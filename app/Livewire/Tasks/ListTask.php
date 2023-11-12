@@ -3,14 +3,17 @@
 namespace App\Livewire\Tasks;
 
 use Livewire\Component;
+use App\Models\Task;
 
 class ListTask extends Component
 {
-    public $tasks = [
-        'todo' => [],
-        'inprogress' => [],
-        'done' => [],
+    public $tasks;
+
+    protected $listeners = [
+        'task-updated' => '$refresh',
     ];
+
+    public $state;
 
     public function render()
     {
@@ -19,21 +22,37 @@ class ListTask extends Component
 
     public function mount()
     {
-        // Initialize tasks
-        $this->tasks['todo'] = [['id' => 1, 'name' => 'Task 1'], ['id' => 2, 'name' => 'Task 2']];
-        $this->tasks['inprogress'] = [['id' => 3, 'name' => 'Task 3']];
-        $this->tasks['done'] = [['id' => 4, 'name' => 'Task 4']];
+        // Fetch all tasks from the database
+        $this->tasks = [
+            'pending' => Task::where('status', 'pending')->get()->toArray(),
+            'in_progress' => Task::where('status', 'in_progress')->get()->toArray(),
+            'completed' => Task::where('status', 'completed')->get()->toArray(),
+        ];
     }
 
     public function addTask()
     {
-        // Add a new task to the 'todo' column
-        $this->tasks['todo'][] = ['id' => count($this->tasks['todo']) + 1, 'name' => 'New Task'];
+
     }
 
-    public function updateTaskOrder($list, $column)
+    public function updateTaskStatus($task_id, $status)
     {
-        // Update the task order when dragged and dropped
-        $this->tasks[$column] = $list;
+        $task = Task::find($task_id);
+        $task->status = $status;
+        $task->save();
+
+        $this->tasks = [
+            'pending' => Task::where('status', 'pending')->get()->toArray(),
+            'in_progress' => Task::where('status', 'in_progress')->get()->toArray(),
+            'completed' => Task::where('status', 'completed')->get()->toArray(),
+        ];
+
+        $this->dispatch('task-updated');
+    }
+
+    public function updatedState()
+    {
+        dd('state changed');
+        $this->dispatch('task-updated');
     }
 }
