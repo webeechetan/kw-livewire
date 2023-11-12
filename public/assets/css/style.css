@@ -2554,3 +2554,24 @@ div.sun-editor-editable {
 }
 
 /*# sourceMappingURL=App.css.map */
+
+.scrolling-wrapper {
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.column {
+  flex: 0 0 auto;
+  width: 300px;
+  padding: 15px;
+  border: 1px solid #ccc;
+  margin-right: 10px;
+}
+
+.task {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  margin: 5px 0;
+  padding: 10px;
+  cursor: move;
+}

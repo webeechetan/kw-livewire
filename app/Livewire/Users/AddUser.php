@@ -5,16 +5,21 @@ namespace App\Livewire\Users;
 use Livewire\Component;
 use App\Models\User;
 use App\Models\Project;
+use App\Models\Team;
 use Illuminate\Support\Facades\Hash;
+use Livewire\WithFileUploads;
+use Livewire\WithPagination;
 
 class AddUser extends Component
 {
+    use WithFileUploads, WithPagination;
+
     public $name;
     public $email;
     public $password;
-    public $projects = [];
-    public $project_id;
-    
+    public $teams = [];
+    public $team_ids;
+    public $image;
 
     public function render()
     {
@@ -23,11 +28,7 @@ class AddUser extends Component
 
     public function mount()
     {
-        $this->projects = Project::all();
-    }
-
-    public function rendered($view,$html){
-        $this->dispatch('loadProjects');
+        $this->teams = Team::all();
     }
 
     public function store()
@@ -42,8 +43,20 @@ class AddUser extends Component
         $user->org_id = auth()->guard('orginizations')->user()->id;
         $user->name = $this->name;
         $user->email = $this->email;
+
+        if($this->image){
+            $this->validate([
+                'image' => 'image|max:1024', // 1MB Max
+            ]);
+
+            $image = $this->image->store('public/images/users');
+            $user->image = $image;
+        }
+
         $user->password = Hash::make($this->password);
         $user->save();
+
+        $user->teams()->attach($this->team_ids);
 
         session()->flash('success','User created successfully');
 

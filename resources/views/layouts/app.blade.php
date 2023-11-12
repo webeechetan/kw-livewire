@@ -50,8 +50,8 @@
                     <li><a wire:navigate href="{{ route('client.index') }}" class="@if (request()->routeIs('client.index') || request()->routeIs('client.add')) active @endif"><PeopleAltOutlinedIcon/> Clients</a></li>
                     <li><a wire:navigate href="{{ route('project.index') }}" class="@if (request()->routeIs('project.index') || request()->routeIs('project.add')) active @endif"><DashboardOutlinedIcon/> Projects</a></li>
                     <li><a wire:navigate href="{{ route('user.index') }}" class="@if (request()->routeIs('user.index') || request()->routeIs('user.add')) active @endif"><PeopleAltOutlinedIcon/> Users</a></li>
-                    <li><a href="../members" class=""><GroupOutlinedIcon/> Teams</a></li>
-                    <li><a href="../tasks" class=""><AssignmentOutlinedIcon /> Tasks</a></li>
+                    <li><a wire:navigate href="{{ route('team.index') }}" class="@if (request()->routeIs('team.index') || request()->routeIs('team.add')) active @endif"><GroupOutlinedIcon/> Teams</a></li>
+                    <li><a wire:navigate href="{{ route('task.index') }}" class="@if (request()->routeIs('task.index') || request()->routeIs('task.add')) active @endif"><AssignmentOutlinedIcon /> Tasks</a></li>
                 </ul>
             </div>
             <div class="sidebar-l-btm">

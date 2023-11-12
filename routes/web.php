@@ -10,6 +10,10 @@ use App\Livewire\Projects\AddProject;
 use App\Livewire\Projects\ListProject;
 use App\Livewire\Users\AddUser;
 use App\Livewire\Users\ListUser;
+use App\Livewire\Teams\AddTeam;
+use App\Livewire\Teams\ListTeam;
+use App\Livewire\Tasks\AddTask;
+use App\Livewire\Tasks\ListTask;
 
 
 use Illuminate\Http\Request;
@@ -42,6 +46,12 @@ Route::get('/projects/add',AddProject::class)->name('project.add');
 
 Route::get('/users',ListUser::class)->name('user.index');
 Route::get('/users/add',AddUser::class)->name('user.add');
+
+Route::get('/teams',ListTeam::class)->name('team.index');
+Route::get('/teams/add',AddTeam::class)->name('team.add');
+
+Route::get('/tasks',ListTask::class)->name('task.index');
+Route::get('/tasks/add',AddTask::class)->name('task.add');
 
 
 

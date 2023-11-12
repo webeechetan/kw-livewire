@@ -24,6 +24,21 @@
                                 @error('password') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
 
+                            <div class="col-md-12 mt-3">
+                                <label for="profile">Profile</label>
+                                <input type="file" wire:model="image" class="form-control">
+                            </div>
+
+                            <div class="col-md-12 mt-3" wire:ignore>
+                                <label for="teams">Teams</label>
+                                <select class="form-control teams" multiple>
+                                    <option value="">Select Project</option>
+                                    @foreach($teams as $team)
+                                        <option value="{{ $team->id }}">{{ $team->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
                             <div class="mt-3">
                                 <button type="submit" class="btn btn-primary">Add User</button>
                             </div>
@@ -34,6 +49,18 @@
         </div>
     </div>
 </div>
+
+@push('scripts')
+    <script>
+        $('.teams').select2();
+
+        $('.teams').on('change', function(e){
+            var teams = $('.teams');
+            var selected_teams = teams.val();
+            @this.set('team_ids', selected_teams);
+        });
+    </script>
+@endpush
 
 
 
