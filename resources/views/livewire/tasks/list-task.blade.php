@@ -4,28 +4,175 @@
     <div class="row">
         <div class="col text-end">
             <div class="pull-right">
-                <button class="btn btn-primary" wire:click="addTask">Add Task</button>
+                <a wire:navigate href="{{ route('task.add') }}"><button class="btn btn-primary">Add Task</button></a>
             </div>
         </div>
     </div>
     <div class="tab-view mt-4">
         <div class="tab-pane" id="board" role="tabpanel" aria-labelledby="board-tab">
-            <div class="row flex-row flex-nowrap scrolling-wrapper mt-4">
-                <div class="column" id="pending-column" data-status="pending">
-                    <h5>Pending</h5>
-                    @foreach($tasks['pending'] as $task)
-                        <div class="task" wire:key="pending-{{$task['id']}}" data-task="{{$task['id']}}">
-                            {{ $task['name'] }}
-                        </div>
-                    @endforeach
+            <div class="row flex-row flex-nowrap scrolling-wrapper mt-4" wire:sortable-group="updateTaskOrder">
+                <div class="column" id="pending-column" wire:key="group-pending">
+                    <div wire:sortable-group.item-group="group-pending" wire:sortable-group.options="{ animation: 100 }">
+                        <h5>Pending</h5>
+                        @foreach($tasks['pending'] as $task)
+                            <div class="task text-center" wire:key="pending-{{$task['id']}}" wire:sortable-group.item="{{ $task['id'] }}">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                                <p>{{ $task['name'] }}</p>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <b>{{ $task['due_date'] }}</b>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <p>{{ $task['description'] }}</p>
+                                    </div>
+                                    <div class="card-footer">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <p>Assign To</p>
+                                                @foreach($task->users as $user)
+                                                    <span class="btn btn-primary btn-sm mt-1">{{ $user->name }}</span> <br>
+                                                @endforeach
+                                            </div>
+                                            <div class="col-md-6 ml-2">
+                                                <p>Assign To Team</p>
+                                                @if($task->team)
+                                                    <span class="btn btn-primary btn-sm">{{ $task->team->name }}</span>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
                 </div>
-                <div class="column" id="completed-cloumn" data-status="completed">
-                    <h5>Completed</h5>
-                    @foreach($tasks['completed'] as $task)
-                        <div class="task" wire:key="pending-{{$task['id']}}" data-task="{{$task['id']}}">
-                            {{ $task['name'] }}
-                        </div>
-                    @endforeach
+
+                <div class="column" id="in-progress-column" wire:key="group-in-progress">
+                    <div wire:sortable-group.item-group="group-in-progress" wire:sortable-group.options="{ animation: 100 }">
+                        <h5>In Progress</h5>
+                        @foreach($tasks['in_progress'] as $task)
+                            <div class="task" wire:key="in-progress-{{$task['id']}}" wire:sortable-group.item="{{ $task['id'] }}">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                                <p>{{ $task['name'] }}</p>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <b>{{ $task['due_date'] }}</b>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <p>{{ $task['description'] }}</p>
+                                    </div>
+                                    <div class="card-footer">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <p>Assign To</p>
+                                                @foreach($task->users as $user)
+                                                    <span class="btn btn-primary btn-sm mt-1">{{ $user->name }}</span> <br>
+                                                @endforeach
+                                            </div>
+                                            <div class="col-md-6 ml-2">
+                                                <p>Assign To Team</p>
+                                                @if($task->team)
+                                                    <span class="btn btn-primary btn-sm">{{ $task->team->name }}</span>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+
+                <div class="column" id="in-review-column" wire:key="group-in-review">
+                    <div wire:sortable-group.item-group="group-in-review" wire:sortable-group.options="{ animation: 100 }">
+                        <h5>In Review</h5>
+                        @foreach($tasks['in_review'] as $task)
+                            <div class="task" wire:key="in-review-{{$task['id']}}" wire:sortable-group.item="{{ $task['id'] }}">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                                <p>{{ $task['name'] }}</p>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <b>{{ $task['due_date'] }}</b>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <p>{{ $task['description'] }}</p>
+                                    </div>
+                                    <div class="card-footer">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <p>Assign To</p>
+                                                @foreach($task->users as $user)
+                                                    <span class="btn btn-primary btn-sm mt-1">{{ $user->name }}</span> <br>
+                                                @endforeach
+                                            </div>
+                                            <div class="col-md-6 ml-2">
+                                                <p>Assign To Team</p>
+                                                @if($task->team)
+                                                    <span class="btn btn-primary btn-sm">{{ $task->team->name }}</span>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+
+                <div class="column" id="completed-cloumn" wire:key="group-completed">
+                    <div wire:sortable-group.item-group="group-completed" wire:sortable-group.options="{ animation: 100 , dragClass : 'task-dragging' }">
+                        <h5>Completed</h5>
+                        @foreach($tasks['completed'] as $task)
+                            <div class="task text-center" wire:key="completed-{{$task['id']}}" wire:sortable-group.item="{{ $task['id'] }}" data-task="{{$task['id']}}">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                                <p>{{ $task['name'] }}</p>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <b>{{ $task['due_date'] }}</b>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <p>{{ $task['description'] }}</p>
+                                    </div>
+                                    <div class="card-footer">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <p>Assign To</p>
+                                                @foreach($task->users as $user)
+                                                    <span class="btn btn-primary btn-sm mt-1">{{ $user->name }}</span> <br>
+                                                @endforeach
+                                            </div>
+                                            <div class="col-md-6 ml-2">
+                                                <p>Assign To Team</p>
+                                                @if($task->team)
+                                                    <span class="btn btn-primary btn-sm">{{ $task->team->name }}</span>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
                 </div>
             </div>
         </div>
@@ -33,58 +180,4 @@
 </div>
 
 @push('scripts')
-<script>
-        $(".task").draggable({
-            revert: true,
-            revertDuration: 0,
-            cursor: "move",
-            zIndex: 100,
-            appendTo: "body",
-            helper: "clone",
-            start: function(event, ui) {
-                $(this).addClass("dragging");
-            },
-            stop: function(event, ui) {
-                $(this).removeClass("dragging");
-            }
-        });
-
-        $(".column").droppable({
-            accept: ".task",
-            drop: function(event, ui) {
-                var task_id = ui.draggable.attr("data-task");
-                var status = $(this).attr("data-status");
-                console.log(task_id, status);
-                @this.updateTaskStatus(task_id, status);
-            }
-        });
-
-        // add event listener if task updated re init the drag and drop 
-        document.addEventListener("task-updated", function(e) {
-            $(".task").draggable({
-                revert: true,
-                revertDuration: 0,
-                cursor: "move",
-                zIndex: 100,
-                appendTo: "body",
-                helper: "clone",
-                start: function(event, ui) {
-                    $(this).addClass("dragging");
-                },
-                stop: function(event, ui) {
-                    $(this).removeClass("dragging");
-                }
-            });
-
-            $(".column").droppable({
-                accept: ".task",
-                drop: function(event, ui) {
-                    var task_id = ui.draggable.attr("data-task");
-                    var status = $(this).attr("data-status");
-                    console.log(task_id, status);
-                    @this.updateTaskStatus(task_id, status);
-                }
-            });
-        });
-    </script>
 @endpush
