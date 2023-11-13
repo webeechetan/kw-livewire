@@ -3,14 +3,11 @@
 namespace App\Livewire\Tasks;
 
 use Livewire\Component;
+use App\Models\Task;
 
 class ListTask extends Component
 {
-    public $tasks = [
-        'todo' => [],
-        'inprogress' => [],
-        'done' => [],
-    ];
+    public $tasks;
 
     public function render()
     {
@@ -19,21 +16,75 @@ class ListTask extends Component
 
     public function mount()
     {
-        // Initialize tasks
-        $this->tasks['todo'] = [['id' => 1, 'name' => 'Task 1'], ['id' => 2, 'name' => 'Task 2']];
-        $this->tasks['inprogress'] = [['id' => 3, 'name' => 'Task 3']];
-        $this->tasks['done'] = [['id' => 4, 'name' => 'Task 4']];
+        // Fetch all tasks from the database
+        $this->tasks = [
+            'pending' => Task::where('status', 'pending')->get(),
+            'in_progress' => Task::where('status', 'in_progress')->get(),
+            'in_review' => Task::where('status', 'in_review')->get(),
+            'completed' => Task::where('status', 'completed')->get(),
+        ];
     }
 
     public function addTask()
     {
-        // Add a new task to the 'todo' column
-        $this->tasks['todo'][] = ['id' => count($this->tasks['todo']) + 1, 'name' => 'New Task'];
+
     }
 
-    public function updateTaskOrder($list, $column)
+    public function updateTaskStatus($task_id, $status)
     {
-        // Update the task order when dragged and dropped
-        $this->tasks[$column] = $list;
+        $task = Task::find($task_id);
+        $task->status = $status;
+        $task->save();
+
+        $this->tasks = [
+            'pending' => Task::where('status', 'pending')->get(),
+            'in_progress' => Task::where('status', 'in_progress')->get(),
+            'in_review' => Task::where('status', 'in_review')->get(),
+            'completed' => Task::where('status', 'completed')->get(),
+        ];
+
+    }
+
+    public function updateTaskOrder($list)
+    {
+        foreach ($list as $item) {
+            if($item['value'] == 'group-pending'){
+                foreach($item['items'] as $task){
+                    $task = Task::find($task['value']);
+                    $task->status = 'pending';
+                    $task->save();
+                }
+            }
+            if($item['value'] == 'group-in-progress'){
+                foreach($item['items'] as $task){
+                    $task = Task::find($task['value']);
+                    $task->status = 'in_progress';
+                    $task->save();
+                }
+            }
+
+            if($item['value'] == 'group-in-review'){
+                foreach($item['items'] as $task){
+                    $task = Task::find($task['value']);
+                    $task->status = 'in_review';
+                    $task->save();
+                }
+            }
+
+            if($item['value'] == 'group-completed'){
+                foreach($item['items'] as $task){
+                    $task = Task::find($task['value']);
+                    $task->status = 'completed';
+                    $task->save();
+                }
+            }
+        }
+
+        $this->tasks = [
+            'pending' => Task::where('status', 'pending')->get(),
+            'in_progress' => Task::where('status', 'in_progress')->get(),
+            'in_review' => Task::where('status', 'in_review')->get(),
+            'completed' => Task::where('status', 'completed')->get(),
+        ];
     }
 }
