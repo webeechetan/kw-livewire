@@ -49,6 +49,6 @@ class AddTask extends Component
 
         $task->users()->attach($this->user_ids);
         session()->flash('message','Task created successfully');
-        return redirect(route('task.index'));
+        $this->redirect(route('task.index'),navigate:true);
     }
 }

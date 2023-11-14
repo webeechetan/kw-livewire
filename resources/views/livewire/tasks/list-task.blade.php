@@ -1,6 +1,6 @@
 <!-- resources/views/livewire/tasks/list-task.blade.php -->
 
-<div class="container">
+<div class="container" wire:poll>
     <div class="row">
         <div class="col text-end">
             <div class="pull-right">
@@ -28,7 +28,7 @@
                                         </div>
                                     </div>
                                     <div class="card-body">
-                                        <p>{{ $task['description'] }}</p>
+                                        <p>{!! $task['description'] !!}</p>
                                     </div>
                                     <div class="card-footer">
                                         <div class="row">
@@ -69,7 +69,7 @@
                                         </div>
                                     </div>
                                     <div class="card-body">
-                                        <p>{{ $task['description'] }}</p>
+                                        <p>{!! $task['description'] !!}</p>
                                     </div>
                                     <div class="card-footer">
                                         <div class="row">
@@ -98,7 +98,7 @@
                         <h5>In Review</h5>
                         @foreach($tasks['in_review'] as $task)
                             <div class="task" wire:key="in-review-{{$task['id']}}" wire:sortable-group.item="{{ $task['id'] }}">
-                                <div class="card">
+                                <div class="card kanban_column_task_overdue">
                                     <div class="card-header">
                                         <div class="row">
                                             <div class="col-md-8">
@@ -110,7 +110,7 @@
                                         </div>
                                     </div>
                                     <div class="card-body">
-                                        <p>{{ $task['description'] }}</p>
+                                        <p>{!! $task['description'] !!}</p>
                                     </div>
                                     <div class="card-footer">
                                         <div class="row">
@@ -134,12 +134,12 @@
                     </div>
                 </div>
 
-                <div class="column" id="completed-cloumn" wire:key="group-completed">
+                <div class="column " id="completed-cloumn" wire:key="group-completed">
                     <div wire:sortable-group.item-group="group-completed" wire:sortable-group.options="{ animation: 100 , dragClass : 'task-dragging' }">
                         <h5>Completed</h5>
                         @foreach($tasks['completed'] as $task)
-                            <div class="task text-center" wire:key="completed-{{$task['id']}}" wire:sortable-group.item="{{ $task['id'] }}" data-task="{{$task['id']}}">
-                                <div class="card">
+                            <div class="task text-center " wire:key="completed-{{$task['id']}}" wire:sortable-group.item="{{ $task['id'] }}" data-task="{{$task['id']}}">
+                                <div class="card kanban_column_task_done">
                                     <div class="card-header">
                                         <div class="row">
                                             <div class="col-md-8">
@@ -151,7 +151,7 @@
                                         </div>
                                     </div>
                                     <div class="card-body">
-                                        <p>{{ $task['description'] }}</p>
+                                        <p>{!! $task['description'] !!}</p>
                                     </div>
                                     <div class="card-footer">
                                         <div class="row">

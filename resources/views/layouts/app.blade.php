@@ -46,7 +46,7 @@
         <aside class="sidebar-l">
             <div class="sidebar-l-menu">
                 <ul class="list-none menu-sidebar">
-                    <li><a wire:navigate href="{{ route('dashboard') }}" class="@if (request()->routeIs('dashboard')) active @endif"><HomeOutlinedIcon/> Dashboard</a></li>
+                    <li><a wire:navigate href="{{ route('dashboard') }}" class="@if (request()->routeIs('dashboard')) active @endif"> Dashboard</a></li>
                     <li><a wire:navigate href="{{ route('client.index') }}" class="@if (request()->routeIs('client.index') || request()->routeIs('client.add')) active @endif"><PeopleAltOutlinedIcon/> Clients</a></li>
                     <li><a wire:navigate href="{{ route('project.index') }}" class="@if (request()->routeIs('project.index') || request()->routeIs('project.add')) active @endif"><DashboardOutlinedIcon/> Projects</a></li>
                     <li><a wire:navigate href="{{ route('user.index') }}" class="@if (request()->routeIs('user.index') || request()->routeIs('user.add')) active @endif"><PeopleAltOutlinedIcon/> Users</a></li>
@@ -61,6 +61,9 @@
         </aside>
         <div class="main-body-content">
             {{ $slot }}
+            <p class="alert alert-warning" wire:offline>
+                Whoops, your device has lost connection. The web page you are viewing is offline.
+            </p>
         </div>
     </div>
     @livewireScripts
@@ -68,8 +71,8 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/livewire/sortable@v1.x.x/dist/livewire-sortable.js"></script>
-    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js" integrity="sha512-57oZ/vW8ANMjR/KQ6Be9v/+/h6bq9/l3f0Oc7vn6qMqyhvPd1cvKBRWWpzu0QoneImqr2SkmO4MSqU+RpHom3Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> --}}
 
+    <script src="https://cdn.ckeditor.com/ckeditor5/40.0.0/classic/ckeditor.js"></script>
 
     @stack('scripts')
     @if (session()->has('success'))
