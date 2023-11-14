@@ -12,20 +12,20 @@
                                 @error('name') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
 
-                            <div class="col-md-6 mt-3">
+                            <div class="col-md-6">
                                 <label for="password">Due Date</label>
                                 <input type="date" wire:model="dueDate" class="form-control" >
                                 @error('password') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row mt-4" wire:ignore>
                             <div class="col-md-12">
                                 <label for="email">Description</label>
-                                <textarea wire:model="description" class="form-control" id="" cols="30" rows="3"></textarea>
+                                <textarea class="form-control" id="editor" cols="30" rows="3"></textarea>
                                 @error('email') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row mt-4">
                             <div class="col-md-6" wire:ignore>
                                 <label for="email">Assign To</label>
                                 <select name="" id="" class="form-control users" multiple>
@@ -58,6 +58,18 @@
 
 @push('scripts')
     <script>
+        ClassicEditor
+            .create( document.querySelector( '#editor' ) )
+            .then( editor => {
+                    editor.model.document.on( 'change:data', () => {
+                        console.log( 'The Document has changed!' );
+                            @this.set('description', editor.getData());
+                    } )
+            } )
+            .catch( error => {
+                    console.error( error );
+            } );
+
         $('.users').select2();
 
         $('.users').on('change', function(e){

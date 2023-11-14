@@ -2564,28 +2564,20 @@ div.sun-editor-editable {
   flex: 0 0 auto;
   width: 300px;
   padding: 15px;
-  border: 1px solid #ccc;
   margin-right: 10px;
 }
 
 .task {
-  background-color: #fff;
-  border: 1px solid #ddd;
   margin: 5px 0;
   padding: 10px;
 }
 
 .draggable-source--is-dragging {
   opacity: 0.5;
-  background-color: #48914d;
+  background-color: #f83890;
 }
 
 .draggable-source--is-dragging .task {
-  color: #fff;
-}
-
-.draggable-source--is-dragging .task:hover {
-  background-color: #48914d;
   color: #fff;
 }
 
@@ -2600,5 +2592,5 @@ div.sun-editor-editable {
 }
 
 .draggable-container--over{
-  border: 1px dashed #48914d;
+  border: 2px dotted black;
 }
