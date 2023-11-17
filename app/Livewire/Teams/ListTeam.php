@@ -14,7 +14,8 @@ class ListTeam extends Component
     public function render()
     {
         return view('livewire.teams.list-team',[
-            'teams' => Team::where('org_id',auth()->guard('orginizations')->user()->id)->paginate(10)
+            'teams' => Team::paginate(10)
         ]);
     }
 }
+

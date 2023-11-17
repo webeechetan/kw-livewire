@@ -22,7 +22,7 @@ class AddClient extends Component
         ]);
 
         $client = new Client();
-        $client->org_id = auth()->guard('orginizations')->user()->id;
+        $client->org_id = session('org_id');
         $client->name = $this->name;
         $client->description = $this->description;
         $client->save();

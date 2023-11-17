@@ -40,7 +40,7 @@ class AddUser extends Component
         ]);
 
         $user = new User();
-        $user->org_id = auth()->guard('orginizations')->user()->id;
+        $user->org_id = session('org_id');
         $user->name = $this->name;
         $user->email = $this->email;
 

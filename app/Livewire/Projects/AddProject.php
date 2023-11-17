@@ -35,7 +35,7 @@ class AddProject extends Component
         $project->name = $this->name;
         $project->client_id = $this->client_id;
         $project->description = $this->description;
-        $project->org_id = auth()->guard('orginizations')->user()->id;
+        $project->org_id = session('org_id');
         $project->save();
         
         session()->flash('success','Project added successfully');

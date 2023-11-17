@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use App\Models\Team;
 use App\Models\Project;
+use App\Models\Scopes\OrganizationScope;
 
 
 class Task extends Model
@@ -20,6 +21,11 @@ class Task extends Model
         'description',
         'due_date'
     ];
+
+    protected static function booted()
+    {
+        static::addGlobalScope(new OrganizationScope);
+    }
 
     public function users(){
         return $this->belongsToMany(User::class);

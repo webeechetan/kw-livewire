@@ -32,7 +32,7 @@ class AddTeam extends Component
         $team = new Team();
         $team->name = $this->name;
         $team->description = $this->description;
-        $team->org_id = auth()->guard('orginizations')->user()->id;
+        $team->org_id = session('org_id');
         $team->save();
 
         $team->users()->attach($this->user_ids);

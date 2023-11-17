@@ -1,4 +1,4 @@
 <div>
-    Welcome , {{ Auth::guard('orginizations')->user()->name }}
+    Welcome , {{ Auth::guard(session('guard'))->user()->name }} 
     <a href="{{ route('logout') }}">Logout</a>
 </div>

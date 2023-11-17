@@ -38,8 +38,8 @@ class AddTask extends Component
         ]);
 
         $task = new Task();
-        $task->org_id = auth()->guard('orginizations')->user()->id;
-        $task->assigned_by = auth()->guard('orginizations')->user()->id;
+        $task->org_id = session('org_id');
+        $task->assigned_by = auth()->guard(session('guard'))->user()->id;
         $task->team_id = $this->team_id;
         $task->name = $this->name;
         $task->description = $this->description;

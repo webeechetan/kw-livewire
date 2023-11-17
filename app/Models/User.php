@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\Team;
+use App\Models\Scopes\OrganizationScope;
 
 class User extends Authenticatable
 {
@@ -43,6 +44,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    protected static function booted()
+    {
+        static::addGlobalScope(new OrganizationScope);
+    }
 
     public function teams(){
         return $this->belongsToMany(Team::class);

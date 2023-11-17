@@ -41,13 +41,20 @@
                             </div>
                             <div class="row">
                                 <div class="col-sm-12">
-                                    <a href="#" class="text-link">Forgot Password?</a>
+                                    <a wire:navigate href="{{ route('forgot.password') }}" class="text-link">Forgot Password?</a>
                                 </div>
                             </div>
                             @if(session()->has('error'))
                                 <div class="col">
                                     <div class="alert alert-danger">
                                         {{ session('error') }}
+                                    </div>
+                                </div>
+                            @endif
+                            @if(session()->has('success'))
+                                <div class="col">
+                                    <div class="alert alert-success">
+                                        {{ session('success') }}
                                     </div>
                                 </div>
                             @endif

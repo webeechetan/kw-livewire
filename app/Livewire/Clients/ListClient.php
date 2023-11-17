@@ -24,6 +24,12 @@ class ListClient extends Component
         $this->resetPage();
     }
 
+    public function deleteClient($id)
+    {
+        Client::find($id)->delete();
+        session()->flash('success', 'Client added successfully.');
+    }
+
     public function mount()
     {
 

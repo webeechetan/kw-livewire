@@ -4,7 +4,7 @@
         <div class="col-md-6">
             <form wire:submit="search" action="">
                 <div class="input-group">
-                    <input wire:model="query" type="text" class="form-control" placeholder="Search Clients...">
+                    <input wire:model="query" type="text" class="form-control" placeholder="Search Projects...">
                     <button type="submit" class="btn btn-primary btn-sm">Search</button>
                 </div>
             </form>
@@ -21,8 +21,8 @@
                     <h5 class="card-header">{{ $project->client->name }} - {{ $project->name }}</h5>
                     <div class="card-body">
                         <p class="card-text">{{ $project->description }}</p>
-                        <a wire:navigate href="" class="btn btn-primary">Edit</a>
-                        <button wire:click="delete({{ $project->id }})" class="btn btn-danger">Delete</button>
+                        <a wire:navigate href="{{ route('project.edit',$project->id) }}" class="btn btn-primary">Edit</a>
+                        <button wire:confirm="Are you sure you want to delete this project?" wire:click="delete({{ $project->id }})" class="btn btn-danger">Delete</button>
                     </div>
                 </div>
             </div>
