@@ -10,7 +10,7 @@
             <div class="col-md-6">
                 <div class="signin-content-right text-center text-md-start space-sec">
                     <div class="signin-content-right-top">
-                        <h5 class="title">Reset your password</h5>
+                        <h2 class="title">Reset your password</h2>
                     </div>
                     <div class="signin-content-right-btm mt-4">
                         @if($step == 1)
@@ -18,15 +18,10 @@
                             <div class="mb-3" >
                                 <div class="form-field">
                                     <div class="form-field-icon">
-                                        <MarkEmailReadTwoToneIcon />
+                                        <i class='bx bx-envelope'></i>
                                     </div>
                                     <input type="email" wire:model="email" class="form-control" placeholder="Enter Email" required />
                                     @error('email') <span class="text-danger">{{ $message }}</span>@enderror
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <a wire:navigate href="{{ route('login') }}" class="text-link">Login</a>
                                 </div>
                             </div>
                             @if(session()->has('error'))
@@ -36,10 +31,11 @@
                                     </div>
                                 </div>
                             @endif
-                            <div class="btn-group mt-2">
-                                <div class="col">
-                                    <button class="w-100 btn btn-primary" type="submit">Send OTP</button>
-                                </div>
+                            <div class="col-12 mb-4">
+                                <button class="w-100 btn btn-primary" type="submit">Send OTP</button>
+                            </div>
+                            <div class="col-12 text-center">
+                                <a wire:navigate href="{{ route('login') }}" class="text-link">Back to Login</a>
                             </div>
                         </form>
 
@@ -50,7 +46,7 @@
                             <div class="mb-3" >
                                 <div class="form-field">
                                     <div class="form-field-icon">
-                                        <MarkEmailReadTwoToneIcon />
+                                        <i class='bx bx-envelope'></i>
                                     </div>
                                     <input type="text" wire:model="enterdOTP" class="form-control" placeholder="Enter OTP" required />
                                     @error('enterdOTP') <span class="text-danger">{{ $message }}</span>@enderror
@@ -76,7 +72,7 @@
                             <div class="mb-3" >
                                 <div class="form-field">
                                     <div class="form-field-icon">
-                                        <MarkEmailReadTwoToneIcon />
+                                        <i class='bx bx-lock-open'></i>
                                     </div>
                                     <input type="text" wire:model="password" class="form-control" placeholder="Enter Password" required />
                                     @error('password') <span class="text-danger">{{ $message }}</span>@enderror
@@ -86,7 +82,7 @@
                             <div class="mb-3">
                                 <div class="form-field">
                                     <div class="form-field-icon">
-                                        <MarkEmailReadTwoToneIcon />
+                                        <i class='bx bx-lock-open'></i>
                                     </div>
                                     <input type="text" wire:model="password_confirmation" class="form-control" placeholder="Confirm Password" required />
                                     @error('password_confirmation') <span class="text-danger">{{ $message }}</span>@enderror

@@ -1,0 +1,15 @@
+/*---- Progress Style End Here ----*/
+.progress {
+    margin-top: 5px;
+    height: 4px;
+    border-radius: $border_radius_sm;
+    &-box {
+        &-title {
+            display: flex;
+            justify-content: space-between;
+            column-gap: 15px;
+            font-size: 12px;
+        }
+    }
+}
+/*---- Progress Style End Here ----*/

@@ -76,7 +76,6 @@ body {
   color: #191919;
   margin: 0;
   padding: 0;
-  font-size: 0.9rem;
 }
 
 /*---- Anchor Style ----*/
@@ -250,22 +249,22 @@ ul.list-none {
   opacity: 0.2;
 }
 
-/* ----- Icon Svg ----- */
-svg.css-i4bv87-MuiSvgIcon-root {
-  width: 18px;
-  height: 18px;
+/* ----- Alert Message ----- */
+.alert {
+  padding: 10px 20px;
+  font-size: 14px;
 }
 
 /*---- Buttons Style Start Here ----*/
 .btn {
   padding: 0.5rem 1.4rem;
-  font-size: 0.9rem;
   font-weight: 400;
   transition: all 0.5s ease;
   /*---- Actions ----*/
   /*---- Options ----*/
   /* ----- Filter Sort ----- */
   /* ----- Border ----- */
+  /* ----- Button Submit ----- */
 }
 .btn svg {
   max-width: 18px;
@@ -318,7 +317,7 @@ svg.css-i4bv87-MuiSvgIcon-root {
   border: 1px solid #f83890;
   border-radius: 4px;
 }
-.btn-primary:hover, .btn-primary:focus, .btn-primary:active {
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary:first-child:active {
   color: #fff;
   background-color: #7407ff;
   border: 1px solid #7407ff;
@@ -326,7 +325,7 @@ svg.css-i4bv87-MuiSvgIcon-root {
 .btn-primary-border {
   border: 1px solid #f83890;
 }
-.btn-primary-border:hover, .btn-primary-border:focus, .btn-primary-border:active {
+.btn-primary-border:hover, .btn-primary-border:focus, .btn-primary-border:active, .btn-primary-border:first-child:active {
   background-color: #f7d306;
   border-color: #f7d306;
 }
@@ -348,6 +347,7 @@ svg.css-i4bv87-MuiSvgIcon-root {
 .btn-group {
   display: flex;
   align-items: center;
+  grid-gap: 20px;
 }
 .btn-action .btn-icon {
   width: 35px;
@@ -438,6 +438,9 @@ svg.css-i4bv87-MuiSvgIcon-root {
   color: #f83890;
   border-color: #f83890;
 }
+.btn-smt {
+  text-transform: uppercase;
+}
 
 /*---- Buttons Style End Here ----*/
 /*---- Header Style ----*/
@@ -514,6 +517,11 @@ svg.css-i4bv87-MuiSvgIcon-root {
 }
 .header-signup {
   padding: 20px 0 0;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  z-index: 9999;
 }
 .header-signup .logo {
   padding: 0 0 20px;
@@ -883,17 +891,20 @@ svg.css-i4bv87-MuiSvgIcon-root {
   position: relative;
 }
 .form-field .form-control, .form-field .form-select {
-  padding: 10px 20px 10px 55px;
+  padding: 10px 20px 10px 65px;
 }
 .form-field-icon {
   color: #f7d306;
   position: absolute;
   top: 8px;
-  left: 10px;
-  padding-right: 10px;
+  left: 15px;
+  padding-right: 15px;
   border-right: 1px solid #ced4da;
   display: flex;
   align-items: center;
+}
+.form-field-icon i {
+  font-size: 22px;
 }
 @media (min-width: 768px) {
   .form-field-icon {
@@ -1116,7 +1127,9 @@ input:-webkit-autofill, input:-webkit-autofill:focus {
 
 .signup-content {
   position: relative;
-  min-height: calc(100vh - 89px);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
 }
 .signup-content:before, .signup-content:after {
   content: "";
@@ -1726,6 +1739,11 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
 .main-body-header-btnAdd:hover {
   color: #fff;
   background-color: #f83890;
+}
+
+/* ----- Auth Forms ----- */
+.signup-form button, .signup-form .signin-google-btn {
+  font-size: 22px;
 }
 
 /*---- Box Item Style ---*/
@@ -2553,44 +2571,4 @@ div.sun-editor-editable {
   grid-gap: 15px;
 }
 
-/*# sourceMappingURL=App.css.map */
-
-.scrolling-wrapper {
-  overflow-x: auto;
-  white-space: nowrap;
-}
-
-.column {
-  flex: 0 0 auto;
-  width: 300px;
-  padding: 15px;
-  margin-right: 10px;
-}
-
-.task {
-  margin: 5px 0;
-  padding: 10px;
-}
-
-.draggable-source--is-dragging {
-  opacity: 0.5;
-  background-color: #f83890;
-}
-
-.draggable-source--is-dragging .task {
-  color: #fff;
-}
-
-.draggable--over {
-  border: 1px dashed #48914d;
-}
-
-.draggable-container {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-
-.draggable-container--over{
-  border: 2px dotted black;
-}
+/*# sourceMappingURL=app.css.map */
