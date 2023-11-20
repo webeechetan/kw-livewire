@@ -7,6 +7,6 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>hello</h1>
+    New user mail
 </body>
 </html>
