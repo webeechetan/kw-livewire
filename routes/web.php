@@ -104,5 +104,3 @@ Route::get('/new-user-mail',function(){
         'user' => User::withoutGlobalScope(OrganizationScope::class)->first()
     ]);
 });
-
-
