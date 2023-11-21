@@ -7,18 +7,18 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class OTPNotification extends Notification
+class UserWelcomeNotification extends Notification
 {
     use Queueable;
 
-    public $otp;
+    public $password;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct($otp)
+    public function __construct($password)
     {
-        $this->otp = $otp;
+        $this->password = $password;
     }
 
     /**
@@ -37,13 +37,12 @@ class OTPNotification extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)->view(
-            'mails.forgot-password-mail',
+            'mails.new-user-mail',
             [
-                'otp' => $this->otp,
+                'password' => $this->password,
                 'user' => $notifiable,
             ]
         );
-
     }
 
     /**

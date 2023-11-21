@@ -7,6 +7,23 @@
     <title>Document</title>
 </head>
 <body>
-    New user mail
+    Hi {{ $user->name }},
+    <br>
+    <br>
+    Your account has been created successfully.
+    <br>
+    <br>
+    Your login credentials are as follows:
+    <br>
+    <br>
+    Email: {{ $user->email }}
+    <br>
+    Password: {{ $password }}
+    <br>
+    <br>
+    Please login to your account and change your password.
+    <br>
+    <br>
+    
 </body>
 </html>

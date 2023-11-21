@@ -9,6 +9,7 @@ use App\Models\Team;
 use Illuminate\Support\Facades\Hash;
 use Livewire\WithFileUploads;
 use Livewire\WithPagination;
+use App\Notifications\UserWelcomeNotification;
 
 class AddUser extends Component
 {
@@ -54,9 +55,14 @@ class AddUser extends Component
         }
 
         $user->password = Hash::make($this->password);
-        $user->save();
 
-        $user->teams()->attach($this->team_ids);
+        try{
+            $user->save();
+            $user->teams()->attach($this->team_ids);
+            $user->notify(new UserWelcomeNotification($this->password));
+        }catch(\Exception $e){
+            session()->flash('error','Something went wrong');
+        }
 
         session()->flash('success','User created successfully');
 

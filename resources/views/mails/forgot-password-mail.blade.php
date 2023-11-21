@@ -7,6 +7,8 @@
     <title>Document</title>
 </head>
 <body>
-    Forgot mail
+    <h1>
+        Your OTP is {{ $otp }}
+    </h1>
 </body>
 </html>
