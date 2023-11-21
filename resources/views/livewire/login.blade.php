@@ -49,15 +49,16 @@
                                 </div>
                             </div>
                             @if(session()->has('error'))
-                                <div class="col">
-                                    <div class="alert alert-danger">
+                                <div class="col text-center">
+                                    <div class="text-danger">
                                         {{ session('error') }}
                                     </div>
                                 </div>
                             @endif
+                            
                             @if(session()->has('success'))
-                                <div class="col">
-                                    <div class="alert alert-success">
+                                <div class="col text-center">
+                                    <div class="text-success">
                                         {{ session('success') }}
                                     </div>
                                 </div>

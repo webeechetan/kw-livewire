@@ -18,6 +18,7 @@ class ForgotPassword extends Component
     public $password_confirmation;
     public $step = 1;
     public $enterdOTP;
+    public $type;
 
     public function render()
     {
@@ -33,13 +34,24 @@ class ForgotPassword extends Component
         $user = User::withoutGlobalScope(OrganizationScope::class)->where('email',$this->email)->first();
 
         if($user){
+            $this->type = 'user';
             $this->otp = rand(100000,999999);
             $user->notify(new OTPNotification($this->otp));
             session()->flash('otp_sent','OTP sent to your email');
             $this->step = 2;
             session()->flash('success','OTP sent to your email');
         }else{
-            session()->flash('error','Email not found');
+            $organization = Organization::where('email',$this->email)->first();
+            if($organization){
+                $this->type = 'organization';
+                $this->otp = rand(100000,999999);
+                $organization->notify(new OTPNotification($this->otp));
+                session()->flash('otp_sent','OTP sent to your email');
+                $this->step = 2;
+                session()->flash('success','OTP sent to your email');
+            }else{
+                session()->flash('error','Email not found');
+            }
         }
     }
 
@@ -66,9 +78,25 @@ class ForgotPassword extends Component
             'password' => 'required|min:6|confirmed'
         ]);
 
+        if($this->type == 'user'){
+            $this->changeUserPassword();
+        }else{
+            $this->changeOrganizationPassword();
+        }
+    }
+
+    public function changeUserPassword(){
         $user = User::withoutGlobalScope(OrganizationScope::class)->where('email',$this->email)->first();
         $user->password = Hash::make($this->password);
         $user->save();
+        session()->flash('success','Password changed successfully');
+        return redirect()->route('login');
+    }
+
+    public function changeOrganizationPassword(){
+        $organization = Organization::where('email',$this->email)->first();
+        $organization->password = Hash::make($this->password);
+        $organization->save();
         session()->flash('success','Password changed successfully');
         return redirect()->route('login');
     }
