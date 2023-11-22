@@ -92,8 +92,8 @@
                                             <table class="emailer-text-wrap mxauto" width="100%" cellcellspacing="0" cellpadding="">
                                                 <tr>
                                                     <td>
-                                                        <h2 style="margin-top: 0; margin-bottom: 30px;">Hi there {User_Name}!</h2>
-                                                        <p>You colleague {name of sender} has invited you to join the team on Kaykewalk. Please Sign up via the link below and join the huddle.</p>
+                                                        <h2 style="margin-top: 0; margin-bottom: 30px;">Hi there {{ $user->name }}!</h2>
+                                                        <p>{{ $org->name }} has invited you to join the team on Kaykewalk. Please Sign up via the link below and join the huddle.</p>
                                                         <a href="#" class="btn-primary" style="margin-top: 30px;">Sign Up Now</a>
                                                     </td>
                                                 </tr>

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Forgot Password | Kaykewalk</title>
+    <title>User Invite | Kaykewalk</title>
 
     <style>
         .mxauto {
@@ -16,6 +16,12 @@
         .spacing20 {
             padding: 20px;
         }
+        img {
+            max-width: 100%;
+        }
+        table {
+            max-width: 100% !important;
+        }
         body {
             background: #f7f7f7;
             font-family: trebuchet ms,sans-serif;
@@ -26,7 +32,7 @@
         }
         .emailer-text-wrap {
             margin: 0 auto;
-            padding: 50px 0 70px;
+            padding: 50px 50px 70px;
         }
         .emailer-text-wrap h2 {
             font-size: 26px;
@@ -61,7 +67,7 @@
                                 <table width="100%" style="border-bottom: 1px solid #ddd;" cellspacing="0" cellpadding="">
                                     <tr>
                                         <td class="textCenter spacing20">
-                                            <img src="./assets/images/logo.png" alt="">
+                                            <img src="https://kw.webeetest.tech/assets/images/logo.png" alt="">
                                         </td>
                                     </tr>
                                 </table>
@@ -72,7 +78,7 @@
                                 <table width="100%" cellspacing="0" cellpadding="">
                                     <tr>
                                         <td>
-                                            <img src="./assets/images/invite_banner.jpg" alt="">
+                                            <img src="https://kw.webeetest.tech/assets/images/invite_banner.jpg" alt="">
                                         </td>
                                     </tr>
                                 </table>
@@ -83,12 +89,24 @@
                                 <table width="100%" cellspacing="0" cellpadding="">
                                     <tr>
                                         <td>
-                                            <table class="emailer-text-wrap mxauto" width="600" cellcellspacing="0" cellpadding="">
+                                            <table class="emailer-text-wrap mxauto" width="100%" cellcellspacing="0" cellpadding="">
                                                 <tr>
                                                     <td>
-                                                        <h2 style="margin-top: 0; margin-bottom: 30px;">Hi there {User_Name}!</h2>
-                                                        <p>You colleague {name of sender} has invited you to join the team on Kaykewalk. Please Sign up via the link below and join the huddle.</p>
-                                                        <a href="#" class="btn-primary" style="margin-top: 30px;">Sign Up Now</a>
+                                                        <h2 style="margin-top: 0; margin-bottom: 30px;">Hi there {{ $user->name }}!</h2>
+                                                        <p>
+                                                            Your One Time Password (OTP) is <strong>{{ $otp }}</strong>.<br>
+                                                        </p>
+                                                        <p>
+                                                            Please use this OTP to verify your email address.
+                                                        </p>
+                                                        <p>
+                                                            If you did not request this, please ignore this email.
+                                                        </p>
+                                                        <p>
+                                                            Thanks,<br>
+                                                            Kaykewalk Team
+                                                        </p>
+
                                                     </td>
                                                 </tr>
                                             </table>

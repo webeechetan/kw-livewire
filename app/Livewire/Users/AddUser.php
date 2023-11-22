@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Users;
 
+use App\Models\Organization;
 use Livewire\Component;
 use App\Models\User;
 use App\Models\Project;
@@ -10,6 +11,7 @@ use Illuminate\Support\Facades\Hash;
 use Livewire\WithFileUploads;
 use Livewire\WithPagination;
 use App\Notifications\UserWelcomeNotification;
+use App\Notifications\InviteUser;
 
 class AddUser extends Component
 {
@@ -66,6 +68,23 @@ class AddUser extends Component
 
         session()->flash('success','User created successfully');
 
+        return $this->redirect(route('user.index'), navigate:true);
+    }
+
+    public function inviteUser(){
+        $this->validate([
+            'email' => 'required|email|unique:users,email'
+        ]);
+
+        $user = new User();
+        $user->org_id = session('org_id');
+        $user->name = $this->email;
+        $user->email = $this->email;
+        $user->password = Hash::make(rand(100000,999999));
+        $user->save();
+        $org = Organization::find(session('org_id'));
+        $user->notify(new InviteUser($org));
+        session()->flash('success','User invited successfully');
         return $this->redirect(route('user.index'), navigate:true);
     }
 }

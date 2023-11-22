@@ -3,6 +3,22 @@
         <div class="col-md-6 offset-3">
             <div class="card">
                 <h5 class="card-header">Add User</h5>
+                {{-- invite user with email --}}
+                <div class="card-body">
+                    <div class="row">
+                        <form wire:submit.prevent="inviteUser" method="POST">
+                            <div class="col-md-12">
+                                <label for="email">Email</label>
+                                <input type="text" wire:model="email" name="email" class="form-control" placeholder="Enter Email">
+                                @error('email') <span class="text-danger">{{ $message }}</span> @enderror
+                            </div>
+
+                            <div class="mt-3">
+                                <button type="submit" class="btn btn-primary">Invite User</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
                 <div class="card-body">
                     <div class="row">
                         <form wire:submit="store" method="POST" enctype="multipart/form-data">

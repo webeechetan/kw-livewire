@@ -11,12 +11,14 @@ class InviteUser extends Notification
 {
     use Queueable;
 
+    public $org;
+
     /**
      * Create a new notification instance.
      */
-    public function __construct()
+    public function __construct($org)
     {
-        //
+        $this->org = $org;
     }
 
     /**
@@ -38,6 +40,7 @@ class InviteUser extends Notification
             'mails.invite-mail',
             [
                 'user' => $notifiable,
+                'org' => $this->org,
             ]
         );
     }
