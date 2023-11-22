@@ -16,6 +16,12 @@
         .spacing20 {
             padding: 20px;
         }
+        img {
+            max-width: 100%;
+        }
+        table {
+            max-width: 100% !important;
+        }
         body {
             background: #f7f7f7;
             font-family: trebuchet ms,sans-serif;
@@ -26,7 +32,7 @@
         }
         .emailer-text-wrap {
             margin: 0 auto;
-            padding: 50px 0 70px;
+            padding: 50px 50px 70px;
         }
         .emailer-text-wrap h2 {
             font-size: 26px;
@@ -61,7 +67,7 @@
                                 <table width="100%" style="border-bottom: 1px solid #ddd;" cellspacing="0" cellpadding="">
                                     <tr>
                                         <td class="textCenter spacing20">
-                                            <img src="./assets/images/logo.png" alt="">
+                                            <img src="https://kw.webeetest.tech/assets/images/logo.png" alt="">
                                         </td>
                                     </tr>
                                 </table>
@@ -72,7 +78,7 @@
                                 <table width="100%" cellspacing="0" cellpadding="">
                                     <tr>
                                         <td>
-                                            <img src="./assets/images/invite_banner.jpg" alt="">
+                                            <img src="https://kw.webeetest.tech/assets/images/invite_banner.jpg" alt="">
                                         </td>
                                     </tr>
                                 </table>
@@ -83,7 +89,7 @@
                                 <table width="100%" cellspacing="0" cellpadding="">
                                     <tr>
                                         <td>
-                                            <table class="emailer-text-wrap mxauto" width="600" cellcellspacing="0" cellpadding="">
+                                            <table class="emailer-text-wrap mxauto" width="100%" cellcellspacing="0" cellpadding="">
                                                 <tr>
                                                     <td>
                                                         <h2 style="margin-top: 0; margin-bottom: 30px;">Hi there {User_Name}!</h2>
