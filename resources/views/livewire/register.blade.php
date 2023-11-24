@@ -4,7 +4,7 @@
             <div class="row justify-content-md-center">
                 <div class="col-sm-6">
                     <div class="logo">
-                        <img src="./assets/images/logo.png" alt="Kaykewalk Logo" />
+                        <img src="{{ asset('') }}assets/images/logo.png" alt="Kaykewalk Logo" />
                     </div>
                 </div>
                 <div class="col-sm-6 text-md-end">
@@ -19,7 +19,7 @@
         <div class="container">
             <div class="row">
                 <div class="col text-center mx-auto">
-                    <img class="signup-welcome-img" src="./assets/images/signup_welcome.png" alt="Sign Up Welcome" />
+                    <img class="signup-welcome-img" src="{{ asset('') }}assets/images/signup_welcome.png" alt="Sign Up Welcome" />
                     <div class="title-wrap">
                         <h2 class="title text-primary mt-3">Welcome to Kaykewalk</h2>
                         <p>Let’s get started with a few simple steps</p>

@@ -92,7 +92,7 @@
                                             <table class="emailer-text-wrap mxauto" width="100%" cellcellspacing="0" cellpadding="">
                                                 <tr>
                                                     <td>
-                                                        <h2 style="margin-top: 0; margin-bottom: 30px;">Hi there {{ $user->name }}!</h2>
+                                                        <h2 style="margin-top: 0; margin-bottom: 30px;">Hi {{ $user->name }}!</h2>
                                                         <p>
                                                             Your account has been created successfully.
                                                         <br>
@@ -101,6 +101,7 @@
                                                         <br>
                                                         <br>
                                                         Email: <strong>{{ $user->email }}</strong>
+                                                        <br>
                                                         <br>
                                                         Password: <strong>{{ $password }}</strong>
                                                         <br>
