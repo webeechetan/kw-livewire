@@ -339,11 +339,6 @@
                 font-weight: 500;
                 font-size: 16px;
             }
-            &_rulesAction_wrap {
-                display: flex;
-                align-items: center;
-                gap: $spacing_md;
-            }
         }
     }
     &_body {
@@ -365,19 +360,22 @@
     }
 }
 
-.addRules {
-    display: flex;
-    align-items: center;
-    grid-gap: $spacing_xs;
-    &_text {
-        font-size: 16px;
+/* ----- Rules Action ----- */
+.rulesAction {
+    &_group {
+        display: flex;
+        flex-wrap: wrap;
+        &-item {
+            &:not(:last-child) {
+                margin-right: 40px;
+            }
+        }
     }
-    &_remove {
-        margin-left: $spacing_xs;
-    }
-    &-date {
-        .addRules-date {
-            font-weight: 500;
+    &-item {
+        &-date {
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
     }
 }
@@ -583,19 +581,18 @@ div.react-datepicker {
     &_rounded {
         @include icon_style_round;
         cursor: pointer;
-        color: $text_light;
+        color: $dark;
         transition: $ease_03;
         font-size: 12px;
-        svg {
-            width: 18px;
-            height: 18px;
+        i {
+            font-size: 18px;
+            color: $dark;
         }
         &_s {
             width: 25px;
             height: 25px;
-            svg {
-                width: 15px;
-                height: 15px;
+            i {
+                font-size: 15px;
             }
         }
     }
@@ -606,9 +603,9 @@ div.react-datepicker {
         &:hover {
             color: $danger;
         }
-        svg {
-            width: 18px;
-            height: 18px;
+        i {
+            font-size: 18px;
+            color: $dark;
         }
     }
 }

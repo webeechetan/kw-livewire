@@ -2013,11 +2013,6 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   font-weight: 500;
   font-size: 16px;
 }
-.AddTask_rulesOverview_item_rulesAction_wrap {
-  display: flex;
-  align-items: center;
-  gap: 30px;
-}
 .AddTask_body {
   padding: 30px;
   height: 100%;
@@ -2035,19 +2030,18 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   margin-top: 50px;
 }
 
-.addRules {
+/* ----- Rules Action ----- */
+.rulesAction_group {
+  display: flex;
+  flex-wrap: wrap;
+}
+.rulesAction_group-item:not(:last-child) {
+  margin-right: 40px;
+}
+.rulesAction-item-date {
   display: flex;
   align-items: center;
-  grid-gap: 10px;
-}
-.addRules_text {
-  font-size: 16px;
-}
-.addRules_remove {
-  margin-left: 10px;
-}
-.addRules-date .addRules-date {
-  font-weight: 500;
+  gap: 10px;
 }
 
 /* ----- Assignee ----- */
@@ -2251,7 +2245,7 @@ div.react-datepicker-popper[data-placement^=bottom] .react-datepicker__triangle:
   border-radius: 50%;
   border: 1px solid #ddd;
   cursor: pointer;
-  color: #9c9c9c;
+  color: #191919;
   transition: all 0.3s ease;
   font-size: 12px;
 }
@@ -2259,17 +2253,16 @@ div.react-datepicker-popper[data-placement^=bottom] .react-datepicker__triangle:
   width: 18px;
   height: 18px;
 }
-.icon_rounded svg {
-  width: 18px;
-  height: 18px;
+.icon_rounded i {
+  font-size: 18px;
+  color: #191919;
 }
 .icon_rounded_s {
   width: 25px;
   height: 25px;
 }
-.icon_rounded_s svg {
-  width: 15px;
-  height: 15px;
+.icon_rounded_s i {
+  font-size: 15px;
 }
 .icon_remove {
   transition: all 0.3s ease;
@@ -2279,9 +2272,9 @@ div.react-datepicker-popper[data-placement^=bottom] .react-datepicker__triangle:
 .icon_remove:hover {
   color: #ff0000;
 }
-.icon_remove svg {
-  width: 18px;
-  height: 18px;
+.icon_remove i {
+  font-size: 18px;
+  color: #191919;
 }
 
 /* ----- Task List View ----- */

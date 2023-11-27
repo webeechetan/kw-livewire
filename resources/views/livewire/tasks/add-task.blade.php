@@ -1,84 +1,71 @@
-<div class="container">
-    <div class="row">
-        <div class="col-md-12 ">
-            <div class="card">
-                <h5 class="card-header">Add Task</h5>
-                <div class="card-body">
-                    <form wire:submit="store" method="POST" enctype="multipart/form-data">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label for="name">Title</label>
-                                <input type="text" wire:model="name" class="form-control" placeholder="Enter Title">
-                                @error('name') <span class="text-danger">{{ $message }}</span> @enderror
-                            </div>
-
-                            <div class="col-md-6">
-                                <label for="password">Due Date</label>
-                                <input type="date" wire:model="dueDate" class="form-control" >
-                                @error('password') <span class="text-danger">{{ $message }}</span> @enderror
-                            </div>
-                        </div>
-                        <div class="row mt-4" wire:ignore>
-                            <div class="col-md-12">
-                                <label for="email">Description</label>
-                                <textarea class="form-control" id="editor" cols="30" rows="3"></textarea>
-                                @error('email') <span class="text-danger">{{ $message }}</span> @enderror
-                            </div>
-                        </div>
-                        <div class="row mt-4">
-                            <div class="col-md-6" wire:ignore>
-                                <label for="email">Assign To</label>
-                                <select name="" id="" class="form-control users" multiple>
-                                    <option value="">Select User</option>
-                                    @foreach($users as $user)
-                                        <option value="{{ $user->id }}">{{ $user->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="email">Assign To Team</label>
-                                <select wire:model="team_id" name="" id="" class="form-control teams">
-                                    <option value="">Select Team</option>
-                                    @foreach($teams as $team)
-                                        <option value="{{ $team->id }}">{{ $team->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="mt-3">
-                            <button type="submit" class="btn btn-primary">Add Task</button>
-                        </div>
-                    </form>
+<div class="AddCanvas">
+    <!-- Add Task Canvas Header -->
+    <div class="AddTask_head">
+        <div class="row">
+            <div class="col-12">
+                <div class="d-flex gap-2 justify-content-end">
+                    <a href="#" class="btn-border btn-border-primary"><i class='bx bx-check'></i></a>
+                    <a href="#" class="btn-border"><i class='bx bx-x' ></i></a>
                 </div>
             </div>
         </div>
     </div>
+    <!-- Add Task Canvas Body -->
+    <div class="AddTask_body">
+        <div class="AddTask_body_overview">
+            <form action="">
+                <input class="form-control form-control-typeStyle AddTask_title" type="text" placeholder="Type your task here...">
+                <div class="AddTask_rulesOverview">
+                    <div class="AddTask_rulesOverview_item">
+                        <div class="AddTask_rulesOverview_item_name">Assigned to</div>
+                        <div class="AddTask_rulesOverview_item_rulesAction">
+                            <select name="" id=""></select>
+                        </div>
+                    </div>
+
+                    <div class="AddTask_rulesOverview_item">
+                        <div class="AddTask_rulesOverview_item_name">Notify to</div>
+                        <div class="AddTask_rulesOverview_item_rulesAction">
+                            <select name="" id=""></select>
+                        </div>
+                    </div>
+
+                    <div class="AddTask_rulesOverview_item">
+                        <div class="AddTask_rulesOverview_item_name">Project</div>
+                        <div class="AddTask_rulesOverview_item_rulesAction">
+                            <select name="" id=""></select>
+                        </div>
+                    </div>
+
+                    <div class="AddTask_rulesOverview_item">
+                        <div class="AddTask_rulesOverview_item_name">Due Date</div>
+                        <div class="AddTask_rulesOverview_item_rulesAction">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="rulesAction_group">
+                                        <a href="#" class="rulesAction-item-date rulesAction_group-item">
+                                            <div class="icon_rounded"><i class='bx bx-calendar' ></i></div>
+                                            <span class="btn_link">Add Date</span>
+                                        </a>
+                                        <a href="#" class="icon_rounded rulesAction_group-item"><i class='bx bx-repeat'></i></a>   
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="AddTask_rulesOverview_item">
+                        <div class="AddTask_rulesOverview_item_name">Description</div>
+                        <div class="AddTask_rulesOverview_item_rulesAction">
+                            <textarea name="" id="" cols="30" rows="10"></textarea>
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
-
-@push('scripts')
-    <script>
-        ClassicEditor
-            .create( document.querySelector( '#editor' ) )
-            .then( editor => {
-                    editor.model.document.on( 'change:data', () => {
-                        console.log( 'The Document has changed!' );
-                            @this.set('description', editor.getData());
-                    } )
-            } )
-            .catch( error => {
-                    console.error( error );
-            } );
-
-        $('.users').select2();
-
-        $('.users').on('change', function(e){
-            var users = $('.users');
-            var selected_users = users.val();
-            @this.set('user_ids', selected_users);
-        });
-    </script>
-@endpush
 
 
 
