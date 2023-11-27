@@ -26,7 +26,7 @@
                                         </div>
                                     </div>
                                     <div class="card-body">
-                                        <p>{{ $task['description'] }}</p>
+                                        <p>{!! $task['description'] !!}</p>
                                     </div>
                                     <div class="card-footer">
                                         <div class="row">
@@ -67,7 +67,7 @@
                                         </div>
                                     </div>
                                     <div class="card-body">
-                                        <p>{{ $task['description'] }}</p>
+                                        <p>{!! $task['description'] !!}</p>
                                     </div>
                                     <div class="card-footer">
                                         <div class="row">
@@ -108,7 +108,7 @@
                                         </div>
                                     </div>
                                     <div class="card-body">
-                                        <p>{{ $task['description'] }}</p>
+                                        <p>{!! $task['description'] !!}</p>
                                     </div>
                                     <div class="card-footer">
                                         <div class="row">
@@ -149,7 +149,7 @@
                                         </div>
                                     </div>
                                     <div class="card-body">
-                                        <p>{{ $task['description'] }}</p>
+                                        <p>{!! $task['description'] !!}</p>
                                     </div>
                                     <div class="card-footer">
                                         <div class="row">
@@ -175,7 +175,16 @@
             </div>
         </div>
     </div>
+    
+    @if($view_form)
+        <livewire:tasks.add-task />
+    @endif
+
+    
+
 </div>
 
 @push('scripts')
+    <script>
+    </script>
 @endpush

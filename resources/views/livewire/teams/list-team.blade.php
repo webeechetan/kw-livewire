@@ -28,8 +28,8 @@
                     </div>
                     <div class="card-footer text-muted">
                         <div class="">
-                            <a wire:navigate href="{{ route('team.edit' , $team->id ) }}"><i class="fa fa-pencil btn btn-primary btn-sm" aria-hidden="true"></i></a>
-                            <i class="fa fa-trash btn btn-primary btn-sm" aria-hidden="true"></i>
+                            <a wire:navigate href="{{ route('team.edit' , $team->id ) }}"><i class="bx bx-pencil btn btn-primary btn-sm" aria-hidden="true"></i></a>
+                            <i class="bx bx-trash btn btn-primary btn-sm" aria-hidden="true"></i>
                         </div>
                     </div>
                 </div>

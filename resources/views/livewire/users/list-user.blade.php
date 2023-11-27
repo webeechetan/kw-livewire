@@ -27,8 +27,8 @@
                     </div>
                     <div class="card-footer text-muted">
                         <div class="">
-                            <i class="fa fa-pencil btn btn-primary btn-sm" aria-hidden="true"></i>
-                            <i class="fa fa-trash btn btn-primary btn-sm" aria-hidden="true"></i>
+                            <i class="bx bx-pencil btn btn-primary btn-sm" aria-hidden="true"></i>
+                            <i class="bx bx-trash btn btn-primary btn-sm" aria-hidden="true"></i>
                         </div>
                     </div>
                 </div>

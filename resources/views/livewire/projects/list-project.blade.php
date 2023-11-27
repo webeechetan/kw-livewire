@@ -21,8 +21,8 @@
                     <h5 class="card-header">{{ $project->client->name }} - {{ $project->name }}</h5>
                     <div class="card-body">
                         <p class="card-text">{{ $project->description }}</p>
-                        <a wire:navigate href="{{ route('project.edit',$project->id) }}" class="btn btn-primary">Edit</a>
-                        <button wire:confirm="Are you sure you want to delete this project?" wire:click="delete({{ $project->id }})" class="btn btn-danger">Delete</button>
+                        <a wire:navigate href="{{ route('project.edit',$project->id) }}" ><i class="bx bx-pencil btn btn-primary btn-sm" aria-hidden="true"></i></a>
+                        <a wire:confirm="Are you sure you want to delete this project?" wire:click="delete({{ $project->id }})"><i class="bx bx-trash btn btn-primary btn-sm" aria-hidden="true"></i></a>
                     </div>
                 </div>
             </div>

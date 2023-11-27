@@ -9,6 +9,8 @@ class ListTask extends Component
 {
     public $tasks;
 
+    public $view_form = false;
+
     public function render()
     {
         return view('livewire.tasks.list-task');
@@ -86,5 +88,25 @@ class ListTask extends Component
             'in_review' => Task::where('status', 'in_review')->get(),
             'completed' => Task::where('status', 'completed')->get(),
         ];
+    }
+
+    public function store(){
+        $this->validate([
+            'name' => 'required'
+        ]);
+
+        $task = new Task();
+        $task->org_id = session('org_id');
+        $task->assigned_by = auth()->guard(session('guard'))->user()->id;
+        $task->team_id = $this->team_id;
+        $task->name = $this->name;
+        $task->description = $this->description;
+        $task->due_date = $this->dueDate;
+        $task->status = 'pending';
+        $task->save();
+
+        $task->users()->attach($this->user_ids);
+        session()->flash('message','Task created successfully');
+        $this->redirect(route('task.index'),navigate:true);
     }
 }

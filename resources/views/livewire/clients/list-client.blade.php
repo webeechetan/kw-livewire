@@ -28,8 +28,8 @@
                     </div>
                     <div class="card-footer text-muted">
                         <div class="">
-                            <a wire:navigate href="{{ route('client.edit',$client->id) }}"><i class="fa fa-pencil btn btn-primary btn-sm" aria-hidden="true"></i></a>
-                            <i wire:confirm="Are you sure you want to delete this client?" wire:click="deleteClient({{$client->id}})" class="fa fa-trash btn btn-primary btn-sm" aria-hidden="true"></i>
+                            <a wire:navigate href="{{ route('client.edit',$client->id) }}"><i class="bx bx-pencil btn btn-primary btn-sm" aria-hidden="true"></i></a>
+                            <i wire:confirm="Are you sure you want to delete this client?" wire:click="deleteClient({{$client->id}})" class="bx bx-trash btn btn-primary btn-sm" aria-hidden="true"></i>
                         </div>
                     </div>
                 </div>
