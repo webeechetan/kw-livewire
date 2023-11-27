@@ -26,22 +26,39 @@
                     </div>
                     <div class="signup-form">
                         <form method="POST" wire:submit="register">
-                            <div class="form-field mb-3" controlId="signupName">
-                                <div class="form-field-icon"><i class='bx bx-user'></i></div>
-                                <input type="text" wire:model="name" class="form-control" placeholder="Enter Name"   />
-                                @error('name') <span class="text-danger">{{ $message }}</span>@enderror
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-field mb-3" controlId="signupName">
+                                        <div class="form-field-icon"><i class='bx bx-user'></i></div>
+                                        <input type="text" wire:model="name" class="form-control" placeholder="Enter Name"   />
+                                        @error('name') <span class="text-danger">{{ $message }}</span>@enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-field mb-3" controlId="signupName">
+                                        <div class="form-field-icon"><i class='bx bx-briefcase'></i></div>
+                                        <input type="text" wire:model="name" class="form-control" placeholder="Enter Your Role"   />
+                                        @error('name') <span class="text-danger">{{ $message }}</span>@enderror
+                                    </div>
+                                </div>
                             </div>
-                            <div class="mb-3 form-field" controlId="signupEmail">
-                                <div class="form-field-icon"><i class='bx bx-envelope'></i></div>
-                                <input type="email" wire:model="email" class="form-control" placeholder="Work Email"   />
-                                @error('email') <span class="text-danger">{{ $message }}</span>@enderror
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3 form-field" controlId="signupEmail">
+                                        <div class="form-field-icon"><i class='bx bx-envelope'></i></div>
+                                        <input type="email" wire:model="email" class="form-control" placeholder="Work Email"   />
+                                        @error('email') <span class="text-danger">{{ $message }}</span>@enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3 form-field" controlId="signupPassword">
+                                        <div class="form-field-icon"><i class='bx bx-lock-open'></i></div>
+                                        <input type="password" wire:model="password" class="form-control" placeholder="Password 8+ Characters"    />
+                                        @error('password') <span class="text-danger">{{ $message }}</span>@enderror
+                                    </div>
+                                </div>
                             </div>
-                            <div class="mb-3 form-field" controlId="signupPassword">
-                                <div class="form-field-icon"><i class='bx bx-lock-open'></i></div>
-                                <input type="password" wire:model="password" class="form-control" placeholder="Password 8+ Characters"    />
-                                @error('password') <span class="text-danger">{{ $message }}</span>@enderror
-                            </div>
-                            <div class="mb-3">
+                            <div class="my-3">
                                 <button class="w-100 btn btn-primary btn-smt" type="submit">Sign Up</button>
                             </div>
                             <p>Or sign up with:</p>

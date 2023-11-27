@@ -10,7 +10,7 @@
             <div class="col-md-6">
                 <div class="signin-content-right text-center text-md-start space-sec">
                     <div class="signin-content-right-top">
-                        <h2 class="title">Sign In to your account</h2>
+                        <h2 class="title mb-4">Sign In to your account</h2>
                         <a href="#" class="signin-google-btn w-100">
                             <svg viewBox="0 0 48 48">
                                 <clipPath id="g">
@@ -43,8 +43,8 @@
                                     @error('password') <span class="text-danger">{{ $message }}</span>@enderror
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-sm-12">
+                            <div class="row mt-4">
+                                <div class="col-12">
                                     <a wire:navigate href="{{ route('forgot.password') }}" class="text-link">Forgot Password?</a>
                                 </div>
                             </div>
@@ -65,15 +65,18 @@
                             @endif
                             <div class="btn-group mt-2">
                                 <div class="col">
+                                    
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <a class="w-100 btn btn-primary-border btn-smt wire:navigate" href="/register">Sign Up</a>
+                                </div>
+                                <div class="col-md-6">
                                     <button class="w-100 btn btn-primary btn-smt" type="submit">Sign In</button>
                                 </div>
                             </div>
                         </form>
-                        <div class="col mt-3">
-                            <a wire:navigate href="/register">
-                                <button class="w-100 btn btn-primary-border btn-smt">Sign Up</button>
-                            </a>
-                        </div>
                     </div>
                 </div>
             </div>
