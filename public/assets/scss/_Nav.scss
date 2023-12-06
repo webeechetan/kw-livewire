@@ -14,11 +14,12 @@
                 transition: $ease_05;
                 font-size: 0.9rem;
                 @include flex_align_center;
+                display: grid;
+                grid-template-columns: 30px 1fr;
 
                 /*---- Sidebar Menu Icon Style ----*/
-                svg {
-                    margin-right: $spacing_sm;
-                    width: 0.8em;
+                i {
+                    font-size: 18px;
                 }
 
                 &:after {
@@ -150,8 +151,8 @@
         }
         &-icon {
             width: 30px;
-            svg {
-                max-width: 0.8em;
+            i {
+                font-size: 18px
             }
         }
     }
@@ -192,7 +193,7 @@
         margin-right: $spacing_xs;
         transition: $ease_03;
         svg {
-            width: 0.8em;
+            font-size: 18px;
         }
     }
     &-user {

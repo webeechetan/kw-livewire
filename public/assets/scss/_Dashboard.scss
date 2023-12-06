@@ -24,23 +24,6 @@
             @include flex_align_center;
             grid-gap: $spacing_s;
         }
-        &-btnAdd {
-            font-size: 13px;
-            color: $brand;
-            border: 1px solid $brand;
-            padding: 6px 10px;
-            border-radius: 4px;
-            transition: $ease_03;
-            cursor: pointer;
-            svg {
-                width: 15px;
-                height: 15px;
-            }
-            &:hover {
-                color: #fff;
-                background-color: $brand;
-            }
-        }
     }
 }
 
@@ -322,12 +305,24 @@
 .AddTask {
     &_head {
         padding: $spacing_s $spacing_md;
+        border-bottom: 1px solid $grey;
     }
     &_title {
         font-size: 26px;
+        &-wrap {
+            position: relative;
+        }
+        &-icon {
+            position: absolute;
+            left: 0;
+            top: 0;
+            font-size: 26px;
+            color: $brand;
+            min-height: 100%;
+            @include flex_center;
+        }
     }
     &_rulesOverview {
-        margin-top: $spacing_md;
         &_item {
             display: grid;
             grid-template-columns: 150px 1fr;
@@ -339,13 +334,17 @@
                 font-weight: 500;
                 font-size: 16px;
             }
+            &_rulesAction {
+                .select2-container--default .select2-selection--multiple, .select2-container--default.select2-container--focus .select2-selection--multiple {
+                    border: none;
+                }
+            }
         }
     }
     &_body {
         padding: $spacing_md;
         height: 100%;
         overflow-y: auto;
-        border-top: 1px solid $border_dark_grey;
         position: relative;
         
         &-edit {
@@ -359,6 +358,53 @@
         margin-top: $spacing_lg;
     }
 }
+
+/* ----- Select ----- */
+.select2 {
+    &-container--default {
+        .select2-selection--multiple {
+            .select2-selection__choice {
+                background: $light;
+                padding: 4px 10px;
+                margin: 0;
+                border: none;
+                border-radius: 30px;
+                font-size: 14px;
+                display: inline-flex;
+                flex-direction: row-reverse;
+                margin-right: 10px;
+    
+                &__remove {
+                    position: relative;
+                    border: none;
+                }
+            }
+        }
+        .select2-search--inline {
+            .select2-search__field {
+                margin: 0;
+                vertical-align: inherit;
+            }
+        }
+        .select2-results__option {
+            padding: 5px 10px;
+            &--highlighted.select2-results__option--selectable {
+                background: $light;
+                color: #000;
+                font-size: 14px;
+                padding: 7px 15px;
+            }
+        }
+    }
+    &-hidden-accessible {
+        min-height: inherit;
+    }
+    &-dropdown {
+        border: 1px solid $grey;
+        padding: 5px;
+    }
+}
+
 
 /* ----- Rules Action ----- */
 .rulesAction {
@@ -407,125 +453,6 @@
             color: $secondary;
             padding: 0 7px;
             border-radius: $border_radius_xs;
-        }
-    }
-}
-
-/* ----- React Select Box ----- */
-#react-select-3 {
-    &-listbox {
-        box-shadow: none;
-        border: 1px solid $border_grey;
-        width: auto;
-        border-radius: $border_radius_sm;
-        padding: $spacing_sm;
-        > div {
-            @include custom_scrollbar;
-            > div {
-                padding: 0;
-                background-color: transparent;
-                &:not(:last-child) {
-                    margin-bottom: 10px;
-                }
-            }
-        }
-    }
-}
-
-div.css {
-    &-13cymwt-control, &-t3ipsp-control, &-t3ipsp-control:hover {
-        border: none;
-        outline: none;
-        box-shadow: none;
-    }
-    &-13cymwt-control, &-t3ipsp-control {
-        min-height: inherit;
-    }
-    &-1hb7zxy-IndicatorsContainer {
-        display: none;
-    }
-    &-wsp0cs-MultiValueGeneric {
-        font-size: inherit;
-        .add_assignee-name span {
-            display: none;
-        }
-    }
-    &-qbdosj-Input {
-        cursor: text;
-    }
-    &-12a83d4-MultiValueRemove:hover {
-        background-color: transparent;
-    }
-    &-1fdsijx-ValueContainer {
-        padding: 0;
-    }
-    &-d7l1ni, &-10wo9uf {
-        &-option {
-            background-color: transparent;
-            
-        }
-    }
-    &-3w2yfm-ValueContainer, &-wsp0cs-MultiValueGeneric, &-1p3m7a8-multiValue {
-        padding: 0;
-    }
-    &-3w2yfm-ValueContainer {
-        grid-gap: $spacing_xs;
-    }
-    &-1p3m7a8-multiValue {
-        background-color: $light;
-        border-radius: $border_radius_rounded;
-        padding-right: 3px;
-    }
-}
-
-/* ----- React Date Picker ----- */
-div.react-datepicker {
-    border: 1px solid $border_dark_grey;
-    border-radius: $border_radius_xs;
-    font-family: $jost;
-    z-index: 9999;
-    &__header {
-        background-color: transparent;
-        padding: $spacing_s;
-        border: none;
-    }
-    &__current-month {
-        display: inline-block;
-        padding: $spacing_xs $spacing_sm;
-        border-radius: $border_radius_xs;
-        text-transform: uppercase;
-        font-weight: 600;
-        letter-spacing: 1px;
-        font-size: 22px;
-        color: $brand;
-    }
-    &__navigation {
-        transform: translateY(28px);
-    }
-    &__day-name, &__day, &__time-name {
-        width: 35px;
-        height: 35px;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: $border-radius_rounded;
-    }
-    &__day {
-        &-name {
-            background-color: $light;
-        }
-        &--selected {
-            background-color: $brand;
-            border-radius: $border_radius;
-        }
-        &:hover {
-            border-radius: $border_radius;
-        }
-    }
-    &-popper {
-        z-index: 9999;
-        &[data-placement^=bottom] .react-datepicker__triangle:after {
-            border-bottom-color: #fff;
         }
     }
 }
@@ -678,61 +605,29 @@ div.react-datepicker {
     }
 }
 
-/* ----- Sun Editor ----- */
-div.sun-editor {
-    font-family: $jost;
-    border: none;
-    background-color: $light;
-    border-radius: $border_radius_sm;
-    .se {
-        &-container {
-            padding: 10px 10px 55px;
-        }
-        &-resizing-bar {
-            display: none;
-        }
-        &-toolbar {
-            outline: none;
-            border-bottom: none;
-            background-color: transparent;
-            position: absolute;
-            left: 20px;
-            bottom: 20px;
-            width: auto;
-            display: inline-block;
-        }
-        &-btn {
-            &-tray {
-                padding: 0;
-                height: 32px;
-            }
-            &-module-border {
-                border: none;
-            }
-        }
-        &-wrapper-inner {
-            font-family: $jost;
-        }
-    }
-    button>svg {
-        width: 13px;
-        height: 13px;
-        display: flex;
-        align-items: center;
-    }
-    &-editable {
-        background-color: transparent;
+/* ----- CK Editor ----- */
+div.ck.ck-editor {
+    border: 1px solid $grey;
+    border-radius: 10px;
+    padding: 5px;
+    &__main > .ck-editor__editable:not(.ck-focused) {
+        background: $light;
     }
 }
-
-/* ----- Skeleton ----- */
-.Skeleton {
-    &-avatarName {
-        display: grid;
-        grid-template-columns: auto 1fr;
-        grid-gap: 5px;
-        align-items: center;   
-    }
+.ck.ck-editor__main>.ck-editor__editable, div.ck.ck-editor__main > .ck-editor__editable:not(.ck-focused) {
+    background: $light !important;
+    outline: none !important;
+    box-shadow: none !important;
+    border: none !important;
+    min-height: 90px;
+}
+div.ck.ck-dropdown .ck-button.ck-dropdown__button {
+    font-size: 12px;
+}
+.ck-rounded-corners .ck.ck-editor__top .ck-sticky-panel .ck-toolbar, 
+.ck.ck-editor__top .ck-sticky-panel .ck-toolbar.ck-rounded-corners, 
+.ck.ck-editor__main>.ck-editor__editable:not(.ck-focused) {
+    border: none;
 }
 
 /* ----- Comment Area ----- */
