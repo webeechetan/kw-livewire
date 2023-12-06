@@ -40,6 +40,7 @@ $danger_light: #fedddc;
 $warning: #e7bf1d;
 $warning_light: #fff7d8;
 $progress: #7407ff;
+$progress_light: #e5d1ff;
 
 /*---- Buttons Colors ----*/
 $primary_hover: $secondary;
@@ -84,6 +85,9 @@ $table_header_color: $secondary;
     }
     &-yellow {
         color: $yellow !important;
+        &-dark {
+            color: #e1c630 !important;
+        }
     }
     &-orange {
         color: $orange !important;

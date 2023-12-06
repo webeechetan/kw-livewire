@@ -12,190 +12,433 @@
                 <div class="main-body-header-right">
                     <div class="d-flex gap-2 justify-content-end">
                         <a class="btn-border btn-border-primary" wire:navigate href="{{ route('task.add') }}"><i class='bx bx-plus' ></i> Add Task</a>
-                        <a href="#" class="btn-border"><i class='bx bx-filter' ></i> Filter</a>
+                        <a class="btn-border" href="#"><i class='bx bx-filter' ></i> Filter</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="kanban_bord_column_title_wrap">
-        <div class="kanban_bord_column_title">Assigned</div>
-    </div>
     <!-- Kanban -->
     <div class="kanban_bord">
-        <div class="kanban_bord_body">
-            <div class="kanban_bord_scrollbar">
-                <div class="kanban_bord_body_columns" wire:sortable-group="updateTaskOrder">
-                    <div id="pending-column" class="kanban_bord_column kanban_bord_column_assigned" wire:key="group-pending">
-                        <div wire:sortable-group.item-group="group-pending" wire:sortable-group.options="{ animation: 100 }">
-                            @foreach($tasks['pending'] as $task)
-                                <div wire:key="pending-{{$task['id']}}" wire:sortable-group.item="{{ $task['id'] }}">
-                                    <div class="kanban_column_card_body">
-                                        <div class="kanban_column_card">
-                                            <div class="card">
-                                                <div class="card-header">
-                                                    <div class="row">
-                                                        <div class="col-md-8">
-                                                            <p>{{ $task['name'] }}</p>
-                                                        </div>
-                                                        <div class="col-md-3">
-                                                            <b>{{ $task['due_date'] }}</b>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="card-body">
-                                                    <p>{!! $task['description'] !!}</p>
-                                                </div>
-                                                <div class="card-footer">
-                                                    <div class="row">
-                                                        <div class="col-md-6">
-                                                            <p>Assign To</p>
-                                                            @foreach($task->users as $user)
-                                                                <span class="btn btn-primary btn-sm mt-1">{{ $user->name }}</span> <br>
-                                                            @endforeach
-                                                        </div>
-                                                        <div class="col-md-6 ml-2">
-                                                            <p>Assign To Team</p>
-                                                            @if($task->team)
-                                                                <span class="btn btn-primary btn-sm">{{ $task->team->name }}</span>
-                                                            @endif
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+        <div class="kanban_bord_scrollbar">
+            <div class="kanban_bord_body_columns">
+                <div class="kanban_bord_column kanban_bord_column_assigned">
+                    <div class="kanban_bord_column_title_wrap">
+                        <div class="kanban_bord_column_title">Assigned</div>
+                    </div>
+                    <div class="kanban_column">
+                        <div class="kanban_column_task kanban_column_task_overdue h-100">
+                            <div class="kanban_column_task-wrap">
+                                <div class="card-options">
+                                    <i class='bx bx-dots-horizontal-rounded' ></i>
+                                </div>
+                                <div class="kanban_column_task_name">
+                                    <div class="kanban_column_task_complete_icon">
+                                        <i class='bx bx-check' ></i>
+                                    </div>
+                                    <div class="kanban_column_task_name_text">
+                                        <div>The logo should be add in the footer also.</div>
+                                        <div class="kanban_column_task_project_name"><i class='bx bx-file-blank' ></i>  Acma Web</div>
+                                    </div>
+                                </div>
+                                <div class="kanban_column_task_bot">
+                                    <div class="kanban_column_task_actions">
+                                        <a href="#" class="kanban_column_task_date">
+                                            <span class="btn-icon-task-action"><i class='bx bx-calendar-alt' ></i></span>
+                                            <span>26 Sep 2023</span>
+                                        </a>
+                                    </div>
+                                    <div>
+                                        <!-- avatar group -->
+                                        <div class="avatarGroup avatarGroup-overlap">
+                                            <a href="#" class="avatarGroup-avatar">
+                                                <span class="avatar avatar-sm">
+                                                    <img alt="avatar" src="../assets/images/avatar/user.jpg" class="rounded-circle" />
+                                                </span>
+                                            </a>
+                                            <a href="#" class="avatarGroup-avatar">
+                                                <span class="avatar avatar-sm">
+                                                    <img alt="avatar" src="../assets/images/avatar/user.jpg" class="rounded-circle" />
+                                                </span>
+                                            </a>
+                                            <a href="#" class="avatarGroup-avatar">
+                                                <span class="avatar avatar-sm">
+                                                    <img alt="avatar" src="../assets/images/avatar/user.jpg" class="rounded-circle" />
+                                                </span>
+                                            </a>
+                                            <a href="#" class="avatarGroup-avatar">
+                                                <span class="avatar avatar-sm">
+                                                    <span>5+</span>
+                                                </span>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
-                            @endforeach
+                            </div>
+                        </div>
+                        <div class="kanban_column_task kanban_column_task_overdue h-100">
+                            <div class="kanban_column_task-wrap">
+                                <div class="card-options">
+                                    <i class='bx bx-dots-horizontal-rounded' ></i>
+                                </div>
+                                <div class="kanban_column_task_name">
+                                    <div class="kanban_column_task_complete_icon">
+                                        <i class='bx bx-check' ></i>
+                                    </div>
+                                    <div class="kanban_column_task_name_text">
+                                        <div>The logo should be add in the footer also.</div>
+                                        <div class="kanban_column_task_project_name"><i class='bx bx-file-blank' ></i>  Acma Web</div>
+                                    </div>
+                                </div>
+                                <div class="kanban_column_task_bot">
+                                    <div class="kanban_column_task_actions">
+                                        <a href="#" class="kanban_column_task_date">
+                                            <span class="btn-icon-task-action"><i class='bx bx-calendar-alt' ></i></span>
+                                            <span>26 Sep 2023</span>
+                                        </a>
+                                    </div>
+                                    <div>
+                                        <!-- avatar group -->
+                                        <div class="avatarGroup avatarGroup-overlap">
+                                            <a href="#" class="avatarGroup-avatar">
+                                                <span class="avatar avatar-sm">
+                                                    <img alt="avatar" src="../assets/images/avatar/user.jpg" class="rounded-circle" />
+                                                </span>
+                                            </a>
+                                            <a href="#" class="avatarGroup-avatar">
+                                                <span class="avatar avatar-sm">
+                                                    <img alt="avatar" src="../assets/images/avatar/user.jpg" class="rounded-circle" />
+                                                </span>
+                                            </a>
+                                            <a href="#" class="avatarGroup-avatar">
+                                                <span class="avatar avatar-sm">
+                                                    <img alt="avatar" src="../assets/images/avatar/user.jpg" class="rounded-circle" />
+                                                </span>
+                                            </a>
+                                            <a href="#" class="avatarGroup-avatar">
+                                                <span class="avatar avatar-sm">
+                                                    <span>5+</span>
+                                                </span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div id="in-progress-column" class="kanban_bord_column kanban_bord_column_assigned" wire:key="group-in-progress">
-                        <div wire:sortable-group.item-group="group-in-progress" wire:sortable-group.options="{ animation: 100 }">
-                            @foreach($tasks['in_progress'] as $task)
-                                <div wire:key="in-progress-{{$task['id']}}" wire:sortable-group.item="{{ $task['id'] }}">
-                                    <div class="kanban_column_card_body">
-                                        <div class="kanban_column_card">
-                                            <div class="card">
-                                                <div class="card-header">
-                                                    <div class="row">
-                                                        <div class="col-md-8">
-                                                            <p>{{ $task['name'] }}</p>
-                                                        </div>
-                                                        <div class="col-md-3">
-                                                            <b>{{ $task['due_date'] }}</b>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="card-body">
-                                                    <p>{!! $task['description'] !!}</p>
-                                                </div>
-                                                <div class="card-footer">
-                                                    <div class="row">
-                                                        <div class="col-md-6">
-                                                            <p>Assign To</p>
-                                                            @foreach($task->users as $user)
-                                                                <span class="btn btn-primary btn-sm mt-1">{{ $user->name }}</span> <br>
-                                                            @endforeach
-                                                        </div>
-                                                        <div class="col-md-6 ml-2">
-                                                            <p>Assign To Team</p>
-                                                            @if($task->team)
-                                                                <span class="btn btn-primary btn-sm">{{ $task->team->name }}</span>
-                                                            @endif
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                </div>
+                <div class="kanban_bord_column kanban_bord_column_accepted">
+                    <div class="kanban_bord_column_title_wrap">
+                        <div class="kanban_bord_column_title text-yellow-dark">Accepted</div>
+                    </div>
+                    <div class="kanban_column">
+                        <div class="kanban_column_task kanban_column_task_warning h-100">
+                            <div class="kanban_column_task-wrap">
+                                <div class="card-options">
+                                    <i class='bx bx-dots-horizontal-rounded' ></i>
+                                </div>
+                                <div class="kanban_column_task_name">
+                                    <div class="kanban_column_task_complete_icon">
+                                        <i class='bx bx-check' ></i>
+                                    </div>
+                                    <div class="kanban_column_task_name_text">
+                                        <div>The logo should be add in the footer also.</div>
+                                        <div class="kanban_column_task_project_name"><i class='bx bx-file-blank' ></i>  Acma Web</div>
+                                    </div>
+                                </div>
+                                <div class="kanban_column_task_bot">
+                                    <div class="kanban_column_task_actions">
+                                        <a href="#" class="kanban_column_task_date">
+                                            <span class="btn-icon-task-action"><i class='bx bx-calendar-alt' ></i></span>
+                                            <span>26 Sep 2023</span>
+                                        </a>
+                                    </div>
+                                    <div>
+                                        <!-- avatar group -->
+                                        <div class="avatarGroup avatarGroup-overlap">
+                                            <a href="#" class="avatarGroup-avatar">
+                                                <span class="avatar avatar-sm">
+                                                    <img alt="avatar" src="../assets/images/avatar/user.jpg" class="rounded-circle" />
+                                                </span>
+                                            </a>
+                                            <a href="#" class="avatarGroup-avatar">
+                                                <span class="avatar avatar-sm">
+                                                    <img alt="avatar" src="../assets/images/avatar/user.jpg" class="rounded-circle" />
+                                                </span>
+                                            </a>
+                                            <a href="#" class="avatarGroup-avatar">
+                                                <span class="avatar avatar-sm">
+                                                    <img alt="avatar" src="../assets/images/avatar/user.jpg" class="rounded-circle" />
+                                                </span>
+                                            </a>
+                                            <a href="#" class="avatarGroup-avatar">
+                                                <span class="avatar avatar-sm">
+                                                    <span>5+</span>
+                                                </span>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
-                            @endforeach
+                            </div>
+                        </div>
+                        <div class="kanban_column_task kanban_column_task_warning h-100">
+                            <div class="kanban_column_task-wrap">
+                                <div class="card-options">
+                                    <i class='bx bx-dots-horizontal-rounded' ></i>
+                                </div>
+                                <div class="kanban_column_task_name">
+                                    <div class="kanban_column_task_complete_icon">
+                                        <i class='bx bx-check' ></i>
+                                    </div>
+                                    <div class="kanban_column_task_name_text">
+                                        <div>The logo should be add in the footer also.</div>
+                                        <div class="kanban_column_task_project_name"><i class='bx bx-file-blank' ></i>  Acma Web</div>
+                                    </div>
+                                </div>
+                                <div class="kanban_column_task_bot">
+                                    <div class="kanban_column_task_actions">
+                                        <a href="#" class="kanban_column_task_date">
+                                            <span class="btn-icon-task-action"><i class='bx bx-calendar-alt' ></i></span>
+                                            <span>26 Sep 2023</span>
+                                        </a>
+                                    </div>
+                                    <div>
+                                        <!-- avatar group -->
+                                        <div class="avatarGroup avatarGroup-overlap">
+                                            <a href="#" class="avatarGroup-avatar">
+                                                <span class="avatar avatar-sm">
+                                                    <img alt="avatar" src="../assets/images/avatar/user.jpg" class="rounded-circle" />
+                                                </span>
+                                            </a>
+                                            <a href="#" class="avatarGroup-avatar">
+                                                <span class="avatar avatar-sm">
+                                                    <img alt="avatar" src="../assets/images/avatar/user.jpg" class="rounded-circle" />
+                                                </span>
+                                            </a>
+                                            <a href="#" class="avatarGroup-avatar">
+                                                <span class="avatar avatar-sm">
+                                                    <img alt="avatar" src="../assets/images/avatar/user.jpg" class="rounded-circle" />
+                                                </span>
+                                            </a>
+                                            <a href="#" class="avatarGroup-avatar">
+                                                <span class="avatar avatar-sm">
+                                                    <span>5+</span>
+                                                </span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div id="in-review-column" class="kanban_bord_column kanban_bord_column_assigned" wire:key="group-in-review">
-                        <div wire:sortable-group.item-group="group-pending" wire:sortable-group.options="{ animation: 100 }">
-                            @foreach($tasks['pending'] as $task)
-                                <div wire:key="pending-{{$task['id']}}" wire:sortable-group.item="{{ $task['id'] }}">
-                                    <div class="kanban_column_card_body">
-                                        <div class="kanban_column_card">
-                                            <div class="card">
-                                                <div class="card-header">
-                                                    <div class="row">
-                                                        <div class="col-md-8">
-                                                            <p>{{ $task['name'] }}</p>
-                                                        </div>
-                                                        <div class="col-md-3">
-                                                            <b>{{ $task['due_date'] }}</b>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="card-body">
-                                                    <p>{!! $task['description'] !!}</p>
-                                                </div>
-                                                <div class="card-footer">
-                                                    <div class="row">
-                                                        <div class="col-md-6">
-                                                            <p>Assign To</p>
-                                                            @foreach($task->users as $user)
-                                                                <span class="btn btn-primary btn-sm mt-1">{{ $user->name }}</span> <br>
-                                                            @endforeach
-                                                        </div>
-                                                        <div class="col-md-6 ml-2">
-                                                            <p>Assign To Team</p>
-                                                            @if($task->team)
-                                                                <span class="btn btn-primary btn-sm">{{ $task->team->name }}</span>
-                                                            @endif
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                </div>
+                <div class="kanban_bord_column kanban_bord_column_in_review">
+                    <div class="kanban_bord_column_title_wrap">
+                        <div class="kanban_bord_column_title text-secondary">In Review</div>
+                    </div>
+                    <div class="kanban_column">
+                        <div class="kanban_column_task kanban_column_task_overdue h-100">
+                            <div class="kanban_column_task-wrap">
+                                <div class="card-options">
+                                    <i class='bx bx-dots-horizontal-rounded' ></i>
+                                </div>
+                                <div class="kanban_column_task_name">
+                                    <div class="kanban_column_task_complete_icon">
+                                        <i class='bx bx-check' ></i>
+                                    </div>
+                                    <div class="kanban_column_task_name_text">
+                                        <div>The logo should be add in the footer also.</div>
+                                        <div class="kanban_column_task_project_name"><i class='bx bx-file-blank' ></i>  Acma Web</div>
+                                    </div>
+                                </div>
+                                <div class="kanban_column_task_bot">
+                                    <div class="kanban_column_task_actions">
+                                        <a href="#" class="kanban_column_task_date">
+                                            <span class="btn-icon-task-action"><i class='bx bx-calendar-alt' ></i></span>
+                                            <span>26 Sep 2023</span>
+                                        </a>
+                                    </div>
+                                    <div>
+                                        <!-- avatar group -->
+                                        <div class="avatarGroup avatarGroup-overlap">
+                                            <a href="#" class="avatarGroup-avatar">
+                                                <span class="avatar avatar-sm">
+                                                    <img alt="avatar" src="../assets/images/avatar/user.jpg" class="rounded-circle" />
+                                                </span>
+                                            </a>
+                                            <a href="#" class="avatarGroup-avatar">
+                                                <span class="avatar avatar-sm">
+                                                    <img alt="avatar" src="../assets/images/avatar/user.jpg" class="rounded-circle" />
+                                                </span>
+                                            </a>
+                                            <a href="#" class="avatarGroup-avatar">
+                                                <span class="avatar avatar-sm">
+                                                    <img alt="avatar" src="../assets/images/avatar/user.jpg" class="rounded-circle" />
+                                                </span>
+                                            </a>
+                                            <a href="#" class="avatarGroup-avatar">
+                                                <span class="avatar avatar-sm">
+                                                    <span>5+</span>
+                                                </span>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
-                            @endforeach
+                            </div>
+                        </div>
+                        <div class="kanban_column_task kanban_column_task_overdue h-100">
+                            <div class="kanban_column_task-wrap">
+                                <div class="card-options">
+                                    <i class='bx bx-dots-horizontal-rounded' ></i>
+                                </div>
+                                <div class="kanban_column_task_name">
+                                    <div class="kanban_column_task_complete_icon">
+                                        <i class='bx bx-check' ></i>
+                                    </div>
+                                    <div class="kanban_column_task_name_text">
+                                        <div>The logo should be add in the footer also.</div>
+                                        <div class="kanban_column_task_project_name"><i class='bx bx-file-blank' ></i>  Acma Web</div>
+                                    </div>
+                                </div>
+                                <div class="kanban_column_task_bot">
+                                    <div class="kanban_column_task_actions">
+                                        <a href="#" class="kanban_column_task_date">
+                                            <span class="btn-icon-task-action"><i class='bx bx-calendar-alt' ></i></span>
+                                            <span>26 Sep 2023</span>
+                                        </a>
+                                    </div>
+                                    <div>
+                                        <!-- avatar group -->
+                                        <div class="avatarGroup avatarGroup-overlap">
+                                            <a href="#" class="avatarGroup-avatar">
+                                                <span class="avatar avatar-sm">
+                                                    <img alt="avatar" src="../assets/images/avatar/user.jpg" class="rounded-circle" />
+                                                </span>
+                                            </a>
+                                            <a href="#" class="avatarGroup-avatar">
+                                                <span class="avatar avatar-sm">
+                                                    <img alt="avatar" src="../assets/images/avatar/user.jpg" class="rounded-circle" />
+                                                </span>
+                                            </a>
+                                            <a href="#" class="avatarGroup-avatar">
+                                                <span class="avatar avatar-sm">
+                                                    <img alt="avatar" src="../assets/images/avatar/user.jpg" class="rounded-circle" />
+                                                </span>
+                                            </a>
+                                            <a href="#" class="avatarGroup-avatar">
+                                                <span class="avatar avatar-sm">
+                                                    <span>5+</span>
+                                                </span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div id="pending-column" class="kanban_bord_column kanban_bord_column_assigned" wire:key="group-completed">
-                        <div wire:sortable-group.item-group="group-pending" wire:sortable-group.options="{ animation: 100 }">
-                            @foreach($tasks['pending'] as $task)
-                                <div wire:key="pending-{{$task['id']}}" wire:sortable-group.item="{{ $task['id'] }}">
-                                    <div class="kanban_column_card_body">
-                                        <div class="kanban_column_card">
-                                            <div class="card">
-                                                <div class="card-header">
-                                                    <div class="row">
-                                                        <div class="col-md-8">
-                                                            <p>{{ $task['name'] }}</p>
-                                                        </div>
-                                                        <div class="col-md-3">
-                                                            <b>{{ $task['due_date'] }}</b>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="card-body">
-                                                    <p>{!! $task['description'] !!}</p>
-                                                </div>
-                                                <div class="card-footer">
-                                                    <div class="row">
-                                                        <div class="col-md-6">
-                                                            <p>Assign To</p>
-                                                            @foreach($task->users as $user)
-                                                                <span class="btn btn-primary btn-sm mt-1">{{ $user->name }}</span> <br>
-                                                            @endforeach
-                                                        </div>
-                                                        <div class="col-md-6 ml-2">
-                                                            <p>Assign To Team</p>
-                                                            @if($task->team)
-                                                                <span class="btn btn-primary btn-sm">{{ $task->team->name }}</span>
-                                                            @endif
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                </div>
+                <div class="kanban_bord_column kanban_bord_column_completed">
+                    <div class="kanban_bord_column_title_wrap">
+                        <div class="kanban_bord_column_title text-success">Completed</div>
+                    </div>
+                    <div class="kanban_column">
+                        <div class="kanban_column_task kanban_column_task_done h-100">
+                            <div class="kanban_column_task-wrap">
+                                <div class="card-options">
+                                    <i class='bx bx-dots-horizontal-rounded' ></i>
+                                </div>
+                                <div class="kanban_column_task_name">
+                                    <div class="kanban_column_task_complete_icon">
+                                        <i class='bx bx-check' ></i>
+                                    </div>
+                                    <div class="kanban_column_task_name_text">
+                                        <div>The logo should be add in the footer also.</div>
+                                        <div class="kanban_column_task_project_name"><i class='bx bx-file-blank' ></i>  Acma Web</div>
+                                    </div>
+                                </div>
+                                <div class="kanban_column_task_bot">
+                                    <div class="kanban_column_task_actions">
+                                        <a href="#" class="kanban_column_task_date">
+                                            <span class="btn-icon-task-action"><i class='bx bx-calendar-alt' ></i></span>
+                                            <span>26 Sep 2023</span>
+                                        </a>
+                                    </div>
+                                    <div>
+                                        <!-- avatar group -->
+                                        <div class="avatarGroup avatarGroup-overlap">
+                                            <a href="#" class="avatarGroup-avatar">
+                                                <span class="avatar avatar-sm">
+                                                    <img alt="avatar" src="../assets/images/avatar/user.jpg" class="rounded-circle" />
+                                                </span>
+                                            </a>
+                                            <a href="#" class="avatarGroup-avatar">
+                                                <span class="avatar avatar-sm">
+                                                    <img alt="avatar" src="../assets/images/avatar/user.jpg" class="rounded-circle" />
+                                                </span>
+                                            </a>
+                                            <a href="#" class="avatarGroup-avatar">
+                                                <span class="avatar avatar-sm">
+                                                    <img alt="avatar" src="../assets/images/avatar/user.jpg" class="rounded-circle" />
+                                                </span>
+                                            </a>
+                                            <a href="#" class="avatarGroup-avatar">
+                                                <span class="avatar avatar-sm">
+                                                    <span>5+</span>
+                                                </span>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
-                            @endforeach
+                            </div>
+                        </div>
+                        <div class="kanban_column_task kanban_column_task_done h-100">
+                            <div class="kanban_column_task-wrap">
+                                <div class="card-options">
+                                    <i class='bx bx-dots-horizontal-rounded' ></i>
+                                </div>
+                                <div class="kanban_column_task_name">
+                                    <div class="kanban_column_task_complete_icon">
+                                        <i class='bx bx-check' ></i>
+                                    </div>
+                                    <div class="kanban_column_task_name_text">
+                                        <div>The logo should be add in the footer also.</div>
+                                        <div class="kanban_column_task_project_name"><i class='bx bx-file-blank' ></i>  Acma Web</div>
+                                    </div>
+                                </div>
+                                <div class="kanban_column_task_bot">
+                                    <div class="kanban_column_task_actions">
+                                        <a href="#" class="kanban_column_task_date">
+                                            <span class="btn-icon-task-action"><i class='bx bx-calendar-alt' ></i></span>
+                                            <span>26 Sep 2023</span>
+                                        </a>
+                                    </div>
+                                    <div>
+                                        <!-- avatar group -->
+                                        <div class="avatarGroup avatarGroup-overlap">
+                                            <a href="#" class="avatarGroup-avatar">
+                                                <span class="avatar avatar-sm">
+                                                    <img alt="avatar" src="../assets/images/avatar/user.jpg" class="rounded-circle" />
+                                                </span>
+                                            </a>
+                                            <a href="#" class="avatarGroup-avatar">
+                                                <span class="avatar avatar-sm">
+                                                    <img alt="avatar" src="../assets/images/avatar/user.jpg" class="rounded-circle" />
+                                                </span>
+                                            </a>
+                                            <a href="#" class="avatarGroup-avatar">
+                                                <span class="avatar avatar-sm">
+                                                    <img alt="avatar" src="../assets/images/avatar/user.jpg" class="rounded-circle" />
+                                                </span>
+                                            </a>
+                                            <a href="#" class="avatarGroup-avatar">
+                                                <span class="avatar avatar-sm">
+                                                    <span>5+</span>
+                                                </span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
