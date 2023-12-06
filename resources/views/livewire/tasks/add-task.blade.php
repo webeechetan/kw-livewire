@@ -12,7 +12,7 @@
             <div class="col-md-4">
                 <div class="d-flex gap-2 justify-content-end">
                     <a href="#" wire:click="store" class="btn-border btn-border-primary"><i class='bx bx-check'></i> Save</a>
-                    <a href="#" class="btn-border"><i class='bx bx-x' ></i> Close</a>
+                    <a href="{{ route('task.index') }}" wire:navigate class="btn-border"><i class='bx bx-x' ></i> Close</a>
                 </div>
             </div>
         </div>
@@ -46,10 +46,10 @@
                         </div>
                     </div>
 
-                    <div class="AddTask_rulesOverview_item">
+                    <div class="AddTask_rulesOverview_item" wire:ignore>
                         <div class="AddTask_rulesOverview_item_name">Project</div>
                         <div class="AddTask_rulesOverview_item_rulesAction">
-                            <select wire:model="project_id" id="" class="form-control">
+                            <select  id="project_id" class="form-control">
                                 <option value="">Select Project</option>
                                 @foreach($projects as $project)
                                     <option value="{{ $project->id }}">{{ $project->name }}</option>
@@ -93,7 +93,22 @@
     <script>
         ClassicEditor
             .create( document.querySelector( '#editor' ),{
-                
+                toolbar: {
+                    items: [
+                        'heading',
+                        '|',
+                        'bold',
+                        '|',
+                        'italic',
+                        '|',
+                        'link',
+                        '|',
+                        'bulletedList',
+                        '|',
+                        'numberedList',
+                        '|',
+                    ]
+                },
             } )
             .then( editor => {
                     editor.model.document.on( 'change:data', () => {
@@ -106,11 +121,27 @@
             } );
 
         $('.users').select2({
+            placeholder: 'Select User',
             templateResult: format,
             templateSelection: format,
             escapeMarkup: function(m) {
                 return m;
             }
+        });
+
+        $('.users').on('change', function(e){
+            var users = $('.users');
+            var selected_users = users.val();
+            @this.set('user_ids', selected_users);
+        });
+
+        $('#project_id').select2({
+            placeholder: 'Select Project',
+        });
+
+        $('#project_id').on('change', function(e){
+            var project_id = $('#project_id').val();
+            @this.set('project_id', project_id);
         });
 
         function format(state) {
@@ -123,12 +154,6 @@
             );
             return $state;
         };
-
-        $('.users').on('change', function(e){
-            var users = $('.users');
-            var selected_users = users.val();
-            @this.set('user_ids', selected_users);
-        });
 
         $('.add_date_btn').flatpickr({
             dateFormat: "Y-m-d",
