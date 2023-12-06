@@ -21,9 +21,9 @@
                         <div class="AddTask_rulesOverview_item_name">Assigned to</div>
                         <div class="AddTask_rulesOverview_item_rulesAction">
                             <select name="" id="" class="form-control users" multiple>
-                                <option value="">Select User</option>
+                                <option value="" disabled>Select User</option>
                                 @foreach($users as $user)
-                                    <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                    <option data-image="{{ $user->image }}" value="{{ $user->id }}">{{ $user->name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -33,9 +33,9 @@
                         <div class="AddTask_rulesOverview_item_name">Notify to</div>
                         <div class="AddTask_rulesOverview_item_rulesAction">
                             <select name="" id="" class="form-control users" multiple>
-                                <option value="">Select User</option>
+                                <option value="" disabled>Select User</option>
                                 @foreach($users as $user)
-                                    <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                    <option data-image="{{ $user->image }}" value="{{ $user->id }}">{{ $user->name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -44,7 +44,7 @@
                     <div class="AddTask_rulesOverview_item">
                         <div class="AddTask_rulesOverview_item_name">Project</div>
                         <div class="AddTask_rulesOverview_item_rulesAction">
-                            <select wire:model="team_id" id="" class="form-control">
+                            <select wire:model="project_id" id="" class="form-control">
                                 <option value="">Select Project</option>
                                 @foreach($projects as $project)
                                     <option value="{{ $project->id }}">{{ $project->name }}</option>
@@ -87,7 +87,9 @@
 @push('scripts')
     <script>
         ClassicEditor
-            .create( document.querySelector( '#editor' ) )
+            .create( document.querySelector( '#editor' ),{
+                
+            } )
             .then( editor => {
                     editor.model.document.on( 'change:data', () => {
                         console.log( 'The Document has changed!' );
@@ -98,7 +100,24 @@
                     console.error( error );
             } );
 
-        $('.users').select2();
+        $('.users').select2({
+            templateResult: format,
+            templateSelection: format,
+            escapeMarkup: function(m) {
+                return m;
+            }
+        });
+
+        function format(state) {
+            if (!state.id) {
+                return state.text;
+            }
+            var baseUrl = "{{ env('APP_URL') }}/storage";
+            var $state = $(
+                '<span><img height="25px" width="25px" src="' + baseUrl + '/' + state.element.attributes[0].value + '" class="img-thumbnail" /> ' + state.text + '</span>'
+            );
+            return $state;
+        };
 
         $('.users').on('change', function(e){
             var users = $('.users');

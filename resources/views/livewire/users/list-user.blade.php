@@ -18,7 +18,12 @@
         @foreach($users as $user)
             <div class="col-md-4 mt-2">
                 <div class="card text-center">
-                    <h6 class="card-header">{{ $user->name }}</h6>
+                    <h6 class="card-header">
+                        <div>
+                            <img src="{{ env('APP_URL') }}/storage/{{ $user->image }}" height="100px" width="100" class="img-thumbnail" alt="">
+                        </div>
+                        {{ $user->name }}
+                    </h6>
                     <div class="card-body">
                         <p class="card-text">{{ $user->email }}</p>
                         @foreach($user->teams as $team)
