@@ -23,16 +23,12 @@
     }
     &-control {
         &-typeStyle {
-            border: 1px solid transparent;
-            padding: 0;
+            border: none;
+            padding: 0 0 0 40px;
             transition: $ease_03;
-            &:focus-visible {
-                border: 1px solid transparent;
-            }
-            &:hover, &:focus, &:focus-visible {
-                padding: 0 15px;
-                border: 1px solid $border_dark_grey;
+            &:hover, &:active, &:focus, &:focus-visible {
                 outline: none;
+                border: none;
             }
         }
      }

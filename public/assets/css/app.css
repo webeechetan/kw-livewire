@@ -619,11 +619,12 @@ ul.list-none {
   font-size: 0.9rem;
   display: flex;
   align-items: center;
+  display: grid;
+  grid-template-columns: 30px 1fr;
   /*---- Sidebar Menu Icon Style ----*/
 }
-.menu-sidebar li a svg {
-  margin-right: 20px;
-  width: 0.8em;
+.menu-sidebar li a i {
+  font-size: 18px;
 }
 .menu-sidebar li a:after {
   content: "";
@@ -729,8 +730,8 @@ ul.list-none {
 .dropdown-item-icon {
   width: 30px;
 }
-.dropdown-item-icon svg {
-  max-width: 0.8em;
+.dropdown-item-icon i {
+  font-size: 18px;
 }
 .dropdown-header {
   display: flex;
@@ -767,7 +768,7 @@ ul.list-none {
   transition: all 0.3s ease;
 }
 .dropdown-subIcon svg {
-  width: 0.8em;
+  font-size: 18px;
 }
 .dropdown-user {
   width: 30px;
@@ -858,17 +859,13 @@ ul.list-none {
   }
 }
 .form-control-typeStyle {
-  border: 1px solid transparent;
-  padding: 0;
+  border: none;
+  padding: 0 0 0 40px;
   transition: all 0.3s ease;
 }
-.form-control-typeStyle:focus-visible {
-  border: 1px solid transparent;
-}
-.form-control-typeStyle:hover, .form-control-typeStyle:focus, .form-control-typeStyle:focus-visible {
-  padding: 0 15px;
-  border: 1px solid #ddd;
+.form-control-typeStyle:hover, .form-control-typeStyle:active, .form-control-typeStyle:focus, .form-control-typeStyle:focus-visible {
   outline: none;
+  border: none;
 }
 .form-check {
   text-align: left;
@@ -1723,23 +1720,6 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   align-items: center;
   grid-gap: 15px;
 }
-.main-body-header-btnAdd {
-  font-size: 13px;
-  color: #f83890;
-  border: 1px solid #f83890;
-  padding: 6px 10px;
-  border-radius: 4px;
-  transition: all 0.3s ease;
-  cursor: pointer;
-}
-.main-body-header-btnAdd svg {
-  width: 15px;
-  height: 15px;
-}
-.main-body-header-btnAdd:hover {
-  color: #fff;
-  background-color: #f83890;
-}
 
 /* ----- Auth Forms ----- */
 .signup-form button, .signup-form .signin-google-btn {
@@ -1994,12 +1974,25 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
 /* ----- Add Task ----- */
 .AddTask_head {
   padding: 15px 30px;
+  border-bottom: 1px solid #eee;
 }
 .AddTask_title {
   font-size: 26px;
 }
-.AddTask_rulesOverview {
-  margin-top: 30px;
+.AddTask_title-wrap {
+  position: relative;
+}
+.AddTask_title-icon {
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-size: 26px;
+  color: #f83890;
+  min-height: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
 }
 .AddTask_rulesOverview_item {
   display: grid;
@@ -2013,11 +2006,13 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   font-weight: 500;
   font-size: 16px;
 }
+.AddTask_rulesOverview_item_rulesAction .select2-container--default .select2-selection--multiple, .AddTask_rulesOverview_item_rulesAction .select2-container--default.select2-container--focus .select2-selection--multiple {
+  border: none;
+}
 .AddTask_body {
   padding: 30px;
   height: 100%;
   overflow-y: auto;
-  border-top: 1px solid #ddd;
   position: relative;
 }
 .AddTask_body-edit {
@@ -2028,6 +2023,43 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
 }
 .AddTask_sec_space {
   margin-top: 50px;
+}
+
+/* ----- Select ----- */
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+  background: #f3f6f9;
+  padding: 4px 10px;
+  margin: 0;
+  border: none;
+  border-radius: 30px;
+  font-size: 14px;
+  display: inline-flex;
+  flex-direction: row-reverse;
+  margin-right: 10px;
+}
+.select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+  position: relative;
+  border: none;
+}
+.select2-container--default .select2-search--inline .select2-search__field {
+  margin: 0;
+  vertical-align: inherit;
+}
+.select2-container--default .select2-results__option {
+  padding: 5px 10px;
+}
+.select2-container--default .select2-results__option--highlighted.select2-results__option--selectable {
+  background: #f3f6f9;
+  color: #000;
+  font-size: 14px;
+  padding: 7px 15px;
+}
+.select2-hidden-accessible {
+  min-height: inherit;
+}
+.select2-dropdown {
+  border: 1px solid #eee;
+  padding: 5px;
 }
 
 /* ----- Rules Action ----- */
@@ -2075,125 +2107,6 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   color: #7407ff;
   padding: 0 7px;
   border-radius: 4px;
-}
-
-/* ----- React Select Box ----- */
-#react-select-3-listbox {
-  box-shadow: none;
-  border: 1px solid #eee;
-  width: auto;
-  border-radius: 10px;
-  padding: 20px;
-}
-#react-select-3-listbox > div::-webkit-scrollbar-track, #react-select-3-listbox > div::-webkit-scrollbar-thumb {
-  -webkit-box-shadow: none;
-  border-radius: 7px;
-  background-color: #f3f6f9;
-}
-#react-select-3-listbox > div::-webkit-scrollbar-thumb {
-  background-color: #fdf4c1;
-}
-#react-select-3-listbox > div::-webkit-scrollbar {
-  width: 6px;
-  background-color: transparent;
-}
-#react-select-3-listbox > div > div {
-  padding: 0;
-  background-color: transparent;
-}
-#react-select-3-listbox > div > div:not(:last-child) {
-  margin-bottom: 10px;
-}
-
-div.css-13cymwt-control, div.css-t3ipsp-control, div.css-t3ipsp-control:hover {
-  border: none;
-  outline: none;
-  box-shadow: none;
-}
-div.css-13cymwt-control, div.css-t3ipsp-control {
-  min-height: inherit;
-}
-div.css-1hb7zxy-IndicatorsContainer {
-  display: none;
-}
-div.css-wsp0cs-MultiValueGeneric {
-  font-size: inherit;
-}
-div.css-wsp0cs-MultiValueGeneric .add_assignee-name span {
-  display: none;
-}
-div.css-qbdosj-Input {
-  cursor: text;
-}
-div.css-12a83d4-MultiValueRemove:hover {
-  background-color: transparent;
-}
-div.css-1fdsijx-ValueContainer {
-  padding: 0;
-}
-div.css-d7l1ni-option, div.css-10wo9uf-option {
-  background-color: transparent;
-}
-div.css-3w2yfm-ValueContainer, div.css-wsp0cs-MultiValueGeneric, div.css-1p3m7a8-multiValue {
-  padding: 0;
-}
-div.css-3w2yfm-ValueContainer {
-  grid-gap: 10px;
-}
-div.css-1p3m7a8-multiValue {
-  background-color: #f3f6f9;
-  border-radius: 30px;
-  padding-right: 3px;
-}
-
-/* ----- React Date Picker ----- */
-div.react-datepicker {
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-family: "Jost", sans-serif;
-  z-index: 9999;
-}
-div.react-datepicker__header {
-  background-color: transparent;
-  padding: 15px;
-  border: none;
-}
-div.react-datepicker__current-month {
-  display: inline-block;
-  padding: 10px 20px;
-  border-radius: 4px;
-  text-transform: uppercase;
-  font-weight: 600;
-  letter-spacing: 1px;
-  font-size: 22px;
-  color: #f83890;
-}
-div.react-datepicker__navigation {
-  transform: translateY(28px);
-}
-div.react-datepicker__day-name, div.react-datepicker__day, div.react-datepicker__time-name {
-  width: 35px;
-  height: 35px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 30px;
-}
-div.react-datepicker__day-name {
-  background-color: #f3f6f9;
-}
-div.react-datepicker__day--selected {
-  background-color: #f83890;
-  border-radius: 50%;
-}
-div.react-datepicker__day:hover {
-  border-radius: 50%;
-}
-div.react-datepicker-popper {
-  z-index: 9999;
-}
-div.react-datepicker-popper[data-placement^=bottom] .react-datepicker__triangle:after {
-  border-bottom-color: #fff;
 }
 
 /* ----- Filter Sort ----- */
@@ -2361,55 +2274,32 @@ div.react-datepicker-popper[data-placement^=bottom] .react-datepicker__triangle:
   font-size: 16px;
 }
 
-/* ----- Sun Editor ----- */
-div.sun-editor {
-  font-family: "Jost", sans-serif;
-  border: none;
-  background-color: #f3f6f9;
+/* ----- CK Editor ----- */
+div.ck.ck-editor {
+  border: 1px solid #eee;
   border-radius: 10px;
+  padding: 5px;
 }
-div.sun-editor .se-container {
-  padding: 10px 10px 55px;
-}
-div.sun-editor .se-resizing-bar {
-  display: none;
-}
-div.sun-editor .se-toolbar {
-  outline: none;
-  border-bottom: none;
-  background-color: transparent;
-  position: absolute;
-  left: 20px;
-  bottom: 20px;
-  width: auto;
-  display: inline-block;
-}
-div.sun-editor .se-btn-tray {
-  padding: 0;
-  height: 32px;
-}
-div.sun-editor .se-btn-module-border {
-  border: none;
-}
-div.sun-editor .se-wrapper-inner {
-  font-family: "Jost", sans-serif;
-}
-div.sun-editor button > svg {
-  width: 13px;
-  height: 13px;
-  display: flex;
-  align-items: center;
-}
-div.sun-editor-editable {
-  background-color: transparent;
+div.ck.ck-editor__main > .ck-editor__editable:not(.ck-focused) {
+  background: #f3f6f9;
 }
 
-/* ----- Skeleton ----- */
-.Skeleton-avatarName {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  grid-gap: 5px;
-  align-items: center;
+.ck.ck-editor__main > .ck-editor__editable, div.ck.ck-editor__main > .ck-editor__editable:not(.ck-focused) {
+  background: #f3f6f9 !important;
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
+  min-height: 90px;
+}
+
+div.ck.ck-dropdown .ck-button.ck-dropdown__button {
+  font-size: 12px;
+}
+
+.ck-rounded-corners .ck.ck-editor__top .ck-sticky-panel .ck-toolbar,
+.ck.ck-editor__top .ck-sticky-panel .ck-toolbar.ck-rounded-corners,
+.ck.ck-editor__main > .ck-editor__editable:not(.ck-focused) {
+  border: none;
 }
 
 /* ----- Comment Area ----- */

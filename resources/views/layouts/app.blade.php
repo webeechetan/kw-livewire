@@ -51,7 +51,16 @@
                     <div class="collapse navbar-collapse justify-content-end" id="responsive-navbar-nav">
                         <ul class="navbar-nav align-items-center">
                             <li class="nav-item">
-                                <a id="modal-search" href="#" class="nav-link" ><SearchOutlinedIcon/></a>
+                                <a id="modal-search" href="#" class="nav-link"><i class='bx bx-search'></i></a>
+                            </li>
+                            <li class="nav-item">
+                                <a id="modal-search" href="#" class="nav-link"><i class='bx bx-chat'></i></a>
+                            </li>
+                            <li class="nav-item">
+                                <a id="modal-search" href="#" class="nav-link"><i class='bx bx-bell' ></i></a>
+                            </li>
+                            <li class="nav-item">
+                                <a id="modal-search" href="#" class="nav-link"><i class='bx bx-bell' ></i></a>
                             </li>
                         </ul>
                     </div>
@@ -63,12 +72,12 @@
         <aside class="sidebar-l">
             <div class="sidebar-l-menu">
                 <ul class="list-none menu-sidebar">
-                    <li><a wire:navigate href="{{ route('dashboard') }}" class="@if (request()->routeIs('dashboard')) active @endif"> Dashboard</a></li>
-                    <li><a wire:navigate href="{{ route('client.index') }}" class="@if (request()->routeIs('client.index') || request()->routeIs('client.add')) active @endif"><PeopleAltOutlinedIcon/> Clients</a></li>
-                    <li><a wire:navigate href="{{ route('project.index') }}" class="@if (request()->routeIs('project.index') || request()->routeIs('project.add')) active @endif"><DashboardOutlinedIcon/> Projects</a></li>
-                    <li><a wire:navigate href="{{ route('user.index') }}" class="@if (request()->routeIs('user.index') || request()->routeIs('user.add')) active @endif"><PeopleAltOutlinedIcon/> Users</a></li>
-                    <li><a wire:navigate href="{{ route('team.index') }}" class="@if (request()->routeIs('team.index') || request()->routeIs('team.add')) active @endif"><GroupOutlinedIcon/> Teams</a></li>
-                    <li><a wire:navigate href="{{ route('task.index') }}" class="@if (request()->routeIs('task.index') || request()->routeIs('task.add')) active @endif"><AssignmentOutlinedIcon /> Tasks</a></li>
+                    <li><a wire:navigate href="{{ route('dashboard') }}" class="@if (request()->routeIs('dashboard')) active @endif"><i class='bx bx-line-chart' ></i> Dashboard</a></li>
+                    <li><a wire:navigate href="{{ route('client.index') }}" class="@if (request()->routeIs('client.index') || request()->routeIs('client.add')) active @endif"><i class='bx bx-briefcase-alt-2'></i> Clients</a></li>
+                    <li><a wire:navigate href="{{ route('project.index') }}" class="@if (request()->routeIs('project.index') || request()->routeIs('project.add')) active @endif"><i class='bx bx-objects-horizontal-left'></i> Projects</a></li>
+                    <li><a wire:navigate href="{{ route('user.index') }}" class="@if (request()->routeIs('user.index') || request()->routeIs('user.add')) active @endif"><i class='bx bx-user'></i> Users</a></li>
+                    <li><a wire:navigate href="{{ route('team.index') }}" class="@if (request()->routeIs('team.index') || request()->routeIs('team.add')) active @endif"><i class='bx bx-sitemap'></i> Teams</a></li>
+                    <li><a wire:navigate href="{{ route('task.index') }}" class="@if (request()->routeIs('task.index') || request()->routeIs('task.add')) active @endif"><i class='bx bx-task' ></i> Tasks</a></li>
                 </ul>
             </div>
             <div class="sidebar-l-btm">

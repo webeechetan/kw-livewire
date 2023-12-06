@@ -1,11 +1,18 @@
 <div class="AddCanvas">
     <!-- Add Task Canvas Header -->
     <div class="AddTask_head">
-        <div class="row">
-            <div class="col-12">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <div class="AddTask_title-wrap">
+                    <div class="AddTask_title-icon"><i class='bx bx-notepad'></i></div>
+                    <input class="form-control form-control-typeStyle AddTask_title" wire:model="name" type="text" placeholder="Type your task here...">
+                </div>
+                @error('name') <span class="text-danger">{{ $message }}</span> @enderror
+            </div>
+            <div class="col-md-4">
                 <div class="d-flex gap-2 justify-content-end">
-                    <a href="#" wire:click="store" class="btn-border btn-border-primary"><i class='bx bx-check'></i></a>
-                    <a href="#" class="btn-border"><i class='bx bx-x' ></i></a>
+                    <a href="#" wire:click="store" class="btn-border btn-border-primary"><i class='bx bx-check'></i> Save</a>
+                    <a href="#" class="btn-border"><i class='bx bx-x' ></i> Close</a>
                 </div>
             </div>
         </div>
@@ -14,8 +21,6 @@
     <div class="AddTask_body">
         <div class="AddTask_body_overview">
             <form  method="POST">
-                <input class="form-control form-control-typeStyle AddTask_title" wire:model="name" type="text" placeholder="Type your task here...">
-                @error('name') <span class="text-danger">{{ $message }}</span> @enderror
                 <div class="AddTask_rulesOverview">
                     <div class="AddTask_rulesOverview_item" wire:ignore>
                         <div class="AddTask_rulesOverview_item_name">Assigned to</div>

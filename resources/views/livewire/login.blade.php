@@ -43,7 +43,7 @@
                                     @error('password') <span class="text-danger">{{ $message }}</span>@enderror
                                 </div>
                             </div>
-                            <div class="row mt-4">
+                            <div class="row my-4">
                                 <div class="col-12">
                                     <a wire:navigate href="{{ route('forgot.password') }}" class="text-link">Forgot Password?</a>
                                 </div>
@@ -63,11 +63,6 @@
                                     </div>
                                 </div>
                             @endif
-                            <div class="btn-group mt-2">
-                                <div class="col">
-                                    
-                                </div>
-                            </div>
                             <div class="row">
                                 <div class="col-md-6">
                                     <a class="w-100 btn btn-primary-border btn-smt wire:navigate" href="/register">Sign Up</a>
