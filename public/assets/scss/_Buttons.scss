@@ -11,8 +11,8 @@
         &-task {
             &-action {
                 @include inline_flex_center;
-                width: 26px;
-                height: 26px;
+                width: 22px;
+                height: 22px;
                 border: 1px solid $border_dark_grey;
                 border-radius: $border_radius;
 
@@ -173,6 +173,8 @@
             color: $brand;
         }
         &-primary {
+            border: 1px solid $brand;
+            color: $brand;
             &:hover, &.active {
                 background-color: $brand;
                 color: #fff;
