@@ -1784,9 +1784,9 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   width: 100%;
 }
 .avatarGroup .avatar-sm {
-  width: 35px;
-  height: 35px;
-  font-size: 12px;
+  width: 32px;
+  height: 32px;
+  font-size: 10px;
   letter-spacing: 1px;
 }
 .avatarGroup-overlap .avatar {
@@ -1909,8 +1909,8 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   padding-right: 30px;
   cursor: pointer;
 }
-.kanban_column_task_name svg {
-  max-width: 18px;
+.kanban_column_task_name_text {
+  font-size: 13px;
 }
 .kanban_column_task_bot {
   display: flex;
@@ -1929,13 +1929,13 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   display: flex;
   align-items: center;
   gap: 5px;
-  font-size: 12px;
+  font-size: 10px;
   font-weight: 600;
   transition: all 0.3s ease;
 }
 .kanban_column_task_complete_icon {
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
   background-color: #eee;
   border-radius: 50%;
   display: flex;
@@ -1945,12 +1945,15 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   cursor: pointer;
   transition: all 0.3s ease;
 }
+.kanban_column_task_complete_icon i {
+  font-size: 13px;
+}
 .kanban_column_task_complete_icon:hover {
   background-color: #48914d;
   color: #fff;
 }
 .kanban_column_task_project_name {
-  margin-top: 10px;
+  margin-top: 5px;
   font-size: 13px;
   display: flex;
   align-items: center;

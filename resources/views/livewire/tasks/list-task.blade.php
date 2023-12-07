@@ -36,8 +36,8 @@
                                     <div class="kanban_column_task_complete_icon">
                                         <i class='bx bx-check' ></i>
                                     </div>
-                                    <div class="kanban_column_task_name_text">
-                                        <div>The logo should be add in the footer also.</div>
+                                    <div class="kanban_column_task_name_wrap">
+                                        <div class="kanban_column_task_name_text">The logo should be add in the footer also.</div>
                                         <div class="kanban_column_task_project_name"><i class='bx bx-file-blank' ></i>  Acma Web</div>
                                     </div>
                                 </div>
@@ -85,8 +85,8 @@
                                     <div class="kanban_column_task_complete_icon">
                                         <i class='bx bx-check' ></i>
                                     </div>
-                                    <div class="kanban_column_task_name_text">
-                                        <div>The logo should be add in the footer also.</div>
+                                    <div class="kanban_column_task_name_wrap">
+                                        <div class="kanban_column_task_name_text">The logo should be add in the footer also.</div>
                                         <div class="kanban_column_task_project_name"><i class='bx bx-file-blank' ></i>  Acma Web</div>
                                     </div>
                                 </div>
@@ -141,8 +141,8 @@
                                     <div class="kanban_column_task_complete_icon">
                                         <i class='bx bx-check' ></i>
                                     </div>
-                                    <div class="kanban_column_task_name_text">
-                                        <div>The logo should be add in the footer also.</div>
+                                    <div class="kanban_column_task_name_wrap">
+                                        <div class="kanban_column_task_name_text">The logo should be add in the footer also.</div>
                                         <div class="kanban_column_task_project_name"><i class='bx bx-file-blank' ></i>  Acma Web</div>
                                     </div>
                                 </div>
@@ -190,8 +190,8 @@
                                     <div class="kanban_column_task_complete_icon">
                                         <i class='bx bx-check' ></i>
                                     </div>
-                                    <div class="kanban_column_task_name_text">
-                                        <div>The logo should be add in the footer also.</div>
+                                    <div class="kanban_column_task_name_wrap">
+                                        <div class="kanban_column_task_name_text">The logo should be add in the footer also.</div>
                                         <div class="kanban_column_task_project_name"><i class='bx bx-file-blank' ></i>  Acma Web</div>
                                     </div>
                                 </div>
@@ -246,8 +246,8 @@
                                     <div class="kanban_column_task_complete_icon">
                                         <i class='bx bx-check' ></i>
                                     </div>
-                                    <div class="kanban_column_task_name_text">
-                                        <div>The logo should be add in the footer also.</div>
+                                    <div class="kanban_column_task_name_wrap">
+                                        <div class="kanban_column_task_name_text">The logo should be add in the footer also.</div>
                                         <div class="kanban_column_task_project_name"><i class='bx bx-file-blank' ></i>  Acma Web</div>
                                     </div>
                                 </div>
@@ -295,8 +295,8 @@
                                     <div class="kanban_column_task_complete_icon">
                                         <i class='bx bx-check' ></i>
                                     </div>
-                                    <div class="kanban_column_task_name_text">
-                                        <div>The logo should be add in the footer also.</div>
+                                    <div class="kanban_column_task_name_wrap">
+                                        <div class="kanban_column_task_name_text">The logo should be add in the footer also.</div>
                                         <div class="kanban_column_task_project_name"><i class='bx bx-file-blank' ></i>  Acma Web</div>
                                     </div>
                                 </div>
@@ -351,8 +351,8 @@
                                     <div class="kanban_column_task_complete_icon">
                                         <i class='bx bx-check' ></i>
                                     </div>
-                                    <div class="kanban_column_task_name_text">
-                                        <div>The logo should be add in the footer also.</div>
+                                    <div class="kanban_column_task_name_wrap">
+                                        <div class="kanban_column_task_name_text">The logo should be add in the footer also.</div>
                                         <div class="kanban_column_task_project_name"><i class='bx bx-file-blank' ></i>  Acma Web</div>
                                     </div>
                                 </div>
@@ -400,8 +400,8 @@
                                     <div class="kanban_column_task_complete_icon">
                                         <i class='bx bx-check' ></i>
                                     </div>
-                                    <div class="kanban_column_task_name_text">
-                                        <div>The logo should be add in the footer also.</div>
+                                    <div class="kanban_column_task_name_wrap">
+                                        <div class="kanban_column_task_name_text">The logo should be add in the footer also.</div>
                                         <div class="kanban_column_task_project_name"><i class='bx bx-file-blank' ></i>  Acma Web</div>
                                     </div>
                                 </div>

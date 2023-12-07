@@ -80,9 +80,9 @@
         }
 
         &-sm {
-            width: 35px;
-            height: 35px;
-            font-size: 12px;
+            width: 32px;
+            height: 32px;
+            font-size: 10px;
             letter-spacing: 1px;
         }
     }
@@ -216,8 +216,9 @@
                 gap: $spacing_xs;
                 padding-right: $spacing_md;
                 cursor: pointer;
-                svg {
-                    max-width: 18px;
+                
+                &_text {
+                    font-size: 13px;
                 }
             }
             &_bot {
@@ -238,25 +239,30 @@
                 display: flex;
                 align-items: center;
                 gap: 5px;
-                font-size: 12px;
+                font-size: 10px;
                 font-weight: 600;
                 transition: $ease_03;
             }
             &_complete_icon {
-                width: 20px;
-                height: 20px;
+                width: 18px;
+                height: 18px;
                 background-color: $grey;
                 border-radius: $border_radius;
                 @include flex_center;
                 cursor: pointer;
                 transition: $ease_03;
+
+                i {
+                    font-size: 13px;
+                }
+
                 &:hover {
                     background-color: $success;
                     color: #fff;
                 }
             }
             &_project_name {
-                margin-top: $spacing_xs;
+                margin-top: 5px;
                 font-size: 13px;
                 display: flex;
                 align-items: center;
