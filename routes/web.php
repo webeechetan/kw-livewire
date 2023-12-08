@@ -18,6 +18,7 @@ use App\Livewire\Teams\ListTeam;
 use App\Livewire\Teams\EditTeam;
 use App\Livewire\Tasks\AddTask;
 use App\Livewire\Tasks\ListTask;
+use App\Livewire\Tasks\TaskListView;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -66,6 +67,7 @@ Route::group(['middleware' => ['myauth']], function() {
     
     Route::get('/tasks',ListTask::class)->name('task.index');
     Route::get('/tasks/add',AddTask::class)->name('task.add');
+    Route::get('/tasks/list-view',TaskListView::class)->name('task.list-view');
     
     Route::get('/logout',function(){
         Auth::logout();

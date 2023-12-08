@@ -53,6 +53,9 @@ class AddUser extends Component
             ]);
 
             $image = $this->image->store('public/images/users');
+            // remove public from the path as we need to store only the path in the db
+            $image = str_replace('public/', '', $image);
+            
             $user->image = $image;
         }
 

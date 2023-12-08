@@ -50,6 +50,10 @@ class User extends Authenticatable
         static::addGlobalScope(new OrganizationScope);
     }
 
+    public function routeNotificationForSlack($notification){
+        return env('SLACK_TASK_NOTIFICATION_WEBHOOK_URL');
+    }
+
     public function teams(){
         return $this->belongsToMany(Team::class);
     }

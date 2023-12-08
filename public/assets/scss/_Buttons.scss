@@ -22,13 +22,50 @@
             }
         }
         &-rounded {
-            width: 35px;
-            height: 35px;
-            background-color: $secondary;
+            width: 26px;
+            height: 26px;
+            background-color: $brand_light;
             border-radius: $border_radius;
             border: none;
-            @include flex_center;
-            color: $white;
+            @include inline_flex_center;
+            color: $brand;
+            transition: $ease_03;
+            &:hover {
+                background-color: $brand;
+                color: $white;
+            }
+            &-danger {
+                background-color: $danger_light;
+                color: $danger;
+                &:hover {
+                    background-color: $danger;
+                    color: $white;
+                }
+            }
+            &-progress {
+                background-color: $progress_light;
+                color: $progress;
+                &:hover {
+                    background-color: $progress;
+                    color: $white;
+                }
+            }
+            &-warning {
+                background-color: $warning_light;
+                color: $warning;
+                &:hover {
+                    background-color: $warning;
+                    color: $dark;
+                }
+            }
+        }
+        &-border {
+            width: 26px;
+            height: 26px;
+            border: 1px solid $border;
+            border-radius: $border_radius;
+            @include inline_flex_center;
+            color: $dark;
             transition: $ease_03;
             &:hover {
                 background-color: $brand;

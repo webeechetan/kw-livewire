@@ -12,7 +12,7 @@
             <div class="col-md-4">
                 <div class="d-flex gap-2 justify-content-end">
                     <a href="#" wire:click="store" class="btn-border btn-border-primary"><i class='bx bx-check'></i> Save</a>
-                    <a href="#" class="btn-border"><i class='bx bx-x' ></i> Close</a>
+                    <a href="{{ route('task.index') }}" wire:navigate class="btn-border"><i class='bx bx-x' ></i> Close</a>
                 </div>
             </div>
         </div>
@@ -26,9 +26,9 @@
                         <div class="AddTask_rulesOverview_item_name">Assigned to</div>
                         <div class="AddTask_rulesOverview_item_rulesAction">
                             <select name="" id="" class="form-control users" multiple>
-                                <option value="">Select User</option>
+                                <option value="" disabled>Select User</option>
                                 @foreach($users as $user)
-                                    <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                    <option data-image="{{ $user->image }}" value="{{ $user->id }}">{{ $user->name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -38,18 +38,18 @@
                         <div class="AddTask_rulesOverview_item_name">Notify to</div>
                         <div class="AddTask_rulesOverview_item_rulesAction">
                             <select name="" id="" class="form-control users" multiple>
-                                <option value="">Select User</option>
+                                <option value="" disabled>Select User</option>
                                 @foreach($users as $user)
-                                    <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                    <option data-image="{{ $user->image }}" value="{{ $user->id }}">{{ $user->name }}</option>
                                 @endforeach
                             </select>
                         </div>
                     </div>
 
-                    <div class="AddTask_rulesOverview_item">
+                    <div class="AddTask_rulesOverview_item" wire:ignore>
                         <div class="AddTask_rulesOverview_item_name">Project</div>
                         <div class="AddTask_rulesOverview_item_rulesAction">
-                            <select wire:model="team_id" id="" class="form-control">
+                            <select  id="project_id" class="form-control">
                                 <option value="">Select Project</option>
                                 @foreach($projects as $project)
                                     <option value="{{ $project->id }}">{{ $project->name }}</option>
@@ -92,7 +92,24 @@
 @push('scripts')
     <script>
         ClassicEditor
-            .create( document.querySelector( '#editor' ) )
+            .create( document.querySelector( '#editor' ),{
+                toolbar: {
+                    items: [
+                        'heading',
+                        '|',
+                        'bold',
+                        '|',
+                        'italic',
+                        '|',
+                        'link',
+                        '|',
+                        'bulletedList',
+                        '|',
+                        'numberedList',
+                        '|',
+                    ]
+                },
+            } )
             .then( editor => {
                     editor.model.document.on( 'change:data', () => {
                         console.log( 'The Document has changed!' );
@@ -103,13 +120,40 @@
                     console.error( error );
             } );
 
-        $('.users').select2();
+        $('.users').select2({
+            placeholder: 'Select User',
+            templateResult: format,
+            templateSelection: format,
+            escapeMarkup: function(m) {
+                return m;
+            }
+        });
 
         $('.users').on('change', function(e){
             var users = $('.users');
             var selected_users = users.val();
             @this.set('user_ids', selected_users);
         });
+
+        $('#project_id').select2({
+            placeholder: 'Select Project',
+        });
+
+        $('#project_id').on('change', function(e){
+            var project_id = $('#project_id').val();
+            @this.set('project_id', project_id);
+        });
+
+        function format(state) {
+            if (!state.id) {
+                return state.text;
+            }
+            var baseUrl = "{{ env('APP_URL') }}/storage";
+            var $state = $(
+                '<span><img height="25px" width="25px" src="' + baseUrl + '/' + state.element.attributes[0].value + '" class="img-thumbnail" /> ' + state.text + '</span>'
+            );
+            return $state;
+        };
 
         $('.add_date_btn').flatpickr({
             dateFormat: "Y-m-d",
