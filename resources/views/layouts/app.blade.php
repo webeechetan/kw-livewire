@@ -29,6 +29,29 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
+    <!-- Livewire sortable -->
+
+    <style>
+
+        .sortable-chosen {
+            border: 1px solid #000;
+            background-color: #fff;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+
+        }
+
+        /* .sortable-ghost {
+            background-color: green;
+        }  */
+
+        .sortable-drag{
+            background-color: #fff;
+            font-size: 20px;
+
+        }
+
+    </style>
+
     @livewireStyles
     @stack('styles')
 </head>
@@ -77,7 +100,7 @@
                     <li><a wire:navigate href="{{ route('project.index') }}" class="@if (request()->routeIs('project.index') || request()->routeIs('project.add')) active @endif"><i class='bx bx-objects-horizontal-left'></i> Projects</a></li>
                     <li><a wire:navigate href="{{ route('user.index') }}" class="@if (request()->routeIs('user.index') || request()->routeIs('user.add')) active @endif"><i class='bx bx-user'></i> Users</a></li>
                     <li><a wire:navigate href="{{ route('team.index') }}" class="@if (request()->routeIs('team.index') || request()->routeIs('team.add')) active @endif"><i class='bx bx-sitemap'></i> Teams</a></li>
-                    <li><a wire:navigate href="{{ route('task.index') }}" class="@if (request()->routeIs('task.index') || request()->routeIs('task.add')) active @endif"><i class='bx bx-task' ></i> Tasks</a></li>
+                    <li><a wire:navigate href="{{ route('task.index') }}" class="@if (request()->routeIs('task.index') || request()->routeIs('task.list-view') || request()->routeIs('task.add')) active @endif"><i class='bx bx-task' ></i> Tasks</a></li>
                 </ul>
             </div>
             <div class="sidebar-l-btm">
