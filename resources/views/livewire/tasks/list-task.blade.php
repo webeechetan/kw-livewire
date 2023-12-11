@@ -47,25 +47,30 @@
                             <div class="kanban_bord_column_title" wire:sortable.handle>{{ ucfirst(str_replace('_','-',$group)) }}</div>
                         </div>
                         <div class="kanban_column" wire:sortable-group.item-group="{{$group}}" wire:sortable-group.options="{ animation: 400 }">
+                            <div class="kanban_column_empty"><i class='bx bx-add-to-queue'></i></div>
                             @foreach($tasks[$group] as $task)
                                 <div class="kanban_column_task kanban_column_task_overdue h-100" wire:key="task-{{$task['id']}}" wire:sortable-group.item="{{ $task['id'] }}">
                                     <div class="kanban_column_task-wrap" wire:sortable-group.handle>
-                                        <div class="card-options">
+                                        <div class="card-options d-none">
                                             <i class='bx bx-dots-horizontal-rounded' ></i>
                                         </div>
                                         <div class="kanban_column_task_name">
-                                            <div class="kanban_column_task_complete_icon">
+                                            <div class="kanban_column_task_complete_icon d-none">
                                                 <i class='bx bx-check' ></i>
                                             </div>
                                             <div class="kanban_column_task_name_text">
                                                 <div wire:click="enableEditForm({{$task['id']}})">{{ $task['name'] }}</div>
                                                 <div class="kanban_column_task_project_name">
-                                                    @if($task['project'])
+                                                    <span>
+                                                        @if($task['project'])
                                                         <i class='bx bx-file-blank' ></i>  {{ $task['project']['name'] }} 
-                                                    @endif
-                                                    @if(count($task['comments']) > 0)
+                                                        @endif
+                                                    </span>
+                                                    <span>
+                                                        @if(count($task['comments']) > 0)
                                                         <i class='bx bx-chat' ></i>  {{ count($task['comments'])  }}
-                                                    @endif
+                                                        @endif
+                                                    </span>
                                                 </div>
                                             </div>
                                         </div>

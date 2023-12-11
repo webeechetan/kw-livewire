@@ -1850,7 +1850,7 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   flex-wrap: wrap;
   gap: 10px;
 }
-.avatarGroup-avtar {
+.avatarGroup-avatar {
   display: flex;
 }
 .avatarGroup .avatar {
@@ -1988,10 +1988,6 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   position: relative;
 }
 .kanban_column_task_name {
-  display: grid;
-  grid-template-columns: 20px 1fr;
-  gap: 10px;
-  padding-right: 30px;
   cursor: pointer;
 }
 .kanban_column_task_name_text {
@@ -2001,7 +1997,7 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 10px;
+  margin-top: 5px;
   padding-top: 5px;
   border-top: 1px solid #eee;
 }
@@ -2039,11 +2035,11 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   color: #fff;
 }
 .kanban_column_task_project_name {
-  margin-top: 5px;
+  margin-top: 10px;
   font-size: 13px;
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 15px;
   color: #9c9c9c;
 }
 .kanban_column_task_done .kanban_column_task_complete_icon {
@@ -2062,6 +2058,18 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
 }
 .kanban_column_task_warning .kanban_column_task_date {
   color: #e7bf1d;
+}
+.kanban_column_empty {
+  width: 100%;
+  min-height: 116px;
+  border: 2px dashed #ddd;
+  border-radius: 4px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  color: #ddd;
 }
 .kanban_bord_body_columns {
   padding-top: 20px;
@@ -2362,6 +2370,7 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   display: grid;
   grid-template-columns: 30px 1fr;
   grid-gap: 5px;
+  cursor: pointer;
 }
 .taskList_col_title_complete_icon {
   width: 20px;
@@ -2387,6 +2396,9 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
 }
 .taskList_row:not(:last-child) {
   margin-bottom: 5px;
+}
+.taskList_row > .row {
+  align-items: center;
 }
 .taskList .accordion {
   --bs-accordion-border-width: 0px;
