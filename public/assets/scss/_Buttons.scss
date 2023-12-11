@@ -206,7 +206,7 @@
         }
 
         &:hover, &.active {
-            border-color: $brand;
+            border-color: $border_dark_grey;
             color: $brand;
         }
         &-primary {
@@ -214,6 +214,16 @@
             color: $brand;
             &:hover, &.active {
                 background-color: $brand;
+                border-color: $brand;
+                color: #fff;
+            }
+        }
+        &-secondary {
+            border: 1px solid $secondary;
+            color: $secondary;
+            &:hover, &.active {
+                background-color: $secondary;
+                border-color: $secondary;
                 color: #fff;
             }
         }

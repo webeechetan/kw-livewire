@@ -5,15 +5,15 @@
             <div class="col">
                 <h3 class="main-body-header-title mb-0">All Tasks</h3>
                 <div class="tabNavigationBar-tab">
-                    <a class="tabNavigationBar-item tabNavigationBar-item-active" href="javascript:;"><i class='bx bx-list-ul' ></i> List</a>
+                    <a class="tabNavigationBar-item tabNavigationBar-item-active" href="javascript:void(0);"><i class='bx bx-list-ul' ></i> List</a>
                     <a class="tabNavigationBar-item" wire:navigate href="{{ route('task.index') }}"><i class='bx bx-columns' ></i> Board</a>
                 </div>
             </div>
             <div class="text-end col">
                 <div class="main-body-header-right">
                     <div class="d-flex gap-2 justify-content-end">
-                        <a href="javascript:;" class="btn-border btn-border-primary toggleForm"><i class='bx bx-plus'></i> Add Task</a>
-                        <a class="btn-border" href="#"><i class='bx bx-filter' ></i> Filter</a>
+                        <a href="javascript:void(0);" class="btn-border btn-border-primary toggleForm"><i class='bx bx-plus'></i> Add Task</a>
+                        <a class="btn-border btn-border-secondary" href="#"><i class='bx bx-filter' ></i> Filter</a>
                     </div>
                 </div>
             </div>
