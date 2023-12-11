@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Organization;
 use App\Models\Team;
 use App\Models\Project;
+use App\Models\Comment;
 use App\Models\Scopes\OrganizationScope;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Notifications\Notification;
@@ -52,5 +53,9 @@ class Task extends Model
             return $this->belongsTo(User::class,'assigned_by');
         }
         return $this->belongsTo(Organization::class,'assigned_by', 'id');
+    }
+
+    public function comments(){
+        return $this->hasMany(Comment::class);
     }
 }
