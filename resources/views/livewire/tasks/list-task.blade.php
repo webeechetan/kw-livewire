@@ -59,7 +59,14 @@
                                             </div>
                                             <div class="kanban_column_task_name_text">
                                                 <div wire:click="enableEditForm({{$task['id']}})">{{ $task['name'] }}</div>
-                                                <div class="kanban_column_task_project_name"><i class='bx bx-file-blank' ></i>  Acma Web</div>
+                                                <div class="kanban_column_task_project_name">
+                                                    @if($task['project'])
+                                                        <i class='bx bx-file-blank' ></i>  {{ $task['project']['name'] }} 
+                                                    @endif
+                                                    @if(count($task['comments']) > 0)
+                                                        <i class='bx bx-chat' ></i>  {{ count($task['comments'])  }}
+                                                    @endif
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="kanban_column_task_bot">
