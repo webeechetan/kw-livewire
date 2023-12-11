@@ -375,7 +375,7 @@
     right: 0;
     top: 0;
     height: 100%;
-    overflow: hidden;
+    overflow: auto;
 }
 
 /* ----- Add Task ----- */
@@ -385,15 +385,21 @@
         border-bottom: 1px solid $grey;
     }
     &_title {
-        font-size: 26px;
+        font-size: 20px;
         &-icon {
-            position: absolute;
-            left: 0;
-            top: 0;
-            font-size: 26px;
+            font-size: 14px;
+            color: $brand;
+        }
+        &-lable {
+            font-size: 14px;
             color: $text_light;
-            min-height: 100%;
-            @include flex_center;
+            position: absolute;
+            top: -10px;
+            left: 5px;
+            background: $white;
+            padding: 0 $spacing_xs;
+            letter-spacing: 1px;
+            text-transform: uppercase;
         }
         &-wrap {
             position: relative;
@@ -417,6 +423,7 @@
                 font-size: 16px;
             }
             &_rulesAction {
+                .select2-container--default .select2-selection--multiple .select2-selection__choice,
                 .select2-container--default .select2-selection--multiple, 
                 .select2-container--default.select2-container--focus .select2-selection--multiple,
                 .select2-container--default .select2-selection--single, 
@@ -428,8 +435,6 @@
     }
     &_body {
         padding: $spacing_md;
-        height: 100%;
-        overflow-y: auto;
         position: relative;
         
         &-edit {
@@ -448,21 +453,41 @@
 .select2 {
     &-container {
         &--default {
-            .select2-selection--multiple {
-                .select2-selection__choice {
-                    background: $light;
-                    padding: 4px 10px;
-                    margin: 0;
-                    border: none;
-                    border-radius: 30px;
-                    font-size: 14px;
-                    display: inline-flex;
-                    flex-direction: row-reverse;
-                    margin-right: 10px;
-        
-                    &__remove {
-                        position: relative;
+            .select2-selection {
+                &--multiple {
+                    .select2-selection__choice {
+                        background: $light;
+                        padding: 4px 10px;
+                        margin: 0;
                         border: none;
+                        border-radius: 30px;
+                        font-size: 14px;
+                        display: inline-flex;
+                        flex-direction: row-reverse;
+                        margin-right: 10px;
+            
+                        &__remove {
+                            position: relative;
+                            border: none;
+                        }
+                    }
+                }
+                &__choice {
+                    &__display {
+                        padding-left: 0;
+                        &_userImg {
+                            width: 25px;
+                            height: 25px;
+                            border-radius: $border_radius;
+                        }
+                    }
+                }
+                &__arrow {
+                    display: none;
+                }
+                &--single {
+                    .select2-selection__rendered {
+                        padding: 0;
                     }
                 }
             }
@@ -470,22 +495,42 @@
                 .select2-search__field {
                     margin: 0;
                     vertical-align: inherit;
+                    font-family: inherit;
+                    &::placeholder {
+                        color: $text_light;
+                    }
                 }
             }
             .select2-results__option {
-                padding: 5px 10px;
+                padding: 7px 15px;
+                font-size: 13px;
+                &--selected {
+                    background: $white;
+                }
                 &--highlighted.select2-results__option--selectable {
                     background: $light;
-                    color: #000;
-                    font-size: 14px;
+                    color: $dark;
+                    font-size: 13px;
                     padding: 7px 15px;
                 }
             }
-        }
-        .select2-selection--single {
-            .select2-selection__rendered {
+            .select2-search--dropdown {
                 padding: 0;
+                margin-bottom: $spacing_xs;
+                .select2-search__field {
+                    border-color: $grey_xd;
+                    border-radius: 4px;
+                    padding: 3px 10px;
+                    &:focus-visible {
+                        box-shadow: none;
+                        outline: none;
+                    }
+                }
             }
+        }
+
+        &--open .select2-dropdown--below {
+            border-top: 1px solid $grey;
         }
     }
     
@@ -606,7 +651,7 @@
         font-size: 12px;
         i {
             font-size: 18px;
-            color: $dark;
+            color: $secondary;
         }
         &_s {
             width: 25px;
@@ -744,6 +789,7 @@ div.ck.ck-editor {
     box-shadow: none !important;
     border: none !important;
     min-height: 90px;
+    font-size: 13px;
 }
 div.ck.ck-dropdown .ck-button.ck-dropdown__button {
     font-size: 12px;
@@ -752,6 +798,67 @@ div.ck.ck-dropdown .ck-button.ck-dropdown__button {
 .ck.ck-editor__top .ck-sticky-panel .ck-toolbar.ck-rounded-corners, 
 .ck.ck-editor__main>.ck-editor__editable:not(.ck-focused) {
     border: none;
+}
+
+div.ck-reset_all :not(.ck-reset_all-excluded *), .ck.ck-reset_all {
+    font-family: $jost;
+    font-size: 8px;
+}
+
+div.ck.ck-toolbar>.ck-toolbar__items>:not(.ck-toolbar__line-break) {
+    margin-right: $spacing_xs;
+}
+
+div .ck.ck-list__item .ck-button.ck-on {
+    background: $brand;
+    box-shadow: none;
+    border: none;
+    &:hover, &:hover:not(.ck-disabled) {
+        background: $secondary;
+    }
+}
+
+/* ----- Activity ----- */
+.cmnt_act {
+    padding: $spacing_sm 0;
+    &_title {
+        font-size: 18px;
+        background-color: $light;
+        padding: $spacing_s;
+        margin: $spacing_s 0 0;
+        border-radius: $border_radius_xs;
+    }
+    &_user {
+        display: grid;
+        grid-template-columns: 40px 1fr;
+        grid-gap: $spacing_xs;
+
+        &_name {
+            font-weight: 600;
+        }
+        
+        &_img {
+            img {
+                width: 100%;
+            }
+        }
+
+        &_text {
+            margin-top: $spacing_s;
+            font-size: 14px;
+        }
+    }
+    &_date {
+        font-size: 12px;
+        color: $text_light;
+    }
+    &_row {
+        &:not(:last-child) {
+            margin-bottom: $spacing_sm;
+            padding-bottom: $spacing_sm;
+            border-bottom: 1px solid #eee;
+        }
+    }
 }
 
 /* ----- Comment Area ----- */

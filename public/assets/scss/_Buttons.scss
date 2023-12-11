@@ -209,8 +209,15 @@
             border-color: $border_dark_grey;
             color: $brand;
         }
+
+        &-sm {
+            font-size: 13px;
+            padding: 3px 6px;
+        }
+
         &-primary {
             border: 1px solid $brand;
+            background-color: $brand_light;
             color: $brand;
             &:hover, &.active {
                 background-color: $brand;
@@ -219,11 +226,32 @@
             }
         }
         &-secondary {
+            background-color: $secondary_light;
             border: 1px solid $secondary;
             color: $secondary;
             &:hover, &.active {
                 background-color: $secondary;
                 border-color: $secondary;
+                color: #fff;
+            }
+        }
+        &-success {
+            border: 1px solid $success;
+            background-color: $success_light;
+            color: $success;
+            &:hover, &.active {
+                background-color: $success;
+                border-color: $success;
+                color: #fff;
+            }
+        }
+        &-danger {
+            border: 1px solid $danger;
+            background-color: $danger_light;
+            color: $danger;
+            &:hover, &.active {
+                background-color: $danger;
+                border-color: $danger;
                 color: #fff;
             }
         }
