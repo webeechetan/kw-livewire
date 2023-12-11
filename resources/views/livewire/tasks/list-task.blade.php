@@ -22,7 +22,7 @@
     <!-- Kanban -->
     <div class="kanban_bord">
         <div class="kanban_bord_scrollbar">
-            <div class="kanban_bord_body_columns" wire:sortable="updateGroupOrder" wire:sortable-group="updateTaskOrder">
+            <div class="kanban_bord_body_columns" wire:sortable-group="updateTaskOrder">
                 @php
                     $groups = ['pending','in_progress','in_review','completed'];
                 @endphp
@@ -44,18 +44,14 @@
                     @endphp
                     <div class="kanban_bord_column {{ $board_class }}" wire:key="group-{{$group}}"  wire:sortable.item="{{ $group  }}">
                         <div class="kanban_bord_column_title_wrap">
-                            <div class="kanban_bord_column_title" wire:sortable.handle>{{ $group }}</div>
+                            <div class="kanban_bord_column_title" wire:sortable.handle>{{ ucfirst(str_replace('_','-',$group)) }}</div>
                         </div>
-                        <div class="kanban_column" wire:sortable-group.item-group="{{$group}}" wire:sortable-group.options="{ animation: 100 }">
-                            {{-- <div class="alert alert-success text-center">
-                                <i class="bx bx-plus"></i>
-                            </div> --}}
+                        <div class="kanban_column" wire:sortable-group.item-group="{{$group}}" wire:sortable-group.options="{ animation: 400 }">
                             @foreach($tasks[$group] as $task)
                                 <div class="kanban_column_task kanban_column_task_overdue h-100" wire:key="task-{{$task['id']}}" wire:sortable-group.item="{{ $task['id'] }}">
                                     <div class="kanban_column_task-wrap" wire:sortable-group.handle>
                                         <div class="card-options">
                                             <i class='bx bx-dots-horizontal-rounded' ></i>
-                                            <i class='bx bx-pencil' wire:click="enableEditForm"></i>
                                         </div>
                                         <div class="kanban_column_task_name">
                                             <div class="kanban_column_task_complete_icon">
@@ -63,14 +59,21 @@
                                             </div>
                                             <div class="kanban_column_task_name_text">
                                                 <div wire:click="enableEditForm({{$task['id']}})">{{ $task['name'] }}</div>
-                                                <div class="kanban_column_task_project_name"><i class='bx bx-file-blank' ></i>  Acma Web</div>
+                                                <div class="kanban_column_task_project_name">
+                                                    @if($task['project'])
+                                                        <i class='bx bx-file-blank' ></i>  {{ $task['project']['name'] }} 
+                                                    @endif
+                                                    @if(count($task['comments']) > 0)
+                                                        <i class='bx bx-chat' ></i>  {{ count($task['comments'])  }}
+                                                    @endif
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="kanban_column_task_bot">
                                             <div class="kanban_column_task_actions">
-                                                <a href="#" class="kanban_column_task_date">
+                                                <a href="#" class="kanban_column_task_date task">
                                                     <span class="btn-icon-task-action"><i class='bx bx-calendar-alt' ></i></span>
-                                                    <span >{{ $task['due_date'] }}</span>
+                                                    <span class="">{{ $task['due_date'] }}</span>
                                                 </a>
                                             </div>
                                             <div>
@@ -223,7 +226,11 @@
                                 <select name="" id="" class="form-control users" multiple>
                                     <option value="" disabled>Select User</option>
                                     @foreach($users as $user)
-                                        <option data-image="{{ $user->image }}" value="{{ $user->id }}">{{ $user->name }}</option>
+                                            @if(in_array($user->id, $user_ids))
+                                                <option data-image="{{ $user->image }}" value="{{ $user->id }}" selected>{{ $user->name }}</option>
+                                            @else
+                                                <option data-image="{{ $user->image }}" value="{{ $user->id }}">{{ $user->name }}</option>
+                                            @endif
                                     @endforeach
                                 </select>
                             </div>
@@ -235,7 +242,11 @@
                                 <select name="" id="" class="form-control users" multiple>
                                     <option value="" disabled>Select User</option>
                                     @foreach($users as $user)
-                                        <option data-image="{{ $user->image }}" value="{{ $user->id }}">{{ $user->name }}</option>
+                                        @if(in_array($user->id, $user_ids))
+                                            <option data-image="{{ $user->image }}" value="{{ $user->id }}" selected>{{ $user->name }}</option>
+                                        @else
+                                            <option data-image="{{ $user->image }}" value="{{ $user->id }}">{{ $user->name }}</option>
+                                        @endif
                                     @endforeach
                                 </select>
                             </div>
@@ -247,7 +258,7 @@
                                 <select  id="project_id" class="form-control">
                                     <option value="">Select Project</option>
                                     @foreach($projects as $project)
-                                        <option value="{{ $project->id }}">{{ $project->name }}</option>
+                                        <option @if($project_id == $project->id) selected @endif value="{{ $project->id }}">{{ $project->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -262,7 +273,7 @@
                                             {{-- <input type="date" wire:model="dueDate" class="form-control" > --}}
                                             <a href="#" class="rulesAction-item-date rulesAction_group-item">
                                                 <div class="icon_rounded"><i class='bx bx-calendar' ></i></div>
-                                                <span class="btn_link add_date_btn">Add Date</span>
+                                                <span class="btn_link add_date_btn">{{ $dueDate }}</span>
                                             </a>
                                             {{-- <a href="#" class="icon_rounded rulesAction_group-item"><i class='bx bx-repeat'></i></a>    --}}
                                         </div>
@@ -274,12 +285,36 @@
                         <div class="AddTask_rulesOverview_item" wire:ignore>
                             <div class="AddTask_rulesOverview_item_name">Description</div>
                             <div class="AddTask_rulesOverview_item_rulesAction">
-                                <textarea name="" id="editor" cols="30" rows="10"></textarea>
+                                <textarea name="" id="editor" cols="30" rows="10">{{ $description }}</textarea>
                             </div>
                         </div>
-    
                     </div>
                 </form>
+                <hr>
+                <div class="AddTask_body_overview">
+                    <div class="AddTask_rulesOverview">
+                        <div class="AddTask_rulesOverview_item" wire:ignore>
+                            <div class="AddTask_rulesOverview_item_name">Comments</div>
+                            <div class="AddTask_rulesOverview_item_rulesAction">
+                                <textarea name="" id="comment_box" cols="30" rows="5"></textarea>
+                            </div>
+                        </div>
+                        {{-- comments --}}
+                        @foreach( $comments as $comment)
+                        <div class="AddTask_rulesOverview_item">
+                            <div class="AddTask_rulesOverview_item_name">
+                                <img class="rounded-circle" src="{{ env('APP_URL') }}/storage/{{ $user->image }}" alt="" height="50" width="50">
+                                {{ $comment->user->name }}
+                                <br>
+                                <small>{{ $comment->created_at->diffForHumans() }}</small>
+                            </div>
+                            <div class="AddTask_rulesOverview_item_rulesAction">
+                                {!! $comment->comment !!}
+                            </div>
+                        </div>
+                        @endforeach
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -322,7 +357,49 @@
                 .catch( error => {
                         console.error( error );
                 } );
+
+                ClassicEditor
+                .create( document.querySelector( '#comment_box' ),{
+                    toolbar: {
+                        items: [
+                            'heading',
+                            '|',
+                            'bold',
+                            '|',
+                            'italic',
+                            '|',
+                            'link',
+                            '|',
+                            'bulletedList',
+                            '|',
+                            'numberedList',
+                            '|',
+                        ]
+                    },
+                } )
+                .then( editor => {
+                        editor.model.document.on( 'change:data', () => {
+                            console.log( 'The Document has changed!' );
+                                @this.set('comment', editor.getData());
+                        } ),
+                        editor.ui.view.editable.element.addEventListener('keydown', (event) => {
+                            // check for enter key without shift key press
+                            if (event.keyCode == 13 && !event.shiftKey) {
+                                event.preventDefault();
+                                @this.saveComment();
+                                setTimeout(function(){
+                                    editor.setData('');
+                                }, 100);
+                            }
+                        });
+                } )
+                .catch( error => {
+                        console.error( error );
+                } );
     
+            document.addEventListener('comment-added', function () {
+            });
+
             $('.users').select2({
                 placeholder: 'Select User',
                 templateResult: format,
@@ -357,7 +434,7 @@
                 );
                 return $state;
             };
-    
+
             $('.add_date_btn').flatpickr({
                 dateFormat: "Y-m-d",
                 onChange: function(selectedDates, dateStr, instance) {

@@ -26,6 +26,7 @@ return new class extends Migration
             $table->date('due_date')->nullable();
             $table->dateTime('completed_at')->nullable();
             $table->boolean('is_recurring')->default(false);
+            $table->integer('task_order')->default(0);
             $table->timestamps();
         });
     }
