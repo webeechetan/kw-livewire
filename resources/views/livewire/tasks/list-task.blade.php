@@ -44,12 +44,32 @@
                     @endphp
                     <div class="kanban_bord_column {{ $board_class }}" wire:key="group-{{$group}}"  wire:sortable.item="{{ $group  }}">
                         <div class="kanban_bord_column_title_wrap">
-                            <div class="kanban_bord_column_title" wire:sortable.handle>{{ ucfirst(str_replace('_','-',$group)) }}</div>
+                            <div class="kanban_bord_column_title" wire:sortable.handle>
+                                @if($group == 'pending')
+                                    Assigned
+                                @elseif($group == 'in_progress')
+                                    Accepted
+                                @elseif($group == 'in_review')
+                                    In Review
+                                @elseif($group == 'completed')
+                                    Completed
+                                @endif
+                            </div>
                         </div>
-                        <div class="kanban_column" wire:sortable-group.item-group="{{$group}}" wire:sortable-group.options="{ animation: 400 }">
+                        <div class="kanban_column" wire:sortable-group.item-group="{{$group}}" wire:sortable-group.options="{ 
+                            animation: 400 ,
+                            easing: 'cubic-bezier(1, 0, 0, 1)',
+                            onStart: function (evt) {
+                                console.log(evt);
+                                // change the color of the dragging item
+                                evt.item.style.background = '#fff';
+                            },
+                        }">
+                            @if(!count($tasks[$group]))
                             <div class="kanban_column_empty"><i class='bx bx-add-to-queue'></i></div>
+                            @endif
                             @foreach($tasks[$group] as $task)
-                                <div class="kanban_column_task kanban_column_task_overdue h-100" wire:key="task-{{$task['id']}}" wire:sortable-group.item="{{ $task['id'] }}">
+                                <div class="kanban_column_task kanban_column_task_overdue h-100" wire:key="task-{{$task['id']}}" wire:sortable-group.item="{{ $task['id'] }}" >
                                     <div class="kanban_column_task-wrap" wire:sortable-group.handle>
                                         <div class="card-options d-none">
                                             <i class='bx bx-dots-horizontal-rounded' ></i>

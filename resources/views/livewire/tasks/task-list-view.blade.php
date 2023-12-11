@@ -47,16 +47,16 @@
             <div class="taskList">
                 <div class="accordion" id="accordionPanelsStayOpenExample">
                     <div class="accordion-item">
-                        <div class="accordion-header taskList_row_wrap_head">
+                        <div class="accordion-header taskList_row_wrap_head" wire:ignore>
                             <span class="accordion-button taskList_row_wrap_head_title" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">Assigned</span>
                         </div>
-                        <div id="panelsStayOpen-collapseOne" class="accordion-collapse taskList_row_wrap collapse show">
+                        <div wire:ignore.self id="panelsStayOpen-collapseOne" class="accordion-collapse taskList_row_wrap collapse show">
                             <div class="accordion-body">
                                 @foreach($tasks['pending'] as $task)
                                     <div class="taskList_row">
                                         <div class="row">
                                             <div class="col-md-4">
-                                                <div class="taskList_col taskList_col_title"><span class="taskList_col_title_complete_icon"><i class='bx bx-check'></i></span> {{ $task->name }}</div>
+                                                <div class="taskList_col taskList_col_title" wire:click="enableEditForm({{$task['id']}})"><span class="taskList_col_title_complete_icon"><i class='bx bx-check'></i></span> {{ $task->name }}</div>
                                             </div>
                                             <div class="col text-center">
                                                 <div class="taskList_col">{{  Carbon\Carbon::parse($task->due_date)->format('d M Y') }}</div>
@@ -82,7 +82,19 @@
                                                 </div>
                                             </div>
                                             <div class="col text-center">
-                                                <div class="taskList_col">Notify</div>
+                                                <div class="taskList_col">
+                                                    <div class="taskList_col">
+                                                        <div class="avatarGroup avatarGroup-overlap">
+                                                            @foreach($task['users'] as $user)
+                                                            <a href="#" class="avatarGroup-avatar">
+                                                                <span class="avatar avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ $user->name }}">
+                                                                    <img alt="avatar" src="{{ env('APP_URL') }}/storage/{{ $user->image }}" class="rounded-circle" />
+                                                                </span>
+                                                            </a>
+                                                            @endforeach
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                             <div class="col">
                                                 <div class="taskList_col">
@@ -135,7 +147,147 @@
                                                 </div>
                                             </div>
                                             <div class="col text-center">
-                                                <div class="taskList_col">Notify</div>
+                                                <div class="taskList_col">
+                                                    <div class="taskList_col">
+                                                        <div class="avatarGroup avatarGroup-overlap">
+                                                            @foreach($task['users'] as $user)
+                                                            <a href="#" class="avatarGroup-avatar">
+                                                                <span class="avatar avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ $user->name }}">
+                                                                    <img alt="avatar" src="{{ env('APP_URL') }}/storage/{{ $user->image }}" class="rounded-circle" />
+                                                                </span>
+                                                            </a>
+                                                            @endforeach
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="taskList_col">
+                                                    <div class="icon_group justify-content-center">
+                                                        <a class="btn-icon-rounded btn-icon-rounded-progress" href="javascript:void(0);"><i class='bx bx-pencil'></i></a>
+                                                        <a class="btn-icon-rounded btn-icon-rounded-danger" href="javascript:void(0);"><i class='bx bx-trash' ></i></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header taskList_row_wrap_head" wire:ignore>
+                            <span class="accordion-button taskList_row_wrap_head_title" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">In Review</span>
+                        </div>
+                        <div wire:ignore.self id="panelsStayOpen-collapseThree" class="accordion-collapse taskList_row_wrap collapse show">
+                            <div class="accordion-body">
+                                @foreach($tasks['in_review'] as $task)
+                                    <div class="taskList_row">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="taskList_col taskList_col_title" wire:click="enableEditForm({{$task['id']}})"><span class="taskList_col_title_complete_icon"><i class='bx bx-check'></i></span> {{ $task->name }}</div>
+                                            </div>
+                                            <div class="col text-center">
+                                                <div class="taskList_col">{{  Carbon\Carbon::parse($task->due_date)->format('d M Y') }}</div>
+                                            </div>
+                                            <div class="col text-center">
+                                                @if($task->project)
+                                                    <div class="taskList_col">{{ $task->project->name }}</div>
+                                                @else
+                                                    <div class="taskList_col">-</div>
+                                                @endif
+                                            </div>
+                                            <div class="col text-center">
+                                                <div class="taskList_col">
+                                                    <div class="avatarGroup avatarGroup-overlap">
+                                                        @foreach($task['users'] as $user)
+                                                        <a href="#" class="avatarGroup-avatar">
+                                                            <span class="avatar avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ $user->name }}">
+                                                                <img alt="avatar" src="{{ env('APP_URL') }}/storage/{{ $user->image }}" class="rounded-circle" />
+                                                            </span>
+                                                        </a>
+                                                        @endforeach
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col text-center">
+                                                <div class="taskList_col">
+                                                    <div class="taskList_col">
+                                                        <div class="avatarGroup avatarGroup-overlap">
+                                                            @foreach($task['users'] as $user)
+                                                            <a href="#" class="avatarGroup-avatar">
+                                                                <span class="avatar avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ $user->name }}">
+                                                                    <img alt="avatar" src="{{ env('APP_URL') }}/storage/{{ $user->image }}" class="rounded-circle" />
+                                                                </span>
+                                                            </a>
+                                                            @endforeach
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="taskList_col">
+                                                    <div class="icon_group justify-content-center">
+                                                        <a class="btn-icon-rounded btn-icon-rounded-progress" href="javascript:void(0);"><i class='bx bx-pencil'></i></a>
+                                                        <a class="btn-icon-rounded btn-icon-rounded-danger" href="javascript:void(0);"><i class='bx bx-trash' ></i></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header taskList_row_wrap_head" wire:ignore>
+                            <span class="accordion-button taskList_row_wrap_head_title" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseFour" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">Completed</span>
+                        </div>
+                        <div wire:ignore.self id="panelsStayOpen-collapseFour" class="accordion-collapse taskList_row_wrap collapse show">
+                            <div class="accordion-body">
+                                @foreach($tasks['completed'] as $task)
+                                    <div class="taskList_row">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="taskList_col taskList_col_title" wire:click="enableEditForm({{$task['id']}})"><span class="taskList_col_title_complete_icon"><i class='bx bx-check'></i></span> {{ $task->name }}</div>
+                                            </div>
+                                            <div class="col text-center">
+                                                <div class="taskList_col">{{  Carbon\Carbon::parse($task->due_date)->format('d M Y') }}</div>
+                                            </div>
+                                            <div class="col text-center">
+                                                @if($task->project)
+                                                    <div class="taskList_col">{{ $task->project->name }}</div>
+                                                @else
+                                                    <div class="taskList_col">-</div>
+                                                @endif
+                                            </div>
+                                            <div class="col text-center">
+                                                <div class="taskList_col">
+                                                    <div class="avatarGroup avatarGroup-overlap">
+                                                        @foreach($task['users'] as $user)
+                                                        <a href="#" class="avatarGroup-avatar">
+                                                            <span class="avatar avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ $user->name }}">
+                                                                <img alt="avatar" src="{{ env('APP_URL') }}/storage/{{ $user->image }}" class="rounded-circle" />
+                                                            </span>
+                                                        </a>
+                                                        @endforeach
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col text-center">
+                                                <div class="taskList_col">
+                                                    <div class="taskList_col">
+                                                        <div class="avatarGroup avatarGroup-overlap">
+                                                            @foreach($task['users'] as $user)
+                                                            <a href="#" class="avatarGroup-avatar">
+                                                                <span class="avatar avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ $user->name }}">
+                                                                    <img alt="avatar" src="{{ env('APP_URL') }}/storage/{{ $user->image }}" class="rounded-circle" />
+                                                                </span>
+                                                            </a>
+                                                            @endforeach
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                             <div class="col">
                                                 <div class="taskList_col">
@@ -155,4 +307,370 @@
             </div>
         </div>
     </div>
+
+    
+    {{-- Add task canvas --}}
+    @if($view_form)
+    <div class="AddCanvas">
+        <!-- Add Task Canvas Header -->
+        <div class="AddTask_head">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <div class="AddTask_title-wrap">
+                        <div class="AddTask_title-icon"><i class='bx bx-notepad'></i></div>
+                        <input class="form-control form-control-typeStyle AddTask_title" wire:model="name" type="text" placeholder="Type your task here...">
+                    </div>
+                    @error('name') <span class="text-danger">{{ $message }}</span> @enderror
+                </div>
+                <div class="col-md-4">
+                    <div class="d-flex gap-2 justify-content-end">
+                        <a href="#" wire:click="store" class="btn-border btn-border-primary"><i class='bx bx-check'></i> Save</a>
+                        <a  wire:click="toggleForm" class="btn-border"><i class='bx bx-x' ></i> Close</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Add Task Canvas Body -->
+        <div class="AddTask_body">
+            <div class="AddTask_body_overview">
+                <form  method="POST">
+                    <div class="AddTask_rulesOverview">
+                        <div class="AddTask_rulesOverview_item" wire:ignore>
+                            <div class="AddTask_rulesOverview_item_name">Assigned to</div>
+                            <div class="AddTask_rulesOverview_item_rulesAction">
+                                <select name="" id="" class="form-control users" multiple>
+                                    <option value="" disabled>Select User</option>
+                                    @foreach($users as $user)
+                                        <option data-image="{{ $user->image }}" value="{{ $user->id }}">{{ $user->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+    
+                        <div class="AddTask_rulesOverview_item" wire:ignore>
+                            <div class="AddTask_rulesOverview_item_name">Notify to</div>
+                            <div class="AddTask_rulesOverview_item_rulesAction">
+                                <select name="" id="" class="form-control users" multiple>
+                                    <option value="" disabled>Select User</option>
+                                    @foreach($users as $user)
+                                        <option data-image="{{ $user->image }}" value="{{ $user->id }}">{{ $user->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+    
+                        <div class="AddTask_rulesOverview_item" wire:ignore>
+                            <div class="AddTask_rulesOverview_item_name">Project</div>
+                            <div class="AddTask_rulesOverview_item_rulesAction">
+                                <select  id="project_id" class="form-control">
+                                    <option value="">Select Project</option>
+                                    @foreach($projects as $project)
+                                        <option value="{{ $project->id }}">{{ $project->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+    
+                        <div class="AddTask_rulesOverview_item" wire:ignore>
+                            <div class="AddTask_rulesOverview_item_name">Due Date</div>
+                            <div class="AddTask_rulesOverview_item_rulesAction">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="rulesAction_group">
+                                            {{-- <input type="date" wire:model="dueDate" class="form-control" > --}}
+                                            <a href="#" class="rulesAction-item-date rulesAction_group-item">
+                                                <div class="icon_rounded"><i class='bx bx-calendar' ></i></div>
+                                                <span class="btn_link add_date_btn">Add Date</span>
+                                            </a>
+                                            {{-- <a href="#" class="icon_rounded rulesAction_group-item"><i class='bx bx-repeat'></i></a>    --}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <div class="AddTask_rulesOverview_item" wire:ignore>
+                            <div class="AddTask_rulesOverview_item_name">Description</div>
+                            <div class="AddTask_rulesOverview_item_rulesAction">
+                                <textarea name="" id="editor" cols="30" rows="10"></textarea>
+                            </div>
+                        </div>
+    
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    @endif
+
+    {{-- edit task canvas --}}
+    @if($edit_task)
+    <div class="AddCanvas">
+        <!-- edit Task Canvas Header -->
+        <div class="AddTask_head">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <div class="AddTask_title-wrap">
+                        <div class="AddTask_title-icon"><i class='bx bx-notepad'></i></div>
+                        <input class="form-control form-control-typeStyle AddTask_title" wire:model="name" type="text" placeholder="Type your task here...">
+                    </div>
+                    @error('name') <span class="text-danger">{{ $message }}</span> @enderror
+                </div>
+                <div class="col-md-4">
+                    <div class="d-flex gap-2 justify-content-end">
+                        <a href="#" wire:click="updateTask" class="btn-border btn-border-primary"><i class='bx bx-check'></i> Update</a>
+                        <a href="{{ route('task.list-view') }}" wire:navigate class="btn-border"><i class='bx bx-x' ></i> Close</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- edit Task Canvas Body -->
+        <div class="AddTask_body">
+            <div class="AddTask_body_overview">
+                <form  method="POST">
+                    <div class="AddTask_rulesOverview">
+                        <div class="AddTask_rulesOverview_item" wire:ignore>
+                            <div class="AddTask_rulesOverview_item_name">Assigned to</div>
+                            <div class="AddTask_rulesOverview_item_rulesAction">
+                                <select name="" id="" class="form-control users" multiple>
+                                    <option value="" disabled>Select User</option>
+                                    @foreach($users as $user)
+                                            @if(in_array($user->id, $user_ids))
+                                                <option data-image="{{ $user->image }}" value="{{ $user->id }}" selected>{{ $user->name }}</option>
+                                            @else
+                                                <option data-image="{{ $user->image }}" value="{{ $user->id }}">{{ $user->name }}</option>
+                                            @endif
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+    
+                        <div class="AddTask_rulesOverview_item" wire:ignore>
+                            <div class="AddTask_rulesOverview_item_name">Notify to</div>
+                            <div class="AddTask_rulesOverview_item_rulesAction">
+                                <select name="" id="" class="form-control users" multiple>
+                                    <option value="" disabled>Select User</option>
+                                    @foreach($users as $user)
+                                        @if(in_array($user->id, $user_ids))
+                                            <option data-image="{{ $user->image }}" value="{{ $user->id }}" selected>{{ $user->name }}</option>
+                                        @else
+                                            <option data-image="{{ $user->image }}" value="{{ $user->id }}">{{ $user->name }}</option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+    
+                        <div class="AddTask_rulesOverview_item" wire:ignore>
+                            <div class="AddTask_rulesOverview_item_name">Project</div>
+                            <div class="AddTask_rulesOverview_item_rulesAction">
+                                <select  id="project_id" class="form-control">
+                                    <option value="">Select Project</option>
+                                    @foreach($projects as $project)
+                                        <option @if($project_id == $project->id) selected @endif value="{{ $project->id }}">{{ $project->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+    
+                        <div class="AddTask_rulesOverview_item" wire:ignore>
+                            <div class="AddTask_rulesOverview_item_name">Due Date</div>
+                            <div class="AddTask_rulesOverview_item_rulesAction">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="rulesAction_group">
+                                            {{-- <input type="date" wire:model="dueDate" class="form-control" > --}}
+                                            <a href="#" class="rulesAction-item-date rulesAction_group-item">
+                                                <div class="icon_rounded"><i class='bx bx-calendar' ></i></div>
+                                                <span class="btn_link add_date_btn">{{ $dueDate }}</span>
+                                            </a>
+                                            {{-- <a href="#" class="icon_rounded rulesAction_group-item"><i class='bx bx-repeat'></i></a>    --}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <div class="AddTask_rulesOverview_item" wire:ignore>
+                            <div class="AddTask_rulesOverview_item_name">Description</div>
+                            <div class="AddTask_rulesOverview_item_rulesAction">
+                                <textarea name="" id="editor" cols="30" rows="10">{{ $description }}</textarea>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <hr>
+                <div class="AddTask_body_overview">
+                    <div class="AddTask_rulesOverview">
+                        <div class="AddTask_rulesOverview_item" wire:ignore>
+                            <div class="AddTask_rulesOverview_item_name">Comments</div>
+                            <div class="AddTask_rulesOverview_item_rulesAction">
+                                <textarea name="" id="comment_box" cols="30" rows="5"></textarea>
+                            </div>
+                        </div>
+                        {{-- comments --}}
+                        @foreach( $comments as $comment)
+                        <div class="AddTask_rulesOverview_item">
+                            <div class="AddTask_rulesOverview_item_name">
+                                <img class="rounded-circle" src="{{ env('APP_URL') }}/storage/{{ $user->image }}" alt="" height="50" width="50">
+                                {{ $comment->user->name }}
+                                <br>
+                                <small>{{ $comment->created_at->diffForHumans() }}</small>
+                            </div>
+                            <div class="AddTask_rulesOverview_item_rulesAction">
+                                {!! $comment->comment !!}
+                            </div>
+                        </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @endif
 </div>
+
+
+@push('scripts')
+    <script>
+
+        $(document).ready(function(){
+            $(".accordion-header").click(function(){
+                // toggle div below one which is clicked
+                $(this).next(".accordion-collapse").toggle(function(){
+                    // add animation when toggling
+                    if($(this).is(":visible")){
+                        $(this).animate({
+                            opacity: "1"
+                        }, "slow");
+                    } else {
+                        $(this).animate({
+                            opacity: "0"
+                        }, "slow");
+                    }
+                });
+            });
+        });
+
+        $(".toggleForm").click(function(){
+            @this.toggleForm();
+        });
+
+        function initPlugins(){
+            ClassicEditor
+                .create( document.querySelector( '#editor' ),{
+                    toolbar: {
+                        items: [
+                            'heading',
+                            '|',
+                            'bold',
+                            '|',
+                            'italic',
+                            '|',
+                            'link',
+                            '|',
+                            'bulletedList',
+                            '|',
+                            'numberedList',
+                            '|',
+                        ]
+                    },
+                } )
+                .then( editor => {
+                        editor.model.document.on( 'change:data', () => {
+                            console.log( 'The Document has changed!' );
+                                @this.set('description', editor.getData());
+                        } )
+                } )
+                .catch( error => {
+                        console.error( error );
+                } );
+
+                ClassicEditor
+                .create( document.querySelector( '#comment_box' ),{
+                    toolbar: {
+                        items: [
+                            'heading',
+                            '|',
+                            'bold',
+                            '|',
+                            'italic',
+                            '|',
+                            'link',
+                            '|',
+                            'bulletedList',
+                            '|',
+                            'numberedList',
+                            '|',
+                        ]
+                    },
+                } )
+                .then( editor => {
+                        editor.model.document.on( 'change:data', () => {
+                            console.log( 'The Document has changed!' );
+                                @this.set('comment', editor.getData());
+                        } ),
+                        editor.ui.view.editable.element.addEventListener('keydown', (event) => {
+                            // check for enter key without shift key press
+                            if (event.keyCode == 13 && !event.shiftKey) {
+                                event.preventDefault();
+                                @this.saveComment();
+                                setTimeout(function(){
+                                    editor.setData('');
+                                }, 100);
+                            }
+                        });
+                } )
+                .catch( error => {
+                        console.error( error );
+                } );
+    
+            document.addEventListener('comment-added', function () {
+            });
+
+            $('.users').select2({
+                placeholder: 'Select User',
+                templateResult: format,
+                templateSelection: format,
+                escapeMarkup: function(m) {
+                    return m;
+                }
+            });
+    
+            $('.users').on('change', function(e){
+                var users = $('.users');
+                var selected_users = users.val();
+                @this.set('user_ids', selected_users);
+            });
+    
+            $('#project_id').select2({
+                placeholder: 'Select Project',
+            });
+    
+            $('#project_id').on('change', function(e){
+                var project_id = $('#project_id').val();
+                @this.set('project_id', project_id);
+            });
+    
+            function format(state) {
+                if (!state.id) {
+                    return state.text;
+                }
+                var baseUrl = "{{ env('APP_URL') }}/storage";
+                var $state = $(
+                    '<span><img height="25px" width="25px" src="' + baseUrl + '/' + state.element.attributes[0].value + '" class="img-thumbnail" /> ' + state.text + '</span>'
+                );
+                return $state;
+            };
+
+            $('.add_date_btn').flatpickr({
+                dateFormat: "Y-m-d",
+                onChange: function(selectedDates, dateStr, instance) {
+                    $(".add_date_btn").html(dateStr);
+                    @this.set('dueDate', dateStr);
+                },
+            });
+        }
+
+    </script>
+@endpush
