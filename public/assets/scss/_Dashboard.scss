@@ -80,9 +80,9 @@
         }
 
         &-sm {
-            width: 35px;
-            height: 35px;
-            font-size: 12px;
+            width: 32px;
+            height: 32px;
+            font-size: 10px;
             letter-spacing: 1px;
         }
     }
@@ -200,7 +200,7 @@
             border: 2px solid #fff;
             border-radius: $border_radius_xs;
             background-color: #fff;
-            &.dragging {
+            &.draggable-source--is-dragging {
                 @include draging_item;
             }
             &:not(:last-child) {
@@ -216,8 +216,9 @@
                 gap: $spacing_xs;
                 padding-right: $spacing_md;
                 cursor: pointer;
-                svg {
-                    max-width: 18px;
+                
+                &_text {
+                    font-size: 13px;
                 }
             }
             &_bot {
@@ -238,25 +239,31 @@
                 display: flex;
                 align-items: center;
                 gap: 5px;
-                font-size: 12px;
+                font-size: 10px;
                 font-weight: 600;
                 transition: $ease_03;
             }
             &_complete_icon {
-                width: 20px;
-                height: 20px;
-                background-color: $grey;
+                width: 18px;
+                height: 18px;
+                border: 1px solid $text_light;
                 border-radius: $border_radius;
                 @include flex_center;
                 cursor: pointer;
                 transition: $ease_03;
+                margin-top: 3px;
+
+                i {
+                    font-size: 14px;
+                }
+
                 &:hover {
                     background-color: $success;
                     color: #fff;
                 }
             }
             &_project_name {
-                margin-top: $spacing_xs;
+                margin-top: 5px;
                 font-size: 13px;
                 display: flex;
                 align-items: center;
@@ -268,6 +275,7 @@
                 .kanban_column_task {
                     &_complete_icon {
                         color: $success;
+                        border-color: $success;
                     }
                     &_date {
                         color: $success;
@@ -405,7 +413,10 @@
                 font-size: 16px;
             }
             &_rulesAction {
-                .select2-container--default .select2-selection--multiple, .select2-container--default.select2-container--focus .select2-selection--multiple {
+                .select2-container--default .select2-selection--multiple, 
+                .select2-container--default.select2-container--focus .select2-selection--multiple,
+                .select2-container--default .select2-selection--single, 
+                .select2-container--default.select2-container--focus .select2-selection--single {
                     border: none;
                 }
             }
@@ -431,41 +442,49 @@
 
 /* ----- Select ----- */
 .select2 {
-    &-container--default {
-        .select2-selection--multiple {
-            .select2-selection__choice {
-                background: $light;
-                padding: 4px 10px;
-                margin: 0;
-                border: none;
-                border-radius: 30px;
-                font-size: 14px;
-                display: inline-flex;
-                flex-direction: row-reverse;
-                margin-right: 10px;
-    
-                &__remove {
-                    position: relative;
+    &-container {
+        &--default {
+            .select2-selection--multiple {
+                .select2-selection__choice {
+                    background: $light;
+                    padding: 4px 10px;
+                    margin: 0;
                     border: none;
+                    border-radius: 30px;
+                    font-size: 14px;
+                    display: inline-flex;
+                    flex-direction: row-reverse;
+                    margin-right: 10px;
+        
+                    &__remove {
+                        position: relative;
+                        border: none;
+                    }
+                }
+            }
+            .select2-search--inline {
+                .select2-search__field {
+                    margin: 0;
+                    vertical-align: inherit;
+                }
+            }
+            .select2-results__option {
+                padding: 5px 10px;
+                &--highlighted.select2-results__option--selectable {
+                    background: $light;
+                    color: #000;
+                    font-size: 14px;
+                    padding: 7px 15px;
                 }
             }
         }
-        .select2-search--inline {
-            .select2-search__field {
-                margin: 0;
-                vertical-align: inherit;
-            }
-        }
-        .select2-results__option {
-            padding: 5px 10px;
-            &--highlighted.select2-results__option--selectable {
-                background: $light;
-                color: #000;
-                font-size: 14px;
-                padding: 7px 15px;
+        .select2-selection--single {
+            .select2-selection__rendered {
+                padding: 0;
             }
         }
     }
+    
     &-hidden-accessible {
         min-height: inherit;
     }
@@ -609,51 +628,78 @@
 
 /* ----- Task List View ----- */
 .taskList {
-    &_head {
-        margin-top: $spacing_s;
-        &_col {
-            padding: $spacing_s $spacing_sm;
-            min-width: 150px;
-            text-align: center;
-            color: $white;
-            text-transform: uppercase;
-            background-color: $brand;
-            &_name {
-                flex: 1;
-                text-align: left;
+    &_col {
+        padding: $spacing_xs $spacing_s;
+        font-size: 14px;
+        &_title {
+            display: grid;
+            grid-template-columns: 30px 1fr;
+            grid-gap: 5px;
+            &_complete_icon {
+                width: 20px;
+                height: 20px;
+                font-size: 16px;
+                border: 1px solid $success;
+                border-radius: $border_radius;
+                @include flex_center;
+                cursor: pointer;
+                transition: $ease_03;
+                margin-top: 2px;
+                &:hover, &.active {
+                    background-color: $success;
+                    color: #fff;
+                }
             }
         }
     }
     &_row {
-        display: flex;
-        grid-gap: 3px;
+        background-color: $white;
+        border-radius: $border_radius_xs;
         &:not(:last-child) {
-            margin-bottom: 6px;
+            margin-bottom: 5px;
         }
     }
-    &_col {
-        padding: $spacing_xs $spacing_sm;
-        min-width: 150px;
-        background-color: $white;
-        &:not(.taskList_col_title) {
-            text-align: center;
-            @include flex_center;
+    
+    /* ----- Accordion ----- */
+    .accordion {
+        --bs-accordion-border-width: 0px;
+        --bs-accordion-bg: transparent;
+        &-item {
+            &:last-of-type {
+                border-bottom-right-radius: $border_radius_xs;
+                border-bottom-left-radius: $border_radius_xs;
+            }
+            &:not(:first-child) {
+                margin-top: $spacing_md;
+            }            
         }
-        &_title {
-            flex: 1;
-            display: flex;
+        &-button {
+            padding: $spacing_xs $spacing_s;
             cursor: pointer;
-            &_complete_icon {
-                margin-right: $spacing_xs;
-                cursor: pointer;
-                transition: $ease_03;
-                &:hover, &.active {
-                    color: $success;
-                }
+            font-size: 22px;
+            background-color: $brand_light;
+            margin-bottom: 10px;
+            &:not(.collapsed) {
+                background-color: $brand_light;
+            }
+            &.taskList_row_wrap_head_title_inProgress {
+                background-color: $warning_light;
             }
         }
-        .btn_status {
-            display: block;
+        &-body {
+            padding: 0;
+        }
+    }
+
+    /* ----- Task List Header ----- */ 
+    &-dashbaord_header {
+        background-color: $brand;
+        margin: $spacing_s 0;
+        border-radius: $border_radius_xs;
+        &_title {
+            letter-spacing: 1px;
+            color: #fff;
+            font-size: 16px;
         }
     }
 }

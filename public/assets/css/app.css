@@ -258,6 +258,13 @@ ul.list-none {
   font-size: 14px;
 }
 
+/* ----- Icon -----*/
+.icon_group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
 /*---- Buttons Style Start Here ----*/
 .btn {
   padding: 0.5rem 1.4rem;
@@ -287,19 +294,59 @@ ul.list-none {
   max-width: 18px;
 }
 .btn-icon-rounded {
-  width: 35px;
-  height: 35px;
-  background-color: #7407ff;
+  width: 26px;
+  height: 26px;
+  background-color: #ffe6f1;
   border-radius: 50%;
   border: none;
-  display: flex;
+  display: inline-flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  color: #fff;
+  color: #f83890;
   transition: all 0.3s ease;
 }
 .btn-icon-rounded:hover {
+  background-color: #f83890;
+  color: #fff;
+}
+.btn-icon-rounded-danger {
+  background-color: #fedddc;
+  color: #ff0000;
+}
+.btn-icon-rounded-danger:hover {
+  background-color: #ff0000;
+  color: #fff;
+}
+.btn-icon-rounded-progress {
+  background-color: #e5d1ff;
+  color: #7407ff;
+}
+.btn-icon-rounded-progress:hover {
+  background-color: #7407ff;
+  color: #fff;
+}
+.btn-icon-rounded-warning {
+  background-color: #fff7d8;
+  color: #e7bf1d;
+}
+.btn-icon-rounded-warning:hover {
+  background-color: #e7bf1d;
+  color: #191919;
+}
+.btn-icon-border {
+  width: 26px;
+  height: 26px;
+  border: 1px solid #9c9c9c;
+  border-radius: 50%;
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  color: #191919;
+  transition: all 0.3s ease;
+}
+.btn-icon-border:hover {
   background-color: #f83890;
   color: #fff;
 }
@@ -985,7 +1032,7 @@ input:-webkit-autofill, input:-webkit-autofill:focus {
 }
 .action-circle:hover {
   color: #191919;
-  border-color: #191919;
+  border-color: #9c9c9c;
 }
 
 /*---- Invite Style Start here ----*/
@@ -1033,7 +1080,7 @@ input:-webkit-autofill, input:-webkit-autofill:focus {
   max-width: 30px;
 }
 .invite-gamil-text {
-  border-bottom: 1px solid #191919;
+  border-bottom: 1px solid #9c9c9c;
 }
 @media (max-width: 991px) {
   .invite-gamil {
@@ -1115,7 +1162,7 @@ input:-webkit-autofill, input:-webkit-autofill:focus {
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  border: 1px solid #191919;
+  border: 1px solid #9c9c9c;
   border-radius: 4px;
   padding: 0.5rem 1.4rem;
   transition: all 0.5s ease;
@@ -1699,6 +1746,34 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
 }
 
 /*---- Pagination Style End Here ----*/
+.draggable-source--is-dragging {
+  opacity: 0.5;
+  background-color: #48914d;
+}
+
+.draggable-source--is-dragging .task {
+  color: #fff;
+}
+
+.draggable-source--is-dragging .task:hover {
+  background-color: #48914d;
+  color: #fff;
+}
+
+.draggable--over {
+  border: 1px dashed #48914d;
+}
+
+.draggable-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.draggable-container--over {
+  border: 1px dashed #48914d;
+}
+
 /*---- Main Body Style ----*/
 .main-body {
   background-color: #f6f5f5;
@@ -1784,9 +1859,9 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   width: 100%;
 }
 .avatarGroup .avatar-sm {
-  width: 35px;
-  height: 35px;
-  font-size: 12px;
+  width: 32px;
+  height: 32px;
+  font-size: 10px;
   letter-spacing: 1px;
 }
 .avatarGroup-overlap .avatar {
@@ -1891,7 +1966,7 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   background-color: #fff;
   /* ----- Task Status ----- */
 }
-.kanban_column_task.dragging {
+.kanban_column_task.draggable-source--is-dragging {
   box-shadow: 0 0 50px rgba(0, 0, 0, 0.2);
   opacity: 0.2;
 }
@@ -1909,8 +1984,8 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   padding-right: 30px;
   cursor: pointer;
 }
-.kanban_column_task_name svg {
-  max-width: 18px;
+.kanban_column_task_name_text {
+  font-size: 13px;
 }
 .kanban_column_task_bot {
   display: flex;
@@ -1929,14 +2004,14 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   display: flex;
   align-items: center;
   gap: 5px;
-  font-size: 12px;
+  font-size: 10px;
   font-weight: 600;
   transition: all 0.3s ease;
 }
 .kanban_column_task_complete_icon {
-  width: 20px;
-  height: 20px;
-  background-color: #eee;
+  width: 18px;
+  height: 18px;
+  border: 1px solid #9c9c9c;
   border-radius: 50%;
   display: flex;
   flex-wrap: wrap;
@@ -1944,13 +2019,17 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   justify-content: center;
   cursor: pointer;
   transition: all 0.3s ease;
+  margin-top: 3px;
+}
+.kanban_column_task_complete_icon i {
+  font-size: 14px;
 }
 .kanban_column_task_complete_icon:hover {
   background-color: #48914d;
   color: #fff;
 }
 .kanban_column_task_project_name {
-  margin-top: 10px;
+  margin-top: 5px;
   font-size: 13px;
   display: flex;
   align-items: center;
@@ -1959,6 +2038,7 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
 }
 .kanban_column_task_done .kanban_column_task_complete_icon {
   color: #48914d;
+  border-color: #48914d;
 }
 .kanban_column_task_done .kanban_column_task_date {
   color: #48914d;
@@ -2069,7 +2149,10 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   font-weight: 500;
   font-size: 16px;
 }
-.AddTask_rulesOverview_item_rulesAction .select2-container--default .select2-selection--multiple, .AddTask_rulesOverview_item_rulesAction .select2-container--default.select2-container--focus .select2-selection--multiple {
+.AddTask_rulesOverview_item_rulesAction .select2-container--default .select2-selection--multiple,
+.AddTask_rulesOverview_item_rulesAction .select2-container--default.select2-container--focus .select2-selection--multiple,
+.AddTask_rulesOverview_item_rulesAction .select2-container--default .select2-selection--single,
+.AddTask_rulesOverview_item_rulesAction .select2-container--default.select2-container--focus .select2-selection--single {
   border: none;
 }
 .AddTask_body {
@@ -2116,6 +2199,9 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   color: #000;
   font-size: 14px;
   padding: 7px 15px;
+}
+.select2-container .select2-selection--single .select2-selection__rendered {
+  padding: 0;
 }
 .select2-hidden-accessible {
   min-height: inherit;
@@ -2254,55 +2340,80 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
 }
 
 /* ----- Task List View ----- */
-.taskList_head {
-  margin-top: 15px;
-}
-.taskList_head_col {
-  padding: 15px 20px;
-  min-width: 150px;
-  text-align: center;
-  color: #fff;
-  text-transform: uppercase;
-  background-color: #f83890;
-}
-.taskList_head_col_name {
-  flex: 1;
-  text-align: left;
-}
-.taskList_row {
-  display: flex;
-  grid-gap: 3px;
-}
-.taskList_row:not(:last-child) {
-  margin-bottom: 6px;
+.taskList {
+  /* ----- Accordion ----- */
+  /* ----- Task List Header ----- */
 }
 .taskList_col {
-  padding: 10px 20px;
-  min-width: 150px;
-  background-color: #fff;
+  padding: 10px 15px;
+  font-size: 14px;
 }
-.taskList_col:not(.taskList_col_title) {
-  text-align: center;
+.taskList_col_title {
+  display: grid;
+  grid-template-columns: 30px 1fr;
+  grid-gap: 5px;
+}
+.taskList_col_title_complete_icon {
+  width: 20px;
+  height: 20px;
+  font-size: 16px;
+  border: 1px solid #48914d;
+  border-radius: 50%;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-}
-.taskList_col_title {
-  flex: 1;
-  display: flex;
-  cursor: pointer;
-}
-.taskList_col_title_complete_icon {
-  margin-right: 10px;
   cursor: pointer;
   transition: all 0.3s ease;
+  margin-top: 2px;
 }
 .taskList_col_title_complete_icon:hover, .taskList_col_title_complete_icon.active {
-  color: #48914d;
+  background-color: #48914d;
+  color: #fff;
 }
-.taskList_col .btn_status {
-  display: block;
+.taskList_row {
+  background-color: #fff;
+  border-radius: 4px;
+}
+.taskList_row:not(:last-child) {
+  margin-bottom: 5px;
+}
+.taskList .accordion {
+  --bs-accordion-border-width: 0px;
+  --bs-accordion-bg: transparent;
+}
+.taskList .accordion-item:last-of-type {
+  border-bottom-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+.taskList .accordion-item:not(:first-child) {
+  margin-top: 30px;
+}
+.taskList .accordion-button {
+  padding: 10px 15px;
+  cursor: pointer;
+  font-size: 22px;
+  background-color: #ffe6f1;
+  margin-bottom: 10px;
+}
+.taskList .accordion-button:not(.collapsed) {
+  background-color: #ffe6f1;
+}
+.taskList .accordion-button.taskList_row_wrap_head_title_inProgress {
+  background-color: #fff7d8;
+}
+.taskList .accordion-body {
+  padding: 0;
+}
+.taskList-dashbaord_header {
+  background-color: #f83890;
+  margin: 15px 0;
+  border-radius: 4px;
+}
+.taskList-dashbaord_header_title {
+  letter-spacing: 1px;
+  color: #fff;
+  font-size: 16px;
 }
 
 /* ----- Drop Area ----- */

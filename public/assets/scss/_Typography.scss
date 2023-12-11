@@ -173,3 +173,10 @@ ul {
     padding: $spacing_xs $spacing_sm;
     font-size: 14px;
 }
+
+/* ----- Icon -----*/
+.icon_group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $spacing_xs;
+}
