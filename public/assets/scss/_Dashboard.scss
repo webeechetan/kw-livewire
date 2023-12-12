@@ -197,12 +197,10 @@
 .kanban {
     &_column {
         &_task {
-            border: 2px solid #fff;
-            border-radius: $border_radius_xs;
+            border: 3px solid #fff;
+            border-radius: 6px;
             background-color: #fff;
-            &.draggable-source--is-dragging {
-                @include draging_item;
-            }
+
             &:not(:last-child) {
                 margin-bottom: $spacing_sm;
             }
@@ -295,6 +293,13 @@
                     }
                 }
             }
+
+            /*----- Draging -----*/
+            &.sortable {
+                &-chosen {
+                    opacity: 0.3;
+                }
+            }
         }
         &_empty {
             width: 100%;
@@ -355,6 +360,14 @@
             &_completed {
                 .kanban_column_task {
                     border-color: $success_light;
+
+                    &_bot {
+                        border-color: $success_light;
+                    }
+                    
+                    &_date {
+                        color: $success;
+                    }
                 }
                 .avatarGroup .avatar {
                     background-color: $success;
@@ -678,7 +691,7 @@
 /* ----- Task List View ----- */
 .taskList {
     &_col {
-        padding: $spacing_xs $spacing_s;
+        padding: 6px $spacing_s;
         font-size: 14px;
         &_title {
             display: grid;
@@ -700,6 +713,9 @@
                     color: #fff;
                 }
             }
+        }
+        .avatarGroup {
+            justify-content: center;
         }
     }
     &_row {
@@ -732,11 +748,20 @@
             font-size: 22px;
             background-color: $brand_light;
             margin-bottom: 10px;
+            border-radius: $border_radius_xs;
             &:not(.collapsed) {
                 background-color: $brand_light;
             }
-            &.taskList_row_wrap_head_title_inProgress {
-                background-color: $warning_light;
+            &.taskList_row_wrap_head_title {
+                &_inProgress {
+                    background-color: $warning_light;
+                }
+                &_inReview {
+                    background-color: $secondary_light;
+                }
+                &_complited {
+                    background-color: $success_light;
+                }
             }
         }
         &-body {
@@ -755,11 +780,6 @@
             font-size: 16px;
         }
     }
-}
-
-/* ----- Drop Area ----- */
-.drop_area {
-    @include drop_area;
 }
 
 /* ----- Item Submit ----- */

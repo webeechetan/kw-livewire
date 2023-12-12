@@ -71,7 +71,6 @@
 /*---- Flex Direction Column ----*/
 /*---- Rounded Box ----*/
 /* ----- Scrollbar ----- */
-/* ----- Draging ----- */
 /*---- Body Style ----*/
 body {
   font-family: "Jost", sans-serif;
@@ -275,10 +274,7 @@ ul.list-none {
   /* ----- Filter Sort ----- */
   /* ----- Border ----- */
   /* ----- Button Submit ----- */
-}
-.btn svg {
-  max-width: 18px;
-  max-width: 18px;
+  /* ----- Button Batch ----- */
 }
 .btn-icon-task-action {
   display: inline-flex;
@@ -358,9 +354,6 @@ ul.list-none {
 .btn-sm svg {
   width: 1rem;
 }
-.btn svg {
-  font-size: 1.4rem;
-}
 .btn-primary {
   color: #fff;
   background-color: #f83890;
@@ -389,10 +382,6 @@ ul.list-none {
   color: #191919;
   background-color: #f7d306;
   border: 1px solid #f7d306;
-}
-.btn:focus {
-  outline: none;
-  box-shadow: none;
 }
 .btn-group {
   display: flex;
@@ -530,6 +519,18 @@ ul.list-none {
 }
 .btn-smt {
   text-transform: uppercase;
+}
+.btn-batch {
+  border: 1px solid #f7d306;
+  padding: 3px 10px;
+  border-radius: 30px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #191919;
+}
+.btn:focus {
+  outline: none;
+  box-shadow: none;
 }
 
 /*---- Buttons Style End Here ----*/
@@ -1996,14 +1997,11 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
 
 /* ----- Kanban ----- */
 .kanban_column_task {
-  border: 2px solid #fff;
-  border-radius: 4px;
+  border: 3px solid #fff;
+  border-radius: 6px;
   background-color: #fff;
   /* ----- Task Status ----- */
-}
-.kanban_column_task.draggable-source--is-dragging {
-  box-shadow: 0 0 50px rgba(0, 0, 0, 0.2);
-  opacity: 0.2;
+  /*----- Draging -----*/
 }
 .kanban_column_task:not(:last-child) {
   margin-bottom: 20px;
@@ -2084,6 +2082,9 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
 .kanban_column_task_warning .kanban_column_task_date {
   color: #e7bf1d;
 }
+.kanban_column_task.sortable-chosen {
+  opacity: 0.3;
+}
 .kanban_column_empty {
   width: 100%;
   min-height: 116px;
@@ -2135,6 +2136,12 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
 }
 .kanban_bord_column_completed .kanban_column_task {
   border-color: #dae9db;
+}
+.kanban_bord_column_completed .kanban_column_task_bot {
+  border-color: #dae9db;
+}
+.kanban_bord_column_completed .kanban_column_task_date {
+  color: #48914d;
 }
 .kanban_bord_column_completed .avatarGroup .avatar {
   background-color: #48914d;
@@ -2425,7 +2432,7 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   /* ----- Task List Header ----- */
 }
 .taskList_col {
-  padding: 10px 15px;
+  padding: 6px 15px;
   font-size: 14px;
 }
 .taskList_col_title {
@@ -2451,6 +2458,9 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
 .taskList_col_title_complete_icon:hover, .taskList_col_title_complete_icon.active {
   background-color: #48914d;
   color: #fff;
+}
+.taskList_col .avatarGroup {
+  justify-content: center;
 }
 .taskList_row {
   background-color: #fff;
@@ -2479,12 +2489,19 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   font-size: 22px;
   background-color: #ffe6f1;
   margin-bottom: 10px;
+  border-radius: 4px;
 }
 .taskList .accordion-button:not(.collapsed) {
   background-color: #ffe6f1;
 }
 .taskList .accordion-button.taskList_row_wrap_head_title_inProgress {
   background-color: #fff7d8;
+}
+.taskList .accordion-button.taskList_row_wrap_head_title_inReview {
+  background-color: #e8ddf7;
+}
+.taskList .accordion-button.taskList_row_wrap_head_title_complited {
+  background-color: #dae9db;
 }
 .taskList .accordion-body {
   padding: 0;
@@ -2498,26 +2515,6 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   letter-spacing: 1px;
   color: #fff;
   font-size: 16px;
-}
-
-/* ----- Drop Area ----- */
-.drop_area {
-  width: 100%;
-  min-height: 100px;
-  border: 2px dashed #ddd;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  border-radius: 4px;
-  color: #9c9c9c;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-  margin-bottom: 20px;
-}
-.drop_area.drop_area_active {
-  border-color: #dae9db;
-  color: #48914d;
 }
 
 /* ----- Item Submit ----- */

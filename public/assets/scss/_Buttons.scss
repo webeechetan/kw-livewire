@@ -3,10 +3,6 @@
     padding: $spacing_btn;
     font-weight: 400;
     transition: $ease_05;
-    svg {
-        max-width: 18px;
-        max-width: 18px; 
-    }
     &-icon {
         &-task {
             &-action {
@@ -81,10 +77,6 @@
             width: 1rem;
         }
     }
-    svg {
-        font-size: 1.4rem;
-    }
-
     &-primary {
         color: $white;
         background-color: $brand;
@@ -113,10 +105,6 @@
             background-color: $yellow;
             border: 1px solid $yellow;
         }
-    }
-    &:focus {
-        outline: none;
-        box-shadow: none;
     }
 
     &-group {
@@ -272,6 +260,21 @@
     /* ----- Button Submit ----- */
     &-smt {
         text-transform: uppercase;
+    }
+
+    /* ----- Button Batch ----- */
+    &-batch {
+        border: 1px solid $yellow;
+        padding: 3px 10px;
+        border-radius: $border_radius_rounded;
+        font-size: 12px;
+        font-weight: 500;
+        color: $dark;
+    }
+
+    &:focus {
+        outline: none;
+        box-shadow: none;
     }
 }
 /*---- Buttons Style End Here ----*/

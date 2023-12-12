@@ -59,11 +59,11 @@
                                                 <div class="taskList_col taskList_col_title" wire:click="enableEditForm({{$task['id']}})"><span class="taskList_col_title_complete_icon"><i class='bx bx-check'></i></span> {{ $task->name }}</div>
                                             </div>
                                             <div class="col text-center">
-                                                <div class="taskList_col">{{  Carbon\Carbon::parse($task->due_date)->format('d M Y') }}</div>
+                                                <div class="taskList_col"><span class="btn-batch"><i class='bx bx-calendar-alt' ></i> {{  Carbon\Carbon::parse($task->due_date)->format('d M Y') }}</span></div>
                                             </div>
                                             <div class="col text-center">
                                                 @if($task->project)
-                                                    <div class="taskList_col">{{ $task->project->name }}</div>
+                                                    <div class="taskList_col"><span class="btn-batch">{{ $task->project->name }}</span></div>
                                                 @else
                                                     <div class="taskList_col">-</div>
                                                 @endif
@@ -83,16 +83,14 @@
                                             </div>
                                             <div class="col text-center">
                                                 <div class="taskList_col">
-                                                    <div class="taskList_col">
-                                                        <div class="avatarGroup avatarGroup-overlap">
-                                                            @foreach($task['users'] as $user)
-                                                            <a href="#" class="avatarGroup-avatar">
-                                                                <span class="avatar avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ $user->name }}">
-                                                                    <img alt="avatar" src="{{ env('APP_URL') }}/storage/{{ $user->image }}" class="rounded-circle" />
-                                                                </span>
-                                                            </a>
-                                                            @endforeach
-                                                        </div>
+                                                    <div class="avatarGroup avatarGroup-overlap">
+                                                        @foreach($task['users'] as $user)
+                                                        <a href="#" class="avatarGroup-avatar">
+                                                            <span class="avatar avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ $user->name }}">
+                                                                <img alt="avatar" src="{{ env('APP_URL') }}/storage/{{ $user->image }}" class="rounded-circle" />
+                                                            </span>
+                                                        </a>
+                                                        @endforeach
                                                     </div>
                                                 </div>
                                             </div>
@@ -177,7 +175,7 @@
                     </div>
                     <div class="accordion-item">
                         <div class="accordion-header taskList_row_wrap_head" wire:ignore>
-                            <span class="accordion-button taskList_row_wrap_head_title" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">In Review</span>
+                            <span class="accordion-button taskList_row_wrap_head_title taskList_row_wrap_head_title_inReview" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">In Review</span>
                         </div>
                         <div wire:ignore.self id="panelsStayOpen-collapseThree" class="accordion-collapse taskList_row_wrap collapse show">
                             <div class="accordion-body">
@@ -241,7 +239,7 @@
                     </div>
                     <div class="accordion-item">
                         <div class="accordion-header taskList_row_wrap_head" wire:ignore>
-                            <span class="accordion-button taskList_row_wrap_head_title" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseFour" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">Completed</span>
+                            <span class="accordion-button taskList_row_wrap_head_title taskList_row_wrap_head_title_complited" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseFour" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">Completed</span>
                         </div>
                         <div wire:ignore.self id="panelsStayOpen-collapseFour" class="accordion-collapse taskList_row_wrap collapse show">
                             <div class="accordion-body">
