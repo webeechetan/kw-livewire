@@ -69,7 +69,17 @@
                             <div class="kanban_column_empty"><i class='bx bx-add-to-queue'></i></div>
                             @endif
                             @foreach($tasks[$group] as $task)
-                                <div class="kanban_column_task kanban_column_task_overdue h-100" wire:key="task-{{$task['id']}}" wire:sortable-group.item="{{ $task['id'] }}" >
+                                @php
+                                    $date_class = '';
+                                    if($task['due_date'] < date('Y-m-d')){
+                                        $date_class = 'kanban_column_task_overdue';
+                                    }
+                                    if($task['due_date'] == date('Y-m-d')){
+                                        $date_class = 'kanban_column_task_warning';
+                                    }
+                                    
+                                @endphp
+                                <div class="kanban_column_task {{ $date_class }} h-100" wire:key="task-{{$task['id']}}" wire:sortable-group.item="{{ $task['id'] }}" >
                                     <div class="kanban_column_task-wrap" wire:sortable-group.handle>
                                         <div class="card-options d-none">
                                             <i class='bx bx-dots-horizontal-rounded' ></i>
@@ -355,6 +365,27 @@
         </div>
     </div>
     @endif
+    <!-- menthion user Modal -->
+    <div class="modal fade" id="mentionUserModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+            </div>
+            <div class="modal-body">
+                <ul>
+                    @foreach($users as $user)
+                        <li class="mention_user" data-id="{{ $user->id }}" data-name="{{ $user->name }}" data-image="{{ $user->image }}">{{ $user->name }}</li>
+                    @endforeach
+                </ul>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+        </div>
+    </div>
 </div>
 
 @push('scripts')
@@ -362,6 +393,22 @@
 
         $(".toggleForm").click(function(){
             @this.toggleForm();
+        });
+
+        let editor_instance = '';
+
+        $(".mention_user").click(function(){
+            var user_id = $(this).data('id');
+            var user_name = $(this).data('name');
+            var user_image = $(this).data('image');
+            $('#mentionUserModal').modal('hide');
+            // add mention text without new line
+
+            var mention_text = '<span class="mention_user" data-id="'+user_id+'" data-name="'+user_name+'" data-image="'+user_image+'">@'+user_name+'</span>';
+            var editor_data = editor_instance.getData();
+            var new_editor_data = editor_data.replace(/<br>/g, '');
+            editor_instance.setData(new_editor_data+mention_text);
+
         });
 
         function initPlugins(){
@@ -385,10 +432,19 @@
                     },
                 } )
                 .then( editor => {
+                        editor_instance = editor;
                         editor.model.document.on( 'change:data', () => {
                             console.log( 'The Document has changed!' );
                                 @this.set('description', editor.getData());
-                        } )
+                        } ),
+                        editor.ui.view.editable.element.addEventListener('keydown', (event) => {
+                            // check for @ symbol key press for mention user
+                            if (event.keyCode == 50 && event.shiftKey) {
+                                event.preventDefault();
+                                $('#mentionUserModal').modal('show');
+
+                            }
+                        });
                 } )
                 .catch( error => {
                         console.error( error );
