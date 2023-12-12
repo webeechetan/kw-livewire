@@ -390,7 +390,12 @@
 
 @push('scripts')
     <script>
-
+        let users_for_mention = [];
+        let users = @json($users);
+        users.forEach(user => {
+            users_for_mention.push(user.name);
+        });
+        
         $(".toggleForm").click(function(){
             @this.toggleForm();
         });
@@ -412,82 +417,63 @@
         });
 
         function initPlugins(){
-            ClassicEditor
-                .create( document.querySelector( '#editor' ),{
-                    toolbar: {
-                        items: [
-                            'heading',
-                            '|',
-                            'bold',
-                            '|',
-                            'italic',
-                            '|',
-                            'link',
-                            '|',
-                            'bulletedList',
-                            '|',
-                            'numberedList',
-                            '|',
-                        ]
+                $("#editor").summernote({
+                    height: 200,
+                    hint: {
+                        mentions: users_for_mention,
+                        match: /\B@(\w*)$/,
+                        search: function (keyword, callback) {
+                            callback($.grep(this.mentions, function (item) {
+                                return item.indexOf(keyword) == 0;
+                            }));
+                        },
+                        template : function (item) {
+                            return '<img src="{{ env('APP_URL') }}/storage/' + users[users_for_mention.indexOf(item)].image + '" class="img-fluid rounded-circle" style="width: 20px; height: 20px; margin-right: 5px;"/>' + item;
+                        },
+                        content: function (item) {
+                            return '@' + item;
+                        }    
                     },
-                } )
-                .then( editor => {
-                        editor_instance = editor;
-                        editor.model.document.on( 'change:data', () => {
-                            console.log( 'The Document has changed!' );
-                                @this.set('description', editor.getData());
-                        } ),
-                        editor.ui.view.editable.element.addEventListener('keydown', (event) => {
-                            // check for @ symbol key press for mention user
-                            if (event.keyCode == 50 && event.shiftKey) {
-                                event.preventDefault();
-                                $('#mentionUserModal').modal('show');
+                    toolbar: [
+                        ['font', ['bold', 'underline']],
+                        ['para', ['ul', 'ol']],
+                        ['insert', ['link']],
+                    ],
+                    callbacks: {
+                        onChange: function(contents, $editable) {
+                            @this.set('description', contents);
+                        }
+                    }
+                });
 
-                            }
-                        });
-                } )
-                .catch( error => {
-                        console.error( error );
-                } );
-
-                ClassicEditor
-                .create( document.querySelector( '#comment_box' ),{
-                    toolbar: {
-                        items: [
-                            'heading',
-                            '|',
-                            'bold',
-                            '|',
-                            'italic',
-                            '|',
-                            'link',
-                            '|',
-                            'bulletedList',
-                            '|',
-                            'numberedList',
-                            '|',
-                        ]
+                $("#comment_box").summernote({
+                    height: 100,
+                    hint: {
+                        mentions: users_for_mention,
+                        match: /\B@(\w*)$/,
+                        search: function (keyword, callback) {
+                            callback($.grep(this.mentions, function (item) {
+                                return item.indexOf(keyword) == 0;
+                            }));
+                        },
+                        template : function (item) {
+                            return '<img src="{{ env('APP_URL') }}/storage/' + users[users_for_mention.indexOf(item)].image + '" class="img-fluid rounded-circle" style="width: 20px; height: 20px; margin-right: 5px;"/>' + item;
+                        },
+                        content: function (item) {
+                            return '@' + item;
+                        }    
                     },
-                } )
-                .then( editor => {
-                        editor.model.document.on( 'change:data', () => {
-                            console.log( 'The Document has changed!' );
-                                @this.set('comment', editor.getData());
-                        } ),
-                        editor.ui.view.editable.element.addEventListener('keydown', (event) => {
-                            // check for enter key without shift key press
-                            if (event.keyCode == 13 && !event.shiftKey) {
-                                event.preventDefault();
-                                @this.saveComment();
-                                setTimeout(function(){
-                                    editor.setData('');
-                                }, 100);
-                            }
-                        });
-                } )
-                .catch( error => {
-                        console.error( error );
-                } );
+                    toolbar: [
+                        ['font', ['bold', 'underline']],
+                        ['para', ['ul', 'ol']],
+                        ['insert', ['link']],
+                    ],
+                    callbacks: {
+                        onChange: function(contents, $editable) {
+                            @this.set('comment', contents);
+                        }
+                    }
+                });
     
             document.addEventListener('comment-added', function () {
             });
