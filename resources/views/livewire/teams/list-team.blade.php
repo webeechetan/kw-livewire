@@ -18,6 +18,7 @@
         @foreach($teams as $team)
             <div class="col-md-4 mt-2">
                 <div class="card text-center">
+                    <img src="{{ env('APP_URL') }}/storage/{{ $team->image }}" alt="" height="50" width="50">
                     <h6 class="card-header">{{ $team->name }}</h6>
                     <div class="card-body">
                         <p class="card-text">{{ $team->description }}</p>

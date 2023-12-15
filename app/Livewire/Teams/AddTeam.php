@@ -5,6 +5,7 @@ namespace App\Livewire\Teams;
 use Livewire\Component;
 use App\Models\Team;
 use App\Models\User;
+use App\Helpers\Helper;
 
 class AddTeam extends Component
 {
@@ -33,6 +34,7 @@ class AddTeam extends Component
         $team->name = $this->name;
         $team->description = $this->description;
         $team->org_id = session('org_id');
+        $team->image = Helper::createAvatar($team->name,'teams');
         $team->save();
 
         $team->users()->attach($this->user_ids);

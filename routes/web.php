@@ -39,6 +39,12 @@ use App\Notifications\InviteUser;
 |
 */
 
+Route::get('/create-image',function(){
+    // Avatar::create('Susilo Bambang Yudhoyono')->save('sample.png');
+    // save in storage folder
+    Avatar::create('Susilo Bambang Yudhoyono')->save(storage_path('app/public/sample.png'));
+});
+
 Route::get('/',Login::class);
 Route::get('/login',Login::class)->name('login');
 Route::get('/register/{org_id?}',Register::class)->name('register');

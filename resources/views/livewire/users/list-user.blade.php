@@ -26,9 +26,15 @@
                     </h6>
                     <div class="card-body">
                         <p class="card-text">{{ $user->email }}</p>
-                        @foreach($user->teams as $team)
-                            <span class="btn btn-warning btn-sm">{{ $team->name }}</span>
-                        @endforeach
+                        <div class="avatarGroup avatarGroup-overlap">
+                            @foreach($user->teams as $team)
+                            <a href="#" class="avatarGroup-avatar">
+                                <span class="avatar avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ $team->name }}">
+                                    <img alt="avatar" src="{{ env('APP_URL') }}/storage/{{ $team->image }}" class="rounded-circle" />
+                                </span>
+                            </a>
+                            @endforeach
+                        </div>
                     </div>
                     <div class="card-footer text-muted">
                         <div class="">
