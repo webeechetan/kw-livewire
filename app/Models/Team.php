@@ -11,6 +11,10 @@ class Team extends Model
 {
     use HasFactory;
 
+    public function setNameAttribute($value){
+        $this->attributes['name'] = ucwords($value);
+    }
+
     public function users(){
         return $this->belongsToMany(User::class);
     }

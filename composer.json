@@ -11,6 +11,7 @@
         "laravel/sanctum": "^3.3",
         "laravel/slack-notification-channel": "^3.1",
         "laravel/tinker": "^2.8",
+        "laravolt/avatar": "^5.0",
         "livewire/livewire": "^3.1"
     },
     "require-dev": {

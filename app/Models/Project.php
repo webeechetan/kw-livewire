@@ -11,6 +11,10 @@ class Project extends Model
 {
     use HasFactory;
 
+    public function setNameAttribute($value){
+        $this->attributes['name'] = ucwords($value);
+    }
+
     public function client(){
         return $this->belongsTo(Client::class);
     }
