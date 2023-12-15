@@ -377,7 +377,7 @@
         
         if(typeof users_for_mention === 'undefined'){
             var users_for_mention = [];
-            let users = @json($users);
+            var users = @json($users);
             users.forEach(user => {
                 users_for_mention.push(user.name);
             });
@@ -390,6 +390,31 @@
         $(".toggleForm").click(function(){
             @this.toggleForm();
         });
+
+        // File manager button (image icon)
+
+        if(typeof FMButton === 'undefined'){
+            var FMButton = function(context) {
+                const ui = $.summernote.ui;
+                const button = ui.button({
+                    contents: '<i class="note-icon-picture"></i> ',
+                    tooltip: 'File Manager',
+                    click: function() {
+                    window.open('/file-manager/summernote', 'fm', 'width=1400,height=800');
+                    }
+                });
+                return button.render();
+            };
+        }else{
+            var FMButton = FMButton;
+        }
+
+        // set file link
+        function fmSetLink(url) {
+            $('#editor').summernote('insertImage', url);
+            $('#comment_box').summernote('insertImage', url);
+
+        }
 
         function initPlugins(){
                 $("#editor").summernote({
@@ -414,11 +439,15 @@
                         ['font', ['bold', 'underline']],
                         ['para', ['ul', 'ol']],
                         ['insert', ['link']],
+                        ['fm-button', ['fm']],
                     ],
                     callbacks: {
                         onChange: function(contents, $editable) {
                             @this.set('description', contents);
                         }
+                    },
+                    buttons: {
+                        fm: FMButton
                     }
                 });
 
@@ -444,11 +473,15 @@
                         ['font', ['bold', 'underline']],
                         ['para', ['ul', 'ol']],
                         ['insert', ['link']],
+                        ['fm-button', ['fm']],
                     ],
                     callbacks: {
                         onChange: function(contents, $editable) {
                             @this.set('comment', contents);
                         }
+                    },
+                    buttons: {
+                        fm: FMButton
                     }
                 });
     
