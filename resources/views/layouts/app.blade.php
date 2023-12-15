@@ -5,6 +5,7 @@
     <!-- Meta Tags -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ $title ?? 'Dashboard' }}</title>
 
     <!-- Fav -->
@@ -19,6 +20,7 @@
     
     <!-- Icons -->
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
 
     <!-- Custom Styles -->
     <link href="{{ asset('') }}assets/css/style.css" rel="stylesheet">
@@ -27,31 +29,10 @@
     <!-- Page Init Js -->
     <script src="{{ asset('') }}assets/js/app.js"></script>
 
+    <link rel="stylesheet" href="{{ asset('vendor/file-manager/css/file-manager.css') }}">    
+
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <!-- Livewire sortable -->
-
-    <style>
-
-        .sortable-chosen {
-            border: 1px solid #000;
-            background-color: #fff;
-            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-
-        }
-
-        /* .sortable-ghost {
-            background-color: green;
-        }  */
-
-        .sortable-drag{
-            background-color: #fff;
-            font-size: 20px;
-
-        }
-
-    </style>
 
     @livewireStyles
     @stack('styles')
@@ -102,6 +83,7 @@
                     <li><a wire:navigate href="{{ route('user.index') }}" class="@if (request()->routeIs('user.index') || request()->routeIs('user.add')) active @endif"><i class='bx bx-user'></i> Users</a></li>
                     <li><a wire:navigate href="{{ route('team.index') }}" class="@if (request()->routeIs('team.index') || request()->routeIs('team.add')) active @endif"><i class='bx bx-sitemap'></i> Teams</a></li>
                     <li><a wire:navigate href="{{ route('task.index') }}" class="@if (request()->routeIs('task.index') || request()->routeIs('task.list-view') || request()->routeIs('task.add')) active @endif"><i class='bx bx-task' ></i> Tasks</a></li>
+                    <li><a href="{{ route('file-manager') }}" class="@if (request()->routeIs('file-manager')) active @endif"><i class='bx bx-file' ></i> Files</a></li>
                 </ul>
             </div>
             <div class="sidebar-l-btm">
@@ -124,6 +106,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="{{ asset('vendor/file-manager/js/file-manager.js') }}" data-navigate-once></script>
 
     @stack('scripts')
     @if (session()->has('success'))

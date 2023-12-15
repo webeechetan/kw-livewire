@@ -36,7 +36,10 @@ class AddProject extends Component
         $project->client_id = $this->client_id;
         $project->description = $this->description;
         $project->org_id = session('org_id');
-        $project->save();
+        if($project->save()){
+            // create folder for project
+            mkdir(public_path('storage/projects/'.$project->name));
+        }
         
         session()->flash('success','Project added successfully');
         return $this->redirect(route('project.index'),navigate: true);
