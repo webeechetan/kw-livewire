@@ -21,10 +21,17 @@
                     <h6 class="card-header">{{ $team->name }}</h6>
                     <div class="card-body">
                         <p class="card-text">{{ $team->description }}</p>
-                        @foreach($team->users as $user)
-                            <span class="btn btn-warning btn-sm">{{ $user->name }}</span>
-                            <img src="{{ env('APP_URL') }}/{{$user->image}}" alt="">
-                        @endforeach
+                        <div class="taskList_col">
+                            <div class="avatarGroup avatarGroup-overlap">
+                                @foreach($team->users as $user)
+                                <a href="#" class="avatarGroup-avatar">
+                                    <span class="avatar avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ $user->name }}">
+                                        <img alt="avatar" src="{{ env('APP_URL') }}/storage/{{ $user->image }}" class="rounded-circle" />
+                                    </span>
+                                </a>
+                                @endforeach
+                            </div>
+                        </div>
                     </div>
                     <div class="card-footer text-muted">
                         <div class="">

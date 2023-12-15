@@ -9,6 +9,7 @@ use App\Models\Project;
 use App\Models\Team;
 use App\Models\Comment;
 use App\Notifications\NewTaskAssignNotification;
+use App\Notifications\UserMentionNotification;
 
 
 class TaskListView extends Component
@@ -32,6 +33,8 @@ class TaskListView extends Component
     public $user_ids;
     public $comment;
     public $comments;
+    public $mentioned_users= [];
+
 
     public function render()
     {
@@ -72,6 +75,40 @@ class TaskListView extends Component
         $task->due_date = $this->dueDate;
         $task->status = 'pending';
         // $task->when_completed_notify = $this->when_completed_notify;
+        // take out mentioned users from description and save them in mentioned_users array
+
+        $mentioned_users = [];
+
+        // remove paragraph tags from description
+
+        $temp_description = str_replace('<p>','',$this->description);
+        $temp_description = str_replace('</p>','',$temp_description);
+
+        // convert description to array of words
+
+        $description_array = explode(' ',$temp_description);
+
+        // check if any word starts with @
+
+        foreach($description_array as $word){
+            if(substr($word,0,1) == '@'){
+                $user_name = substr($word,1);
+                $user_name = str_replace('_',' ',$user_name);
+                $mentioned_users[] = $user_name;
+            }
+        }
+
+        // get user ids from mentioned users
+
+        $mentioned_user_ids = User::whereIn('name',$mentioned_users)->pluck('id')->toArray();
+
+        foreach($mentioned_user_ids as $user_id){
+            $user = User::find($user_id);
+            $user->notify(new UserMentionNotification($task));
+        }
+
+        $task->mentioned_users = implode(',',$mentioned_user_ids);
+
         $task->save();
 
         $task->users()->attach($this->user_ids);
@@ -120,8 +157,45 @@ class TaskListView extends Component
         $comment->task_id = $this->task->id;
         $comment->user_id = auth()->guard(session('guard'))->user()->id;
         $comment->comment = $this->comment;
+        $comment->created_by = session('guard');
+
+        // take out mentioned users from description and save them in mentioned_users array
+
+        $mentioned_users = [];
+
+        // remove paragraph tags from description
+
+        $temp_comment = str_replace('<p>','',$this->comment);
+        $temp_comment = str_replace('</p>','',$temp_comment);
+        $temp_comment = str_replace('&nbsp;',' ',$temp_comment);
+
+        // convert description to array of words
+
+        $comment_array = explode(' ',$temp_comment);
+
+        // check if any word starts with @
+
+        foreach($comment_array as $word){
+            if(substr($word,0,1) == '@'){
+                $user_name = substr($word,1);
+                $user_name = str_replace('_',' ',$user_name);
+                $mentioned_users[] = $user_name;
+            }
+        }
+
+        // get user ids from mentioned users
+
+        $mentioned_user_ids = User::whereIn('name',$mentioned_users)->pluck('id')->toArray();
+
+        foreach($mentioned_user_ids as $user_id){
+            $user = User::find($user_id);
+            $user->notify(new UserMentionNotification($this->task , $comment));
+        }
+
+        $comment->mentioned_users = implode(',',$mentioned_user_ids);
         $comment->save();
         $this->comments = $this->task->comments;
+        $this->comment = '';
         $this->dispatch('comment-added');
 
     }

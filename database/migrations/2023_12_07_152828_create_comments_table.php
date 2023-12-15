@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('task_id')->constrained()->onDelete('cascade');
             $table->unsignedBigInteger('user_id');
+            $table->string('mentioned_users')->nullable();
+            $table->string('created_by')->default('web')->comment('web','orginizations');
             $table->text('comment');
             $table->timestamps();
         });

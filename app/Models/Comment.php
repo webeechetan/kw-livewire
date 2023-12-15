@@ -19,7 +19,12 @@ class Comment extends Model
 
     public function user()
     {
-        
-        return $this->belongsTo(User::class);
+        // check if the user is from web or organization
+        $guard = $this->created_by;
+        if($guard == 'web'){
+            return $this->belongsTo(User::class);
+        }else{
+            return $this->belongsTo(Organization::class);
+        }
     }
 }

@@ -342,8 +342,7 @@
                             <div class="cmnt_act_user_name-wrap">
                                 <div class="cmnt_act_user_name">{{ $comment->user->name }}</div>
                                 <div class="cmnt_act_date">{{ $comment->created_at->diffForHumans() }}</div>
-                                <div class="cmnt_act_user_text d-none">{!! $comment->comment !!}</div>
-                                <div class="cmnt_act_user_text">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has </div>
+                                <div class="cmnt_act_user_text">{!! $comment->comment !!}</div>
                             </div>
                         </div>
                     </div>
@@ -353,9 +352,13 @@
                 <div class="AddTask_body_overview">
                     <div class="AddTask_rulesOverview">
                         <div class="AddTask_rulesOverview_item" wire:ignore>
-                            <div class="AddTask_rulesOverview_item_name">Comments</div>
+                            <div class="AddTask_rulesOverview_item_name">Comment</div>
                             <div class="AddTask_rulesOverview_item_rulesAction">
                                 <textarea name="" id="comment_box" cols="30" rows="5"></textarea>
+                            </div>
+                            <div class="AddTask_rulesOverview_item_name mt-3"></div>
+                            <div class="AddTask_rulesOverview_item_rulesAction mt-3">
+                                <button wire:click="saveComment" class="btn btn-primary btn-sm"><i class="bx bx-comment"></i></button>
                             </div>
                         </div>
                         
@@ -365,55 +368,27 @@
         </div>
     </div>
     @endif
-    <!-- menthion user Modal -->
-    <div class="modal fade" id="mentionUserModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-            </div>
-            <div class="modal-body">
-                <ul>
-                    @foreach($users as $user)
-                        <li class="mention_user" data-id="{{ $user->id }}" data-name="{{ $user->name }}" data-image="{{ $user->image }}">{{ $user->name }}</li>
-                    @endforeach
-                </ul>
-            </div>
-            <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-        </div>
-        </div>
-    </div>
 </div>
 
 @push('scripts')
     <script>
-        let users_for_mention = [];
-        let users = @json($users);
-        users.forEach(user => {
-            users_for_mention.push(user.name);
-        });
+
+        // check if users_for_mention is already declared
         
+        if(typeof users_for_mention === 'undefined'){
+            var users_for_mention = [];
+            let users = @json($users);
+            users.forEach(user => {
+                users_for_mention.push(user.name);
+            });
+        }else{
+            var users_for_mention = users_for_mention;
+            var users = @json($users);
+        }
+
+
         $(".toggleForm").click(function(){
             @this.toggleForm();
-        });
-
-        let editor_instance = '';
-
-        $(".mention_user").click(function(){
-            var user_id = $(this).data('id');
-            var user_name = $(this).data('name');
-            var user_image = $(this).data('image');
-            $('#mentionUserModal').modal('hide');
-            // add mention text without new line
-
-            var mention_text = '<span class="mention_user" data-id="'+user_id+'" data-name="'+user_name+'" data-image="'+user_image+'">@'+user_name+'</span>';
-            var editor_data = editor_instance.getData();
-            var new_editor_data = editor_data.replace(/<br>/g, '');
-            editor_instance.setData(new_editor_data+mention_text);
-
         });
 
         function initPlugins(){
@@ -428,11 +403,12 @@
                             }));
                         },
                         template : function (item) {
-                            return '<img src="{{ env('APP_URL') }}/storage/' + users[users_for_mention.indexOf(item)].image + '" class="img-fluid rounded-circle" style="width: 20px; height: 20px; margin-right: 5px;"/>' + item;
+                            return '<span class="mention_user" data-id=" ' + users[users_for_mention.indexOf(item)].id + ' "><img src="{{ env('APP_URL') }}/storage/' + users[users_for_mention.indexOf(item)].image + '" class="img-fluid rounded-circle" style="width: 20px; height: 20px; margin-right: 5px;"/>' + item + '</span>';
                         },
                         content: function (item) {
+                            item = item.replace(/\s/g, '_');
                             return '@' + item;
-                        }    
+                        },    
                     },
                     toolbar: [
                         ['font', ['bold', 'underline']],
@@ -460,6 +436,7 @@
                             return '<img src="{{ env('APP_URL') }}/storage/' + users[users_for_mention.indexOf(item)].image + '" class="img-fluid rounded-circle" style="width: 20px; height: 20px; margin-right: 5px;"/>' + item;
                         },
                         content: function (item) {
+                            item = item.replace(/\s/g, '_');
                             return '@' + item;
                         }    
                     },
@@ -476,6 +453,7 @@
                 });
     
             document.addEventListener('comment-added', function () {
+                $("#comment_box").summernote("code", "");
             });
 
             $('.users').select2({

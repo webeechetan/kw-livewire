@@ -9,15 +9,22 @@ use App\Models\Project;
 use App\Models\Team;
 use App\Models\Comment;
 use App\Notifications\NewTaskAssignNotification;
+use App\Notifications\UserMentionNotification;
 
 class ListTask extends Component
 {
+
+    // auth 
+
+    public $auth_user_id;
+
     public $tasks;
 
     // Add task Form
     public $name;
     public $description;
     public $dueDate;
+    public $mentioned_users= [];
 
     public $users;
     public $projects;
@@ -44,15 +51,17 @@ class ListTask extends Component
 
     public function mount()
     {
+        $this->auth_user_id = auth()->guard(session('guard'))->user()->id;
         $this->users = User::all();
         $this->projects = Project::all();
         $this->teams = Team::all();
         // Fetch all tasks from the database
+
         $this->tasks = [
-            'pending' => Task::where('status', 'pending')->orderBy('task_order')->get(),
-            'in_progress' => Task::where('status', 'in_progress')->orderBy('task_order')->get(),
-            'in_review' => Task::where('status', 'in_review')->orderBy('task_order')->get(),
-            'completed' => Task::where('status', 'completed')->orderBy('task_order')->get(),
+            'pending' => Task::tasksByUserType()->where('status','pending')->orderBy('task_order')->get(),
+            'in_progress' => Task::tasksByUserType()->where('status','in_progress')->orderBy('task_order')->get(),
+            'in_review' => Task::tasksByUserType()->where('status','in_review')->orderBy('task_order')->get(),
+            'completed' => Task::tasksByUserType()->where('status','completed')->orderBy('task_order')->get(),
         ];
     }
 
@@ -103,10 +112,10 @@ class ListTask extends Component
         }
 
         $this->tasks = [
-            'pending' => Task::where('status', 'pending')->orderBy('task_order')->get(),
-            'in_progress' => Task::where('status', 'in_progress')->orderBy('task_order')->get(),
-            'in_review' => Task::where('status', 'in_review')->orderBy('task_order')->get(),
-            'completed' => Task::where('status', 'completed')->orderBy('task_order')->get(),
+            'pending' => Task::tasksByUserType()->where('status','pending')->orderBy('task_order')->get(),
+            'in_progress' => Task::tasksByUserType()->where('status','in_progress')->orderBy('task_order')->get(),
+            'in_review' => Task::tasksByUserType()->where('status','in_review')->orderBy('task_order')->get(),
+            'completed' => Task::tasksByUserType()->where('status','completed')->orderBy('task_order')->get(),
         ];
     }
 
@@ -121,8 +130,44 @@ class ListTask extends Component
         $task->project_id = $this->project_id;
         $task->name = $this->name;
         $task->description = $this->description;
+
+        // take out mentioned users from description and save them in mentioned_users array
+
+        $mentioned_users = [];
+
+        // remove paragraph tags from description
+
+        $temp_description = str_replace('<p>','',$this->description);
+        $temp_description = str_replace('</p>','',$temp_description);
+
+        // convert description to array of words
+
+        $description_array = explode(' ',$temp_description);
+
+        // check if any word starts with @
+
+        foreach($description_array as $word){
+            if(substr($word,0,1) == '@'){
+                $user_name = substr($word,1);
+                $user_name = str_replace('_',' ',$user_name);
+                $mentioned_users[] = $user_name;
+            }
+        }
+
+        // get user ids from mentioned users
+
+        $mentioned_user_ids = User::whereIn('name',$mentioned_users)->pluck('id')->toArray();
+
+        foreach($mentioned_user_ids as $user_id){
+            $user = User::find($user_id);
+            $user->notify(new UserMentionNotification($task));
+        }
+
+        $task->mentioned_users = implode(',',$mentioned_user_ids);
+
         $task->due_date = $this->dueDate;
         $task->status = 'pending';
+        $task->created_by = session('guard');
         // $task->when_completed_notify = $this->when_completed_notify;
         $task->save();
 
@@ -176,8 +221,44 @@ class ListTask extends Component
         $comment->task_id = $this->task->id;
         $comment->user_id = auth()->guard(session('guard'))->user()->id;
         $comment->comment = $this->comment;
+        $comment->created_by = session('guard');
+
+        // take out mentioned users from description and save them in mentioned_users array
+
+        $mentioned_users = [];
+
+        // remove paragraph tags from description
+
+        $temp_comment = str_replace('<p>','',$this->comment);
+        $temp_comment = str_replace('</p>','',$temp_comment);
+
+        // convert description to array of words
+
+        $comment_array = explode(' ',$temp_comment);
+
+        // check if any word starts with @
+
+        foreach($comment_array as $word){
+            if(substr($word,0,1) == '@'){
+                $user_name = substr($word,1);
+                $user_name = str_replace('_',' ',$user_name);
+                $mentioned_users[] = $user_name;
+            }
+        }
+
+        // get user ids from mentioned users
+
+        $mentioned_user_ids = User::whereIn('name',$mentioned_users)->pluck('id')->toArray();
+
+        foreach($mentioned_user_ids as $user_id){
+            $user = User::find($user_id);
+            $user->notify(new UserMentionNotification($this->task , $comment));
+        }
+
+        $comment->mentioned_users = implode(',',$mentioned_user_ids);
         $comment->save();
         $this->comments = $this->task->comments;
+        $this->comment = '';
         $this->dispatch('comment-added');
 
     }

@@ -48,14 +48,25 @@ class Task extends Model
     }
 
     public function assignedBy(){
-        $guard = session('guard');
+        $guard = $this->created_by;
         if($guard == 'web'){
-            return $this->belongsTo(User::class,'assigned_by');
+            return $this->belongsTo(User::class, 'assigned_by');
+        }else{
+            return $this->belongsTo(Organization::class, 'assigned_by');
         }
-        return $this->belongsTo(Organization::class,'assigned_by', 'id');
     }
 
     public function comments(){
         return $this->hasMany(Comment::class);
+    }
+
+    // scopes 
+
+    public function scopeTasksByUserType($query){
+        if(session('guard') == 'web'){
+            return $query->whereHas('users', function($q){
+                $q->where('user_id', auth()->user()->id);
+            });
+        }
     }
 }

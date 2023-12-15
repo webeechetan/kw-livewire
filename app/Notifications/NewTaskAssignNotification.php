@@ -29,7 +29,7 @@ class NewTaskAssignNotification extends Notification implements ShouldQueue
      */
     public function via(object $notifiable): array
     {
-        return ['slack','mail'];
+        return ['mail'];
     }
 
     /**
@@ -39,8 +39,9 @@ class NewTaskAssignNotification extends Notification implements ShouldQueue
     {
         return (new MailMessage)
                     ->subject('New Task Assigned')
-                    ->line('Hey there '.$this->task->assignedBy->name.' assigned you a new task '.$this->task->name)
-                    ->action('View Task', route('task.index'));
+                    ->line('Hey there '.$this->task->assignedTo->name.' '.$this->task->assignedBy->name.' assigned you a new task '.$this->task->name)
+                    ->action('View Task', url('/tasks/'.$this->task->id))
+                    ->line('Thank you for using our application!');
     }
 
     public function toSlack($notifiable)
