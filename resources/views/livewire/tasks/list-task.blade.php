@@ -337,7 +337,7 @@
                     <div class="cmnt_act_row">
                         <div class="cmnt_act_user">
                             <div class="cmnt_act_user_img">
-                                <img class="rounded-circle" src="{{ env('APP_URL') }}/storage/{{ $user->image }}">
+                                <img class="rounded-circle" src="{{ env('APP_URL') }}/storage/{{ $comment->user->image }}">
                             </div>
                             <div class="cmnt_act_user_name-wrap">
                                 <div class="cmnt_act_user_name">{{ $comment->user->name }}</div>

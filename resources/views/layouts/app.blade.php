@@ -78,10 +78,12 @@
             <div class="sidebar-l-menu">
                 <ul class="list-none menu-sidebar">
                     <li><a wire:navigate href="{{ route('dashboard') }}" class="@if (request()->routeIs('dashboard')) active @endif"><i class='bx bx-line-chart' ></i> Dashboard</a></li>
-                    <li><a wire:navigate href="{{ route('client.index') }}" class="@if (request()->routeIs('client.index') || request()->routeIs('client.add')) active @endif"><i class='bx bx-briefcase-alt-2'></i> Clients</a></li>
-                    <li><a wire:navigate href="{{ route('project.index') }}" class="@if (request()->routeIs('project.index') || request()->routeIs('project.add')) active @endif"><i class='bx bx-objects-horizontal-left'></i> Projects</a></li>
-                    <li><a wire:navigate href="{{ route('user.index') }}" class="@if (request()->routeIs('user.index') || request()->routeIs('user.add')) active @endif"><i class='bx bx-user'></i> Users</a></li>
-                    <li><a wire:navigate href="{{ route('team.index') }}" class="@if (request()->routeIs('team.index') || request()->routeIs('team.add')) active @endif"><i class='bx bx-sitemap'></i> Teams</a></li>
+                    @if (session('guard') == 'orginizations')
+                        <li><a wire:navigate href="{{ route('client.index') }}" class="@if (request()->routeIs('client.index') || request()->routeIs('client.add')) active @endif"><i class='bx bx-briefcase-alt-2'></i> Clients</a></li>
+                        <li><a wire:navigate href="{{ route('project.index') }}" class="@if (request()->routeIs('project.index') || request()->routeIs('project.add')) active @endif"><i class='bx bx-objects-horizontal-left'></i> Projects</a></li>
+                        <li><a wire:navigate href="{{ route('user.index') }}" class="@if (request()->routeIs('user.index') || request()->routeIs('user.add')) active @endif"><i class='bx bx-user'></i> Users</a></li>
+                        <li><a wire:navigate href="{{ route('team.index') }}" class="@if (request()->routeIs('team.index') || request()->routeIs('team.add')) active @endif"><i class='bx bx-sitemap'></i> Teams</a></li>
+                    @endif
                     <li><a wire:navigate href="{{ route('task.index') }}" class="@if (request()->routeIs('task.index') || request()->routeIs('task.list-view') || request()->routeIs('task.add')) active @endif"><i class='bx bx-task' ></i> Tasks</a></li>
                     <li><a href="{{ route('file-manager') }}" class="@if (request()->routeIs('file-manager')) active @endif"><i class='bx bx-file' ></i> Files</a></li>
                 </ul>
