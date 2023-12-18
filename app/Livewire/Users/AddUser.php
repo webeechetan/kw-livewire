@@ -58,9 +58,10 @@ class AddUser extends Component
             $image = str_replace('public/', '', $image);
             
             $user->image = $image;
+        }else{
+            $user->image = Helper::createAvatar($user->name,'users');
         }
 
-        $user->image = Helper::createAvatar($user->name,'users');
 
         $user->password = Hash::make($this->password);
 
