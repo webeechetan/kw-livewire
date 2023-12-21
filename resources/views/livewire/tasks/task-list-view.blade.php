@@ -121,7 +121,7 @@
                                     <div class="taskList_row">
                                         <div class="row">
                                             <div class="col-md-4">
-                                                <div class="taskList_col taskList_col_title"><span class="taskList_col_title_complete_icon"><i class='bx bx-check'></i></span> {{ $task->name }}</div>
+                                                <div class="taskList_col taskList_col_title" wire:click="enableEditForm({{$task['id']}})"><span class="taskList_col_title_complete_icon"><i class='bx bx-check'></i></span> {{ $task->name }}</div>
                                             </div>
                                             <div class="col text-center">
                                                 <div class="taskList_col">{{  Carbon\Carbon::parse($task->due_date)->format('d M Y') }}</div>
@@ -539,7 +539,7 @@
     <script>
         if(typeof users_for_mention === 'undefined'){
             var users_for_mention = [];
-            let users = @json($users);
+            var users = @json($users);
             users.forEach(user => {
                 users_for_mention.push(user.name);
             });
@@ -570,6 +570,30 @@
             @this.toggleForm();
         });
 
+        // File manager button (image icon)
+
+        if(typeof FMButton === 'undefined'){
+            var FMButton = function(context) {
+                const ui = $.summernote.ui;
+                const button = ui.button({
+                    contents: '<i class="note-icon-picture"></i> ',
+                    tooltip: 'File Manager',
+                    click: function() {
+                    window.open('/file-manager/summernote', 'fm', 'width=1400,height=800');
+                    }
+                });
+                return button.render();
+            };
+        }else{
+            var FMButton = FMButton;
+        }
+
+        // set file link
+        function fmSetLink(url) {
+            $('#editor').summernote('insertImage', url);
+            $('#comment_box').summernote('insertImage', url);
+        }
+
         function initPlugins(){
                 $("#editor").summernote({
                     height: 200,
@@ -593,11 +617,15 @@
                         ['font', ['bold', 'underline']],
                         ['para', ['ul', 'ol']],
                         ['insert', ['link']],
+                        ['fm-button', ['fm']],
                     ],
                     callbacks: {
                         onChange: function(contents, $editable) {
                             @this.set('description', contents);
                         }
+                    },
+                    buttons: {
+                        fm: FMButton
                     }
                 });
 
@@ -623,11 +651,15 @@
                         ['font', ['bold', 'underline']],
                         ['para', ['ul', 'ol']],
                         ['insert', ['link']],
+                        ['fm-button', ['fm']],
                     ],
                     callbacks: {
                         onChange: function(contents, $editable) {
                             @this.set('comment', contents);
                         }
+                    },
+                    buttons: {
+                        fm: FMButton
                     }
                 });
     
