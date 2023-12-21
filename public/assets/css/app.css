@@ -2082,7 +2082,7 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
 .kanban_column_task_warning .kanban_column_task_date {
   color: #e7bf1d;
 }
-.kanban_column_task.sortable-chosen {
+.kanban_column_task.sortable-ghost {
   opacity: 0.3;
 }
 .kanban_column_empty {

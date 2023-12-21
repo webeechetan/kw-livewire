@@ -296,7 +296,7 @@
 
             /*----- Draging -----*/
             &.sortable {
-                &-chosen {
+                &-ghost {
                     opacity: 0.3;
                 }
             }
