@@ -27,6 +27,8 @@ return new class extends Migration
             $table->dateTime('completed_at')->nullable();
             $table->boolean('is_recurring')->default(false);
             $table->integer('task_order')->default(0);
+            $table->string('created_by')->default('web')->comment('web','orginizations');
+            $table->string('mentioned_users')->nullable();
             $table->timestamps();
         });
     }

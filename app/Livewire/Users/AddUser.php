@@ -12,6 +12,7 @@ use Livewire\WithFileUploads;
 use Livewire\WithPagination;
 use App\Notifications\UserWelcomeNotification;
 use App\Notifications\InviteUser;
+use App\Helpers\Helper;
 
 class AddUser extends Component
 {
@@ -57,7 +58,10 @@ class AddUser extends Component
             $image = str_replace('public/', '', $image);
             
             $user->image = $image;
+        }else{
+            $user->image = Helper::createAvatar($user->name,'users');
         }
+
 
         $user->password = Hash::make($this->password);
 

@@ -19,6 +19,7 @@ use App\Livewire\Teams\EditTeam;
 use App\Livewire\Tasks\AddTask;
 use App\Livewire\Tasks\ListTask;
 use App\Livewire\Tasks\TaskListView;
+use App\Livewire\FileManager;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -38,6 +39,12 @@ use App\Notifications\InviteUser;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+Route::get('/create-image',function(){
+    // Avatar::create('Susilo Bambang Yudhoyono')->save('sample.png');
+    // save in storage folder
+    Avatar::create('Susilo Bambang Yudhoyono')->save(storage_path('app/public/sample.png'));
+});
 
 Route::get('/',Login::class);
 Route::get('/login',Login::class)->name('login');
@@ -68,6 +75,8 @@ Route::group(['middleware' => ['myauth']], function() {
     Route::get('/tasks',ListTask::class)->name('task.index');
     Route::get('/tasks/add',AddTask::class)->name('task.add');
     Route::get('/tasks/list-view',TaskListView::class)->name('task.list-view');
+
+    Route::get('/file-manager',FileManager::class)->name('file-manager');
     
     Route::get('/logout',function(){
         Auth::logout();

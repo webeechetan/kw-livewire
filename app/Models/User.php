@@ -50,11 +50,19 @@ class User extends Authenticatable
         static::addGlobalScope(new OrganizationScope);
     }
 
+    public function setNameAttribute($value){
+        $this->attributes['name'] = ucwords($value);
+    }
+
     public function routeNotificationForSlack($notification){
         return env('SLACK_TASK_NOTIFICATION_WEBHOOK_URL');
     }
 
     public function teams(){
         return $this->belongsToMany(Team::class);
+    }
+
+    public function tasks(){
+        return $this->belongsToMany(Task::class);
     }
 }

@@ -5,6 +5,7 @@ namespace App\Livewire\Teams;
 use Livewire\Component;
 use App\Models\Team;
 use App\Models\User;
+use App\Helpers\Helper;
 
 class EditTeam extends Component
 {
@@ -39,6 +40,7 @@ class EditTeam extends Component
         $team = Team::find($this->team->id);
         $team->name = $this->name;
         $team->description = $this->description;
+        $team->image = Helper::createAvatar($team->name,'teams');
         $team->save();
 
         $this->team->users()->sync($this->user_ids);

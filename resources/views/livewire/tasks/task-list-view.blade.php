@@ -119,7 +119,7 @@
                                     <div class="taskList_row">
                                         <div class="row">
                                             <div class="col-md-4">
-                                                <div class="taskList_col taskList_col_title"><span class="taskList_col_title_complete_icon"><i class='bx bx-check'></i></span> {{ $task->name }}</div>
+                                                <div class="taskList_col taskList_col_title" wire:click="enableEditForm({{$task['id']}})"><span class="taskList_col_title_complete_icon"><i class='bx bx-check'></i></span> {{ $task->name }}</div>
                                             </div>
                                             <div class="col text-center">
                                                 <div class="taskList_col">{{  Carbon\Carbon::parse($task->due_date)->format('d M Y') }}</div>
@@ -505,6 +505,10 @@
                             <div class="AddTask_rulesOverview_item_rulesAction">
                                 <textarea name="" id="comment_box" cols="30" rows="5"></textarea>
                             </div>
+                            <div class="AddTask_rulesOverview_item_name mt-3"></div>
+                            <div class="AddTask_rulesOverview_item_rulesAction mt-3">
+                                <button wire:click="saveComment" class="btn btn-primary btn-sm"><i class="bx bx-comment"></i></button>
+                            </div>
                         </div>
                         {{-- comments --}}
                         @foreach( $comments as $comment)
@@ -531,6 +535,16 @@
 
 @push('scripts')
     <script>
+        if(typeof users_for_mention === 'undefined'){
+            var users_for_mention = [];
+            var users = @json($users);
+            users.forEach(user => {
+                users_for_mention.push(user.name);
+            });
+        }else{
+            var users_for_mention = users_for_mention;
+            var users = @json($users);
+        }
 
         $(document).ready(function(){
             $(".accordion-header").click(function(){
@@ -554,76 +568,101 @@
             @this.toggleForm();
         });
 
-        function initPlugins(){
-            ClassicEditor
-                .create( document.querySelector( '#editor' ),{
-                    toolbar: {
-                        items: [
-                            'heading',
-                            '|',
-                            'bold',
-                            '|',
-                            'italic',
-                            '|',
-                            'link',
-                            '|',
-                            'bulletedList',
-                            '|',
-                            'numberedList',
-                            '|',
-                        ]
-                    },
-                } )
-                .then( editor => {
-                        editor.model.document.on( 'change:data', () => {
-                            console.log( 'The Document has changed!' );
-                                @this.set('description', editor.getData());
-                        } )
-                } )
-                .catch( error => {
-                        console.error( error );
-                } );
+        // File manager button (image icon)
 
-                ClassicEditor
-                .create( document.querySelector( '#comment_box' ),{
-                    toolbar: {
-                        items: [
-                            'heading',
-                            '|',
-                            'bold',
-                            '|',
-                            'italic',
-                            '|',
-                            'link',
-                            '|',
-                            'bulletedList',
-                            '|',
-                            'numberedList',
-                            '|',
-                        ]
+        if(typeof FMButton === 'undefined'){
+            var FMButton = function(context) {
+                const ui = $.summernote.ui;
+                const button = ui.button({
+                    contents: '<i class="note-icon-picture"></i> ',
+                    tooltip: 'File Manager',
+                    click: function() {
+                    window.open('/file-manager/summernote', 'fm', 'width=1400,height=800');
+                    }
+                });
+                return button.render();
+            };
+        }else{
+            var FMButton = FMButton;
+        }
+
+        // set file link
+        function fmSetLink(url) {
+            $('#editor').summernote('insertImage', url);
+            $('#comment_box').summernote('insertImage', url);
+        }
+
+        function initPlugins(){
+                $("#editor").summernote({
+                    height: 200,
+                    hint: {
+                        mentions: users_for_mention,
+                        match: /\B@(\w*)$/,
+                        search: function (keyword, callback) {
+                            callback($.grep(this.mentions, function (item) {
+                                return item.indexOf(keyword) == 0;
+                            }));
+                        },
+                        template : function (item) {
+                            return '<img src="{{ env('APP_URL') }}/storage/' + users[users_for_mention.indexOf(item)].image + '" class="img-fluid rounded-circle" style="width: 20px; height: 20px; margin-right: 5px;"/>' + item;
+                        },
+                        content: function (item) {
+                            item = item.replace(/\s/g, '_');
+                            return '@' + item;
+                        }    
                     },
-                } )
-                .then( editor => {
-                        editor.model.document.on( 'change:data', () => {
-                            console.log( 'The Document has changed!' );
-                                @this.set('comment', editor.getData());
-                        } ),
-                        editor.ui.view.editable.element.addEventListener('keydown', (event) => {
-                            // check for enter key without shift key press
-                            if (event.keyCode == 13 && !event.shiftKey) {
-                                event.preventDefault();
-                                @this.saveComment();
-                                setTimeout(function(){
-                                    editor.setData('');
-                                }, 100);
-                            }
-                        });
-                } )
-                .catch( error => {
-                        console.error( error );
-                } );
+                    toolbar: [
+                        ['font', ['bold', 'underline']],
+                        ['para', ['ul', 'ol']],
+                        ['insert', ['link']],
+                        ['fm-button', ['fm']],
+                    ],
+                    callbacks: {
+                        onChange: function(contents, $editable) {
+                            @this.set('description', contents);
+                        }
+                    },
+                    buttons: {
+                        fm: FMButton
+                    }
+                });
+
+                $("#comment_box").summernote({
+                    height: 100,
+                    hint: {
+                        mentions: users_for_mention,
+                        match: /\B@(\w*)$/,
+                        search: function (keyword, callback) {
+                            callback($.grep(this.mentions, function (item) {
+                                return item.indexOf(keyword) == 0;
+                            }));
+                        },
+                        template : function (item) {
+                            return '<img src="{{ env('APP_URL') }}/storage/' + users[users_for_mention.indexOf(item)].image + '" class="img-fluid rounded-circle" style="width: 20px; height: 20px; margin-right: 5px;"/>' + item;
+                        },
+                        content: function (item) {
+                            item = item.replace(/\s/g, '_');
+                            return '@' + item + ' ';
+                        }    
+                    },
+                    toolbar: [
+                        ['font', ['bold', 'underline']],
+                        ['para', ['ul', 'ol']],
+                        ['insert', ['link']],
+                        ['fm-button', ['fm']],
+                    ],
+                    callbacks: {
+                        onChange: function(contents, $editable) {
+                            @this.set('comment', contents);
+                        }
+                    },
+                    buttons: {
+                        fm: FMButton
+                    }
+                });
     
             document.addEventListener('comment-added', function () {
+                $("#comment_box").summernote("code", "");
             });
 
             $('.users').select2({
@@ -656,7 +695,7 @@
                 }
                 var baseUrl = "{{ env('APP_URL') }}/storage";
                 var $state = $(
-                    '<span><img height="25px" width="25px" src="' + baseUrl + '/' + state.element.attributes[0].value + '" class="img-thumbnail" /> ' + state.text + '</span>'
+                    '<span><img class="select2-selection__choice__display_userImg" src="' + baseUrl + '/' + state.element.attributes[0].value + '" /> ' + state.text + '</span>'
                 );
                 return $state;
             };

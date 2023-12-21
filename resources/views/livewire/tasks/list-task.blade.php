@@ -69,7 +69,17 @@
                             <div class="kanban_column_empty"><i class='bx bx-add-to-queue'></i></div>
                             @endif
                             @foreach($tasks[$group] as $task)
-                                <div class="kanban_column_task kanban_column_task_overdue h-100" wire:key="task-{{$task['id']}}" wire:sortable-group.item="{{ $task['id'] }}" >
+                                @php
+                                    $date_class = '';
+                                    if($task['due_date'] < date('Y-m-d')){
+                                        $date_class = 'kanban_column_task_overdue';
+                                    }
+                                    if($task['due_date'] == date('Y-m-d')){
+                                        $date_class = 'kanban_column_task_warning';
+                                    }
+                                    
+                                @endphp
+                                <div class="kanban_column_task {{ $date_class }} h-100" wire:key="task-{{$task['id']}}" wire:sortable-group.item="{{ $task['id'] }}" >
                                     <div class="kanban_column_task-wrap" wire:sortable-group.handle>
                                         <div class="card-options d-none">
                                             <i class='bx bx-dots-horizontal-rounded' ></i>
@@ -327,13 +337,12 @@
                     <div class="cmnt_act_row">
                         <div class="cmnt_act_user">
                             <div class="cmnt_act_user_img">
-                                <img class="rounded-circle" src="{{ env('APP_URL') }}/storage/{{ $user->image }}">
+                                <img class="rounded-circle" src="{{ env('APP_URL') }}/storage/{{ $comment->user->image }}">
                             </div>
                             <div class="cmnt_act_user_name-wrap">
                                 <div class="cmnt_act_user_name">{{ $comment->user->name }}</div>
                                 <div class="cmnt_act_date">{{ $comment->created_at->diffForHumans() }}</div>
-                                <div class="cmnt_act_user_text d-none">{!! $comment->comment !!}</div>
-                                <div class="cmnt_act_user_text">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has </div>
+                                <div class="cmnt_act_user_text">{!! $comment->comment !!}</div>
                             </div>
                         </div>
                     </div>
@@ -343,9 +352,13 @@
                 <div class="AddTask_body_overview">
                     <div class="AddTask_rulesOverview">
                         <div class="AddTask_rulesOverview_item" wire:ignore>
-                            <div class="AddTask_rulesOverview_item_name">Comments</div>
+                            <div class="AddTask_rulesOverview_item_name">Comment</div>
                             <div class="AddTask_rulesOverview_item_rulesAction">
                                 <textarea name="" id="comment_box" cols="30" rows="5"></textarea>
+                            </div>
+                            <div class="AddTask_rulesOverview_item_name mt-3"></div>
+                            <div class="AddTask_rulesOverview_item_rulesAction mt-3">
+                                <button wire:click="saveComment" class="btn btn-primary btn-sm"><i class="bx bx-comment"></i></button>
                             </div>
                         </div>
                         
@@ -359,15 +372,49 @@
 
 @push('scripts')
     <script>
-        let users_for_mention = [];
-        let users = @json($users);
-        users.forEach(user => {
-            users_for_mention.push(user.name);
-        });
+
+        // check if users_for_mention is already declared
         
+        if(typeof users_for_mention === 'undefined'){
+            var users_for_mention = [];
+            var users = @json($users);
+            users.forEach(user => {
+                users_for_mention.push(user.name);
+            });
+        }else{
+            var users_for_mention = users_for_mention;
+            var users = @json($users);
+        }
+
+
         $(".toggleForm").click(function(){
             @this.toggleForm();
         });
+
+        // File manager button (image icon)
+
+        if(typeof FMButton === 'undefined'){
+            var FMButton = function(context) {
+                const ui = $.summernote.ui;
+                const button = ui.button({
+                    contents: '<i class="note-icon-picture"></i> ',
+                    tooltip: 'File Manager',
+                    click: function() {
+                    window.open('/file-manager/summernote', 'fm', 'width=1400,height=800');
+                    }
+                });
+                return button.render();
+            };
+        }else{
+            var FMButton = FMButton;
+        }
+
+        // set file link
+        function fmSetLink(url) {
+            $('#editor').summernote('insertImage', url);
+            $('#comment_box').summernote('insertImage', url);
+
+        }
 
         function initPlugins(){
                 $("#editor").summernote({
@@ -381,21 +428,26 @@
                             }));
                         },
                         template : function (item) {
-                            return '<img src="{{ env('APP_URL') }}/storage/' + users[users_for_mention.indexOf(item)].image + '" class="img-fluid rounded-circle" style="width: 20px; height: 20px; margin-right: 5px;"/>' + item;
+                            return '<span class="mention_user" data-id=" ' + users[users_for_mention.indexOf(item)].id + ' "><img src="{{ env('APP_URL') }}/storage/' + users[users_for_mention.indexOf(item)].image + '" class="img-fluid rounded-circle" style="width: 20px; height: 20px; margin-right: 5px;"/>' + item + '</span>';
                         },
                         content: function (item) {
+                            item = item.replace(/\s/g, '_');
                             return '@' + item;
-                        }    
+                        },    
                     },
                     toolbar: [
                         ['font', ['bold', 'underline']],
                         ['para', ['ul', 'ol']],
                         ['insert', ['link']],
+                        ['fm-button', ['fm']],
                     ],
                     callbacks: {
                         onChange: function(contents, $editable) {
                             @this.set('description', contents);
                         }
+                    },
+                    buttons: {
+                        fm: FMButton
                     }
                 });
 
@@ -413,6 +465,7 @@
                             return '<img src="{{ env('APP_URL') }}/storage/' + users[users_for_mention.indexOf(item)].image + '" class="img-fluid rounded-circle" style="width: 20px; height: 20px; margin-right: 5px;"/>' + item;
                         },
                         content: function (item) {
+                            item = item.replace(/\s/g, '_');
                             return '@' + item;
                         }    
                     },
@@ -420,15 +473,20 @@
                         ['font', ['bold', 'underline']],
                         ['para', ['ul', 'ol']],
                         ['insert', ['link']],
+                        ['fm-button', ['fm']],
                     ],
                     callbacks: {
                         onChange: function(contents, $editable) {
                             @this.set('comment', contents);
                         }
+                    },
+                    buttons: {
+                        fm: FMButton
                     }
                 });
     
             document.addEventListener('comment-added', function () {
+                $("#comment_box").summernote("code", "");
             });
 
             $('.users').select2({

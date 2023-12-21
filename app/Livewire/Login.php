@@ -4,8 +4,10 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use App\Models\Organization;
 use App\Models\User;
+use App\Models\Scopes\OrganizationScope;
 
 class Login extends Component
 {
@@ -27,10 +29,14 @@ class Login extends Component
         $res = Auth::guard('orginizations')->attempt(['email' => $this->email, 'password' => $this->password]);
 
         if(!$res){
-            $res = Auth::guard('web')->attempt(['email' => $this->email, 'password' => $this->password]);
-            if($res){
-                session()->put('guard','web');
-                session()->put('org_id',User::where('email',$this->email)->first()->org_id);
+            $user = User::withoutGlobalScope(OrganizationScope::class)->where('email',$this->email)->first();
+            if($user){
+                $res = Hash::check($this->password,$user->password);
+                if($res){
+                    Auth::guard('web')->login($user);
+                    session()->put('guard','web');
+                    session()->put('org_id',User::withoutGlobalScope(OrganizationScope::class)->where('email',$this->email)->first()->org_id);
+                }
             }
         }else{
             session()->put('guard','orginizations');
