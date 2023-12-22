@@ -150,8 +150,7 @@
                 <div class="col-md-5">
                     <div class="d-flex gap-2 justify-content-end">
                         <a href="javascript:;" wire:click="store" class="btn-border btn-border-sm btn-border-success"><i class='bx bx-check'></i> Save</a>
-                        <a href="javascript:;" class="btn-border btn-border-sm btn-border-primary close-add-task-form"><i class='bx bx-x' ></i> Close</a>
-                        <a href="{{ route('task.index') }}" wire:navigate class="btn-border btn-border-sm btn-border-danger"><i class='bx bx-trash' ></i> Delete</a>
+                        <a href="{{ route('task.index') }}" wire:navigate  class="btn-border btn-border-sm btn-border-primary close-add-task-form"><i class='bx bx-x' ></i> Close</a>
                     </div>
                 </div>
             </div>
@@ -429,7 +428,11 @@
                         },
                         content: function (item) {
                             item = item.replace(/\s/g, '_');
-                            return '@' + item;
+                            let span = document.createElement('a');
+                            $(span).addClass('mention_user');
+                            $(span).text(' '+'@' + item + ' ');
+                            return span;
+                            // return '@' + item;
                         },    
                     },
                     toolbar: [

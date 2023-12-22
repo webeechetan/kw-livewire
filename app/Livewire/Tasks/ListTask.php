@@ -140,6 +140,11 @@ class ListTask extends Component
         $temp_description = str_replace('<p>','',$this->description);
         $temp_description = str_replace('</p>','',$temp_description);
 
+        // remove html tags from description
+
+        $temp_description = strip_tags($temp_description);
+
+
         // convert description to array of words
 
         $description_array = explode(' ',$temp_description);
@@ -231,6 +236,8 @@ class ListTask extends Component
 
         $temp_comment = str_replace('<p>','',$this->comment);
         $temp_comment = str_replace('</p>','',$temp_comment);
+        $temp_comment = strip_tags($temp_comment);
+
 
         // convert description to array of words
 

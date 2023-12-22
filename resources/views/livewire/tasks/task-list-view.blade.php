@@ -317,7 +317,6 @@
                     <div class="d-flex gap-2 justify-content-end">
                         <a href="javascript:;" wire:click="store" class="btn-border btn-border-sm btn-border-success"><i class='bx bx-check'></i> Save</a>
                         <a href="javascript:;" wire:click="toggleForm" class="btn-border btn-border-sm btn-border-primary"><i class='bx bx-x' ></i> Close</a>
-                        <a href="{{ route('task.index') }}" wire:navigate class="btn-border btn-border-sm btn-border-danger"><i class='bx bx-trash' ></i> Delete</a>
                     </div>
                 </div>
             </div>
