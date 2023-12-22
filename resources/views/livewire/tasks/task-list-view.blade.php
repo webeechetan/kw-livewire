@@ -36,266 +36,265 @@
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" id="task_list_tab_complete-tab" data-bs-toggle="pill" data-bs-target="#task_list_tab_complete" type="button" role="tab" aria-controls="task_list_tab_complete" aria-selected="false">Completed</button>
                     </li>
-                    
-                    </ul>
-                    <div class="tab-content" id="pills-tabContent">
-                        <div class="tab-pane fade show active" id="task_list_tab_assigned" role="tabpanel" aria-labelledby="task_list_tab_assigned-tab" tabindex="0">
-                            <div class="taskList-dashbaord_header">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="taskList-dashbaord_header_title taskList_col">Task Name</div>
-                                    </div>
-                                    <div class="col text-center">
-                                        <div class="taskList-dashbaord_header_title taskList_col">Due Date</div>
-                                    </div>
-                                    <div class="col text-center">
-                                        <div class="taskList-dashbaord_header_title taskList_col">Projects</div>
-                                    </div>
-                                    <div class="col text-center">
-                                        <div class="taskList-dashbaord_header_title taskList_col">Assignee</div>
-                                    </div>
-                                    <div class="col text-center">
-                                        <div class="taskList-dashbaord_header_title taskList_col">Notify</div>
-                                    </div>
-                                    <div class="col text-center">
-                                        <div class="taskList-dashbaord_header_title taskList_col">Status</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="taskList">
-                                @foreach($tasks['pending'] as $task)
-                                    <div class="taskList_row">
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <div class="taskList_col taskList_col_title" wire:click="enableEditForm({{$task['id']}})"><span class="taskList_col_title_complete_icon"><i class='bx bx-check'></i></span> {{ $task->name }}</div>
-                                            </div>
-                                            <div class="col text-center">
-                                                <div class="taskList_col"><span class="btn-batch"><i class='bx bx-calendar-alt' ></i> {{  Carbon\Carbon::parse($task->due_date)->format('d M Y') }}</span></div>
-                                            </div>
-                                            <div class="col text-center">
-                                                @if($task->project)
-                                                    <div class="taskList_col"><span class="btn-batch">{{ $task->project->name }}</span></div>
-                                                @else
-                                                    <div class="taskList_col">-</div>
-                                                @endif
-                                            </div>
-                                            <div class="col text-center">
-                                                <div class="taskList_col">
-                                                    <div class="avatarGroup avatarGroup-overlap">
-                                                        @foreach($task['users'] as $user)
-                                                        <a href="#" class="avatarGroup-avatar">
-                                                            <span class="avatar avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ $user->name }}">
-                                                                <img alt="avatar" src="{{ env('APP_URL') }}/storage/{{ $user->image }}" class="rounded-circle" />
-                                                            </span>
-                                                        </a>
-                                                        @endforeach
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col text-center">
-                                                <div class="taskList_col">
-                                                    <div class="avatarGroup avatarGroup-overlap">
-                                                        @foreach($task['users'] as $user)
-                                                        <a href="#" class="avatarGroup-avatar">
-                                                            <span class="avatar avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ $user->name }}">
-                                                                <img alt="avatar" src="{{ env('APP_URL') }}/storage/{{ $user->image }}" class="rounded-circle" />
-                                                            </span>
-                                                        </a>
-                                                        @endforeach
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col">
-                                                <div class="taskList_col">
-                                                    <div class="icon_group justify-content-center">
-                                                        <a class="btn-icon-rounded btn-icon-rounded-progress" href="javascript:void(0);"><i class='bx bx-pencil'></i></a>
-                                                        <a class="btn-icon-rounded btn-icon-rounded-danger" href="javascript:void(0);"><i class='bx bx-trash' ></i></a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endforeach
-                            </div>
+                </ul>
+                <div class="taskList-dashbaord_header">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="taskList-dashbaord_header_title taskList_col">Task Name</div>
                         </div>
-                        <div class="tab-pane fade" id="task_list_tab_progress" role="tabpanel" aria-labelledby="task_list_tab_progress-tab" tabindex="0">
-                            <div>
-                                @foreach($tasks['in_progress'] as $task)
-                                    <div class="taskList_row">
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <div class="taskList_col taskList_col_title" wire:click="enableEditForm({{$task['id']}})"><span class="taskList_col_title_complete_icon"><i class='bx bx-check'></i></span> {{ $task->name }}</div>
-                                            </div>
-                                            <div class="col text-center">
-                                                <div class="taskList_col">{{  Carbon\Carbon::parse($task->due_date)->format('d M Y') }}</div>
-                                            </div>
-                                            <div class="col text-center">
-                                                @if($task->project)
-                                                    <div class="taskList_col">{{ $task->project->name }}</div>
-                                                @else
-                                                    <div class="taskList_col">-</div>
-                                                @endif
-                                            </div>
-                                            <div class="col text-center">
-                                                <div class="taskList_col">
-                                                    <div class="avatarGroup avatarGroup-overlap">
-                                                        @foreach($task['users'] as $user)
-                                                        <a href="#" class="avatarGroup-avatar">
-                                                            <span class="avatar avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ $user->name }}">
-                                                                <img alt="avatar" src="{{ env('APP_URL') }}/storage/{{ $user->image }}" class="rounded-circle" />
-                                                            </span>
-                                                        </a>
-                                                        @endforeach
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col text-center">
-                                                <div class="taskList_col">
-                                                    <div class="taskList_col">
-                                                        <div class="avatarGroup avatarGroup-overlap">
-                                                            @foreach($task['users'] as $user)
-                                                            <a href="#" class="avatarGroup-avatar">
-                                                                <span class="avatar avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ $user->name }}">
-                                                                    <img alt="avatar" src="{{ env('APP_URL') }}/storage/{{ $user->image }}" class="rounded-circle" />
-                                                                </span>
-                                                            </a>
-                                                            @endforeach
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col">
-                                                <div class="taskList_col">
-                                                    <div class="icon_group justify-content-center">
-                                                        <a class="btn-icon-rounded btn-icon-rounded-progress" href="javascript:void(0);"><i class='bx bx-pencil'></i></a>
-                                                        <a class="btn-icon-rounded btn-icon-rounded-danger" href="javascript:void(0);"><i class='bx bx-trash' ></i></a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endforeach
-                            </div>
+                        <div class="col text-center">
+                            <div class="taskList-dashbaord_header_title taskList_col">Due Date</div>
                         </div>
-                        <div class="tab-pane fade" id="task_list_tab_review" role="tabpanel" aria-labelledby="task_list_tab_review-tab" tabindex="0">
-                            <div>
-                                @foreach($tasks['in_review'] as $task)
-                                    <div class="taskList_row">
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <div class="taskList_col taskList_col_title" wire:click="enableEditForm({{$task['id']}})"><span class="taskList_col_title_complete_icon"><i class='bx bx-check'></i></span> {{ $task->name }}</div>
-                                            </div>
-                                            <div class="col text-center">
-                                                <div class="taskList_col">{{  Carbon\Carbon::parse($task->due_date)->format('d M Y') }}</div>
-                                            </div>
-                                            <div class="col text-center">
-                                                @if($task->project)
-                                                    <div class="taskList_col">{{ $task->project->name }}</div>
-                                                @else
-                                                    <div class="taskList_col">-</div>
-                                                @endif
-                                            </div>
-                                            <div class="col text-center">
-                                                <div class="taskList_col">
-                                                    <div class="avatarGroup avatarGroup-overlap">
-                                                        @foreach($task['users'] as $user)
-                                                        <a href="#" class="avatarGroup-avatar">
-                                                            <span class="avatar avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ $user->name }}">
-                                                                <img alt="avatar" src="{{ env('APP_URL') }}/storage/{{ $user->image }}" class="rounded-circle" />
-                                                            </span>
-                                                        </a>
-                                                        @endforeach
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col text-center">
-                                                <div class="taskList_col">
-                                                    <div class="taskList_col">
-                                                        <div class="avatarGroup avatarGroup-overlap">
-                                                            @foreach($task['users'] as $user)
-                                                            <a href="#" class="avatarGroup-avatar">
-                                                                <span class="avatar avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ $user->name }}">
-                                                                    <img alt="avatar" src="{{ env('APP_URL') }}/storage/{{ $user->image }}" class="rounded-circle" />
-                                                                </span>
-                                                            </a>
-                                                            @endforeach
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col">
-                                                <div class="taskList_col">
-                                                    <div class="icon_group justify-content-center">
-                                                        <a class="btn-icon-rounded btn-icon-rounded-progress" href="javascript:void(0);"><i class='bx bx-pencil'></i></a>
-                                                        <a class="btn-icon-rounded btn-icon-rounded-danger" href="javascript:void(0);"><i class='bx bx-trash' ></i></a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endforeach
-                            </div>
+                        <div class="col text-center">
+                            <div class="taskList-dashbaord_header_title taskList_col">Projects</div>
                         </div>
-                        <div class="tab-pane fade" id="task_list_tab_complete" role="tabpanel" aria-labelledby="task_list_tab_complete-tab" tabindex="0">
-                            <div>
-                                @foreach($tasks['completed'] as $task)
-                                    <div class="taskList_row">
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <div class="taskList_col taskList_col_title" wire:click="enableEditForm({{$task['id']}})"><span class="taskList_col_title_complete_icon"><i class='bx bx-check'></i></span> {{ $task->name }}</div>
-                                            </div>
-                                            <div class="col text-center">
-                                                <div class="taskList_col">{{  Carbon\Carbon::parse($task->due_date)->format('d M Y') }}</div>
-                                            </div>
-                                            <div class="col text-center">
-                                                @if($task->project)
-                                                    <div class="taskList_col">{{ $task->project->name }}</div>
-                                                @else
-                                                    <div class="taskList_col">-</div>
-                                                @endif
-                                            </div>
-                                            <div class="col text-center">
-                                                <div class="taskList_col">
-                                                    <div class="avatarGroup avatarGroup-overlap">
-                                                        @foreach($task['users'] as $user)
-                                                        <a href="#" class="avatarGroup-avatar">
-                                                            <span class="avatar avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ $user->name }}">
-                                                                <img alt="avatar" src="{{ env('APP_URL') }}/storage/{{ $user->image }}" class="rounded-circle" />
-                                                            </span>
-                                                        </a>
-                                                        @endforeach
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col text-center">
-                                                <div class="taskList_col">
-                                                    <div class="taskList_col">
-                                                        <div class="avatarGroup avatarGroup-overlap">
-                                                            @foreach($task['users'] as $user)
-                                                            <a href="#" class="avatarGroup-avatar">
-                                                                <span class="avatar avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ $user->name }}">
-                                                                    <img alt="avatar" src="{{ env('APP_URL') }}/storage/{{ $user->image }}" class="rounded-circle" />
-                                                                </span>
-                                                            </a>
-                                                            @endforeach
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col">
-                                                <div class="taskList_col">
-                                                    <div class="icon_group justify-content-center">
-                                                        <a class="btn-icon-rounded btn-icon-rounded-progress" href="javascript:void(0);"><i class='bx bx-pencil'></i></a>
-                                                        <a class="btn-icon-rounded btn-icon-rounded-danger" href="javascript:void(0);"><i class='bx bx-trash' ></i></a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endforeach
-                            </div>
+                        <div class="col text-center">
+                            <div class="taskList-dashbaord_header_title taskList_col">Assignee</div>
+                        </div>
+                        <div class="col text-center">
+                            <div class="taskList-dashbaord_header_title taskList_col">Notify</div>
+                        </div>
+                        <div class="col text-center">
+                            <div class="taskList-dashbaord_header_title taskList_col">Status</div>
                         </div>
                     </div>
+                </div>
+                <div class="tab-content" id="pills-tabContent">
+                    <div class="tab-pane fade show active" id="task_list_tab_assigned" role="tabpanel" aria-labelledby="task_list_tab_assigned-tab" tabindex="0">
+                        <div class="taskList">
+                            @foreach($tasks['pending'] as $task)
+                                <div class="taskList_row">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="taskList_col taskList_col_title" wire:click="enableEditForm({{$task['id']}})"><span class="taskList_col_title_complete_icon"><i class='bx bx-check'></i></span> {{ $task->name }}</div>
+                                        </div>
+                                        <div class="col text-center">
+                                            <div class="taskList_col"><span class="btn-batch">{{  Carbon\Carbon::parse($task->due_date)->format('d M Y') }}</span></div>
+                                        </div>
+                                        <div class="col text-center">
+                                            @if($task->project)
+                                                <div class="taskList_col"><span class="btn-batch">{{ $task->project->name }}</span></div>
+                                            @else
+                                                <div class="taskList_col">-</div>
+                                            @endif
+                                        </div>
+                                        <div class="col text-center">
+                                            <div class="taskList_col">
+                                                <div class="avatarGroup avatarGroup-overlap">
+                                                    @foreach($task['users'] as $user)
+                                                    <a href="#" class="avatarGroup-avatar">
+                                                        <span class="avatar avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ $user->name }}">
+                                                            <img alt="avatar" src="{{ env('APP_URL') }}/storage/{{ $user->image }}" class="rounded-circle" />
+                                                        </span>
+                                                    </a>
+                                                    @endforeach
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col text-center">
+                                            <div class="taskList_col">
+                                                <div class="avatarGroup avatarGroup-overlap">
+                                                    @foreach($task['users'] as $user)
+                                                    <a href="#" class="avatarGroup-avatar">
+                                                        <span class="avatar avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ $user->name }}">
+                                                            <img alt="avatar" src="{{ env('APP_URL') }}/storage/{{ $user->image }}" class="rounded-circle" />
+                                                        </span>
+                                                    </a>
+                                                    @endforeach
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="taskList_col">
+                                                <div class="icon_group justify-content-center">
+                                                    <a class="btn-icon-rounded btn-icon-rounded-progress" href="javascript:void(0);"><i class='bx bx-pencil'></i></a>
+                                                    <a class="btn-icon-rounded btn-icon-rounded-danger" href="javascript:void(0);"><i class='bx bx-trash' ></i></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="task_list_tab_progress" role="tabpanel" aria-labelledby="task_list_tab_progress-tab" tabindex="0">
+                        <div>
+                            @foreach($tasks['in_progress'] as $task)
+                                <div class="taskList_row">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="taskList_col taskList_col_title" wire:click="enableEditForm({{$task['id']}})"><span class="taskList_col_title_complete_icon"><i class='bx bx-check'></i></span> {{ $task->name }}</div>
+                                        </div>
+                                        <div class="col text-center">
+                                            <div class="taskList_col">{{  Carbon\Carbon::parse($task->due_date)->format('d M Y') }}</div>
+                                        </div>
+                                        <div class="col text-center">
+                                            @if($task->project)
+                                                <div class="taskList_col">{{ $task->project->name }}</div>
+                                            @else
+                                                <div class="taskList_col">-</div>
+                                            @endif
+                                        </div>
+                                        <div class="col text-center">
+                                            <div class="taskList_col">
+                                                <div class="avatarGroup avatarGroup-overlap">
+                                                    @foreach($task['users'] as $user)
+                                                    <a href="#" class="avatarGroup-avatar">
+                                                        <span class="avatar avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ $user->name }}">
+                                                            <img alt="avatar" src="{{ env('APP_URL') }}/storage/{{ $user->image }}" class="rounded-circle" />
+                                                        </span>
+                                                    </a>
+                                                    @endforeach
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col text-center">
+                                            <div class="taskList_col">
+                                                <div class="taskList_col">
+                                                    <div class="avatarGroup avatarGroup-overlap">
+                                                        @foreach($task['users'] as $user)
+                                                        <a href="#" class="avatarGroup-avatar">
+                                                            <span class="avatar avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ $user->name }}">
+                                                                <img alt="avatar" src="{{ env('APP_URL') }}/storage/{{ $user->image }}" class="rounded-circle" />
+                                                            </span>
+                                                        </a>
+                                                        @endforeach
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="taskList_col">
+                                                <div class="icon_group justify-content-center">
+                                                    <a class="btn-icon-rounded btn-icon-rounded-progress" href="javascript:void(0);"><i class='bx bx-pencil'></i></a>
+                                                    <a class="btn-icon-rounded btn-icon-rounded-danger" href="javascript:void(0);"><i class='bx bx-trash' ></i></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="task_list_tab_review" role="tabpanel" aria-labelledby="task_list_tab_review-tab" tabindex="0">
+                        <div>
+                            @foreach($tasks['in_review'] as $task)
+                                <div class="taskList_row">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="taskList_col taskList_col_title" wire:click="enableEditForm({{$task['id']}})"><span class="taskList_col_title_complete_icon"><i class='bx bx-check'></i></span> {{ $task->name }}</div>
+                                        </div>
+                                        <div class="col text-center">
+                                            <div class="taskList_col">{{  Carbon\Carbon::parse($task->due_date)->format('d M Y') }}</div>
+                                        </div>
+                                        <div class="col text-center">
+                                            @if($task->project)
+                                                <div class="taskList_col">{{ $task->project->name }}</div>
+                                            @else
+                                                <div class="taskList_col">-</div>
+                                            @endif
+                                        </div>
+                                        <div class="col text-center">
+                                            <div class="taskList_col">
+                                                <div class="avatarGroup avatarGroup-overlap">
+                                                    @foreach($task['users'] as $user)
+                                                    <a href="#" class="avatarGroup-avatar">
+                                                        <span class="avatar avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ $user->name }}">
+                                                            <img alt="avatar" src="{{ env('APP_URL') }}/storage/{{ $user->image }}" class="rounded-circle" />
+                                                        </span>
+                                                    </a>
+                                                    @endforeach
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col text-center">
+                                            <div class="taskList_col">
+                                                <div class="taskList_col">
+                                                    <div class="avatarGroup avatarGroup-overlap">
+                                                        @foreach($task['users'] as $user)
+                                                        <a href="#" class="avatarGroup-avatar">
+                                                            <span class="avatar avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ $user->name }}">
+                                                                <img alt="avatar" src="{{ env('APP_URL') }}/storage/{{ $user->image }}" class="rounded-circle" />
+                                                            </span>
+                                                        </a>
+                                                        @endforeach
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="taskList_col">
+                                                <div class="icon_group justify-content-center">
+                                                    <a class="btn-icon-rounded btn-icon-rounded-progress" href="javascript:void(0);"><i class='bx bx-pencil'></i></a>
+                                                    <a class="btn-icon-rounded btn-icon-rounded-danger" href="javascript:void(0);"><i class='bx bx-trash' ></i></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="task_list_tab_complete" role="tabpanel" aria-labelledby="task_list_tab_complete-tab" tabindex="0">
+                        <div>
+                            @foreach($tasks['completed'] as $task)
+                                <div class="taskList_row">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="taskList_col taskList_col_title" wire:click="enableEditForm({{$task['id']}})"><span class="taskList_col_title_complete_icon"><i class='bx bx-check'></i></span> {{ $task->name }}</div>
+                                        </div>
+                                        <div class="col text-center">
+                                            <div class="taskList_col">{{  Carbon\Carbon::parse($task->due_date)->format('d M Y') }}</div>
+                                        </div>
+                                        <div class="col text-center">
+                                            @if($task->project)
+                                                <div class="taskList_col">{{ $task->project->name }}</div>
+                                            @else
+                                                <div class="taskList_col">-</div>
+                                            @endif
+                                        </div>
+                                        <div class="col text-center">
+                                            <div class="taskList_col">
+                                                <div class="avatarGroup avatarGroup-overlap">
+                                                    @foreach($task['users'] as $user)
+                                                    <a href="#" class="avatarGroup-avatar">
+                                                        <span class="avatar avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ $user->name }}">
+                                                            <img alt="avatar" src="{{ env('APP_URL') }}/storage/{{ $user->image }}" class="rounded-circle" />
+                                                        </span>
+                                                    </a>
+                                                    @endforeach
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col text-center">
+                                            <div class="taskList_col">
+                                                <div class="taskList_col">
+                                                    <div class="avatarGroup avatarGroup-overlap">
+                                                        @foreach($task['users'] as $user)
+                                                        <a href="#" class="avatarGroup-avatar">
+                                                            <span class="avatar avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ $user->name }}">
+                                                                <img alt="avatar" src="{{ env('APP_URL') }}/storage/{{ $user->image }}" class="rounded-circle" />
+                                                            </span>
+                                                        </a>
+                                                        @endforeach
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="taskList_col">
+                                                <div class="icon_group justify-content-center">
+                                                    <a class="btn-icon-rounded btn-icon-rounded-progress" href="javascript:void(0);"><i class='bx bx-pencil'></i></a>
+                                                    <a class="btn-icon-rounded btn-icon-rounded-danger" href="javascript:void(0);"><i class='bx bx-trash' ></i></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
