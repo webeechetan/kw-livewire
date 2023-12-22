@@ -522,6 +522,7 @@ ul.list-none {
   font-size: 12px;
   font-weight: 500;
   color: #191919;
+  display: inline-block;
 }
 .btn:focus {
   outline: none;
@@ -1811,6 +1812,7 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   display: flex;
   flex-wrap: wrap;
   position: relative;
+  overflow: hidden;
   /*---- Content Body Style ----*/
   /*---- Body Header ----*/
 }
@@ -1871,9 +1873,6 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   flex-wrap: wrap;
   gap: 10px;
 }
-.avatarGroup-avatar {
-  display: flex;
-}
 .avatarGroup .avatar {
   width: 50px;
   height: 50px;
@@ -1894,6 +1893,12 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   height: 28px;
   font-size: 10px;
   letter-spacing: 1px;
+}
+.avatarGroup-avatar {
+  display: flex;
+}
+.avatarGroup-avatar:first-child .avatar {
+  margin-left: 0;
 }
 .avatarGroup-overlap .avatar {
   margin-left: -20px;
@@ -2154,6 +2159,11 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   top: 0;
   height: 100%;
   overflow: auto;
+  transform: translatex(100%);
+  transition: all 0.3s ease;
+}
+.AddCanvas.open {
+  transform: translatex(0);
 }
 
 /* ----- Add Task ----- */
@@ -2419,6 +2429,36 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
 .icon_remove i {
   font-size: 18px;
   color: #191919;
+}
+
+/* ----- Task Status Tabs ----- */
+.taskList-dashbaord_tabs .nav-pills {
+  gap: 20px;
+}
+.taskList-dashbaord_tabs .nav-pills .nav-link {
+  border: 1px solid #ddd;
+  background-color: #eee;
+  color: #191919;
+}
+.taskList-dashbaord_tabs .nav-pills .nav-link.active {
+  background-color: #f83890;
+  border-color: #f83890;
+  color: #fff;
+}
+.taskList-dashbaord_tabs .nav-pills .nav-link.active#task_list_tab_progress-tab {
+  border-color: #f7d306;
+  background-color: #f7d306;
+  color: #191919;
+}
+.taskList-dashbaord_tabs .nav-pills .nav-link.active#task_list_tab_review-tab {
+  border-color: #7407ff;
+  background-color: #7407ff;
+  color: #fff;
+}
+.taskList-dashbaord_tabs .nav-pills .nav-link.active#task_list_tab_complete-tab {
+  border-color: #48914d;
+  background-color: #48914d;
+  color: #fff;
 }
 
 /* ----- Task List View ----- */

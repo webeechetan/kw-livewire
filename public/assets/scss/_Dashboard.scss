@@ -4,6 +4,7 @@
     display: flex;
     flex-wrap: wrap;
     position: relative;
+    overflow: hidden;
     
     /*---- Content Body Style ----*/
     &-content {
@@ -59,10 +60,6 @@
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
-
-    &-avatar {
-        display: flex;
-    }
     
     .avatar {
         width: 50px;
@@ -84,6 +81,15 @@
             height: 28px;
             font-size: 10px;
             letter-spacing: 1px;
+        }
+    }
+
+    &-avatar {
+        display: flex;
+        &:first-child {
+            .avatar {
+                margin-left: 0;
+            }
         }
     }
 
@@ -389,6 +395,12 @@
     top: 0;
     height: 100%;
     overflow: auto;
+    transform: translatex(100%);
+    transition: $ease_03;
+
+    &.open {
+        transform: translatex(0);
+    }
 }
 
 /* ----- Add Task ----- */
@@ -684,6 +696,40 @@
         i {
             font-size: 18px;
             color: $dark;
+        }
+    }
+}
+
+/* ----- Task Status Tabs ----- */
+.taskList-dashbaord_tabs {
+    .nav-pills  {
+        gap: $spacing_sm;
+        .nav-link {
+            border: 1px solid $grey_xd;
+            background-color: $grey;
+            color: $text_color;
+            &.active {
+                background-color: $brand;
+                border-color: $brand;
+                color: $white;
+                &#task_list_tab {
+                    &_progress-tab {
+                        border-color: $yellow;
+                        background-color: $yellow;
+                        color: $text-color;
+                    }
+                    &_review-tab {
+                        border-color: $secondary;
+                        background-color: $secondary;
+                        color: $white;
+                    }
+                    &_complete-tab {
+                        border-color: $success;
+                        background-color: $success;
+                        color: $white;
+                    }
+                }
+            }
         }
     }
 }
