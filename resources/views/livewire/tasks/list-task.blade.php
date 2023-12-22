@@ -319,7 +319,7 @@
                             </div>
                         </div>
     
-                        <div class="AddTask_rulesOverview_item" wire:ignore>
+                        <div class="AddTask_rulesOverview_item mb-5" wire:ignore>
                             <div class="AddTask_rulesOverview_item_name">Description</div>
                             <div class="AddTask_rulesOverview_item_rulesAction">
                                 <textarea name="" id="editor" cols="30" rows="10">{{ $description }}</textarea>
@@ -348,20 +348,13 @@
                     </div>
                     @endforeach
                 </div>
-                
-                <div class="AddTask_body_overview">
-                    <div class="AddTask_rulesOverview">
-                        <div class="AddTask_rulesOverview_item" wire:ignore>
-                            <div class="AddTask_rulesOverview_item_name">Comment</div>
-                            <div class="AddTask_rulesOverview_item_rulesAction">
-                                <textarea name="" id="comment_box" cols="30" rows="5"></textarea>
-                            </div>
-                            <div class="AddTask_rulesOverview_item_name mt-3"></div>
-                            <div class="AddTask_rulesOverview_item_rulesAction mt-3">
-                                <button wire:click="saveComment" class="btn btn-primary btn-sm"><i class="bx bx-comment"></i></button>
-                            </div>
+
+                <div class="custComment">
+                    <div class="custComment-wrap">
+                        <div class="custComment-editor" wire:ignore>
+                            <textarea name="" id="comment_box" cols="30" rows="5"></textarea>
                         </div>
-                        
+                        <button wire:click="saveComment" class="custComment-btn btn-primary btn btn-sm"><i class="bx bx-comment"></i> Comment</button>
                     </div>
                 </div>
             </div>
