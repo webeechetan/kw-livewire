@@ -307,17 +307,18 @@
         <!-- Add Task Canvas Header -->
         <div class="AddTask_head">
             <div class="row align-items-center">
-                <div class="col-md-8">
+                <div class="col-md-7">
                     <div class="AddTask_title-wrap">
-                        <div class="AddTask_title-icon"><i class='bx bx-notepad'></i></div>
+                        <label class="AddTask_title-lable"><span class="AddTask_title-icon"><i class='bx bx-notepad'></i></span> Task Title</label>
                         <input class="form-control form-control-typeStyle AddTask_title" wire:model="name" type="text" placeholder="Type your task here...">
                     </div>
                     @error('name') <span class="text-danger">{{ $message }}</span> @enderror
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-5">
                     <div class="d-flex gap-2 justify-content-end">
-                        <a href="#" wire:click="store" class="btn-border btn-border-primary"><i class='bx bx-check'></i> Save</a>
-                        <a  wire:click="toggleForm" class="btn-border"><i class='bx bx-x' ></i> Close</a>
+                        <a href="javascript:;" wire:click="store" class="btn-border btn-border-sm btn-border-success"><i class='bx bx-check'></i> Save</a>
+                        <a href="javascript:;" wire:click="toggleForm" class="btn-border btn-border-sm btn-border-primary"><i class='bx bx-x' ></i> Close</a>
+                        <a href="{{ route('task.index') }}" wire:navigate class="btn-border btn-border-sm btn-border-danger"><i class='bx bx-trash' ></i> Delete</a>
                     </div>
                 </div>
             </div>
@@ -401,17 +402,18 @@
         <!-- edit Task Canvas Header -->
         <div class="AddTask_head">
             <div class="row align-items-center">
-                <div class="col-md-8">
+                <div class="col-md-7">
                     <div class="AddTask_title-wrap">
-                        <div class="AddTask_title-icon"><i class='bx bx-notepad'></i></div>
+                        <label class="AddTask_title-lable"><span class="AddTask_title-icon"><i class='bx bx-notepad'></i></span> Task Title</label>
                         <input class="form-control form-control-typeStyle AddTask_title" wire:model="name" type="text" placeholder="Type your task here...">
                     </div>
                     @error('name') <span class="text-danger">{{ $message }}</span> @enderror
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-5">
                     <div class="d-flex gap-2 justify-content-end">
-                        <a href="#" wire:click="updateTask" class="btn-border btn-border-primary"><i class='bx bx-check'></i> Update</a>
-                        <a href="{{ route('task.list-view') }}" wire:navigate class="btn-border"><i class='bx bx-x' ></i> Close</a>
+                        <a href="javascript:;" wire:click="updateTask" class="btn-border btn-border-sm btn-border-success"><i class='bx bx-check'></i> Save</a>
+                        <a href="{{route('task.list-view')}}" wire:navigate class="btn-border btn-border-sm btn-border-primary"><i class='bx bx-x' ></i> Close</a>
+                        <a href="{{ route('task.index') }}" wire:navigate class="btn-border btn-border-sm btn-border-danger"><i class='bx bx-trash' ></i> Delete</a>
                     </div>
                 </div>
             </div>
@@ -491,11 +493,28 @@
                         </div>
                     </div>
                 </form>
-                <hr>
+                <h5 class="cmnt_act_title"><i class='bx bx-line-chart text-primary'></i> Activity</h5>
+                <div class="cmnt_act">
+                    @foreach( $comments as $comment)
+                    <div class="cmnt_act_row">
+                        <div class="cmnt_act_user">
+                            <div class="cmnt_act_user_img">
+                                <img class="rounded-circle" src="{{ env('APP_URL') }}/storage/{{ $comment->user->image }}">
+                            </div>
+                            <div class="cmnt_act_user_name-wrap">
+                                <div class="cmnt_act_user_name">{{ $comment->user->name }}</div>
+                                <div class="cmnt_act_date">{{ $comment->created_at->diffForHumans() }}</div>
+                                <div class="cmnt_act_user_text">{!! $comment->comment !!}</div>
+                            </div>
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
+                
                 <div class="AddTask_body_overview">
                     <div class="AddTask_rulesOverview">
                         <div class="AddTask_rulesOverview_item" wire:ignore>
-                            <div class="AddTask_rulesOverview_item_name">Comments</div>
+                            <div class="AddTask_rulesOverview_item_name">Comment</div>
                             <div class="AddTask_rulesOverview_item_rulesAction">
                                 <textarea name="" id="comment_box" cols="30" rows="5"></textarea>
                             </div>
@@ -504,20 +523,7 @@
                                 <button wire:click="saveComment" class="btn btn-primary btn-sm"><i class="bx bx-comment"></i></button>
                             </div>
                         </div>
-                        {{-- comments --}}
-                        @foreach( $comments as $comment)
-                        <div class="AddTask_rulesOverview_item">
-                            <div class="AddTask_rulesOverview_item_name">
-                                <img class="rounded-circle" src="{{ env('APP_URL') }}/storage/{{ $user->image }}" alt="" height="50" width="50">
-                                {{ $comment->user->name }}
-                                <br>
-                                <small>{{ $comment->created_at->diffForHumans() }}</small>
-                            </div>
-                            <div class="AddTask_rulesOverview_item_rulesAction">
-                                {!! $comment->comment !!}
-                            </div>
-                        </div>
-                        @endforeach
+                        
                     </div>
                 </div>
             </div>

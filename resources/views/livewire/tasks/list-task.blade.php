@@ -135,8 +135,8 @@
     </div>
     
     {{-- Add task canvas --}}
-    @if($view_form)
-    <div class="AddCanvas">
+    {{-- @if($view_form) --}}
+    <div class="AddCanvas add-task-form ">
         <!-- Add Task Canvas Header -->
         <div class="AddTask_head">
             <div class="row align-items-center">
@@ -150,7 +150,7 @@
                 <div class="col-md-5">
                     <div class="d-flex gap-2 justify-content-end">
                         <a href="javascript:;" wire:click="store" class="btn-border btn-border-sm btn-border-success"><i class='bx bx-check'></i> Save</a>
-                        <a href="javascript:;" wire:click="toggleForm" class="btn-border btn-border-sm btn-border-primary"><i class='bx bx-x' ></i> Close</a>
+                        <a href="javascript:;" class="btn-border btn-border-sm btn-border-primary close-add-task-form"><i class='bx bx-x' ></i> Close</a>
                         <a href="{{ route('task.index') }}" wire:navigate class="btn-border btn-border-sm btn-border-danger"><i class='bx bx-trash' ></i> Delete</a>
                     </div>
                 </div>
@@ -189,7 +189,7 @@
                             <div class="AddTask_rulesOverview_item_name">Project</div>
                             <div class="AddTask_rulesOverview_item_rulesAction">
                                 <select  id="project_id" class="form-control">
-                                    <option value="">Select Project</option>
+                                    <option value="" disabled selected>Select Project</option>
                                     @foreach($projects as $project)
                                         <option value="{{ $project->id }}">{{ $project->name }}</option>
                                     @endforeach
@@ -227,7 +227,7 @@
             </div>
         </div>
     </div>
-    @endif
+    {{-- @endif --}}
 
     {{-- edit task canvas --}}
 
@@ -372,7 +372,9 @@
 
 @push('scripts')
     <script>
-
+        $(document).ready(function(){
+            $(".add-task-form").hide();
+        });
         // check if users_for_mention is already declared
         
         if(typeof users_for_mention === 'undefined'){
@@ -388,7 +390,12 @@
 
 
         $(".toggleForm").click(function(){
+            $(".add-task-form").addClass('open');
             @this.toggleForm();
+        });
+
+        $(".close-add-task-form").click(function(){
+            $(".add-task-form").removeClass('open');
         });
 
         // File manager button (image icon)
