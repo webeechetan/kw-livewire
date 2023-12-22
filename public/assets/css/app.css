@@ -2083,12 +2083,11 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   color: #e7bf1d;
 }
 .kanban_column_task.sortable-ghost {
-  opacity: 0.3;
+  opacity: 1;
 }
 .kanban_column_empty {
   width: 286px;
   min-height: 116px;
-  border: 2px dashed #ddd;
   border-radius: 4px;
   display: flex;
   flex-wrap: wrap;
@@ -2096,6 +2095,8 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   justify-content: center;
   font-size: 32px;
   color: #ddd;
+  background-color: #eee;
+  position: absolute;
 }
 .kanban_bord_body_columns {
   padding-top: 20px;
@@ -2159,11 +2160,6 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   top: 0;
   height: 100%;
   overflow: auto;
-  transform: translatex(100%);
-  transition: all 0.3s ease;
-}
-.AddCanvas.open {
-  transform: translatex(0);
 }
 
 /* ----- Add Task ----- */
@@ -2532,56 +2528,48 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   font-size: 16px;
 }
 
-/* ----- CK Editor ----- */
-div.ck.ck-editor {
-  border: 1px solid #eee;
-  border-radius: 10px;
-  padding: 5px;
-}
-div.ck.ck-editor__main > .ck-editor__editable:not(.ck-focused) {
-  background: #f3f6f9;
+/* ----- Summer Note Editor ----- */
+.note-editor.note-airframe .note-editing-area .note-editable, .note-editor.note-frame .note-editing-area .note-editable {
+  font-size: 14px;
 }
 
-.ck.ck-editor__main > .ck-editor__editable, div.ck.ck-editor__main > .ck-editor__editable:not(.ck-focused) {
-  background: #f3f6f9 !important;
-  outline: none !important;
-  box-shadow: none !important;
-  border: none !important;
-  min-height: 90px;
-  font-size: 13px;
+.note-editor .note-editing-area .note-editable a {
+  color: #f83890;
 }
 
-div.ck.ck-dropdown .ck-button.ck-dropdown__button {
+.note-editor .note-toolbar > .note-btn-group, .note-popover .popover-content > .note-btn-group {
+  margin: 0;
+}
+
+.note-btn, .note-btn:hover, .note-btn:active, .note-btn:focus {
   font-size: 12px;
-}
-
-.ck-rounded-corners .ck.ck-editor__top .ck-sticky-panel .ck-toolbar,
-.ck.ck-editor__top .ck-sticky-panel .ck-toolbar.ck-rounded-corners,
-.ck.ck-editor__main > .ck-editor__editable:not(.ck-focused) {
+  background: transparent;
+  padding: 0 10px;
   border: none;
 }
 
-div.ck-reset_all :not(.ck-reset_all-excluded *), .ck.ck-reset_all {
-  font-family: "Jost", sans-serif;
-  font-size: 8px;
+.note-editor .note-toolbar, .note-popover .popover-content {
+  padding-bottom: 3px;
 }
 
-div.ck.ck-toolbar > .ck-toolbar__items > :not(.ck-toolbar__line-break) {
-  margin-right: 10px;
+.note-editor.note-airframe, .note-editor.note-frame {
+  border-color: #eee;
 }
 
-div .ck.ck-list__item .ck-button.ck-on {
-  background: #f83890;
-  box-shadow: none;
-  border: none;
+.note-toolbar {
+  background: #f3f6f9;
+  border-bottom: 1px solid #eee;
 }
-div .ck.ck-list__item .ck-button.ck-on:hover, div .ck.ck-list__item .ck-button.ck-on:hover:not(.ck-disabled) {
-  background: #7407ff;
+
+.note-editor.note-airframe .note-statusbar, .note-editor.note-frame .note-statusbar {
+  border-color: #eee;
+  background: #fff;
 }
 
 /* ----- Activity ----- */
 .cmnt_act {
   padding: 20px 0;
+  margin-bottom: 175px;
 }
 .cmnt_act_title {
   font-size: 18px;
@@ -2635,6 +2623,16 @@ div .ck.ck-list__item .ck-button.ck-on:hover, div .ck.ck-list__item .ck-button.c
   display: flex;
   align-items: center;
   grid-gap: 4px;
+}
+.custComment .note-toolbar {
+  position: absolute;
+  bottom: 10px;
+  left: 5px;
+  border: none;
+  background: transparent;
+  z-index: 9;
+  width: 100%;
+  background-color: #f3f6f9;
 }
 
 /* ----- Requiring Task ----- */
