@@ -59,7 +59,7 @@
                                     </div>
                                 </div>
                             @endif
-                            <div class="btn-group mt-2">
+                            <div class="mt-2">
                                 <div class="col">
                                     <button class="w-100 btn btn-primary" type="submit">Verify OTP</button>
                                 </div>
@@ -96,7 +96,7 @@
                                     </div>
                                 </div>
                             @endif
-                            <div class="btn-group mt-2">
+                            <div class="mt-2">
                                 <div class="col">
                                     <button class="w-100 btn btn-primary" type="submit">Change Password</button>
                                 </div>

@@ -383,11 +383,6 @@ ul.list-none {
   background-color: #f7d306;
   border: 1px solid #f7d306;
 }
-.btn-group {
-  display: flex;
-  align-items: center;
-  grid-gap: 20px;
-}
 .btn-action .btn-icon {
   width: 35px;
   height: 35px;
@@ -1887,7 +1882,7 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   justify-content: center;
   background: #ddd;
   border-radius: 50%;
-  border: 2px solid #eee;
+  border: 1px solid #eee;
   font-weight: 600;
   color: #191919;
 }
@@ -1895,8 +1890,8 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   width: 100%;
 }
 .avatarGroup .avatar-sm {
-  width: 32px;
-  height: 32px;
+  width: 28px;
+  height: 28px;
   font-size: 10px;
   letter-spacing: 1px;
 }
@@ -2428,7 +2423,6 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
 
 /* ----- Task List View ----- */
 .taskList {
-  /* ----- Accordion ----- */
   /* ----- Task List Header ----- */
 }
 .taskList_col {
@@ -2472,39 +2466,8 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
 .taskList_row > .row {
   align-items: center;
 }
-.taskList .accordion {
-  --bs-accordion-border-width: 0px;
-  --bs-accordion-bg: transparent;
-}
-.taskList .accordion-item:last-of-type {
-  border-bottom-right-radius: 4px;
-  border-bottom-left-radius: 4px;
-}
-.taskList .accordion-item:not(:first-child) {
-  margin-top: 30px;
-}
-.taskList .accordion-button {
-  padding: 10px 15px;
-  cursor: pointer;
-  font-size: 22px;
-  background-color: #ffe6f1;
-  margin-bottom: 10px;
-  border-radius: 4px;
-}
-.taskList .accordion-button:not(.collapsed) {
-  background-color: #ffe6f1;
-}
-.taskList .accordion-button.taskList_row_wrap_head_title_inProgress {
-  background-color: #fff7d8;
-}
-.taskList .accordion-button.taskList_row_wrap_head_title_inReview {
-  background-color: #e8ddf7;
-}
-.taskList .accordion-button.taskList_row_wrap_head_title_complited {
-  background-color: #dae9db;
-}
-.taskList .accordion-body {
-  padding: 0;
+.taskList-dashbaord_tabs {
+  margin-top: 20px;
 }
 .taskList-dashbaord_header {
   background-color: #f83890;

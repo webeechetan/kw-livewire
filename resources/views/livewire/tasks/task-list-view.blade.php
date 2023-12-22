@@ -22,36 +22,47 @@
 
     <div class="taskList-dashbaord">
         <div class="taskList-wrap">
-            <div class="taskList-dashbaord_header">
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="taskList-dashbaord_header_title taskList_col">Task Name</div>
-                    </div>
-                    <div class="col text-center">
-                        <div class="taskList-dashbaord_header_title taskList_col">Due Date</div>
-                    </div>
-                    <div class="col text-center">
-                        <div class="taskList-dashbaord_header_title taskList_col">Projects</div>
-                    </div>
-                    <div class="col text-center">
-                        <div class="taskList-dashbaord_header_title taskList_col">Assignee</div>
-                    </div>
-                    <div class="col text-center">
-                        <div class="taskList-dashbaord_header_title taskList_col">Notify</div>
-                    </div>
-                    <div class="col text-center">
-                        <div class="taskList-dashbaord_header_title taskList_col">Status</div>
-                    </div>
-                </div>
-            </div>
-            <div class="taskList">
-                <div class="accordion" id="accordionPanelsStayOpenExample">
-                    <div class="accordion-item">
-                        <div class="accordion-header taskList_row_wrap_head" wire:ignore>
-                            <span class="accordion-button taskList_row_wrap_head_title" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">Assigned</span>
-                        </div>
-                        <div wire:ignore.self id="panelsStayOpen-collapseOne" class="accordion-collapse taskList_row_wrap collapse show">
-                            <div class="accordion-body">
+            <div class="taskList-dashbaord_tabs">
+                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="task_list_tab_assigned-tab" data-bs-toggle="pill" data-bs-target="#task_list_tab_assigned" type="button" role="tab" aria-controls="task_list_tab_assigned" aria-selected="true">Assigned</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="task_list_tab_progress-tab" data-bs-toggle="pill" data-bs-target="#task_list_tab_progress" type="button" role="tab" aria-controls="task_list_tab_progress" aria-selected="false">In Progress</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="task_list_tab_review-tab" data-bs-toggle="pill" data-bs-target="#task_list_tab_review" type="button" role="tab" aria-controls="task_list_tab_review" aria-selected="false">In Review</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="task_list_tab_complete-tab" data-bs-toggle="pill" data-bs-target="#task_list_tab_complete" type="button" role="tab" aria-controls="task_list_tab_complete" aria-selected="false">Completed</button>
+                    </li>
+                    
+                    </ul>
+                    <div class="tab-content" id="pills-tabContent">
+                        <div class="tab-pane fade show active" id="task_list_tab_assigned" role="tabpanel" aria-labelledby="task_list_tab_assigned-tab" tabindex="0">
+                            <div class="taskList-dashbaord_header">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="taskList-dashbaord_header_title taskList_col">Task Name</div>
+                                    </div>
+                                    <div class="col text-center">
+                                        <div class="taskList-dashbaord_header_title taskList_col">Due Date</div>
+                                    </div>
+                                    <div class="col text-center">
+                                        <div class="taskList-dashbaord_header_title taskList_col">Projects</div>
+                                    </div>
+                                    <div class="col text-center">
+                                        <div class="taskList-dashbaord_header_title taskList_col">Assignee</div>
+                                    </div>
+                                    <div class="col text-center">
+                                        <div class="taskList-dashbaord_header_title taskList_col">Notify</div>
+                                    </div>
+                                    <div class="col text-center">
+                                        <div class="taskList-dashbaord_header_title taskList_col">Status</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="taskList">
                                 @foreach($tasks['pending'] as $task)
                                     <div class="taskList_row">
                                         <div class="row">
@@ -107,14 +118,8 @@
                                 @endforeach
                             </div>
                         </div>
-                    </div>
-
-                    <div class="accordion-item">
-                        <div class="accordion-header taskList_row_wrap_head">
-                            <span class="accordion-button taskList_row_wrap_head_title taskList_row_wrap_head_title_inProgress" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="true" aria-controls="panelsStayOpen-collapseTwo">In Progress</span>
-                        </div>
-                        <div id="panelsStayOpen-collapseTwo" class="accordion-collapse taskList_row_wrap collapse show">
-                            <div class="accordion-body">
+                        <div class="tab-pane fade" id="task_list_tab_progress" role="tabpanel" aria-labelledby="task_list_tab_progress-tab" tabindex="0">
+                            <div>
                                 @foreach($tasks['in_progress'] as $task)
                                     <div class="taskList_row">
                                         <div class="row">
@@ -172,13 +177,8 @@
                                 @endforeach
                             </div>
                         </div>
-                    </div>
-                    <div class="accordion-item">
-                        <div class="accordion-header taskList_row_wrap_head" wire:ignore>
-                            <span class="accordion-button taskList_row_wrap_head_title taskList_row_wrap_head_title_inReview" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">In Review</span>
-                        </div>
-                        <div wire:ignore.self id="panelsStayOpen-collapseThree" class="accordion-collapse taskList_row_wrap collapse show">
-                            <div class="accordion-body">
+                        <div class="tab-pane fade" id="task_list_tab_review" role="tabpanel" aria-labelledby="task_list_tab_review-tab" tabindex="0">
+                            <div>
                                 @foreach($tasks['in_review'] as $task)
                                     <div class="taskList_row">
                                         <div class="row">
@@ -236,13 +236,8 @@
                                 @endforeach
                             </div>
                         </div>
-                    </div>
-                    <div class="accordion-item">
-                        <div class="accordion-header taskList_row_wrap_head" wire:ignore>
-                            <span class="accordion-button taskList_row_wrap_head_title taskList_row_wrap_head_title_complited" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseFour" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">Completed</span>
-                        </div>
-                        <div wire:ignore.self id="panelsStayOpen-collapseFour" class="accordion-collapse taskList_row_wrap collapse show">
-                            <div class="accordion-body">
+                        <div class="tab-pane fade" id="task_list_tab_complete" role="tabpanel" aria-labelledby="task_list_tab_complete-tab" tabindex="0">
+                            <div>
                                 @foreach($tasks['completed'] as $task)
                                     <div class="taskList_row">
                                         <div class="row">
@@ -301,7 +296,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
             </div>
         </div>
     </div>

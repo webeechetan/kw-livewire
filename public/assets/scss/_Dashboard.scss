@@ -72,7 +72,7 @@
         justify-content: center;
         background: $grey_xd;
         border-radius: 50%;
-        border: 2px solid $grey;
+        border: 1px solid $grey;
         font-weight: 600;
         color: $dark;
         img {
@@ -80,8 +80,8 @@
         }
 
         &-sm {
-            width: 32px;
-            height: 32px;
+            width: 28px;
+            height: 28px;
             font-size: 10px;
             letter-spacing: 1px;
         }
@@ -728,56 +728,21 @@
             align-items: center;
         }
     }
-    
-    /* ----- Accordion ----- */
-    .accordion {
-        --bs-accordion-border-width: 0px;
-        --bs-accordion-bg: transparent;
-        &-item {
-            &:last-of-type {
-                border-bottom-right-radius: $border_radius_xs;
-                border-bottom-left-radius: $border_radius_xs;
-            }
-            &:not(:first-child) {
-                margin-top: $spacing_md;
-            }            
-        }
-        &-button {
-            padding: $spacing_xs $spacing_s;
-            cursor: pointer;
-            font-size: 22px;
-            background-color: $brand_light;
-            margin-bottom: 10px;
-            border-radius: $border_radius_xs;
-            &:not(.collapsed) {
-                background-color: $brand_light;
-            }
-            &.taskList_row_wrap_head_title {
-                &_inProgress {
-                    background-color: $warning_light;
-                }
-                &_inReview {
-                    background-color: $secondary_light;
-                }
-                &_complited {
-                    background-color: $success_light;
-                }
-            }
-        }
-        &-body {
-            padding: 0;
-        }
-    }
 
     /* ----- Task List Header ----- */ 
-    &-dashbaord_header {
-        background-color: $brand;
-        margin: $spacing_s 0;
-        border-radius: $border_radius_xs;
-        &_title {
-            letter-spacing: 1px;
-            color: #fff;
-            font-size: 16px;
+    &-dashbaord {
+        &_tabs {
+            margin-top: $spacing_sm;
+        }
+        &_header {
+            background-color: $brand;
+            margin: $spacing_s 0;
+            border-radius: $border_radius_xs;
+            &_title {
+                letter-spacing: 1px;
+                color: #fff;
+                font-size: 16px;
+            }
         }
     }
 }

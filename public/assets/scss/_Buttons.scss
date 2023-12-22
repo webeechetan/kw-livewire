@@ -107,11 +107,6 @@
         }
     }
 
-    &-group {
-        @include flex_align_center;
-        grid-gap: 20px;
-    }
-
     /*---- Actions ----*/
     &-action {
         .btn {
