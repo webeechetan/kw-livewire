@@ -135,8 +135,8 @@
     </div>
     
     {{-- Add task canvas --}}
-    {{-- @if($view_form) --}}
-    <div class="AddCanvas add-task-form ">
+    @if($view_form)
+    <div class="AddCanvas ">
         <!-- Add Task Canvas Header -->
         <div class="AddTask_head">
             <div class="row align-items-center">
@@ -227,7 +227,7 @@
             </div>
         </div>
     </div>
-    {{-- @endif --}}
+    @endif
 
     {{-- edit task canvas --}}
 
@@ -372,9 +372,9 @@
 
 @push('scripts')
     <script>
-        $(document).ready(function(){
-            $(".add-task-form").hide();
-        });
+        // $(document).ready(function(){
+        //     $(".add-task-form").hide();
+        // });
         // check if users_for_mention is already declared
         
         if(typeof users_for_mention === 'undefined'){
@@ -390,13 +390,10 @@
 
 
         $(".toggleForm").click(function(){
-            $(".add-task-form").addClass('open');
             @this.toggleForm();
         });
 
-        $(".close-add-task-form").click(function(){
-            $(".add-task-form").removeClass('open');
-        });
+       
 
         // File manager button (image icon)
 
