@@ -390,7 +390,6 @@
     width: 767px;
     background-color: #fff;
     box-shadow: $box_shadow_light;
-    padding: 0 0 $spacing_md;
     position: absolute;
     right: 0;
     top: 0;
@@ -831,10 +830,14 @@
     background: #fff;
 }
 
+.note-modal {
+    z-index: 99999;
+}
+
 /* ----- Activity ----- */
 .cmnt_act {
     padding: $spacing_sm 0;
-    margin-bottom: 175px;
+    margin-bottom: 150px;
     &_title {
         font-size: 18px;
         background-color: $light;
@@ -881,6 +884,7 @@
     left: 0;
     bottom: 0;
     width: 100%;
+    background-color: $light;
     &-wrap {
         position: relative;
         margin: $spacing_sm $spacing_md;
@@ -888,24 +892,47 @@
 
     &-btn {
         position: absolute;
-        right: 20px;
-        bottom: 20px;
+        right: 10px;
+        bottom: 10px;
         z-index: 99;
         font-size: 0.9rem;
         display: flex;
         align-items: center;
         grid-gap: 4px;
+        background-color: $brand;
+        color: #fff;
+        border: none;
+        padding: 3px 8px;
+        border-radius: $border_radius_xs;
+        transition: $ease_03;
+
+        &:hover, &:active, &:focus {
+            background-color: $secondary;
+        }
     }
 
     .note-toolbar {
         position: absolute;
-        bottom: 10px;
-        left: 5px;
+        bottom: 3px;
+        left: 3px;
         border: none;
-        background: transparent;
+        background: $white;
         z-index: 9;
-        width: 100%;
-        background-color: $light;
+        width: calc(100% - 6px);
+        padding: 8px 5px;
+        border-top: 1px solid $grey;
+    }
+
+    .note-editable {
+        background-color: #fff;
+    }
+
+    .note-editing-area {
+        padding-bottom: 45px;
+    }
+
+    .note-statusbar {
+        display: none;
     }
 }
 
