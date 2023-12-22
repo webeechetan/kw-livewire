@@ -2154,7 +2154,6 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   width: 767px;
   background-color: #fff;
   box-shadow: 0 3px 30px rgba(0, 0, 0, 0.07);
-  padding: 0 0 30px;
   position: absolute;
   right: 0;
   top: 0;
@@ -2566,10 +2565,14 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   background: #fff;
 }
 
+.note-modal {
+  z-index: 99999;
+}
+
 /* ----- Activity ----- */
 .cmnt_act {
   padding: 20px 0;
-  margin-bottom: 175px;
+  margin-bottom: 150px;
 }
 .cmnt_act_title {
   font-size: 18px;
@@ -2609,6 +2612,7 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   left: 0;
   bottom: 0;
   width: 100%;
+  background-color: #f3f6f9;
 }
 .custComment-wrap {
   position: relative;
@@ -2616,23 +2620,42 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
 }
 .custComment-btn {
   position: absolute;
-  right: 20px;
-  bottom: 20px;
+  right: 10px;
+  bottom: 10px;
   z-index: 99;
   font-size: 0.9rem;
   display: flex;
   align-items: center;
   grid-gap: 4px;
+  background-color: #f83890;
+  color: #fff;
+  border: none;
+  padding: 3px 8px;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+.custComment-btn:hover, .custComment-btn:active, .custComment-btn:focus {
+  background-color: #7407ff;
 }
 .custComment .note-toolbar {
   position: absolute;
-  bottom: 10px;
-  left: 5px;
+  bottom: 3px;
+  left: 3px;
   border: none;
-  background: transparent;
+  background: #fff;
   z-index: 9;
-  width: 100%;
-  background-color: #f3f6f9;
+  width: calc(100% - 6px);
+  padding: 8px 5px;
+  border-top: 1px solid #eee;
+}
+.custComment .note-editable {
+  background-color: #fff;
+}
+.custComment .note-editing-area {
+  padding-bottom: 45px;
+}
+.custComment .note-statusbar {
+  display: none;
 }
 
 /* ----- Requiring Task ----- */
