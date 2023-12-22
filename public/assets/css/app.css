@@ -2086,7 +2086,7 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   opacity: 0.3;
 }
 .kanban_column_empty {
-  width: 100%;
+  width: 286px;
   min-height: 116px;
   border: 2px dashed #ddd;
   border-radius: 4px;
