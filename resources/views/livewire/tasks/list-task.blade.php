@@ -432,7 +432,6 @@
                             $(span).addClass('mention_user');
                             $(span).text(' '+'@' + item + ' ');
                             return span;
-                            // return '@' + item;
                         },    
                     },
                     toolbar: [
@@ -466,7 +465,10 @@
                         },
                         content: function (item) {
                             item = item.replace(/\s/g, '_');
-                            return '@' + item;
+                            let span = document.createElement('a');
+                            $(span).addClass('mention_user');
+                            $(span).text(' '+'@' + item + ' ');
+                            return span;
                         }    
                     },
                     toolbar: [

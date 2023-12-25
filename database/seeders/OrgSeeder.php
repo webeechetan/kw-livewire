@@ -27,6 +27,7 @@ class OrgSeeder extends Seeder
         $org->name = 'Webeesocial';
         $org->email = 'wbs@gmail.com';
         $org->password = Hash::make('123456');
+        $org->image = Helper::createAvatar($org->name,'users');
         $org->save();
 
         $client = new Client();
