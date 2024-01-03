@@ -21,6 +21,7 @@
                 <div class="card text-center">
                     <h6 class="card-header">{{ $client->name }}</h6>
                     <div class="card-body">
+                        <img src="{{ asset('storage/'.$client->image) }}" alt="" class="img-fluid" height="100" width="100">
                         <p class="card-text">{{ $client->description }}</p>
                         @foreach($client->projects as $project)
                             <span class="btn btn-warning btn-sm">{{ $project->name }}</span>
