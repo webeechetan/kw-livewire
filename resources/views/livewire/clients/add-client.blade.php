@@ -12,6 +12,12 @@
                                 @error('name') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
                             <div class="col-md-12">
+                                <label for="name">Client Image</label>
+                                <input type="file" wire:model="image" name="image" class="form-control">
+                                @error('image') <span class="text-danger">{{ $message }}</span> @enderror
+                            </div>
+                                
+                            <div class="col-md-12">
                                 <label for="description">Description</label>
                                 <textarea name="description" wire:model="description" class="form-control" placeholder="Enter Description"></textarea>
                                 @error('description') <span class="text-danger">{{ $message }}</span> @enderror

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name')->unique();
             $table->string('email')->unique();
             $table->string('password');
+            $table->string('image')->default('public/images/users/default.png');
             $table->timestamps();
         });
     }

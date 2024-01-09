@@ -136,7 +136,7 @@
     
     {{-- Add task canvas --}}
     @if($view_form)
-    <div class="AddCanvas">
+    <div class="AddCanvas ">
         <!-- Add Task Canvas Header -->
         <div class="AddTask_head">
             <div class="row align-items-center">
@@ -150,8 +150,7 @@
                 <div class="col-md-5">
                     <div class="d-flex gap-2 justify-content-end">
                         <a href="javascript:;" wire:click="store" class="btn-border btn-border-sm btn-border-success"><i class='bx bx-check'></i> Save</a>
-                        <a href="javascript:;" wire:click="toggleForm" class="btn-border btn-border-sm btn-border-primary"><i class='bx bx-x' ></i> Close</a>
-                        <a href="{{ route('task.index') }}" wire:navigate class="btn-border btn-border-sm btn-border-danger"><i class='bx bx-trash' ></i> Delete</a>
+                        <a href="{{ route('task.index') }}" wire:navigate  class="btn-border btn-border-sm btn-border-primary close-add-task-form"><i class='bx bx-x' ></i> Close</a>
                     </div>
                 </div>
             </div>
@@ -189,7 +188,7 @@
                             <div class="AddTask_rulesOverview_item_name">Project</div>
                             <div class="AddTask_rulesOverview_item_rulesAction">
                                 <select  id="project_id" class="form-control">
-                                    <option value="">Select Project</option>
+                                    <option value="" disabled selected>Select Project</option>
                                     @foreach($projects as $project)
                                         <option value="{{ $project->id }}">{{ $project->name }}</option>
                                     @endforeach
@@ -365,7 +364,9 @@
 
 @push('scripts')
     <script>
-
+        // $(document).ready(function(){
+        //     $(".add-task-form").hide();
+        // });
         // check if users_for_mention is already declared
         
         if(typeof users_for_mention === 'undefined'){
@@ -383,6 +384,8 @@
         $(".toggleForm").click(function(){
             @this.toggleForm();
         });
+
+       
 
         // File manager button (image icon)
 
@@ -425,7 +428,10 @@
                         },
                         content: function (item) {
                             item = item.replace(/\s/g, '_');
-                            return '@' + item;
+                            let span = document.createElement('a');
+                            $(span).addClass('mention_user');
+                            $(span).text(' '+'@' + item + ' ');
+                            return span;
                         },    
                     },
                     toolbar: [
@@ -459,7 +465,10 @@
                         },
                         content: function (item) {
                             item = item.replace(/\s/g, '_');
-                            return '@' + item;
+                            let span = document.createElement('a');
+                            $(span).addClass('mention_user');
+                            $(span).text(' '+'@' + item + ' ');
+                            return span;
                         }    
                     },
                     toolbar: [
