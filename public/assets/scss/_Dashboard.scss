@@ -1329,3 +1329,105 @@
         }
     }
 }
+
+/* ----- Files & Folder ----- */
+.files {
+    &-head {
+        display: flex;
+        align-items: center;
+        background-color: #fff;
+        padding: $spacing_xs $spacing_sm;
+    }
+    &-options {
+        margin-left: auto;
+        padding-left: $spacing_s;
+        ul {
+            display: flex;
+            padding: 0;
+            margin: 0;
+            list-style-type: none;
+            gap: $spacing_s;
+            
+            li {
+                a {
+                    font-size: 22px;
+                    background-color: $yellow_light;
+                    border: 1px solid transparent;
+                    width: 35px;
+                    height: 30px;
+                    border-radius: $border-radius_xs;
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    transition: $ease_03;
+
+                    &:hover {
+                        color: $yellow_dark;
+                        border-color: $yellow;
+                    }
+                }
+                &:last-child {
+                    a {
+                        color: $danger;
+                        background-color: $danger_light;
+
+                        &:hover {
+                            border-color: $danger;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    &-list {
+        &_2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: $spacing_s;
+        }
+    }
+
+    &-folder {
+        background-color: #fff;
+        border-radius: $border-radius_xs;
+        padding: $spacing_xs;
+        text-align: center;
+        position: relative;
+
+        &-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background-color: $grey;
+            margin-bottom: $spacing_xs;
+            border-radius: $border-radius;
+
+            i {
+                font-size: 32px;
+                color: $brand;
+            }
+        }
+
+        &-title {
+            font-weight: 500;
+        }
+
+        &-number {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            width: 30px;
+            height: 30px;
+            border-radius: $border_radius_xs;
+            background-color: $yellow_light;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 13px;
+        }
+    }
+}

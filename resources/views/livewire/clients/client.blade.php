@@ -131,7 +131,32 @@
     <div class="mt-5">
         <div class="row">
             <div class="col-md-4">
-                <div id="fm" class=""></div>
+                <div class="files-head">
+                    <h5 class="mb-0">Files & Folders</h5>
+                    <div class="files-options">
+                        <ul>
+                            <li><a href="#"><span><i class='bx bx-upload' ></i></span></a></li>
+                            <li><a href="#"><span><i class='bx bx-trash' ></i></span></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="files-list files-list_2 mt-3">
+                    <div class="files-folder">
+                        <span class="files-folder-icon"><i class='bx bx-folder'></i></span>
+                        <div class="files-folder-title">Moodward</div>
+                        <div class="files-folder-number">12</div>
+                    </div>
+                    <div class="files-folder">
+                        <span class="files-folder-icon"><i class='bx bx-folder'></i></span>
+                        <div class="files-folder-title">Moodward</div>
+                        <div class="files-folder-number">12</div>
+                    </div>
+                    <div class="files-folder">
+                        <span class="files-folder-icon"><i class='bx bx-folder'></i></span>
+                        <div class="files-folder-title">Moodward</div>
+                        <div class="files-folder-number">12</div>
+                    </div>
+                </div>
             </div>
             <div class="col-md-8">
                 <div class="project-tabs">

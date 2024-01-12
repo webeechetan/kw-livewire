@@ -3002,4 +3002,89 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   color: #cdb110;
 }
 
+/* ----- Files & Folder ----- */
+.files-head {
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  padding: 10px 20px;
+}
+.files-options {
+  margin-left: auto;
+  padding-left: 15px;
+}
+.files-options ul {
+  display: flex;
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+  gap: 15px;
+}
+.files-options ul li a {
+  font-size: 22px;
+  background-color: #fdf4c1;
+  border: 1px solid transparent;
+  width: 35px;
+  height: 30px;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+.files-options ul li a:hover {
+  color: #cdb110;
+  border-color: #f7d306;
+}
+.files-options ul li:last-child a {
+  color: #ff0000;
+  background-color: #fedddc;
+}
+.files-options ul li:last-child a:hover {
+  border-color: #ff0000;
+}
+.files-list_2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+}
+.files-folder {
+  background-color: #fff;
+  border-radius: 4px;
+  padding: 10px;
+  text-align: center;
+  position: relative;
+}
+.files-folder-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  background-color: #eee;
+  margin-bottom: 10px;
+  border-radius: 50%;
+}
+.files-folder-icon i {
+  font-size: 32px;
+  color: #f83890;
+}
+.files-folder-title {
+  font-weight: 500;
+}
+.files-folder-number {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  width: 30px;
+  height: 30px;
+  border-radius: 4px;
+  background-color: #fdf4c1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 13px;
+}
+
 /*# sourceMappingURL=app.css.map */
