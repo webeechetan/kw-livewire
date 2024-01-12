@@ -8,6 +8,7 @@ use App\Livewire\Dashboard;
 use App\Livewire\Clients\AddClient;
 use App\Livewire\Clients\ListClient;
 use App\Livewire\Clients\EditClient;
+use App\Livewire\Clients\Client as ClientProfile;
 use App\Livewire\Projects\AddProject;
 use App\Livewire\Projects\ListProject;
 use App\Livewire\Projects\EditProject;
@@ -59,6 +60,7 @@ Route::group(['middleware' => ['myauth']], function() {
     Route::get('/clients',ListClient::class)->name('client.index');
     Route::get('/clients/add',AddClient::class)->name('client.add');
     Route::get('/clients/edit/{id}',EditClient::class)->name('client.edit');
+    Route::get('/client/view/{id}',ClientProfile::class)->name('client.profile');
     
     Route::get('/projects',ListProject::class)->name('project.index');
     Route::get('/projects/add',AddProject::class)->name('project.add');

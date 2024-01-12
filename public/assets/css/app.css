@@ -2660,7 +2660,7 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
 
 /* ----- Requiring Task ----- */
 .req_calender {
-  width: 350px;
+  width: 400px;
   max-width: 100%;
   border: 1px solid #eee;
   padding: 15px;
@@ -2700,10 +2700,6 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
 .req_calender-header-item-date span {
   display: inline-flex;
 }
-.req_calender-header-item-date span svg {
-  width: 15px;
-  height: 15px;
-}
 .req_calender-body {
   background-color: #f3f6f9;
   padding: 20px;
@@ -2722,7 +2718,7 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   text-align: center;
   margin-top: 20px;
 }
-.req_calender-repeats select.form-select.planHoverStyle {
+.req_calender-repeats select.planHoverStyle {
   background-color: transparent;
   min-height: inherit;
   border: none;
@@ -2731,17 +2727,30 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   padding: 5px 30px 5px 15px;
   font-size: 14px;
 }
-.req_calender-repeats select.form-select.planHoverStyle:hover, .req_calender-repeats select.form-select.planHoverStyle.active {
+.req_calender-repeats select.planHoverStyle:hover, .req_calender-repeats select.planHoverStyle.active {
   border-color: #ced4da;
 }
 .req_calender-repeats-lable {
   font-size: 14px;
 }
 .req_calender-repeats-weekly-day_select {
+  display: flex;
+  align-items: center;
   justify-content: space-between;
+  list-style-type: none;
 }
 .req_calender-repeats-weekly-day_select > :not(style) ~ :not(style) {
   margin-left: 0 !important;
+}
+.req_calender-repeats-weekly-day_select li {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #eee;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
 }
 .req_calender-repeats-monthly-opt {
   background: #fff;

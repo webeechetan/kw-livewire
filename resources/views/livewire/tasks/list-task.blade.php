@@ -312,16 +312,109 @@
                                                 <span class="btn_link add_date_btn">{{ $dueDate }}</span>
                                             </a>
                                             {{-- <a href="#" class="icon_rounded rulesAction_group-item"><i class='bx bx-repeat'></i></a>    --}}
+                                            <span class="req_calender_opt" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Tooltip on top"><i class='bx bx-repeat'></i></span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div>                        
     
+                        <!-- Description -->
                         <div class="AddTask_rulesOverview_item mb-5" wire:ignore>
                             <div class="AddTask_rulesOverview_item_name">Description</div>
                             <div class="AddTask_rulesOverview_item_rulesAction">
                                 <textarea name="" id="editor" cols="30" rows="10">{{ $description }}</textarea>
+                            </div>
+                        </div>
+
+                        <!-- Requiring Task Date  -->
+                        <div class="req_calender d-none">
+                            <div class="req_calender-wrap">
+                                <div class="req_calender-header">
+                                    <div class="req_calender-header-item">
+                                        <a href="#" class="req_calender-header-item-date req_calender-header-item-date-primary">
+                                            <span><i class='bx bx-calendar-alt'></i></span> Start Date
+                                        </a>
+                                        <Tooltip title="Due Date" arrow>
+                                            <a href="" class="req_calender-header-item-date req_calender-header-item-date-secondary">
+                                                <span><i class='bx bx-calendar-alt'></i></span> Due Date
+                                            </a>
+                                        </Tooltip>
+                                    </div>
+                                </div>
+                                <div class="req_calender-body">
+                                    <div class="req_calender-repeats">
+                                        <div class="req_calender-label">Repeats</div>
+                                        <div>
+                                            <select class="planHoverStyle" aria-label="Weekly">
+                                                <option value="1">Weekly</option>
+                                                <option value="2">Monthly</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="req_calender-repeats-weekly">
+                                        <h4 class="req_calender-repeats-lable">On These Days</h4>
+                                        <ul class="req_calender-repeats-weekly-day_select">
+                                            <li><span>S</span></li>
+                                            <li class="active"><span>M</span></li>
+                                            <li><span>T</span></li>
+                                            <li><span>W</span></li>
+                                            <li><span>T</span></li>
+                                            <li><span>F</span></li>
+                                            <li><span>S</span></li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="req_calender-repeats-monthly">
+                                        <div class="req_calender-repeats-monthly">
+                                            <div class="req_calender-repeats-monthly-item">
+                                                <div>
+                                                    <a class="req_calender-repeats-monthly-opt active">
+                                                        <span><i class='bx bx-checkbox-checked' ></i></span> On The
+                                                    </a>
+                                                </div>
+                                                <div>
+                                                    <div class="req_calender-repeats-monthly-onThe-r">
+                                                        <select class="planHoverStyle" aria-label="Monthly">
+                                                            <option value="1">1st</option>
+                                                            <option value="2">2nd</option>
+                                                            <option value="3">3rd</option>
+                                                            <option value="4">4th</option>
+                                                            <option value="5">Last</option>
+                                                        </select>
+                                                        <select class="planHoverStyle" aria-label="Monthly">
+                                                            <option value="1">Sunday</option>
+                                                            <option value="2">Monday</option>
+                                                            <option value="3">Tuesday</option>
+                                                            <option value="4">Wednesday</option>
+                                                            <option value="5">Thursday</option>
+                                                            <option value="5">Firday</option>
+                                                            <option value="5">Suterday</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="req_calender-repeats-monthly-item mt-4">
+                                                <div>
+                                                    <a class="req_calender-repeats-monthly-opt">
+                                                        <span><i class='bx bx-checkbox' ></i></span> On Day
+                                                    </a>
+                                                </div>
+                                                <div>
+                                                    <select class="planHoverStyle" aria-label="Monthly">
+                                                        <option value="1">1st</option>
+                                                        <option value="2">2nd</option>
+                                                        <option value="3">3rd</option>
+                                                        <option value="4">4th</option>
+                                                        <option value="5">Last</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="req_calender-repeats-info">Every Monday of the week</div>
+                                </div>
                             </div>
                         </div>
                     </div>

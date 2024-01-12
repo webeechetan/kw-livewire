@@ -938,7 +938,7 @@
 
 /* ----- Requiring Task ----- */
 .req_calender {
-    width: 350px;
+    width: 400px;
     max-width: 100%;
     border: 1px solid $border_grey;
     padding: $spacing_s;
@@ -974,10 +974,6 @@
                 }
                 span {
                     display: inline-flex;
-                    svg {
-                        width: 15px;
-                        height: 15px;
-                    }
                 }
             }
         }
@@ -999,7 +995,7 @@
             text-align: center;
             margin-top: $spacing_sm;
         }
-        select.form-select {
+        select {
             &.planHoverStyle {
                 background-color: transparent;
                 min-height: inherit;
@@ -1018,9 +1014,20 @@
         }
         &-weekly {
             &-day_select {
+                display: flex;
+                align-items: center;
                 justify-content: space-between;
+                list-style-type: none;
                 &>:not(style)~:not(style) {
                     margin-left: 0 !important;
+                }
+
+                li {
+                    width: 30px;
+                    height: 30px;
+                    border-radius: 50%;
+                    background-color: $grey;
+                    @include flex_center;
                 }
             }
         }

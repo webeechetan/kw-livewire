@@ -19,7 +19,7 @@
         @foreach($clients as $client)
             <div class="col-md-4 mt-2">
                 <div class="card text-center">
-                    <h6 class="card-header">{{ $client->name }}</h6>
+                    <h6 class="card-header"><a wire:navigate href="{{ route('client.profile', $client->id ) }}">{{ $client->name }}</a></h6>
                     <div class="card-body">
                         <img src="{{ asset('storage/'.$client->image) }}" alt="" class="img-fluid" height="100" width="100">
                         <p class="card-text">{{ $client->description }}</p>
