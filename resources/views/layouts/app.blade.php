@@ -43,8 +43,8 @@
         <div class="header-main-wrap">
             <div class="header-main-left">
                 <div class="logo">
-                    <span><img src="../assets/images/logo-icon.png" alt="Kaykewalk Logo" /></span>
-                    <span><img src="../assets/images/webeesocial-logo.png" alt="Webeesocial Logo" /></span>
+                    <span><img src="{{ asset('') }}assets/images/logo-icon.png" alt="Kaykewalk Logo" /></span>
+                    <span><img src="{{ asset('') }}assets/images/webeesocial-logo.png" alt="Webeesocial Logo" /></span>
                 </div>
             </div>
             <div class="header-main-right">
@@ -89,8 +89,8 @@
                 </ul>
             </div>
             <div class="sidebar-l-btm">
-                <img src="../assets/images/logo.png" width="150" alt="Kaykewalk Profile" />
-                <p class="mb-0 mt-3">Copyright © 2023, Kaykewalk, All Rights Reserved.</p>
+                <img src="{{ asset('') }}assets/images/logo.png" width="150" alt="Kaykewalk Profile" />
+                <p class="mb-0 mt-3">Copyright © 2024, Kaykewalk, All Rights Reserved.</p>
             </div>
         </aside>
         <div class="main-body-content">
