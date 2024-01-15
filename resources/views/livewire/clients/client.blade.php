@@ -2,7 +2,7 @@
     <!-- Dashboard Header -->
     <div class="row align-items-center mb-4">
         <div class="col">
-            <h3 class="main-body-header-title mb-0">Acma Profile</h3>
+            <h3 class="main-body-header-title mb-0">{{ $client->name }} Profile</h3>
             
         </div>
         <div class="text-end col">
