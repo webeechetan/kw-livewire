@@ -13,72 +13,8 @@
 
     <!-- Dashboard Body -->
     <div class="row">
-        <div class="col-md-4">
-            <div class="column-box p-3">
-                <div class="files-head column-head d-flex flex-wrap align-items-center mb-4">
-                    <div>
-                        <h5 class="mb-0">Files & Folders</h5>
-                        <div class="text-light"><span class="text-primary"><i class='bx bx-folder' ></i></span> 4 <span class="px-2">|</span> <span class="text-secondary"><i class='bx bx-file-blank' ></i></span> 42</div>
-                    </div>
-                    <div class="files-options">
-                        <ul>
-                            <li><a href="#"><span><i class='bx bx-upload' ></i></span></a></li>
-                            <li><a href="#"><span><i class='bx bx-trash' ></i></span></a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="files-list files-list_2 mt-3">
-                    <div class="files-folder selected">
-                        <span class="files-folder-icon"><i class='bx bx-folder'></i></span>
-                        <div class="files-folder-title">Buyers Guide</div>
-                        <div class="files-folder-number">12</div>
-                    </div>
-                    <div class="files-folder">
-                        <span class="files-folder-icon"><i class='bx bx-folder'></i></span>
-                        <div class="files-folder-title">Startup Acma</div>
-                        <div class="files-folder-number">12</div>
-                    </div>
-                    <div class="files-folder">
-                        <span class="files-folder-icon"><i class='bx bx-folder'></i></span>
-                        <div class="files-folder-title">Acma Webiste</div>
-                        <div class="files-folder-number">12</div>
-                    </div>
-                </div>
-                <div class="files-items-wrap">
-                    <div class="files-items-head column-head mb-4">
-                        <h5 class="title-sm mb-0">Recent Files</h5>
-                        <!-- <form class="ms-auto" action="">
-                            <div class="search-box">
-                                <input class="form-control" type="text" placeholder="Search File...">
-                                <span class="search-box-icon"><i class='bx bx-search' ></i></span>   
-                            </div>
-                        </form> -->
-                    </div>
-                    <div class="files-items">
-                        <div class="files-item">
-                            <div class="files-item-icon">
-                                <span><i class='bx bx-file-blank'></i></span>
-                            </div>
-                            <div class="files-item-content">
-                                <div class="files-item-content-title">Tetrisly-guide-lines.png</div>
-                                <div class="files-item-content-info">26 Jan 2024</div>
-                            </div>
-                        </div>
-                        <div class="files-item">
-                            <div class="files-item-icon">
-                                <span><i class='bx bx-file-blank'></i></span>
-                            </div>
-                            <div class="files-item-content">
-                                <div class="files-item-content-title">Tetrisly-guide-lines.png</div>
-                                <div class="files-item-content-info">26 Jan 2024</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-8">
-            <div class="column-box">
+        <div class="col-md-7 mb-4">
+            <div class="column-box h-100">
                 <div class="column-head d-flex flex-wrap align-items-center mb-4">
                     <div>
                         <h5 class="mb-0">All Projects</h5>
@@ -171,11 +107,13 @@
                     </div>
                 </div>
             </div>
-            <div class="column-box mt-4">
+        </div>
+        <div class="col-md-5 mb-4">
+            <div class="column-box h-100">
                 <div class="column-head d-flex flex-wrap align-items-center mb-4">
                     <div>
-                        <h5 class="mb-0">Team Assigned</h5>
-                        <div class="text-light">4 Teams</div>
+                        <h5 class="mb-0">Team</h5>
+                        <div class="text-light">4 Teams Assigned</div>
                     </div>
                     <form class="single-add ms-auto" action="">
                         <div class="single-add-wrap">
@@ -193,24 +131,7 @@
                             <div class="team-avtar">
                                 <span>DS</span>
                             </div>
-                            <h4 class="team-style_2-title">Design</h4>
-                        </div>
-                        <div class="avatarGroup avatarGroup-overlap">
-                            <a href="#" class="avatarGroup-avatar">
-                                <span class="avatar" data-bs-toggle="tooltip" data-bs-placement="top" title="Ajay Kumar">
-                                    <img alt="avatar" src="http://localhost:8000/storage/images/users/Ajay Kumar.png" class="rounded-circle">
-                                </span>
-                            </a>
-                            <a href="#" class="avatarGroup-avatar">
-                                <span class="avatar" data-bs-toggle="tooltip" data-bs-placement="top" title="Roshan Jajoria">
-                                    <img alt="avatar" src="http://localhost:8000/storage/images/users/Roshan Jajoria.png" class="rounded-circle">
-                                </span>
-                            </a>
-                            <a href="#" class="avatarGroup-avatar">
-                                <span class="avatar" data-bs-toggle="tooltip" data-bs-placement="top" title="Chetan Singh">
-                                    <img alt="avatar" src="http://localhost:8000/storage/images/users/Chetan Singh.png" class="rounded-circle">
-                                </span>
-                            </a>
+                            <h4 class="team-style_2-title">Design <span class="team-style_2-memCount">6 Members</span></h4>
                         </div>
                     </div>
                     <!-- Team -->
@@ -219,24 +140,7 @@
                             <div class="team-avtar">
                                 <span>TC</span>
                             </div>
-                            <h4 class="team-style_2-title">Tech</h4>
-                        </div>
-                        <div class="avatarGroup avatarGroup-overlap">
-                            <a href="#" class="avatarGroup-avatar">
-                                <span class="avatar" data-bs-toggle="tooltip" data-bs-placement="top" title="Ajay Kumar">
-                                    <img alt="avatar" src="http://localhost:8000/storage/images/users/Ajay Kumar.png" class="rounded-circle">
-                                </span>
-                            </a>
-                            <a href="#" class="avatarGroup-avatar">
-                                <span class="avatar" data-bs-toggle="tooltip" data-bs-placement="top" title="Roshan Jajoria">
-                                    <img alt="avatar" src="http://localhost:8000/storage/images/users/Roshan Jajoria.png" class="rounded-circle">
-                                </span>
-                            </a>
-                            <a href="#" class="avatarGroup-avatar">
-                                <span class="avatar" data-bs-toggle="tooltip" data-bs-placement="top" title="Chetan Singh">
-                                    <img alt="avatar" src="http://localhost:8000/storage/images/users/Chetan Singh.png" class="rounded-circle">
-                                </span>
-                            </a>
+                            <h4 class="team-style_2-title">Tech <span class="team-style_2-memCount">12 Members</span></h4>
                         </div>
                     </div>
                     <!-- Team -->
@@ -245,53 +149,93 @@
                             <div class="team-avtar">
                                 <span>ME</span>
                             </div>
-                            <h4 class="team-style_2-title">Media</h4>
-                        </div>
-                        <div class="avatarGroup avatarGroup-overlap">
-                            <a href="#" class="avatarGroup-avatar">
-                                <span class="avatar" data-bs-toggle="tooltip" data-bs-placement="top" title="Ajay Kumar">
-                                    <img alt="avatar" src="http://localhost:8000/storage/images/users/Ajay Kumar.png" class="rounded-circle">
-                                </span>
-                            </a>
-                            <a href="#" class="avatarGroup-avatar">
-                                <span class="avatar" data-bs-toggle="tooltip" data-bs-placement="top" title="Roshan Jajoria">
-                                    <img alt="avatar" src="http://localhost:8000/storage/images/users/Roshan Jajoria.png" class="rounded-circle">
-                                </span>
-                            </a>
-                            <a href="#" class="avatarGroup-avatar">
-                                <span class="avatar" data-bs-toggle="tooltip" data-bs-placement="top" title="Chetan Singh">
-                                    <img alt="avatar" src="http://localhost:8000/storage/images/users/Chetan Singh.png" class="rounded-circle">
-                                </span>
-                            </a>
+                            <h4 class="team-style_2-title">Media <span class="team-style_2-memCount">6 Members</span></h4>
                         </div>
                     </div>
                     <!-- Team -->
                     <div class="team team-style_2">
                         <div class="team-style_2-head_wrap">
                             <div class="team-avtar">
-                                <span>ME</span>
+                                <span>CP</span>
                             </div>
-                            <h4 class="team-style_2-title">Media</h4>
-                        </div>
-                        <div class="avatarGroup avatarGroup-overlap">
-                            <a href="#" class="avatarGroup-avatar">
-                                <span class="avatar" data-bs-toggle="tooltip" data-bs-placement="top" title="Ajay Kumar">
-                                    <img alt="avatar" src="http://localhost:8000/storage/images/users/Ajay Kumar.png" class="rounded-circle">
-                                </span>
-                            </a>
-                            <a href="#" class="avatarGroup-avatar">
-                                <span class="avatar" data-bs-toggle="tooltip" data-bs-placement="top" title="Roshan Jajoria">
-                                    <img alt="avatar" src="http://localhost:8000/storage/images/users/Roshan Jajoria.png" class="rounded-circle">
-                                </span>
-                            </a>
-                            <a href="#" class="avatarGroup-avatar">
-                                <span class="avatar" data-bs-toggle="tooltip" data-bs-placement="top" title="Chetan Singh">
-                                    <img alt="avatar" src="http://localhost:8000/storage/images/users/Chetan Singh.png" class="rounded-circle">
-                                </span>
-                            </a>
+                            <h4 class="team-style_2-title">Copy <span class="team-style_2-memCount">6 Members</span></h4>
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="column-box h-100 p-3">
+                <div class="files-head column-head d-flex flex-wrap align-items-center mb-4">
+                    <div>
+                        <h5 class="mb-0">External Links</h5>
+                        <div class="text-light"><span class="text-primary"><i class='bx bx-folder' ></i></span> 4 <span class="px-2">|</span> <span class="text-secondary"><i class='bx bx-file-blank' ></i></span> 42</div>
+                    </div>
+                    <div class="files-options">
+                        <ul>
+                            <li><a href="#"><span><i class='bx bx-plus'></i></span></a></li>
+                            <li><a href="#"><span><i class='bx bx-trash' ></i></span></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="files-list files-list_2 mt-3">
+                    <div class="files-folder selected">
+                        <span class="files-folder-icon"><i class='bx bx-folder'></i></span>
+                        <div class="files-folder-title">Buyers Guide</div>
+                        <div class="files-folder-number">12</div>
+                    </div>
+                    <div class="files-folder">
+                        <span class="files-folder-icon"><i class='bx bx-folder'></i></span>
+                        <div class="files-folder-title">Startup Acma</div>
+                        <div class="files-folder-number">12</div>
+                    </div>
+                    <div class="files-folder">
+                        <span class="files-folder-icon"><i class='bx bx-folder'></i></span>
+                        <div class="files-folder-title">Acma Webiste</div>
+                        <div class="files-folder-number">12</div>
+                    </div>
+                </div>
+                <div class="files-items-wrap">
+                    <div class="files-items-head column-head mb-4">
+                        <h5 class="title-sm mb-0">Recent Files</h5>
+                        <!-- <form class="ms-auto" action="">
+                            <div class="search-box">
+                                <input class="form-control" type="text" placeholder="Search File...">
+                                <span class="search-box-icon"><i class='bx bx-search' ></i></span>   
+                            </div>
+                        </form> -->
+                    </div>
+                    <div class="files-items">
+                        <div class="files-item">
+                            <div class="files-item-icon">
+                                <span><i class='bx bx-file-blank'></i></span>
+                            </div>
+                            <div class="files-item-content">
+                                <div class="files-item-content-title">Tetrisly-guide-lines.png</div>
+                                <div class="files-item-content-info">26 Jan 2024</div>
+                            </div>
+                        </div>
+                        <div class="files-item">
+                            <div class="files-item-icon">
+                                <span><i class='bx bx-file-blank'></i></span>
+                            </div>
+                            <div class="files-item-content">
+                                <div class="files-item-content-title">Tetrisly-guide-lines.png</div>
+                                <div class="files-item-content-info">26 Jan 2024</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="column-box">
+                <div class="column-head d-flex flex-wrap align-items-center mb-4">
+                    <h5 class="mb-0">Files & Folders</h5>
+                </div>
+                <div id="fm" style="height: 600px;"></div>
             </div>
         </div>
     </div>

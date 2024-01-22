@@ -2898,13 +2898,17 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
 }
 .team-style_2-head_wrap {
   display: flex;
-  align-items: center;
   gap: 10px;
-  margin-right: 50px;
 }
 .team-style_2-title {
-  font-size: 22px;
+  font-size: 18px;
   margin-bottom: 0;
+}
+.team-style_2-memCount {
+  font-size: 12px;
+  color: #9c9c9c;
+  display: block;
+  margin-top: 5px;
 }
 .team-style_2 .avatar {
   width: 30px;
