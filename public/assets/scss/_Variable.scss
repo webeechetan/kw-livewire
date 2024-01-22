@@ -176,3 +176,21 @@ $team_dp: 75px;
         background-color: transparent;
     }
 }
+
+/* ----- Grid Css ----- */
+.gap {
+    &-20 {
+        gap: $spacing_sm;
+    }
+}
+.grid_col {
+    display: grid;
+    &-repeat {
+        &-2 {
+            grid-template-columns: repeat(2, 1fr);
+        }
+        &-3 {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+}

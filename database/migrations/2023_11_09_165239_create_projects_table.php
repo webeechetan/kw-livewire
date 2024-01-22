@@ -17,6 +17,8 @@ return new class extends Migration
             $table->unsignedBigInteger('client_id');
             $table->string('name');
             $table->longText('description')->nullable();
+            $table->date('due_date');
+            $table->string('status')->default('active')->comment('active, completed, overdue, archived');
             $table->timestamps();
         });
     }

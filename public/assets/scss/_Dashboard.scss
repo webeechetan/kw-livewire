@@ -25,48 +25,6 @@
             @include flex_align_center;
             grid-gap: $spacing_s;
         }
-
-        &-right {
-            .single-add {
-                display: grid;
-                gap: $spacing_s;
-                background-color: #fff;
-                padding: $spacing_xs $spacing_s;
-                border-radius: $border_radius_xs;
-                max-width: 450px;
-                grid-template-columns: 1fr auto;
-                box-shadow: $box_shadow_xtra_light;
-
-                &-wrap {
-                    display: flex;
-                    align-items: center;
-                }
-
-                &-date {
-                    width: 35px;
-                    height: 30px;
-                    background: $secondary_light;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    font-size: 22px;
-                    border-radius: $border_radius_xs;
-                    margin-left: $spacing_xs;
-                    color: $secondary;
-                }
-
-                input.form-control {
-                    min-height: inherit;
-                    border: 1px solid transparent;
-                    border-right: 1px solid $grey_xd;
-                    padding: 0 $spacing_xs 0 0;
-                }
-                a.btn-border {
-                    display: inline-flex;
-                    align-items: center;
-                }
-            }
-        }
     }
 }
 
@@ -1111,18 +1069,21 @@
     }
 }
 
+/* ----- Client Page ----- */
+.client_head_logo {
+    max-width: 75px;
+    display: inline-block;
+    img {
+        max-width: 100%;
+    }
+}
+
 /* ----- Team ----- */
 .team {
     background-color: #fff;
+    border: 1px solid $grey;
     padding: $spacing_xs;
     border-radius: $border_radius_xs;
-    box-shadow: $box_shadow_xtra_light;
-    width: calc(25% - 15px);
-    &-list {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 20px;
-    }
     &-style_2 {
         display: flex;
         justify-content: space-between;
@@ -1162,6 +1123,7 @@
 /* ----- Project ----- */
 .project {
     background-color: #fff;
+    border: 1px solid $grey;
     padding: $spacing_s;
     border-radius: $border_radius_xs;
     box-shadow: $box_shadow_xtra_light;
@@ -1188,37 +1150,31 @@
     }
 
     &-tabs {
-        display: flex;
-        align-items: center;
-        gap: 20px;
-        border-bottom: 1px solid $grey;
-        background-color: #fff;
-        padding: $spacing_xs $spacing_sm;
+        
         .nav {
             &-tabs {
                 width: 100%;
                 border-bottom: none;
                 gap: 15px;
-                justify-content: flex-end;
 
                 .nav-link {
                     color: $text_color;
                     text-transform: uppercase;
                     min-width: 100px;
-                    border: none;
-                    background: $grey;
+                    border: 1px solid $grey;
+                    background: $light;
                     font-weight: 500;
-                    border-radius: $border-radius_xs;
+                    border-radius: $border-radius_xs $border-radius_xs;
                     transition: $ease_03;
                     font-size: 14px;
                     letter-spacing: 0.5px;
 
                     &.active, &:hover, &:focus {
-                        border: none;
                         background: $brand_light;
                         color: $brand;
                         box-shadow: none;
                         outline: none;
+                        border-color: $brand;
                     }
 
                     &.project-tabs {
@@ -1226,18 +1182,21 @@
                             &.active, &:hover, &:focus {
                                 background-color: $success_light;
                                 color: $success;
+                                border-color: $success;
                             }
                         }
                         &-overdue {
                             &.active, &:hover, &:focus {
                                 background-color: $danger_light;
                                 color: $danger;
+                                border-color: $danger;
                             }
                         }
                         &-archived {
                             &.active, &:hover, &:focus {
                                 background-color: $warning_light;
                                 color: $yellow_dark;
+                                border-color: $yellow_dark;
                             }
                         }
                     }
@@ -1332,11 +1291,8 @@
 
 /* ----- Files & Folder ----- */
 .files {
-    &-head {
-        display: flex;
-        align-items: center;
-        background-color: #fff;
-        padding: $spacing_xs $spacing_sm;
+    &-sec {
+        background-color: $grey;
     }
     &-options {
         margin-left: auto;
@@ -1380,34 +1336,27 @@
         }
     }
 
-    &-list {
-        &_2 {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: $spacing_s;
-        }
-    }
-
     &-folder {
         background-color: #fff;
         border-radius: $border-radius_xs;
         padding: $spacing_xs;
-        text-align: center;
         position: relative;
+        text-align: center;
+        border: 1px solid transparent;
+        cursor: pointer;
 
         &-icon {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 50px;
-            height: 50px;
+            width: 42px;
+            height: 42px;
             background-color: $grey;
             margin-bottom: $spacing_xs;
             border-radius: $border-radius;
 
             i {
-                font-size: 32px;
-                color: $brand;
+                font-size: 22px;
             }
         }
 
@@ -1419,8 +1368,8 @@
             position: absolute;
             right: 10px;
             top: 10px;
-            width: 30px;
-            height: 30px;
+            width: 25px;
+            height: 25px;
             border-radius: $border_radius_xs;
             background-color: $yellow_light;
             display: inline-flex;
@@ -1429,5 +1378,68 @@
             font-weight: 600;
             font-size: 13px;
         }
+
+        &.selected {
+            border-color: $brand;
+
+            .files-folder-icon {
+                background-color: $brand;
+                i {
+                    color: #fff;
+                }
+            }
+        }
+    }
+
+    &-list {
+        &_2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: $spacing_s;
+            
+            .files {
+                &-folder {
+                    gap: $spacing_s;
+                    border: 1px solid $grey;
+
+                    &-icon {
+                        width: inherit;
+                        height: inherit;
+                        background-color: inherit;
+                    }
+
+                    &.selected {
+                        color: $brand;
+                        border-color: $brand;
+
+                        .files-folder {
+                            &-icon {
+                                background: transparent;
+                                align-items: inherit;
+
+                                i {
+                                    color: $brand;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    &-items {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: $spacing_s;
+        &-wrap {
+            margin-top: $spacing_lg;
+        }
+    }
+
+    &-item {
+        text-align: center;
+        border: 1px solid $grey;
+        padding: $spacing_xs;
     }
 }
