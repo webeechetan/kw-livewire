@@ -2,7 +2,7 @@
     <!-- Dashboard Header -->
     <div class="row align-items-center mb-4">
         <div class="col">
-            <h3 class="main-body-header-title mb-0"><span class="client_head_logo"><img src="https://webeesocial.com/wp-content/uploads/2020/12/logo-tm-compressed.png" alt=""></span> Acma</h3>
+            <h3 class="main-body-header-title mb-0"><span class="client_head_logo"><img src="{{ env('APP_URL') }}/storage/{{ $client->image }}" alt=""></span> {{ $client->name }}</h3>
         </div>
         <div class="text-end col">
             <div class="main-body-header-right">
@@ -82,14 +82,14 @@
                 <div class="column-head d-flex flex-wrap align-items-center mb-4">
                     <div>
                         <h5 class="mb-0">All Projects</h5>
-                        <div class="text-light">12 Projects</div>
+                        <div class="text-light">{{ count($client->projects) }} Projects</div>
                     </div>
-                    <form class="single-add ms-auto" action="">
-                        <div class="single-add-wrap">
-                            <input class="form-control" wire:model="name" type="text" placeholder="Add Project Here">
-                            <a class="single-add-date" href="#" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip" data-bs-title="Select Date"><i class='bx bx-calendar' ></i></a>
+                    <form class="single-add ms-auto" method="POST" wire:submit.prevent="addProject()">
+                        <div class="single-add-wrap" wire:ignore>
+                            <input class="form-control" wire:model="project_name" type="text" placeholder="Add Project Here">
+                            <a class="single-add-date" href="javascript:void(0);" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip" data-bs-title="Select Date"><i class='bx bx-calendar' ></i></a>
                         </div>
-                        <a href="javascript:void(0);" class="btn btn-sm btn-primary">Add Project</a>
+                        <button class="btn btn-sm btn-primary">Add Project</button>
                     </form>
                 </div>
                 <div class="project-tabs">
@@ -111,199 +111,62 @@
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade show active" id="project-active-tab-pane" role="tabpanel" aria-labelledby="project-active-tab" tabindex="0">
                         <div class="project-list">
-                            <div class="project project-align_left project-overdue">
-                                <div class="project-icon">
-                                    <span class="d-inline-flex"><i class='bx bx-list-ul'></i></span>
+                            @foreach($active_projects as $project)
+                                <div class="project project-align_left project-overdue">
+                                    <div class="project-icon">
+                                        <span class="d-inline-flex"><i class='bx bx-list-ul'></i></span>
+                                    </div>
+                                    <div class="project-content">
+                                        <a href="#" class="project-title">{{ $project->name }}</a>
+                                        <div class="project-selected-date">Due on <span>{{ $project->due_date }}</span></div>
+                                    </div>
                                 </div>
-                                <div class="project-content">
-                                    <a href="#" class="project-title">Startup Acma</a>
-                                    <div class="project-selected-date">Due on <span>30 Dec 2023</span></div>
-                                </div>
-                            </div>
-                            <div class="project project-align_left">
-                                <div class="project-icon">
-                                    <span class="d-inline-flex"><i class='bx bx-list-ul'></i></span>
-                                </div>
-                                <div class="project-content">
-                                    <a href="#" class="project-title">Buyers Guide</a>
-                                    <div class="project-selected-date">Due on <span>30 March 2024</span></div>
-                                </div>
-                            </div>
-                            <div class="project project-align_left">
-                                <div class="project-icon">
-                                    <span class="d-inline-flex"><i class='bx bx-list-ul'></i></span>
-                                </div>
-                                <div class="project-content">
-                                    <a href="#" class="project-title">Buyers Guide</a>
-                                    <div class="project-selected-date">Due on <span>30 March 2024</span></div>
-                                </div>
-                            </div>
-                            <div class="project project-align_left">
-                                <div class="project-icon">
-                                    <span class="d-inline-flex"><i class='bx bx-list-ul'></i></span>
-                                </div>
-                                <div class="project-content">
-                                    <a href="#" class="project-title">Buyers Guide</a>
-                                    <div class="project-selected-date">Due on <span>30 March 2024</span></div>
-                                </div>
-                            </div>
-                            <div class="project project-align_left">
-                                <div class="project-icon">
-                                    <span class="d-inline-flex"><i class='bx bx-list-ul'></i></span>
-                                </div>
-                                <div class="project-content">
-                                    <a href="#" class="project-title">Buyers Guide</a>
-                                    <div class="project-selected-date">Due on <span>30 March 2024</span></div>
-                                </div>
-                            </div>
-                            
+                            @endforeach
                         </div>
                     </div>
                     <div class="tab-pane fade" id="project-done-tab-pane" role="tabpanel" aria-labelledby="project-done-tab" tabindex="0">
                         <div class="project-list project-list-completed">
+                            @foreach($completed_projects as $project)
                             <div class="project project-align_left">
                                 <div class="project-icon">
                                     <span class="d-inline-flex"><i class='bx bx-list-ul'></i></span>
                                 </div>
                                 <div class="project-content">
-                                    <a href="#" class="project-title">Buyers Guide</a>
-                                    <div class="project-dec">Contrary to popular belief, Lorem Ipsum is not simply random text...</div>
+                                    <a href="#" class="project-title">{{ $project->name }}</a>
+                                    <div class="project-dec">{{ $project->description }}</div>
                                 </div>
                             </div>
-                            <div class="project project-align_left">
-                                <div class="project-icon">
-                                    <span class="d-inline-flex"><i class='bx bx-list-ul'></i></span>
-                                </div>
-                                <div class="project-content">
-                                    <a href="#" class="project-title">Buyers Guide</a>
-                                    <div class="project-dec">Contrary to popular belief, Lorem Ipsum is not simply random text...</div>
-                                </div>
-                            </div>
-                            <div class="project project-align_left">
-                                <div class="project-icon">
-                                    <span class="d-inline-flex"><i class='bx bx-list-ul'></i></span>
-                                </div>
-                                <div class="project-content">
-                                    <a href="#" class="project-title">Buyers Guide</a>
-                                    <div class="project-dec">Contrary to popular belief, Lorem Ipsum is not simply random text...</div>
-                                </div>
-                            </div>
-                            <div class="project project-align_left">
-                                <div class="project-icon">
-                                    <span class="d-inline-flex"><i class='bx bx-list-ul'></i></span>
-                                </div>
-                                <div class="project-content">
-                                    <a href="#" class="project-title">Buyers Guide</a>
-                                    <div class="project-dec">Contrary to popular belief, Lorem Ipsum is not simply random text...</div>
-                                </div>
-                            </div>
-                            <div class="project project-align_left">
-                                <div class="project-icon">
-                                    <span class="d-inline-flex"><i class='bx bx-list-ul'></i></span>
-                                </div>
-                                <div class="project-content">
-                                    <a href="#" class="project-title">Buyers Guide</a>
-                                    <div class="project-dec">Contrary to popular belief, Lorem Ipsum is not simply random text...</div>
-                                </div>
-                            </div>
+                            @endforeach
                         </div>
                     </div>
                     <div class="tab-pane fade" id="project-overdue-tab-pane" role="tabpanel" aria-labelledby="project-overdue-tab" tabindex="0">
                         <div class="project-list project-list-overdue">
-                            <div class="project project-align_left">
-                                <div class="project-icon">
-                                    <span class="d-inline-flex"><i class='bx bx-list-ul'></i></span>
+                            @foreach($overdue_projects as $project)
+                                <div class="project project-align_left">
+                                    <div class="project-icon">
+                                        <span class="d-inline-flex"><i class='bx bx-list-ul'></i></span>
+                                    </div>
+                                    <div class="project-content">
+                                        <a href="#" class="project-title">{{ $project->name }}</a>
+                                        <div class="project-dec">{{ $project->description }}</div>
+                                    </div>
                                 </div>
-                                <div class="project-content">
-                                    <a href="#" class="project-title">Buyers Guide</a>
-                                    <div class="project-dec">Contrary to popular belief, Lorem Ipsum is not simply random text...</div>
-                                </div>
-                            </div>
-                            <div class="project project-align_left">
-                                <div class="project-icon">
-                                    <span class="d-inline-flex"><i class='bx bx-list-ul'></i></span>
-                                </div>
-                                <div class="project-content">
-                                    <a href="#" class="project-title">Buyers Guide</a>
-                                    <div class="project-dec">Contrary to popular belief, Lorem Ipsum is not simply random text...</div>
-                                </div>
-                            </div>
-                            <div class="project project-align_left">
-                                <div class="project-icon">
-                                    <span class="d-inline-flex"><i class='bx bx-list-ul'></i></span>
-                                </div>
-                                <div class="project-content">
-                                    <a href="#" class="project-title">Buyers Guide</a>
-                                    <div class="project-dec">Contrary to popular belief, Lorem Ipsum is not simply random text...</div>
-                                </div>
-                            </div>
-                            <div class="project project-align_left">
-                                <div class="project-icon">
-                                    <span class="d-inline-flex"><i class='bx bx-list-ul'></i></span>
-                                </div>
-                                <div class="project-content">
-                                    <a href="#" class="project-title">Buyers Guide</a>
-                                    <div class="project-dec">Contrary to popular belief, Lorem Ipsum is not simply random text...</div>
-                                </div>
-                            </div>
-                            <div class="project project-align_left">
-                                <div class="project-icon">
-                                    <span class="d-inline-flex"><i class='bx bx-list-ul'></i></span>
-                                </div>
-                                <div class="project-content">
-                                    <a href="#" class="project-title">Buyers Guide</a>
-                                    <div class="project-dec">Contrary to popular belief, Lorem Ipsum is not simply random text...</div>
-                                </div>
-                            </div>
+                            @endforeach
                         </div>
                     </div>
                     <div class="tab-pane fade" id="project-archived-tab-pane" role="tabpanel" aria-labelledby="project-archived-tab" tabindex="0">
                         <div class="project-list project-list-archive">
+                            @foreach($archived_projects as $project)
                             <div class="project project-align_left">
                                 <div class="project-icon">
                                     <span class="d-inline-flex"><i class='bx bx-list-ul'></i></span>
                                 </div>
                                 <div class="project-content">
-                                    <a href="#" class="project-title">Buyers Guide</a>
-                                    <div class="project-dec">Contrary to popular belief, Lorem Ipsum is not simply random text...</div>
+                                    <a href="#" class="project-title">{{ $project->name }}</a>
+                                    <div class="project-dec">{{ $project->description }}</div>
                                 </div>
                             </div>
-                            <div class="project project-align_left">
-                                <div class="project-icon">
-                                    <span class="d-inline-flex"><i class='bx bx-list-ul'></i></span>
-                                </div>
-                                <div class="project-content">
-                                    <a href="#" class="project-title">Buyers Guide</a>
-                                    <div class="project-dec">Contrary to popular belief, Lorem Ipsum is not simply random text...</div>
-                                </div>
-                            </div>
-                            <div class="project project-align_left">
-                                <div class="project-icon">
-                                    <span class="d-inline-flex"><i class='bx bx-list-ul'></i></span>
-                                </div>
-                                <div class="project-content">
-                                    <a href="#" class="project-title">Buyers Guide</a>
-                                    <div class="project-dec">Contrary to popular belief, Lorem Ipsum is not simply random text...</div>
-                                </div>
-                            </div>
-                            <div class="project project-align_left">
-                                <div class="project-icon">
-                                    <span class="d-inline-flex"><i class='bx bx-list-ul'></i></span>
-                                </div>
-                                <div class="project-content">
-                                    <a href="#" class="project-title">Buyers Guide</a>
-                                    <div class="project-dec">Contrary to popular belief, Lorem Ipsum is not simply random text...</div>
-                                </div>
-                            </div>
-                            <div class="project project-align_left">
-                                <div class="project-icon">
-                                    <span class="d-inline-flex"><i class='bx bx-list-ul'></i></span>
-                                </div>
-                                <div class="project-content">
-                                    <a href="#" class="project-title">Buyers Guide</a>
-                                    <div class="project-dec">Contrary to popular belief, Lorem Ipsum is not simply random text...</div>
-                                </div>
-                            </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>
@@ -316,8 +179,8 @@
                     </div>
                     <form class="single-add ms-auto" action="">
                         <div class="single-add-wrap">
-                            <input class="form-control" wire:model="name" type="text" placeholder="Add Team Here">
-                            <a class="single-add-date" href="#" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip" data-bs-title="Select Date"><i class='bx bx-user-plus'></i></a>
+                            <input class="form-control" wire:model="project_name" type="text" placeholder="Add Team Here">
+                            <a class="single-add-date"  href="javascript:void(0);" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip" data-bs-title="Select Date"><i class='bx bx-user-plus '></i></a>
                         </div>
                         <a href="javascript:void(0);" class="btn-sm btn-with_icon btn-primary">Add Team</a>
                     </form>
@@ -433,3 +296,17 @@
         </div>
     </div>
 </div>
+@push('scripts')
+<script>
+    $(function () {
+        $('[data-bs-toggle="tooltip"]').tooltip()
+    })
+    $('.single-add-date').flatpickr({
+        dateFormat: "Y-m-d",
+        onChange: function(selectedDates, dateStr, instance) {
+            $(".single-add-date").html(dateStr);
+            @this.set('project_due_date', dateStr);
+        },
+    });
+</script>
+@endpush
