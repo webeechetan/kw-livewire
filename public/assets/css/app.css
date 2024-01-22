@@ -304,30 +304,39 @@ ul.list-none {
 
 /* ----- Search ----- */
 .search-box {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   border-radius: 4px;
-  background-color: #f3f6f9;
+  background-color: #fff;
+  border: 1px solid #ddd;
   padding: 5px;
 }
 .search-box input.form-control {
   min-height: inherit;
   border: none;
-  padding: 5px 15px;
+  padding: 5px 10px;
   background: transparent;
   width: inherit;
+  font-size: 14px;
+  min-width: 230px;
 }
 .search-box-icon {
-  width: 30px;
-  height: 30px;
+  width: 26px;
+  height: 26px;
   display: inline-flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
+  background-color: #7407ff;
+  color: #fff;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.search-box-icon:hover, .search-box-icon:focus {
   background-color: #e8ddf7;
   color: #7407ff;
-  border-radius: 50%;
-  cursor: pointer;
 }
 
 /* ----- Single Add ----- */
@@ -370,88 +379,39 @@ ul.list-none {
   padding: 7px 15px;
 }
 
+/* ----- Card ----- */
+.card_style {
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 4px;
+}
+.card_style-client-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.card_style-client-head img {
+  width: 50px;
+}
+.card_style-client-body {
+  margin-top: 10px;
+}
+.card_style-client-body-title {
+  margin-bottom: 10px;
+}
+
 /*---- Buttons Style Start Here ----*/
 .btn {
   padding: 0.5rem 1.4rem;
   font-weight: 400;
   transition: all 0.5s ease;
+  /* ----- Icon ----- */
   /*---- Actions ----*/
   /*---- Options ----*/
   /* ----- Filter Sort ----- */
   /* ----- Border ----- */
   /* ----- Button Submit ----- */
   /* ----- Button Batch ----- */
-  /* ----- ----- */
-}
-.btn-icon-task-action {
-  display: inline-flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  width: 22px;
-  height: 22px;
-  border: 1px solid #ddd;
-  border-radius: 50%;
-}
-.btn-icon-task-action svg {
-  max-width: 18px;
-}
-.btn-icon-rounded {
-  width: 26px;
-  height: 26px;
-  background-color: #ffe6f1;
-  border-radius: 50%;
-  border: none;
-  display: inline-flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  color: #f83890;
-  transition: all 0.3s ease;
-}
-.btn-icon-rounded:hover {
-  background-color: #f83890;
-  color: #fff;
-}
-.btn-icon-rounded-danger {
-  background-color: #fedddc;
-  color: #ff0000;
-}
-.btn-icon-rounded-danger:hover {
-  background-color: #ff0000;
-  color: #fff;
-}
-.btn-icon-rounded-progress {
-  background-color: #e5d1ff;
-  color: #7407ff;
-}
-.btn-icon-rounded-progress:hover {
-  background-color: #7407ff;
-  color: #fff;
-}
-.btn-icon-rounded-warning {
-  background-color: #fff7d8;
-  color: #e7bf1d;
-}
-.btn-icon-rounded-warning:hover {
-  background-color: #e7bf1d;
-  color: #191919;
-}
-.btn-icon-border {
-  width: 26px;
-  height: 26px;
-  border: 1px solid #9c9c9c;
-  border-radius: 50%;
-  display: inline-flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  color: #191919;
-  transition: all 0.3s ease;
-}
-.btn-icon-border:hover {
-  background-color: #f83890;
-  color: #fff;
 }
 .btn-sm {
   padding: 0.3rem 1rem;
@@ -489,6 +449,27 @@ ul.list-none {
   color: #191919;
   background-color: #f7d306;
   border: 1px solid #f7d306;
+}
+.btn-icon {
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #ddd;
+  padding: 0;
+  font-size: 18px;
+  background-color: #eee;
+  border-radius: 4px;
+}
+.btn-icon:hover, .btn-icon:focus {
+  background-color: #ffe6f1;
+  color: #f83890;
+}
+.btn-icon-primary {
+  border-color: #f83890;
+  background-color: #ffe6f1;
 }
 .btn-action .btn-icon {
   width: 35px;
@@ -630,11 +611,6 @@ ul.list-none {
   font-weight: 500;
   color: #191919;
   display: inline-block;
-}
-.btn-with_icon {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
 }
 .btn:focus {
   outline: none;
@@ -3200,5 +3176,7 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   border: 1px solid #eee;
   padding: 10px;
 }
+
+/* ----- Client ----- */
 
 /*# sourceMappingURL=app.css.map */

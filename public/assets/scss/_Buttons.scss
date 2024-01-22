@@ -3,72 +3,6 @@
     padding: $spacing_btn;
     font-weight: 400;
     transition: $ease_05;
-    &-icon {
-        &-task {
-            &-action {
-                @include inline_flex_center;
-                width: 22px;
-                height: 22px;
-                border: 1px solid $border_dark_grey;
-                border-radius: $border_radius;
-
-                svg {
-                    max-width: 18px;
-                }
-            }
-        }
-        &-rounded {
-            width: 26px;
-            height: 26px;
-            background-color: $brand_light;
-            border-radius: $border_radius;
-            border: none;
-            @include inline_flex_center;
-            color: $brand;
-            transition: $ease_03;
-            &:hover {
-                background-color: $brand;
-                color: $white;
-            }
-            &-danger {
-                background-color: $danger_light;
-                color: $danger;
-                &:hover {
-                    background-color: $danger;
-                    color: $white;
-                }
-            }
-            &-progress {
-                background-color: $progress_light;
-                color: $progress;
-                &:hover {
-                    background-color: $progress;
-                    color: $white;
-                }
-            }
-            &-warning {
-                background-color: $warning_light;
-                color: $warning;
-                &:hover {
-                    background-color: $warning;
-                    color: $dark;
-                }
-            }
-        }
-        &-border {
-            width: 26px;
-            height: 26px;
-            border: 1px solid $border;
-            border-radius: $border_radius;
-            @include inline_flex_center;
-            color: $dark;
-            transition: $ease_03;
-            &:hover {
-                background-color: $brand;
-                color: $white;
-            }
-        }
-    }
     &-sm {
         padding: $spacing_btn_sm;
         font-size: 0.8rem;
@@ -104,6 +38,28 @@
             color: $text_color;
             background-color: $yellow;
             border: 1px solid $yellow;
+        }
+    }
+
+    /* ----- Icon ----- */
+    &-icon {
+        width: 32px;
+        height: 32px;
+        @include inline_flex_center;
+        border: 1px solid $grey_xd;
+        padding: 0;
+        font-size: 18px;
+        background-color: $grey;
+        border-radius: $border_radius_xs;
+
+        &:hover, &:focus {
+            background-color: $brand_light;
+            color: $brand;
+        }
+
+        &-primary {
+            border-color: $brand;
+            background-color: $brand_light;
         }
     }
 
@@ -266,13 +222,6 @@
         font-weight: 500;
         color: $dark;
         display: inline-block;
-    }
-
-    /* ----- ----- */
-    &-with_icon {
-        display: inline-flex;
-        align-items: center;
-        gap: 5px;
     }
 
     &:focus {

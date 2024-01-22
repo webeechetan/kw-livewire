@@ -1,41 +1,42 @@
-<div class="container-fluid">
-
-    <div class="row">
-        <div class="col-md-6">
-            <form wire:submit="search" action="">
-                <div class="input-group">
-                    <input wire:model="query" type="text" class="form-control" placeholder="Search Clients...">
-                    <button type="submit" class="btn btn-primary btn-sm">Search</button>
-                </div>
-            </form>
+<div class="container">
+    <!-- Dashboard Header -->
+    <div class="row align-items-center">
+        <div class="col">
+            <h3 class="main-body-header-title mb-0">All Clients</h3>
         </div>
-        <div class="col-md-6 text-end">
-            <a wire:navigate href="{{ route('client.add') }}" class="btn btn-primary">Add New Client</a>
+        <div class="text-end col">
+            <div class="main-body-header-right">
+                <form class="search-box" wire:submit="search" action="">
+                    <input wire:model="query" type="text" class="form-control" placeholder="Search Clients...">
+                    <button type="submit" class="search-box-icon"><i class='bx bx-search'></i></button>
+                </form>
+                <a wire:navigate href="{{ route('client.add') }}" href="javascript:void(0);" class="btn-border btn-border-primary"><i class="bx bx-plus"></i> Add Client</a>
+            </div>
         </div>
     </div>
     
     <div class="row mt-4">
-        
         @foreach($clients as $client)
-            <div class="col-md-4 mt-2">
-                <div class="card text-center">
-                    <h6 class="card-header"><a wire:navigate href="{{ route('client.profile', $client->id ) }}">{{ $client->name }}</a></h6>
-                    <div class="card-body">
-                        <img src="{{ asset('storage/'.$client->image) }}" alt="" class="img-fluid" height="100" width="100">
-                        <p class="card-text">{{ $client->description }}</p>
-                        @foreach($client->projects as $project)
-                            <span class="btn btn-warning btn-sm">{{ $project->name }}</span>
-                        @endforeach
-                    </div>
-                    <div class="card-footer text-muted">
-                        <div class="">
-                            <a wire:navigate href="{{ route('client.edit',$client->id) }}"><i class="bx bx-pencil btn btn-primary btn-sm" aria-hidden="true"></i></a>
-                            <i wire:confirm="Are you sure you want to delete this client?" wire:click="deleteClient({{$client->id}})" class="bx bx-trash btn btn-primary btn-sm" aria-hidden="true"></i>
+        <div class="col-md-4">
+            <div class="card_style card_style-client">
+                <div class="card_style-client-head">
+                    <div><img src="{{ asset('storage/'.$client->image) }}" alt="" class="img-fluid"></div>
+                    <h4><a wire:navigate href="{{ route('client.profile', $client->id ) }}">{{ $client->name }}</a></h4>
+                </div>
+                <div class="card_style-client-body">
+                    <div class="card_style-client-body-title"><i class='bx bx-network-chart' ></i> Active Projects</div>
+                    <div class="card_style-client-projects">
+                        <div class="card_style-client-project">
+                            @foreach($client->projects as $project)
+                                <span class="btn btn-warning btn-sm">{{ $project->name }}</span>
+                            @endforeach
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
         @endforeach
+
         <div class="pagintaions mt-4">
             {{ $clients->links(data: ['scrollTo' => false]) }}
         </div>

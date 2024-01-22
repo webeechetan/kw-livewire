@@ -210,28 +210,38 @@ ul {
 
 /* ----- Search ----- */
 .search-box {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     border-radius: $border-radius_xs;
-    background-color: $light;
+    background-color: #fff;
+    border: 1px solid $grey_xd;
     padding: 5px;
 
     input.form-control {
         min-height: inherit;
         border: none;
-        padding: 5px 15px;
+        padding: 5px 10px;
         background: transparent;
         width: inherit;
+        font-size: 14px;
+        min-width: 230px;
     }
 
     &-icon {
-        width: 30px;
-        height: 30px;
+        width: 26px;
+        height: 26px;
         @include inline_flex_center;
-        background-color: $secondary_light;
-        color: $secondary;
-        border-radius: $border-radius;
+        background-color: $secondary;
+        color: #fff;
+        border-radius: $border-radius_xs;
+        border: none;
         cursor: pointer;
+        transition: $ease_03;
+
+        &:hover, &:focus {
+            background-color: $secondary_light;
+            color: $secondary;
+        }
     }
 }
 
@@ -277,3 +287,27 @@ ul {
         padding: 7px 15px;
     }
 } 
+
+/* ----- Card ----- */
+.card_style {
+    background-color: #fff;
+    padding: $spacing_s;
+    border-radius: $border_radius_xs;
+
+    &-client {
+        &-head {
+            @include flex_align_center;
+            gap: $spacing_xs;
+
+            img {
+                width: 50px;
+            }
+        }
+        &-body {
+            margin-top: $spacing_xs;
+            &-title {
+                margin-bottom: $spacing_xs;
+            }
+        }
+    }
+}
