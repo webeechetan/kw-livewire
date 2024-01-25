@@ -15,18 +15,14 @@
     <div class="row">
         <div class="col-md-7 mb-4">
             <div class="column-box h-100">
-                <div class="column-head d-flex flex-wrap align-items-center mb-4">
+                <div class="column-head d-flex flex-wrap gap-20 align-items-center mb-4">
                     <div>
                         <h5 class="mb-0">All Projects</h5>
                         <div class="text-light">{{ count($client->projects) }} Projects</div>
                     </div>
-                    <form class="single-add ms-auto" method="POST" wire:submit.prevent="addProject()">
-                        <div class="single-add-wrap" wire:ignore>
-                            <input class="form-control" wire:model="project_name" type="text" placeholder="Add Project Here">
-                            <a class="single-add-date" href="javascript:void(0);" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip" data-bs-title="Select Date"><i class='bx bx-calendar' ></i></a>
-                        </div>
-                        <button class="btn btn-sm btn-primary">Add Project</button>
-                    </form>
+                    <div class="ms-auto">
+                        <a class="btn btn-sm btn-primary" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="bx bx-plus"></i> Add Project</a>
+                    </div>
                 </div>
                 <div class="project-tabs">
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -115,13 +111,16 @@
                         <h5 class="mb-0">Team</h5>
                         <div class="text-light">4 Teams Assigned</div>
                     </div>
-                    <form class="single-add ms-auto" action="">
+                    <div class="ms-auto">
+                        <a class="btn btn-sm btn-primary" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal2"><i class="bx bx-plus"></i> Add Team</a>
+                    </div>
+                    <!-- <form class="single-add ms-auto" action="">
                         <div class="single-add-wrap">
                             <input class="form-control" wire:model="project_name" type="text" placeholder="Add Team Here">
                             <a class="single-add-date"  href="javascript:void(0);" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip" data-bs-title="Select Date"><i class='bx bx-user-plus '></i></a>
                         </div>
                         <a href="javascript:void(0);" class="btn-sm btn-with_icon btn-primary">Add Team</a>
-                    </form>
+                    </form> -->
                 </div>
                 <!-- Teams -->
                 <div class="team-list grid_col grid_col-repeat-2 gap-20">
@@ -235,10 +234,134 @@
                 <div class="column-head d-flex flex-wrap align-items-center mb-4">
                     <h5 class="mb-0">Files & Folders</h5>
                 </div>
-                <div id="fm" style="height: 600px;"></div>
+                <div id="fm"></div>
             </div>
         </div>
     </div>
+
+    <!-- Project Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header d-flex align-items-center justify-content-between gap-20">
+                    <h3 class="modal-title"><span class="btn-icon btn-icon-primary me-1"><i class='bx bx-data'></i></span> Add Project</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="">
+                        <div class="modal-form-body">
+                            <div class="row">
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Project Name<sup class="text-primary">*</sup></label>
+                                </div>
+                                <div class="col-md-8 mb-4">
+                                    <input type="text" class="form-style" placeholder="Project Name Here...">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Select Date</label>
+                                </div>
+                                <div class="col-md-8 mb-4">
+                                    <div class="btn-list btn-list-full-2 justify-content-between gap-10">
+                                        <button type="button" class="btn btn-50 btn-sm btn-border-secondary"><i class='bx bx-calendar-alt' ></i> Start Date</button>
+                                        <button type="button" class="btn btn-50 btn-sm btn-border-danger"><i class='bx bx-calendar-alt' ></i> Due Date</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Upload Logo</label>
+                                </div>
+                                <div class="col-md-8 mb-4">
+                                    <div class="form-file_upload form-file_upload-logo">
+                                        <input type="file" id="formFile">
+                                        <div class="form-file_upload-box">
+                                            <div class="form-file_upload-box-icon"><i class='bx bx-image'></i></div>
+                                            <div class="form-file_upload-box-text">Upload Image</div>
+                                        </div>
+                                        <div class="form-file_upload-valText">Allowed *.jpeg, *.jpg, *.png, *.gif max size of 3 Mb</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Project Desc</label>
+                                </div>
+                                <div class="col-md-8 mb-4">
+                                    <textarea type="text" class="form-style" placeholder="Add Project Description Here..." rows="2" cols="30"></textarea>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label for="">Document Upload</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="form-file_upload form-file_upload-doc">
+                                        <input type="file" id="formFile">
+                                        <div class="form-file_upload-box">
+                                            <div class="form-file_upload-box-icon"><i class='bx bx-images' ></i></div>
+                                            <div class="form-file_upload-box-text">Upload Images</div>
+                                        </div>
+                                        <div class="form-file_upload-valText">Allowed *.jpeg, *.jpg, *.png, *.gif max size of 3 Mb</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-form-btm">
+                            <div class="row">
+                                <div class="col-md-6 ms-auto text-end">
+                                    <button type="submit" class="btn btn-primary">Add Project</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Team Modal -->
+    <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header d-flex align-items-center justify-content-between gap-20">
+                    <h3 class="modal-title"><span class="btn-icon btn-icon-primary me-1"><i class='bx bx-group' ></i></span> Add Team</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="">
+                        <div class="modal-form-body">
+                            <div class="row">
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Select Team</label>
+                                </div>
+                                <div class="col-md-8 mb-4">
+                                    <input type="text" class="form-style" placeholder="Select Team Here...">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Select Users</label>
+                                </div>
+                                <div class="col-md-8 mb-4">
+                                    <input type="text" class="form-style" placeholder="Select Usres Here...">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-form-btm">
+                            <div class="row">
+                                <div class="col-md-6 ms-auto text-end">
+                                    <button type="submit" class="btn btn-primary">Add Team</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
 </div>
 @push('scripts')
 <script>

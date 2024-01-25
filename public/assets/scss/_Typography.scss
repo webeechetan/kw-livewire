@@ -282,10 +282,6 @@ ul {
         padding: 0 $spacing_xs 0 0;
         background-color: transparent;
     }
-    a.btn-sm {
-        font-size: 14px;
-        padding: 7px 15px;
-    }
 } 
 
 /* ----- Card ----- */
@@ -309,5 +305,43 @@ ul {
                 margin-bottom: $spacing_xs;
             }
         }
+    }
+}
+
+/* ------ Modal ------ */
+.modal {
+    &-body {
+        padding: 0;
+    }
+    .btn-close {
+        background-size: 12px;
+        transition: $ease_03;
+        margin: 0;
+        padding: 0;
+        width: 30px;
+        height: 30px;
+        background-color: $grey_xd;
+    }
+    &-title {
+        font-size: 20px;
+    }
+
+    label {
+        color: $text_color;
+        font-weight: 600;
+    }
+
+    &-form {
+        &-body {
+            padding: $spacing_sm;
+        }
+        &-btm {
+            border-top: 1px solid $grey_xd;
+            padding: $spacing_sm;
+        }
+    }
+
+    .form-control, .form-select {
+        min-height: inherit;
     }
 }

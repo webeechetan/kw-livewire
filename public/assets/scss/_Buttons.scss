@@ -3,6 +3,7 @@
     padding: $spacing_btn;
     font-weight: 400;
     transition: $ease_05;
+    border-radius: $border_radius_xs;
     &-sm {
         padding: $spacing_btn_sm;
         font-size: 0.8rem;
@@ -222,6 +223,19 @@
         font-weight: 500;
         color: $dark;
         display: inline-block;
+    }
+
+    /* ----- Button Group ----- */
+    &-list {
+        display: flex;
+        flex-wrap: wrap;
+
+        &-full {
+            &-2 {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+            }
+        }
     }
 
     &:focus {
