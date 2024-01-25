@@ -41,4 +41,85 @@
             {{ $clients->links(data: ['scrollTo' => false]) }}
         </div>
     </div>
+
+    <!-- Client Modal -->
+    <div class="modal fade" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header d-flex align-items-center justify-content-between gap-20">
+                    <h3 class="modal-title"><span class="btn-icon btn-icon-primary me-1"><i class='bx bx-user'></i></span> Add Client</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="">
+                        <div class="modal-form-body">
+                            <div class="row">
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Client Name<sup class="text-primary">*</sup></label>
+                                </div>
+                                <div class="col-md-8 mb-4">
+                                    <input type="text" class="form-style" placeholder="Client Name Here...">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Onboard Date</label>
+                                </div>
+                                <div class="col-md-8 mb-4">
+                                    <div class="btn-list btn-list-full-2 justify-content-between gap-10">
+                                        <button type="button" class="btn btn-50 btn-sm btn-border-secondary"><i class='bx bx-calendar-alt' ></i> Select Date</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Upload Logo</label>
+                                </div>
+                                <div class="col-md-8 mb-4">
+                                    <div class="form-file_upload form-file_upload-logo">
+                                        <input type="file" id="formFile">
+                                        <div class="form-file_upload-box">
+                                            <div class="form-file_upload-box-icon"><i class='bx bx-image'></i></div>
+                                            <div class="form-file_upload-box-text">Upload Image</div>
+                                        </div>
+                                        <div class="form-file_upload-valText">Allowed *.jpeg, *.jpg, *.png, *.gif max size of 3 Mb</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Project Desc</label>
+                                </div>
+                                <div class="col-md-8 mb-4">
+                                    <textarea type="text" class="form-style" placeholder="Add Project Description Here..." rows="2" cols="30"></textarea>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label for="">Document Upload</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="form-file_upload form-file_upload-doc">
+                                        <input type="file" id="formFile">
+                                        <div class="form-file_upload-box">
+                                            <div class="form-file_upload-box-icon"><i class='bx bx-images' ></i></div>
+                                            <div class="form-file_upload-box-text">Upload Images</div>
+                                        </div>
+                                        <div class="form-file_upload-valText">Allowed *.jpeg, *.jpg, *.png, *.gif max size of 3 Mb</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-form-btm">
+                            <div class="row">
+                                <div class="col-md-6 ms-auto text-end">
+                                    <button type="submit" class="btn btn-primary">Add Project</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

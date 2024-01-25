@@ -6,7 +6,7 @@
         </div>
         <div class="text-end col">
             <div class="main-body-header-right">
-                <a href="javascript:void(0);" class="btn-border btn-border-primary"><i class="bx bx-plus"></i> Add Client</a>
+                <a href="#" class="btn-border btn-border-danger"><i class='bx bx-trash'></i> Delete</a>
             </div>
         </div>
     </div>
@@ -206,7 +206,7 @@
                     </div>
                     <div class="files-options ms-auto">
                         <div class="btn-list gap-10">
-                            <a href="#" class="btn btn-sm btn-border-primary" data-bs-toggle="modal" data-bs-target="#exampleModal3"><span><i class='bx bx-plus'></i></span> Add File</a>
+                            <a href="#" class="btn btn-sm btn-border-primary"><span><i class='bx bx-plus'></i></span> Add File</a>
                             <a href="#" class="btn btn-sm btn-border-danger"><span><i class='bx bx-trash' ></i></span> Delete</a>
                         </div>
                     </div>
@@ -409,57 +409,6 @@
                                 </div>
                                 <div class="col-md-8 mb-4">
                                     <input type="text" class="form-style" placeholder="Select Usres Here...">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-form-btm">
-                            <div class="row">
-                                <div class="col-md-6 ms-auto text-end">
-                                    <button type="submit" class="btn btn-primary">Add Team</button>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- File Modal -->
-    <div class="modal fade" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header d-flex align-items-center justify-content-between gap-20">
-                    <h3 class="modal-title"><span class="btn-icon btn-icon-primary me-1"><i class='bx bx-group' ></i></span> Add Files</h3>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form action="">
-                        <div class="modal-form-body">
-                            <div class="row">
-                                <div class="col-12 mb-5">
-                                    <div class="form-file_upload form-file_upload-doc">
-                                        <input type="file" id="formFile">
-                                        <div class="form-file_upload-box">
-                                            <div class="form-file_upload-box-icon"><i class='bx bx-images' ></i></div>
-                                            <div class="form-file_upload-box-text">Upload Images</div>
-                                        </div>
-                                        <div class="form-file_upload-valText text-center">Allowed *.jpeg, *.jpg, *.png, *.gif max size of 3 Mb</div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 mb-4">
-                                    <label for="">Select Folder</label>
-                                </div>
-                                <div class="col-md-8 mb-4">
-                                    <input type="text" class="form-style" placeholder="Select Here...">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-4 mb-4">
-                                    <label for="">Select Sub Folder</label>
-                                </div>
-                                <div class="col-md-8 mb-4">
-                                    <input type="text" class="form-style" placeholder="Select Here...">
                                 </div>
                             </div>
                         </div>
