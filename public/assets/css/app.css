@@ -430,6 +430,14 @@ ul.list-none {
   min-height: inherit;
 }
 
+/* ----- Breadcrumb ----- */
+.breadcrumb-item a {
+  color: #9c9c9c;
+}
+.breadcrumb-item.active {
+  color: #f83890;
+}
+
 /*---- Buttons Style Start Here ----*/
 .btn {
   padding: 0.5rem 1.4rem;
@@ -447,7 +455,7 @@ ul.list-none {
 }
 .btn-sm {
   padding: 7px 15px;
-  font-size: 0.8rem;
+  font-size: 14px;
   transition: all 0.3s ease;
 }
 .btn-sm svg {
@@ -2993,7 +3001,8 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
 
 /* ----- Client Page ----- */
 .client_head_logo {
-  max-width: 75px;
+  width: 50px;
+  height: 50px;
   display: inline-block;
 }
 .client_head_logo img {
@@ -3006,6 +3015,9 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   border: 1px solid #eee;
   padding: 10px;
   border-radius: 4px;
+}
+.team:not(:last-child) {
+  margin-bottom: 10px;
 }
 .team-style_2 {
   display: flex;
@@ -3042,6 +3054,10 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
 }
 .team-avtar span img {
   max-width: 100%;
+}
+.team-scroll {
+  max-height: 430px;
+  overflow: auto;
 }
 
 /* ----- Project ----- */
@@ -3175,61 +3191,33 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
 .files-sec {
   background-color: #eee;
 }
-.files-options {
-  margin-left: auto;
-  padding-left: 15px;
-}
-.files-options ul {
-  display: flex;
-  padding: 0;
-  margin: 0;
-  list-style-type: none;
-  gap: 15px;
-}
-.files-options ul li a {
-  font-size: 22px;
-  background-color: #fdf4c1;
-  border: 1px solid transparent;
-  width: 35px;
-  height: 30px;
-  border-radius: 4px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
-}
-.files-options ul li a:hover {
-  color: #cdb110;
-  border-color: #f7d306;
-}
-.files-options ul li:last-child a {
-  color: #ff0000;
-  background-color: #fedddc;
-}
-.files-options ul li:last-child a:hover {
-  border-color: #ff0000;
-}
 .files-folder {
   background-color: #fff;
   border-radius: 4px;
   padding: 10px;
   position: relative;
   text-align: center;
-  border: 1px solid transparent;
+  border: 1px solid #eee;
   cursor: pointer;
+  width: 200px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
 .files-folder-icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 42px;
-  height: 42px;
+  width: 30px;
+  height: 30px;
   background-color: #eee;
   margin-bottom: 10px;
   border-radius: 50%;
 }
 .files-folder-icon i {
-  font-size: 22px;
+  font-size: 16px;
 }
 .files-folder-title {
   font-weight: 500;
@@ -3238,8 +3226,9 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   position: absolute;
   right: 10px;
   top: 10px;
-  width: 25px;
+  min-width: 25px;
   height: 25px;
+  padding: 0 5px;
   border-radius: 4px;
   background-color: #fdf4c1;
   display: inline-flex;
@@ -3257,34 +3246,20 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
 .files-folder.selected .files-folder-icon i {
   color: #fff;
 }
-.files-list_2 {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+.files-folder-add_new {
+  border: 2px dashed #eee;
+}
+.files-folder-add_new .files-folder-title {
+  color: #9c9c9c;
+}
+.files-list {
+  display: flex;
+  flex-wrap: wrap;
   gap: 15px;
-}
-.files-list_2 .files-folder {
-  gap: 15px;
-  border: 1px solid #eee;
-}
-.files-list_2 .files-folder-icon {
-  width: inherit;
-  height: inherit;
-  background-color: inherit;
-}
-.files-list_2 .files-folder.selected {
-  color: #f83890;
-  border-color: #f83890;
-}
-.files-list_2 .files-folder.selected .files-folder-icon {
-  background: transparent;
-  align-items: inherit;
-}
-.files-list_2 .files-folder.selected .files-folder-icon i {
-  color: #f83890;
 }
 .files-items {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  display: flex;
+  flex-wrap: wrap;
   gap: 15px;
 }
 .files-items-wrap {
@@ -3294,6 +3269,24 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   text-align: center;
   border: 1px solid #eee;
   padding: 10px;
+  width: 200px;
+  border-radius: 4px;
+}
+.files-item-icon {
+  color: #f83890;
+  font-size: 32px;
+}
+.files-item-icon span {
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+}
+.files-item-icon span img {
+  max-width: 100%;
+  max-height: 100%;
+}
+.files-item.selected {
+  border-color: #f83890;
 }
 
 /* ----- Client ----- */

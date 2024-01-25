@@ -345,3 +345,15 @@ ul {
         min-height: inherit;
     }
 }
+
+/* ----- Breadcrumb ----- */
+.breadcrumb {
+    &-item {
+        a {
+            color: $text_light;
+        }
+        &.active {
+            color: $brand;
+        }
+    }
+}

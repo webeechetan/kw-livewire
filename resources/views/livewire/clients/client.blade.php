@@ -13,7 +13,7 @@
 
     <!-- Dashboard Body -->
     <div class="row">
-        <div class="col-md-7 mb-4">
+        <div class="col-12 mb-4">
             <div class="column-box h-100">
                 <div class="column-head d-flex flex-wrap gap-20 align-items-center mb-4">
                     <div>
@@ -104,15 +104,17 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-5 mb-4">
+    </div>
+    <div class="row">
+        <div class="col-md-3">
             <div class="column-box h-100">
                 <div class="column-head d-flex flex-wrap align-items-center mb-4">
                     <div>
-                        <h5 class="mb-0">Team</h5>
+                        <h5 class="mb-0">Teams</h5>
                         <div class="text-light">4 Teams Assigned</div>
                     </div>
                     <div class="ms-auto">
-                        <a class="btn btn-sm btn-primary" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal2"><i class="bx bx-plus"></i> Add Team</a>
+                        <a class="btn-icon btn-icon-primary" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal2"><i class="bx bx-plus"></i></a>
                     </div>
                     <!-- <form class="single-add ms-auto" action="">
                         <div class="single-add-wrap">
@@ -122,78 +124,121 @@
                         <a href="javascript:void(0);" class="btn-sm btn-with_icon btn-primary">Add Team</a>
                     </form> -->
                 </div>
-                <!-- Teams -->
-                <div class="team-list grid_col grid_col-repeat-2 gap-20">
-                    <!-- Team -->
-                    <div class="team team-style_2">
-                        <div class="team-style_2-head_wrap">
-                            <div class="team-avtar">
-                                <span>DS</span>
+                <div class="team-scroll">
+                    <!-- Teams -->
+                    <div class="team-list">
+                        <!-- Team -->
+                        <div class="team team-style_2">
+                            <div class="team-style_2-head_wrap">
+                                <div class="team-avtar">
+                                    <span>DS</span>
+                                </div>
+                                <h4 class="team-style_2-title">Design <span class="team-style_2-memCount">6 Members</span></h4>
                             </div>
-                            <h4 class="team-style_2-title">Design <span class="team-style_2-memCount">6 Members</span></h4>
                         </div>
-                    </div>
-                    <!-- Team -->
-                    <div class="team team-style_2">
-                        <div class="team-style_2-head_wrap">
-                            <div class="team-avtar">
-                                <span>TC</span>
+                        <!-- Team -->
+                        <div class="team team-style_2">
+                            <div class="team-style_2-head_wrap">
+                                <div class="team-avtar">
+                                    <span>TC</span>
+                                </div>
+                                <h4 class="team-style_2-title">Tech <span class="team-style_2-memCount">12 Members</span></h4>
                             </div>
-                            <h4 class="team-style_2-title">Tech <span class="team-style_2-memCount">12 Members</span></h4>
                         </div>
-                    </div>
-                    <!-- Team -->
-                    <div class="team team-style_2">
-                        <div class="team-style_2-head_wrap">
-                            <div class="team-avtar">
-                                <span>ME</span>
+                        <!-- Team -->
+                        <div class="team team-style_2">
+                            <div class="team-style_2-head_wrap">
+                                <div class="team-avtar">
+                                    <span>ME</span>
+                                </div>
+                                <h4 class="team-style_2-title">Media <span class="team-style_2-memCount">6 Members</span></h4>
                             </div>
-                            <h4 class="team-style_2-title">Media <span class="team-style_2-memCount">6 Members</span></h4>
                         </div>
-                    </div>
-                    <!-- Team -->
-                    <div class="team team-style_2">
-                        <div class="team-style_2-head_wrap">
-                            <div class="team-avtar">
-                                <span>CP</span>
+                        <!-- Team -->
+                        <div class="team team-style_2">
+                            <div class="team-style_2-head_wrap">
+                                <div class="team-avtar">
+                                    <span>CP</span>
+                                </div>
+                                <h4 class="team-style_2-title">Copy <span class="team-style_2-memCount">6 Members</span></h4>
                             </div>
-                            <h4 class="team-style_2-title">Copy <span class="team-style_2-memCount">6 Members</span></h4>
+                        </div>
+                        <!-- Team -->
+                        <div class="team team-style_2">
+                            <div class="team-style_2-head_wrap">
+                                <div class="team-avtar">
+                                    <span>CP</span>
+                                </div>
+                                <h4 class="team-style_2-title">Copy <span class="team-style_2-memCount">6 Members</span></h4>
+                            </div>
+                        </div>
+                        <!-- Team -->
+                        <div class="team team-style_2">
+                            <div class="team-style_2-head_wrap">
+                                <div class="team-avtar">
+                                    <span>CP</span>
+                                </div>
+                                <h4 class="team-style_2-title">Copy <span class="team-style_2-memCount">6 Members</span></h4>
+                            </div>
+                        </div>
+                        <!-- Team -->
+                        <div class="team team-style_2">
+                            <div class="team-style_2-head_wrap">
+                                <div class="team-avtar">
+                                    <span>CP</span>
+                                </div>
+                                <h4 class="team-style_2-title">Copy <span class="team-style_2-memCount">6 Members</span></h4>
+                            </div>
+                        </div>
+                        <div class="team">
+                            <a class="btn btn-sm btn-border-primary w-100" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal2"><i class="bx bx-plus"></i> Add Team</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-9">
             <div class="column-box h-100 p-3">
-                <div class="files-head column-head d-flex flex-wrap align-items-center mb-4">
+                <div class="files-head column-head d-flex flex-wrap align-items-center mb-3">
                     <div>
-                        <h5 class="mb-0">External Links</h5>
+                        <h5 class="mb-0">Files & Folders</h5>
                         <div class="text-light"><span class="text-primary"><i class='bx bx-folder' ></i></span> 4 <span class="px-2">|</span> <span class="text-secondary"><i class='bx bx-file-blank' ></i></span> 42</div>
                     </div>
-                    <div class="files-options">
-                        <ul>
-                            <li><a href="#"><span><i class='bx bx-plus'></i></span></a></li>
-                            <li><a href="#"><span><i class='bx bx-trash' ></i></span></a></li>
-                        </ul>
+                    <div class="files-options ms-auto">
+                        <div class="btn-list gap-10">
+                            <a href="#" class="btn btn-sm btn-border-primary" data-bs-toggle="modal" data-bs-target="#exampleModal3"><span><i class='bx bx-plus'></i></span> Add File</a>
+                            <a href="#" class="btn btn-sm btn-border-danger"><span><i class='bx bx-trash' ></i></span> Delete</a>
+                        </div>
                     </div>
                 </div>
-                <div class="files-list files-list_2 mt-3">
-                    <div class="files-folder selected">
-                        <span class="files-folder-icon"><i class='bx bx-folder'></i></span>
-                        <div class="files-folder-title">Buyers Guide</div>
-                        <div class="files-folder-number">12</div>
-                    </div>
+                <div class="row">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item"><a href="#">Library</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Data</li>
+                        </ol>
+                    </nav>
+                </div>
+                <div class="files-list">
                     <div class="files-folder">
                         <span class="files-folder-icon"><i class='bx bx-folder'></i></span>
+                        <div class="files-folder-title">Buyers Guide</div>
+                        <div class="text-light"><span class="text-primary"><i class='bx bx-folder' ></i></span> 4 <span class="px-2">|</span> <span class="text-secondary"><i class='bx bx-file-blank' ></i></span> 42</div>
+                    </div>
+                    <div class="files-folder selected">
+                        <span class="files-folder-icon"><i class='bx bx-folder'></i></span>
                         <div class="files-folder-title">Startup Acma</div>
-                        <div class="files-folder-number">12</div>
+                        <div class="text-light"><span class="text-primary"><i class='bx bx-folder' ></i></span> 4 <span class="px-2">|</span> <span class="text-secondary"><i class='bx bx-file-blank' ></i></span> 42</div>
                     </div>
                     <div class="files-folder">
                         <span class="files-folder-icon"><i class='bx bx-folder'></i></span>
                         <div class="files-folder-title">Acma Webiste</div>
-                        <div class="files-folder-number">12</div>
+                        <div class="text-light"><span class="text-primary"><i class='bx bx-folder' ></i></span> 4 <span class="px-2">|</span> <span class="text-secondary"><i class='bx bx-file-blank' ></i></span> 42</div>
+                    </div>
+                    <div class="files-folder files-folder-add_new">
+                        <span class="files-folder-icon"><i class='bx bx-plus' ></i></span>
+                        <div class="files-folder-title">Add Folder</div>
                     </div>
                 </div>
                 <div class="files-items-wrap">
@@ -213,7 +258,30 @@
                             </div>
                             <div class="files-item-content">
                                 <div class="files-item-content-title">Tetrisly-guide-lines.png</div>
-                                <div class="files-item-content-info">26 Jan 2024</div>
+                            </div>
+                        </div>
+                        <div class="files-item selected">
+                            <div class="files-item-icon">
+                                <span><img src="{{ env('APP_URL') }}/assets/images/google-sheets-icon.svg" alt=""></span>
+                            </div>
+                            <div class="files-item-content">
+                                <div class="files-item-content-title">Tetrisly-guide-lines.sheet</div>
+                            </div>
+                        </div>
+                        <div class="files-item">
+                            <div class="files-item-icon">
+                                <span><img src="{{ env('APP_URL') }}/assets/images/google-docs-icon.svg" alt=""></span>
+                            </div>
+                            <div class="files-item-content">
+                                <div class="files-item-content-title">Tetrisly-guide-lines.doc</div>
+                            </div>
+                        </div>
+                        <div class="files-item">
+                            <div class="files-item-icon">
+                                <span><img src="{{ env('APP_URL') }}/assets/images/google-docs-icon.svg" alt=""></span>
+                            </div>
+                            <div class="files-item-content">
+                                <div class="files-item-content-title">Tetrisly-guide-lines.doc</div>
                             </div>
                         </div>
                         <div class="files-item">
@@ -222,19 +290,14 @@
                             </div>
                             <div class="files-item-content">
                                 <div class="files-item-content-title">Tetrisly-guide-lines.png</div>
-                                <div class="files-item-content-info">26 Jan 2024</div>
                             </div>
+                        </div>
+                        <div class="files-folder files-folder-add_new">
+                            <span class="files-folder-icon"><i class='bx bx-plus' ></i></span>
+                            <div class="files-folder-title">Add Files</div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="col-md-8">
-            <div class="column-box">
-                <div class="column-head d-flex flex-wrap align-items-center mb-4">
-                    <h5 class="mb-0">Files & Folders</h5>
-                </div>
-                <div id="fm"></div>
             </div>
         </div>
     </div>
@@ -346,6 +409,57 @@
                                 </div>
                                 <div class="col-md-8 mb-4">
                                     <input type="text" class="form-style" placeholder="Select Usres Here...">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-form-btm">
+                            <div class="row">
+                                <div class="col-md-6 ms-auto text-end">
+                                    <button type="submit" class="btn btn-primary">Add Team</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- File Modal -->
+    <div class="modal fade" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header d-flex align-items-center justify-content-between gap-20">
+                    <h3 class="modal-title"><span class="btn-icon btn-icon-primary me-1"><i class='bx bx-group' ></i></span> Add Files</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="">
+                        <div class="modal-form-body">
+                            <div class="row">
+                                <div class="col-12 mb-5">
+                                    <div class="form-file_upload form-file_upload-doc">
+                                        <input type="file" id="formFile">
+                                        <div class="form-file_upload-box">
+                                            <div class="form-file_upload-box-icon"><i class='bx bx-images' ></i></div>
+                                            <div class="form-file_upload-box-text">Upload Images</div>
+                                        </div>
+                                        <div class="form-file_upload-valText text-center">Allowed *.jpeg, *.jpg, *.png, *.gif max size of 3 Mb</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Select Folder</label>
+                                </div>
+                                <div class="col-md-8 mb-4">
+                                    <input type="text" class="form-style" placeholder="Select Here...">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Select Sub Folder</label>
+                                </div>
+                                <div class="col-md-8 mb-4">
+                                    <input type="text" class="form-style" placeholder="Select Here...">
                                 </div>
                             </div>
                         </div>
