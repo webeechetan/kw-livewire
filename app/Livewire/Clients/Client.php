@@ -5,6 +5,8 @@ namespace App\Livewire\Clients;
 use Livewire\Component;
 use App\Models\Client as ClientModel;
 use Illuminate\Http\Request;
+use App\Models\Team;
+use App\Models\User;
 
 class Client extends Component
 {
@@ -20,6 +22,11 @@ class Client extends Component
     public $project_name;
     public $project_due_date;
 
+    public $teams;
+    public $team_id;
+    
+    public $users;
+
 
     public function render()
     {
@@ -30,12 +37,13 @@ class Client extends Component
     {
         $this->client_id = $id;
         $this->client = ClientModel::with('projects')->find($id);
-        // dd($this->client);
         $this->active_projects = $this->client->projects()->where('status', 'active')->get();
-        // dd($this->client->projects);
         $this->completed_projects = $this->client->projects()->where('status', 'completed')->get();
         $this->overdue_projects = $this->client->projects()->where('status', 'overdue')->get();
         $this->archived_projects = $this->client->projects()->where('status', 'archived')->get();
+        $this->teams = Team::all();
+        $this->users = User::all();
+
     }
 
     public function addProject()
@@ -56,6 +64,14 @@ class Client extends Component
         $this->project_due_date = '';
 
         $this->redirect(route('client.profile', $this->client_id),navigate:true);
+    }
+
+    public function updatedTeamId($team_id)
+    {
+        $this->team_id = $team_id;
+        $team = Team::find($team_id);
+        $this->users = $team->users;
+        // dd($team->users);
     }
 
 }

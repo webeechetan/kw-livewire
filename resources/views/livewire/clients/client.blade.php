@@ -117,10 +117,10 @@
                     </div>
                     <form class="single-add ms-auto" action="">
                         <div class="single-add-wrap">
-                            <input class="form-control" wire:model="project_name" type="text" placeholder="Add Team Here">
-                            <a class="single-add-date"  href="javascript:void(0);" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip" data-bs-title="Select Date"><i class='bx bx-user-plus '></i></a>
+                            {{-- <input class="form-control" wire:model="project_name" type="text" placeholder="Add Team Here"> --}}
+                            <a class="single-add-date"  href="javascript:void(0);"   data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip" data-bs-title="Select Date"><i class='bx bx-user-plus '></i></a>
                         </div>
-                        <a href="javascript:void(0);" class="btn-sm btn-with_icon btn-primary">Add Team</a>
+                        <a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn-sm btn-with_icon btn-primary">Add Team</a>
                     </form>
                 </div>
                 <!-- Teams -->
@@ -239,12 +239,43 @@
             </div>
         </div>
     </div>
+    {{-- Add new team modal --}}
+
+    <div wire:ignore class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Add new team and members</h5>
+              <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <select wire:model.live="team_id" name="" id="" class="form-control">
+                    <option value="">Select Team</option>
+                    @foreach($teams as $team)
+                        <option value="{{ $team->id }}">{{ $team->name }}</option>
+                    @endforeach
+                </select>
+                <select name="" id="">
+                    <option value="">Select Member</option>
+                    @foreach($users as $user)
+                        <option value="{{ $user->id }}">{{ $user->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
 </div>
 @push('scripts')
+{{-- <script src="{{ asset('vendor/file-manager/js/file-manager.js') }}"></script> --}}
 <script>
-    $(function () {
-        $('[data-bs-toggle="tooltip"]').tooltip()
-    })
+    
     $('.single-add-date').flatpickr({
         dateFormat: "Y-m-d",
         onChange: function(selectedDates, dateStr, instance) {
@@ -252,5 +283,17 @@
             @this.set('project_due_date', dateStr);
         },
     });
+
+    document.addEventListener('livewire:navigated', () => {
+        setTimeout(() => {
+            $(function () {
+                $('[data-bs-toggle="tooltip"]').tooltip();
+            })
+            $('#fm').filemanager('image');
+        }, 3000);
+    });
+    
 </script>
 @endpush
+
+secratere , yblf
