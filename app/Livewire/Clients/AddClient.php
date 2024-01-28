@@ -46,6 +46,13 @@ class AddClient extends Component
 
 
         $client->description = $this->description;
+        // create a folder for the client
+        $path = 'storage/'. session('org_name') . '/clients/' . $this->name;
+
+        $path = public_path($path);
+        if (!file_exists($path)) {
+            mkdir($path, 0777, true);
+        }
         $client->save();
         session()->flash('success', 'Client added successfully.');
         return $this->redirect(route('client.index'), navigate: true);

@@ -31,7 +31,7 @@
                 border-color: $brand;
             }
         }
-     }
+    }
     &-check {
         text-align: left;
         &-input {
@@ -71,6 +71,88 @@
                 top: 10px;
                 min-height: calc(50px - 20px);
             }
+        }
+    }
+
+    &-file_upload {
+        position: relative;
+        #formFile {
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+        &-box {
+            font-size: 14px;
+            background-color: $success_light;
+            border-radius: $border_radius_xs;
+            padding: $spacing_s;
+            text-align: center;
+
+            &-icon {
+                font-size: 20px;
+                width: 35px;
+                height: 35px;
+                background-color: $success_light;
+                color: $success;
+                @include flex_center;
+                border: 1px solid $success;
+                border-radius: $border-radius_xs;
+                margin: 0 auto $spacing_xs;
+            }
+
+            &-text {
+                font-size: 12px;
+                text-transform: uppercase;
+                color: $success;
+                letter-spacing: 1px;
+                font-weight: 600;
+            }
+        }
+        &-logo {
+            .form-file_upload {
+                &-box {
+                    display: flex;
+                    align-items: center;
+                    gap: 5px;
+                    background-color: transparent;
+                    padding: 0;
+
+                    &-icon {
+                        margin: 0;
+                    }
+        
+                    &-text {
+                        background-color: $success_light;
+                        border-radius: $border-radius_xs;
+                        height: 35px;
+                        padding: 0 $spacing_xs;
+                        width: 100%;
+                        @include flex_align_center;
+                    }
+                }
+            }   
+        }
+
+        &-valText {
+            font-size: 12px;
+            margin-top: 5px;
+        }
+    }
+
+    &-style {
+        padding: 0;
+        margin: 0;
+        border: none;
+        color: $text_color;
+        width: 100%;
+
+        &:focus, &:active {
+            outline: none;
+            box-shadow: none;
+            border: none;
         }
     }
 }

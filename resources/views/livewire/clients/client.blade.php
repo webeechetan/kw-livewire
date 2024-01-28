@@ -6,27 +6,23 @@
         </div>
         <div class="text-end col">
             <div class="main-body-header-right">
-                <a href="javascript:void(0);" class="btn-border btn-border-primary"><i class="bx bx-plus"></i> Add Client</a>
+                <a href="#" class="btn-border btn-border-danger"><i class='bx bx-trash'></i> Delete</a>
             </div>
         </div>
     </div>
 
     <!-- Dashboard Body -->
     <div class="row">
-        <div class="col-md-7 mb-4">
+        <div class="col-12 mb-4">
             <div class="column-box h-100">
-                <div class="column-head d-flex flex-wrap align-items-center mb-4">
+                <div class="column-head d-flex flex-wrap gap-20 align-items-center mb-4">
                     <div>
                         <h5 class="mb-0">All Projects</h5>
                         <div class="text-light">{{ count($client->projects) }} Projects</div>
                     </div>
-                    <form class="single-add ms-auto" method="POST" wire:submit.prevent="addProject()">
-                        <div class="single-add-wrap" wire:ignore>
-                            <input class="form-control" wire:model="project_name" type="text" placeholder="Add Project Here">
-                            <a class="single-add-date" href="javascript:void(0);" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip" data-bs-title="Select Date"><i class='bx bx-calendar' ></i></a>
-                        </div>
-                        <button class="btn btn-sm btn-primary">Add Project</button>
-                    </form>
+                    <div class="ms-auto">
+                        <a class="btn btn-sm btn-primary" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="bx bx-plus"></i> Add Project</a>
+                    </div>
                 </div>
                 <div class="project-tabs">
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -108,169 +104,227 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-5 mb-4">
+    </div>
+    <div class="row">
+        <div class="col-md-3">
             <div class="column-box h-100">
                 <div class="column-head d-flex flex-wrap align-items-center mb-4">
                     <div>
-                        <h5 class="mb-0">Team</h5>
+                        <h5 class="mb-0">Teams</h5>
                         <div class="text-light">4 Teams Assigned</div>
                     </div>
-                    <form class="single-add ms-auto" action="">
+                    <div class="ms-auto">
+                        <a class="btn-icon btn-icon-primary" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal2"><i class="bx bx-plus"></i></a>
+                    </div>
+                    <!-- <form class="single-add ms-auto" action="">
                         <div class="single-add-wrap">
                             {{-- <input class="form-control" wire:model="project_name" type="text" placeholder="Add Team Here"> --}}
                             <a class="single-add-date"  href="javascript:void(0);"   data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip" data-bs-title="Select Date"><i class='bx bx-user-plus '></i></a>
                         </div>
-                        <a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn-sm btn-with_icon btn-primary">Add Team</a>
+                        <a href="javascript:void(0);" class="btn-sm btn-with_icon btn-primary">Add Team</a>
+                    </form> -->
+                </div>
+                <div class="team-scroll">
+                    <!-- Teams -->
+                    <div class="team-list">
+                        <!-- Team -->
+                        <div class="team team-style_2">
+                            <div class="team-style_2-head_wrap">
+                                <div class="team-avtar">
+                                    <span>DS</span>
+                                </div>
+                                <h4 class="team-style_2-title">Design <span class="team-style_2-memCount">6 Members</span></h4>
+                            </div>
+                        </div>
+                        <!-- Team -->
+                        <div class="team team-style_2">
+                            <div class="team-style_2-head_wrap">
+                                <div class="team-avtar">
+                                    <span>TC</span>
+                                </div>
+                                <h4 class="team-style_2-title">Tech <span class="team-style_2-memCount">12 Members</span></h4>
+                            </div>
+                        </div>
+                        <!-- Team -->
+                        <div class="team team-style_2">
+                            <div class="team-style_2-head_wrap">
+                                <div class="team-avtar">
+                                    <span>ME</span>
+                                </div>
+                                <h4 class="team-style_2-title">Media <span class="team-style_2-memCount">6 Members</span></h4>
+                            </div>
+                        </div>
+                        <!-- Team -->
+                        <div class="team team-style_2">
+                            <div class="team-style_2-head_wrap">
+                                <div class="team-avtar">
+                                    <span>CP</span>
+                                </div>
+                                <h4 class="team-style_2-title">Copy <span class="team-style_2-memCount">6 Members</span></h4>
+                            </div>
+                        </div>
+                        <!-- Team -->
+                        <div class="team team-style_2">
+                            <div class="team-style_2-head_wrap">
+                                <div class="team-avtar">
+                                    <span>CP</span>
+                                </div>
+                                <h4 class="team-style_2-title">Copy <span class="team-style_2-memCount">6 Members</span></h4>
+                            </div>
+                        </div>
+                        <!-- Team -->
+                        <div class="team team-style_2">
+                            <div class="team-style_2-head_wrap">
+                                <div class="team-avtar">
+                                    <span>CP</span>
+                                </div>
+                                <h4 class="team-style_2-title">Copy <span class="team-style_2-memCount">6 Members</span></h4>
+                            </div>
+                        </div>
+                        <!-- Team -->
+                        <div class="team team-style_2">
+                            <div class="team-style_2-head_wrap">
+                                <div class="team-avtar">
+                                    <span>CP</span>
+                                </div>
+                                <h4 class="team-style_2-title">Copy <span class="team-style_2-memCount">6 Members</span></h4>
+                            </div>
+                        </div>
+                        <div class="team">
+                            <a class="btn btn-sm btn-border-primary w-100" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal2"><i class="bx bx-plus"></i> Add Team</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <livewire:components.file-manager :client="$client" />
+        </div>
+    </div>
+
+    <!-- Project Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header d-flex align-items-center justify-content-between gap-20">
+                    <h3 class="modal-title"><span class="btn-icon btn-icon-primary me-1"><i class='bx bx-data'></i></span> Add Project</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="">
+                        <div class="modal-form-body">
+                            <div class="row">
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Project Name<sup class="text-primary">*</sup></label>
+                                </div>
+                                <div class="col-md-8 mb-4">
+                                    <input type="text" class="form-style" placeholder="Project Name Here...">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Select Date</label>
+                                </div>
+                                <div class="col-md-8 mb-4">
+                                    <div class="btn-list btn-list-full-2 justify-content-between gap-10">
+                                        <button type="button" class="btn btn-50 btn-sm btn-border-secondary"><i class='bx bx-calendar-alt' ></i> Start Date</button>
+                                        <button type="button" class="btn btn-50 btn-sm btn-border-danger"><i class='bx bx-calendar-alt' ></i> Due Date</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Upload Logo</label>
+                                </div>
+                                <div class="col-md-8 mb-4">
+                                    <div class="form-file_upload form-file_upload-logo">
+                                        <input type="file" id="formFile">
+                                        <div class="form-file_upload-box">
+                                            <div class="form-file_upload-box-icon"><i class='bx bx-image'></i></div>
+                                            <div class="form-file_upload-box-text">Upload Image</div>
+                                        </div>
+                                        <div class="form-file_upload-valText">Allowed *.jpeg, *.jpg, *.png, *.gif max size of 3 Mb</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Project Desc</label>
+                                </div>
+                                <div class="col-md-8 mb-4">
+                                    <textarea type="text" class="form-style" placeholder="Add Project Description Here..." rows="2" cols="30"></textarea>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label for="">Document Upload</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="form-file_upload form-file_upload-doc">
+                                        <input type="file" id="formFile">
+                                        <div class="form-file_upload-box">
+                                            <div class="form-file_upload-box-icon"><i class='bx bx-images' ></i></div>
+                                            <div class="form-file_upload-box-text">Upload Images</div>
+                                        </div>
+                                        <div class="form-file_upload-valText">Allowed *.jpeg, *.jpg, *.png, *.gif max size of 3 Mb</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-form-btm">
+                            <div class="row">
+                                <div class="col-md-6 ms-auto text-end">
+                                    <button type="submit" class="btn btn-primary">Add Project</button>
+                                </div>
+                            </div>
+                        </div>
                     </form>
                 </div>
-                <!-- Teams -->
-                <div class="team-list grid_col grid_col-repeat-2 gap-20">
-                    <!-- Team -->
-                    <div class="team team-style_2">
-                        <div class="team-style_2-head_wrap">
-                            <div class="team-avtar">
-                                <span>DS</span>
-                            </div>
-                            <h4 class="team-style_2-title">Design <span class="team-style_2-memCount">6 Members</span></h4>
-                        </div>
-                    </div>
-                    <!-- Team -->
-                    <div class="team team-style_2">
-                        <div class="team-style_2-head_wrap">
-                            <div class="team-avtar">
-                                <span>TC</span>
-                            </div>
-                            <h4 class="team-style_2-title">Tech <span class="team-style_2-memCount">12 Members</span></h4>
-                        </div>
-                    </div>
-                    <!-- Team -->
-                    <div class="team team-style_2">
-                        <div class="team-style_2-head_wrap">
-                            <div class="team-avtar">
-                                <span>ME</span>
-                            </div>
-                            <h4 class="team-style_2-title">Media <span class="team-style_2-memCount">6 Members</span></h4>
-                        </div>
-                    </div>
-                    <!-- Team -->
-                    <div class="team team-style_2">
-                        <div class="team-style_2-head_wrap">
-                            <div class="team-avtar">
-                                <span>CP</span>
-                            </div>
-                            <h4 class="team-style_2-title">Copy <span class="team-style_2-memCount">6 Members</span></h4>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-4">
-            <div class="column-box h-100 p-3">
-                <div class="files-head column-head d-flex flex-wrap align-items-center mb-4">
-                    <div>
-                        <h5 class="mb-0">External Links</h5>
-                        <div class="text-light"><span class="text-primary"><i class='bx bx-folder' ></i></span> 4 <span class="px-2">|</span> <span class="text-secondary"><i class='bx bx-file-blank' ></i></span> 42</div>
-                    </div>
-                    <div class="files-options">
-                        <ul>
-                            <li><a href="#"><span><i class='bx bx-plus'></i></span></a></li>
-                            <li><a href="#"><span><i class='bx bx-trash' ></i></span></a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="files-list files-list_2 mt-3">
-                    <div class="files-folder selected">
-                        <span class="files-folder-icon"><i class='bx bx-folder'></i></span>
-                        <div class="files-folder-title">Buyers Guide</div>
-                        <div class="files-folder-number">12</div>
-                    </div>
-                    <div class="files-folder">
-                        <span class="files-folder-icon"><i class='bx bx-folder'></i></span>
-                        <div class="files-folder-title">Startup Acma</div>
-                        <div class="files-folder-number">12</div>
-                    </div>
-                    <div class="files-folder">
-                        <span class="files-folder-icon"><i class='bx bx-folder'></i></span>
-                        <div class="files-folder-title">Acma Webiste</div>
-                        <div class="files-folder-number">12</div>
-                    </div>
-                </div>
-                <div class="files-items-wrap">
-                    <div class="files-items-head column-head mb-4">
-                        <h5 class="title-sm mb-0">Recent Files</h5>
-                        <!-- <form class="ms-auto" action="">
-                            <div class="search-box">
-                                <input class="form-control" type="text" placeholder="Search File...">
-                                <span class="search-box-icon"><i class='bx bx-search' ></i></span>   
-                            </div>
-                        </form> -->
-                    </div>
-                    <div class="files-items">
-                        <div class="files-item">
-                            <div class="files-item-icon">
-                                <span><i class='bx bx-file-blank'></i></span>
-                            </div>
-                            <div class="files-item-content">
-                                <div class="files-item-content-title">Tetrisly-guide-lines.png</div>
-                                <div class="files-item-content-info">26 Jan 2024</div>
-                            </div>
-                        </div>
-                        <div class="files-item">
-                            <div class="files-item-icon">
-                                <span><i class='bx bx-file-blank'></i></span>
-                            </div>
-                            <div class="files-item-content">
-                                <div class="files-item-content-title">Tetrisly-guide-lines.png</div>
-                                <div class="files-item-content-info">26 Jan 2024</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-8">
-            <div class="column-box">
-                <div class="column-head d-flex flex-wrap align-items-center mb-4">
-                    <h5 class="mb-0">Files & Folders</h5>
-                </div>
-                <div id="fm" style="height: 600px;"></div>
-            </div>
-        </div>
-    </div>
-    {{-- Add new team modal --}}
 
-    <div wire:ignore class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Add new team and members</h5>
-              <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
+    <!-- Team Modal -->
+    <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header d-flex align-items-center justify-content-between gap-20">
+                    <h3 class="modal-title"><span class="btn-icon btn-icon-primary me-1"><i class='bx bx-group' ></i></span> Add Team</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="">
+                        <div class="modal-form-body">
+                            <div class="row">
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Select Team</label>
+                                </div>
+                                <div class="col-md-8 mb-4">
+                                    <input type="text" class="form-style" placeholder="Select Team Here...">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Select Users</label>
+                                </div>
+                                <div class="col-md-8 mb-4">
+                                    <input type="text" class="form-style" placeholder="Select Usres Here...">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-form-btm">
+                            <div class="row">
+                                <div class="col-md-6 ms-auto text-end">
+                                    <button type="submit" class="btn btn-primary">Add Team</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div class="modal-body">
-                <select wire:model.live="team_id" name="" id="" class="form-control">
-                    <option value="">Select Team</option>
-                    @foreach($teams as $team)
-                        <option value="{{ $team->id }}">{{ $team->name }}</option>
-                    @endforeach
-                </select>
-                <select name="" id="">
-                    <option value="">Select Member</option>
-                    @foreach($users as $user)
-                        <option value="{{ $user->id }}">{{ $user->name }}</option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-          </div>
         </div>
-      </div>
+    </div>
+    
 </div>
 @push('scripts')
 {{-- <script src="{{ asset('vendor/file-manager/js/file-manager.js') }}"></script> --}}
@@ -289,7 +343,6 @@
             $(function () {
                 $('[data-bs-toggle="tooltip"]').tooltip();
             })
-            $('#fm').filemanager('image');
         }, 3000);
     });
     

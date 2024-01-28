@@ -1071,7 +1071,8 @@
 
 /* ----- Client Page ----- */
 .client_head_logo {
-    max-width: 75px;
+    width: 50px;
+    height: 50px;
     display: inline-block;
     img {
         max-width: 100%;
@@ -1084,6 +1085,9 @@
     border: 1px solid $grey;
     padding: $spacing_xs;
     border-radius: $border_radius_xs;
+    &:not(:last-child) {
+        margin-bottom: $spacing_xs;
+    }
     &-style_2 {
         display: flex;
         justify-content: space-between;
@@ -1121,6 +1125,11 @@
                 max-width: 100%;
             }
         }
+    }
+
+    &-scroll {
+        max-height: 430px;
+        overflow: auto;
     }
 }
 
@@ -1298,47 +1307,6 @@
     &-sec {
         background-color: $grey;
     }
-    &-options {
-        margin-left: auto;
-        padding-left: $spacing_s;
-        ul {
-            display: flex;
-            padding: 0;
-            margin: 0;
-            list-style-type: none;
-            gap: $spacing_s;
-            
-            li {
-                a {
-                    font-size: 22px;
-                    background-color: $yellow_light;
-                    border: 1px solid transparent;
-                    width: 35px;
-                    height: 30px;
-                    border-radius: $border-radius_xs;
-                    display: inline-flex;
-                    align-items: center;
-                    justify-content: center;
-                    transition: $ease_03;
-
-                    &:hover {
-                        color: $yellow_dark;
-                        border-color: $yellow;
-                    }
-                }
-                &:last-child {
-                    a {
-                        color: $danger;
-                        background-color: $danger_light;
-
-                        &:hover {
-                            border-color: $danger;
-                        }
-                    }
-                }
-            }
-        }
-    }
 
     &-folder {
         background-color: #fff;
@@ -1346,21 +1314,24 @@
         padding: $spacing_xs;
         position: relative;
         text-align: center;
-        border: 1px solid transparent;
+        border: 1px solid $grey;
         cursor: pointer;
+        width: 200px;
+        @include flex_center;
+        flex-direction: column;
 
         &-icon {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 42px;
-            height: 42px;
+            width: 30px;
+            height: 30px;
             background-color: $grey;
             margin-bottom: $spacing_xs;
             border-radius: $border-radius;
 
             i {
-                font-size: 22px;
+                font-size: 16px;
             }
         }
 
@@ -1372,8 +1343,9 @@
             position: absolute;
             right: 10px;
             top: 10px;
-            width: 25px;
+            min-width: 25px;
             height: 25px;
+            padding: 0 5px;
             border-radius: $border_radius_xs;
             background-color: $yellow_light;
             display: inline-flex;
@@ -1393,48 +1365,23 @@
                 }
             }
         }
-    }
 
-    &-list {
-        &_2 {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: $spacing_s;
-            
-            .files {
-                &-folder {
-                    gap: $spacing_s;
-                    border: 1px solid $grey;
+        &-add_new {
+            border: 2px dashed $grey;
 
-                    &-icon {
-                        width: inherit;
-                        height: inherit;
-                        background-color: inherit;
-                    }
-
-                    &.selected {
-                        color: $brand;
-                        border-color: $brand;
-
-                        .files-folder {
-                            &-icon {
-                                background: transparent;
-                                align-items: inherit;
-
-                                i {
-                                    color: $brand;
-                                }
-                            }
-                        }
-                    }
-                }
+            .files-folder-title {
+                color: $text_light;
             }
         }
     }
 
+    &-list {
+        @include flex;
+        gap: $spacing_s;
+    }
+
     &-items {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
+        @include flex;
         gap: $spacing_s;
         &-wrap {
             margin-top: $spacing_lg;
@@ -1445,6 +1392,28 @@
         text-align: center;
         border: 1px solid $grey;
         padding: $spacing_xs;
+        width: 200px;
+        border-radius: $border_radius_xs;
+
+        &-icon {
+            color: $brand;
+            font-size: 32px;
+
+            span {
+                width: 32px;
+                height: 32px;
+                display: inline-flex;
+
+                img {
+                    max-width: 100%;
+                    max-height: 100%;
+                }
+            }
+        }
+
+        &.selected {
+            border-color: $brand;
+        }
     }
 }
 

@@ -36,11 +36,13 @@ class Login extends Component
                     Auth::guard('web')->login($user);
                     session()->put('guard','web');
                     session()->put('org_id',User::withoutGlobalScope(OrganizationScope::class)->where('email',$this->email)->first()->org_id);
+                    session()->put('org_name',Organization::find(session('org_id'))->name);
                 }
             }
         }else{
             session()->put('guard','orginizations');
             session()->put('org_id',Organization::where('email',$this->email)->first()->id);
+            session()->put('org_name',Organization::where('email',$this->email)->first()->name);
         }
 
         if($res){
