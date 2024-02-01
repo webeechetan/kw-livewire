@@ -17,6 +17,7 @@ return new class extends Migration
             $table->longText('link');
             $table->mediumText('link_alias')->nullable();
             $table->longText('path');
+            $table->longText('og_data')->nullable();
             $table->timestamps();
         });
     }

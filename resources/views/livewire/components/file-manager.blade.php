@@ -66,12 +66,23 @@
             <div class="files-item select_link
             @if(in_array($l->id, $selected_links)) selected @endif" data-link="{{ $l->id }}">
                 <div class="files-item-icon">
+                    @php
+                        $og_data = json_decode($l->og_data);
+                    @endphp
+                    @if($l->og_data && $l->og_data != 'null' && $l->og_data != '[]' && $l->og_data != '{}' && $l->og_data != '')
+                        @if($og_data->image )
+                            <span><img src="{{ $og_data->image }}" alt=""></span>
+                        @endif
+                    @else
                     <span><i class='bx bx-link'></i></span>
+                    @endif
                 </div>
                 <div class="files-item-content">
                     <a href="{{ $l->link }}" target="_blank" class="files-item-content-title">
                         @if($l->link_alias)
                             {{ $l->link_alias }}
+                        @elseif($l->og_data && $l->og_data != 'null' && $l->og_data != '[]' && $l->og_data != '{}' && $l->og_data != '')
+                            {{ $og_data->title }}
                         @else
                             {{ $l->link }}
                         @endif
@@ -305,18 +316,42 @@
             $(this).addClass("selected");
         });
 
-        $(document).on("click", ".select_directory", function(event){
-            let directory_path = $(this).data("directory");
-            if(event.ctrlKey){
-                $(this).toggleClass("selected");
-                @this.selectDirectory(directory_path,'multipe');
-                return;
-            }
-            @this.selectDirectory(directory_path,'single');
-            $(".select_directory").removeClass("selected");
-            $(this).addClass("selected");
+        let clickedOnce = false;
 
+        $(document).on("click", ".select_directory", function(event){
+            if (!clickedOnce) {
+                // Set a delay to detect double-click
+                setTimeout(function() {
+
+                    // if (!clickedOnce) {
+                        // Single-click action
+                        let directory_path = $(this).data("directory");
+                        if (event.ctrlKey) {
+                            $(this).toggleClass("selected");
+                            @this.selectDirectory(directory_path, 'multipe');
+                            return;
+                        }
+                        console.log('single clicked');
+                        @this.selectDirectory(directory_path, 'single');
+                        $(".select_directory").removeClass("selected");
+                        $(this).addClass("selected");
+                    // }
+                    clickedOnce = false;
+                }.bind(this), 300); // Adjust the delay as needed (300 milliseconds in this case)
+
+                clickedOnce = true;
+                event.preventDefault(); // Prevent default action
+                return false;
+            }
         });
+
+        $(document).on("dblclick", ".select_directory", function(event){
+            // If double-clicked, return false to prevent further action
+            console.log('double clicked');
+            event.preventDefault();
+            return false;
+        });
+
 
         $(document).on("click", ".select_link", function(event){
             let link_path = $(this).data("link");
