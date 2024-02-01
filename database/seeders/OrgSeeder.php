@@ -29,15 +29,25 @@ class OrgSeeder extends Seeder
         $org->password = Hash::make('123456');
         $org->image = Helper::createAvatar($org->name,'users');
         $org->save();
+        // create folder for organization
+        $path = public_path('storage/'.$org->name);
+        if(!file_exists($path)){
+            mkdir($path, 0777, true);
+        }
 
         // clients
 
-        $client = new Client();
-        $client->org_id = $org->id;
-        $client->name = 'Acma';
-        $client->description = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.';
-        $client->image = Helper::createAvatar($client->name,'clients');
-        $client->save();
+        $client1 = new Client();
+        $client1->org_id = $org->id;
+        $client1->name = 'Acma';
+        $client1->description = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.';
+        $client1->image = Helper::createAvatar($client1->name,'clients');
+        $client1->save();
+        // create folder for client
+        $path = public_path('storage/'.$org->name.'/'.$client1->name);
+        if(!file_exists($path)){
+            mkdir($path, 0777, true);
+        }
 
         $client = new Client();
         $client->org_id = $org->id;
@@ -45,6 +55,11 @@ class OrgSeeder extends Seeder
         $client->description = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
         $client->image = Helper::createAvatar($client->name,'clients');
         $client->save();
+        // create folder for client
+        $path = public_path('storage/'.$org->name.'/'.$client->name);
+        if(!file_exists($path)){
+            mkdir($path, 0777, true);
+        }
 
         // projects 
 
@@ -54,6 +69,11 @@ class OrgSeeder extends Seeder
         $project->name = 'Acma Website';
         $project->description = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
         $project->save();
+        // create folder for project
+        $path = public_path('storage/'.$org->name.'/'.$client1->name.'/'.$project->name);
+        if(!file_exists($path)){
+            mkdir($path, 0777, true);
+        }
 
         $project = new Project();
         $project->org_id = $org->id;
@@ -61,6 +81,11 @@ class OrgSeeder extends Seeder
         $project->name = 'Acma Mobile App';
         $project->description = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
         $project->save();
+        // create folder for project
+        $path = public_path('storage/'.$org->name.'/'.$client1->name.'/'.$project->name);
+        if(!file_exists($path)){
+            mkdir($path, 0777, true);
+        }
 
         $project = new Project();
         $project->org_id = $org->id;
@@ -68,6 +93,11 @@ class OrgSeeder extends Seeder
         $project->name = 'GRG Website';
         $project->description = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
         $project->save();
+        // create folder for project
+        $path = public_path('storage/'.$org->name.'/'.$client->name.'/'.$project->name);
+        if(!file_exists($path)){
+            mkdir($path, 0777, true);
+        }
 
         $project = new Project();
         $project->org_id = $org->id;
@@ -75,6 +105,11 @@ class OrgSeeder extends Seeder
         $project->name = 'GRG CA website';
         $project->description = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
         $project->save();
+        // create folder for project
+        $path = public_path('storage/'.$org->name.'/'.$client->name.'/'.$project->name);
+        if(!file_exists($path)){
+            mkdir($path, 0777, true);
+        }
 
         // teams
 

@@ -7,9 +7,12 @@ use App\Models\Client as ClientModel;
 use Illuminate\Http\Request;
 use App\Models\Team;
 use App\Models\User;
+use App\Helpers\Helper;
+use Livewire\WithFileUploads;
 
 class Client extends Component
 {
+    use WithFileUploads;
 
     public $client;
     public $client_id;
@@ -20,7 +23,11 @@ class Client extends Component
     public $archived_projects;
 
     public $project_name;
+    public $project_start_date;
     public $project_due_date;
+    public $project_image;
+    public $project_description;
+
 
     public $teams;
     public $team_id;
@@ -52,12 +59,32 @@ class Client extends Component
             'project_name' => 'required',
         ]);
 
+        $image  = '';
+
+        if (request()->hasFile('image')) {
+            $image = $this->image->store('public/images/projects');
+            // remove public from the path as we need to store only the path in the db
+            $image = str_replace('public/', '', $image);
+        }else{
+            $image = Helper::createAvatar($this->project_name,'projects');
+        }
+
+        // create a folder for the project
+
+        $path = 'storage/'. session('org_name') . '/projects/' . $this->project_name;
+        $path = public_path($path);
+        if (!file_exists($path)) {
+            mkdir($path, 0777, true);
+        }
+
         $this->client->projects()->create([
             'org_id' => $this->client->org_id,
             'client_id' => $this->client->id,
-            'description' => '',
+            'description' => $this->project_description,
             'name' => $this->project_name,
+            'start_date' => $this->project_start_date,
             'due_date' => $this->project_due_date,
+            'image' => $image,
         ]);
 
         $this->project_name = '';
