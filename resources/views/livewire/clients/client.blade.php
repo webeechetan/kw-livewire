@@ -21,7 +21,7 @@
                         <div class="text-light">{{ count($client->projects) }} Projects</div>
                     </div>
                     <div class="ms-auto">
-                        <a class="btn btn-sm btn-primary" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="bx bx-plus"></i> Add Project</a>
+                        <a class="btn btn-sm btn-primary" href="#" data-bs-toggle="modal" data-bs-target="#projectModal"><i class="bx bx-plus"></i> Add Project</a>
                     </div>
                 </div>
                 <div class="project-tabs">
@@ -50,7 +50,9 @@
                                     </div>
                                     <div class="project-content">
                                         <a href="#" class="project-title">{{ $project->name }}</a>
-                                        <div class="project-selected-date">Due on <span>{{ $project->due_date }}</span></div>
+                                        @if($project->due_date)
+                                            <div class="project-selected-date">Due on <span>{{ $project->due_date }}</span></div>
+                                        @endif
                                     </div>
                                 </div>
                             @endforeach
@@ -203,7 +205,7 @@
     </div>
 
     <!-- Project Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div wire:ignore class="modal fade" id="projectModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header d-flex align-items-center justify-content-between gap-20">
@@ -211,14 +213,14 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="">
+                    <form wire:submit="addProject" method="POST" enctype="multipart/form-data">
                         <div class="modal-form-body">
                             <div class="row">
                                 <div class="col-md-4 mb-4">
                                     <label for="">Project Name<sup class="text-primary">*</sup></label>
                                 </div>
                                 <div class="col-md-8 mb-4">
-                                    <input type="text" class="form-style" placeholder="Project Name Here...">
+                                    <input wire:model="project_name" type="text" class="form-style" placeholder="Project Name Here...">
                                 </div>
                             </div>
                             <div class="row">
@@ -227,8 +229,8 @@
                                 </div>
                                 <div class="col-md-8 mb-4">
                                     <div class="btn-list btn-list-full-2 justify-content-between gap-10">
-                                        <button type="button" class="btn btn-50 btn-sm btn-border-secondary"><i class='bx bx-calendar-alt' ></i> Start Date</button>
-                                        <button type="button" class="btn btn-50 btn-sm btn-border-danger"><i class='bx bx-calendar-alt' ></i> Due Date</button>
+                                        <a  class="btn btn-50 btn-sm btn-border-secondary project_start_date"><i class='bx bx-calendar-alt' ></i> Start Date</a>
+                                        <a  class="btn btn-50 btn-sm btn-border-danger project_due_date"><i class='bx bx-calendar-alt' ></i> Due Date</a>
                                     </div>
                                 </div>
                             </div>
@@ -252,24 +254,10 @@
                                     <label for="">Project Desc</label>
                                 </div>
                                 <div class="col-md-8 mb-4">
-                                    <textarea type="text" class="form-style" placeholder="Add Project Description Here..." rows="2" cols="30"></textarea>
+                                    <textarea wire:model="project_description" type="text" class="form-style" placeholder="Add Project Description Here..." rows="2" cols="30"></textarea>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <label for="">Document Upload</label>
-                                </div>
-                                <div class="col-md-8">
-                                    <div class="form-file_upload form-file_upload-doc">
-                                        <input type="file" id="formFile">
-                                        <div class="form-file_upload-box">
-                                            <div class="form-file_upload-box-icon"><i class='bx bx-images' ></i></div>
-                                            <div class="form-file_upload-box-text">Upload Images</div>
-                                        </div>
-                                        <div class="form-file_upload-valText">Allowed *.jpeg, *.jpg, *.png, *.gif max size of 3 Mb</div>
-                                    </div>
-                                </div>
-                            </div>
+                            
                         </div>
                         <div class="modal-form-btm">
                             <div class="row">
@@ -330,10 +318,18 @@
 {{-- <script src="{{ asset('vendor/file-manager/js/file-manager.js') }}"></script> --}}
 <script>
     
-    $('.single-add-date').flatpickr({
+    $('.project_start_date').flatpickr({
         dateFormat: "Y-m-d",
         onChange: function(selectedDates, dateStr, instance) {
-            $(".single-add-date").html(dateStr);
+            $(".project_start_date").html(dateStr);
+            @this.set('project_start_date', dateStr);
+        },
+    });
+
+    $('.project_due_date').flatpickr({
+        dateFormat: "Y-m-d",
+        onChange: function(selectedDates, dateStr, instance) {
+            $(".project_due_date").html(dateStr);
             @this.set('project_due_date', dateStr);
         },
     });

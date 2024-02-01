@@ -30,8 +30,19 @@ class Register extends Component
         $organization->name = $this->name;
         $organization->email = $this->email;
         $organization->password = Hash::make($this->password);
-        $organization->save();
 
+        try {
+            $organization->save();
+            // create folder for organization
+            $path = public_path('storage/'.$organization->name);
+            if(!file_exists($path)){
+                mkdir($path, 0777, true);
+            }
+        } catch (\Throwable $th) {
+            return $this->alert('error', 'Something went wrong, please try again later');
+        }
+        
+        
         return $this->redirect(route('login'),navigate: true);
     }
 }

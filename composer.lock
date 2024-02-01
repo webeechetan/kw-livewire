@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c012ea32c938ea3124c3bda7732e3060",
+    "content-hash": "da81be5039fb75660c46b20aad253b9c",
     "packages": [
         {
             "name": "alexusmai/laravel-file-manager",
@@ -3606,6 +3606,59 @@
                 }
             ],
             "time": "2023-11-08T05:53:05+00:00"
+        },
+        {
+            "name": "shweshi/opengraph",
+            "version": "V1.1.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/shweshi/OpenGraph.git",
+                "reference": "c5ca16a243cf65f9c032ab188d0894041d43e4bf"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/shweshi/OpenGraph/zipball/c5ca16a243cf65f9c032ab188d0894041d43e4bf",
+                "reference": "c5ca16a243cf65f9c032ab188d0894041d43e4bf",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/log": "^5.0|^6.0|^7.0|^8.0|^9.0|^10.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.8.*"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "shweshi\\OpenGraph\\Providers\\OpenGraphProvider"
+                    ],
+                    "aliases": {
+                        "OpenGraph": "shweshi\\OpenGraph\\Facades\\OpenGraphFacade"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "shweshi\\OpenGraph\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Shashi Prakash Gautam",
+                    "email": "contactmespg@gmail.com"
+                }
+            ],
+            "description": "A Laravel package to fetch website Open Graph metadata.",
+            "support": {
+                "issues": "https://github.com/shweshi/OpenGraph/issues",
+                "source": "https://github.com/shweshi/OpenGraph/tree/V1.1.3"
+            },
+            "time": "2023-08-30T19:31:18+00:00"
         },
         {
             "name": "symfony/console",
