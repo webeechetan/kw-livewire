@@ -26,6 +26,10 @@ class Helper
         $avtar = new Avatar();
         $avtar->create($name)->toBase64();
         $avtar->setBackground($avtar_bg_colors[rand(0,12)]);
+        // check if folder exist or not if not then create folder
+        if(!file_exists(storage_path('app/public/images/'.$folder))){
+            mkdir(storage_path('app/public/images/'.$folder), 0777, true);
+        }
         $avtar->save(storage_path('app/public/images/'.$folder.'/'.$name.'.png'));
         return 'images/'.$folder.'/'.$name.'.png';
     }

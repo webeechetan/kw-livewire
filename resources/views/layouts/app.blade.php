@@ -23,13 +23,10 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
 
     <!-- Custom Styles -->
-    <link href="{{ asset('') }}assets/css/style.css" rel="stylesheet">
     <link href="{{ asset('') }}assets/css/app.css" rel="stylesheet">
 
     <!-- Page Init Js -->
-    <script src="{{ asset('') }}assets/js/app.js"></script>
-
-    <link rel="stylesheet" href="{{ asset('vendor/file-manager/css/file-manager.css') }}">    
+    <script src="{{ asset('') }}assets/js/app.js"></script>  
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -108,7 +105,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <script src="{{ asset('vendor/file-manager/js/file-manager.js') }}" data-navigate-once></script>
 
     @stack('scripts')
     @if (session()->has('success'))

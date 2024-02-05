@@ -13,9 +13,11 @@
         "laravel/slack-notification-channel": "^3.1",
         "laravel/tinker": "^2.8",
         "laravolt/avatar": "^5.0",
-        "livewire/livewire": "^3.1"
+        "livewire/livewire": "^3.1",
+        "shweshi/opengraph": "^1.1"
     },
     "require-dev": {
+        "barryvdh/laravel-debugbar": "^3.9",
         "fakerphp/faker": "^1.9.1",
         "laravel/pint": "^1.0",
         "laravel/sail": "^1.18",

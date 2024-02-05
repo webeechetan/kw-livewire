@@ -21,7 +21,7 @@
                         <div class="text-light">{{ count($client->projects) }} Projects</div>
                     </div>
                     <div class="ms-auto">
-                        <a class="btn btn-sm btn-primary" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="bx bx-plus"></i> Add Project</a>
+                        <a class="btn btn-sm btn-primary" href="#" data-bs-toggle="modal" data-bs-target="#projectModal"><i class="bx bx-plus"></i> Add Project</a>
                     </div>
                 </div>
                 <div class="project-tabs">
@@ -50,7 +50,9 @@
                                     </div>
                                     <div class="project-content">
                                         <a href="#" class="project-title">{{ $project->name }}</a>
-                                        <div class="project-selected-date">Due on <span>{{ $project->due_date }}</span></div>
+                                        @if($project->due_date)
+                                            <div class="project-selected-date">Due on <span>{{ $project->due_date }}</span></div>
+                                        @endif
                                     </div>
                                 </div>
                             @endforeach
@@ -118,8 +120,8 @@
                     </div>
                     <!-- <form class="single-add ms-auto" action="">
                         <div class="single-add-wrap">
-                            <input class="form-control" wire:model="project_name" type="text" placeholder="Add Team Here">
-                            <a class="single-add-date"  href="javascript:void(0);" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip" data-bs-title="Select Date"><i class='bx bx-user-plus '></i></a>
+                            {{-- <input class="form-control" wire:model="project_name" type="text" placeholder="Add Team Here"> --}}
+                            <a class="single-add-date"  href="javascript:void(0);"   data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip" data-bs-title="Select Date"><i class='bx bx-user-plus '></i></a>
                         </div>
                         <a href="javascript:void(0);" class="btn-sm btn-with_icon btn-primary">Add Team</a>
                     </form> -->
@@ -198,112 +200,12 @@
             </div>
         </div>
         <div class="col-md-9">
-            <div class="column-box h-100 p-3">
-                <div class="files-head column-head d-flex flex-wrap align-items-center mb-3">
-                    <div>
-                        <h5 class="mb-0">Files & Folders</h5>
-                        <div class="text-light"><span class="text-primary"><i class='bx bx-folder' ></i></span> 4 <span class="px-2">|</span> <span class="text-secondary"><i class='bx bx-file-blank' ></i></span> 42</div>
-                    </div>
-                    <div class="files-options ms-auto">
-                        <div class="btn-list gap-10">
-                            <a href="#" class="btn btn-sm btn-border-primary"><span><i class='bx bx-plus'></i></span> Add File</a>
-                            <a href="#" class="btn btn-sm btn-border-danger"><span><i class='bx bx-trash' ></i></span> Delete</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item"><a href="#">Library</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Data</li>
-                        </ol>
-                    </nav>
-                </div>
-                <div class="files-list">
-                    <div class="files-folder">
-                        <span class="files-folder-icon"><i class='bx bx-folder'></i></span>
-                        <div class="files-folder-title">Buyers Guide</div>
-                        <div class="text-light"><span class="text-primary"><i class='bx bx-folder' ></i></span> 4 <span class="px-2">|</span> <span class="text-secondary"><i class='bx bx-file-blank' ></i></span> 42</div>
-                    </div>
-                    <div class="files-folder selected">
-                        <span class="files-folder-icon"><i class='bx bx-folder'></i></span>
-                        <div class="files-folder-title">Startup Acma</div>
-                        <div class="text-light"><span class="text-primary"><i class='bx bx-folder' ></i></span> 4 <span class="px-2">|</span> <span class="text-secondary"><i class='bx bx-file-blank' ></i></span> 42</div>
-                    </div>
-                    <div class="files-folder">
-                        <span class="files-folder-icon"><i class='bx bx-folder'></i></span>
-                        <div class="files-folder-title">Acma Webiste</div>
-                        <div class="text-light"><span class="text-primary"><i class='bx bx-folder' ></i></span> 4 <span class="px-2">|</span> <span class="text-secondary"><i class='bx bx-file-blank' ></i></span> 42</div>
-                    </div>
-                    <div class="files-folder files-folder-add_new">
-                        <span class="files-folder-icon"><i class='bx bx-plus' ></i></span>
-                        <div class="files-folder-title">Add Folder</div>
-                    </div>
-                </div>
-                <div class="files-items-wrap">
-                    <div class="files-items-head column-head mb-4">
-                        <h5 class="title-sm mb-0">Recent Files</h5>
-                        <!-- <form class="ms-auto" action="">
-                            <div class="search-box">
-                                <input class="form-control" type="text" placeholder="Search File...">
-                                <span class="search-box-icon"><i class='bx bx-search' ></i></span>   
-                            </div>
-                        </form> -->
-                    </div>
-                    <div class="files-items">
-                        <div class="files-item">
-                            <div class="files-item-icon">
-                                <span><i class='bx bx-file-blank'></i></span>
-                            </div>
-                            <div class="files-item-content">
-                                <div class="files-item-content-title">Tetrisly-guide-lines.png</div>
-                            </div>
-                        </div>
-                        <div class="files-item selected">
-                            <div class="files-item-icon">
-                                <span><img src="{{ env('APP_URL') }}/assets/images/google-sheets-icon.svg" alt=""></span>
-                            </div>
-                            <div class="files-item-content">
-                                <div class="files-item-content-title">Tetrisly-guide-lines.sheet</div>
-                            </div>
-                        </div>
-                        <div class="files-item">
-                            <div class="files-item-icon">
-                                <span><img src="{{ env('APP_URL') }}/assets/images/google-docs-icon.svg" alt=""></span>
-                            </div>
-                            <div class="files-item-content">
-                                <div class="files-item-content-title">Tetrisly-guide-lines.doc</div>
-                            </div>
-                        </div>
-                        <div class="files-item">
-                            <div class="files-item-icon">
-                                <span><img src="{{ env('APP_URL') }}/assets/images/google-docs-icon.svg" alt=""></span>
-                            </div>
-                            <div class="files-item-content">
-                                <div class="files-item-content-title">Tetrisly-guide-lines.doc</div>
-                            </div>
-                        </div>
-                        <div class="files-item">
-                            <div class="files-item-icon">
-                                <span><i class='bx bx-file-blank'></i></span>
-                            </div>
-                            <div class="files-item-content">
-                                <div class="files-item-content-title">Tetrisly-guide-lines.png</div>
-                            </div>
-                        </div>
-                        <div class="files-folder files-folder-add_new">
-                            <span class="files-folder-icon"><i class='bx bx-plus' ></i></span>
-                            <div class="files-folder-title">Add Files</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <livewire:components.file-manager :client="$client" />
         </div>
     </div>
 
     <!-- Project Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div wire:ignore class="modal fade" id="projectModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header d-flex align-items-center justify-content-between gap-20">
@@ -311,14 +213,14 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="">
+                    <form wire:submit="addProject" method="POST" enctype="multipart/form-data">
                         <div class="modal-form-body">
                             <div class="row">
                                 <div class="col-md-4 mb-4">
                                     <label for="">Project Name<sup class="text-primary">*</sup></label>
                                 </div>
                                 <div class="col-md-8 mb-4">
-                                    <input type="text" class="form-style" placeholder="Project Name Here...">
+                                    <input wire:model="project_name" type="text" class="form-style" placeholder="Project Name Here...">
                                 </div>
                             </div>
                             <div class="row">
@@ -327,8 +229,8 @@
                                 </div>
                                 <div class="col-md-8 mb-4">
                                     <div class="btn-list btn-list-full-2 justify-content-between gap-10">
-                                        <button type="button" class="btn btn-50 btn-sm btn-border-secondary"><i class='bx bx-calendar-alt' ></i> Start Date</button>
-                                        <button type="button" class="btn btn-50 btn-sm btn-border-danger"><i class='bx bx-calendar-alt' ></i> Due Date</button>
+                                        <a  class="btn btn-50 btn-sm btn-border-secondary project_start_date"><i class='bx bx-calendar-alt' ></i> Start Date</a>
+                                        <a  class="btn btn-50 btn-sm btn-border-danger project_due_date"><i class='bx bx-calendar-alt' ></i> Due Date</a>
                                     </div>
                                 </div>
                             </div>
@@ -352,24 +254,10 @@
                                     <label for="">Project Desc</label>
                                 </div>
                                 <div class="col-md-8 mb-4">
-                                    <textarea type="text" class="form-style" placeholder="Add Project Description Here..." rows="2" cols="30"></textarea>
+                                    <textarea wire:model="project_description" type="text" class="form-style" placeholder="Add Project Description Here..." rows="2" cols="30"></textarea>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <label for="">Document Upload</label>
-                                </div>
-                                <div class="col-md-8">
-                                    <div class="form-file_upload form-file_upload-doc">
-                                        <input type="file" id="formFile">
-                                        <div class="form-file_upload-box">
-                                            <div class="form-file_upload-box-icon"><i class='bx bx-images' ></i></div>
-                                            <div class="form-file_upload-box-text">Upload Images</div>
-                                        </div>
-                                        <div class="form-file_upload-valText">Allowed *.jpeg, *.jpg, *.png, *.gif max size of 3 Mb</div>
-                                    </div>
-                                </div>
-                            </div>
+                            
                         </div>
                         <div class="modal-form-btm">
                             <div class="row">
@@ -385,7 +273,7 @@
     </div>
 
     <!-- Team Modal -->
-    <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div wire:ignore.self class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header d-flex align-items-center justify-content-between gap-20">
@@ -400,7 +288,12 @@
                                     <label for="">Select Team</label>
                                 </div>
                                 <div class="col-md-8 mb-4">
-                                    <input type="text" class="form-style" placeholder="Select Team Here...">
+                                    <select class="form-style team_id" wire:model.live="team_id">
+                                        <option value="">Select Team</option>
+                                        @foreach($teams as $team)
+                                            <option value="{{ $team->id }}">{{ $team->name }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
                             <div class="row">
@@ -408,7 +301,12 @@
                                     <label for="">Select Users</label>
                                 </div>
                                 <div class="col-md-8 mb-4">
-                                    <input type="text" class="form-style" placeholder="Select Usres Here...">
+                                    <select class="form-style team_users" class="form-control" multiple>
+                                        <option value="">Select Users</option>
+                                        @foreach($users as $user)
+                                            <option data-image="{{ $user->image }}" value="{{ $user->id }}">{{ $user->name }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -426,17 +324,84 @@
     </div>
     
 </div>
+@push('styles')
+    <style>
+        /** team_users select2 options are hiding behind modal **/
+        .select2-container{
+            z-index:100000;
+        }
+
+    </style>
+@endpush
+
 @push('scripts')
 <script>
-    $(function () {
-        $('[data-bs-toggle="tooltip"]').tooltip()
-    })
-    $('.single-add-date').flatpickr({
+    
+    $('.project_start_date').flatpickr({
         dateFormat: "Y-m-d",
         onChange: function(selectedDates, dateStr, instance) {
-            $(".single-add-date").html(dateStr);
+            $(".project_start_date").html(dateStr);
+            @this.set('project_start_date', dateStr);
+        },
+    });
+
+    $('.project_due_date').flatpickr({
+        dateFormat: "Y-m-d",
+        onChange: function(selectedDates, dateStr, instance) {
+            $(".project_due_date").html(dateStr);
             @this.set('project_due_date', dateStr);
         },
     });
+
+    // team_users select2
+
+    $('.team_users').select2({
+        placeholder: "Select Users",
+        allowClear: true,
+        templateResult: format,
+        templateSelection: format,
+
+    });
+
+    $(".team_id").on('change', function(){
+    });
+
+
+
+    document.addEventListener('livewire:navigated', () => {
+        setTimeout(() => {
+            $(function () {
+                $('[data-bs-toggle="tooltip"]').tooltip();
+            })
+        }, 3000);
+    });
+
+    document.addEventListener('teamSelected', event => {
+        console.log(event.detail);
+        // destroy old select2
+
+        $('.team_users').select2('destroy');
+
+        $(".team_users").select2({
+            placeholder: "Select Users",
+            allowClear: true,
+            templateResult: format,
+            templateSelection: format,
+        });
+
+
+    })
+
+    function format(state) {
+        if (!state.id) {
+            return state.text;
+        }
+        var baseUrl = "{{ env('APP_URL') }}/storage";
+        var $state = $(
+            '<span><img class="select2-selection__choice__display_userImg" src="' + baseUrl + '/' + state.element.attributes[0].value + '" /> ' + state.text + '</span>'
+        );
+        return $state;
+    };
+    
 </script>
 @endpush
