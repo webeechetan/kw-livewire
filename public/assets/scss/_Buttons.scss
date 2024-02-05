@@ -223,6 +223,26 @@
         font-weight: 500;
         color: $dark;
         display: inline-block;
+
+        &-bg {
+            padding: 3px 10px;
+            border-radius: $border_radius_rounded;
+            font-size: 12px;
+            font-weight: 500;
+            color: $text_color;
+            display: inline-block;
+            background-color: $grey;
+
+            &-success {
+                background-color: $success;
+                color: #fff;
+            }
+        }
+
+        &-success {
+            border-color: $success;
+            color: $success;
+        }
     }
 
     /* ----- Button Group ----- */

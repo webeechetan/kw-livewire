@@ -19,13 +19,19 @@
     &-header {
         border-bottom: 1px solid $border_dark_grey;
         &-title {
-            font-size: 1.8em;
+            font-size: 26px;
         }
         &-btn_group {
             @include flex_align_center;
             grid-gap: $spacing_s;
         }
     }
+}
+
+.dashboard-head {
+    background-color: #fff;
+    padding: $spacing_xs $spacing_s;
+    border-radius: $border_radius_xs;
 }
 
 /* ----- Auth Forms ----- */

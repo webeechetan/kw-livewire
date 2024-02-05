@@ -1,16 +1,24 @@
 <div class="container">
     <!-- Dashboard Header -->
-    <div class="row align-items-center">
-        <div class="col">
-            <h3 class="main-body-header-title mb-0">All Clients</h3>
-        </div>
-        <div class="text-end col">
-            <div class="main-body-header-right">
-                <form class="search-box" wire:submit="search" action="">
-                    <input wire:model="query" type="text" class="form-control" placeholder="Search Clients...">
-                    <button type="submit" class="search-box-icon"><i class='bx bx-search'></i></button>
-                </form>
-                <a wire:navigate href="{{ route('client.add') }}" href="javascript:void(0);" class="btn-border btn-border-primary"><i class="bx bx-plus"></i> Add Client</a>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#"><i class='bx bx-line-chart'></i> Dashboard</a></li>
+            <li class="breadcrumb-item active" aria-current="page">All Clients</li>
+        </ol>
+    </nav>
+    <div class="dashboard-head">
+        <div class="row align-items-center">
+            <div class="col">
+                <h3 class="main-body-header-title mb-0">All Clients</h3>
+            </div>
+            <div class="text-end col">
+                <div class="main-body-header-right">
+                    <form class="search-box" wire:submit="search" action="">
+                        <input wire:model="query" type="text" class="form-control" placeholder="Search Clients...">
+                        <button type="submit" class="search-box-icon"><i class='bx bx-search me-1'></i> Search</button>
+                    </form>
+                    <a wire:navigate href="{{ route('client.add') }}" href="javascript:void(0);" class="btn-border btn-border-primary"><i class="bx bx-plus"></i> Add Client</a>
+                </div>
             </div>
         </div>
     </div>
@@ -21,15 +29,38 @@
             <div class="card_style card_style-client">
                 <div class="card_style-client-head">
                     <div><img src="{{ asset('storage/'.$client->image) }}" alt="" class="img-fluid"></div>
-                    <h4><a wire:navigate href="{{ route('client.profile', $client->id ) }}">{{ $client->name }}</a></h4>
+                    <div>
+                        <h4><a wire:navigate href="{{ route('client.profile', $client->id ) }}">{{ $client->name }}</a></h4>
+                        <div class="btn-withIcon">7 Projects</div>
+                    </div>
                 </div>
                 <div class="card_style-client-body">
-                    <div class="card_style-client-body-title"><i class='bx bx-network-chart' ></i> Active Projects</div>
-                    <div class="card_style-client-projects">
-                        <div class="card_style-client-project">
-                            @foreach($client->projects as $project)
-                                <span class="btn btn-warning btn-sm">{{ $project->name }}</span>
-                            @endforeach
+                    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <div class="card_style-client-body-title active text-primary" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Active <span class="btn-batch-bg btn-batch-bg ms-2">5 Projects</span></div>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <div class="card_style-client-body-title text-success" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Completed <span class="btn-batch-bg btn-batch-bg-success ms-2">2 Projects</span></div>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="pills-tabContent">
+                        <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab" tabindex="0">
+                            <div class="card_style-client-projects">
+                                <div class="card_style-client-project">
+                                    @foreach($client->projects as $project)
+                                        <span class="btn-batch text-uppercase">{{ $project->name }}</span>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab" tabindex="0">
+                            <div class="card_style-client-projects">
+                                <div class="card_style-client-project">
+                                    @foreach($client->projects as $project)
+                                        <span class="btn-batch text-uppercase btn-batch-success">{{ $project->name }}</span>
+                                    @endforeach
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
