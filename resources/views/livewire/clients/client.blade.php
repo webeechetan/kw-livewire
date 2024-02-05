@@ -273,7 +273,7 @@
     </div>
 
     <!-- Team Modal -->
-    <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div wire:ignore.self class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header d-flex align-items-center justify-content-between gap-20">
@@ -288,7 +288,12 @@
                                     <label for="">Select Team</label>
                                 </div>
                                 <div class="col-md-8 mb-4">
-                                    <input type="text" class="form-style" placeholder="Select Team Here...">
+                                    <select class="form-style team_id" wire:model.live="team_id">
+                                        <option value="">Select Team</option>
+                                        @foreach($teams as $team)
+                                            <option value="{{ $team->id }}">{{ $team->name }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
                             <div class="row">
@@ -296,7 +301,12 @@
                                     <label for="">Select Users</label>
                                 </div>
                                 <div class="col-md-8 mb-4">
-                                    <input type="text" class="form-style" placeholder="Select Usres Here...">
+                                    <select class="form-style team_users" class="form-control" multiple>
+                                        <option value="">Select Users</option>
+                                        @foreach($users as $user)
+                                            <option data-image="{{ $user->image }}" value="{{ $user->id }}">{{ $user->name }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -314,8 +324,17 @@
     </div>
     
 </div>
+@push('styles')
+    <style>
+        /** team_users select2 options are hiding behind modal **/
+        .select2-container{
+            z-index:100000;
+        }
+
+    </style>
+@endpush
+
 @push('scripts')
-{{-- <script src="{{ asset('vendor/file-manager/js/file-manager.js') }}"></script> --}}
 <script>
     
     $('.project_start_date').flatpickr({
@@ -334,6 +353,21 @@
         },
     });
 
+    // team_users select2
+
+    $('.team_users').select2({
+        placeholder: "Select Users",
+        allowClear: true,
+        templateResult: format,
+        templateSelection: format,
+
+    });
+
+    $(".team_id").on('change', function(){
+    });
+
+
+
     document.addEventListener('livewire:navigated', () => {
         setTimeout(() => {
             $(function () {
@@ -341,6 +375,33 @@
             })
         }, 3000);
     });
+
+    document.addEventListener('teamSelected', event => {
+        console.log(event.detail);
+        // destroy old select2
+
+        $('.team_users').select2('destroy');
+
+        $(".team_users").select2({
+            placeholder: "Select Users",
+            allowClear: true,
+            templateResult: format,
+            templateSelection: format,
+        });
+
+
+    })
+
+    function format(state) {
+        if (!state.id) {
+            return state.text;
+        }
+        var baseUrl = "{{ env('APP_URL') }}/storage";
+        var $state = $(
+            '<span><img class="select2-selection__choice__display_userImg" src="' + baseUrl + '/' + state.element.attributes[0].value + '" /> ' + state.text + '</span>'
+        );
+        return $state;
+    };
     
 </script>
 @endpush

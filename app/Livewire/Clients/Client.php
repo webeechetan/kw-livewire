@@ -35,6 +35,8 @@ class Client extends Component
     public $users;
 
 
+
+
     public function render()
     {
         return view('livewire.clients.client');
@@ -98,7 +100,7 @@ class Client extends Component
         $this->team_id = $team_id;
         $team = Team::find($team_id);
         $this->users = $team->users;
-        // dd($team->users);
+        $this->dispatch('teamSelected', $team_id);
     }
 
 }

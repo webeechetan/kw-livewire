@@ -59,7 +59,7 @@ class FileManager extends Component
     public function mount($client)
     {
         $this->client = $client;
-        $this->path = session('org_name').'/clients/'.$this->client->name;
+        $this->path = session('org_name').'/'.$this->client->name;
         $this->path_array = explode('/', $this->path);
         $this->getMedia($this->path);
     }
