@@ -130,6 +130,7 @@ class FileManager extends Component
             $this->new_file = null;
             $this->getMedia($this->path);
             $this->dispatch('fileAdded');
+            $this->dispatch('success', 'File added successfully');
         }catch(\Exception $e){
             session()->flash('error', 'File already exists');
         }
@@ -157,6 +158,7 @@ class FileManager extends Component
         $link->og_data = json_encode($og_data);
         $link->save();
         $this->dispatch('linkAdded');
+        $this->dispatch('success', 'Link added successfully');
         $this->getMedia($this->path);
         $this->link_name = '';
         $this->link_alias = '';
@@ -214,6 +216,7 @@ class FileManager extends Component
         $this->selected_files = [];
         $this->selected_directories = [];
         $this->dispatch('fileDeleted');
+        $this->dispatch('success', 'Selected items deleted successfully');
     }
 
     public function addNewDirectory(){
@@ -221,6 +224,7 @@ class FileManager extends Component
         $this->new_directory_name = '';
         $this->getMedia($this->path);
         $this->dispatch('directoryAdded');
+        $this->dispatch('success', 'Directory added successfully');
     }
 
     public function getDirectorySize($directory_path){

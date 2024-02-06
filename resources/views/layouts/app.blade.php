@@ -109,14 +109,24 @@
     @stack('scripts')
     @if (session()->has('success'))
     <script>
-        toastr.success('{{ session('success') }}')
+        toastr.success("{{ session('success') }}")
     </script>
     @endif
     @if (session()->has('error'))
     <script>
-        toastr.error('{{ session('error') }}')
+        toastr.error("{{ session('error') }}")
     </script>
     @endif
+
+    <script>
+        document.addEventListener('error', event => {
+            toastr.error(event.detail)
+        })
+
+        document.addEventListener('success', event => {
+            toastr.success(event.detail)
+        })
+    </script>
 </body>
 
 </html>
