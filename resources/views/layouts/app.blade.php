@@ -113,15 +113,23 @@
     @stack('scripts')
     @if (session()->has('success'))
     <script>
-        toastr.success('{{ session('success') }}')
+        toastr.success("{{ session('success') }}")
     </script>
     @endif
     @if (session()->has('error'))
     <script>
-        toastr.error('{{ session('error') }}')
+        toastr.error("{{ session('error') }}")
     </script>
     @endif
+
     <script>
+        document.addEventListener('error', event => {
+            toastr.error(event.detail)
+        })
+
+        document.addEventListener('success', event => {
+            toastr.success(event.detail)
+        })
         $('.cus_dropdown-icon').click(function(){
             $(this).parent('.cus_dropdown').toggleClass('open');
         });

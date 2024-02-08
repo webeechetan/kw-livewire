@@ -14,9 +14,13 @@ return new class extends Migration
         Schema::create('clients', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('org_id');
+            $table->foreign('org_id')->references('id')->on('organizations')->onDelete('cascade');
             $table->string('name');
             $table->longText('description')->nullable();
             $table->string('image')->nullable()->default('default.png');
+            $table->string('status')->default('active')->comment('active, completed');
+            $table->date('onboard_date')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

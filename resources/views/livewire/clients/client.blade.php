@@ -108,7 +108,6 @@
                                 </div>
                                 <div class="project-content">
                                     <a href="#" class="project-title">{{ $project->name }}</a>
-                                    <div class="project-dec">{{ $project->description }}</div>
                                 </div>
                             </div>
                             @endforeach
@@ -123,7 +122,6 @@
                                     </div>
                                     <div class="project-content">
                                         <a href="#" class="project-title">{{ $project->name }}</a>
-                                        <div class="project-dec">{{ $project->description }}</div>
                                     </div>
                                 </div>
                             @endforeach
@@ -138,7 +136,6 @@
                                 </div>
                                 <div class="project-content">
                                     <a href="#" class="project-title">{{ $project->name }}</a>
-                                    <div class="project-dec">{{ $project->description }}</div>
                                 </div>
                             </div>
                             @endforeach
@@ -154,10 +151,10 @@
                 <div class="column-head d-flex flex-wrap align-items-center mb-4">
                     <div>
                         <h5 class="mb-0">Teams</h5>
-                        <div class="text-light">4 Teams Assigned</div>
+                        <div class="text-light">{{ $client->teams->count() }} Teams Assigned</div>
                     </div>
                     <div class="ms-auto">
-                        <a class="btn-icon btn-icon-primary" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal2"><i class="bx bx-plus"></i></a>
+                        <a class="btn-icon btn-icon-primary" href="#" data-bs-toggle="modal" data-bs-target="#teamModal"><i class="bx bx-plus"></i></a>
                     </div>
                     <!-- <form class="single-add ms-auto" action="">
                         <div class="single-add-wrap">
@@ -170,68 +167,37 @@
                 <div class="team-scroll scrollbar">
                     <!-- Teams -->
                     <div class="team-list">
-                        <!-- Team -->
-                        <div class="team team-style_2">
-                            <div class="team-style_2-head_wrap">
-                                <div class="team-avtar">
-                                    <span>DS</span>
+                        @foreach($client->teams as $team)
+                            <div class="team team-style_2 editTeam" wire:click="editTeam({{ $team->id }})">
+                                <div class="team-style_2-head_wrap">
+                                    <div class="team-avtar">
+                                        <span>
+                                            <img src="{{ env('APP_URL') }}/storage/{{ $team->image }}" alt="">
+                                        </span>
+                                    </div>
+                                    <h4 class="team-style_2-title">{{$team->name}} 
+                                        <span class="team-style_2-memCount">
+                                            @php
+                                                $team_user_count = [];
+                                                $team_users = $team->users->pluck('id')->toArray();
+                                                $client_users = $client->users->pluck('id')->toArray();
+                                                foreach($team_users as $team_user){
+                                                    if(in_array($team_user, $client_users)){
+                                                        $team_user_count[] = $team_user;
+                                                    }
+                                                }
+                                                echo count($team_user_count);
+                                                $team_user_count = [];
+                                            @endphp
+                                            Members
+                                        </span>
+                                    </h4>
                                 </div>
-                                <h4 class="team-style_2-title">Design <span class="team-style_2-memCount">6 Members</span></h4>
                             </div>
-                        </div>
-                        <!-- Team -->
-                        <div class="team team-style_2">
-                            <div class="team-style_2-head_wrap">
-                                <div class="team-avtar">
-                                    <span>TC</span>
-                                </div>
-                                <h4 class="team-style_2-title">Tech <span class="team-style_2-memCount">12 Members</span></h4>
-                            </div>
-                        </div>
-                        <!-- Team -->
-                        <div class="team team-style_2">
-                            <div class="team-style_2-head_wrap">
-                                <div class="team-avtar">
-                                    <span>ME</span>
-                                </div>
-                                <h4 class="team-style_2-title">Media <span class="team-style_2-memCount">6 Members</span></h4>
-                            </div>
-                        </div>
-                        <!-- Team -->
-                        <div class="team team-style_2">
-                            <div class="team-style_2-head_wrap">
-                                <div class="team-avtar">
-                                    <span>CP</span>
-                                </div>
-                                <h4 class="team-style_2-title">Copy <span class="team-style_2-memCount">6 Members</span></h4>
-                            </div>
-                        </div>
-                        <!-- Team -->
-                        <div class="team team-style_2">
-                            <div class="team-style_2-head_wrap">
-                                <div class="team-avtar">
-                                    <span>CP</span>
-                                </div>
-                                <h4 class="team-style_2-title">Copy <span class="team-style_2-memCount">6 Members</span></h4>
-                            </div>
-                        </div>
-                        <!-- Team -->
-                        <div class="team team-style_2">
-                            <div class="team-style_2-head_wrap">
-                                <div class="team-avtar">
-                                    <span>CP</span>
-                                </div>
-                                <h4 class="team-style_2-title">Copy <span class="team-style_2-memCount">6 Members</span></h4>
-                            </div>
-                        </div>
-                        <!-- Team -->
-                        <div class="team team-style_2">
-                            <div class="team-style_2-head_wrap">
-                                <div class="team-avtar">
-                                    <span>CP</span>
-                                </div>
-                                <h4 class="team-style_2-title">Copy <span class="team-style_2-memCount">6 Members</span></h4>
-                            </div>
+                        @endforeach
+                        
+                        <div class="team">
+                            <a class="btn btn-sm btn-border-primary w-100" href="#" data-bs-toggle="modal" data-bs-target="#teamModal"><i class="bx bx-plus"></i> Add Team</a>
                         </div>
                     </div>
                 </div>
@@ -314,7 +280,7 @@
     </div>
 
     <!-- Team Modal -->
-    <div wire:ignore.self class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div wire:ignore.self class="modal fade" id="teamModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header d-flex align-items-center justify-content-between gap-20">
@@ -322,7 +288,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="">
+                    <form action="" wire:submit="assignTeam">
                         <div class="modal-form-body">
                             <div class="row">
                                 <div class="col-md-4 mb-4">
@@ -337,12 +303,12 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="row team_users_col">
                                 <div class="col-md-4 mb-4">
                                     <label for="">Select Users</label>
                                 </div>
-                                <div class="col-md-8 mb-4">
-                                    <select class="form-style team_users" class="form-control" multiple>
+                                <div class="col-md-8 mb-4" >
+                                    <select class="form-style team_users" class="form-control" multiple wire:model="team_users">
                                         <option value="">Select Users</option>
                                         @foreach($users as $user)
                                             <option data-image="{{ $user->image }}" value="{{ $user->id }}">{{ $user->name }}</option>
@@ -363,6 +329,62 @@
             </div>
         </div>
     </div>
+
+    <div wire:ignore.self class="modal fade" id="updateTeamModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header d-flex align-items-center justify-content-between gap-20">
+                    <h3 class="modal-title"><span class="btn-icon btn-icon-primary me-1"><i class='bx bx-group' ></i></span> Update Team</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="" wire:submit="updateTeam">
+                        <div class="modal-form-body">
+                            <div class="row">
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Select Team</label>
+                                </div>
+                                <div class="col-md-8 mb-4">
+                                    <select class="form-style team_id" wire:model.live="team_id">
+                                        <option value="">Select Team</option>
+                                        @foreach($teams as $team)
+                                            <option value="{{ $team->id }}">{{ $team->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row team_users_col">
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Select Users</label>
+                                </div>
+                                <div class="col-md-8 mb-4" >
+                                    <select class="form-style team_users" class="form-control" multiple wire:model="team_users">
+                                        <option value="">Select Users</option>
+                                        @foreach($users as $user)
+                                            <option 
+                                                @if(in_array($user->id, $team_users))
+                                                    selected
+                                                @endif
+                                            data-image="{{ $user->image }}" value="{{ $user->id }}">{{ $user->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-form-btm">
+                            <div class="row">
+                                <div class="col-md-6 ms-auto text-end">
+                                    <button type="submit" class="btn btn-primary">Update Team</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
     
 </div>
 @push('scripts')
@@ -384,16 +406,33 @@
         },
     });
 
-    // team_users select2
+    // team_users 
 
-    $('.team_users').select2({
-        placeholder: "Select Users",
-        allowClear: true,
-        templateResult: format,
-        templateSelection: format,
-    });
+    // $(".team_users").change(function(){
+    //     var selected = $(this).val();
+    //     @this.set('team_users', selected);
+    //     console.log(selected);
+    //     setTimeout(() => {
+    //         $(".team_users").select2({
+    //             placeholder: "Select Users",
+    //             allowClear: true,
+    //             templateResult: format,
+    //             templateSelection: format,
+    //         });
+    //     }, 1000);
+    // });
 
-    $(".team_id").on('change', function(){
+    $(document).on('change', '.team_users', function(){
+        var selected = $(this).val();
+        @this.set('team_users', selected);
+        setTimeout(() => {
+            $(".team_users").select2({
+                placeholder: "Select Users",
+                allowClear: true,
+                templateResult: format,
+                templateSelection: format,
+            });
+        }, 1000);
     });
 
     document.addEventListener('livewire:navigated', () => {
@@ -405,20 +444,49 @@
     });
 
     document.addEventListener('teamSelected', event => {
-        console.log(event.detail);
-        // destroy old select2
-
-        $('.team_users').select2('destroy');
-
-        $(".team_users").select2({
-            placeholder: "Select Users",
-            allowClear: true,
-            templateResult: format,
-            templateSelection: format,
-        });
-
-
+        setTimeout(() => {
+            $(".team_users").select2({
+                placeholder: "Select Users",
+                allowClear: true,
+                templateResult: format,
+                templateSelection: format,
+            });
+        }, 100);
     })
+
+    document.addEventListener('teamSelectedForEdit', event => {
+
+        let selected_users_ids = event.detail;
+
+        $("#updateTeamModal").modal('show');
+
+        setTimeout(() => {
+            
+            // $(".team_users").select2({
+            //     placeholder: "Select Users",
+            //     allowClear: true,
+            //     templateResult: format,
+            //     templateSelection: format,
+            // });
+
+            // $(".team_users").val(selected_users_ids).trigger('change');
+
+            console.log(selected_users_ids);
+        }, 1000);
+
+
+        
+    })
+
+    document.addEventListener('teamAssigned', event => {
+        $("#teamModal").modal('hide');
+    });
+
+
+    document.addEventListener('teamUpdated', event => {
+        $("#updateTeamModal").modal('hide');
+    });
+    
 
     function format(state) {
         if (!state.id) {

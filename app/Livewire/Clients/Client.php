@@ -33,6 +33,8 @@ class Client extends Component
     public $team_id;
     
     public $users;
+    public $team_users = [];
+    
 
 
 
@@ -101,6 +103,77 @@ class Client extends Component
         $team = Team::find($team_id);
         $this->users = $team->users;
         $this->dispatch('teamSelected', $team_id);
+    }
+
+    public function assignTeam(){
+        if($this->team_id == ''){
+            return;
+        }
+
+        // dd($this->team_id);
+
+        // restrict the team from being assigned to the client more than once
+        if($this->client->teams->contains($this->team_id)){
+            $this->dispatch('error', 'Team already assigned to the client.');
+            return;
+        }
+
+        // restrict the user from being assigned to the client more than once
+
+        $this->team_users = array_unique($this->team_users);
+        $this->team_users = array_diff($this->team_users, $this->client->users->pluck('id')->toArray());
+
+        if(count($this->team_users) == 0){
+            $this->dispatch('error', 'No new users to assign to the client.');
+            return;
+        }
+
+        $this->client->teams()->attach($this->team_id);
+
+        // $this->client->users()->attach($this->team_users);
+
+        foreach($this->team_users as $user){
+            $this->client->users()->attach($user, ['team_id' => $this->team_id]);
+        }
+
+        $this->team_users = [];
+        $this->team_id = '';
+        $this->dispatch('success', 'Team assigned to the client successfully.');
+        $this->dispatch('teamAssigned', $this->team_id);
+    }
+
+    public function editTeam($id){
+        $this->team_id = $id;
+        $this->team_users = [];
+        $this->team_users = $this->client->users->where('pivot.team_id', $id)->pluck('id')->toArray();
+        // dd($this->team_users);
+        $team = Team::find($id);
+        $this->users = $team->users;
+        $this->dispatch('teamSelectedForEdit', $this->team_users);
+        // $this->team_users = [];
+    }
+
+    public function updateTeam(){
+        if($this->team_id == ''){
+            return;
+        }
+        
+        // sync the users with client with the team id
+
+
+
+        foreach($this->team_users as $user){
+            $this->client->users()->detach($user, ['team_id' => $this->team_id]);
+
+            $this->client->users()->attach($user, ['team_id' => $this->team_id]);
+        }
+
+        $this->team_users = [];
+
+        $this->team_id = '';
+
+        $this->dispatch('success', 'Team updated successfully.');
+        $this->dispatch('teamUpdated', $this->team_id);
     }
 
 }
