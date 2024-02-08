@@ -1,7 +1,6 @@
 /*---- Progress Style End Here ----*/
 .progress {
-    margin-top: 5px;
-    height: 4px;
+    height: 5px;
     border-radius: $border_radius_sm;
     &-box {
         &-title {
@@ -10,6 +9,20 @@
             column-gap: 15px;
             font-size: 12px;
         }
+    }
+
+    &-bar {
+        align-items: flex-end;
+        &-text {
+            position: absolute;
+            transform: translateY(-12px);
+            color: $text_color;
+            font-weight: 600;
+            font-size: 11px;
+        }
+    }
+    &-success {
+        background-color: $success;
     }
 }
 /*---- Progress Style End Here ----*/

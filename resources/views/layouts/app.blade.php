@@ -62,7 +62,11 @@
                                 <a id="modal-search" href="#" class="nav-link"><i class='bx bx-bell' ></i></a>
                             </li>
                             <li class="nav-item">
-                                <a id="modal-search" href="#" class="nav-link"><i class='bx bx-bell' ></i></a>
+                                <a id="modal-search" href="#" class="nav-link">
+                                    <span class="avatar avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Ajay Kumar">
+                                        <img alt="avatar" src="http://localhost:8000/storage/images/users/Ajay Kumar.png" class="rounded-circle">
+                                    </span>
+                                </a>
                             </li>
                         </ul>
                     </div>
@@ -126,6 +130,14 @@
         document.addEventListener('success', event => {
             toastr.success(event.detail)
         })
+        $('.cus_dropdown-icon').click(function(){
+            $(this).parent('.cus_dropdown').toggleClass('open');
+            event.stopPropagation();
+        });
+
+        $('html').click(function(){
+            $('.cus_dropdown').removeClass('open');
+        });
     </script>
 </body>
 

@@ -8,10 +8,11 @@ use App\Models\Project;
 use App\Models\Scopes\OrganizationScope;
 use App\Models\Team;
 use App\Models\User;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Client extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $guarded = [];
 
