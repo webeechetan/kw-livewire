@@ -10,11 +10,31 @@
     <div class="dashboard-head mb-4">
         <div class="row align-items-center">
             <div class="col">
-                <h3 class="main-body-header-title mb-0"><span class="client_head_logo"><img src="{{ env('APP_URL') }}/storage/{{ $client->image }}" alt=""></span> {{ $client->name }} </h3>
+                <div class="dashboard-head-title-wrap">
+                    <div class="client_head_logo"><img src="{{ env('APP_URL') }}/storage/{{ $client->image }}" alt=""></div>
+                    <div>
+                        <h3 class="main-body-header-title mb-0">{{ $client->name }} </h3>
+                        <div class="client_head-date">26 Jan 2024</div>
+                    </div>
+                </div>
             </div>
             <div class="text-end col">
                 <div class="main-body-header-right">
-                    <a href="#" class="btn-border btn-border-danger"><i class='bx bx-trash'></i> Delete</a>
+                    <!-- Edit -->
+                    <div class="cus_dropdown">
+                        <!-- For Active Class = btn-border-success | For Archived Class = btn-border-archived -->
+                        <div class="cus_dropdown-icon btn-border btn-border-success">Active <i class='bx bx-chevron-down' ></i></div>
+                        <div class="cus_dropdown-body cus_dropdown-body-widh_s">
+                            <div class="cus_dropdown-body-wrap">
+                                <ul class="cus_dropdown-list">
+                                    <li><a href="#" class="active"><span><i class='bx bx-user-check' ></i></span> Active</a></li>
+                                    <li><a href="#"><span><i class='bx bx-user-minus' ></i></span> Archived</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="#" class="btn-sm btn-border btn-border-secondary"><i class='bx bx-pencil'></i> Edit</a>
+                    <a href="#" class="btn-sm btn-border btn-border-danger"><i class='bx bx-trash'></i> Delete</a>
                 </div>
             </div>
         </div>
@@ -64,7 +84,7 @@
                                         @endif
                                     </div>
                                     <!-- Edit -->
-                                    <div class="cus_dropdown">
+                                    <div class="cus_dropdown cus_dropdown-edit">
                                         <div class="cus_dropdown-icon"><i class='bx bx-dots-horizontal-rounded' ></i></div>
                                         <div class="cus_dropdown-body cus_dropdown-body-widh_s">
                                             <div class="cus_dropdown-body-wrap">

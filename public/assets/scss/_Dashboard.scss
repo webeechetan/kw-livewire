@@ -25,6 +25,12 @@
             @include flex_align_center;
             grid-gap: $spacing_s;
         }
+
+        &-right {
+            @include flex_align_center;
+            justify-content: flex-end;
+            gap: 15px;
+        }
     }
 }
 
@@ -32,6 +38,11 @@
     background-color: #fff;
     padding: $spacing_xs $spacing_s;
     border-radius: $border_radius_xs;
+
+    &-title-wrap {
+        @include flex_align_center;
+        gap: 10px;
+    }
 }
 
 /* ----- Auth Forms ----- */
@@ -111,16 +122,27 @@
     overflow: hidden;
     overflow-Y: auto;
     padding-right: $spacing_xs;
+
     &::-webkit-scrollbar-track {
         background-color: $light;
     }
     &::-webkit-scrollbar {
         border-radius: $border_radius_xs;
-        width: $scrollbar_width;
+        width: 6px;
     }
     &::-webkit-scrollbar-thumb {
         border-radius: $border_radius_xs;
         background-color: $grey_xd;
+    }
+
+    &_x {
+        overflow-Y: inherit;
+        overflow-X: auto;
+        padding-bottom: 10px;
+
+        &::-webkit-scrollbar {
+            height: 4px;
+        }
     }
 }
 
@@ -619,52 +641,6 @@
         }
     }
 }
-/* ----- Filter Sort ----- */
-.filterSort {
-    &_wrap {
-        min-width: 450px;
-    }
-    &_body {
-        padding: $spacing_sm;
-        &-header {
-            font-size: 16px;
-        }
-        &_item {
-            &:not(:last-child) {
-                margin-bottom: $spacing_md;
-            }
-        }
-        &_btn {
-            &_group {
-                display: flex;
-                flex-wrap: wrap;
-                gap: $spacing_xs;
-            }
-            &_action {
-                padding: 3px 8px;
-                border: 1px solid #ddd;
-                border-radius: 4px;
-                font-size: 14px;
-                cursor: pointer;
-                transition: $ease_03;
-                display: flex;
-                align-items: center;
-
-                svg {
-                    width: 16px;
-                    height: 16px;
-                    color: $secondary;
-                    margin-right: 5px;
-                }
-
-                &:hover {
-                    color: $secondary;
-                    border-color: $secondary;
-                }
-            }
-        }
-    }
-}
 
 /* ----- Icon ----- */
 .icon {
@@ -1077,12 +1053,17 @@
 }
 
 /* ----- Client Page ----- */
-.client_head_logo {
-    width: 50px;
-    height: 50px;
-    display: inline-block;
-    img {
-        max-width: 100%;
+.client_head {
+    &_logo {
+        width: 50px;
+        height: 50px;
+        display: inline-block;
+        img {
+            max-width: 100%;
+        }
+    }
+    &-date {
+        font-size: 14px;
     }
 }
 
@@ -1346,6 +1327,10 @@
             font-weight: 500;
         }
 
+        &-des {
+            font-size: 12px;
+        }
+
         &-number {
             position: absolute;
             right: 10px;
@@ -1416,6 +1401,10 @@
                     max-height: 100%;
                 }
             }
+        }
+
+        &-content-des {
+            font-size: 12px;
         }
 
         &.selected {

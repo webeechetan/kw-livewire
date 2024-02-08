@@ -29,7 +29,7 @@
             <div class="col-md-4">
                 <div class="card_style card_style-project">
                     <!-- Edit -->
-                    <div class="cus_dropdown">
+                    <div class="cus_dropdown cus_dropdown-edit">
                         <div class="cus_dropdown-icon"><i class='bx bx-dots-horizontal-rounded' ></i></div>
                         <div class="cus_dropdown-body cus_dropdown-body-widh_s">
                             <div class="cus_dropdown-body-wrap">

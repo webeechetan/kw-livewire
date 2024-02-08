@@ -220,7 +220,7 @@ ul {
     border-radius: $border-radius_xs;
     background-color: #fff;
     border: 1px solid $grey_xd;
-    padding: 5px;
+    padding: 3px;
 
     input.form-control {
         min-height: inherit;
@@ -543,24 +543,59 @@ ul {
     }
 }
 
+/* ----- Filter Sort ----- */
+.filterSort {
+    padding: $spacing_sm;
+    &-header {
+        font-size: 16px;
+        margin-bottom: 15px;
+        @include flex;
+        gap: 7px;
+    }
+    &_btn {
+        &_group {
+            @include flex;
+            gap: 10px;
+
+            a {
+                transition: $ease_03;
+                &:hover, &.active {
+                    background-color: $success;
+                    color: #fff;
+                }
+            }
+        }        
+    }
+}
+
 /* ----- Edit Dropdown ----- */
 .cus_dropdown {
-    position: absolute;
-    right: 15px;
-    top: 15px;
-    z-index: 99;
-    cursor: pointer;
+    position: relative;
 
     &-icon {
-        width: 20px;
-        height: 20px;
-        border-radius: $border-radius_xs;
-        border: 1px solid $grey;
-        @include flex_center;
-        transition: $ease_03;
+        font-size: 14px;
+        cursor: pointer;
+    }
 
-        &:hover {
-            border-color: $text_light;
+    &-edit {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        z-index: 99;
+
+        .cus_dropdown {
+            &-icon {
+                width: 20px;
+                height: 20px;
+                border-radius: $border-radius_xs;
+                border: 1px solid $grey;
+                @include flex_center;
+                transition: $ease_03;
+        
+                &:hover {
+                    border-color: $text_light;
+                }
+            }
         }
     }
 
@@ -573,6 +608,9 @@ ul {
         transition: $ease_03;
         &-widh_s {
             min-width: 150px;
+        }
+        &-widh_l {
+            min-width: 350px;
         }
         &-wrap {
             background-color: #fff;
@@ -596,7 +634,7 @@ ul {
                     margin-right: 7px;
                 }
 
-                &:hover {
+                &:hover, &.active {
                     color: $brand;
                 }
             }
@@ -604,6 +642,10 @@ ul {
                 border-bottom: 1px solid $grey;
             }
         }
+    }
+
+    &-options {
+        padding: 20px;
     }
 
     &.open {

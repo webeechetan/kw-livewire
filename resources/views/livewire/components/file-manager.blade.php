@@ -5,31 +5,37 @@
             <div class="text-light"><span class="text-primary"><i class='bx bx-folder' ></i></span> {{ $directories_count }} <span class="px-2">|</span> <span class="text-secondary"><i class='bx bx-file-blank' ></i></span> {{$files_count}} <span class="px-2">|</span> {{$used_storage_size_in_mb}}MB Used / 100MB</div>
         </div>
         <div class="files-options ms-auto">
-            <div class="btn-list gap-10">
-                <a data-bs-toggle="modal" data-bs-target="#add-new-file" class="btn btn-sm btn-border-primary"><span><i class='bx bx-plus'></i></span> Add File</a>
-                <a data-bs-toggle="modal" data-bs-target="#add-new-link" class="btn btn-sm btn-border-primary"><span><i class='bx bx-link'></i></span> Save Link</a>
+            <div class="btn-list align-items-center gap-10">
+                <a href="#" class="btn-border btn-border-success" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Download Here"><span><i class='bx bx-download' ></i></span></a>
+                <a data-bs-toggle="modal" data-bs-target="#add-new-file" class="btn-border btn-border-primary"><span><i class='bx bx-plus'></i></span></a>
+                <a data-bs-toggle="modal" data-bs-target="#add-new-link" class="btn-border btn-border-secondary"><span><i class='bx bx-link'></i></span></a>
                 <a wire:click="deleteSelected" class="btn btn-sm btn-border-danger @if(empty($selected_files) && empty($selected_directories) && empty($selected_links)) disabled @endif 
-                "><span><i class='bx bx-trash' ></i></span> Delete</a>
+                "><span><i class='bx bx-trash' ></i></span></a>
             </div>
         </div>
     </div>
     <div class="row">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                @foreach($path_array as $p )
-                    @php
-                        $path_for_folder_open = '';
-                        foreach($path_array as $path_key => $path_value){
-                            if($path_key <= $loop->index){
-                                $path_for_folder_open .= $path_value.'/';
+        <div class="col mb-3">
+            <nav aria-label="breadcrumb">
+                <ul class="breadcrumb mb-0">
+                    @foreach($path_array as $p )
+                        @php
+                            $path_for_folder_open = '';
+                            foreach($path_array as $path_key => $path_value){
+                                if($path_key <= $loop->index){
+                                    $path_for_folder_open .= $path_value.'/';
+                                }
                             }
-                        }
 
-                    @endphp
-                    <li class="breadcrumb-item" wire:click="openFolder('{{$path_for_folder_open}}')"><a>{{ $p }}</a></li>
-                @endforeach
-            </ol>
-        </nav>
+                        @endphp
+                        <li class="breadcrumb-item" wire:click="openFolder('{{$path_for_folder_open}}')"><a>{{ $p }}</a></li>
+                    @endforeach
+                </ul>
+            </nav>
+        </div>
+        <div class="col text-end">
+            <div class="d-flex align-items-center flex-wrap justify-content-end"><span class="text-primary d-flex"><i class='bx bx-folder me-1' ></i></span> 2 <span class="px-2">|</span> <span class="text-secondary d-flex"><i class='bx bx-file-blank me-1' ></i></span> 4 Selected</div>
+        </div>
     </div>
     <div class="row text-center mb-4" wire:loading>
         <div class="col-md-12 text-center">
@@ -44,6 +50,7 @@
                 <span class="files-folder-icon"><i class='bx bx-folder'></i></span>
                 <div class="files-folder-title">{{ $directory_name }}</div>
                 <div class="text-light"><span class="text-primary"><i class='bx bx-folder' ></i></span> {{ $directory_data['directories_count'] }} <span class="px-2">|</span> <span class="text-secondary"><i class='bx bx-file-blank' ></i></span> {{ $directory_data['files_count'] }}</div>
+                <div class="files-folder-des mt-1">2.08 GB</div>
             </div>
         @endforeach
 
@@ -58,6 +65,7 @@
                 </div>
                 <div class="files-item-content">
                     <div class="files-item-content-title">{{$file_name}}</div>
+                    <div class="files-item-content-des">2.08 Mb | 14 Jan 2024 <br/>3:28 PM</div>
                 </div>
             </div>
         @endforeach

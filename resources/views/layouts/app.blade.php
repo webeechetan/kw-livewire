@@ -124,6 +124,9 @@
     <script>
         $('.cus_dropdown-icon').click(function(){
             $(this).parent('.cus_dropdown').toggleClass('open');
+        });
+
+        $('.cus_dropdown-icon, .filterSort').click(function(){
             event.stopPropagation();
         });
 
