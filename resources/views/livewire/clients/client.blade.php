@@ -1,12 +1,21 @@
 <div class="container">
     <!-- Dashboard Header -->
-    <div class="row align-items-center mb-4">
-        <div class="col">
-            <h3 class="main-body-header-title mb-0"><span class="client_head_logo"><img src="{{ env('APP_URL') }}/storage/{{ $client->image }}" alt=""></span> {{ $client->name }}</h3>
-        </div>
-        <div class="text-end col">
-            <div class="main-body-header-right">
-                <a href="#" class="btn-border btn-border-danger"><i class='bx bx-trash'></i> Delete</a>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#"><i class='bx bx-line-chart'></i> Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="#">All Clients</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Acma</li>
+        </ol>
+    </nav>
+    <div class="dashboard-head mb-4">
+        <div class="row align-items-center">
+            <div class="col">
+                <h3 class="main-body-header-title mb-0"><span class="client_head_logo"><img src="{{ env('APP_URL') }}/storage/{{ $client->image }}" alt=""></span> {{ $client->name }} </h3>
+            </div>
+            <div class="text-end col">
+                <div class="main-body-header-right">
+                    <a href="#" class="btn-border btn-border-danger"><i class='bx bx-trash'></i> Delete</a>
+                </div>
             </div>
         </div>
     </div>
@@ -53,6 +62,18 @@
                                         @if($project->due_date)
                                             <div class="project-selected-date">Due on <span>{{ $project->due_date }}</span></div>
                                         @endif
+                                    </div>
+                                    <!-- Edit -->
+                                    <div class="cus_dropdown">
+                                        <div class="cus_dropdown-icon"><i class='bx bx-dots-horizontal-rounded' ></i></div>
+                                        <div class="cus_dropdown-body cus_dropdown-body-widh_s">
+                                            <div class="cus_dropdown-body-wrap">
+                                                <ul class="cus_dropdown-list">
+                                                    <li><a href="#"><span class="text-secondary"><i class='bx bx-pencil' ></i></span> Edit</a></li>
+                                                    <li><a href="#"><span class="text-danger"><i class='bx bx-trash' ></i></span> Delete</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             @endforeach
@@ -126,7 +147,7 @@
                         <a href="javascript:void(0);" class="btn-sm btn-with_icon btn-primary">Add Team</a>
                     </form> -->
                 </div>
-                <div class="team-scroll">
+                <div class="team-scroll scrollbar">
                     <!-- Teams -->
                     <div class="team-list">
                         <!-- Team -->
@@ -192,10 +213,10 @@
                                 <h4 class="team-style_2-title">Copy <span class="team-style_2-memCount">6 Members</span></h4>
                             </div>
                         </div>
-                        <div class="team">
-                            <a class="btn btn-sm btn-border-primary w-100" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal2"><i class="bx bx-plus"></i> Add Team</a>
-                        </div>
                     </div>
+                </div>
+                <div class="pt-4">
+                    <a class="btn btn-sm btn-border-primary w-100" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal2"><i class="bx bx-plus"></i> Add Team</a>
                 </div>
             </div>
         </div>
@@ -324,19 +345,9 @@
     </div>
     
 </div>
-@push('styles')
-    <style>
-        /** team_users select2 options are hiding behind modal **/
-        .select2-container{
-            z-index:100000;
-        }
-
-    </style>
-@endpush
-
 @push('scripts')
 <script>
-    
+
     $('.project_start_date').flatpickr({
         dateFormat: "Y-m-d",
         onChange: function(selectedDates, dateStr, instance) {
@@ -360,13 +371,10 @@
         allowClear: true,
         templateResult: format,
         templateSelection: format,
-
     });
 
     $(".team_id").on('change', function(){
     });
-
-
 
     document.addEventListener('livewire:navigated', () => {
         setTimeout(() => {

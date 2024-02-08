@@ -62,6 +62,10 @@
             border-color: $brand;
             background-color: $brand_light;
         }
+
+        &-rounded {
+            border-radius: $border_radius;
+        }
     }
 
     /*---- Actions ----*/
@@ -216,7 +220,7 @@
 
     /* ----- Button Batch ----- */
     &-batch {
-        border: 1px solid $yellow;
+        border: 1px solid $grey_xd;
         padding: 3px 10px;
         border-radius: $border_radius_rounded;
         font-size: 12px;
@@ -228,13 +232,23 @@
             padding: 3px 10px;
             border-radius: $border_radius_rounded;
             font-size: 12px;
-            font-weight: 500;
             color: $text_color;
             display: inline-block;
             background-color: $grey;
+            font-weight: 500;
 
             &-success {
                 background-color: $success;
+                color: #fff;
+            }
+
+            &-primary {
+                background-color: $brand;
+                color: #fff;
+            }
+
+            &-   {
+                background-color: $secondary;
                 color: #fff;
             }
         }

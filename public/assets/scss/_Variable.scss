@@ -139,6 +139,11 @@ $team_dp: 75px;
     align-items: center;
 }
 
+@mixin inline_flex_align_center {
+    display: inline-flex;
+    align-items: center;
+}
+
 /*---- Flex Align End ----*/
 @mixin flex_align_end {
     display: flex;

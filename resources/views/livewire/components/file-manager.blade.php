@@ -2,7 +2,7 @@
     <div class="files-head column-head d-flex flex-wrap align-items-center mb-3">
         <div>
             <h5 class="mb-0">Files & Folders</h5>
-            <div class="text-light"><span class="text-primary"><i class='bx bx-folder' ></i></span> {{ $directories_count }} <span class="px-2">|</span> <span class="text-secondary"><i class='bx bx-file-blank' ></i></span> {{$files_count}}  100MB/{{$used_storage_size_in_mb}}MB used</div>
+            <div class="text-light"><span class="text-primary"><i class='bx bx-folder' ></i></span> {{ $directories_count }} <span class="px-2">|</span> <span class="text-secondary"><i class='bx bx-file-blank' ></i></span> {{$files_count}} <span class="px-2">|</span> {{$used_storage_size_in_mb}}MB Used / 100MB</div>
         </div>
         <div class="files-options ms-auto">
             <div class="btn-list gap-10">

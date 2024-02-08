@@ -65,7 +65,7 @@
 .avatarGroup {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 3px;
 
     &-avatar {
         display: flex;
@@ -78,7 +78,7 @@
 
     &-overlap {
         .avatar {
-            margin-left: -20px;
+            margin-left: -10px;
         }
     }
 }
@@ -477,6 +477,7 @@
 /* ----- Select ----- */
 .select2 {
     &-container {
+        z-index: 999999;
         &--default {
             .select2-selection {
                 &--multiple {
