@@ -2,7 +2,6 @@
 /*---- Actions ----*/
 /*---- Buttons Colors ----*/
 /*---- Pagination ---*/
-/*---- Scrollbar ----*/
 /*---- Table ----*/
 /*---- Default Classies ----*/
 .text-primary {
@@ -317,7 +316,7 @@ ul.list-none {
   border-radius: 4px;
   background-color: #fff;
   border: 1px solid #ddd;
-  padding: 5px;
+  padding: 3px;
 }
 .search-box input.form-control {
   min-height: inherit;
@@ -590,15 +589,45 @@ ul.list-none {
   font-size: 24px;
 }
 
+/* ----- Filter Sort ----- */
+.filterSort {
+  padding: 20px;
+}
+.filterSort-header {
+  font-size: 16px;
+  margin-bottom: 15px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+.filterSort_btn_group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.filterSort_btn_group a {
+  transition: all 0.3s ease;
+}
+.filterSort_btn_group a:hover, .filterSort_btn_group a.active {
+  background-color: #48914d;
+  color: #fff;
+}
+
 /* ----- Edit Dropdown ----- */
 .cus_dropdown {
+  position: relative;
+}
+.cus_dropdown-icon {
+  font-size: 14px;
+  cursor: pointer;
+}
+.cus_dropdown-edit {
   position: absolute;
   right: 15px;
   top: 15px;
   z-index: 99;
-  cursor: pointer;
 }
-.cus_dropdown-icon {
+.cus_dropdown-edit .cus_dropdown-icon {
   width: 20px;
   height: 20px;
   border-radius: 4px;
@@ -609,7 +638,7 @@ ul.list-none {
   justify-content: center;
   transition: all 0.3s ease;
 }
-.cus_dropdown-icon:hover {
+.cus_dropdown-edit .cus_dropdown-icon:hover {
   border-color: #9c9c9c;
 }
 .cus_dropdown-body {
@@ -622,6 +651,9 @@ ul.list-none {
 }
 .cus_dropdown-body-widh_s {
   min-width: 150px;
+}
+.cus_dropdown-body-widh_l {
+  min-width: 350px;
 }
 .cus_dropdown-body-wrap {
   background-color: #fff;
@@ -642,11 +674,14 @@ ul.list-none {
 .cus_dropdown-list li a span {
   margin-right: 7px;
 }
-.cus_dropdown-list li a:hover {
+.cus_dropdown-list li a:hover, .cus_dropdown-list li a.active {
   color: #f83890;
 }
 .cus_dropdown-list li:not(:last-child) {
   border-bottom: 1px solid #eee;
+}
+.cus_dropdown-options {
+  padding: 20px;
 }
 .cus_dropdown.open .cus_dropdown-body {
   transform: translateY(0);
@@ -705,7 +740,6 @@ ul.list-none {
   /* ----- Icon ----- */
   /*---- Actions ----*/
   /*---- Options ----*/
-  /* ----- Filter Sort ----- */
   /* ----- Border ----- */
   /* ----- Button Submit ----- */
   /* ----- Button Batch ----- */
@@ -715,9 +749,6 @@ ul.list-none {
   padding: 7px 15px;
   font-size: 14px;
   transition: all 0.3s ease;
-}
-.btn-sm svg {
-  width: 1rem;
 }
 .btn-primary {
   color: #fff;
@@ -816,20 +847,6 @@ ul.list-none {
 .btn-options:hover {
   color: #f83890;
 }
-.btn-filterSort {
-  background-color: transparent;
-  color: #7407ff;
-  border-color: #7407ff;
-  padding: 5px 10px;
-  border-radius: 4px;
-}
-.btn-filterSort:after {
-  display: none;
-}
-.btn-filterSort svg {
-  max-width: 20px;
-  max-height: 20px;
-}
 .btn-border {
   border: 1px solid #ddd;
   border-radius: 4px;
@@ -889,6 +906,16 @@ ul.list-none {
   background-color: #ff0000;
   border-color: #ff0000;
   color: #fff;
+}
+.btn-border-archived {
+  border: 1px solid #eee;
+  background-color: #f3f6f9;
+  color: #191919;
+}
+.btn-border-archived:hover, .btn-border-archived.active {
+  background-color: #eee;
+  border-color: #191919;
+  color: #191919;
 }
 .btn_link {
   transition: all 0.3s ease;
@@ -2345,11 +2372,22 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   align-items: center;
   grid-gap: 15px;
 }
+.main-body-header-right {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 15px;
+}
 
 .dashboard-head {
   background-color: #fff;
   padding: 10px 15px;
   border-radius: 4px;
+}
+.dashboard-head-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 /* ----- Auth Forms ----- */
@@ -2436,6 +2474,14 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
 .scrollbar::-webkit-scrollbar-thumb {
   border-radius: 4px;
   background-color: #ddd;
+}
+.scrollbar_x {
+  overflow-Y: inherit;
+  overflow-X: auto;
+  padding-bottom: 10px;
+}
+.scrollbar_x::-webkit-scrollbar {
+  height: 4px;
 }
 
 /*---- Image ----*/
@@ -2864,45 +2910,6 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   border-radius: 4px;
 }
 
-/* ----- Filter Sort ----- */
-.filterSort_wrap {
-  min-width: 450px;
-}
-.filterSort_body {
-  padding: 20px;
-}
-.filterSort_body-header {
-  font-size: 16px;
-}
-.filterSort_body_item:not(:last-child) {
-  margin-bottom: 30px;
-}
-.filterSort_body_btn_group {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-.filterSort_body_btn_action {
-  padding: 3px 8px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 14px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-}
-.filterSort_body_btn_action svg {
-  width: 16px;
-  height: 16px;
-  color: #7407ff;
-  margin-right: 5px;
-}
-.filterSort_body_btn_action:hover {
-  color: #7407ff;
-  border-color: #7407ff;
-}
-
 /* ----- Icon ----- */
 .icon_rounded {
   display: inline-flex;
@@ -3315,6 +3322,9 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
 .client_head_logo img {
   max-width: 100%;
 }
+.client_head-date {
+  font-size: 14px;
+}
 
 /* ----- Team ----- */
 .team {
@@ -3529,6 +3539,9 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
 .files-folder-title {
   font-weight: 500;
 }
+.files-folder-des {
+  font-size: 12px;
+}
 .files-folder-number {
   position: absolute;
   right: 10px;
@@ -3591,6 +3604,9 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
 .files-item-icon span img {
   max-width: 100%;
   max-height: 100%;
+}
+.files-item-content-des {
+  font-size: 12px;
 }
 .files-item.selected {
   border-color: #f83890;

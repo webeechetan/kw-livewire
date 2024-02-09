@@ -8,10 +8,8 @@
         padding: $spacing_btn_sm;
         font-size: 14px;
         transition: $ease_03;
-        svg {
-            width: 1rem;
-        }
     }
+
     &-primary {
         color: $white;
         background-color: $brand;
@@ -30,6 +28,7 @@
             }
         }
     }
+
     &-yellow {
         color: $text_color;
         background-color: $yellow_light;
@@ -117,24 +116,6 @@
         }
     }
 
-    /* ----- Filter Sort ----- */
-    &-filterSort {
-        background-color: transparent;
-        color: $secondary;
-        border-color: $secondary;
-        padding: 5px 10px;
-        border-radius: 4px;
-
-        &:after {
-            display: none;
-        }
-
-        svg {
-            max-width: 20px;
-            max-height: 20px;
-        }
-    }
-
     /* ----- Border ----- */
     &-border {
         border: 1px solid $border_dark_grey;
@@ -197,6 +178,16 @@
                 background-color: $danger;
                 border-color: $danger;
                 color: #fff;
+            }
+        }
+        &-archived {
+            border: 1px solid $grey;
+            background-color: $light;
+            color: $text_color;
+            &:hover, &.active {
+                background-color: $grey;
+                border-color: $text_color;
+                color: $text_color;
             }
         }
     }
