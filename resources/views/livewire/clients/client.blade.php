@@ -148,7 +148,7 @@
     <div class="row">
         <div class="col-md-3">
             <div class="column-box h-100">
-                <div class="column-head d-flex flex-wrap align-items-center mb-4">
+                <div class="column-head d-flex flex-wrap align-items-center">
                     <div>
                         <h5 class="mb-0">Teams</h5>
                         <div class="text-light">{{ $client->teams->count() }} Teams Assigned</div>
@@ -156,19 +156,24 @@
                     <div class="ms-auto">
                         <a class="btn-icon btn-icon-primary" href="#" data-bs-toggle="modal" data-bs-target="#teamModal"><i class="bx bx-plus"></i></a>
                     </div>
-                    <!-- <form class="single-add ms-auto" action="">
-                        <div class="single-add-wrap">
-                            {{-- <input class="form-control" wire:model="project_name" type="text" placeholder="Add Team Here"> --}}
-                            <a class="single-add-date"  href="javascript:void(0);"   data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip" data-bs-title="Select Date"><i class='bx bx-user-plus '></i></a>
-                        </div>
-                        <a href="javascript:void(0);" class="btn-sm btn-with_icon btn-primary">Add Team</a>
-                    </form> -->
                 </div>
                 <div class="team-scroll scrollbar">
                     <!-- Teams -->
                     <div class="team-list">
                         @foreach($client->teams as $team)
-                            <div class="team team-style_2 editTeam" wire:click="editTeam({{ $team->id }})">
+                            <div class="team team-style_2 editTeam">
+                                <!-- Edit -->
+                                <div class="cus_dropdown cus_dropdown-edit">
+                                    <div class="cus_dropdown-icon"><i class='bx bx-dots-horizontal-rounded' ></i></div>
+                                    <div class="cus_dropdown-body cus_dropdown-body-widh_s">
+                                        <div class="cus_dropdown-body-wrap">
+                                            <ul class="cus_dropdown-list">
+                                                <li><a href="#" wire:click="editTeam({{ $team->id }})"><span class="text-secondary"><i class='bx bx-pencil' ></i></span> Edit</a></li>
+                                                <li><a href="#"><span class="text-danger"><i class='bx bx-trash' ></i></span> Delete</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="team-style_2-head_wrap">
                                     <div class="team-avtar">
                                         <span>
@@ -195,14 +200,10 @@
                                 </div>
                             </div>
                         @endforeach
-                        
-                        <div class="team">
-                            <a class="btn btn-sm btn-border-primary w-100" href="#" data-bs-toggle="modal" data-bs-target="#teamModal"><i class="bx bx-plus"></i> Add Team</a>
-                        </div>
                     </div>
                 </div>
-                <div class="pt-4">
-                    <a class="btn btn-sm btn-border-primary w-100" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal2"><i class="bx bx-plus"></i> Add Team</a>
+                <div>
+                    <a class="btn btn-sm btn-border-primary w-100" href="#" data-bs-toggle="modal" data-bs-target="#teamModal"><i class="bx bx-plus"></i> Add Team</a>
                 </div>
             </div>
         </div>
@@ -216,7 +217,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header d-flex align-items-center justify-content-between gap-20">
-                    <h3 class="modal-title"><span class="btn-icon btn-icon-primary me-1"><i class='bx bx-data'></i></span> Add Project</h3>
+                    <h3 class="modal-title"><span class="btn-icon btn-icon-primary me-1"><i class='bx bx-layer' ></i></span> Add Project</h3>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -330,6 +331,7 @@
         </div>
     </div>
 
+    <!-- Update Team Modal -->
     <div wire:ignore.self class="modal fade" id="updateTeamModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">

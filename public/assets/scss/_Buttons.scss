@@ -248,6 +248,13 @@
             border-color: $success;
             color: $success;
         }
+        &-primary {
+            border-color: $brand;
+            color: $brand;
+        }
+        &-warning {
+            border-color: $warning;
+        }
     }
 
     /* ----- Button Group ----- */

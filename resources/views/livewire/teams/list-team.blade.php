@@ -43,7 +43,9 @@
                     </div>
                     <div class="card_style-team-head">
                         <div class="card_style-team-head-active"><span class="text-primary"><i class='bx bxs-star' ></i></span></div>
-                        <div class="card_style-team-profile-img"><span><img src="{{ env('APP_URL') }}/storage/{{ $team->image }}" alt="{{ $team->name }}"></span></div>
+                        <div>
+                            <div class="card_style-team-profile-img"><span><img src="{{ env('APP_URL') }}/storage/{{ $team->image }}" alt="{{ $team->name }}"></span></div>
+                        </div>
                         <div class="card_style-team-profile-content">
                             <h4><a href="#">{{ $team->name }}</a></h4>
                             <div class="avatarGroup avatarGroup-overlap justify-content-center">

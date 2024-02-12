@@ -46,47 +46,25 @@
                             <h4><a href="#">{{ $user->name }}</a></h4>
                             <div class="d-flex align-items-center"><i class='bx bx-envelope me-1 text-secondary' ></i> {{ $user->email }}</div>
                             <div class="card_style-user-head-position mt-2"><i class='bx bx-user'></i> Web Developer | Tech Team</div>
+                            <div class="mt-2">Assigned <span class="btn-batch btn-batch-warning">5 Teams</span></div>
                         </div>
                     </div>
                     <hr>
                     <div class="card_style-user-body">
-                        <div class="card_style-user-team">
-                            <div class="card_style-user-title"><span><i class='bx bx-user-plus' ></i></span> Teams Assigned</div>
-                            <div>
-                                @foreach($user->teams as $team)
-                                    <div class="btn-batch"><img src="{{ env('APP_URL') }}/storage/{{ $team->image }}" alt="{{ $team->name }}"> {{ $team->name }}</div>
-                                @endforeach
-                                <div class="btn-batch"><img src="http://localhost:8000/storage/images/teams/Tech%20Team.png" alt=""> Media Team</div>
-                                <div class="btn-batch"><img src="http://localhost:8000/storage/images/teams/Tech%20Team.png" alt=""> CS Team</div>
+                        <div class="card_style-options">
+                            <div class="card_style-options-head"><span><i class='bx bx-layer text-secondary' ></i></span> 30 Projects</div>
+                            <div class="card_style-options-list d-flex">
+                                <div class="text-primary">Active <span class="btn-batch-bg btn-batch-bg-primary">10 Projects</span></div>
+                                <div class="text-success ms-4">Completed <span class="btn-batch-bg btn-batch-bg-success">5 Projects</span></div>
                             </div>
                         </div>
                         <hr>
-                        <div class="card_style-user-title"><span><i class='bx bx-objects-horizontal-left' ></i></span> 7 Projects Assigned</div>
-                        <div class="card_style-projects_tab">
-                            <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-                                <li class="nav-item" role="presentation">
-                                    <div class="card_style-projects_tab-title active text-primary" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Active <span class="btn-batch-bg btn-batch-bg-primary ms-2">5 Projects</span></div>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <div class="card_style-projects_tab-title text-success" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Completed <span class="btn-batch-bg btn-batch-bg-success ms-2">2 Projects</span></div>
-                                </li>
-                            </ul>
-                            <div class="tab-content" id="pills-tabContent">
-                                <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab" tabindex="0">
-                                    <div class="card_style-projects_tab-items">
-                                        <span class="btn-batch">Acma Website</span>
-                                        <span class="btn-batch">Buyers Guide</span>
-                                        <span class="btn-batch">Prunell</span>
-                                        <span class="btn-batch">Musco</span>
-                                    </div>
-                                </div>
-                                <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab" tabindex="0">
-                                    <div class="card_style-projects_tab-items">
-                                        <span class="btn-batch btn-batch-success">Webeesocial</span>
-                                        <span class="btn-batch">Buyers Guide</span>
-                                        <span class="btn-batch">Prunell</span>
-                                    </div>
-                                </div>
+                        <div class="card_style-tasks">
+                            <div class="card_style-tasks-title"><span><i class='bx bx-objects-horizontal-left' ></i></span> 60 Tasks</div>
+                            <div class="card_style-tasks-list">
+                                <div class="card_style-tasks-item card_style-tasks-item-pending"><span><i class='bx bx-objects-horizontal-center' ></i></span> 30 Active</div>
+                                <div class="card_style-tasks-item card_style-tasks-item-overdue"><span><i class='bx bx-objects-horizontal-center' ></i></span> 20 Overdue</div>
+                                <div class="card_style-tasks-item card_style-tasks-item-done"><span><i class='bx bx-objects-horizontal-center' ></i></span> 10 Completed</div>
                             </div>
                         </div>
                     </div>

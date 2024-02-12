@@ -320,6 +320,20 @@ ul {
         }
     }
 
+    &-options {
+        &-head {
+            font-size: 16px;
+            font-weight: 500;
+
+            span {
+                margin-right: 5px;
+            }
+        }
+        &-list {
+            margin-top: 10px;
+        }
+    }
+
     &-client {
         &-head {
             @include flex;
@@ -606,6 +620,7 @@ ul {
         opacity: 0;
         visibility: hidden;
         transition: $ease_03;
+        z-index: 99999;
         &-widh_s {
             min-width: 150px;
         }
@@ -661,6 +676,18 @@ ul {
 
 /* ------ Modal ------ */
 .modal {
+    &-backdrop.show {
+        opacity: 0.2;
+    }
+    &-content {
+        border: none;
+        box-shadow: 0 3px 40px rgba(0,0,0,0.1);
+    }
+    &-dialog {
+        @media (min-width: 1400px) {
+            margin-top: 70px;
+        }
+    }
     &-body {
         padding: 0;
     }
@@ -675,6 +702,7 @@ ul {
     }
     &-title {
         font-size: 20px;
+        text-transform: uppercase;
     }
 
     label {
@@ -706,6 +734,25 @@ ul {
         }
         &.active {
             color: $brand;
+        }
+    }
+}
+
+/* ----- Loader ----- */
+.loader {
+    &_column {
+        z-index: 9999;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+    &_cus {
+        .progress {
+            background-color: transparent;
+            height: 2px;
+            &-bar {
+                background-color: $brand;
+            }
         }
     }
 }

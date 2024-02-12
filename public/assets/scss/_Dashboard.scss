@@ -121,7 +121,6 @@
 .scrollbar {
     overflow: hidden;
     overflow-Y: auto;
-    padding-right: $spacing_xs;
 
     &::-webkit-scrollbar-track {
         background-color: $light;
@@ -1073,9 +1072,15 @@
     border: 1px solid $grey;
     padding: $spacing_xs;
     border-radius: $border_radius_xs;
-    &:not(:last-child) {
-        margin-bottom: $spacing_xs;
+    position: relative;
+    margin-top: 15px;
+
+    &:last-child {
+        .cus_dropdown-body {
+            bottom: 25px;
+        }
     }
+
     &-style_2 {
         display: flex;
         justify-content: space-between;
@@ -1084,7 +1089,7 @@
             gap: 10px;
         }
         &-title {
-            font-size: 18px;
+            font-size: 16px;
             margin-bottom: 0;
         }
         &-memCount {
@@ -1094,13 +1099,13 @@
             margin-top: 5px;
         }
         .avatar {
-            width: 30px;
-            height: 30px;
+            width: 25px;
+            height: 25px;
         }
     }
     &-avtar {
         span {
-            width: 35px;
+            width: 30px;
             height: 30px;
             display: inline-flex;
             justify-content: center;
@@ -1108,7 +1113,7 @@
             background-color: $brand_light;
             color: $brand;
             font-weight: 500;
-            border-radius: $border-radius_xs;
+            border-radius: $border-radius;
             img {
                 max-width: 100%;
             }
@@ -1117,7 +1122,7 @@
 
     &-scroll {
         max-height: 430px;
-        overflow: auto;
+        margin-bottom: 15px;
     }
 }
 
@@ -1294,6 +1299,10 @@
 .files {
     &-sec {
         background-color: $grey;
+    }
+
+    &-body {
+        position: relative;
     }
 
     &-folder {
