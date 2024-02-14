@@ -100,13 +100,28 @@
                                 <div class="card_style-projects_tab-items">
                                     <!-- Avatar Group (Add + More option after 6) -->
                                     <div class="avatarGroup avatarGroup-lg mt-2">
+                                        @php
+                                            $plus_more_projects = 0;
+                                            if(count($activeProjects) > 7){
+                                                $plus_more_projects = count($activeProjects) - 7;
+                                            }
+                                        @endphp
                                         @foreach($activeProjects as $project)
-                                        <a href="#" class="avatarGroup-avatar">
-                                            <span class="avatar" data-bs-toggle="tooltip" data-bs-placement="top" title="Ajay Kumar">
-                                                <img alt="avatar" src="{{ asset('storage/'.$client->image) }}" class="rounded-circle">
-                                            </span>
-                                        </a>
+                                            @if($loop->index < 7)
+                                                <a href="#" class="avatarGroup-avatar">
+                                                    <span class="avatar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{ $project->name }}">
+                                                        <img alt="avatar" src="{{ asset('storage/'.$project->image) }}" class="rounded-circle">
+                                                    </span>
+                                                </a>
+                                            @endif
                                         @endforeach
+                                        @if($plus_more_projects > 0)
+                                            <a href="#" class="avatarGroup-avatar">
+                                                <span class="avatar avatar-more" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{ $plus_more_projects }} more projects">
+                                                    <span class="avatar-more-text">+{{ $plus_more_projects }}</span>
+                                                </span>
+                                            </a>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -116,8 +131,8 @@
                                     <div class="avatarGroup avatarGroup-lg mt-2">
                                         @foreach($completedProjects as $project)
                                         <a href="#" class="avatarGroup-avatar">
-                                            <span class="avatar" data-bs-toggle="tooltip" data-bs-placement="top" title="Ajay Kumar">
-                                                <img alt="avatar" src="{{ asset('storage/'.$client->image) }}" class="rounded-circle">
+                                            <span class="avatar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{ $project->name }}">
+                                                <img alt="avatar" src="{{ asset('storage/'.$project->image) }}" class="rounded-circle">
                                             </span>
                                         </a>
                                         @endforeach

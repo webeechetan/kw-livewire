@@ -14,7 +14,9 @@
                     <div class="client_head_logo"><img src="{{ env('APP_URL') }}/storage/{{ $client->image }}" alt=""></div>
                     <div>
                         <h3 class="main-body-header-title mb-0">{{ $client->name }} </h3>
-                        <div class="client_head-date">26 Jan 2024</div>
+                        <div class="client_head-date">
+                            {{ \Carbon\Carbon::parse($client->onboard_date)->format('d M-Y') }}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -81,6 +83,8 @@
                                         <a href="#" class="project-title">{{ $project->name }}</a>
                                         @if($project->due_date)
                                             <div class="project-selected-date">Due on <span>{{ $project->due_date }}</span></div>
+                                        @else
+                                            <div class="project-selected-date">Due on <span>No Due Date</span></div>
                                         @endif
                                     </div>
                                     <!-- Edit -->
@@ -89,8 +93,8 @@
                                         <div class="cus_dropdown-body cus_dropdown-body-widh_s">
                                             <div class="cus_dropdown-body-wrap">
                                                 <ul class="cus_dropdown-list">
-                                                    <li><a href="#"><span class="text-secondary"><i class='bx bx-pencil' ></i></span> Edit</a></li>
-                                                    <li><a href="#"><span class="text-danger"><i class='bx bx-trash' ></i></span> Delete</a></li>
+                                                    <li><a href="#" wire:click="editProject({{ $project->id }})"><span class="text-secondary"><i class='bx bx-pencil' ></i></span> Edit</a></li>
+                                                    <li><a href="#"><span wire:click="deleteProject({{ $project->id }})" class="text-danger"><i class='bx bx-trash' ></i></span> Delete</a></li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -169,7 +173,7 @@
                                         <div class="cus_dropdown-body-wrap">
                                             <ul class="cus_dropdown-list">
                                                 <li><a href="#" wire:click="editTeam({{ $team->id }})"><span class="text-secondary"><i class='bx bx-pencil' ></i></span> Edit</a></li>
-                                                <li><a href="#"><span class="text-danger"><i class='bx bx-trash' ></i></span> Delete</a></li>
+                                                <li><a href="#" wire:click="deleteTeam({{ $team->id }})"><span class="text-danger"><i class='bx bx-trash' ></i></span> Delete</a></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -217,7 +221,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header d-flex align-items-center justify-content-between gap-20">
-                    <h3 class="modal-title"><span class="btn-icon btn-icon-primary me-1"><i class='bx bx-layer' ></i></span> Add Project</h3>
+                    <h3 class="modal-title"><span class="btn-icon btn-icon-primary me-1"><i class='bx bx-layer' ></i></span> <span class="project-modal-title">Add Project</span></h3>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -270,7 +274,7 @@
                         <div class="modal-form-btm">
                             <div class="row">
                                 <div class="col-md-6 ms-auto text-end">
-                                    <button type="submit" class="btn btn-primary">Add Project</button>
+                                    <button type="submit" class="btn btn-primary project-modal-btn">Add Project</button>
                                 </div>
                             </div>
                         </div>
@@ -408,22 +412,6 @@
         },
     });
 
-    // team_users 
-
-    // $(".team_users").change(function(){
-    //     var selected = $(this).val();
-    //     @this.set('team_users', selected);
-    //     console.log(selected);
-    //     setTimeout(() => {
-    //         $(".team_users").select2({
-    //             placeholder: "Select Users",
-    //             allowClear: true,
-    //             templateResult: format,
-    //             templateSelection: format,
-    //         });
-    //     }, 1000);
-    // });
-
     $(document).on('change', '.team_users', function(){
         var selected = $(this).val();
         @this.set('team_users', selected);
@@ -435,14 +423,6 @@
                 templateSelection: format,
             });
         }, 1000);
-    });
-
-    document.addEventListener('livewire:navigated', () => {
-        setTimeout(() => {
-            $(function () {
-                $('[data-bs-toggle="tooltip"]').tooltip();
-            })
-        }, 3000);
     });
 
     document.addEventListener('teamSelected', event => {
@@ -463,21 +443,10 @@
         $("#updateTeamModal").modal('show');
 
         setTimeout(() => {
-            
-            // $(".team_users").select2({
-            //     placeholder: "Select Users",
-            //     allowClear: true,
-            //     templateResult: format,
-            //     templateSelection: format,
-            // });
-
-            // $(".team_users").val(selected_users_ids).trigger('change');
 
             console.log(selected_users_ids);
+            $(".team_users").val(selected_users_ids).trigger('change');
         }, 1000);
-
-
-        
     })
 
     document.addEventListener('teamAssigned', event => {
@@ -487,6 +456,17 @@
 
     document.addEventListener('teamUpdated', event => {
         $("#updateTeamModal").modal('hide');
+    });
+
+    document.addEventListener('editProject', event => {
+        $("#projectModal").modal('show');
+        $(".project-modal-title").html('Edit Project');
+        $(".project-modal-btn").html('Update Project');
+        $('.project_start_date').flatpickr().setDate(event.detail[0].start_date);
+        $('.project_due_date').flatpickr().setDate(event.detail[0].due_date);
+        $(".project_start_date").html(event.detail[0].start_date);
+        $(".project_due_date").html(event.detail[0].due_date);
+
     });
     
 

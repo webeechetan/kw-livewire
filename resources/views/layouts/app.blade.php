@@ -141,6 +141,14 @@
         $('html').click(function(){
             $('.cus_dropdown').removeClass('open');
         });
+
+        document.addEventListener('livewire:navigated', () => {
+            setTimeout(() => {
+                $(function () {
+                    $('[data-bs-toggle="tooltip"]').tooltip();
+                })
+            }, 1000);
+        });
     </script>
 </body>
 

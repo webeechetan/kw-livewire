@@ -18,6 +18,11 @@ class ListClient extends Component
 
     public $query = '';
 
+    //  filters
+
+    public $filer = 'all';
+
+
     public $client_onboard_date;
     public $client_name;
     public $client_description;
@@ -47,8 +52,4 @@ class ListClient extends Component
         $this->resetPage();
     }
 
-    public function mount()
-    {
-
-    }
 }
