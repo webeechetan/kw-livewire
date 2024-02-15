@@ -50,6 +50,12 @@ b, strong {
     &-primary {
         color: $brand !important;
     }
+    &-sm {
+        font-size: 13px;
+    }
+    &-xs {
+        font-size: 11px;
+    }
 }
 
 /*---- List Style ----*/
@@ -148,6 +154,11 @@ ul {
     &-sm {
         font-size: 20px;
     }
+    &-label {
+        color: $text_color;
+        font-weight: 500;
+        margin-bottom: 15px;
+    }
 }
 
 /*---- Section Space ----*/
@@ -169,6 +180,10 @@ ul {
             margin-top: $spacing_lg;
         }
     }
+}
+
+hr.space-sm {
+    margin: 10px 0;
 }
 
 /*---- Background Overlay ----*/
@@ -211,6 +226,10 @@ ul {
         border-bottom: 1px solid $grey;
         padding-bottom: $spacing_xs;
     }
+    &-title {
+        font-size: 22px;
+        font-weight: 500;
+    }
 }
 
 /* ----- Search ----- */
@@ -221,6 +240,7 @@ ul {
     background-color: #fff;
     border: 1px solid $grey_xd;
     padding: 3px;
+    position: relative;
 
     input.form-control {
         min-height: inherit;
@@ -246,6 +266,28 @@ ul {
         &:hover, &:focus {
             background-color: $secondary_light;
             color: $secondary;
+        }
+    }
+
+    &-float {
+        &-style {          
+            border-color: transparent;
+            border-bottom-color: $grey_xd;
+            padding: 0;
+            border-radius: 0;
+            input.form-control {
+                padding: 4px 20px 4px 25px;
+                font-size: 13px;
+            }
+        }
+        &-icon {
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            margin: auto;
+            color: $text_light;
+            @include flex_align_center;
         }
     }
 }
@@ -472,28 +514,6 @@ ul {
         }
     }
 
-    &-progress {
-        &-head {
-            @include flex;
-            justify-content: space-between;
-            font-weight: 500;
-            margin-bottom: 20px;
-
-            &-days {
-                span {
-                    color: $warning;
-                }
-            }
-        }
-        &-btm {
-            &-date {
-                font-size: 12px;
-                font-weight: 500;
-                margin-top: 5px;
-            }
-        }
-    }
-
     &-user {
         &-head {
             display: grid;
@@ -513,16 +533,16 @@ ul {
                 }
             }
         }
-        &-team {
-            .btn-batch {
-                padding: 2px 10px 2px 3px;
-                @include inline_flex_align_center;
-                img {
-                    width: 20px;
-                    margin-right: 5px;
-                }
-            }
-        }
+        // &-team {
+        //     .btn-batch {
+        //         padding: 2px 10px 2px 3px;
+        //         @include inline_flex_align_center;
+        //         img {
+        //             width: 20px;
+        //             margin-right: 5px;
+        //         }
+        //     }
+        // }
         &-title {
             font-weight: 500;
             margin-bottom: 10px;
@@ -553,6 +573,29 @@ ul {
             h4 {
                 font-size: 24px;
             }
+        }
+    }
+}
+
+/* ----- Task Progress ----- */
+.task_progress {
+    &-head {
+        @include flex;
+        justify-content: space-between;
+        font-weight: 500;
+        margin-bottom: 20px;
+
+        &-days {
+            span {
+                color: $warning;
+            }
+        }
+    }
+    &-btm {
+        &-date {
+            font-size: 12px;
+            font-weight: 500;
+            margin-top: 5px;
         }
     }
 }

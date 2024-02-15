@@ -728,7 +728,7 @@
                 @include flex_center;
                 cursor: pointer;
                 transition: $ease_03;
-                margin-top: 2px;
+                margin-top: 3px;
                 &:hover, &.active {
                     background-color: $success;
                     color: #fff;
@@ -743,7 +743,7 @@
         background-color: $white;
         border-radius: $border_radius_xs;
         &:not(:last-child) {
-            margin-bottom: 5px;
+            border-bottom: 1px solid $grey;
         }
         > .row {
             align-items: center;
@@ -756,13 +756,15 @@
             margin-top: $spacing_sm;
         }
         &_header {
-            background-color: $brand;
-            margin: $spacing_s 0;
+            background-color: $secondary_light;
+            margin-top: $spacing_s;
             border-radius: $border_radius_xs;
             &_title {
                 letter-spacing: 1px;
-                color: #fff;
-                font-size: 16px;
+                color: $dark;
+                font-size: 13px;
+                font-weight: 500;
+                text-transform: uppercase;
             }
         }
     }

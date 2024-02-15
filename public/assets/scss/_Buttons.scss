@@ -4,11 +4,6 @@
     font-weight: 400;
     transition: $ease_05;
     border-radius: $border_radius_xs;
-    &-sm {
-        padding: $spacing_btn_sm;
-        font-size: 14px;
-        transition: $ease_03;
-    }
 
     &-primary {
         color: $white;
@@ -124,20 +119,11 @@
         transition: $ease_03;
         background-color: transparent;
         display: inline-block;
-
-        svg {
-            width: 16px;
-            height: 16px;
-        }
+        line-height: 100%;
 
         &:hover, &.active {
-            border-color: $border_dark_grey;
+            border-color: $brand;
             color: $brand;
-        }
-
-        &-sm {
-            font-size: 13px;
-            padding: 3px 6px;
         }
 
         &-primary {
@@ -190,6 +176,15 @@
                 color: $text_color;
             }
         }
+
+        &-sm {
+            font-size: 13px;
+            padding: 6px 10px;
+        }
+
+        &-rounded {
+            border-radius: $border-radius_rounded;
+        }
     }
 
     &_link {
@@ -197,10 +192,24 @@
         display: inline-flex;
         align-items: center;
         gap: 5px;
-        border-bottom: 1px solid $grey_xd;
         &:hover {
             color: $brand;
-            border-color: $brand;
+        }
+
+        &-border {
+            border-bottom: 1px solid $grey_xd;
+
+            &:hover {
+                border-color: $brand;
+            }
+        }
+
+        &-primary {
+            color: $brand;
+        }
+
+        &-sm {
+            font-size: 13px;
         }
     }
 
@@ -238,7 +247,7 @@
                 color: #fff;
             }
 
-            &-   {
+            &-secondary   {
                 background-color: $secondary;
                 color: #fff;
             }
@@ -257,15 +266,32 @@
         }
     }
 
+    &-sm {
+        padding: $spacing_btn_xs;
+        font-size: 14px;
+        transition: $ease_03;
+    }
+
     /* ----- Button Group ----- */
     &-list {
         display: flex;
         flex-wrap: wrap;
+        align-items: flex-start;
+        gap: 10px;
 
         &-full {
             &-2 {
                 display: grid;
                 grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .btn-batch {
+            padding: 2px 10px 2px 3px;
+            @include inline_flex_align_center;
+            img {
+                width: 20px;
+                margin-right: 5px;
             }
         }
     }

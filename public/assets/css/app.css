@@ -35,6 +35,12 @@
 .text-link:hover {
   color: #7407ff;
 }
+.text-grey {
+  color: #eee !important;
+}
+.text-dark-grey {
+  color: #ddd;
+}
 
 /*---- Background Colors ----*/
 .bg-primary {
@@ -49,7 +55,7 @@
   }
 }
 
-/*---- Font Family ----*/
+/*----   Family ----*/
 /*---- Transition Ease ----*/
 /*---- Border Radius ----*/
 /*---- Spacing ----*/
@@ -138,6 +144,12 @@ b, strong {
 }
 .text-primary {
   color: #f83890 !important;
+}
+.text-sm {
+  font-size: 13px;
+}
+.text-xs {
+  font-size: 11px;
 }
 
 /*---- List Style ----*/
@@ -249,6 +261,11 @@ ul.list-none {
 .title-sm {
   font-size: 20px;
 }
+.title-label {
+  color: #191919;
+  font-weight: 500;
+  margin-bottom: 15px;
+}
 
 /*---- Section Space ----*/
 .space-sec {
@@ -269,6 +286,10 @@ ul.list-none {
 }
 .space-top-btn {
   margin-top: 50px;
+}
+
+hr.space-sm {
+  margin: 10px 0;
 }
 
 /*---- Background Overlay ----*/
@@ -308,6 +329,10 @@ ul.list-none {
   border-bottom: 1px solid #eee;
   padding-bottom: 10px;
 }
+.column-title {
+  font-size: 22px;
+  font-weight: 500;
+}
 
 /* ----- Search ----- */
 .search-box {
@@ -317,6 +342,7 @@ ul.list-none {
   background-color: #fff;
   border: 1px solid #ddd;
   padding: 3px;
+  position: relative;
 }
 .search-box input.form-control {
   min-height: inherit;
@@ -344,6 +370,26 @@ ul.list-none {
 .search-box-icon:hover, .search-box-icon:focus {
   background-color: #e8ddf7;
   color: #7407ff;
+}
+.search-box-float-style {
+  border-color: transparent;
+  border-bottom-color: #ddd;
+  padding: 0;
+  border-radius: 0;
+}
+.search-box-float-style input.form-control {
+  padding: 4px 20px 4px 25px;
+  font-size: 13px;
+}
+.search-box-float-icon {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  color: #9c9c9c;
+  display: flex;
+  align-items: center;
 }
 
 /* ----- Single Add ----- */
@@ -540,21 +586,6 @@ ul.list-none {
   color: #48914d;
   border-color: #48914d;
 }
-.card_style-progress-head {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  font-weight: 500;
-  margin-bottom: 20px;
-}
-.card_style-progress-head-days span {
-  color: #e7bf1d;
-}
-.card_style-progress-btm-date {
-  font-size: 12px;
-  font-weight: 500;
-  margin-top: 5px;
-}
 .card_style-user-head {
   display: grid;
   grid-template-columns: 50px 1fr;
@@ -566,15 +597,6 @@ ul.list-none {
 .card_style-user-profile-content h4 {
   font-size: 20px;
   margin-bottom: 5px;
-}
-.card_style-user-team .btn-batch {
-  padding: 2px 10px 2px 3px;
-  display: inline-flex;
-  align-items: center;
-}
-.card_style-user-team .btn-batch img {
-  width: 20px;
-  margin-right: 5px;
 }
 .card_style-user-title {
   font-weight: 500;
@@ -597,6 +619,23 @@ ul.list-none {
 }
 .card_style-team-head h4 {
   font-size: 24px;
+}
+
+/* ----- Task Progress ----- */
+.task_progress-head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+.task_progress-head-days span {
+  color: #e7bf1d;
+}
+.task_progress-btm-date {
+  font-size: 12px;
+  font-weight: 500;
+  margin-top: 5px;
 }
 
 /* ----- Filter Sort ----- */
@@ -784,11 +823,6 @@ ul.list-none {
   /* ----- Button Batch ----- */
   /* ----- Button Group ----- */
 }
-.btn-sm {
-  padding: 7px 15px;
-  font-size: 14px;
-  transition: all 0.3s ease;
-}
 .btn-primary {
   color: #fff;
   background-color: #f83890;
@@ -889,22 +923,15 @@ ul.list-none {
 .btn-border {
   border: 1px solid #ddd;
   border-radius: 4px;
-  padding: 5px 10px;
+  padding: 7px 10px;
   transition: all 0.3s ease;
   background-color: transparent;
   display: inline-block;
-}
-.btn-border svg {
-  width: 16px;
-  height: 16px;
+  line-height: 100%;
 }
 .btn-border:hover, .btn-border.active {
-  border-color: #ddd;
+  border-color: #f83890;
   color: #f83890;
-}
-.btn-border-sm {
-  font-size: 13px;
-  padding: 3px 6px;
 }
 .btn-border-primary {
   border: 1px solid #f83890;
@@ -956,16 +983,33 @@ ul.list-none {
   border-color: #191919;
   color: #191919;
 }
+.btn-border-sm {
+  font-size: 13px;
+  padding: 6px 10px;
+}
+.btn-border-rounded {
+  border-radius: 30px;
+}
 .btn_link {
   transition: all 0.3s ease;
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  border-bottom: 1px solid #ddd;
 }
 .btn_link:hover {
   color: #f83890;
+}
+.btn_link-border {
+  border-bottom: 1px solid #ddd;
+}
+.btn_link-border:hover {
   border-color: #f83890;
+}
+.btn_link-primary {
+  color: #f83890;
+}
+.btn_link-sm {
+  font-size: 13px;
 }
 .btn-smt {
   text-transform: uppercase;
@@ -996,7 +1040,7 @@ ul.list-none {
   background-color: #f83890;
   color: #fff;
 }
-.btn-batch-bg- {
+.btn-batch-bg-secondary {
   background-color: #7407ff;
   color: #fff;
 }
@@ -1011,13 +1055,29 @@ ul.list-none {
 .btn-batch-warning {
   border-color: #e7bf1d;
 }
+.btn-sm {
+  padding: 7px 10px;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
 .btn-list {
   display: flex;
   flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 10px;
 }
 .btn-list-full-2 {
   display: grid;
   grid-template-columns: 1fr 1fr;
+}
+.btn-list .btn-batch {
+  padding: 2px 10px 2px 3px;
+  display: inline-flex;
+  align-items: center;
+}
+.btn-list .btn-batch img {
+  width: 20px;
+  margin-right: 5px;
 }
 .btn:focus {
   outline: none;
@@ -3053,7 +3113,7 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   justify-content: center;
   cursor: pointer;
   transition: all 0.3s ease;
-  margin-top: 2px;
+  margin-top: 3px;
 }
 .taskList_col_title_complete_icon:hover, .taskList_col_title_complete_icon.active {
   background-color: #48914d;
@@ -3067,7 +3127,7 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   border-radius: 4px;
 }
 .taskList_row:not(:last-child) {
-  margin-bottom: 5px;
+  border-bottom: 1px solid #eee;
 }
 .taskList_row > .row {
   align-items: center;
@@ -3076,14 +3136,16 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   margin-top: 20px;
 }
 .taskList-dashbaord_header {
-  background-color: #f83890;
-  margin: 15px 0;
+  background-color: #e8ddf7;
+  margin-top: 15px;
   border-radius: 4px;
 }
 .taskList-dashbaord_header_title {
   letter-spacing: 1px;
-  color: #fff;
-  font-size: 16px;
+  color: #191919;
+  font-size: 13px;
+  font-weight: 500;
+  text-transform: uppercase;
 }
 
 /* ----- Item Submit ----- */

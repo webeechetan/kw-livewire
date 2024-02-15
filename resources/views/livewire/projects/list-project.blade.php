@@ -80,7 +80,7 @@
                     </div>
                     <div class="card_style-project-head">
                         <div class="card_style-project-head-client"><span><i class='bx bx-user'></i></span> {{ $project->client->name }}</div>
-                        <h4><a href="#">{{ $project->name }}</a></h4>
+                        <h4><a href="{{ route('project.profile') }}" wire:navigate>{{ $project->name }}</a></h4>
                         <!-- Avatar Group -->
                         <div class="avatarGroup avatarGroup-lg avatarGroup-overlap mt-2">
                             <a href="#" class="avatarGroup-avatar">
@@ -115,16 +115,16 @@
                             </div>
                         </div>
                         <hr>
-                        <div class="card_style-progress">
-                            <div class="card_style-progress-head">
-                                <div class="card_style-progress-head-title">Progress</div>
-                                <div class="card_style-progress-head-days"><span><i class='bx bx-calendar-minus'></i></span> 45 Days Left</div>
+                        <div class="task_progress">
+                            <div class="task_progress-head">
+                                <div class="task_progress-head-title">Progress</div>
+                                <div class="task_progress-head-days"><span><i class='bx bx-calendar-minus'></i></span> 45 Days Left</div>
                             </div>
-                            <div class="card_style-progress-btm">
+                            <div class="task_progress-btm">
                                 <div class="progress" role="progressbar" aria-label="Project Progress" aria-valuemin="0" aria-valuemax="100">
                                     <div class="progress-bar progress-success" style="width: 60%"><span class="progress-bar-text">60%</span></div>
                                 </div>
-                                <div class="card_style-progress-btm-date d-flex justify-content-between">
+                                <div class="task_progress-btm-date d-flex justify-content-between">
                                     <div><i class='bx bx-calendar text-primary' ></i> 26 Jan 2024</div>
                                     <div class="text-success"><i class='bx bx-calendar-check ' ></i> 30 March 2024</div>
                                 </div>
