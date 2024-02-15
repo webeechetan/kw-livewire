@@ -2,8 +2,8 @@
     <!-- Dashboard Header -->
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="#"><i class='bx bx-line-chart'></i> Dashboard</a></li>
-            <li class="breadcrumb-item"><a href="#">All Clients</a></li>
+            <li class="breadcrumb-item"><a wire:navigate href="{{ route('dashboard') }}"><i class='bx bx-line-chart'></i> Dashboard</a></li>
+            <li class="breadcrumb-item"><a wire:navigate href="{{ route('client.index') }}">All Clients</a></li>
             <li class="breadcrumb-item active" aria-current="page">Acma</li>
         </ol>
     </nav>
@@ -462,10 +462,14 @@
         $("#projectModal").modal('show');
         $(".project-modal-title").html('Edit Project');
         $(".project-modal-btn").html('Update Project');
-        $('.project_start_date').flatpickr().setDate(event.detail[0].start_date);
-        $('.project_due_date').flatpickr().setDate(event.detail[0].due_date);
-        $(".project_start_date").html(event.detail[0].start_date);
-        $(".project_due_date").html(event.detail[0].due_date);
+        if(event.detail[0].due_date){
+            $('.project_start_date').flatpickr().setDate(event.detail[0].start_date);
+            $(".project_start_date").html(event.detail[0].start_date);
+        }
+        if(event.detail[0].due_date){
+            $('.project_due_date').flatpickr().setDate(event.detail[0].due_date);
+            $(".project_due_date").html(event.detail[0].due_date);
+        }
 
     });
     
