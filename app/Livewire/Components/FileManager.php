@@ -76,8 +76,9 @@ class FileManager extends Component
             $file_array = explode('/', $file);
             $file_name = end($file_array);
             $this->files[$file_name] = [
-                'size' => Storage::size($file),
+                'size' => round(Storage::size($file)/1024,2),
                 'file_path' => $file,
+                'last_modified' => date('d M, Y h:i:s', Storage::lastModified($file)),
             ];
         }
 
@@ -267,6 +268,19 @@ class FileManager extends Component
             return null;
         }
 
+    }
+
+    public function downloadSelected(){
+        $files = $this->selected_files;
+        // dd($files);
+        $zip_file_name = 'download.zip';
+        $zip = new \ZipArchive();
+        $zip->open($zip_file_name, \ZipArchive::CREATE | \ZipArchive::OVERWRITE);
+        foreach ($files as $file) {
+            $zip->addFile(Storage::path($file), $file);
+        }
+        $zip->close();
+        return response()->download($zip_file_name)->deleteFileAfterSend(true);
     }
 
     public function placeholder()

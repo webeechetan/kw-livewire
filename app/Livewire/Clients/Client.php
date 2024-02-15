@@ -22,6 +22,7 @@ class Client extends Component
     public $overdue_projects;
     public $archived_projects;
 
+    public $project = null;
     public $project_name;
     public $project_start_date;
     public $project_due_date;
@@ -59,6 +60,11 @@ class Client extends Component
 
     public function addProject()
     {
+        if($this->project){
+            $this->updateProject();
+            return;
+        }
+
         $this->validate([
             'project_name' => 'required',
         ]);
@@ -153,6 +159,13 @@ class Client extends Component
         // $this->team_users = [];
     }
 
+    public function deleteTeam($id){
+        $this->client->teams()->detach($id);
+        $this->client->users()->wherePivot('team_id', $id)->detach();
+        $this->dispatch('success', 'Team deleted successfully.');
+        $this->redirect(route('client.profile', $this->client_id),navigate:true);
+    }
+
     public function updateTeam(){
         if($this->team_id == ''){
             return;
@@ -174,6 +187,53 @@ class Client extends Component
 
         $this->dispatch('success', 'Team updated successfully.');
         $this->dispatch('teamUpdated', $this->team_id);
+    }
+
+    public function editProject($id){
+        $this->project = $this->client->projects()->find($id);
+        $this->project_name = $this->project->name;
+        $this->project_start_date = $this->project->start_date;
+        $this->project_due_date = $this->project->due_date;
+        $this->project_description = $this->project->description;
+        $this->project_start_date = $this->project->start_date;
+        $this->project_due_date = $this->project->due_date;
+        $this->dispatch('editProject', $this->project);
+    }
+
+    public function updateProject(){
+        $this->validate([
+            'project_name' => 'required',
+        ]);
+
+        $image  = '';
+
+        if (request()->hasFile('image')) {
+            $image = $this->image->store('public/images/projects');
+            // remove public from the path as we need to store only the path in the db
+            $image = str_replace('public/', '', $image);
+        }else{
+            $image = $this->project->image;
+        }
+
+        $this->project->update([
+            'description' => $this->project_description,
+            'name' => $this->project_name,
+            'start_date' => $this->project_start_date,
+            'due_date' => $this->project_due_date,
+            'image' => $image,
+        ]);
+
+        $this->project_name = '';
+        $this->project_due_date = '';
+        $this->project = null;
+        $this->dispatch('success', 'Project updated successfully.');
+        $this->redirect(route('client.profile', $this->client_id),navigate:true);
+    }
+
+    public function deleteProject($id){
+        $this->client->projects()->find($id)->delete();
+        $this->dispatch('success', 'Project deleted successfully.');
+        $this->redirect(route('client.profile', $this->client_id),navigate:true);
     }
 
 }

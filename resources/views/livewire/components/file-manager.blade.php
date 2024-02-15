@@ -6,11 +6,14 @@
         </div>
         <div class="files-options ms-auto">
             <div class="btn-list align-items-center gap-10">
-                <a href="#" class="btn-border btn-border-success" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Download Here"><span><i class='bx bx-download' ></i></span></a>
+                <a wire:click="downloadSelected" class="btn btn-sm btn-border-success 
+                @if(empty($selected_files)) disabled @endif
+                " data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Download Here">
+                    <span><i class='bx bx-download' ></i></span>
+                </a>
                 <a data-bs-toggle="modal" data-bs-target="#add-new-file" class="btn-border btn-border-primary"><span><i class='bx bx-plus'></i></span></a>
                 <a data-bs-toggle="modal" data-bs-target="#add-new-link" class="btn-border btn-border-secondary"><span><i class='bx bx-link'></i></span></a>
-                <a wire:click="deleteSelected" class="btn btn-sm btn-border-danger @if(empty($selected_files) && empty($selected_directories) && empty($selected_links)) disabled @endif 
-                "><span><i class='bx bx-trash' ></i></span></a>
+                <a wire:click="deleteSelected" class="btn btn-sm btn-border-danger @if(empty($selected_files) && empty($selected_directories) && empty($selected_links)) disabled @endif "><span><i class='bx bx-trash' ></i></span></a>
             </div>
         </div>
     </div>
@@ -19,7 +22,7 @@
         <!-- <div class="spinner-border text-primary " role="status" >
             <span class="sr-only"></span>
         </div> -->
-        <div class="loader_cus loader_column w-100" wire:loading>
+        <div class="loader_cus loader_column w-100" wire:loading.delay>
             <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100">
                 <div class="progress-bar" style="width: 25%"></div>
             </div>
@@ -44,7 +47,7 @@
                 </nav>
             </div>
             <div class="col text-end">
-                <div class="d-flex align-items-center flex-wrap justify-content-end"><span class="text-primary d-flex"><i class='bx bx-folder me-1' ></i></span> 2 <span class="px-2">|</span> <span class="text-secondary d-flex"><i class='bx bx-file-blank me-1' ></i></span> 4 Selected</div>
+                <div class="d-flex align-items-center flex-wrap justify-content-end"><span class="text-primary d-flex"><i class='bx bx-folder me-1' ></i></span> {{ count($selected_directories) }} <span class="px-2">|</span> <span class="text-secondary d-flex"><i class='bx bx-file-blank me-1' ></i></span> {{ count($selected_files) }} Selected</div>
             </div>
         </div>
         <div class="files-list">
@@ -57,21 +60,7 @@
                 </div>
             @endforeach
 
-            @foreach($files as $file_name => $file_data)
-                <div class="files-item select_file @if(in_array($file_data['file_path'], $selected_files)) selected @endif" data-file="{{ $file_data['file_path'] }}">
-                    <div class="files-item-icon">
-                        @if($this->createThumbnailFromFileName($file_name))
-                            <span><img src="{{ $this->createThumbnailFromFileName($file_name) }}" alt=""></span>
-                        @else
-                            <span><i class='bx bx-file'></i></span>
-                        @endif
-                    </div>
-                    <div class="files-item-content">
-                        <div class="files-item-content-title">{{$file_name}}</div>
-                        <div class="files-item-content-des">2.08 Mb | 14 Jan 2024 <br/>3:28 PM</div>
-                    </div>
-                </div>
-            @endforeach
+            
 
             @foreach($links as $l)
                 <div class="files-item select_link
@@ -108,7 +97,7 @@
                 <div class="files-folder-title">Add Folder</div>
             </div>
         </div>
-        {{-- <div class="files-items-wrap">
+        <div class="files-items-wrap">
             <div class="files-items-head column-head mb-4">
                 <h5 class="title-sm mb-0">Recent Files</h5>
                 <!-- <form class="ms-auto" action="">
@@ -118,53 +107,29 @@
                     </div>
                 </form> -->
             </div>
+           
             <div class="files-items">
-                <div class="files-item">
-                    <div class="files-item-icon">
-                        <span><i class='bx bx-file-blank'></i></span>
+                @foreach($files as $file_name => $file_data)
+                    <div class="files-item select_file @if(in_array($file_data['file_path'], $selected_files)) selected @endif" data-file="{{ $file_data['file_path'] }}">
+                        <div class="files-item-icon">
+                            @if($this->createThumbnailFromFileName($file_name))
+                                <span><img src="{{ $this->createThumbnailFromFileName($file_name) }}" alt=""></span>
+                            @else
+                                <span><i class='bx bx-file'></i></span>
+                            @endif
+                        </div>
+                        <div class="files-item-content">
+                            <div class="files-item-content-title">{{$file_name}}</div>
+                            <div class="files-item-content-des">{{ $file_data['size'] }} KB | {{ $file_data['last_modified'] }}</div>
+                        </div>
                     </div>
-                    <div class="files-item-content">
-                        <div class="files-item-content-title">Tetrisly-guide-lines.png</div>
-                    </div>
-                </div>
-                <div class="files-item selected">
-                    <div class="files-item-icon">
-                        <span><img src="{{ env('APP_URL') }}/assets/images/google-sheets-icon.svg" alt=""></span>
-                    </div>
-                    <div class="files-item-content">
-                        <div class="files-item-content-title">Tetrisly-guide-lines.sheet</div>
-                    </div>
-                </div>
-                <div class="files-item">
-                    <div class="files-item-icon">
-                        <span><img src="{{ env('APP_URL') }}/assets/images/google-docs-icon.svg" alt=""></span>
-                    </div>
-                    <div class="files-item-content">
-                        <div class="files-item-content-title">Tetrisly-guide-lines.doc</div>
-                    </div>
-                </div>
-                <div class="files-item">
-                    <div class="files-item-icon">
-                        <span><img src="{{ env('APP_URL') }}/assets/images/google-docs-icon.svg" alt=""></span>
-                    </div>
-                    <div class="files-item-content">
-                        <div class="files-item-content-title">Tetrisly-guide-lines.doc</div>
-                    </div>
-                </div>
-                <div class="files-item">
-                    <div class="files-item-icon">
-                        <span><i class='bx bx-file-blank'></i></span>
-                    </div>
-                    <div class="files-item-content">
-                        <div class="files-item-content-title">Tetrisly-guide-lines.png</div>
-                    </div>
-                </div>
-                <div class="files-folder files-folder-add_new">
+                @endforeach
+                <div class="files-folder files-folder-add_new" data-bs-toggle="modal" data-bs-target="#add-new-file">
                     <span class="files-folder-icon"><i class='bx bx-plus' ></i></span>
                     <div class="files-folder-title">Add Files</div>
                 </div>
             </div>
-        </div> --}}
+        </div>
     </div>
 
     <!-- Add New File modal -->
@@ -316,6 +281,16 @@
     
 
     $(document).ready(function(){
+
+        setInterval(() => {
+            let progress = $(".progress-bar").width();
+            if(progress >= 100){
+                $(".progress").width(0);
+            }
+            $(".progress").width(progress + 100);
+
+        }, 100);
+
         $(document).on("click", ".select_file", function(event){
             let file_path = $(this).data("file");
             if(event.ctrlKey){
