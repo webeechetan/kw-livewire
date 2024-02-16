@@ -48,7 +48,7 @@ class Client extends Component
     public function mount($id)
     {
         $this->client_id = $id;
-        $this->client = ClientModel::with('projects')->find($id);
+        $this->client = ClientModel::withTrashed()->with('projects')->find($id);
         $this->active_projects = $this->client->projects()->where('status', 'active')->get();
         $this->completed_projects = $this->client->projects()->where('status', 'completed')->get();
         $this->overdue_projects = $this->client->projects()->where('status', 'overdue')->get();
@@ -56,6 +56,24 @@ class Client extends Component
         $this->teams = Team::all();
         $this->users = User::all();
 
+    }
+
+    public function changeClientStatus($status){
+        if($status == $this->client->status){
+            return;
+        }
+
+        if($status == 'archived'){
+            $this->client->delete();
+            $this->redirect(route('client.index'),navigate:true);
+            // $this->dispatch('success', 'Client archived successfully.');
+        }else{
+            $this->client->update([
+                'status' => $status
+            ]);
+            $this->dispatch('success', 'Client status updated successfully.');
+        }
+        $this->redirect(route('client.profile', $this->client_id),navigate:true);
     }
 
     public function addProject()

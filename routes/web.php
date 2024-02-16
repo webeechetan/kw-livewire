@@ -15,9 +15,11 @@ use App\Livewire\Projects\EditProject;
 use App\Livewire\Projects\Project;
 use App\Livewire\Users\AddUser;
 use App\Livewire\Users\ListUser;
+use App\Livewire\Users\User as UserProfile;
 use App\Livewire\Teams\AddTeam;
 use App\Livewire\Teams\ListTeam;
 use App\Livewire\Teams\EditTeam;
+use App\Livewire\Teams\Team as TeamProfile;
 use App\Livewire\Tasks\AddTask;
 use App\Livewire\Tasks\ListTask;
 use App\Livewire\Tasks\TaskListView;
@@ -58,7 +60,7 @@ Route::group(['middleware' => ['myauth']], function() {
 
     Route::get('/dashboard',Dashboard::class)->name('dashboard');
     
-    Route::get('/clients',ListClient::class)->name('client.index');
+    Route::get('/clients/{sort?}/{filter?}',ListClient::class)->name('client.index');
     Route::get('/clients/add',AddClient::class)->name('client.add');
     Route::get('/clients/edit/{id}',EditClient::class)->name('client.edit');
     Route::get('/client/view/{id}',ClientProfile::class)->name('client.profile');
@@ -71,9 +73,13 @@ Route::group(['middleware' => ['myauth']], function() {
     Route::get('/teams',ListTeam::class)->name('team.index');
     Route::get('/teams/add',AddTeam::class)->name('team.add');
     Route::get('/teams/edit/{id}',EditTeam::class)->name('team.edit');
+    Route::get('/team/view',TeamProfile::class)->name('team.profile');
+    
 
     Route::get('/users',ListUser::class)->name('user.index');
     Route::get('/users/add',AddUser::class)->name('user.add');
+    Route::get('/user/view',UserProfile::class)->name('user.profile');
+    
     
     
     Route::get('/tasks',ListTask::class)->name('task.index');

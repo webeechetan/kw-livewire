@@ -43,7 +43,7 @@
                     <div class="card_style-user-head">
                         <div class="card_style-user-profile-img"><span><img src="{{ env('APP_URL') }}/storage/{{ $user->image }}" alt="{{ $user->name }}"></span></div>
                         <div class="card_style-user-profile-content">
-                            <h4><a href="#">{{ $user->name }}</a></h4>
+                            <h4><a wire:navigate href="{{ route('user.profile') }}">{{ $user->name }}</a></h4>
                             <div class="d-flex align-items-center"><i class='bx bx-envelope me-1 text-secondary' ></i> {{ $user->email }}</div>
                             <div class="card_style-user-head-position mt-2"><i class='bx bx-user'></i> Web Developer | Tech Team</div>
                             <div class="mt-2">Assigned <span class="btn-batch btn-batch-warning">5 Teams</span></div>

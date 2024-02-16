@@ -47,7 +47,7 @@
                             <div class="card_style-team-profile-img"><span><img src="{{ env('APP_URL') }}/storage/{{ $team->image }}" alt="{{ $team->name }}"></span></div>
                         </div>
                         <div class="card_style-team-profile-content">
-                            <h4><a href="#">{{ $team->name }}</a></h4>
+                            <h4><a wire:navigate href="{{ route('team.profile') }}">{{ $team->name }}</a></h4>
                             <div class="avatarGroup avatarGroup-overlap justify-content-center">
                                 @foreach($team->users as $user)
                                 <a href="#" class="avatarGroup-avatar">

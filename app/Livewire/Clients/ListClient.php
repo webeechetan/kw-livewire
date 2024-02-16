@@ -6,6 +6,7 @@ use Livewire\Component;
 use App\Models\Client;
 use Livewire\WithPagination;
 use App\Helpers\Helper;
+use ProtoneMedia\LaravelCrossEloquentSearch\Search;
 
 
 class ListClient extends Component
@@ -18,9 +19,10 @@ class ListClient extends Component
 
     public $query = '';
 
-    //  filters
+    //  filters & sorts
 
-    public $filer = 'all';
+    public $sort = 'all';
+    public $filter = 'all';
 
 
     public $client_onboard_date;
@@ -32,10 +34,34 @@ class ListClient extends Component
 
     public function render()
     {
+        $clients = Client::where('name','like','%'.$this->query.'%');
+
+        if($this->sort == 'newest'){
+            $clients->orderBy('created_at','desc');
+        }elseif($this->sort == 'oldest'){
+            $clients->orderBy('created_at','asc');
+        }elseif($this->sort == 'a_z'){
+            $clients->orderBy('name','asc');
+        }elseif($this->sort == 'z_a'){
+            $clients->orderBy('name','desc');
+        }
+
+        if($this->filter == 'active'){
+            $clients->where('status','active');
+        }elseif($this->filter == 'completed'){
+            $clients->where('status','completed');
+        }elseif($this->filter == 'archived'){
+            $clients->onlyTrashed();
+        }
+
+
+        $clients = $clients->paginate(9);
+
         return view('livewire.clients.list-client',[
-            'clients' => Client::where('name','like','%'.$this->query.'%')->paginate(9),
+            'clients' => $clients,
         ]);
     }
+
 
     public function emitEditEvent($clientId)
     {
