@@ -4,7 +4,7 @@
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a wire:navigate href="{{ route('dashboard') }}"><i class='bx bx-line-chart'></i> Dashboard</a></li>
             <li class="breadcrumb-item"><a wire:navigate href="{{ route('client.index') }}">All Clients</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Acma</li>
+            <li class="breadcrumb-item active" aria-current="page">{{ $client->name }}</li>
         </ol>
     </nav>
     <div class="dashboard-head mb-4">
@@ -25,12 +25,17 @@
                     <!-- Edit -->
                     <div class="cus_dropdown">
                         <!-- For Active Class = btn-border-success | For Archived Class = btn-border-archived -->
-                        <div class="cus_dropdown-icon btn-border btn-border-success">Active <i class='bx bx-chevron-down' ></i></div>
+                        @if(!$client->trashed())
+                            <div class="cus_dropdown-icon btn-border btn-border-success">Active <i class='bx bx-chevron-down' ></i></div>
+                        @else
+                            <div class="cus_dropdown-icon btn-border btn-border-archived">Archived <i class='bx bx-chevron-down' ></i></div>
+                        @endif
+
                         <div class="cus_dropdown-body cus_dropdown-body-widh_s">
                             <div class="cus_dropdown-body-wrap">
                                 <ul class="cus_dropdown-list">
-                                    <li><a href="#" class="active"><span><i class='bx bx-user-check' ></i></span> Active</a></li>
-                                    <li><a href="#"><span><i class='bx bx-user-minus' ></i></span> Archived</a></li>
+                                    <li><a wire:click="changeClientStatus('active')" @if(!$client->trashed()) class="active" @endif><span><i class='bx bx-user-check' ></i></span> Active</a></li>
+                                    <li><a wire:click="changeClientStatus('archived')" @if($client->trashed()) class="active" @endif ><span><i class='bx bx-user-minus' ></i></span> Archived</a></li>
                                 </ul>
                             </div>
                         </div>
