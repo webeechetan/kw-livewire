@@ -79,7 +79,7 @@
                         </div>
                     </div>
                     <div class="card_style-project-head">
-                        <div class="card_style-project-head-client"><span><i class='bx bx-user'></i></span> {{ $project->client->name }}</div>
+                {{-- <div class="card_style-project-head-client"><span><i class='bx bx-user'></i></span> {{ $project->client->name }}</div> --}}
                         <h4><a href="{{ route('project.profile') }}" wire:navigate>{{ $project->name }}</a></h4>
                         <!-- Avatar Group -->
                         <div class="avatarGroup avatarGroup-lg avatarGroup-overlap mt-2">

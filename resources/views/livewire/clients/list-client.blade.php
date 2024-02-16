@@ -1,11 +1,18 @@
 <div class="container">
     <!-- Dashboard Header -->
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a wire:navigate href="{{ route('dashboard') }}"><i class='bx bx-line-chart'></i> Dashboard</a></li>
-            <li class="breadcrumb-item active" aria-current="page">All Clients</li>
-        </ol>
-    </nav>
+    <div class="d-flex flex-wrap justify-content-between align-items-start">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a wire:navigate href="{{ route('dashboard') }}"><i class='bx bx-line-chart'></i> Dashboard</a></li>
+                <li class="breadcrumb-item active" aria-current="page">All Clients</li>
+            </ol>
+        </nav>
+        <div class="d-flex flex-wrap gap-2 align-items-center justify-content-end">
+            <span class="pe-2 text-sm">Filter Results:</span>
+            <a href="#" class="btn-batch">Newest <span class="ms-1"><i class='bx bx-x'></i></span></a>
+            <a href="#" class="btn-batch">Newest <span class="ms-1"><i class='bx bx-x'></i></span></a>
+        </div>
+    </div>
     <div class="dashboard-head">
         <div class="row align-items-center">
             <div class="col d-flex align-items-center gap-3">
@@ -44,8 +51,8 @@
                                             <li class="filterSort_item"><a wire:navigate href="{{ route('client.index',['sort'=>$sort,'filter'=>'completed']) }}" class="btn-batch  @if($filter == 'completed') active @endif">Completed</a></li>
                                             <li class="filterSort_item"><a wire:navigate href="{{ route('client.index',['sort'=>$sort,'filter'=>'archived']) }}" class="btn-batch  @if($filter == 'archived') active @endif">Archived</a></li>
                                         </ul>
-                                        <hr>
-                                        {{-- <h5 class="filterSort-header"><i class='bx bx-objects-horizontal-left text-primary'></i> Filter By Projects</h5>
+                                        {{--<hr>
+                                        <h5 class="filterSort-header"><i class='bx bx-objects-horizontal-left text-primary'></i> Filter By Projects</h5>
                                         <ul class="filterSort_btn_group list-none">
                                             <li class="filterSort_item"><a href="#" class="btn-batch">Active</a></li>
                                             <li class="filterSort_item"><a href="#" class="btn-batch">Completed</a></li>
@@ -68,10 +75,10 @@
             $completedProjects = $client->projects->where('status', 'completed');
         @endphp
         <div class="col-md-4"  wire:key="{{ $client->id }}">
-            <div wire:loading wire:target="emitDeleteEvent({{ $client->id }})" class="alert alert-warning">  
-                Removing post...
-            </div>
             <div class="card_style card_style-client">
+                <div wire:loading wire:target="emitDeleteEvent({{ $client->id }})" class="card_style-loader">
+                    <div class="card_style-loader-wrap"><i class='bx bx-trash text-danger me-2' ></i> Removing ...</div>
+                </div>
                 <!-- Edit -->
                 <div class="cus_dropdown cus_dropdown-edit">
                     <div class="cus_dropdown-icon"><i class='bx bx-dots-horizontal-rounded' ></i></div>
