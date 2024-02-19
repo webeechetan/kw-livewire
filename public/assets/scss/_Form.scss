@@ -143,16 +143,22 @@
     }
 
     &-style {
-        padding: 0;
+        padding: 10px 15px;
+        background-color: $light;
+        color: $text_color;
         margin: 0;
         border: none;
-        color: $text_color;
         width: 100%;
+        border-radius: $border-radius_xs;
 
         &:focus, &:active {
             outline: none;
             box-shadow: none;
             border: none;
+        }
+
+        &::placeholder {
+            color: $text-light;
         }
     }
 }

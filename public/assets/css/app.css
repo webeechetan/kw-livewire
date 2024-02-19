@@ -266,6 +266,11 @@ ul.list-none {
   font-weight: 500;
   margin-bottom: 15px;
 }
+.title-with_icon {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
 
 /*---- Section Space ----*/
 .space-sec {
@@ -437,7 +442,6 @@ hr.space-sm {
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
-  margin-bottom: 25px;
 }
 .card_style:after {
   content: "";
@@ -501,38 +505,7 @@ hr.space-sm {
   gap: 5px;
 }
 .card_style-project-head h4 {
-  font-size: 26px;
-  margin-bottom: 0;
-}
-.card_style-project-head-client {
-  position: relative;
-  padding-right: 60px;
-  display: inline-block;
-  margin-bottom: 10px;
-}
-.card_style-project-head-client:before {
-  content: "";
-  width: 50px;
-  height: 2px;
-  background-color: #fdf4c1;
-  position: absolute;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  margin: auto;
-}
-.card_style-project-head-client span {
-  width: 20px;
-  height: 20px;
-  display: inline-flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  font-size: 12px;
-  background-color: #fdf4c1;
-  border: 1px solid #f7d306;
-  border-radius: 50%;
-  margin-right: 5px;
+  font-size: 22px;
 }
 .card_style-project-options {
   display: flex;
@@ -605,20 +578,8 @@ hr.space-sm {
 .card_style-user-title span {
   color: #7407ff;
 }
-.card_style-team-profile-img span {
-  width: 50px;
-  display: inline-flex;
-}
-.card_style-team-profile-img span img {
-  width: 100%;
-}
-.card_style-team-head-active {
-  position: absolute;
-  left: 20px;
-  top: 15px;
-}
-.card_style-team-head h4 {
-  font-size: 24px;
+.card_style-team-profile-content h4 {
+  font-size: 22px;
 }
 .card_style-loader-wrap {
   width: 100%;
@@ -634,6 +595,20 @@ hr.space-sm {
   justify-content: center;
   font-size: 20px;
   letter-spacing: 2px;
+}
+.card_style-list_head {
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  grid-gap: 10px;
+}
+.card_style-list_head img {
+  max-width: 100%;
+}
+.card_style-star_active {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  font-size: 16px;
 }
 
 /* ----- Task Progress ----- */
@@ -824,6 +799,29 @@ hr.space-sm {
   background-color: #f83890;
 }
 
+/* ----- Divider ----- */
+.divider-or {
+  position: relative;
+  width: calc(100% - 30px);
+  text-align: center;
+  margin: auto;
+}
+.divider-or span {
+  background-color: #ddd;
+  width: calc(50% - 50px);
+  height: 1px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+}
+.divider-or span:nth-child(1) {
+  left: 0;
+}
+.divider-or span:nth-child(2) {
+  right: 0;
+}
+
 /*---- Buttons Style Start Here ----*/
 .btn {
   padding: 0.5rem 1.4rem;
@@ -868,17 +866,18 @@ hr.space-sm {
   border: 1px solid #f7d306;
 }
 .btn-icon {
-  width: 32px;
-  height: 32px;
+  width: 30px;
+  height: 30px;
   display: inline-flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
   border: 1px solid #ddd;
   padding: 0;
-  font-size: 18px;
+  font-size: 14px;
   background-color: #eee;
   border-radius: 4px;
+  transition: all 0.3s ease;
 }
 .btn-icon:hover, .btn-icon:focus {
   background-color: #ffe6f1;
@@ -887,6 +886,22 @@ hr.space-sm {
 .btn-icon-primary {
   border-color: #f83890;
   background-color: #ffe6f1;
+}
+.btn-icon-edit {
+  border-color: #e7bf1d;
+  background-color: #fff7d8;
+}
+.btn-icon-edit:hover, .btn-icon-edit:focus {
+  background-color: #e7bf1d;
+  color: #fff;
+}
+.btn-icon-danger {
+  border-color: #ff0000;
+  background-color: #fedddc;
+}
+.btn-icon-danger:hover, .btn-icon-danger:focus {
+  background-color: #ff0000;
+  color: #fff;
 }
 .btn-icon-rounded {
   border-radius: 50%;
@@ -1085,12 +1100,12 @@ hr.space-sm {
   display: grid;
   grid-template-columns: 1fr 1fr;
 }
-.btn-list .btn-batch {
+.btn-list .btn-batch-profile {
   padding: 2px 10px 2px 3px;
   display: inline-flex;
   align-items: center;
 }
-.btn-list .btn-batch img {
+.btn-list .btn-batch-profile img {
   width: 20px;
   margin-right: 5px;
 }
@@ -1630,16 +1645,21 @@ hr.space-sm {
   margin-top: 5px;
 }
 .form-style {
-  padding: 0;
+  padding: 10px 15px;
+  background-color: #f3f6f9;
+  color: #191919;
   margin: 0;
   border: none;
-  color: #191919;
   width: 100%;
+  border-radius: 4px;
 }
 .form-style:focus, .form-style:active {
   outline: none;
   box-shadow: none;
   border: none;
+}
+.form-style::placeholder {
+  color: #9c9c9c;
 }
 
 .was-validated .form-control:valid:focus {
@@ -3104,10 +3124,12 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
 
 /* ----- Task List View ----- */
 .taskList {
+  max-height: 400px;
+  margin-top: 5px;
   /* ----- Task List Header ----- */
 }
 .taskList_col {
-  padding: 6px 15px;
+  padding: 8px 15px;
   font-size: 14px;
 }
 .taskList_col_title {

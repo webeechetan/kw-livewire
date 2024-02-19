@@ -38,14 +38,15 @@
 
     /* ----- Icon ----- */
     &-icon {
-        width: 32px;
-        height: 32px;
+        width: 30px;
+        height: 30px;
         @include inline_flex_center;
         border: 1px solid $grey_xd;
         padding: 0;
-        font-size: 18px;
+        font-size: 14px;
         background-color: $grey;
         border-radius: $border_radius_xs;
+        transition: $ease_03;
 
         &:hover, &:focus {
             background-color: $brand_light;
@@ -55,6 +56,26 @@
         &-primary {
             border-color: $brand;
             background-color: $brand_light;
+        }
+
+        &-edit {
+            border-color: $warning;
+            background-color: $warning_light;
+            
+            &:hover,  &:focus {
+                background-color: $warning;
+                color: #fff;
+            }
+        }
+
+        &-danger {
+            border-color: $danger;
+            background-color: $danger_light;
+            
+            &:hover,  &:focus {
+                background-color: $danger;
+                color: #fff;
+            }
         }
 
         &-rounded {
@@ -287,11 +308,13 @@
         }
 
         .btn-batch {
-            padding: 2px 10px 2px 3px;
-            @include inline_flex_align_center;
-            img {
-                width: 20px;
-                margin-right: 5px;
+            &-profile {
+                padding: 2px 10px 2px 3px;
+                @include inline_flex_align_center;
+                img {
+                    width: 20px;
+                    margin-right: 5px;
+                }
             }
         }
     }

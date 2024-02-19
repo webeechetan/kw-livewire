@@ -159,6 +159,10 @@ ul {
         font-weight: 500;
         margin-bottom: 15px;
     }
+    &-with_icon {
+        @include flex_align_center;
+        gap: 7px;
+    }
 }
 
 /*---- Section Space ----*/
@@ -340,7 +344,6 @@ hr.space-sm {
     transition: $ease_03;
     position: relative;
     overflow: hidden;
-    margin-bottom: 25px;
 
     &:after {
         content: "";
@@ -423,35 +426,7 @@ hr.space-sm {
     &-project {
         &-head {
             h4 {
-                font-size: 26px;
-                margin-bottom: 0;
-            }
-            &-client {
-                position: relative;
-                padding-right: 60px;
-                display: inline-block;
-                margin-bottom: 10px;
-                &:before {
-                    content: "";
-                    width: 50px;
-                    height: 2px;
-                    background-color: $yellow_light;
-                    position: absolute;
-                    right: 0;
-                    top: 0;
-                    bottom: 0;
-                    margin: auto;
-                }
-                span {
-                    width: 20px;
-                    height: 20px;
-                    @include inline_flex_center;
-                    font-size: 12px;
-                    background-color: $yellow_light;
-                    border: 1px solid $yellow;
-                    border-radius: $border-radius;
-                    margin-right: 5px;
-                }
+                font-size: 22px;
             }
         }
         &-options {
@@ -554,24 +529,9 @@ hr.space-sm {
     }
 
     &-team {
-        &-profile-img {
-            span {
-                width: 50px;
-                display: inline-flex;
-                img {
-                    width: 100%;
-                }
-            }
-        }
-        &-head {
-            &-active {
-                position: absolute;
-                left: 20px;
-                top: 15px;
-            }
-
+        &-profile-content {
             h4 {
-                font-size: 24px;
+                font-size: 22px;
             }
         }
     }
@@ -589,6 +549,23 @@ hr.space-sm {
             font-size: 20px;
             letter-spacing: 2px;
         }
+    }
+
+    &-list_head {
+        display: grid;
+        grid-template-columns: 40px 1fr;
+        grid-gap: 10px;
+
+        img {
+            max-width: 100%;
+        }
+    }
+
+    &-star_active {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        font-size: 16px;
     }
 }
 
@@ -811,6 +788,30 @@ hr.space-sm {
             &-bar {
                 background-color: $brand;
             }
+        }
+    }
+}
+
+/* ----- Divider ----- */
+.divider-or {
+    position: relative;
+    width: calc(100% - 30px);
+    text-align: center;
+    margin: auto;
+    span {
+        background-color: $grey_xd;
+        width: calc(50% - 50px);
+        height: 1px;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+
+        &:nth-child(1) {
+            left: 0;
+        }
+        &:nth-child(2) {
+            right: 0;
         }
     }
 }

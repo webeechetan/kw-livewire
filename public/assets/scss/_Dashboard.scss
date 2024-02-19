@@ -711,8 +711,10 @@
 
 /* ----- Task List View ----- */
 .taskList {
+    max-height: 400px;
+    margin-top: 5px;
     &_col {
-        padding: 6px $spacing_s;
+        padding: 8px $spacing_s;
         font-size: 14px;
         &_title {
             display: grid;

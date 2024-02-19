@@ -74,8 +74,8 @@
             $activeProjects = $client->projects->where('status', 'active');
             $completedProjects = $client->projects->where('status', 'completed');
         @endphp
-        <div class="col-md-4"  wire:key="{{ $client->id }}">
-            <div class="card_style card_style-client">
+        <div class="col-md-4 mb-4"  wire:key="{{ $client->id }}">
+            <div class="card_style card_style-client h-100">
                 <div wire:loading wire:target="emitDeleteEvent({{ $client->id }})" class="card_style-loader">
                     <div class="card_style-loader-wrap"><i class='bx bx-trash text-danger me-2' ></i> Removing ...</div>
                 </div>

@@ -28,7 +28,7 @@
         
         @foreach($teams as $team)
             <div class="col-md-4 mt-2">
-                <div class="card_style card_style-team text-center">
+                <div class="card_style card_style-team">
                     <!-- Edit -->
                     <div class="cus_dropdown cus_dropdown-edit">
                         <div class="cus_dropdown-icon"><i class='bx bx-dots-horizontal-rounded' ></i></div>
@@ -41,14 +41,12 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card_style-team-head">
-                        <div class="card_style-team-head-active"><span class="text-primary"><i class='bx bxs-star' ></i></span></div>
-                        <div>
-                            <div class="card_style-team-profile-img"><span><img src="{{ env('APP_URL') }}/storage/{{ $team->image }}" alt="{{ $team->name }}"></span></div>
-                        </div>
+                    <div class="card_style-star_active"><span class="text-success"><i class='bx bxs-star' ></i></span></div>
+                    <div class="card_style-list_head">
+                        <div class="card_style-team-profile-img"><span><img src="{{ env('APP_URL') }}/storage/{{ $team->image }}" alt="{{ $team->name }}"></span></div>
                         <div class="card_style-team-profile-content">
                             <h4><a wire:navigate href="{{ route('team.profile') }}">{{ $team->name }}</a></h4>
-                            <div class="avatarGroup avatarGroup-overlap justify-content-center">
+                            <div class="avatarGroup avatarGroup-overlap">
                                 @foreach($team->users as $user)
                                 <a href="#" class="avatarGroup-avatar">
                                     <span class="avatar avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ $user->name }}">
@@ -59,6 +57,8 @@
                             </div>
                         </div>
                     </div>
+                    <hr>
+                    
                 </div>
             </div>
         @endforeach
