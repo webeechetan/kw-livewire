@@ -40,7 +40,7 @@
                                         </div>
                                         <div class="form-file_upload-valText">Allowed *.jpeg, *.jpg, *.png, *.gif max size of 3 Mb</div>
                                     </div>
-                                    <div class="old-image d-none">
+                                    <div class="old-image d-none mt-3">
                                         <img src="" alt="" class="img-fluid old-image-src">
                                     </div>
                                 </div>
@@ -91,7 +91,11 @@
 
             document.addEventListener('edit-client', event => {
                 $('#add-client-modal').modal('show');
-                $('.client-onboard-date').html(event.detail[0].onboard_date);
+                if(event.detail[0].onboard_date){
+                    $('.client-onboard-date').html(event.detail[0].onboard_date);
+                }else{
+                    $('.client-onboard-date').html('Select Date');
+                }
                 $('.client-onboard-date').flatpickr({
                     enableTime: true,
                     dateFormat: "Y-m-d",

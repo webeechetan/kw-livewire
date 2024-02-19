@@ -15,7 +15,7 @@ class AddClient extends Component
 
     public $client;
 
-    protected $listeners = ['editClient', 'deleteClient'];
+    protected $listeners = ['editClient', 'deleteClient','restoreClient','forceDeleteClient'];
 
     public function render()
     {
@@ -118,5 +118,21 @@ class AddClient extends Component
         $this->client_description = '';
         $this->client_onboard_date = '';
         $this->client_image = '';
+    }
+
+    public function restoreClient($id)
+    {
+        $client = Client::withTrashed()->find($id);
+        $client->restore();
+        $this->dispatch('success', 'Client restored successfully');
+        $this->dispatch('saved');
+    }
+
+    public function forceDeleteClient($id)
+    {
+        $client = Client::withTrashed()->find($id);
+        $client->forceDelete();
+        $this->dispatch('success', 'Client deleted successfully');
+        $this->dispatch('saved');
     }
 }

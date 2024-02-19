@@ -56,7 +56,7 @@
                     <span class="files-folder-icon"><i class='bx bx-folder'></i></span>
                     <div class="files-folder-title">{{ $directory_name }}</div>
                     <div class="text-light"><span class="text-primary"><i class='bx bx-folder' ></i></span> {{ $directory_data['directories_count'] }} <span class="px-2">|</span> <span class="text-secondary"><i class='bx bx-file-blank' ></i></span> {{ $directory_data['files_count'] }}</div>
-                    <div class="files-folder-des mt-1">2.08 GB</div>
+                    {{-- <div class="files-folder-des mt-1">2.08 GB</div> --}}
                 </div>
             @endforeach
 

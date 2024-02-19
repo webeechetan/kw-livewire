@@ -29,9 +29,23 @@ class ListProject extends Component
         $this->resetPage();
     }
 
-    public function delete($id){
-        $project = Project::find($id);
-        $project->delete();
-        session()->flash('success','Project deleted successfully');
+    public function emitEditEvent($projectId)
+    {
+        $this->dispatch('editProject', $projectId);
+    }
+
+    public function emitDeleteEvent($projectId)
+    {
+        $this->dispatch('deleteProject', $projectId);
+    }
+
+    public function emitRestoreEvent($projectId)
+    {
+        $this->dispatch('restoreProject', $projectId);
+    }
+
+    public function emitForceDeleteEvent($projectId)
+    {
+        $this->dispatch('forceDeleteProject', $projectId);
     }
 }

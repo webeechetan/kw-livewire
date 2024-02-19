@@ -40,8 +40,8 @@
                             </div>
                         </div>
                     </div>
-                    <a href="#" class="btn-sm btn-border btn-border-secondary"><i class='bx bx-pencil'></i> Edit</a>
-                    <a href="#" class="btn-sm btn-border btn-border-danger"><i class='bx bx-trash'></i> Delete</a>
+                    <button @if($client->trashed()) disabled @endif wire:click="emitEditClient({{$client->id}})" class="btn-sm btn-border btn-border-secondary "><i class='bx bx-pencil'></i> Edit</button>
+                    <a href="#" class="btn-sm btn-border btn-border-danger" wire:click="forceDeleteClient({{$client->id}})"><i class='bx bx-trash'></i> Delete</a>
                 </div>
             </div>
         </div>
@@ -394,6 +394,8 @@
             </div>
         </div>
     </div>
+
+    <livewire:components.add-client @saved="$refresh" />
 
     
     

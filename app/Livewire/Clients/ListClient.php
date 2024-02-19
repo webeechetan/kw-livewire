@@ -73,6 +73,16 @@ class ListClient extends Component
         $this->dispatch('deleteClient', $clientId);
     }
 
+    public function emitRestoreEvent($clientId)
+    {
+        $this->dispatch('restoreClient', $clientId);
+    }
+
+    public function emitForceDeleteEvent($clientId)
+    {
+        $this->dispatch('forceDeleteClient', $clientId);
+    }
+
     public function search()
     {
         $this->resetPage();
