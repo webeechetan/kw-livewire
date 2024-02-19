@@ -59,18 +59,13 @@ class Client extends Component
     }
 
     public function changeClientStatus($status){
-        if($status == $this->client->status){
-            return;
-        }
 
         if($status == 'archived'){
             $this->client->delete();
             $this->redirect(route('client.index'),navigate:true);
             // $this->dispatch('success', 'Client archived successfully.');
         }else{
-            $this->client->update([
-                'status' => $status
-            ]);
+            $this->client->restore();
             $this->dispatch('success', 'Client status updated successfully.');
         }
         $this->redirect(route('client.profile', $this->client_id),navigate:true);
@@ -118,6 +113,36 @@ class Client extends Component
         $this->project_name = '';
         $this->project_due_date = '';
 
+        $this->redirect(route('client.profile', $this->client_id),navigate:true);
+    }
+
+    public function updateProject(){
+        $this->validate([
+            'project_name' => 'required',
+        ]);
+
+        $image  = '';
+
+        if (request()->hasFile('image')) {
+            $image = $this->image->store('public/images/projects');
+            // remove public from the path as we need to store only the path in the db
+            $image = str_replace('public/', '', $image);
+        }else{
+            $image = $this->project->image;
+        }
+
+        $this->project->update([
+            'description' => $this->project_description,
+            'name' => $this->project_name,
+            'start_date' => $this->project_start_date,
+            'due_date' => $this->project_due_date,
+            'image' => $image,
+        ]);
+
+        $this->project_name = '';
+        $this->project_due_date = '';
+        $this->project = null;
+        $this->dispatch('success', 'Project updated successfully.');
         $this->redirect(route('client.profile', $this->client_id),navigate:true);
     }
 
@@ -218,40 +243,23 @@ class Client extends Component
         $this->dispatch('editProject', $this->project);
     }
 
-    public function updateProject(){
-        $this->validate([
-            'project_name' => 'required',
-        ]);
-
-        $image  = '';
-
-        if (request()->hasFile('image')) {
-            $image = $this->image->store('public/images/projects');
-            // remove public from the path as we need to store only the path in the db
-            $image = str_replace('public/', '', $image);
-        }else{
-            $image = $this->project->image;
-        }
-
-        $this->project->update([
-            'description' => $this->project_description,
-            'name' => $this->project_name,
-            'start_date' => $this->project_start_date,
-            'due_date' => $this->project_due_date,
-            'image' => $image,
-        ]);
-
-        $this->project_name = '';
-        $this->project_due_date = '';
-        $this->project = null;
-        $this->dispatch('success', 'Project updated successfully.');
-        $this->redirect(route('client.profile', $this->client_id),navigate:true);
-    }
-
     public function deleteProject($id){
         $this->client->projects()->find($id)->delete();
         $this->dispatch('success', 'Project deleted successfully.');
         $this->redirect(route('client.profile', $this->client_id),navigate:true);
+    }
+
+    public function emitEditClient($id)
+    {
+        $this->dispatch('editClient', $id);
+    }
+
+    public function forceDeleteClient($id)
+    {
+        $client = ClientModel::withTrashed()->find($id);
+        $client->forceDelete();
+        $this->dispatch('success', 'Client deleted successfully.');
+        $this->redirect(route('client.index'),navigate:true);
     }
 
 }

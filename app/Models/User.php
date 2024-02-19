@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\Team;
+use App\Models\Project;
 use App\Models\Scopes\OrganizationScope;
 
 class User extends Authenticatable
@@ -68,5 +69,9 @@ class User extends Authenticatable
 
     public function clients(){
         return $this->belongsToMany(Client::class);
+    }
+
+    public function projects(){
+        return $this->belongsToMany(Project::class);
     }
 }

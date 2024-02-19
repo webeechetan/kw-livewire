@@ -7,11 +7,11 @@
                 <li class="breadcrumb-item active" aria-current="page">All Clients</li>
             </ol>
         </nav>
-        <div class="d-flex flex-wrap gap-2 align-items-center justify-content-end">
+        {{-- <div class="d-flex flex-wrap gap-2 align-items-center justify-content-end">
             <span class="pe-2 text-sm">Filter Results:</span>
             <a href="#" class="btn-batch">Newest <span class="ms-1"><i class='bx bx-x'></i></span></a>
             <a href="#" class="btn-batch">Newest <span class="ms-1"><i class='bx bx-x'></i></span></a>
-        </div>
+        </div> --}}
     </div>
     <div class="dashboard-head">
         <div class="row align-items-center">
@@ -85,8 +85,13 @@
                     <div class="cus_dropdown-body cus_dropdown-body-widh_s">
                         <div class="cus_dropdown-body-wrap">
                             <ul class="cus_dropdown-list">
-                                <li class="edit_client" wire:click="emitEditEvent({{ $client->id }})"><a href="javascript:"><span class="text-secondary "><i class='bx bx-pencil' ></i></span> Edit</a></li>
-                                <li><a href="javascript:" wire:click="emitDeleteEvent({{ $client->id }})"><span class="text-danger"><i class='bx bx-trash' ></i></span> Delete</a></li>
+                                @if($client->trashed())
+                                    <li><a href="javascript:" wire:click="emitRestoreEvent({{ $client->id }})"><span class="text-danger"><i class='bx bx-recycle'></i></span> Restore</a></li>
+                                    <li><a href="javascript:" wire:click="emitForceDeleteEvent({{ $client->id }})"><span class="text-danger"><i class='bx bx-trash'></i></span> Permanent Delete</a></li>
+                                @else
+                                    <li class="edit_client" wire:click="emitEditEvent({{ $client->id }})"><a href="javascript:"><span class="text-secondary "><i class='bx bx-pencil' ></i></span> Edit</a></li>
+                                    <li><a href="javascript:" wire:click="emitDeleteEvent({{ $client->id }})"><span class="text-danger"><i class='bx bx-trash' ></i></span> Delete</a></li>
+                                @endif
                             </ul>
                         </div>
                     </div>
