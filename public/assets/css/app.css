@@ -3402,16 +3402,10 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
 }
 
 /* ----- Comment Area ----- */
-.custComment {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  background-color: #f3f6f9;
-}
 .custComment-wrap {
   position: relative;
-  margin: 20px 30px;
+  margin: 15px 25px;
+  background-color: #f3f6f9;
 }
 .custComment-btn {
   position: absolute;

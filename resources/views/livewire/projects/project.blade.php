@@ -50,7 +50,7 @@
                 </div>
                 <div class="row align-items-center mb-2">
                     <div class="col"><span><i class='bx bx-calendar-alt text-primary'></i></span> Start Date</div>
-                    <div class="col">26 April 2024 <a href="#" class="ms-2"><i class='bx bx-pencil text-primary'></i></a></div>
+                    <div class="col">26 April 2024 <a href="#" class="ms-2"><i class='bx bx-pencil text-primary'></i></a></div>                    
                 </div>
                 <div class="row align-items-center mb-2">
                     <div class="col"><span><i class='bx bx-calendar text-primary'></i></span> Due Date</div>
@@ -74,6 +74,19 @@
                 <div class="row align-items-center mb-3">
                     <div class="col"><span><i class='bx bx-user text-primary' ></i></span> Assigness</div>
                     <div class="col">
+                        <div class="assign-new-user-col d-none">
+                            <select class="users" name="" id="" multiple>
+                                <option value="">Select User</option>
+                                @foreach($users as $user)
+                                    <option 
+                                        @if($project->users->contains($user->id))
+                                            @selected(true)
+                                        @endif
+                                    value="{{ $user->id }}">{{ $user->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <a href="javascript:" class="btn_link btn_link-border btn_link-sm assign-new-user">Add</a>
                         <!-- Avatar Group -->
                         <div class="avatarGroup avatarGroup-lg avatarGroup-overlap">
                             @php
@@ -92,7 +105,7 @@
                             @if($usersCount > 3)
                                 <a href="#" class="avatarGroup-avatar">
                                     <span class="avatar avatar-sm">
-                                        <div class="avatar avatar-sm avatar-more">+{{ $usersCount - 3 }}</div>
+                                        <div class="avatar avatar-sm avatar-more">+{{ $usersCount - 3 }} </div>
                                     </span>
                                 </a>
                             @endif
@@ -118,21 +131,35 @@
                 <div class="task_progress">
                     <div class="task_progress-head">
                         <div class="task_progress-head-title">Progress</div>
-                        <div class="task_progress-head-days"><span><i class='bx bx-calendar-minus'></i></span> 45 Days Left</div>
+                        <div class="task_progress-head-days"><span><i class='bx bx-calendar-minus'></i></span> 
+                            {{ \Carbon\Carbon::parse($project->due_date)->diffInDays($project->start_date) }} Days Left</div>
                     </div>
+                    @php
+                    $progress = 0;
+                    if($project->tasks->count() > 0){
+                        $progress = ($project->tasks->where('status', 'completed')->count() / $project->tasks->count()) * 100;
+                    }
+
+                    @endphp
                     <div class="task_progress-btm">
                         <div class="progress" role="progressbar" aria-label="Project Progress" aria-valuemin="0" aria-valuemax="100">
-                            <div class="progress-bar progress-success" style="width: 60%"><span class="progress-bar-text">60%</span></div>
+                            <div class="progress-bar progress-success" style="width: {{$progress}}%"><span class="progress-bar-text">{{$progress}}%</span></div>
                         </div>
                         <div class="task_progress-btm-date d-flex justify-content-between">
-                            <div><i class='bx bx-calendar text-primary' ></i> 26 Jan 2024</div>
-                            <div class="text-success"><i class='bx bx-calendar-check ' ></i> 30 March 2024</div>
+                            <div><i class='bx bx-calendar text-primary' ></i> {{ \Carbon\Carbon::parse($project->start_date)->format('d M-Y') }}</div>
+                            <div class="text-success"><i class='bx bx-calendar-check ' ></i> {{ \Carbon\Carbon::parse($project->due_date)->format('d M-Y') }}</div>
                         </div>
                     </div>
                 </div>
                 <hr>
-                <div class="title-label d-flex align-items-center">Description <a href="#" class="ms-2 d-inline-flex"><i class='bx bx-pencil text-primary'></i></a></div>
-                <div class="text-sm">The female circus horse-rider is a recurring subject in Chagall’s work. In 1926 the art dealer Ambroise Vollard invited Chagall to make a project based on the circus. They visited Paris’s historic Cirque d’Hiver Bouglione together; Vollard lent Chagall his private box seats. Chagall completed 19 gou... <a href="#" class="btn_link btn_link-primary">see more</a></div>
+                <div wire:ignore>
+
+                    <div class="title-label d-flex align-items-center">Description <a href="#" class="ms-2 d-inline-flex edit-description"><i class='bx bx-pencil text-primary'></i></a></div>
+                    <div class="text-sm project-description">
+                        {!! $project->description !!}
+                    </div>
+                </div>
+                {{-- <a href="#" class="btn_link btn_link-primary">see more</a> --}}
             </div>
         </div>
         <div class="col-md-8">
@@ -860,6 +887,14 @@
             </div>
         </div>
         <div class="offcanvas-footer">
+            <div class="custComment">
+                <div class="custComment-wrap">
+                    <div class="custComment-editor" wire:ignore>
+                        <textarea name="" id="comment_box" cols="30" rows="5"></textarea>
+                    </div>
+                    <button wire:click="saveComment" class="custComment-btn"><i class='bx bx-send'></i> Comment</button>
+                </div>
+            </div>
             <div class="taskPane-footer-wrap">
                 <button type="button" class="btn-border btn-sm btn-border-danger"><i class='bx bx-trash' ></i> Delete Task</button>
                 <button type="button" class="btn-border btn-sm btn-border-primary ms-auto"><i class='bx bx-check'></i> Save Task</button>
@@ -914,17 +949,75 @@
         </div>
     </div>
 </div>
-@script
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+@push('scripts')
+    
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
-    <script>
-        flatpickr(".change-due-date", {
-            dateFormat: "Y-m-d",
-            defaultDate: "{{ $project->due_date }}",
-            onChange: function(selectedDates, dateStr, instance) {
-                $(".project-due-date").html(dateStr);
-                @this.changeDueDate(dateStr);
-            }
+<script>
+    flatpickr(".change-due-date", {
+        dateFormat: "Y-m-d",
+        defaultDate: "{{ $project->due_date }}",
+        onChange: function(selectedDates, dateStr, instance) {
+            $(".project-due-date").html(dateStr);
+            @this.changeDueDate(dateStr);
+        }
+    });
+
+    $(".edit-description").click(function(){
+        $(".project-description").summernote({
+            height: 200,
+            toolbar: [
+                ['font', ['bold', 'underline']],
+                ['para', ['ul', 'ol']],
+                ['insert', ['link']],
+                ['fm-button', ['fm']],
+            ],
+            callbacks: {
+                onChange: function(contents, $editable) {
+                    @this.updateDescription(contents);
+                }
+            },
         });
-    </script>
-@endscript
+    });
+
+    $(".users").select2({
+        placeholder: "Select User",
+        allowClear: true
+    });
+    
+    $(".assign-new-user").click(function(){
+        $(".assign-new-user-col").toggleClass("d-none");
+        $(".users").select2({
+            placeholder: "Select User",
+            allowClear: true
+        });
+    });
+
+    $(".users").change(function(){
+        var users = $(this).val();
+        console.log(users);
+        @this.syncUsers(users);
+    });
+
+    // user-synced
+    document.addEventListener('user-synced', event => {
+        $(".users").select2({
+            placeholder: "Select User",
+            allowClear: true
+        });
+    });
+
+    $(document).ready(function(){
+        $("#comment_box").summernote({
+            height: 100,
+            toolbar: [
+                ['font', ['bold', 'underline']],
+                ['para', ['ul', 'ol']],
+                ['insert', ['link']],
+                ['fm-button', ['fm']],
+            ]
+        });
+    });
+    
+</script>
+@endpush

@@ -831,14 +831,10 @@
 
 /* ----- Comment Area ----- */
 .custComment {
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    background-color: $light;
     &-wrap {
         position: relative;
-        margin: $spacing_sm $spacing_md;
+        margin: 15px 25px;
+        background-color: $light;
     }
 
     &-btn {
