@@ -13,8 +13,8 @@
                 <div class="dashboard-head-title-wrap">
                     <div class="client_head_logo"><img src="{{ env('APP_URL') }}/storage/images/clients/Acma.png" alt=""></div>
                     <div>
+                        <div class="client_head-date">Acma</div>
                         <h3 class="main-body-header-title mb-0">Buyers Guide</h3>
-                        <div class="client_head-date">26 Jan 2024</div>
                     </div>
                 </div>
             </div>
@@ -42,171 +42,23 @@
 
     <!-- Dashboard Body -->
     <div class="row">
-        <div class="col-lg-4 mb-4">
-            <div class="card_style card_style-team h-100">
-                <!-- Edit -->
-                <div class="cus_dropdown cus_dropdown-edit">
-                    <div class="cus_dropdown-icon"><i class='bx bx-dots-horizontal-rounded' ></i></div>
-                    <div class="cus_dropdown-body cus_dropdown-body-widh_s">
-                        <div class="cus_dropdown-body-wrap">
-                            <ul class="cus_dropdown-list">
-                                <li><a href="#"><span class="text-secondary"><i class='bx bx-pencil' ></i></span> Edit</a></li>
-                                <li><a href="#"><span class="text-danger"><i class='bx bx-trash' ></i></span> Delete</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="card_style-team-profile-content">
-                    <h4><a href="#">Tech Team</a></h4>
-                    <div class="avatarGroup">
-                        <a href="#" class="avatarGroup-avatar">
-                            <span class="avatar avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Aakash Chaohan">
-                                <img alt="avatar" src="{{ env('APP_URL') }}/storage/images/users/Ajay Kumar.png" class="rounded-circle" />
-                            </span>
-                        </a>
-                        <a href="#" class="avatarGroup-avatar">
-                            <span class="avatar avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Aakash Chaohan">
-                                <img alt="avatar" src="{{ env('APP_URL') }}/storage/images/users/Ajay Kumar.png" class="rounded-circle" />
-                            </span>
-                        </a>
-                        <a href="#" class="avatarGroup-avatar">
-                            <span class="avatar avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Aakash Chaohan">
-                                <img alt="avatar" src="{{ env('APP_URL') }}/storage/images/users/Ajay Kumar.png" class="rounded-circle" />
-                            </span>
-                        </a>
-                        <a href="#" class="avatarGroup-avatar">
-                            <span class="avatar avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Aakash Chaohan">
-                                <img alt="avatar" src="{{ env('APP_URL') }}/storage/images/users/Ajay Kumar.png" class="rounded-circle" />
-                            </span>
-                        </a>
-                    </div>
-                    <hr>
-                    <div class="card_style-tasks">
-                        <div class="card_style-tasks-title"><span><i class='bx bx-objects-horizontal-left' ></i></span> 60 Tasks</div>
-                        <div class="card_style-tasks-list">
-                            <div class="card_style-tasks-item card_style-tasks-item-pending"><span><i class='bx bx-objects-horizontal-center' ></i></span> 30 Active</div>
-                            <div class="card_style-tasks-item card_style-tasks-item-overdue"><span><i class='bx bx-objects-horizontal-center' ></i></span> 20 Overdue</div>
-                            <div class="card_style-tasks-item card_style-tasks-item-done"><span><i class='bx bx-objects-horizontal-center' ></i></span> 10 Completed</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-4 mb-4">
-            <div class="card_style card_style-team h-100">
-                <!-- Edit -->
-                <div class="cus_dropdown cus_dropdown-edit">
-                    <div class="cus_dropdown-icon"><i class='bx bx-dots-horizontal-rounded' ></i></div>
-                    <div class="cus_dropdown-body cus_dropdown-body-widh_s">
-                        <div class="cus_dropdown-body-wrap">
-                            <ul class="cus_dropdown-list">
-                                <li><a href="#"><span class="text-secondary"><i class='bx bx-pencil' ></i></span> Edit</a></li>
-                                <li><a href="#"><span class="text-danger"><i class='bx bx-trash' ></i></span> Delete</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="card_style-team-profile-content">
-                    <h4><a href="#">Media Team</a></h4>
-                    <div class="avatarGroup">
-                        <a href="#" class="avatarGroup-avatar">
-                            <span class="avatar avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Aakash Chaohan">
-                                <img alt="avatar" src="{{ env('APP_URL') }}/storage/images/users/Ajay Kumar.png" class="rounded-circle" />
-                            </span>
-                        </a>
-                        <a href="#" class="avatarGroup-avatar">
-                            <span class="avatar avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Aakash Chaohan">
-                                <img alt="avatar" src="{{ env('APP_URL') }}/storage/images/users/Ajay Kumar.png" class="rounded-circle" />
-                            </span>
-                        </a>
-                        <a href="#" class="avatarGroup-avatar">
-                            <span class="avatar avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Aakash Chaohan">
-                                <img alt="avatar" src="{{ env('APP_URL') }}/storage/images/users/Ajay Kumar.png" class="rounded-circle" />
-                            </span>
-                        </a>
-                        <a href="#" class="avatarGroup-avatar">
-                            <span class="avatar avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Aakash Chaohan">
-                                <img alt="avatar" src="{{ env('APP_URL') }}/storage/images/users/Ajay Kumar.png" class="rounded-circle" />
-                            </span>
-                        </a>
-                    </div>
-                    <hr>
-                    <div class="card_style-tasks">
-                        <div class="card_style-tasks-title"><span><i class='bx bx-objects-horizontal-left' ></i></span> 40 Tasks</div>
-                        <div class="card_style-tasks-list">
-                            <div class="card_style-tasks-item card_style-tasks-item-pending"><span><i class='bx bx-objects-horizontal-center' ></i></span> 30 Active</div>
-                            <div class="card_style-tasks-item card_style-tasks-item-overdue"><span><i class='bx bx-objects-horizontal-center' ></i></span> 20 Overdue</div>
-                            <div class="card_style-tasks-item card_style-tasks-item-done"><span><i class='bx bx-objects-horizontal-center' ></i></span> 10 Completed</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-4 mb-4">
-            <div class="card_style card_style-team h-100">
-                <!-- Edit -->
-                <div class="cus_dropdown cus_dropdown-edit">
-                    <div class="cus_dropdown-icon"><i class='bx bx-dots-horizontal-rounded' ></i></div>
-                    <div class="cus_dropdown-body cus_dropdown-body-widh_s">
-                        <div class="cus_dropdown-body-wrap">
-                            <ul class="cus_dropdown-list">
-                                <li><a href="#"><span class="text-secondary"><i class='bx bx-pencil' ></i></span> Edit</a></li>
-                                <li><a href="#"><span class="text-danger"><i class='bx bx-trash' ></i></span> Delete</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="card_style-team-profile-content">
-                    <h4><a href="#">Copy Team</a></h4>
-                    <div class="avatarGroup">
-                        <a href="#" class="avatarGroup-avatar">
-                            <span class="avatar avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Aakash Chaohan">
-                                <img alt="avatar" src="{{ env('APP_URL') }}/storage/images/users/Ajay Kumar.png" class="rounded-circle" />
-                            </span>
-                        </a>
-                        <a href="#" class="avatarGroup-avatar">
-                            <span class="avatar avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Aakash Chaohan">
-                                <img alt="avatar" src="{{ env('APP_URL') }}/storage/images/users/Ajay Kumar.png" class="rounded-circle" />
-                            </span>
-                        </a>
-                        <a href="#" class="avatarGroup-avatar">
-                            <span class="avatar avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Aakash Chaohan">
-                                <img alt="avatar" src="{{ env('APP_URL') }}/storage/images/users/Ajay Kumar.png" class="rounded-circle" />
-                            </span>
-                        </a>
-                        <a href="#" class="avatarGroup-avatar">
-                            <span class="avatar avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Aakash Chaohan">
-                                <img alt="avatar" src="{{ env('APP_URL') }}/storage/images/users/Ajay Kumar.png" class="rounded-circle" />
-                            </span>
-                        </a>
-                    </div>
-                    <hr>
-                    <div class="card_style-tasks">
-                        <div class="card_style-tasks-title"><span><i class='bx bx-objects-horizontal-left' ></i></span> 50 Tasks</div>
-                        <div class="card_style-tasks-list">
-                            <div class="card_style-tasks-item card_style-tasks-item-pending"><span><i class='bx bx-objects-horizontal-center' ></i></span> 20 Active</div>
-                            <div class="card_style-tasks-item card_style-tasks-item-overdue"><span><i class='bx bx-objects-horizontal-center' ></i></span> 20 Overdue</div>
-                            <div class="card_style-tasks-item card_style-tasks-item-done"><span><i class='bx bx-objects-horizontal-center' ></i></span> 10 Completed</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
         <div class="col-md-4">
             <div class="column-box">
                 <div class="row align-items-center mb-2">
-                    <div class="col"><span><i class='bx bx-layer text-primary' ></i></span> Created By</div>
+                    <div class="col"><span><i class='bx bx-layer text-success' ></i></span> Created By</div>
                     <div class="col">Rakesh Roshan</div>
                 </div>
                 <div class="row align-items-center mb-2">
-                    <div class="col"><span><i class='bx bx-calendar text-primary'></i></span> Duration</div>
-                    <div class="col">3 Months</div>
+                    <div class="col"><span><i class='bx bx-calendar-alt text-primary'></i></span> Start Date</div>
+                    <div class="col">26 April 2024 <a href="#" class="ms-2"><i class='bx bx-pencil text-primary'></i></a></div>
                 </div>
                 <div class="row align-items-center mb-2">
-                    <div class="col"><span><i class='bx bx-calendar text-primary'></i></span> Due Date</div>
+                    <div class="col"><span><i class='bx bx-calendar text-danger'></i></span> Due Date</div>
                     <div class="col">26 April 2024 <a href="#" class="ms-2"><i class='bx bx-pencil text-primary'></i></a></div>
+                </div>
+                <div class="row align-items-center mb-2">
+                    <div class="col"><span><i class='bx bx-time text-secondary'></i></span> Duration</div>
+                    <div class="col">3 Months</div>
                 </div>
                 <hr>
                 <div class="row align-items-center mb-3">
@@ -239,6 +91,7 @@
                                     <img alt="avatar" src="http://localhost:8000/storage/images/users/Chetan Singh.png" class="rounded-circle">
                                 </span>
                             </a>
+                            <a href="#" class="ms-1 btn_link btn_link-border btn_link-sm">Add</a>
                         </div>
                     </div>
                 </div>
@@ -250,10 +103,7 @@
                 </div>
                 <hr>
                 <div>
-                    <div class="d-flex flex-wrap align-items-start">
-                        <div class="title-label">Teams</div>
-                        <a href="#" class="btn-border btn-border-sm ms-auto"><i class='bx bx-plus' ></i> Add</a>
-                    </div>
+                    <div class="title-label">Teams</div>
                     <div class="btn-list">
                         <a href="#" class="btn-batch btn-batch-profile"><span><img alt="avatar" src="http://localhost:8000/storage/images/users/Ajay Kumar.png" class="rounded-circle"></span> Tech Team</a>
                         <a href="#" class="btn-batch btn-batch-profile"><span><img alt="avatar" src="http://localhost:8000/storage/images/users/Ajay Kumar.png" class="rounded-circle"></span> Tech Team</a>
@@ -286,7 +136,7 @@
                 <div class="d-flex flex-wrap justify-content-between align-items-center">
                     <div><h4 class="column-title mb-0"><i class='bx bx-objects-horizontal-left text-primary' ></i> 60 Tasks</h4></div>
                     <div class="btn-list">
-                        <a href="#" class="btn-sm btn-border"><i class='bx bx-plus' ></i> Add Task</a>
+                        <a href="javascript:;" class="btn-sm btn-border" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><i class='bx bx-plus' ></i> Add Task</a>
                         <div class="cus_dropdown">
                             <div class="cus_dropdown-icon btn-border btn-border-secondary"><i class='bx bx-filter-alt' ></i> Filter</div>
                             <div class="cus_dropdown-body cus_dropdown-body-widh_l">
@@ -912,52 +762,148 @@
             </div>
         </div>
 
-        <div class="col-md-3 d-none">
-            <div class="column-box h-100">
-                <div class="column-head d-flex flex-wrap align-items-center">
-                    <div>
-                        <h5 class="mb-0">Teams</h5>
-                        <div class="text-light">03 Teams Assigned</div>
+    </div>
+    
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+        <div class="offcanvas-header">
+            <div class="btn-list">
+                <button type="button" class="btn-batch btn-batch-secondary">Accepted</button>
+                <button type="button" class="btn-batch btn-batch-success">Completed</button>
+            </div>
+            <div class="offcanvas-header-end">
+                <button type="button" class="btn-icon"><i class='bx bx-check text-success' ></i></button>
+                <button type="button" class="btn-icon" data-bs-toggle="modal" data-bs-target="#attached-file-modal"><i class='bx bx-paperclip' style="transform: rotate(60deg);"></i></button>
+                <button type="button" class="btn-icon"><i class='bx bx-link' ></i></button>
+                <button type="button" class="btn-icon"><i class='bx bx-fullscreen'></i></button>
+                <button type="button" class="btn-icon"><i class='bx bx-trash'></i></button>
+                <button type="button" class="btn-icon" data-bs-dismiss="offcanvas" aria-label="Close"><i class='bx bx-arrow-to-right'></i></button>
+            </div>
+        </div>
+        <div class="offcanvas-body scrollbar">
+            <form class="taskPane" action="">
+                <div class="taskPane-head">
+                    <div class="taskPane-heading">
+                        <div class="taskPane-heading-label"><i class='bx bx-notepad text-primary'></i> Task Heading</div>
+                        <input class="form-control form-control-typeStyle AddTask_title" wire:model="name" type="text" placeholder="Write a task name">
                     </div>
-                    <div class="ms-auto">
-                        <a class="btn-icon btn-icon-primary" href="#" data-bs-toggle="modal" data-bs-target="#teamModal"><i class="bx bx-plus"></i></a>
+                    @error('name') <span class="text-danger">{{ $message }}</span> @enderror
+                </div>
+                <div class="taskPane-body">
+                    <div class="taskPane-item d-flex flex-wrap">
+                        <div class="taskPane-item-left"><div class="taskPane-item-label">Assigned to</div></div>
+                        <div class="taskPane-item-right">
+                            <select name="" id="" class="users">
+                                <option value="" disabled>Select User</option>
+                                <option data-image="" value="">Rakesh Roshan</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="taskPane-item d-flex flex-wrap">
+                        <div class="taskPane-item-left"><div class="taskPane-item-label">Notify to</div></div>
+                        <div class="taskPane-item-right">
+                            <select name="" id="" class="users">
+                                <option value="" disabled>Select User</option>
+                                <option data-image="" value="">Rakesh Roshan</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="taskPane-item d-flex flex-wrap">
+                        <div class="taskPane-item-left"><div class="taskPane-item-label">Project</div></div>
+                        <div class="taskPane-item-right">
+                            <select name="" id="" class="users">
+                                <option value="" disabled>Select User</option>
+                                <option data-image="" value="">Rakesh Roshan</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="taskPane-item d-flex flex-wrap">
+                        <div class="taskPane-item-left"><div class="taskPane-item-label">Due Date</div></div>
+                        <div class="taskPane-item-right">
+                            <a href="#">
+                                <div class="icon_rounded"><i class='bx bx-calendar' ></i></div>
+                                <span class="btn_link">No Due Date</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="taskPane-item">
+                        <div class="taskPane-item-label mb-3">Description</div>
+                        <div>
+                            <textarea name="" id="editor" cols="30" rows="4" placeholder="Type Description"></textarea>
+                        </div>
                     </div>
                 </div>
-                <div class="team-scroll scrollbar">
-                    <!-- Teams -->
-                    <div class="team-list">
-                        <div class="team team-style_2 editTeam">
-                            <!-- Edit -->
-                            <div class="cus_dropdown cus_dropdown-edit">
-                                <div class="cus_dropdown-icon"><i class='bx bx-dots-horizontal-rounded' ></i></div>
-                                <div class="cus_dropdown-body cus_dropdown-body-widh_s">
-                                    <div class="cus_dropdown-body-wrap">
-                                        <ul class="cus_dropdown-list">
-                                            <li><a href="#"><span class="text-secondary"><i class='bx bx-pencil' ></i></span> Edit</a></li>
-                                            <li><a href="#"><span class="text-danger"><i class='bx bx-trash' ></i></span> Delete</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
+            </form>
+            <div class="cmnt_sec">
+                <!-- Activity -->
+                <h5 class="cmnt_act_title"><span><i class='bx bx-line-chart text-primary'></i> Activity</span><span class="text-sm"><i class='bx bx-comment-dots text-secondary'></i> 15 Comments</span></h5>
+                <div class="cmnt_act">
+                    <div class="cmnt_act_row">
+                        <div class="cmnt_act_user">
+                            <div class="cmnt_act_user_img">
+                                <img class="rounded-circle" src="{{ env('APP_URL') }}/storage/images/users/Chetan%20Singh.png">
                             </div>
-                            <div class="team-style_2-head_wrap">
-                                <div class="team-avtar">
-                                    <span>
-                                        <img src="{{ env('APP_URL') }}/storage/images/clients/Acma.png" alt="">
-                                    </span>
-                                </div>
-                                <h4 class="team-style_2-title">Tech Team
-                                    <span class="team-style_2-memCount"></span>
-                                </h4>
+                            <div class="cmnt_act_user_name-wrap">
+                                <div class="cmnt_act_user_name">Chetan Kumar</div>
+                                <div class="cmnt_act_date">1 week ago</div>
+                                <div class="cmnt_act_user_text">Add logo in the client section and make it live</div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div>
-                    <a class="btn btn-sm btn-border-primary w-100" href="#" data-bs-toggle="modal" data-bs-target="#teamModal"><i class="bx bx-plus"></i> Add Team</a>
-                </div>
             </div>
         </div>
-        <div class="col-md-9">
+        <div class="offcanvas-footer">
+            <div class="taskPane-footer-wrap">
+                <button type="button" class="btn-border btn-sm btn-border-danger"><i class='bx bx-trash' ></i> Delete Task</button>
+                <button type="button" class="btn-border btn-sm btn-border-primary ms-auto"><i class='bx bx-check'></i> Save Task</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add File Modal  -->
+    <div class="modal fade" id="attached-file-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header d-flex align-items-center justify-content-between gap-20">
+                    <h3 class="modal-title"><span class="btn-icon btn-icon-primary me-1"><i class='bx bx-layer' ></i></span> <span class="project-form-text">Upload File Or Link</span></h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" enctype="multipart/form-data">
+                        <div class="modal-form-body">
+                            <div class="row">
+                                <div class="col-12">
+                                    <label for="">Add Link</label>
+                                    <input type="text" class="form-style mt-2" placeholder="Add Link...">
+                                </div>
+                            </div>
+                            <div class="divider-or my-3 w-100"><span></span>OR<span></span></div>
+                            <div class="row">
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Upload Image <br/>Or File</label>
+                                </div>
+                                <div class="col-md-8 mb-4">
+                                    <div class="form-file_upload form-file_upload-logo">
+                                        <input type="file" id="formFile">
+                                        <div class="form-file_upload-box">
+                                            <div class="form-file_upload-box-icon"><i class='bx bx-image'></i></div>
+                                            <div class="form-file_upload-box-text">Upload</div>
+                                        </div>
+                                        <div class="form-file_upload-valText">Allowed *.jpeg, *.jpg, *.png, *.gif max size of 3 Mb</div>
+                                    </div>
+                                </div>
+                            </div>                            
+                        </div>
+                        <div class="modal-form-btm">
+                            <div class="row">
+                                <div class="col-md-6 ms-auto text-end">
+                                    <button type="submit" class="btn btn-primary project-form-btn">Uplaod</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 </div>

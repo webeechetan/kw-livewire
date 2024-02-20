@@ -15,7 +15,7 @@
         align-items: flex-end;
         &-text {
             position: absolute;
-            transform: translateY(-12px);
+            transform: translate(10px, -12px);
             color: $text_color;
             font-weight: 600;
             font-size: 11px;

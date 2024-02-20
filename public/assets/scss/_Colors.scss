@@ -122,6 +122,9 @@ $table_header_color: $secondary;
     &-secondary {
         background-color: $secondary !important;
     }
+    &-light {
+        background-color: $light !important;
+    }
     &-md {
         @media (min-width: 768px) {
             &-secondary {

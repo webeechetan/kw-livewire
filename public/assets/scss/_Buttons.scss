@@ -241,6 +241,7 @@
 
     /* ----- Button Batch ----- */
     &-batch {
+        background-color: #fff;
         border: 1px solid $grey_xd;
         padding: 3px 10px;
         border-radius: $border_radius_rounded;
@@ -261,16 +262,19 @@
             &-success {
                 background-color: $success;
                 color: #fff;
+                border-color: $success;
             }
 
             &-primary {
                 background-color: $brand;
                 color: #fff;
+                border-color: $brand;
             }
 
             &-secondary   {
                 background-color: $secondary;
                 color: #fff;
+                border-color: $secondary;
             }
         }
 
@@ -281,6 +285,10 @@
         &-primary {
             border-color: $brand;
             color: $brand;
+        }
+        &-secondary {
+            border-color: $secondary;
+            color: $secondary;
         }
         &-warning {
             border-color: $warning;
