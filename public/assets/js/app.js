@@ -15,3 +15,4 @@ document.addEventListener('edit-task-showed', function () {
         initPlugins();
     }, 100);
 });
+

@@ -2,19 +2,19 @@
     <!-- Dashboard Header -->
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="#"><i class='bx bx-line-chart'></i> Dashboard</a></li>
-            <li class="breadcrumb-item"><a href="#">All Projects</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Buyers Guide</li>
+            <li class="breadcrumb-item"><a wire:navigate href="{{ route('dashboard') }}"><i class='bx bx-line-chart'></i> Dashboard</a></li>
+            <li class="breadcrumb-item"><a wire:navigate href="{{ route('project.index') }}">All Projects</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ $project->name }}</li>
         </ol>
     </nav>
     <div class="dashboard-head mb-4">
         <div class="row align-items-center">
             <div class="col">
                 <div class="dashboard-head-title-wrap">
-                    <div class="client_head_logo"><img src="{{ env('APP_URL') }}/storage/images/clients/Acma.png" alt=""></div>
+                    <div class="client_head_logo"><img src="{{ asset('storage/'.$project->image) }}" alt=""></div>
                     <div>
-                        <div class="client_head-date">Acma</div>
-                        <h3 class="main-body-header-title mb-0">Buyers Guide</h3>
+                        <div class="client_head-date">{{ \Carbon\Carbon::parse($project->start_date)->format('d M-Y') }}</div>
+                        <h3 class="main-body-header-title mb-0">{{ $project->name }}</h3>
                     </div>
                 </div>
             </div>
@@ -53,12 +53,22 @@
                     <div class="col">26 April 2024 <a href="#" class="ms-2"><i class='bx bx-pencil text-primary'></i></a></div>
                 </div>
                 <div class="row align-items-center mb-2">
-                    <div class="col"><span><i class='bx bx-calendar text-danger'></i></span> Due Date</div>
-                    <div class="col">26 April 2024 <a href="#" class="ms-2"><i class='bx bx-pencil text-primary'></i></a></div>
+                    <div class="col"><span><i class='bx bx-calendar text-primary'></i></span> Due Date</div>
+                    <div class="col project-due-date">
+                        @if($project->due_date)
+                            {{ \Carbon\Carbon::parse($project->due_date)->format('d M-Y') }} 
+                        @else
+                            <span class="text-danger">Not Set</span>
+                        @endif
+
+                        <a href="javascript:" class="ms-2 change-due-date" data-bs-toggle="tooltip" data-bs-placement="top" title="Change Date">
+                            <i class='bx bx-pencil text-primary'></i>
+                        </a>
+                    </div>
                 </div>
                 <div class="row align-items-center mb-2">
-                    <div class="col"><span><i class='bx bx-time text-secondary'></i></span> Duration</div>
-                    <div class="col">3 Months</div>
+                    <div class="col"><span><i class='bx bx-calendar text-success'></i></span> Duration</div>
+                    <div class="col">{{ \Carbon\Carbon::parse($project->due_date)->diffInDays($project->start_date)}} Days</div>
                 </div>
                 <hr>
                 <div class="row align-items-center mb-3">
@@ -66,32 +76,26 @@
                     <div class="col">
                         <!-- Avatar Group -->
                         <div class="avatarGroup avatarGroup-lg avatarGroup-overlap">
-                            <a href="#" class="avatarGroup-avatar">
-                                <span class="avatar avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Ajay Kumar">
-                                    <img alt="avatar" src="http://localhost:8000/storage/images/users/Ajay Kumar.png" class="rounded-circle">
-                                </span>
-                            </a>
-                            <a href="#" class="avatarGroup-avatar">
-                                <span class="avatar avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Roshan Jajoria">
-                                    <img alt="avatar" src="http://localhost:8000/storage/images/users/Roshan Jajoria.png" class="rounded-circle">
-                                </span>
-                            </a>
-                            <a href="#" class="avatarGroup-avatar">
-                                <span class="avatar avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Chetan Singh">
-                                    <img alt="avatar" src="http://localhost:8000/storage/images/users/Chetan Singh.png" class="rounded-circle">
-                                </span>
-                            </a>
-                            <a href="#" class="avatarGroup-avatar">
-                                <span class="avatar avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Chetan Singh">
-                                    <img alt="avatar" src="http://localhost:8000/storage/images/users/Chetan Singh.png" class="rounded-circle">
-                                </span>
-                            </a>
-                            <a href="#" class="avatarGroup-avatar">
-                                <span class="avatar avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Chetan Singh">
-                                    <img alt="avatar" src="http://localhost:8000/storage/images/users/Chetan Singh.png" class="rounded-circle">
-                                </span>
-                            </a>
-                            <a href="#" class="ms-1 btn_link btn_link-border btn_link-sm">Add</a>
+                            @php
+                                $usersCount = $project->users->count();  
+                            @endphp
+                            @foreach($project->users as $user)
+                                @if($loop->index > 2)
+                                    @break
+                                @endif
+                                <a href="#" class="avatarGroup-avatar">
+                                    <span class="avatar avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ $user->name }}">
+                                        <img alt="avatar" src="{{ asset('storage/'.$user->image) }}" class="rounded-circle">
+                                    </span>
+                                </a>
+                            @endforeach
+                            @if($usersCount > 3)
+                                <a href="#" class="avatarGroup-avatar">
+                                    <span class="avatar avatar-sm">
+                                        <div class="avatar avatar-sm avatar-more">+{{ $usersCount - 3 }}</div>
+                                    </span>
+                                </a>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -833,6 +837,9 @@
                     </div>
                 </div>
             </form>
+            <div class="taskPane-upload-list">
+                <div class="taskPane-upload"><img src="" alt=""></div>
+            </div>
             <div class="cmnt_sec">
                 <!-- Activity -->
                 <h5 class="cmnt_act_title"><span><i class='bx bx-line-chart text-primary'></i> Activity</span><span class="text-sm"><i class='bx bx-comment-dots text-secondary'></i> 15 Comments</span></h5>
@@ -907,3 +914,17 @@
         </div>
     </div>
 </div>
+@script
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+    <script>
+        flatpickr(".change-due-date", {
+            dateFormat: "Y-m-d",
+            defaultDate: "{{ $project->due_date }}",
+            onChange: function(selectedDates, dateStr, instance) {
+                $(".project-due-date").html(dateStr);
+                @this.changeDueDate(dateStr);
+            }
+        });
+    </script>
+@endscript
