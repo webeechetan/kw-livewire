@@ -165,7 +165,7 @@ class ListTask extends Component
 
         foreach($mentioned_user_ids as $user_id){
             $user = User::find($user_id);
-            $user->notify(new UserMentionNotification($task));
+            // $user->notify(new UserMentionNotification($task));
         }
 
         $task->mentioned_users = implode(',',$mentioned_user_ids);
@@ -179,7 +179,7 @@ class ListTask extends Component
         $task->users()->attach($this->user_ids);
         foreach($this->user_ids as $user_id){
             $user = User::find($user_id);
-            $user->notify(new NewTaskAssignNotification($task));
+            // $user->notify(new NewTaskAssignNotification($task));
         }
         session()->flash('message','Task created successfully');
         $this->redirect(route('task.index'),navigate:true);
@@ -211,7 +211,7 @@ class ListTask extends Component
         $this->task->users()->sync($this->user_ids);
         foreach($this->user_ids as $user_id){
             $user = User::find($user_id);
-            $user->notify(new NewTaskAssignNotification($this->task));
+            // $user->notify(new NewTaskAssignNotification($this->task));
         }
         session()->flash('message','Task updated successfully');
         $this->redirect(route('task.index'),navigate:true);
@@ -259,7 +259,7 @@ class ListTask extends Component
 
         foreach($mentioned_user_ids as $user_id){
             $user = User::find($user_id);
-            $user->notify(new UserMentionNotification($this->task , $comment));
+            // $user->notify(new UserMentionNotification($this->task , $comment));
         }
 
         $comment->mentioned_users = implode(',',$mentioned_user_ids);

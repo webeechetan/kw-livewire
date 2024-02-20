@@ -52,7 +52,7 @@ class AddTask extends Component
         $task->users()->attach($this->user_ids);
         foreach($this->user_ids as $user_id){
             $user = User::find($user_id);
-            $user->notify(new NewTaskAssignNotification($task));
+            // $user->notify(new NewTaskAssignNotification($task));
         }
         session()->flash('message','Task created successfully');
         $this->redirect(route('task.index'),navigate:true);
