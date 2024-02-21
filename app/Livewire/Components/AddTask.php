@@ -3,10 +3,13 @@
 namespace App\Livewire\Components;
 
 use Livewire\Component;
-use App\Models\ { Project, Task, User };
+use App\Models\ { Project, Task, User, Attachment};
+use Livewire\WithFileUploads;
 
 class AddTask extends Component
 {
+    use WithFileUploads;
+
     protected $listeners = ['editTask'];
 
     public $project;
@@ -19,6 +22,9 @@ class AddTask extends Component
     public $task_users;
     public $task_notifiers;
     public $project_id;
+
+    public $attachments;
+    public $temp_paths = [];
 
     public function render()
     {
@@ -50,12 +56,22 @@ class AddTask extends Component
         $task->save();
         $task->users()->sync($this->task_users);
         $task->notifiers()->sync($this->task_notifiers);
+         // attach files to task from $this->attachments
+         foreach($this->temp_paths as $path){
+            $attachment = new Attachment();
+            $attachment->org_id = session('org_id');
+            $attachment->attachment_path = $path;
+            $attachment->name = basename($path);
+            $attachment->attachable_id = $task->id;
+            $attachment->attachable_type = Task::class;
+            $attachment->save();
+        }
         $this->dispatch('saved','Task saved successfully');
         $this->redirect(route('project.profile',['id'=>$this->project->id]), navigate: true);
     }
 
     public function editTask($id){
-        $this->task = Task::with('users','notifiers')->find($id);
+        $this->task = Task::with('users','notifiers','attachments')->find($id);
         $this->name = $this->task->name;
         $this->description = $this->task->description;
         $this->due_date = $this->task->due_date;
@@ -78,5 +94,19 @@ class AddTask extends Component
         $this->redirect(route('project.profile',['id'=>$this->project->id]), navigate: true);
     }
 
+    public function attachFile(){
+        // store attachments in temp storage and then move to permanent storage after task is saved
+        $this->validate([
+            'attachments' => 'required',
+        ]);
+
+
+        foreach($this->attachments as $attachment){
+            $this->temp_paths[] = $attachment->store('attachments');
+        }
+
+        $this->dispatch('file-attached',$this->temp_paths);
+    
+    }
     
 }

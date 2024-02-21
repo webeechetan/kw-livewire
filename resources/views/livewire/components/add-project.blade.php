@@ -112,13 +112,13 @@
                 $('#add-project-modal').modal('show');
                 $('.project-form-text').html('Edit Project');
                 $('.project-form-btn').html('Update Project');
-                if(event.detail[0].project_start_date){
-                    $('.project_start_date').html(event.detail[0].project_start_date);
+                if(event.detail[0].start_date){
+                    $('.project_start_date').html(event.detail[0].start_date);
                 }else{
                     $('.project_start_date').html('Start Date');
                 }
-                if(event.detail[0].project_due_date){
-                    $('.project_due_date').html(event.detail[0].project_due_date);
+                if(event.detail[0].due_date){
+                    $('.project_due_date').html(event.detail[0].due_date);
                 }else{
                     $('.project_due_date').html('Due Date');
                 }
@@ -127,7 +127,9 @@
                 project_users.forEach(function (user) {
                     project_users_array.push(user.id);
                 });
+
                 $('.users').val(project_users_array).trigger('change');
+                $(".users").select2();
 
             });
 

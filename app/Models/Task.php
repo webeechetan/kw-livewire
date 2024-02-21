@@ -12,6 +12,7 @@ use App\Models\Comment;
 use App\Models\Scopes\OrganizationScope;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Notifications\Notification;
+use App\Models\Attachment;
 
 
 class Task extends Model
@@ -62,6 +63,10 @@ class Task extends Model
 
     public function notifiers(){
         return $this->belongsToMany(User::class, 'task_user_notify');
+    }
+
+    public function attachments(){
+        return $this->morphMany(Attachment::class, 'attachable');
     }
 
     // scopes 

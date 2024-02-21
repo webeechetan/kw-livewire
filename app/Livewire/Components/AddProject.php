@@ -105,6 +105,7 @@ class AddProject extends Component
     public function editProject($id)
     {
         $this->project = Project::find($id);
+        // dd($this->project);
         $this->client_id = $this->project->client_id;
         $this->project_name = $this->project->name;
         $this->project_description = $this->project->description;

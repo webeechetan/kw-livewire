@@ -105,7 +105,7 @@
                             @if($usersCount > 3)
                                 <a href="javascript:" class="avatarGroup-avatar">
                                     <span class="avatar avatar-sm">
-                                        <div class="avatar avatar-sm avatar-more">+{{ $usersCount - 3 }} </div>
+                                       +{{ $usersCount - 3 }}
                                     </span>
                                 </a>
                             @endif

@@ -78,7 +78,10 @@
                         </div>
                     </div>
                     <div class="taskPane-item mb-2">
-                        <button type="button" class="btn-border btn-sm btn-border-secondary" data-bs-toggle="modal" data-bs-target="#attached-file-modal"><i class="bx bx-paperclip" style="transform: rotate(60deg);"></i> 04 Attachements</button>
+                        <button type="button" class="btn-border btn-sm btn-border-secondary" data-bs-toggle="modal" data-bs-target="#attached-file-modal"><i class="bx bx-paperclip" style="transform: rotate(60deg);"></i> <span class="task-attachment-count">0 </span> Attachements</button>
+                            <div class="task-attachments">
+                                
+                            </div>
                     </div>
                 </div>
             </form>
@@ -181,53 +184,6 @@
         </div>
     </div>
 
-    <!-- Add File Modal  -->
-    {{-- <div class="modal fade" id="attached-file-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header d-flex align-items-center justify-content-between gap-20">
-                    <h3 class="modal-title"><span class="btn-icon btn-icon-primary me-1"><i class='bx bx-layer' ></i></span> <span class="project-form-text">Upload File Or Link</span></h3>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form method="POST" enctype="multipart/form-data">
-                        <div class="modal-form-body">
-                            <div class="row">
-                                <div class="col-12">
-                                    <label for="">Add Link</label>
-                                    <input type="text" class="form-style mt-2" placeholder="Add Link...">
-                                </div>
-                            </div>
-                            <div class="divider-or my-3 w-100"><span></span>OR<span></span></div>
-                            <div class="row">
-                                <div class="col-md-4 mb-4">
-                                    <label for="">Upload Image <br/>Or File</label>
-                                </div>
-                                <div class="col-md-8 mb-4">
-                                    <div class="form-file_upload form-file_upload-logo">
-                                        <input type="file" id="formFile">
-                                        <div class="form-file_upload-box">
-                                            <div class="form-file_upload-box-icon"><i class='bx bx-image'></i></div>
-                                            <div class="form-file_upload-box-text">Upload</div>
-                                        </div>
-                                        <div class="form-file_upload-valText">Allowed *.jpeg, *.jpg, *.png, *.gif max size of 3 Mb</div>
-                                    </div>
-                                </div>
-                            </div>                            
-                        </div>
-                        <div class="modal-form-btm">
-                            <div class="row">
-                                <div class="col-md-6 ms-auto text-end">
-                                    <button type="submit" class="btn btn-primary project-form-btn">Uplaod</button>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div> --}}
-</div>
 
 @push('scripts')
     <script>
@@ -296,21 +252,21 @@
 
                 $('.task-users').val(task_users_ids).trigger('change');
 
-                $('.task-users').select2({
-                    placeholder: "Select User",
-                    allowClear: true,
-                    templateResult: format,
-                    templateSelection: format
-                });
+                // $('.task-users').select2({
+                //     placeholder: "Select User",
+                //     allowClear: true,
+                //     templateResult: format,
+                //     templateSelection: format
+                // });
 
                 $('.task-notify-users').val(task_notifiers_ids).trigger('change');
 
-                $('.task-notify-users').select2({
-                    placeholder: "Select User",
-                    allowClear: true,
-                    templateResult: format,
-                    templateSelection: format
-                });
+                // $('.task-notify-users').select2({
+                //     placeholder: "Select User",
+                //     allowClear: true,
+                //     templateResult: format,
+                //     templateSelection: format
+                // });
 
                 $('.task-projects').val(event.detail[0].project_id).trigger('change');
 
@@ -319,10 +275,34 @@
                 }else{
                     $('.task-due-date').text('No Due Date');
                 }
+                $(".task-attachment-count").html(event.detail[0].attachments.length);
+                
+                // .task-attachments
+
+                let attachment_html = '';
+
+                event.detail[0].attachments.forEach(attachment => {
+                    attachment_html += `<div class="task-attachments-item">
+                        <div class="task-attachments-item-img">
+                            <a href="{{ env('APP_URL') }}/storage/${attachment.attachment_path}" target="_blank">
+                                ${attachment.attachment_path}
+                            </a>
+                        </div>
+                    </div>`;
+                });
+
+                $('.task-attachments').html(attachment_html);
+
 
                 $('#offcanvasRight').offcanvas('show');
 
             })
+
+            // file-attached
+            document.addEventListener('file-attached', event => {
+                $(".task-attachment-count").html(event.detail.length);
+                $('#attached-file-modal').modal('hide');
+            });
     
     </script>
 @endpush
