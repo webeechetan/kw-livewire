@@ -758,6 +758,13 @@ hr.space-sm {
     .form-control, .form-select {
         min-height: inherit;
     }
+
+    .files-item {
+        width: 150px;
+        &-content-title {
+            font-size: 12px;
+        }
+    }
 }
 
 /* ----- Breadcrumb ----- */
@@ -818,6 +825,9 @@ hr.space-sm {
 
 /* ------ Offcanvas ------ */
 .offcanvas {
+    &-backdrop.show {
+        opacity: 0.2;
+    }
     &.offcanvas-end {
         width: 550px;
     }
@@ -849,6 +859,9 @@ hr.space-sm {
     &-body {
         border-top: 1px solid $grey;
         padding: 0;
+    }
+
+    &-footer {
         background-color: $light;
     }
 }
@@ -874,6 +887,15 @@ hr.space-sm {
             letter-spacing: 1px;
             text-transform: uppercase;
         }
+
+        input.form-control {
+            font-size: 18px;
+            color: $text-color;
+
+            &::placeholder {
+                color: $text_light;
+            }
+        }
     }
     &-body {
         margin-top: 30px;
@@ -885,6 +907,9 @@ hr.space-sm {
         }
         &-left {
             min-width: 150px;
+        }
+        &-right {
+            flex: 1;
         }
 
         select, textarea {
@@ -916,8 +941,7 @@ hr.space-sm {
     &-footer {
         &-wrap {
             padding: 15px 25px;
-            background-color: #fff;
-            border-top: 1px solid $grey;
+            border-top: 1px solid $grey_xd;
             @include flex_align_center;
         }
     }
@@ -928,11 +952,11 @@ hr.space-sm {
     &_sec {
         border-top: 1px solid $grey;
     }
-    &_act {
-        padding: 25px;  
+    &_item {
+        padding: 0 25px 25px;
         &_title {
             font-size: 18px;
-            padding: 15px 25px;
+            padding: 15px 25px 0 25px;
             @include flex_align_center;
             justify-content: space-between;
             background-color: #fff;
@@ -945,9 +969,10 @@ hr.space-sm {
             display: grid;
             grid-template-columns: 40px 1fr;
             grid-gap: $spacing_xs;
+            position: relative;
     
             &_name {
-                font-weight: 600;
+                font-weight: 500;
             }
             
             &_img {
@@ -960,16 +985,53 @@ hr.space-sm {
                 margin-top: $spacing_s;
                 font-size: 14px;
             }
+
+            &-edit {
+                position: absolute;
+                top: 0;
+                right: 0;
+            }
         }
         &_date {
             font-size: 12px;
             color: $text_light;
         }
         &_row {
+            background-color: $light;
+            padding: 10px;
+            border-radius: 7px;
             &:not(:last-child) {
-                margin-bottom: $spacing_sm;
-                padding-bottom: $spacing_sm;
-                border-bottom: 1px solid #eee;
+                margin-bottom: 10px;
+            }
+        }
+
+        &-tabs {
+            margin-bottom: 20px;
+            .nav {
+                &-link {
+                    color: $text_light;
+                    border-radius: 0;
+                    border: none;
+                    border-bottom: 2px solid transparent;
+                    padding: 10px 0;
+                    width: 50%;
+                    text-align: left;
+                    transition: $ease_03;
+
+                    &.active {
+                        color: $text-color;
+                        border-color: $brand;
+                    }
+
+                    &:hover, &:focus {
+                        color: $text-color;
+                    }
+
+                    &:focus-visible {
+                        box-shadow: none;
+                        outline: none;
+                    }
+                }
             }
         }
     }

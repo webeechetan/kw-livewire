@@ -77,29 +77,93 @@
                             <textarea wire:model="description" id="editor" cols="30" rows="4" placeholder="Type Description"></textarea>
                         </div>
                     </div>
+                    <div class="taskPane-item mb-2">
+                        <button type="button" class="btn-border btn-sm btn-border-secondary" data-bs-toggle="modal" data-bs-target="#attached-file-modal"><i class="bx bx-paperclip" style="transform: rotate(60deg);"></i> 04 Attachements</button>
+                    </div>
                 </div>
             </form>
-            {{-- <div class="taskPane-upload-list">
-                <div class="taskPane-upload"><img src="" alt=""></div>
-            </div>
             <div class="cmnt_sec">
                 <!-- Activity -->
-                <h5 class="cmnt_act_title"><span><i class='bx bx-line-chart text-primary'></i> Activity</span><span class="text-sm"><i class='bx bx-comment-dots text-secondary'></i> 15 Comments</span></h5>
-                <div class="cmnt_act">
-                    <div class="cmnt_act_row">
-                        <div class="cmnt_act_user">
-                            <div class="cmnt_act_user_img">
-                                <img class="rounded-circle" src="{{ env('APP_URL') }}/storage/images/users/Chetan%20Singh.png">
+                <h5 class="cmnt_item_title"><span><i class='bx bx-line-chart text-primary'></i> Activity</span><span class="text-sm"><i class='bx bx-comment-dots text-secondary'></i> 15 Comments</span></h5>
+                <div class="cmnt_item">
+                    <div class="cmnt_item-tabs">
+                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                            <button class="nav-link active" id="nav-internal-tab" data-bs-toggle="tab" data-bs-target="#nav-internal" type="button" role="tab" aria-controls="nav-internal" aria-selected="true">Internal Feedback <span class="text-sm ms-2"><i class='bx bx-comment-dots text-secondary'></i> 07</span></button>
+                            <button class="nav-link" id="nav-client-tab" data-bs-toggle="tab" data-bs-target="#nav-client" type="button" role="tab" aria-controls="nav-client" aria-selected="false">Client Feedback <span class="text-sm ms-2"><i class='bx bx-comment-dots text-secondary'></i> 08</span></button>
+                        </div>
+                    </div>
+                    <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane fade show active" id="nav-internal" role="tabpanel" aria-labelledby="nav-internal-tab" tabindex="0">
+                            <div class="cmnt_item_row">
+                                <div class="cmnt_item_user">
+                                    <div class="cmnt_item_user_img">
+                                        <img class="rounded-circle" src="{{ env('APP_URL') }}/storage/images/users/Chetan%20Singh.png">
+                                    </div>
+                                    <div class="cmnt_item_user_name-wrap">
+                                        <div class="cmnt_item_user_name">Chetan Kumar</div>
+                                        <div class="cmnt_item_date">1 Week Ago</div>
+                                        <div class="cmnt_item_user_text">Add logo in the client section and make it live</div>
+                                    </div>
+                                    <div class="cmnt_item_user-edit btn-list">
+                                        <a href="#" class="btn_link"><i class='bx bx-pencil' ></i></a>
+                                        <a href="#" class="btn_link"><i class='bx bx-trash' ></i></a>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="cmnt_act_user_name-wrap">
-                                <div class="cmnt_act_user_name">Chetan Kumar</div>
-                                <div class="cmnt_act_date">1 week ago</div>
-                                <div class="cmnt_act_user_text">Add logo in the client section and make it live</div>
+                            <div class="cmnt_item_row">
+                                <div class="cmnt_item_user">
+                                    <div class="cmnt_item_user_img">
+                                        <img class="rounded-circle" src="{{ env('APP_URL') }}/storage/images/users/Chetan%20Singh.png">
+                                    </div>
+                                    <div class="cmnt_item_user_name-wrap">
+                                        <div class="cmnt_item_user_name">Chetan Kumar</div>
+                                        <div class="cmnt_item_date">1 Week Ago</div>
+                                        <div class="cmnt_item_user_text">Add logo in the client section and make it live</div>
+                                    </div>
+                                    <div class="cmnt_item_user-edit btn-list">
+                                        <a href="#" class="btn_link"><i class='bx bx-pencil' ></i></a>
+                                        <a href="#" class="btn_link"><i class='bx bx-trash' ></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="nav-client" role="tabpanel" aria-labelledby="nav-client-tab" tabindex="0">
+                            <div class="cmnt_item_row">
+                                <div class="cmnt_item_user">
+                                    <div class="cmnt_item_user_img">
+                                        <img class="rounded-circle" src="{{ env('APP_URL') }}/storage/images/users/Chetan%20Singh.png">
+                                    </div>
+                                    <div class="cmnt_item_user_name-wrap">
+                                        <div class="cmnt_item_user_name">Chetan Kumar</div>
+                                        <div class="cmnt_item_date">1 Week Ago</div>
+                                        <div class="cmnt_item_user_text">Add logo in the client section and make it live</div>
+                                    </div>
+                                    <div class="cmnt_item_user-edit btn-list">
+                                        <a href="#" class="btn_link"><i class='bx bx-pencil' ></i></a>
+                                        <a href="#" class="btn_link"><i class='bx bx-trash' ></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cmnt_item_row">
+                                <div class="cmnt_item_user">
+                                    <div class="cmnt_item_user_img">
+                                        <img class="rounded-circle" src="{{ env('APP_URL') }}/storage/images/users/Chetan%20Singh.png">
+                                    </div>
+                                    <div class="cmnt_item_user_name-wrap">
+                                        <div class="cmnt_item_user_name">Chetan Kumar</div>
+                                        <div class="cmnt_item_date">1 Week Ago</div>
+                                        <div class="cmnt_item_user_text">Add logo in the client section and make it live</div>
+                                    </div>
+                                    <div class="cmnt_item_user-edit btn-list">
+                                        <a href="#" class="btn_link"><i class='bx bx-pencil' ></i></a>
+                                        <a href="#" class="btn_link"><i class='bx bx-trash' ></i></a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div> --}}
+            </div>
         </div>
         <div class="offcanvas-footer">
             {{-- <div class="custComment">
