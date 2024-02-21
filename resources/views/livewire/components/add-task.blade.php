@@ -78,7 +78,19 @@
                         </div>
                     </div>
                     <div class="taskPane-item mb-2">
-                        <button type="button" class="btn-border btn-sm btn-border-secondary" data-bs-toggle="modal" data-bs-target="#attached-file-modal"><i class="bx bx-paperclip" style="transform: rotate(60deg);"></i> 04 Attachements</button>
+                        <div class="taskPane-item-label mb-3"><a href="#"><i class="bx bx-paperclip text-secondary" style="transform: rotate(60deg);"></i></a> 04 Attachements</div>
+                        <div class="attached_files">
+                            <div class="attached_files-item">
+                                <div class="attached_files-item-preview">
+                                    <img class="attached_files-item-thumb" src="{{ env('APP_URL') }}/storage/images/invite_banner.jpg" alt="">
+                                </div>
+                            </div>
+                            <div class="attached_files-item">
+                                <div class="attached_files-item-preview">
+                                    <img class="attached_files-item-thumb" src="{{ env('APP_URL') }}/storage/images/thankyou.jpg" alt="">
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </form>

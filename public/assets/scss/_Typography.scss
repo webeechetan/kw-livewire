@@ -1036,3 +1036,21 @@ hr.space-sm {
         }
     }
 }
+
+/* ----- File Attachments ----- */
+.attached_files {
+    @include flex;
+    gap: 15px;
+    &-item {
+        &-preview {
+            width: 90px;
+            height: 90px;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid $grey_xd;
+        }
+        &-thumb {
+            width: 100%;
+        }
+    }
+}

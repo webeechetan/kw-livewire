@@ -1018,6 +1018,23 @@ hr.space-sm {
   outline: none;
 }
 
+/* ----- File Attachments ----- */
+.attached_files {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+.attached_files-item-preview {
+  width: 90px;
+  height: 90px;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid #ddd;
+}
+.attached_files-item-thumb {
+  width: 100%;
+}
+
 /*---- Buttons Style Start Here ----*/
 .btn {
   padding: 0.5rem 1.4rem;
@@ -2768,7 +2785,6 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
 /* ----- Avatar ----- */
 .avatarGroup {
   display: flex;
-  flex-wrap: wrap;
   gap: 3px;
 }
 .avatarGroup-avatar {
@@ -2787,9 +2803,9 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: #ddd;
+  background: #eee;
   border-radius: 50%;
-  border: 1px solid #eee;
+  border: 1px solid #f3f6f9;
   font-weight: 600;
   color: #191919;
 }
@@ -3339,7 +3355,6 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
 
 /* ----- Task List View ----- */
 .taskList {
-  max-height: 400px;
   margin-top: 5px;
   /* ----- Task List Header ----- */
 }
