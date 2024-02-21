@@ -815,7 +815,7 @@
                 <div class="taskPane-head">
                     <div class="taskPane-heading">
                         <div class="taskPane-heading-label"><i class='bx bx-notepad text-primary'></i> Task Heading</div>
-                        <input class="form-control form-control-typeStyle AddTask_title" wire:model="name" type="text" placeholder="Write a task name">
+                        <input class="form-control" wire:model="name" type="text" placeholder="Write a task name">
                     </div>
                     @error('name') <span class="text-danger">{{ $message }}</span> @enderror
                 </div>
@@ -862,24 +862,88 @@
                             <textarea name="" id="editor" cols="30" rows="4" placeholder="Type Description"></textarea>
                         </div>
                     </div>
+                    <div class="taskPane-item mb-2">
+                        <button type="button" class="btn-border btn-sm btn-border-secondary" data-bs-toggle="modal" data-bs-target="#attached-file-modal"><i class="bx bx-paperclip" style="transform: rotate(60deg);"></i> 04 Attachements</button>
+                    </div>
                 </div>
             </form>
-            <div class="taskPane-upload-list">
-                <div class="taskPane-upload"><img src="" alt=""></div>
-            </div>
             <div class="cmnt_sec">
                 <!-- Activity -->
-                <h5 class="cmnt_act_title"><span><i class='bx bx-line-chart text-primary'></i> Activity</span><span class="text-sm"><i class='bx bx-comment-dots text-secondary'></i> 15 Comments</span></h5>
-                <div class="cmnt_act">
-                    <div class="cmnt_act_row">
-                        <div class="cmnt_act_user">
-                            <div class="cmnt_act_user_img">
-                                <img class="rounded-circle" src="{{ env('APP_URL') }}/storage/images/users/Chetan%20Singh.png">
+                <h5 class="cmnt_item_title"><span><i class='bx bx-line-chart text-primary'></i> Activity</span><span class="text-sm"><i class='bx bx-comment-dots text-secondary'></i> 15 Comments</span></h5>
+                <div class="cmnt_item">
+                    <div class="cmnt_item-tabs">
+                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                            <button class="nav-link active" id="nav-internal-tab" data-bs-toggle="tab" data-bs-target="#nav-internal" type="button" role="tab" aria-controls="nav-internal" aria-selected="true">Internal Feedback <span class="text-sm ms-2"><i class='bx bx-comment-dots text-secondary'></i> 07</span></button>
+                            <button class="nav-link" id="nav-client-tab" data-bs-toggle="tab" data-bs-target="#nav-client" type="button" role="tab" aria-controls="nav-client" aria-selected="false">Client Feedback <span class="text-sm ms-2"><i class='bx bx-comment-dots text-secondary'></i> 08</span></button>
+                        </div>
+                    </div>
+                    <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane fade show active" id="nav-internal" role="tabpanel" aria-labelledby="nav-internal-tab" tabindex="0">
+                            <div class="cmnt_item_row">
+                                <div class="cmnt_item_user">
+                                    <div class="cmnt_item_user_img">
+                                        <img class="rounded-circle" src="{{ env('APP_URL') }}/storage/images/users/Chetan%20Singh.png">
+                                    </div>
+                                    <div class="cmnt_item_user_name-wrap">
+                                        <div class="cmnt_item_user_name">Chetan Kumar</div>
+                                        <div class="cmnt_item_date">1 Week Ago</div>
+                                        <div class="cmnt_item_user_text">Add logo in the client section and make it live</div>
+                                    </div>
+                                    <div class="cmnt_item_user-edit btn-list">
+                                        <a href="#" class="btn_link"><i class='bx bx-pencil' ></i></a>
+                                        <a href="#" class="btn_link"><i class='bx bx-trash' ></i></a>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="cmnt_act_user_name-wrap">
-                                <div class="cmnt_act_user_name">Chetan Kumar</div>
-                                <div class="cmnt_act_date">1 week ago</div>
-                                <div class="cmnt_act_user_text">Add logo in the client section and make it live</div>
+                            <div class="cmnt_item_row">
+                                <div class="cmnt_item_user">
+                                    <div class="cmnt_item_user_img">
+                                        <img class="rounded-circle" src="{{ env('APP_URL') }}/storage/images/users/Chetan%20Singh.png">
+                                    </div>
+                                    <div class="cmnt_item_user_name-wrap">
+                                        <div class="cmnt_item_user_name">Chetan Kumar</div>
+                                        <div class="cmnt_item_date">1 Week Ago</div>
+                                        <div class="cmnt_item_user_text">Add logo in the client section and make it live</div>
+                                    </div>
+                                    <div class="cmnt_item_user-edit btn-list">
+                                        <a href="#" class="btn_link"><i class='bx bx-pencil' ></i></a>
+                                        <a href="#" class="btn_link"><i class='bx bx-trash' ></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="nav-client" role="tabpanel" aria-labelledby="nav-client-tab" tabindex="0">
+                            <div class="cmnt_item_row">
+                                <div class="cmnt_item_user">
+                                    <div class="cmnt_item_user_img">
+                                        <img class="rounded-circle" src="{{ env('APP_URL') }}/storage/images/users/Chetan%20Singh.png">
+                                    </div>
+                                    <div class="cmnt_item_user_name-wrap">
+                                        <div class="cmnt_item_user_name">Chetan Kumar</div>
+                                        <div class="cmnt_item_date">1 Week Ago</div>
+                                        <div class="cmnt_item_user_text">Add logo in the client section and make it live</div>
+                                    </div>
+                                    <div class="cmnt_item_user-edit btn-list">
+                                        <a href="#" class="btn_link"><i class='bx bx-pencil' ></i></a>
+                                        <a href="#" class="btn_link"><i class='bx bx-trash' ></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cmnt_item_row">
+                                <div class="cmnt_item_user">
+                                    <div class="cmnt_item_user_img">
+                                        <img class="rounded-circle" src="{{ env('APP_URL') }}/storage/images/users/Chetan%20Singh.png">
+                                    </div>
+                                    <div class="cmnt_item_user_name-wrap">
+                                        <div class="cmnt_item_user_name">Chetan Kumar</div>
+                                        <div class="cmnt_item_date">1 Week Ago</div>
+                                        <div class="cmnt_item_user_text">Add logo in the client section and make it live</div>
+                                    </div>
+                                    <div class="cmnt_item_user-edit btn-list">
+                                        <a href="#" class="btn_link"><i class='bx bx-pencil' ></i></a>
+                                        <a href="#" class="btn_link"><i class='bx bx-trash' ></i></a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -897,7 +961,7 @@
             </div>
             <div class="taskPane-footer-wrap">
                 <button type="button" class="btn-border btn-sm btn-border-danger"><i class='bx bx-trash' ></i> Delete Task</button>
-                <button type="button" class="btn-border btn-sm btn-border-primary ms-auto"><i class='bx bx-check'></i> Save Task</button>
+                <button type="button" class="btn-sm btn-primary ms-auto"><i class='bx bx-check'></i> Save Task</button>
             </div>
         </div>
     </div>
@@ -915,16 +979,7 @@
                         <div class="modal-form-body">
                             <div class="row">
                                 <div class="col-12">
-                                    <label for="">Add Link</label>
-                                    <input type="text" class="form-style mt-2" placeholder="Add Link...">
-                                </div>
-                            </div>
-                            <div class="divider-or my-3 w-100"><span></span>OR<span></span></div>
-                            <div class="row">
-                                <div class="col-md-4 mb-4">
-                                    <label for="">Upload Image <br/>Or File</label>
-                                </div>
-                                <div class="col-md-8 mb-4">
+                                    <label for="" class="mb-2">Upload File</label>
                                     <div class="form-file_upload form-file_upload-logo">
                                         <input type="file" id="formFile">
                                         <div class="form-file_upload-box">
@@ -934,7 +989,25 @@
                                         <div class="form-file_upload-valText">Allowed *.jpeg, *.jpg, *.png, *.gif max size of 3 Mb</div>
                                     </div>
                                 </div>
-                            </div>                            
+                                <div class="col-12 divider-or my-3"><span></span>OR<span></span></div>
+                                <div class="col-12">
+                                    <label for="" class="mb-2">Add Link</label>
+                                    <input type="text" class="form-style" placeholder="Add Link...">
+                                </div>
+                            </div>
+                            <div class="row mt-4">
+                                <div class="col-12">
+                                    <div class="files-items-head column-head mb-4"><h5 class="title-sm mb-0">Recent Files</h5></div>
+                                    <div class="files-items">                    
+                                        <div class="files-item select_file " data-file="Webeesocial/Acma/User Profile Image.jpg">
+                                            <div class="files-item-icon"><span><img src="http://localhost:8000/assets/images/icons/image.svg" alt=""></span></div>
+                                            <div class="files-item-content">
+                                                <div class="files-item-content-title">User Profile Image.jpg</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>                           
                         </div>
                         <div class="modal-form-btm">
                             <div class="row">

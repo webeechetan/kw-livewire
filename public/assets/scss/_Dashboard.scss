@@ -502,7 +502,7 @@
         width: 100% !important;
         &--default {
             .select2-selection {
-                &--multiple {
+                &--multiple, &--single {
                     border: none;
                     .select2-selection__choice {
                         background: $light;
@@ -814,7 +814,7 @@
     padding-bottom: 3px
 }
 .note-editor.note-airframe, .note-editor.note-frame {
-    border-color: $grey;
+    border-color: $grey_xd;
 }
 .note-toolbar {
     background: $light;
@@ -833,14 +833,13 @@
 .custComment {
     &-wrap {
         position: relative;
-        margin: 15px 25px;
-        background-color: $light;
+        padding: 15px 25px;
     }
 
     &-btn {
         position: absolute;
-        right: 10px;
-        bottom: 10px;
+        right: 35px;
+        bottom: 25px;
         z-index: 99;
         font-size: 0.9rem;
         display: flex;
@@ -860,22 +859,16 @@
 
     .note-toolbar {
         position: absolute;
-        bottom: 3px;
-        left: 3px;
+        bottom: 0;
+        left: 0;
         border: none;
-        background: $white;
         z-index: 9;
-        width: calc(100% - 6px);
-        padding: 8px 5px;
-        border-top: 1px solid $grey;
-    }
-
-    .note-editable {
-        background-color: #fff;
+        background-color: transparent;
     }
 
     .note-editing-area {
         padding-bottom: 45px;
+        background-color: #fff;
     }
 
     .note-statusbar {
