@@ -38,5 +38,13 @@ class Project extends Component
         $this->project->users()->sync($users);
         $this->dispatch('user-synced','Users synced successfully');
     }
+
+    public function emitEditTaskEvent($id){
+        $this->dispatch('editTask', $id);
+    }
+
+    public function emitEditProjectEvent($id){
+        $this->dispatch('editProject',$id);
+    }
 }
  

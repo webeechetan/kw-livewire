@@ -60,6 +60,10 @@ class Task extends Model
         return $this->hasMany(Comment::class);
     }
 
+    public function notifiers(){
+        return $this->belongsToMany(User::class, 'task_user_notify');
+    }
+
     // scopes 
 
     public function scopeTasksByUserType($query){

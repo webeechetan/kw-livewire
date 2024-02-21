@@ -23,6 +23,7 @@ use App\Livewire\Teams\Team as TeamProfile;
 use App\Livewire\Tasks\AddTask;
 use App\Livewire\Tasks\ListTask;
 use App\Livewire\Tasks\TaskListView;
+use App\Livewire\Tasks\View;
 use App\Livewire\FileManager;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -85,6 +86,7 @@ Route::group(['middleware' => ['myauth']], function() {
     Route::get('/tasks',ListTask::class)->name('task.index');
     Route::get('/tasks/add',AddTask::class)->name('task.add');
     Route::get('/tasks/list-view',TaskListView::class)->name('task.list-view');
+    Route::get('/task/view',View::class)->name('task.view');
 
     Route::get('/file-manager',FileManager::class)->name('file-manager');
     
