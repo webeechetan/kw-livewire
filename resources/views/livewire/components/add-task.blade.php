@@ -15,7 +15,7 @@
             </div>
         </div>
         <div class="offcanvas-body scrollbar">
-            <form class="taskPane" method="POST" wire:submit="saveTask">
+            <form class="taskPane" method="POST" wire:submit="saveTask" enctype="multipart/form-data">
                 <div class="taskPane-head">
                     <div class="taskPane-heading">
                         <div class="taskPane-heading-label"><i class='bx bx-notepad text-primary'></i> Task Heading</div>
@@ -78,10 +78,20 @@
                         </div>
                     </div>
                     <div class="taskPane-item mb-2">
-                        <button type="button" class="btn-border btn-sm btn-border-secondary" data-bs-toggle="modal" data-bs-target="#attached-file-modal"><i class="bx bx-paperclip" style="transform: rotate(60deg);"></i> <span class="task-attachment-count">0 </span> Attachements</button>
-                            <div class="task-attachments">
-                                
+                        <div class="taskPane-item-label mb-3"><a href="#"><i class="bx bx-paperclip text-secondary add-attachments" style="transform: rotate(60deg);"></i></a> <span class="task-attachment-count">0</span> Attachements</div>
+                        <input class="d-none attachments" type="file" wire:model="attachments" multiple id="formFile" />
+                        <div class="attached_files">
+                            <div class="attached_files-item">
+                                <div class="attached_files-item-preview">
+                                    <img class="attached_files-item-thumb" src="{{ env('APP_URL') }}/storage/images/invite_banner.jpg" alt="" />
+                                </div>
                             </div>
+                            <div class="attached_files-item">
+                                <div class="attached_files-item-preview">
+                                    <img class="attached_files-item-thumb" src="{{ env('APP_URL') }}/storage/images/thankyou.jpg" alt="" />
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </form>
@@ -183,10 +193,17 @@
             </div>
         </div>
     </div>
+</div>
 
 
 @push('scripts')
     <script>
+            // add-attachments
+
+            $('.add-attachments').on('click', function(){
+                $('.attachments').click();
+            });
+
             // Select2
             $('.task-users').select2({
                 placeholder: "Select User",
@@ -279,19 +296,19 @@
                 
                 // .task-attachments
 
-                let attachment_html = '';
+                // let attachment_html = '';
 
-                event.detail[0].attachments.forEach(attachment => {
-                    attachment_html += `<div class="task-attachments-item">
-                        <div class="task-attachments-item-img">
-                            <a href="{{ env('APP_URL') }}/storage/${attachment.attachment_path}" target="_blank">
-                                ${attachment.attachment_path}
-                            </a>
-                        </div>
-                    </div>`;
-                });
+                // event.detail[0].attachments.forEach(attachment => {
+                //     attachment_html += `<div class="task-attachments-item">
+                //         <div class="task-attachments-item-img">
+                //             <a href="{{ env('APP_URL') }}/storage/${attachment.attachment_path}" target="_blank">
+                //                 ${attachment.attachment_path}
+                //             </a>
+                //         </div>
+                //     </div>`;
+                // });
 
-                $('.task-attachments').html(attachment_html);
+                // $('.task-attachments').html(attachment_html);
 
 
                 $('#offcanvasRight').offcanvas('show');
@@ -303,6 +320,6 @@
                 $(".task-attachment-count").html(event.detail.length);
                 $('#attached-file-modal').modal('hide');
             });
-    
+
     </script>
 @endpush

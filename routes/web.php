@@ -66,10 +66,10 @@ Route::group(['middleware' => ['myauth']], function() {
     Route::get('/clients/edit/{id}',EditClient::class)->name('client.edit');
     Route::get('/client/view/{id}',ClientProfile::class)->name('client.profile');
     
-    Route::get('/projects',ListProject::class)->name('project.index');
+    Route::get('/projects/{sort?}/{filter?}/{byUser?}/{byTeam?}',ListProject::class)->name('project.index');
     Route::get('/projects/add',AddProject::class)->name('project.add');
     Route::get('/projects/edit/{id}',EditProject::class)->name('project.edit');
-    Route::get('/project/view/{id}',Project::class)->name('project.profile');
+    Route::get('/project/view/{id}/{sort?}/{filter?}/{byUser?}/{byTeam?}',Project::class)->name('project.profile');
     
     Route::get('/teams',ListTeam::class)->name('team.index');
     Route::get('/teams/add',AddTeam::class)->name('team.add');

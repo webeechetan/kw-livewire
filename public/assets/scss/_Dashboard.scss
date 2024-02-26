@@ -75,7 +75,6 @@
 /* ----- Avatar ----- */
 .avatarGroup {
     display: flex;
-    flex-wrap: wrap;
     gap: 3px;
 
     &-avatar {
@@ -100,9 +99,9 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    background: $grey_xd;
+    background: $grey;
     border-radius: 50%;
-    border: 1px solid $grey;
+    border: 1px solid $light;
     font-weight: 600;
     color: $dark;
     img {
@@ -721,7 +720,6 @@
 
 /* ----- Task List View ----- */
 .taskList {
-    max-height: 400px;
     margin-top: 5px;
     &_col {
         padding: 8px $spacing_s;

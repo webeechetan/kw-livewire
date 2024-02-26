@@ -27,27 +27,29 @@
                                     <div class="filterSort">
                                         <h5 class="filterSort-header"><i class='bx bx-sort-down text-primary' ></i> Sort By</h5>
                                         <ul class="filterSort_btn_group list-none">
-                                            <li class="filterSort_item"><a href="#" class="btn-batch">Newest</a></li>
-                                            <li class="filterSort_item"><a href="#" class="btn-batch">Due Date</a></li>
-                                            <li class="filterSort_item"><a href="#" class="btn-batch"><i class='bx bx-down-arrow-alt' ></i> A To Z</a></li>
-                                            <li class="filterSort_item"><a href="#" class="btn-batch"><i class='bx bx-up-arrow-alt' ></i> Z To A</a></li>
+                                            <li class="filterSort_item"><a wire:navigate href="{{ route('project.index',['sort'=>'newest','filter'=>$filter,'byUser'=>$byUser, 'byTeam' => $byTeam])}}" class="btn-batch  @if($sort == 'newest') active @endif">Newest</a></li>
+                                            <li class="filterSort_item"><a wire:navigate href="{{ route('project.index',['sort'=>'oldest','filter'=>$filter,'byUser'=>$byUser, 'byTeam' => $byTeam])}}" class="btn-batch  @if($sort == 'oldest') active @endif">Oldest</a></li>
+                                            <li class="filterSort_item"><a wire:navigate href="{{ route('project.index',['sort'=>'a_z','filter'=>$filter,'byUser'=>$byUser, 'byTeam' => $byTeam])}}" class="btn-batch  @if($sort == 'a_z') active @endif"><i class='bx bx-down-arrow-alt' ></i> A To Z</a></li>
+                                            <li class="filterSort_item"><a wire:navigate href="{{ route('project.index',['sort'=>'z_a','filter'=>$filter,'byUser'=>$byUser, 'byTeam' => $byTeam])}}" class="btn-batch  @if($sort == 'z_a') active @endif"><i class='bx bx-up-arrow-alt' ></i> Z To A</a></li>
                                         </ul>
                                         <hr>
                                         <h5 class="filterSort-header"><i class='bx bx-briefcase text-primary' ></i> Filter By Status</h5>
                                         <ul class="filterSort_btn_group list-none">
-                                            <li class="filterSort_item"><a href="#" class="btn-batch">Active</a></li>
-                                            <li class="filterSort_item"><a href="#" class="btn-batch">Overdue</a></li>
-                                            <li class="filterSort_item"><a href="#" class="btn-batch">Completed</a></li>
-                                            <li class="filterSort_item"><a href="#" class="btn-batch">Archived</a></li>
+                                            <li class="filterSort_item"><a wire:navigate href="{{ route('project.index',['sort'=>$sort,'filter'=>'active','byUser'=>$byUser, 'byTeam' => $byTeam])}}" class="btn-batch  @if($filter == 'active') active @endif">Active</a></li>
+                                            <li class="filterSort_item"><a wire:navigate href="{{ route('project.index',['sort'=>$sort,'filter'=>'overdue','byUser'=>$byUser, 'byTeam' => $byTeam])}}" class="btn-batch  @if($filter == 'overdue') active @endif">Overdue</a></li>
+                                            <li class="filterSort_item"><a wire:navigate href="{{ route('project.index',['sort'=>$sort,'filter'=>'completed','byUser'=>$byUser, 'byTeam' => $byTeam])}}" class="btn-batch  @if($filter == 'completed') active @endif">Completed</a></li>
+                                            <li class="filterSort_item"><a wire:navigate href="{{ route('project.index',['sort'=>$sort,'filter'=>'archived','byUser'=>$byUser, 'byTeam' => $byTeam])}}" class="btn-batch  @if($filter == 'archived') active @endif">Archived</a></li>
                                         </ul>
                                         <hr>
-                                        <h5 class="filterSort-header"><i class='bx bx-briefcase text-primary' ></i> Filter By Clients</h5>
-                                        <select class="form-control"name="" id="">
-                                            <option value="Rakesh">Rakesh</option>
-                                            <option value="Rajiv">Rajiv</option>
+                                        <h5 class="filterSort-header"><i class='bx bx-objects-horizontal-left text-primary'></i> Filter By User</h5>
+                                        <select class="form-control" wire:model.live="byUser">
+                                            <option value="all">All</option>
+                                            @foreach($users as $user)
+                                                <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                            @endforeach
                                         </select>
                                         <hr>
-                                        <h5 class="filterSort-header"><i class='bx bx-objects-horizontal-left text-primary'></i> Filter By User</h5>
+                                        <h5 class="filterSort-header"><i class='bx bx-briefcase text-primary' ></i> Filter By Clients</h5>
                                         <select class="form-control"name="" id="">
                                             <option value="Rakesh">Rakesh</option>
                                             <option value="Rajiv">Rajiv</option>
@@ -64,7 +66,7 @@
     
     <div class="row mt-4">
         @foreach($projects as $project)
-            <div class="col-md-4">
+            <div class="col-md-4 mt-4">
                 <div class="card_style card_style-overdue">
                     <!-- Edit -->
                     <div class="cus_dropdown cus_dropdown-edit">
@@ -73,7 +75,7 @@
                             <div class="cus_dropdown-body-wrap">
                                 <ul class="cus_dropdown-list">
                                     <li><a wire:click="emitEditEvent({{ $project->id }})"><span class="text-secondary"><i class='bx bx-pencil' ></i></span> Edit</a></li>
-                                    <li><a wire:confirm="Are you sure you want to delete this project?" wire:click="delete({{ $project->id }})"><span class="text-danger"><i class='bx bx-trash' ></i></span> Delete</a></li>
+                                    <li><a wire:confirm="Are you sure you want to delete this project?" wire:click="emitDeleteEvent({{ $project->id }})"><span class="text-danger"><i class='bx bx-trash' ></i></span> Delete</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -161,6 +163,6 @@
     </div>
     
     <!-- Add Project Component -->
-    <livewire:components.add-project />
+    <livewire:components.add-project @saved="$refresh" />
     
 </div>

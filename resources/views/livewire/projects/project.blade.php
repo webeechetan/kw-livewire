@@ -34,7 +34,7 @@
                         </div>
                     </div>
                     <a href="javascript:" wire:click="emitEditProjectEvent({{ $project->id }})" class="btn-sm btn-border btn-border-secondary"><i class='bx bx-pencil'></i> Edit</a>
-                    <a href="javascript:" class="btn-sm btn-border btn-border-danger"><i class='bx bx-trash'></i> Delete</a>
+                    <a href="javascript:" wire:click.confirm="emitDeleteProjectEvent({{ $project->id }})" class="btn-sm btn-border btn-border-danger"><i class='bx bx-trash'></i> Delete</a>
                 </div>
             </div>
         </div>
@@ -96,14 +96,14 @@
                                 @if($loop->index > 2)
                                     @break
                                 @endif
-                                <a href="javascript:" class="avatarGroup-avatar">
+                                <a href="javascript:" class="avatarGroup-avatar" wire-key="project-user-{{$user->id}}">
                                     <span class="avatar avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ $user->name }}">
                                         <img alt="avatar" src="{{ asset('storage/'.$user->image) }}" class="rounded-circle">
                                     </span>
                                 </a>
                             @endforeach
                             @if($usersCount > 3)
-                                <a href="javascript:" class="avatarGroup-avatar">
+                                <a href="javascript:" class="avatarGroup-avatar" wire-key="project-user-more">
                                     <span class="avatar avatar-sm">
                                        +{{ $usersCount - 3 }}
                                     </span>
@@ -175,10 +175,10 @@
                                     <div class="filterSort">
                                         <h5 class="filterSort-header"><i class='bx bx-sort-down text-primary' ></i> Sort By</h5>
                                         <ul class="filterSort_btn_group list-none">
-                                            <li class="filterSort_item"><a href="javascript:" class="btn-batch">Newest</a></li>
-                                            <li class="filterSort_item"><a href="javascript:" class="btn-batch">Due Date</a></li>
-                                            <li class="filterSort_item"><a href="javascript:" class="btn-batch"><i class='bx bx-down-arrow-alt' ></i> A To Z</a></li>
-                                            <li class="filterSort_item"><a href="javascript:" class="btn-batch"><i class='bx bx-up-arrow-alt' ></i> Z To A</a></li>
+                                            <li class="filterSort_item"><a wire:navigate href="{{ route('project.profile',['id' => $project->id ,'sort'=>'newest','filter'=>$filter,'byUser'=>$byUser, 'byTeam' => $byTeam])}}" class="btn-batch  @if($sort == 'newest') active @endif">Newest</a></li>
+                                            <li class="filterSort_item"><a wire:navigate href="{{ route('project.profile',['id' => $project->id,'sort'=>'oldest','filter'=>$filter,'byUser'=>$byUser, 'byTeam' => $byTeam])}}" class="btn-batch  @if($sort == 'oldest') active @endif">Oldest</a></li>
+                                            <li class="filterSort_item"><a wire:navigate href="{{ route('project.profile',['id' => $project->id ,'sort'=>'a_z','filter'=>$filter,'byUser'=>$byUser, 'byTeam' => $byTeam])}}" class="btn-batch  @if($sort == 'a_z') active @endif"><i class='bx bx-down-arrow-alt' ></i> A To Z</a></li>
+                                            <li class="filterSort_item"><a wire:navigate href="{{ route('project.profile',['id' => $project->id ,'sort'=>'z_a','filter'=>$filter,'byUser'=>$byUser, 'byTeam' => $byTeam])}}" class="btn-batch  @if($sort == 'z_a') active @endif"><i class='bx bx-up-arrow-alt' ></i> Z To A</a></li>
                                         </ul>
                                         <hr>
                                         <div class="d-flex flex-wrap align-items-center justify-content-between">
@@ -188,13 +188,15 @@
                                             </div>
                                         </div>
                                         <hr>
-                                        <h5 class="filterSort-header"><i class='bx bx-sitemap text-primary' ></i> Teams</h5>
-                                        <select class="form-control"name="" id="">
-                                            <option value="Rakesh">Rakesh</option>
-                                            <option value="Rajiv">Rajiv</option>
+                                        <h5 class="filterSort-header"><i class='bx bx-objects-horizontal-left text-primary'></i> User</h5>
+                                        <select class="form-control" wire:model.live="byUser">
+                                            <option value="byUser">All</option>
+                                            @foreach($users as $user)
+                                                <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                            @endforeach
                                         </select>
                                         <hr>
-                                        <h5 class="filterSort-header"><i class='bx bx-objects-horizontal-left text-primary'></i> User</h5>
+                                        <h5 class="filterSort-header"><i class='bx bx-sitemap text-primary' ></i> Teams</h5>
                                         <select class="form-control"name="" id="">
                                             <option value="Rakesh">Rakesh</option>
                                             <option value="Rajiv">Rajiv</option>
@@ -240,7 +242,7 @@
                 <div class="taskList scrollbar">
                     <div>
                         @foreach($project->tasks as $task)
-                        <div class="taskList_row">
+                        <div class="taskList_row" wire:key="task-row-{{ $task->id }}">
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="taskList_col taskList_col_title">
@@ -257,7 +259,7 @@
                                     <div class="taskList_col">
                                         <div class="avatarGroup avatarGroup-overlap">
                                             @foreach($task->users as $user)
-                                                <a href="javascript:" class="avatarGroup-avatar">
+                                                <a href="javascript:" wire-key="task-user-{{$user->id}}" class="avatarGroup-avatar">
                                                     <span class="avatar avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ $user->name }}">
                                                         <img alt="avatar" src="{{ asset('storage/'.$user->image) }}" class="rounded-circle" />
                                                     </span>
@@ -270,7 +272,7 @@
                                     <div class="taskList_col">
                                         <div class="avatarGroup avatarGroup-overlap">
                                             @foreach($task->notifiers as $user)
-                                                <a href="javascript:" class="avatarGroup-avatar">
+                                                <a href="javascript:" class="avatarGroup-avatar" wire-key="task-notifier-{{$user->id}}">
                                                     <span class="avatar avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ $user->name }}">
                                                         <img alt="avatar" src="{{ asset('storage/'.$user->image) }}" class="rounded-circle" />
                                                     </span>
@@ -282,7 +284,7 @@
                                 <div class="col">                                    
                                     <div class="btn-list justify-content-center">
                                         <a class="btn-icon btn-icon-rounded btn-icon-edit edit-task" data-id="{{ $task->id }}" href="javascript:void(0);"><i class='bx bx-pencil'></i></a>
-                                        <a class="btn-icon btn-icon-rounded btn-icon-danger" href="javascript:void(0);"><i class='bx bx-trash' ></i></a>
+                                        <a wire:click="deleteTask({{ $task->id }})" class="btn-icon btn-icon-rounded btn-icon-danger" href="javascript:void(0);"><i class='bx bx-trash' ></i></a>
                                     </div>
                                 </div>
                             </div>
@@ -295,8 +297,8 @@
 
     </div>
     
-    <livewire:components.add-task @saved="$refresh" :project="$project"  />
-    <livewire:components.add-project @saved="$refresh" />
+    <livewire:components.add-task @saved="$refresh" :project="$project" wire:key="task-{{$project->id}}"  />
+    <livewire:components.add-project @saved="$refresh" wire:key="project-{{$project->id}}" />
     
 </div>
 @push('scripts')

@@ -149,6 +149,13 @@ class AddProject extends Component
 
     }
 
+    public function deleteProject($id)
+    {
+        $project = Project::find($id);
+        $project->delete();
+        $this->dispatch('success', 'Project deleted successfully.');
+        $this->dispatch('saved');
+    }
 
 
     public function resetForm(){

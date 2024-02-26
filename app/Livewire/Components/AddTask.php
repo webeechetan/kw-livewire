@@ -24,7 +24,6 @@ class AddTask extends Component
     public $project_id;
 
     public $attachments;
-    public $temp_paths = [];
 
     public function render()
     {
@@ -57,14 +56,17 @@ class AddTask extends Component
         $task->users()->sync($this->task_users);
         $task->notifiers()->sync($this->task_notifiers);
          // attach files to task from $this->attachments
-         foreach($this->temp_paths as $path){
-            $attachment = new Attachment();
-            $attachment->org_id = session('org_id');
-            $attachment->attachment_path = $path;
-            $attachment->name = basename($path);
-            $attachment->attachable_id = $task->id;
-            $attachment->attachable_type = Task::class;
-            $attachment->save();
+        if($this->attachments){
+            foreach($this->attachments as $attachment){
+                $path = $attachment->store('attachments');
+                $at = new Attachment();
+                $at->org_id = session('org_id');
+                $at->name = $attachment->getClientOriginalName();
+                $at->attachment_path = $path;
+                $at->attachable_id = $task->id;
+                $at->attachable_type = 'App\Models\Task';
+                $at->save();
+            }
         }
         $this->dispatch('saved','Task saved successfully');
         $this->redirect(route('project.profile',['id'=>$this->project->id]), navigate: true);
@@ -90,23 +92,22 @@ class AddTask extends Component
         $this->task->save();
         $this->task->users()->sync($this->task_users);
         $this->task->notifiers()->sync($this->task_notifiers);
-        $this->dispatch('saved','Task updated successfully');
-        $this->redirect(route('project.profile',['id'=>$this->project->id]), navigate: true);
-    }
-
-    public function attachFile(){
-        // store attachments in temp storage and then move to permanent storage after task is saved
-        $this->validate([
-            'attachments' => 'required',
-        ]);
-
-
-        foreach($this->attachments as $attachment){
-            $this->temp_paths[] = $attachment->store('attachments');
+        // attach files to task from $this->attachments
+        if($this->attachments){
+            foreach($this->attachments as $attachment){
+                $path = $attachment->store('attachments');
+                $at = new Attachment();
+                $at->org_id = session('org_id');
+                $at->name = $attachment->getClientOriginalName();
+                $at->attachment_path = $path;
+                $at->attachable_id = $this->task->id;
+                $at->attachable_type = 'App\Models\Task';
+                $at->save();
+            }
         }
 
-        $this->dispatch('file-attached',$this->temp_paths);
-    
+        $this->dispatch('saved','Task updated successfully');
+        $this->redirect(route('project.profile',['id'=>$this->project->id]), navigate: true);
     }
     
 }
