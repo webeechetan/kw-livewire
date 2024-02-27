@@ -154,6 +154,9 @@ ul {
     &-sm {
         font-size: 20px;
     }
+    &-md {
+        font-size: 24px;
+    }
     &-label {
         color: $text_color;
         font-weight: 500;
@@ -225,6 +228,9 @@ hr.space-sm {
         background-color: #fff;
         padding: $spacing_sm;
         border-radius: $border-radius_xs;
+        &-style1 {
+            border: 1px solid $grey;
+        }
     }
     &-head {
         border-bottom: 1px solid $grey;
@@ -620,6 +626,7 @@ hr.space-sm {
 /* ----- Edit Dropdown ----- */
 .cus_dropdown {
     position: relative;
+    display: inline-block;
 
     &-icon {
         font-size: 14px;
@@ -665,6 +672,10 @@ hr.space-sm {
         &-wrap {
             background-color: #fff;
             box-shadow: $box_shadow_light;
+        }
+        &_left {
+            right: inherit;
+            left: 0;
         }
     }
 
@@ -831,31 +842,6 @@ hr.space-sm {
     &.offcanvas-end {
         width: 550px;
     }
-    &-header {
-        padding: 15px 25px;
-        &-end {
-            @include flex_align_center;
-            gap: 15px;
-            margin-left: auto;
-            button {
-                font-size: 20px;
-                background-color: transparent;
-                border: none;
-                padding: 0;
-                margin: 0;
-                transition: $ease_03;
-                border: 1px solid $grey;
-    
-                &[data-bs-dismiss="offcanvas"] {
-                    font-size: 22px;
-                }
-                &:hover, &:focus {
-                    color: $brand;
-                    border-color: $brand;
-                }
-            }
-        }
-    }
     &-body {
         border-top: 1px solid $grey;
         padding: 0;
@@ -869,7 +855,34 @@ hr.space-sm {
 /* ----- Task Pane Module ----- */
 .taskPane {
     background-color: #fff;
-    padding: 15px 25px;
+    &-dashbaord {
+        &-head {
+            &-right {
+                @include flex_align_center;
+                justify-content: flex-end;
+                gap: 15px;
+                margin-left: auto;
+
+                button.btn-icon {
+                    font-size: 20px;
+                    background-color: transparent;
+                    border: none;
+                    padding: 0;
+                    margin: 0;
+                    transition: $ease_03;
+                    border: 1px solid $grey;
+        
+                    &[data-bs-dismiss="offcanvas"] {
+                        font-size: 22px;
+                    }
+                    &:hover, &:focus {
+                        color: $brand;
+                        border-color: $brand;
+                    }
+                }
+            }
+        }
+    }
     &-head {
         padding-top: 10px;
     }
@@ -933,17 +946,16 @@ hr.space-sm {
                 border-color: $brand;
             }
         }
-
-        &:not(:last-child) {
-            margin-bottom: 20px;
-        }
     }
     &-footer {
         &-wrap {
-            padding: 15px 25px;
             border-top: 1px solid $grey_xd;
             @include flex_align_center;
         }
+    }
+    &-calenderView {
+        border: 1px solid $grey;
+        border-radius: $border-radius_xs;
     }
 }
 
@@ -953,10 +965,8 @@ hr.space-sm {
         border-top: 1px solid $grey;
     }
     &_item {
-        padding: 0 25px 25px;
         &_title {
             font-size: 18px;
-            padding: 15px 25px 0 25px;
             @include flex_align_center;
             justify-content: space-between;
             background-color: #fff;
@@ -983,7 +993,6 @@ hr.space-sm {
     
             &_text {
                 margin-top: $spacing_s;
-                font-size: 14px;
             }
 
             &-edit {
@@ -998,7 +1007,7 @@ hr.space-sm {
         }
         &_row {
             background-color: $light;
-            padding: 10px;
+            padding: 20px;
             border-radius: 7px;
             &:not(:last-child) {
                 margin-bottom: 10px;
@@ -1017,14 +1026,11 @@ hr.space-sm {
                     width: 50%;
                     text-align: left;
                     transition: $ease_03;
+                    font-weight: 500;
 
-                    &.active {
-                        color: $text-color;
+                    &.active, &:hover, &:focus {
+                        color: $brand;
                         border-color: $brand;
-                    }
-
-                    &:hover, &:focus {
-                        color: $text-color;
                     }
 
                     &:focus-visible {
@@ -1043,14 +1049,110 @@ hr.space-sm {
     gap: 15px;
     &-item {
         &-preview {
-            width: 90px;
-            height: 90px;
+            width: 70px;
+            height: 70px;
             border-radius: 10px;
             overflow: hidden;
             border: 1px solid $grey_xd;
+            @include flex_center;
+            font-size: 22px;
+            color: $text_light;
+            cursor: pointer;
         }
         &-thumb {
             width: 100%;
         }
+    }
+}
+
+/* ----- User Profile ----- */
+.user {
+    &-profile {
+        text-align: center;
+        &-img {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 15px;
+            border-radius: 50%;
+            overflow: hidden;
+
+            img {
+                width: 100%;
+            }
+        }
+    }
+}
+
+/* ----- All Stats Style ----- */
+
+.states_style {
+    display: grid;
+    gap: 15px;
+    
+    &-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: $border_radius_xs;
+        @include flex_center;
+        font-size: 24px;
+        color: $text-color;
+        border: 1px solid $grey_xd;
+        background-color: #fff;
+    }
+
+    &-text {
+        color: $text-color;
+        font-weight: 500;
+    }
+
+    &-success {
+
+        .states_style-icon {
+            background-color: $success_light;
+            border-color:  $success;
+        }
+
+        .states_style-icon, .states_style-text {
+            color: $success;
+        }
+    }
+
+    &-overdue {
+
+        .states_style-icon {
+            background-color: $danger_light;
+            border-color:  $danger;
+        }
+
+        .states_style-icon, .states_style-text {
+            color: $danger;
+        }
+    }
+
+    &-progress {
+        .states_style-icon {
+            background-color: $secondary_light;
+            border-color:  $secondary;
+        }
+
+        .states_style-icon, .states_style-text {
+            color: $secondary;
+        }
+    }
+
+    &-active {
+        .states_style-icon {
+            background-color: $brand_light;
+            border-color:  $brand;
+        }
+
+        .states_style-icon, .states_style-text {
+            color: $brand;
+        }
+    }
+
+    &-left {
+        display: grid;
+        grid-template-columns: auto 1fr;
     }
 }

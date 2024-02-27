@@ -1,11 +1,11 @@
 <div>
     <div wire:ignore class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
-        <div class="offcanvas-header">
+        <div class="offcanvas-header taskPane-dashbaord-head py-3 px-4">
             <div class="btn-list">
                 <button type="button" class="btn-batch btn-batch-secondary">Accepted</button>
                 <button type="button" class="btn-batch btn-batch-success">Completed</button>
             </div>
-            <div class="offcanvas-header-end">
+            <div class="taskPane-dashbaord-head-right">
                 <button type="button" class="btn-icon"><i class='bx bx-check text-success' ></i></button>
                 <button type="button" class="btn-icon" data-bs-toggle="modal" data-bs-target="#attached-file-modal"><i class='bx bx-paperclip' style="transform: rotate(60deg);"></i></button>
                 <button type="button" class="btn-icon"><i class='bx bx-link' ></i></button>
@@ -15,7 +15,7 @@
             </div>
         </div>
         <div class="offcanvas-body scrollbar">
-            <form class="taskPane" method="POST" wire:submit="saveTask">
+            <form class="taskPane py-3 px-4" method="POST" wire:submit="saveTask">
                 <div class="taskPane-head">
                     <div class="taskPane-heading">
                         <div class="taskPane-heading-label"><i class='bx bx-notepad text-primary'></i> Task Heading</div>
@@ -25,7 +25,7 @@
                     @error('name') <span class="text-danger">{{ $message }}</span> @enderror
                 </div>
                 <div class="taskPane-body">
-                    <div class="taskPane-item d-flex flex-wrap" >
+                    <div class="taskPane-item d-flex flex-wrap mb-3" >
                         <div class="taskPane-item-left"><div class="taskPane-item-label">Assigned to</div></div>
                         <div class="taskPane-item-right" wire:ignore>
                             <select name="" id="" class="task-users" multiple>
@@ -36,7 +36,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="taskPane-item d-flex flex-wrap">
+                    <div class="taskPane-item d-flex flex-wrap mb-3">
                         <div class="taskPane-item-left"><div class="taskPane-item-label">Notify to</div></div>
                         <div class="taskPane-item-right">
                             <select name="" id="" class="task-notify-users" multiple>
@@ -47,7 +47,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="taskPane-item d-flex flex-wrap">
+                    <div class="taskPane-item d-flex flex-wrap mb-3">
                         <div class="taskPane-item-left"><div class="taskPane-item-label">Project</div></div>
                         <div class="taskPane-item-right">
                             <select name="" id="" class="task-projects">
@@ -62,7 +62,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="taskPane-item d-flex flex-wrap">
+                    <div class="taskPane-item d-flex flex-wrap mb-3">
                         <div class="taskPane-item-left"><div class="taskPane-item-label">Due Date</div></div>
                         <div class="taskPane-item-right">
                             <a href="javascript:">
@@ -71,8 +71,8 @@
                             </a>
                         </div>
                     </div>
-                    <div class="taskPane-item">
-                        <div class="taskPane-item-label mb-3">Description</div>
+                    <div class="taskPane-item mb-3">
+                        <div class="taskPane-item-label mb-2">Description</div>
                         <div>
                             <textarea wire:model="description" id="editor" cols="30" rows="4" placeholder="Type Description"></textarea>
                         </div>
@@ -94,10 +94,10 @@
                     </div>
                 </div>
             </form>
-            <div class="cmnt_sec">
+            <div class="cmnt_sec p-4">
                 <!-- Activity -->
-                <h5 class="cmnt_item_title"><span><i class='bx bx-line-chart text-primary'></i> Activity</span><span class="text-sm"><i class='bx bx-comment-dots text-secondary'></i> 15 Comments</span></h5>
                 <div class="cmnt_item">
+                    <h5 class="cmnt_item_title"><span><i class='bx bx-line-chart text-primary'></i> Activity</span><span class="text-sm"><i class='bx bx-comment-dots text-secondary'></i> 15 Comments</span></h5>
                     <div class="cmnt_item-tabs">
                         <div class="nav nav-tabs" id="nav-tab" role="tablist">
                             <button class="nav-link active" id="nav-internal-tab" data-bs-toggle="tab" data-bs-target="#nav-internal" type="button" role="tab" aria-controls="nav-internal" aria-selected="true">Internal Feedback <span class="text-sm ms-2"><i class='bx bx-comment-dots text-secondary'></i> 07</span></button>
@@ -186,7 +186,7 @@
                     <button wire:click="saveComment" class="custComment-btn"><i class='bx bx-send'></i> Comment</button>
                 </div>
             </div> --}}
-            <div class="taskPane-footer-wrap">
+            <div class="taskPane-footer-wrap py-3 px-4">
                 <button type="button" class="btn-border btn-sm btn-border-danger"><i class='bx bx-trash' ></i> Delete Task</button>
                 <button type="button" wire:click="saveTask" class="btn-border btn-sm btn-border-primary ms-auto"><i class='bx bx-check'></i> Save Task</button>
             </div>

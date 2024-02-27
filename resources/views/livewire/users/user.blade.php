@@ -1,3 +1,141 @@
-<div>
-    {{-- To attain knowledge, add things every day; To attain wisdom, subtract things every day. --}}
+<div class="container">
+    <!-- Dashboard Header -->
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a wire:navigate href="#"><i class='bx bx-line-chart'></i> Dashboard</a></li>
+            <li class="breadcrumb-item"><a wire:navigate href="#">All Projects</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Himanshu Sharma</li>
+        </ol>
+    </nav>
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="column-box">
+                <div class="user-profile">
+                    <div class="user-profile-img"><img src="/storage/images/user_pro.jpg" alt=""></div>
+                    <h3 class="main-body-header-title mb-2">Himanshu Sharma</h3>
+                    <div><i class="bx bx-envelope me-1 text-secondary"></i> ajay@gmail.com</div>
+                    <div class="card_style-user-head-position mt-2"><i class="bx bx-user text-primary"></i> Web Developer | Tech Team</div>
+                </div>
+                <hr>
+                <div class="row align-items-center mb-2">
+                    <div class="col"><span><i class='bx bx-cake text-warning'></i></span> Date Of Birth</div>
+                    <div class="col">26 Jan 1999</div>
+                </div>
+                <div class="row align-items-center mb-2">
+                    <div class="col"><span><i class='bx bx-calendar-alt text-success' ></i></span> Joining Date</div>
+                    <div class="col">06 March 2023</div>
+                </div>
+                <hr>
+                <div>
+                    <div class="title-label"><i class='bx bx-sitemap text-primary' ></i> Assign Teams</div>
+                    <div class="btn-list">
+                        <a href="javascript:" class="btn-batch btn-batch-profile"><span><img alt="avatar" src="http://localhost:8000/storage/images/users/Ajay Kumar.png" class="rounded-circle"></span> Tech Team</a>
+                        <a href="javascript:" class="btn-batch btn-batch-profile"><span><img alt="avatar" src="http://localhost:8000/storage/images/users/Ajay Kumar.png" class="rounded-circle"></span> Tech Team</a>
+                        <a href="javascript:" class="btn-batch btn-batch-profile"><span><img alt="avatar" src="http://localhost:8000/storage/images/users/Ajay Kumar.png" class="rounded-circle"></span> Tech Team</a>
+                    </div>
+                </div>
+                <hr>
+                <div>
+                    <div class="title-label"><i class='bx bx-briefcase text-primary' ></i> Assign Clients</div>
+                    <div class="btn-list">
+                        <a href="javascript:" class="btn-batch">Acma</a>
+                        <a href="javascript:" class="btn-batch">Refresh Botainicals</a>
+                        <a href="javascript:" class="btn-batch">Prunell</a>
+                    </div>
+                </div>
+                <hr>
+                <div>
+                    <div class="title-label"><i class='bx bx-briefcase text-primary' ></i> Projects</div>
+                    <div class="btn-list">
+                        <a href="javascript:" class="btn-batch">Acma</a>
+                        <a href="javascript:" class="btn-batch">Refresh Botainicals</a>
+                        <a href="javascript:" class="btn-batch">Prunell</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-8">
+            <div class="column-box mb-4">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <div class="tabNavigationBar-tab">
+                            <a class="tabNavigationBar-item tabNavigationBar-item-active" href="#"><i class="bx bx-list-ul"></i>Overview</a>
+                            <a class="tabNavigationBar-item" href="#"><i class="bx bx-columns"></i> Projects <span class="btn-icon btn-icon-primary">15</span></a>
+                            <a class="tabNavigationBar-item" href="#"><i class="bx bx-columns"></i> Tasks <span class="btn-icon btn-icon-primary">50</span></a>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="main-body-header-right">
+                            <!-- Edit -->
+                            <div class="cus_dropdown">
+                                <!-- For Active Class = btn-border-success | For Archived Class = btn-border-archived -->
+                                <div class="cus_dropdown-icon btn-border btn-border-success">Active <i class='bx bx-chevron-down' ></i></div>
+                                <div class="cus_dropdown-body cus_dropdown-body-widh_s">
+                                    <div class="cus_dropdown-body-wrap">
+                                        <ul class="cus_dropdown-list">
+                                            <li><a href="javascript:" class="active"><span><i class='bx bx-user-check' ></i></span> Active</a></li>
+                                            <li><a href="javascript:"><span><i class='bx bx-user-minus' ></i></span> Archived</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="javascript:" class="btn-sm btn-border btn-border-secondary"><i class='bx bx-pencil'></i> Edit</a>
+                            <a href="javascript:" class="btn-sm btn-border btn-border-danger"><i class='bx bx-trash'></i> Delete</a>
+                        </div>
+                    </div>
+                </div>                    
+            </div>
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <div class="column-box">
+                        <div class="states_style states_style-left states_style-progress">
+                            <div class="states_style-icon"><i class='bx bx-objects-horizontal-left' ></i></div>
+                            <div>
+                                <h5 class="title-md mb-1">12</h5>
+                                <div class="states_style-text">Projects Done</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 mb-4">
+                    <div class="column-box">
+                        <div class="states_style states_style-left states_style-success">
+                            <div class="states_style-icon"><i class='bx bx-task'></i></div>
+                            <div>
+                                <h5 class="title-md mb-1">1.23k</h5>
+                                <div class="states_style-text">Tasks Done</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="column-box">
+                        <div class="states_style states_style-left states_style-overdue">
+                            <div class="states_style-icon"><i class='bx bx-task-x' ></i></div>
+                            <div>
+                                <h5 class="title-md mb-1">25</h5>
+                                <div class="states_style-text">Tasks Overdue</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="column-box mb-4">
+                <h5 class="title-sm mb-2">Bio</h5>
+                <div class="user-profile-bio">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</div>      
+            </div>
+            <div class="column-box mb-4">
+                <h5 class="title-sm mb-2">Skils</h5>
+                <div class="btn-list">
+                    <span class="btn-batch">Photoshop</span><span class="btn-batch">HTML</span><span class="btn-batch">jQuery</span><span class="btn-batch">Ajax</span>
+                </div>
+            </div>
+            <div class="column-box">
+                <h5 class="title-sm mb-2">Experience</h5>
+                <div class="btn-list">
+                    <span>10 Years as Web Designer</span>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

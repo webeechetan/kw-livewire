@@ -24,6 +24,18 @@
         }
     }
 
+    &-secondary {
+        color: $white;
+        background-color: $secondary;
+        border: 1px solid $secondary;
+        border-radius: $border_radius_xs;
+        &:hover, &:focus, &:active, &:first-child:active {
+            color: $white;
+            background-color: $secondary_hover;
+            border: 1px solid $secondary_hover;
+        }
+    }
+
     &-yellow {
         color: $text_color;
         background-color: $yellow_light;

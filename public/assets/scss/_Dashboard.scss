@@ -202,25 +202,55 @@
 
 /* ----- Tab Navigator Bar ----- */
 .tabNavigationBar {
-    &-tab {
-        display: flex;
-        flex-direction: inherit;
-        gap: 30px;
-    }
     &-item {
-        padding: 15px 0;
-        font-weight: 600;
-        svg {
-            width: 18px;
-            height: 18px;
-        }
-        &-active {
+        font-weight: 500;
+        transition: $ease_03;
+        padding: 10px 0;
+
+        &-active, &:hover {
             background-color: inherit;
             color: $brand;
-            border-bottom: 1px solid $brand;
         }
         &:last-child {
             border-radius: 0;
+        }
+        .btn-number {
+            min-width: 30px;
+            height: 25px;
+            background-color: $light;
+            border: 1px solid $grey_xd;
+            font-size: 14px;
+            @include inline_flex_center;
+            border-radius: $border-radius_xs;
+
+            &-secondary {
+                background-color: $secondary_light;
+                border-color: $secondary;
+                color: $secondary;
+            }
+
+            &-success {
+                background-color: $success_light;
+                border-color: $success;
+                color: $success;
+            }
+        }
+    }
+
+    &-tab {
+        display: flex;
+        grid-gap: 5px;
+        border-bottom: 1px solid $grey_xd;
+
+        &.border_style {
+            .tabNavigationBar-item {
+                padding: 10px 15px;
+                border-bottom: 2px solid transparent;
+
+                &-active, &:hover {
+                    border-color: $brand;
+                }
+            }
         }
     }
 }
@@ -506,8 +536,8 @@
                     .select2-selection__choice {
                         background: $light;
                         padding: 4px 10px;
-                        margin: 0;
-                        border: none;
+                        margin: 0 5px 5px 0;
+                        border-color: $grey;
                         border-radius: 30px;
                         font-size: 14px;
                         display: inline-flex;
@@ -526,6 +556,7 @@
                             width: 25px;
                             height: 25px;
                             border-radius: $border_radius;
+                            margin-left: -5px;
                         }
                     }
                 }
@@ -576,13 +607,9 @@
             }
             &.select2-container--focus .select2-selection--multiple {
                 border: none;
+                margin: 0;
+                padding: 0;
             }
-        }
-
-        .select2-selection--multiple .select2-selection__rendered {
-            display: inline-flex;
-            flex-wrap: wrap;
-            gap: 10px;
         }
 
         &--open .select2-dropdown--below {
@@ -793,6 +820,9 @@
 }
 
 /* ----- Summer Note Editor ----- */
+.note-editable {
+    min-height: 200px;
+}
 .note-editor.note-airframe .note-editing-area .note-editable, .note-editor.note-frame .note-editing-area .note-editable {
     font-size: 14px;
 }
@@ -812,11 +842,10 @@
     padding-bottom: 3px
 }
 .note-editor.note-airframe, .note-editor.note-frame {
-    border-color: $grey_xd;
+    border-color: transparent;
 }
 .note-toolbar {
-    background: $light;
-    border-bottom: 1px solid $grey;
+    border-color: transparent;
 }
 .note-editor.note-airframe .note-statusbar, .note-editor.note-frame .note-statusbar {
     border-color: $grey;
@@ -829,48 +858,29 @@
 
 /* ----- Comment Area ----- */
 .custComment {
-    &-wrap {
-        position: relative;
-        padding: 15px 25px;
-    }
 
-    &-btn {
-        position: absolute;
-        right: 35px;
-        bottom: 25px;
-        z-index: 99;
-        font-size: 0.9rem;
-        display: flex;
-        align-items: center;
-        grid-gap: 4px;
-        background-color: $brand;
-        color: #fff;
-        border: none;
-        padding: 3px 8px;
-        border-radius: $border_radius_xs;
-        transition: $ease_03;
-
-        &:hover, &:active, &:focus {
-            background-color: $secondary;
-        }
-    }
-
-    .note-toolbar {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        border: none;
-        z-index: 9;
-        background-color: transparent;
-    }
-
-    .note-editing-area {
-        padding-bottom: 45px;
+    &-editor {
         background-color: #fff;
+        border-radius: 4px;
+        padding: 10px;
+        position: relative;
     }
 
-    .note-statusbar {
-        display: none;
+    &-attachments {
+        position: absolute;
+        top: 23px;
+        left: 25px;
+    }
+
+    .panel-heading.note-toolbar {
+        padding: 10px 10px 10px 37px;
+        border-radius: 4px;
+    }
+
+    .note {
+        &-statusbar {
+            display: none;
+        }
     }
 }
 
@@ -1032,13 +1042,6 @@
     padding: $spacing_xs;
     border-radius: $border_radius_xs;
     position: relative;
-    margin-top: 15px;
-
-    &:last-child {
-        .cus_dropdown-body {
-            bottom: 25px;
-        }
-    }
 
     &-style_2 {
         display: flex;
