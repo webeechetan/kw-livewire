@@ -47,7 +47,7 @@
         </div>
     </div>
     <div class="tabNavigationBar-tab border_style mb-3">
-        <a class="tabNavigationBar-item active" href="{{ route('client.overview', $client->id) }}"><i class='bx bx-line-chart'></i> Overview</a>
+        <a class="tabNavigationBar-item active" href="{{ route('client.profile', $client->id) }}"><i class='bx bx-line-chart'></i> Overview</a>
         <a class="tabNavigationBar-item" href="{{ route('client.projects', $client->id) }}"><i class='bx bx-layer' ></i> Projects</a>
         <a class="tabNavigationBar-item" href="{{ route('client.file-manager', $client->id ) }}"><i class='bx bx-objects-horizontal-left' ></i> File Manager</a>
     </div>
