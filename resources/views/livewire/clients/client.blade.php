@@ -47,9 +47,9 @@
         </div>
     </div>
     <div class="tabNavigationBar-tab border_style mb-3">
-        <a class="tabNavigationBar-item tabNavigationBar-item-active" href="#"><i class='bx bx-line-chart'></i> Overview</a>
-        <a class="tabNavigationBar-item" href="#"><i class='bx bx-layer' ></i> Projects</a>
-        <a class="tabNavigationBar-item" href="#"><i class='bx bx-objects-horizontal-left' ></i> File Manager</a>
+        <a class="tabNavigationBar-item active" href="{{ route('client.overview', $client->id) }}"><i class='bx bx-line-chart'></i> Overview</a>
+        <a class="tabNavigationBar-item" href="{{ route('client.projects', $client->id) }}"><i class='bx bx-layer' ></i> Projects</a>
+        <a class="tabNavigationBar-item" href="{{ route('client.file-manager', $client->id ) }}"><i class='bx bx-objects-horizontal-left' ></i> File Manager</a>
     </div>
 
     <!-- Dashboard Body -->
@@ -92,9 +92,10 @@
         <div class="row">
             <div class="col-lg-8">
                 <div class="column-title mb-2">Description</div>
-                <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit</div>
                 <hr>
-                <h5 class="column-title">Teams</h5>
+                <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit</div>
+                <h5 class="column-title mt-4">Teams</h5>
+                <hr>
                 <!-- Teams -->
                 <div class="team-list row">
                     @foreach($client->teams as $team)
@@ -163,6 +164,8 @@
             </div>
         </div>        
     </div>
+
+    <!-- All Projects -->
     <div class="col-12 mb-4 d-none">
         <div class="column-box h-100">
             <div class="column-head d-flex flex-wrap gap-20 align-items-center mb-4">
@@ -267,6 +270,8 @@
             </div>
         </div>
     </div>
+
+    <!-- Teams & Folders -->
     <div class="row">
         <div class="col-md-3">
             <div class="column-box h-100">

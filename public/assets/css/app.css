@@ -1087,11 +1087,11 @@ hr.space-sm {
 .states_style-success .states_style-icon, .states_style-success .states_style-text {
   color: #48914d;
 }
-.states_style-overdue .states_style-icon {
+.states_style-danger .states_style-icon {
   background-color: #fedddc;
   border-color: #ff0000;
 }
-.states_style-overdue .states_style-icon, .states_style-overdue .states_style-text {
+.states_style-danger .states_style-icon, .states_style-danger .states_style-text {
   color: #ff0000;
 }
 .states_style-progress .states_style-icon {
@@ -1102,11 +1102,11 @@ hr.space-sm {
   color: #7407ff;
 }
 .states_style-active .states_style-icon {
-  background-color: #ffe6f1;
-  border-color: #f83890;
+  background-color: #fdf4c1;
+  border-color: #f7d306;
 }
 .states_style-active .states_style-icon, .states_style-active .states_style-text {
-  color: #f83890;
+  color: #cdb110;
 }
 .states_style-left {
   display: grid;
@@ -2989,7 +2989,7 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   transition: all 0.3s ease;
   padding: 10px 0;
 }
-.tabNavigationBar-item-active, .tabNavigationBar-item:hover {
+.tabNavigationBar-item.active, .tabNavigationBar-item:hover {
   background-color: inherit;
   color: #f83890;
 }
@@ -3027,7 +3027,7 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   padding: 10px 15px;
   border-bottom: 2px solid transparent;
 }
-.tabNavigationBar-tab.border_style .tabNavigationBar-item-active, .tabNavigationBar-tab.border_style .tabNavigationBar-item:hover {
+.tabNavigationBar-tab.border_style .tabNavigationBar-item.active, .tabNavigationBar-tab.border_style .tabNavigationBar-item:hover {
   border-color: #f83890;
 }
 

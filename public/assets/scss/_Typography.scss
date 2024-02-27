@@ -1117,7 +1117,7 @@ hr.space-sm {
         }
     }
 
-    &-overdue {
+    &-danger {
 
         .states_style-icon {
             background-color: $danger_light;
@@ -1142,12 +1142,12 @@ hr.space-sm {
 
     &-active {
         .states_style-icon {
-            background-color: $brand_light;
-            border-color:  $brand;
+            background-color: $yellow_light;
+            border-color:  $yellow;
         }
 
         .states_style-icon, .states_style-text {
-            color: $brand;
+            color: $yellow_dark;
         }
     }
 

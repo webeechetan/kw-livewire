@@ -207,7 +207,7 @@
         transition: $ease_03;
         padding: 10px 0;
 
-        &-active, &:hover {
+        &.active, &:hover {
             background-color: inherit;
             color: $brand;
         }
@@ -247,7 +247,7 @@
                 padding: 10px 15px;
                 border-bottom: 2px solid transparent;
 
-                &-active, &:hover {
+                &.active, &:hover {
                     border-color: $brand;
                 }
             }
