@@ -3,15 +3,10 @@
     <div class="d-flex flex-wrap justify-content-between align-items-start">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a wire:navigate href="{{ route('dashboard') }}"><i class='bx bx-line-chart'></i> Dashboard</a></li>
+                <li class="breadcrumb-item"><a wire:navigate href="{{ route('dashboard') }}"><i class='bx bx-line-chart'></i> Webeesocial</a></li>
                 <li class="breadcrumb-item active" aria-current="page">All Clients</li>
             </ol>
         </nav>
-        {{-- <div class="d-flex flex-wrap gap-2 align-items-center justify-content-end">
-            <span class="pe-2 text-sm">Filter Results:</span>
-            <a href="#" class="btn-batch">Newest <span class="ms-1"><i class='bx bx-x'></i></span></a>
-            <a href="#" class="btn-batch">Newest <span class="ms-1"><i class='bx bx-x'></i></span></a>
-        </div> --}}
     </div>
     <div class="dashboard-head">
         <div class="row align-items-center">
@@ -23,7 +18,7 @@
             <div class="col">
                 <div class="main-body-header-right">
                     <form class="search-box" wire:submit="search" action="">
-                        <input wire:model="query" type="text" class="form-control" placeholder="Search Clients...">
+                        <input wire:model="query" type="text" class="form-control" placeholder="Search Companies">
                         <button type="submit" class="search-box-icon"><i class='bx bx-search me-1'></i> Search</button>
                     </form>
                     <div class="main-body-header-filters">
@@ -49,14 +44,14 @@
                                         <ul class="filterSort_btn_group list-none">
                                             <li class="filterSort_item"><a wire:navigate href="{{ route('client.index',['sort'=>$sort,'filter'=>'active']) }}" class="btn-batch  @if($filter == 'active') active @endif">Active</a></li>
                                             <li class="filterSort_item"><a wire:navigate href="{{ route('client.index',['sort'=>$sort,'filter'=>'completed']) }}" class="btn-batch  @if($filter == 'completed') active @endif">Completed</a></li>
-                                            <li class="filterSort_item"><a wire:navigate href="{{ route('client.index',['sort'=>$sort,'filter'=>'archived']) }}" class="btn-batch  @if($filter == 'archived') active @endif">Archived</a></li>
+                                            <li class="filterSort_item"><a wire:navigate href="{{ route('client.index',['sort'=>$sort,'filter'=>'archived']) }}" class="btn-batch  @if($filter == 'archived') active @endif">Archive</a></li>
                                         </ul>
                                         {{--<hr>
                                         <h5 class="filterSort-header"><i class='bx bx-objects-horizontal-left text-primary'></i> Filter By Projects</h5>
                                         <ul class="filterSort_btn_group list-none">
                                             <li class="filterSort_item"><a href="#" class="btn-batch">Active</a></li>
                                             <li class="filterSort_item"><a href="#" class="btn-batch">Completed</a></li>
-                                            <li class="filterSort_item"><a href="#" class="btn-batch">Archived</a></li>
+                                            <li class="filterSort_item"><a href="#" class="btn-batch">Archive</a></li>
                                         </ul> --}}
                                     </div>
                                 </div>
@@ -68,7 +63,13 @@
         </div>
     </div>
     
-    <div class="row mt-4">
+    <div class="row">
+        <div class="d-flex flex-wrap gap-2 align-items-center py-3">
+            <span class="pe-2"><i class='bx bx-filter-alt text-secondary'></i> Filter Results:</span>
+            <span href="#" class="btn-batch">Newest <a href="javascript:;" class="ms-1"><i class='bx bx-x'></i></a></span>
+            <span href="#" class="btn-batch">Newest <a href="javascript:;" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
+            <a href="#" class="text-danger d-flex align-items-center">Reset <span class="ms-1 d-inline-flex"><i class='bx bx-refresh'></i></span></a>
+        </div>
         @foreach($clients as $client)
         @php
             $activeProjects = $client->projects->where('status', 'active');
@@ -86,11 +87,11 @@
                         <div class="cus_dropdown-body-wrap">
                             <ul class="cus_dropdown-list">
                                 @if($client->trashed())
-                                    <li><a href="javascript:" wire:click="emitRestoreEvent({{ $client->id }})"><span class="text-danger"><i class='bx bx-recycle'></i></span> Restore</a></li>
-                                    <li><a href="javascript:" wire:click="emitForceDeleteEvent({{ $client->id }})"><span class="text-danger"><i class='bx bx-trash'></i></span> Permanent Delete</a></li>
+                                    <li><a href="javascript:" wire:click="emitRestoreEvent({{ $client->id }})"><span><i class='bx bx-recycle'></i></span> Restore</a></li>
+                                    <li><a href="javascript:" wire:click="emitForceDeleteEvent({{ $client->id }})"><span><i class='bx bx-trash'></i></span> Permanent Delete</a></li>
                                 @else
-                                    <li class="edit_client" wire:click="emitEditEvent({{ $client->id }})"><a href="javascript:"><span class="text-secondary "><i class='bx bx-pencil' ></i></span> Edit</a></li>
-                                    <li><a href="javascript:" wire:click="emitDeleteEvent({{ $client->id }})"><span class="text-danger"><i class='bx bx-trash' ></i></span> Delete</a></li>
+                                    <li class="edit_client" wire:click="emitEditEvent({{ $client->id }})"><a href="javascript:"><span><i class='bx bx-pencil' ></i></span> Edit</a></li>
+                                    <li><a href="javascript:" wire:click="emitDeleteEvent({{ $client->id }})"><span><i class='bx bx-trash' ></i></span> Delete</a></li>
                                 @endif
                             </ul>
                         </div>

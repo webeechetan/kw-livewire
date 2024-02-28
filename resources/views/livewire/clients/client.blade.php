@@ -7,13 +7,13 @@
             <li class="breadcrumb-item active" aria-current="page">{{ $client->name }}</li>
         </ol>
     </nav>
-    <div class="dashboard-head mb-3">
+    <div class="dashboard-head mb-2">
         <div class="row align-items-center">
             <div class="col">
                 <div class="dashboard-head-title-wrap">
                     <div class="client_head_logo"><img src="{{ env('APP_URL') }}/storage/{{ $client->image }}" alt=""></div>
                     <div>
-                        <h3 class="main-body-header-title mb-0">{{ $client->name }} </h3>
+                        <h3 class="main-body-header-title mb-0">{{ $client->name }}</h3>
                         <div class="client_head-date">
                             {{ \Carbon\Carbon::parse($client->onboard_date)->format('d M-Y') }}
                         </div>
@@ -34,8 +34,8 @@
                         <div class="cus_dropdown-body cus_dropdown-body-widh_s">
                             <div class="cus_dropdown-body-wrap">
                                 <ul class="cus_dropdown-list">
-                                    <li><a wire:click="changeClientStatus('active')" @if(!$client->trashed()) class="active" @endif><span><i class='bx bx-user-check' ></i></span> Active</a></li>
-                                    <li><a wire:click="changeClientStatus('archived')" @if($client->trashed()) class="active" @endif ><span><i class='bx bx-user-minus' ></i></span> Archived</a></li>
+                                    <li><a href="javascript:;" wire:click="changeClientStatus('active')" @if(!$client->trashed()) class="active" @endif>Active</a></li>
+                                    <li><a href="javascript:;" wire:click="changeClientStatus('archived')" @if($client->trashed()) class="active" @endif>Archive</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -90,7 +90,7 @@
     </div>
     <div class="column-box mb-5">
         <div class="row">
-            <div class="col-lg-8">
+            <div class="col-lg-8 pe-lg-5">
                 <div class="column-title mb-2">Description</div>
                 <hr>
                 <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit</div>
@@ -99,7 +99,7 @@
                 <!-- Teams -->
                 <div class="team-list row">
                     @foreach($client->teams as $team)
-                        <div class="col-md-6 col-lg-4">
+                        <div class="col-auto">
                             <div class="team team-style_2 editTeam">
                                 <!-- Edit -->
                                 <div class="cus_dropdown cus_dropdown-edit">
@@ -119,7 +119,7 @@
                                             <img src="{{ env('APP_URL') }}/storage/{{ $team->image }}" alt="">
                                         </span>
                                     </div>
-                                    <h4 class="team-style_2-title">{{$team->name}} 
+                                    {{-- <h4 class="team-style_2-title">{{$team->name}} 
                                         <span class="team-style_2-memCount">
                                             @php
                                                 $team_user_count = [];
@@ -135,30 +135,50 @@
                                             @endphp
                                             Members
                                         </span>
-                                    </h4>
+                                    </h4> --}}
+                                    <div>
+                                        <h4 class="team-style_2-title">{{$team->name}}</h4>
+                                        <div class="avatarGroup avatarGroup-overlap">
+                                            <a href="#" class="avatarGroup-avatar">
+                                                <span class="avatar avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Ajay Kumar" data-bs-original-title="Ajay Kumar">
+                                                    <img alt="avatar" src="http://localhost:8000/storage/images/users/Ajay Kumar.png" class="rounded-circle">
+                                                </span>
+                                            </a>
+                                            <a href="#" class="avatarGroup-avatar">
+                                                <span class="avatar avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Roshan Jajoria" data-bs-original-title="Roshan Jajoria">
+                                                    <img alt="avatar" src="http://localhost:8000/storage/images/users/Roshan Jajoria.png" class="rounded-circle">
+                                                </span>
+                                            </a>
+                                            <a href="#" class="avatarGroup-avatar">
+                                                <span class="avatar avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Chetan Singh" data-bs-original-title="Chetan Singh">
+                                                    <img alt="avatar" src="http://localhost:8000/storage/images/users/Chetan Singh.png" class="rounded-circle">
+                                                </span>
+                                            </a>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     @endforeach
                 </div>
             </div>
-            <div class="col-lg-4">
+            <div class="col-lg-4 font-500">
                 <div class="column-box bg-light mb-2">
                     <div class="row align-items-center">
                         <div class="col"><span><i class='bx bx-layer text-secondary' ></i></span> Created By</div>
-                        <div class="col">Rakesh Roshan</div>
+                        <div class="col text-secondary">Rakesh Roshan</div>
                     </div>
                 </div>
                 <div class="column-box bg-light mb-2">
                     <div class="row align-items-center">
                         <div class="col"><span><i class='bx bx-calendar text-success'></i></span> Onboard Date</div>
-                        <div class="col">27 Feb, 2024</div>
+                        <div class="col text-success">27 Feb, 2024</div>
                     </div>
                 </div>
                 <div class="column-box bg-light">
                     <div class="row align-items-center">
-                        <div class="col"><span><i class='bx bx-user'></i></span> Point Of Contact</div>
-                        <div class="col">Md. Husain</div>
+                        <div class="col"><span><i class='bx bx-user text-primary'></i></span> Point Of Contact</div>
+                        <div class="col text-primary">Md. Husain</div>
                     </div>
                 </div>
             </div>
@@ -166,21 +186,21 @@
     </div>
 
     <!-- All Projects -->
-    <div class="col-12 mb-4 d-none">
+    <div class="col-12 mb-4">
         <div class="column-box h-100">
             <div class="column-head d-flex flex-wrap gap-20 align-items-center mb-4">
                 <div>
                     <h5 class="mb-0">All Projects</h5>
-                    <div class="text-light">{{ count($client->projects) }} Projects</div>
+                    <div><i class='bx bx-layer text-secondary' ></i> {{ count($client->projects) }} Projects</div>
                 </div>
                 <div class="ms-auto">
-                    <a class="btn btn-sm btn-primary" href="#" data-bs-toggle="modal" data-bs-target="#projectModal"><i class="bx bx-plus"></i> Add Project</a>
+                    <a class="btn-border btn-sm btn-border-secondary" href="#" data-bs-toggle="modal" data-bs-target="#projectModal"><i class="bx bx-plus"></i> Add Project</a>
                 </div>
             </div>
             <div class="project-tabs">
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link active" id="project-active-tab" data-bs-toggle="tab" data-bs-target="#project-active-tab-pane" type="button" role="tab" aria-controls="project-active-tab-pane" aria-selected="true">Active</button>
+                        <button class="nav-link project-tabs-active active" id="project-active-tab" data-bs-toggle="tab" data-bs-target="#project-active-tab-pane" type="button" role="tab" aria-controls="project-active-tab-pane" aria-selected="true">Active</button>
                     </li>
                     <li class="nav-item" role="presentation">
                         <button class="nav-link project-tabs-completed" id="project-done-tab" data-bs-toggle="tab" data-bs-target="#project-done-tab-pane" type="button" role="tab" aria-controls="project-done-tab-pane" aria-selected="false">Completed</button>
@@ -355,7 +375,7 @@
                                     <label for="">Project Name<sup class="text-primary">*</sup></label>
                                 </div>
                                 <div class="col-md-8 mb-4">
-                                    <input wire:model="project_name" type="text" class="form-style" placeholder="Project Name Here...">
+                                    <input wire:model="project_name" type="text" class="form-style" placeholder="Project Name">
                                 </div>
                             </div>
                             <div class="row">
@@ -385,11 +405,9 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-4 mb-4">
-                                    <label for="">Project Desc</label>
-                                </div>
-                                <div class="col-md-8 mb-4">
-                                    <textarea wire:model="project_description" type="text" class="form-style" placeholder="Add Project Description Here..." rows="2" cols="30"></textarea>
+                                <div class="col-12">
+                                    <label for="" class="mb-2">Add Description</label>
+                                    <textarea wire:model="project_description" type="text" class="form-style" placeholder="Add Description" rows="2" cols="30"></textarea>
                                 </div>
                             </div>
                             

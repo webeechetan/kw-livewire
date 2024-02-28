@@ -11,10 +11,22 @@
                         <div class="modal-form-body">
                             <div class="row">
                                 <div class="col-md-4 mb-4">
-                                    <label for="">Client Name<sup class="text-primary">*</sup></label>
+                                    <label for="">Company Name<sup class="text-primary">*</sup></label>
                                 </div>
                                 <div class="col-md-8 mb-4">
-                                    <input wire:model="client_name" type="text" class="form-style" placeholder="Client Name Here...">
+                                    <input wire:model="client_name" type="text" class="form-style" placeholder="Company Name">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Brand Name<sup class="text-primary">*</sup></label>
+                                </div>
+                                <div class="col-md-8 mb-4">
+                                    <input wire:model="client_name" type="text" class="form-style" placeholder="Brand Name">
+                                    <div class="form-check mt-2">
+                                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                        <label class="form-check-label" for="defaultCheck1">Use This as Title</label>
+                                    </div>
                                 </div>
                             </div>
                             <div class="row">
@@ -46,11 +58,9 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-4 mb-4">
-                                    <label for="">Project Desc</label>
-                                </div>
-                                <div class="col-md-8 mb-4">
-                                    <textarea type="text" wire:model="client_description" class="form-style" placeholder="Add Project Description Here..." rows="2" cols="30"></textarea>
+                                <div class="col-12">
+                                    <label for="" class="mb-2">Add Description</label>
+                                    <textarea type="text" wire:model="client_description" class="form-style" placeholder="Add Description" rows="4" cols="30"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -107,8 +117,8 @@
                 });
                 $('.old-image').removeClass('d-none');
                 $('.old-image-src').attr('src', '{{ env("APP_URL") }}/storage/'+event.detail[0].image);
-                $('.client-form-text').html('Edit Client');
-                $('.client-form-btn').html('Update Client');
+                $('.client-form-text').html('Edit');
+                $('.client-form-btn').html('Update');
             })
 
         });

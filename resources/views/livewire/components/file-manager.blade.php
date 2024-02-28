@@ -1,8 +1,8 @@
-<div class="column-box h-100 p-3">
+<div class="column-box p-3" style="margin-bottom:150px;">
     <div class="files-head column-head d-flex flex-wrap align-items-center">
         <div>
-            <h5 class="mb-0">Files & Folders</h5>
-            <div class="text-light"><span class="text-primary"><i class='bx bx-folder' ></i></span> {{ $directories_count }} <span class="px-2">|</span> <span class="text-secondary"><i class='bx bx-file-blank' ></i></span> {{$files_count}} <span class="px-2">|</span> {{$used_storage_size_in_mb}}MB Used / 100MB</div>
+            <h5 class="column-title">Files & Folders</h5>
+            <div class="text-light"><span class="text-secondary"><i class='bx bx-file-blank' ></i></span> {{$files_count}} <span class="px-2">|</span> <span class="text-primary"><i class='bx bx-folder' ></i></span> {{ $directories_count }} <span class="px-2">|</span> <span class="text-primary"><i class='bx bx-link-alt' ></i></span> {{ $directories_count }} <span class="px-2">|</span> {{$used_storage_size_in_mb}}MB Used / 100MB</div>
         </div>
         <div class="files-options ms-auto">
             <div class="btn-list align-items-center gap-10">
@@ -22,13 +22,8 @@
         <!-- <div class="spinner-border text-primary " role="status" >
             <span class="sr-only"></span>
         </div> -->
-        <div class="loader_cus loader_column w-100" wire:loading.delay>
-            <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100">
-                <div class="progress-bar" style="width: 25%"></div>
-            </div>
-        </div>
         <div class="row pt-3">
-            <div class="col mb-3">
+            <div class="col-12">
                 <nav aria-label="breadcrumb">
                     <ul class="breadcrumb mb-0">
                         @foreach($path_array as $p )
@@ -46,10 +41,76 @@
                     </ul>
                 </nav>
             </div>
-            <div class="col text-end">
-                <div class="d-flex align-items-center flex-wrap justify-content-end"><span class="text-primary d-flex"><i class='bx bx-folder me-1' ></i></span> {{ count($selected_directories) }} <span class="px-2">|</span> <span class="text-secondary d-flex"><i class='bx bx-file-blank me-1' ></i></span> {{ count($selected_files) }} Selected</div>
+        </div>
+
+        <!-- Loader -->
+        <div class="loader_cus loader_column w-100" wire:loading.delay>
+            <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+                <div class="progress-bar" style="width: 25%"></div>
             </div>
         </div>
+
+        <!-- Add Files & Folders -->
+        <div class="row mt-3">
+            <div class="col-md-4">
+                <div class="files-folder files-folder-add_new files-folder-primary">
+                    <span class="files-folder-icon"><i class='bx bx-file-blank' ></i></span>
+                    <div class="files-folder-title ms-1">Add File</div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="files-folder files-folder-add_new files-folder-warning">
+                    <span class="files-folder-icon"><i class='bx bx-folder' ></i></span>
+                    <div class="files-folder-title ms-1">Add Folder</div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="files-folder files-folder-add_new files-folder-secondary">
+                    <span class="files-folder-icon"><i class='bx bx-link-alt' ></i></span>
+                    <div class="files-folder-title ms-1">Add Link</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- File & Folder Wrap -->
+        <div class="files-items-wrap mt-4 mb-3">
+            <div class="column-head column-head-light d-flex flex-wrap align-items-center">
+                <div>
+                    <h5 class="title-sm mb-2">Acma Attachments</h5>
+                    <div><i class='bx bx-data text-primary' ></i> {{ $directories_count }} Attachments <span class="px-2">|</span> {{$used_storage_size_in_mb}}MB Used / 100MB</div>
+                </div>
+                <form class="search-box search-box-float-style ms-auto" action="">
+                    <span class="search-box-float-icon"><i class="bx bx-search"></i></span>
+                    <input type="text" class="form-control" placeholder="Search Task...">
+                </form>
+            </div>
+        </div>
+
+        <!-- Filters -->
+        <div class="btn-list mb-3">
+            <a href="#" class="btn-border btn-border-success"><i class='bx bx-data'></i> All {{ count($selected_files) }}</a>
+            <a href="#" class="btn-border btn-border-primary"><i class='bx bx-file-blank' ></i> Files {{ count($selected_files) }}</a>
+            <a href="#" class="btn-border btn-border-warning"><i class='bx bx-folder me-1' ></i> Folders {{ count($selected_directories) }}</a>
+            <a href="#" class="btn-border btn-border-secondary"><i class='bx bx-link-alt' ></i> Links {{ count($selected_directories) }}</a>
+        </div>
+        <div class="files-list">
+            <div class="files-folder">
+                <div class="files-size">18.19 KB</div>
+                <span class="files-folder-icon"><i class="bx bx-folder"></i></span>
+                <div class="files-folder-title">Level 1</div>
+                <div class="text-light"><span class="text-primary"><i class="bx bx-folder"></i></span> 1 <span class="px-2">|</span> <span class="text-secondary"><i class="bx bx-file-blank"></i></span> 0</div>
+            </div>
+            <div class="files-item">
+                <div class="files-size">18.19 KB</div>
+                <div class="files-item-icon">
+                    <span><img src="http://localhost:8000/assets/images/icons/image.svg" alt=""></span>
+                </div>
+                <div class="files-item-content">
+                    <div class="files-item-content-title mb-2">welcome-profile-vector-image-view.png</div>
+                </div>
+            </div>
+        </div>
+        
         <div class="files-list">
             @foreach($directories as $directory_name => $directory_data)
                 <div class="files-folder select_directory @if(in_array($directory_data['directory_path'], $selected_directories)) selected @endif" data-directory="{{$directory_data['directory_path']}}" wire:dblclick="openFolder('{{$directory_data['directory_path']}}')">
@@ -97,15 +158,16 @@
                 <div class="files-folder-title">Add Folder</div>
             </div>
         </div>
+
         <div class="files-items-wrap">
-            <div class="files-items-head column-head mb-4">
-                <h5 class="title-sm mb-0">Recent Files</h5>
-                <!-- <form class="ms-auto" action="">
+            <div class="files-items-head column-head d-flex flex-wrap align-items-center mb-4">
+                <h5 class="title-sm mb-0">Acma Attachments</h5>
+                <form class="ms-auto" action="">
                     <div class="search-box">
                         <input class="form-control" type="text" placeholder="Search File...">
                         <span class="search-box-icon"><i class='bx bx-search' ></i></span>   
                     </div>
-                </form> -->
+                </form>
             </div>
            
             <div class="files-items">
@@ -119,7 +181,7 @@
                             @endif
                         </div>
                         <div class="files-item-content">
-                            <div class="files-item-content-title">{{$file_name}}</div>
+                            <div class="files-item-content-title mb-2">{{$file_name}}</div>
                             <div class="files-item-content-des">{{ $file_data['size'] }} KB | {{ $file_data['last_modified'] }}</div>
                         </div>
                     </div>
