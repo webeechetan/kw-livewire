@@ -12,7 +12,6 @@ use App\Livewire\Clients\EditClient;
 use App\Livewire\Clients\Client as ClientProfile;
 use App\Livewire\Clients\Components\FileManager as ClientFileManager;
 use App\Livewire\Clients\Components\Projects as ClientProjects;
-use App\Livewire\Clients\Components\Overview as ClientOverview;
 
 
 
@@ -72,7 +71,6 @@ Route::group(['middleware' => ['myauth']], function() {
     Route::get('/clients/add',AddClient::class)->name('client.add');
     Route::get('/clients/edit/{id}',EditClient::class)->name('client.edit');
     Route::get('/client/view/{id}',ClientProfile::class)->name('client.profile');
-    Route::get('/client/view/{id?}/overview',ClientOverview::class)->name('client.overview');
     Route::get('/client/view/{id?}/projects',ClientProjects::class)->name('client.projects');
     Route::get('/client/view/{id?}/file-manager',ClientFileManager::class)->name('client.file-manager');
     

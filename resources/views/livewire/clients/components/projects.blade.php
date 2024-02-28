@@ -43,9 +43,9 @@
         </div>
     </div>
     <div class="tabNavigationBar-tab border_style mb-3">
-        <a class="tabNavigationBar-item" href="#"><i class='bx bx-line-chart'></i> Overview</a>
-        <a class="tabNavigationBar-item active" href="#"><i class='bx bx-layer' ></i> Projects</a>
-        <a class="tabNavigationBar-item" href="#"><i class='bx bx-objects-horizontal-left' ></i> File Manager</a>
+        <a class="tabNavigationBar-item" href="{{ route('client.profile', $client->id) }}"><i class='bx bx-line-chart'></i> Overview</a>
+        <a class="tabNavigationBar-item active" href="{{ route('client.projects', $client->id) }}"><i class='bx bx-layer' ></i> Projects</a>
+        <a class="tabNavigationBar-item" href="{{ route('client.file-manager', $client->id ) }}"><i class='bx bx-objects-horizontal-left' ></i> File Manager</a>
     </div>
 
     <!-- Dashboard Body -->
@@ -86,7 +86,7 @@
     </div>
     <div class="column-box">
         <div class="row">
-            {{-- <div class="col-12 mb-4">
+            <div class="col-12 mb-4">
                 <div class="column-box h-100">
                     <div class="column-head d-flex flex-wrap gap-20 align-items-center mb-4">
                         <div>
@@ -94,7 +94,7 @@
                             <div class="text-light">{{ count($client->projects) }} Projects</div>
                         </div>
                         <div class="ms-auto">
-                            <a class="btn btn-sm btn-primary" href="#" data-bs-toggle="modal" data-bs-target="#projectModal"><i class="bx bx-plus"></i> Add Project</a>
+                            <a class="btn btn-sm btn-primary" href="#" data-bs-toggle="modal" data-bs-target="#add-project-modal"><i class="bx bx-plus"></i> Add Project</a>
                         </div>
                     </div>
                     <div class="project-tabs">
@@ -189,7 +189,9 @@
                         </div>
                     </div>
                 </div>
-            </div> --}}
+            </div>
         </div>
     </div>
+    <!-- Add Project Modal -->
+    <livewire:components.add-project @saved="$refresh" />
 </div>
