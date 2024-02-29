@@ -135,8 +135,8 @@
                                             <div class="cus_dropdown-body cus_dropdown-body-widh_s">
                                                 <div class="cus_dropdown-body-wrap">
                                                     <ul class="cus_dropdown-list">
-                                                        <li><a href="#" wire:click="editProject({{ $project->id }})"><span class="text-secondary"><i class='bx bx-pencil' ></i></span> Edit</a></li>
-                                                        <li><a href="#"><span wire:click="deleteProject({{ $project->id }})" class="text-danger"><i class='bx bx-trash' ></i></span> Delete</a></li>
+                                                        <li><a href="#" wire:click="emitEditEvent({{ $project->id }})"><span class="text-secondary"><i class='bx bx-pencil' ></i></span> Edit</a></li>
+                                                        <li wire:click="emitDeleteEvent({{ $project->id }})"><a ><span class="text-danger"><i class='bx bx-trash' ></i></span> Delete</a></li>
                                                     </ul>
                                                 </div>
                                             </div>
