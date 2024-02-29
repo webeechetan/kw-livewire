@@ -27,7 +27,7 @@
                                     <label for="">Project Name<sup class="text-primary">*</sup></label>
                                 </div>
                                 <div class="col-md-8 mb-4">
-                                    <input wire:model="project_name" type="text" class="form-style" placeholder="Project Name Here...">
+                                    <input wire:model="project_name" type="text" class="form-style" placeholder="Project Name">
                                 </div>
                             </div>
                             <div class="row">
@@ -70,10 +70,10 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-4 mb-4">
-                                    <label for="">Project Desc</label>
+                                    <label for="">Add Description</label>
                                 </div>
                                 <div class="col-md-8 mb-4">
-                                    <textarea wire:model="project_description" type="text" class="form-style" placeholder="Add Project Description Here..." rows="2" cols="30"></textarea>
+                                    <textarea wire:model="project_description" type="text" class="form-style" placeholder="Add Description" rows="2" cols="30"></textarea>
                                 </div>
                             </div>
                             

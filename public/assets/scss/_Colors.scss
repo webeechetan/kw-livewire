@@ -14,6 +14,7 @@ $scrollbar_color: $yellow_light;
 
 $light: #f3f6f9;
 $text_light: #9c9c9c;
+$text_grey: #d1d1d1;
 $text_color: #191919;
 $text_form: $text_light;
 
@@ -107,7 +108,7 @@ $table_header_color: $secondary;
         }
     }
     &-grey {
-        color: $grey !important;
+        color: $text_grey !important;
     }
     &-dark-grey {
         color: $grey_xd;

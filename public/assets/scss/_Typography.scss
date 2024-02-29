@@ -168,6 +168,12 @@ ul {
     }
 }
 
+.font {
+    &-500 {
+        font-weight: 500;
+    }
+}
+
 /*---- Section Space ----*/
 .space {
     &-sec {
@@ -235,6 +241,13 @@ hr.space-sm {
     &-head {
         border-bottom: 1px solid $grey;
         padding-bottom: $spacing_xs;
+
+        &-light {
+            border-bottom: none;
+            background-color: $light;
+            padding: 10px 15px;
+            border-radius: $border-radius_xs;
+        }
     }
     &-title {
         font-size: 22px;
@@ -280,24 +293,16 @@ hr.space-sm {
     }
 
     &-float {
-        &-style {          
-            border-color: transparent;
-            border-bottom-color: $grey_xd;
-            padding: 0;
-            border-radius: 0;
+        &-style {      
             input.form-control {
-                padding: 4px 20px 4px 25px;
                 font-size: 13px;
             }
         }
         &-icon {
-            position: absolute;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            margin: auto;
-            color: $text_light;
-            @include flex_align_center;
+            color: $secondary;
+            width: 30px;
+            @include flex_center;
+            border-right: 1px solid $grey_xd;
         }
     }
 }
@@ -697,10 +702,11 @@ hr.space-sm {
 
                 &:hover, &.active {
                     color: $brand;
+                    background-color: $brand_light;
                 }
             }
             &:not(:last-child) {
-                border-bottom: 1px solid $grey;
+                border-bottom: 2px solid #fff;
             }
         }
     }
@@ -751,7 +757,7 @@ hr.space-sm {
         text-transform: uppercase;
     }
 
-    label {
+    label:not(.form-check-label) {
         color: $text_color;
         font-weight: 600;
     }
@@ -782,12 +788,21 @@ hr.space-sm {
 .breadcrumb {
     &-item {
         font-size: 14px;
-        a {
-            color: $text_light;
-        }
         &.active {
-            color: $brand;
+            color: $secondary;
         }
+        a {
+            color: $text-color;
+            transition: $ease_03;
+            &:hover, &:focus {
+                color: $secondary;
+            }
+        }
+
+        + .breadcrumb-item::before {
+            color: $text_grey;
+        }
+        
     }
 }
 

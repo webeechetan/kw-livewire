@@ -7,7 +7,7 @@
                     <div class="row">
                         <form wire:submit="addClient" method="POST" enctype="multipart/form-data">
                             <div class="col-md-12">
-                                <label for="name">Client Name</label>
+                                <label for="name">Company Name</label>
                                 <input type="text" wire:model="name" name="name" class="form-control" placeholder="Enter Client Name">
                                 @error('name') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>

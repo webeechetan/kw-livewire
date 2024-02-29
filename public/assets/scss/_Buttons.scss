@@ -189,6 +189,16 @@
                 color: #fff;
             }
         }
+        &-warning {
+            border: 1px solid $warning;
+            background-color: $warning_light;
+            color: $yellow-dark;
+            &:hover, &.active {
+                background-color: $yellow-dark;
+                border-color: $yellow-dark;
+                color: #fff;
+            }
+        }
         &-danger {
             border: 1px solid $danger;
             background-color: $danger_light;
