@@ -35,6 +35,16 @@ class OrgSeeder extends Seeder
             mkdir($path, 0777, true);
         }
 
+        // user for organization
+
+        $user = new User();
+        $user->name = $org->name;
+        $user->email = $org->email;
+        $user->password = Hash::make($org->password);
+        $user->org_id = $org->id;
+        $user->image = Helper::createAvatar($org->name,'users');
+        $user->save();
+
         // clients
 
         $client1 = new Client();
@@ -68,6 +78,7 @@ class OrgSeeder extends Seeder
         $project->client_id = 1;
         $project->name = 'Acma Website';
         $project->description = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
+        $project->image = Helper::createAvatar($project->name,'projects');
         $project->save();
         // create folder for project
         $path = public_path('storage/'.$org->name.'/'.$client1->name.'/'.$project->name);
@@ -79,6 +90,7 @@ class OrgSeeder extends Seeder
         $project->org_id = $org->id;
         $project->client_id = 1;
         $project->name = 'Acma Mobile App';
+        $project->image = Helper::createAvatar($project->name,'projects');
         $project->description = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
         $project->save();
         // create folder for project
@@ -91,6 +103,7 @@ class OrgSeeder extends Seeder
         $project->org_id = $org->id;
         $project->client_id = 2;
         $project->name = 'GRG Website';
+        $project->image = Helper::createAvatar($project->name,'projects');
         $project->description = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
         $project->save();
         // create folder for project
@@ -103,6 +116,7 @@ class OrgSeeder extends Seeder
         $project->org_id = $org->id;
         $project->client_id = 2;
         $project->name = 'GRG CA website';
+        $project->image = Helper::createAvatar($project->name,'projects');
         $project->description = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
         $project->save();
         // create folder for project

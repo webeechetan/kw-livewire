@@ -14,10 +14,7 @@ use App\Livewire\Clients\Components\FileManager as ClientFileManager;
 use App\Livewire\Clients\Components\Projects as ClientProjects;
 
 
-
-use App\Livewire\Projects\AddProject;
 use App\Livewire\Projects\ListProject;
-use App\Livewire\Projects\EditProject;
 use App\Livewire\Projects\Project;
 use App\Livewire\Users\AddUser;
 use App\Livewire\Users\ListUser;
@@ -68,15 +65,11 @@ Route::group(['middleware' => ['myauth']], function() {
     Route::get('/dashboard',Dashboard::class)->name('dashboard');
     
     Route::get('/clients/{sort?}/{filter?}',ListClient::class)->name('client.index');
-    Route::get('/clients/add',AddClient::class)->name('client.add');
-    Route::get('/clients/edit/{id}',EditClient::class)->name('client.edit');
     Route::get('/client/view/{id}',ClientProfile::class)->name('client.profile');
     Route::get('/client/view/{id?}/projects',ClientProjects::class)->name('client.projects');
     Route::get('/client/view/{id?}/file-manager',ClientFileManager::class)->name('client.file-manager');
     
     Route::get('/projects/{sort?}/{filter?}/{byUser?}/{byTeam?}',ListProject::class)->name('project.index');
-    Route::get('/projects/add',AddProject::class)->name('project.add');
-    Route::get('/projects/edit/{id}',EditProject::class)->name('project.edit');
     Route::get('/project/view/{id}/{sort?}/{filter?}/{byUser?}/{byTeam?}',Project::class)->name('project.profile');
     
     Route::get('/teams',ListTeam::class)->name('team.index');

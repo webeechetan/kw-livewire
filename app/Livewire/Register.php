@@ -5,7 +5,8 @@ namespace App\Livewire;
 use Livewire\Component;
 use App\Models\Organization;
 use Illuminate\Support\Facades\Hash;
-
+use App\Models\User;
+use App\Helpers\Helper;
 
 class Register extends Component
 {
@@ -38,6 +39,14 @@ class Register extends Component
             if(!file_exists($path)){
                 mkdir($path, 0777, true);
             }
+            $user = new User();
+            $user->name = $this->name;
+            $user->email = $this->email;
+            $user->password = Hash::make($this->password);
+            $user->org_id = $organization->id;
+            $user->image = Helper::createAvatar($this->name,'users');
+            $user->save();
+
         } catch (\Throwable $th) {
             return $this->alert('error', 'Something went wrong, please try again later');
         }

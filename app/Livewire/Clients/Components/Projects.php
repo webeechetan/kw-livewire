@@ -43,4 +43,5 @@ class Projects extends Component
     {
         $this->dispatch('deleteProject', $id);
     }
+
 }

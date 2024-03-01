@@ -219,7 +219,7 @@ class FileManager extends Component
         $this->dispatch('fileDeleted');
         $this->dispatch('success', 'Selected items deleted successfully');
     }
-
+ 
     public function addNewDirectory(){
         Storage::makeDirectory($this->path.'/'.$this->new_directory_name);
         $this->new_directory_name = '';

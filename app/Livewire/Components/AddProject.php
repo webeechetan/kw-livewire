@@ -85,11 +85,13 @@ class AddProject extends Component
         $project->start_date = $this->project_start_date;
         $project->due_date = $this->project_due_date;
         $project->image = $image;
+        $project->created_by = session('user')->id;
         try {
             if($project->save()){
                 if(count($this->project_users) > 0){
                     $project->users()->sync($this->project_users);
                 }
+                $project->users()->attach(session('user')->id);
                 $this->dispatch('success', 'Project added successfully');
                 $this->dispatch('project-added');
                 $this->dispatch('saved');

@@ -48,24 +48,24 @@
             <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100">
                 <div class="progress-bar" style="width: 25%"></div>
             </div>
-        </div>
+        </div> 
 
         <!-- Add Files & Folders -->
         <div class="row mt-3">
             <div class="col-md-4">
-                <div class="files-folder files-folder-add_new files-folder-primary">
+                <div class="files-folder files-folder-add_new files-folder-primary" data-bs-toggle="modal" data-bs-target="#add-new-file">
                     <span class="files-folder-icon"><i class='bx bx-file-blank' ></i></span>
                     <div class="files-folder-title ms-1">Add File</div>
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="files-folder files-folder-add_new files-folder-warning">
+                <div class="files-folder files-folder-add_new files-folder-warning" data-bs-toggle="modal" data-bs-target="#add-new-directory">
                     <span class="files-folder-icon"><i class='bx bx-folder' ></i></span>
                     <div class="files-folder-title ms-1">Add Folder</div>
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="files-folder files-folder-add_new files-folder-secondary">
+                <div class="files-folder files-folder-add_new files-folder-secondary" data-bs-toggle="modal" data-bs-target="#add-new-link">
                     <span class="files-folder-icon"><i class='bx bx-link-alt' ></i></span>
                     <div class="files-folder-title ms-1">Add Link</div>
                 </div>
@@ -76,7 +76,7 @@
         <div class="files-items-wrap mt-4 mb-3">
             <div class="column-head column-head-light d-flex flex-wrap align-items-center">
                 <div>
-                    <h5 class="title-sm mb-2">Acma Attachments</h5>
+                    <h5 class="title-sm mb-2"></h5>
                     <div><i class='bx bx-data text-primary' ></i> {{ $directories_count }} Attachments <span class="px-2">|</span> {{$used_storage_size_in_mb}}MB Used / 100MB</div>
                 </div>
                 <form class="search-box search-box-float-style ms-auto" action="">
@@ -91,41 +91,38 @@
             <a href="#" class="btn-border btn-border-success"><i class='bx bx-data'></i> All {{ count($selected_files) }}</a>
             <a href="#" class="btn-border btn-border-primary"><i class='bx bx-file-blank' ></i> Files {{ count($selected_files) }}</a>
             <a href="#" class="btn-border btn-border-warning"><i class='bx bx-folder me-1' ></i> Folders {{ count($selected_directories) }}</a>
-            <a href="#" class="btn-border btn-border-secondary"><i class='bx bx-link-alt' ></i> Links {{ count($selected_directories) }}</a>
+            <a href="#" class="btn-border btn-border-secondary"><i class='bx bx-link-alt' ></i> Links {{ count($selected_links) }}</a>
         </div>
+
         <div class="files-list">
-            <div class="files-folder">
-                <div class="files-size">18.19 KB</div>
-                <span class="files-folder-icon"><i class="bx bx-folder"></i></span>
-                <div class="files-folder-title">Level 1</div>
-                <div class="text-light"><span class="text-primary"><i class="bx bx-folder"></i></span> 1 <span class="px-2">|</span> <span class="text-secondary"><i class="bx bx-file-blank"></i></span> 0</div>
-            </div>
-            <div class="files-item">
-                <div class="files-size">18.19 KB</div>
-                <div class="files-item-icon">
-                    <span><img src="http://localhost:8000/assets/images/icons/image.svg" alt=""></span>
-                </div>
-                <div class="files-item-content">
-                    <div class="files-item-content-title mb-2">welcome-profile-vector-image-view.png</div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="files-list">
+            {{-- Folders --}}
             @foreach($directories as $directory_name => $directory_data)
-                <div class="files-folder select_directory @if(in_array($directory_data['directory_path'], $selected_directories)) selected @endif" data-directory="{{$directory_data['directory_path']}}" wire:dblclick="openFolder('{{$directory_data['directory_path']}}')">
+                <div class="files-folder files-item select_directory @if(in_array($directory_data['directory_path'], $selected_directories)) selected @endif" data-directory="{{$directory_data['directory_path']}}" wire:dblclick="openFolder('{{$directory_data['directory_path']}}')">
                     <span class="files-folder-icon"><i class='bx bx-folder'></i></span>
                     <div class="files-folder-title">{{ $directory_name }}</div>
                     <div class="text-light"><span class="text-primary"><i class='bx bx-folder' ></i></span> {{ $directory_data['directories_count'] }} <span class="px-2">|</span> <span class="text-secondary"><i class='bx bx-file-blank' ></i></span> {{ $directory_data['files_count'] }}</div>
-                    {{-- <div class="files-folder-des mt-1">2.08 GB</div> --}}
                 </div>
             @endforeach
-
-            
-
+            {{-- Files --}}
+            @foreach($files as $file_name => $file_data)
+                <div class="files-item select_file @if(in_array($file_data['file_path'], $selected_files)) selected @endif" data-file="{{ $file_data['file_path'] }}">
+                    <div class="files-size">{{ $file_data['size'] }} KB | {{ $file_data['last_modified'] }}</div>
+                    
+                    <div class="files-item-icon">
+                        @if($this->createThumbnailFromFileName($file_name))
+                            <span><img src="{{ $this->createThumbnailFromFileName($file_name) }}" alt=""></span>
+                        @else
+                            <span><i class='bx bx-file'></i></span>
+                        @endif
+                    </div>
+                    <div class="files-item-content">
+                        <div class="files-item-content-title mb-2">{{$file_name}}</div>
+                    </div>
+                </div>
+            @endforeach
+            {{-- Links --}}
             @foreach($links as $l)
-                <div class="files-item select_link
-                @if(in_array($l->id, $selected_links)) selected @endif" data-link="{{ $l->id }}">
+                <div class="files-item select_link @if(in_array($l->id, $selected_links)) selected @endif" data-link="{{ $l->id }}">
                     <div class="files-item-icon">
                         @php
                             $og_data = json_decode($l->og_data);
@@ -152,45 +149,6 @@
                     </div>
                 </div>
             @endforeach
-
-            <div class="files-folder files-folder-add_new" data-bs-toggle="modal" data-bs-target="#add-new-directory" >
-                <span class="files-folder-icon"><i class='bx bx-plus' ></i></span>
-                <div class="files-folder-title">Add Folder</div>
-            </div>
-        </div>
-
-        <div class="files-items-wrap">
-            <div class="files-items-head column-head d-flex flex-wrap align-items-center mb-4">
-                <h5 class="title-sm mb-0">Acma Attachments</h5>
-                <form class="ms-auto" action="">
-                    <div class="search-box">
-                        <input class="form-control" type="text" placeholder="Search File...">
-                        <span class="search-box-icon"><i class='bx bx-search' ></i></span>   
-                    </div>
-                </form>
-            </div>
-           
-            <div class="files-items">
-                @foreach($files as $file_name => $file_data)
-                    <div class="files-item select_file @if(in_array($file_data['file_path'], $selected_files)) selected @endif" data-file="{{ $file_data['file_path'] }}">
-                        <div class="files-item-icon">
-                            @if($this->createThumbnailFromFileName($file_name))
-                                <span><img src="{{ $this->createThumbnailFromFileName($file_name) }}" alt=""></span>
-                            @else
-                                <span><i class='bx bx-file'></i></span>
-                            @endif
-                        </div>
-                        <div class="files-item-content">
-                            <div class="files-item-content-title mb-2">{{$file_name}}</div>
-                            <div class="files-item-content-des">{{ $file_data['size'] }} KB | {{ $file_data['last_modified'] }}</div>
-                        </div>
-                    </div>
-                @endforeach
-                <div class="files-folder files-folder-add_new" data-bs-toggle="modal" data-bs-target="#add-new-file">
-                    <span class="files-folder-icon"><i class='bx bx-plus' ></i></span>
-                    <div class="files-folder-title">Add Files</div>
-                </div>
-            </div>
         </div>
     </div>
 

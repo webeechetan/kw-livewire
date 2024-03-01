@@ -37,12 +37,14 @@ class Login extends Component
                     session()->put('guard','web');
                     session()->put('org_id',User::withoutGlobalScope(OrganizationScope::class)->where('email',$this->email)->first()->org_id);
                     session()->put('org_name',Organization::find(session('org_id'))->name);
+                    session()->put('user',User::withoutGlobalScope(OrganizationScope::class)->where('email',$this->email)->first()->id);
                 }
             }
         }else{
             session()->put('guard','orginizations');
             session()->put('org_id',Organization::where('email',$this->email)->first()->id);
             session()->put('org_name',Organization::where('email',$this->email)->first()->name);
+            session()->put('user',User::where('email',$this->email)->first());
         }
 
         if($res){
