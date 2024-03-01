@@ -16,15 +16,16 @@
                                 <div class="col-md-8 mb-4">
                                     <input wire:model="client_name" type="text" class="form-style" placeholder="Company Name">
                                 </div>
+                                <span class="text-danger">@error('client_name') {{ $message }} @enderror</span>
                             </div>
                             <div class="row">
                                 <div class="col-md-4 mb-4">
                                     <label for="">Brand Name<sup class="text-primary">*</sup></label>
                                 </div>
                                 <div class="col-md-8 mb-4">
-                                    <input wire:model="client_name" type="text" class="form-style" placeholder="Brand Name">
+                                    <input wire:model="brand_name" type="text" class="form-style" placeholder="Brand Name">
                                     <div class="form-check mt-2">
-                                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                        <input class="form-check-input" type="checkbox" wire:model="use_brand_name" value="1" id="use_brand_name">
                                         <label class="form-check-label" for="defaultCheck1">Use This as Title</label>
                                     </div>
                                 </div>
@@ -78,10 +79,16 @@
     </div>
 </div>
 
-@push('scripts')
+@assets
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+@endassets
+
+@script
     <script>
         $(document).ready(function() {
-            $('.client-onboard-date').flatpickr({
+
+            flatpickr('.client-onboard-date', {
                 enableTime: true,
                 dateFormat: "Y-m-d",
                 onChange: function(selectedDates, dateStr, instance) {
@@ -115,6 +122,11 @@
                         @this.set('client_onboard_date', dateStr);
                     },
                 });
+                if(event.detail[0].use_brand_name == 1){
+                    $('#use_brand_name').prop('checked', true);
+                }else{
+                    $('#use_brand_name').prop('checked', false);
+                }
                 $('.old-image').removeClass('d-none');
                 $('.old-image-src').attr('src', '{{ env("APP_URL") }}/storage/'+event.detail[0].image);
                 $('.client-form-text').html('Edit');
@@ -123,4 +135,4 @@
 
         });
     </script>
-@endpush
+@endscript

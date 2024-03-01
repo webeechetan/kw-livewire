@@ -33,4 +33,15 @@ class Projects extends Component
         $this->archived_projects = $this->client->projects()->where('status', 'archived')->get();
 
     }
+    
+    public function emitEditEvent($id)
+    {
+        $this->dispatch('editProject', $id);
+    }
+
+    public function emitDeleteEvent($id)
+    {
+        $this->dispatch('deleteProject', $id);
+    }
+
 }

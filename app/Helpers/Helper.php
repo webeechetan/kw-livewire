@@ -8,6 +8,9 @@ class Helper
 {
 
     public static function createAvatar($name,$folder){
+
+        $name = strtoupper($name);
+
         $avtar_bg_colors = [
             '#f44336',
             '#e91e63',

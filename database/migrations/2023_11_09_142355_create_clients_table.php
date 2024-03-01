@@ -15,11 +15,14 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('org_id');
             $table->foreign('org_id')->references('id')->on('organizations')->onDelete('cascade');
-            $table->string('name');
+            $table->string('name')->unique();
+            $table->string('brand_name')->nullable();
+            $table->boolean('use_brand_name')->default(false)->nullable();
             $table->longText('description')->nullable();
             $table->string('image')->nullable()->default('default.png');
             $table->string('status')->default('active')->comment('active, completed');
             $table->date('onboard_date')->nullable();
+            $table->unsignedBigInteger('created_by')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

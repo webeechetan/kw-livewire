@@ -4,42 +4,23 @@
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a wire:navigate href="{{ route('dashboard') }}"><i class='bx bx-line-chart'></i> Dashboard</a></li>
             <li class="breadcrumb-item"><a wire:navigate href="{{ route('client.index') }}">All Clients</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Acma</li>
+            <li class="breadcrumb-item active" aria-current="page">{{$client->name}}</li>
         </ol>
     </nav>
     <div class="dashboard-head mb-3">
         <div class="row align-items-center">
             <div class="col">
                 <div class="dashboard-head-title-wrap">
-                    <div class="client_head_logo"><img src="{{ env('APP_URL') }}/storage/images/clients/Acma.png" alt=""></div>
+                    <div class="client_head_logo"><img src="{{ env('APP_URL') }}/storage/{{ $client->image }}" alt=""></div>
                     <div>
-                        <h3 class="main-body-header-title mb-0">Acma</h3>
+                        <h3 class="main-body-header-title mb-0">{{ $client->name }}</h3>
                         <div class="client_head-date">
-                            27 Feb-2024
+                            {{ \Carbon\Carbon::parse($client->onboard_date)->format('d M-Y') }}
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="text-end col">
-                <div class="main-body-header-right">
-                    <!-- Edit -->
-                    <div class="cus_dropdown">
-                        <!-- For Active Class = btn-border-success | For Archived Class = btn-border-archived -->
-                        <div class="cus_dropdown-icon btn-border btn-border-success">Active <i class='bx bx-chevron-down' ></i></div>
-
-                        <div class="cus_dropdown-body cus_dropdown-body-widh_s">
-                            <div class="cus_dropdown-body-wrap">
-                                <ul class="cus_dropdown-list">
-                                    <li><a href="#"class="active"><span><i class='bx bx-user-check' ></i></span> Active</a></li>
-                                    <li><a href="#"><span><i class='bx bx-user-minus' ></i></span> Archived</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <button class="btn-sm btn-border btn-border-secondary "><i class='bx bx-pencil'></i> Edit</button>
-                    <a href="#" class="btn-sm btn-border btn-border-danger"><i class='bx bx-trash'></i> Delete</a>
-                </div>
-            </div>
+            
         </div>
     </div>
     <div class="tabNavigationBar-tab border_style mb-3">
@@ -55,7 +36,7 @@
                 <div class="states_style states_style-left states_style-progress">
                     <div class="states_style-icon"><i class='bx bx-layer' ></i></div>
                     <div>
-                        <h5 class="title-md mb-1">06</h5>
+                        <h5 class="title-md mb-1">{{ $active_projects->count() }}</h5>
                         <div class="states_style-text">Active</div>
                     </div>
                 </div>
@@ -66,7 +47,7 @@
                 <div class="states_style states_style-left states_style-success">
                     <div class="states_style-icon"><i class='bx bx-sitemap' ></i></div>
                     <div>
-                        <h5 class="title-md mb-1">04</h5>
+                        <h5 class="title-md mb-1">{{ $completed_projects->count() }}</h5>
                         <div class="states_style-text">Completed</div>
                     </div>
                 </div>
@@ -77,8 +58,8 @@
                 <div class="states_style states_style-left states_style-danger">
                     <div class="states_style-icon"><i class='bx bx-user-plus'></i></div>
                     <div>
-                        <h5 class="title-md mb-1">22</h5>
-                        <div class="states_style-text">02 Archive</div>
+                        <h5 class="title-md mb-1">{{ $archived_projects->count() }}</h5>
+                        <div class="states_style-text">Archive</div>
                     </div>
                 </div>
             </div>
@@ -135,8 +116,8 @@
                                             <div class="cus_dropdown-body cus_dropdown-body-widh_s">
                                                 <div class="cus_dropdown-body-wrap">
                                                     <ul class="cus_dropdown-list">
-                                                        <li><a href="#" wire:click="editProject({{ $project->id }})"><span class="text-secondary"><i class='bx bx-pencil' ></i></span> Edit</a></li>
-                                                        <li><a href="#"><span wire:click="deleteProject({{ $project->id }})" class="text-danger"><i class='bx bx-trash' ></i></span> Delete</a></li>
+                                                        <li><a href="#" wire:click="emitEditEvent({{ $project->id }})"><span class="text-secondary"><i class='bx bx-pencil' ></i></span> Edit</a></li>
+                                                        <li wire:click="emitDeleteEvent({{ $project->id }})"><a ><span class="text-danger"><i class='bx bx-trash' ></i></span> Delete</a></li>
                                                     </ul>
                                                 </div>
                                             </div>

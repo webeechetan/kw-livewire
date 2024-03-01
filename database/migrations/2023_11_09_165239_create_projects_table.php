@@ -21,6 +21,7 @@ return new class extends Migration
             $table->date('due_date')->nullable();
             $table->string('image')->nullable()->default('default.png');
             $table->string('status')->default('active')->comment('active, completed, overdue, archived');
+            $table->unsignedBigInteger('created_by')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

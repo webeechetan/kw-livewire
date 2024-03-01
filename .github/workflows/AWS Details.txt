@@ -1,0 +1,3 @@
+AWS Details 
+email : chetansingh6454@gmail.com
+root_user_password : Chetansingh@123

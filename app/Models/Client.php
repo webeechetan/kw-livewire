@@ -8,6 +8,7 @@ use App\Models\Project;
 use App\Models\Scopes\OrganizationScope;
 use App\Models\Team;
 use App\Models\User;
+use App\Models\Organization;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Client extends Model
@@ -35,6 +36,17 @@ class Client extends Model
     protected static function booted()
     {
         static::addGlobalScope(new OrganizationScope);
+    }
+
+    public function getVisibleNameAttribute(){
+        if($this->use_brand_name){
+            return $this->brand_name;
+        }
+        return $this->name;
+    }
+
+    public function createdBy(){
+        return $this->belongsTo(User::class,'created_by');
     }
 
 }

@@ -64,18 +64,32 @@
     </div>
     
     <div class="row">
-        <div class="d-flex flex-wrap gap-2 align-items-center py-3">
-            <span class="pe-2"><i class='bx bx-filter-alt text-secondary'></i> Filter Results:</span>
-            <span href="#" class="btn-batch">Newest <a href="javascript:;" class="ms-1"><i class='bx bx-x'></i></a></span>
-            <span href="#" class="btn-batch">Newest <a href="javascript:;" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
-            <a href="#" class="text-danger d-flex align-items-center">Reset <span class="ms-1 d-inline-flex"><i class='bx bx-refresh'></i></span></a>
-        </div>
+        @if($sort != 'all' || $filter != 'all')
+            <div class="d-flex flex-wrap gap-2 align-items-center py-3">
+                <span class="pe-2"><i class='bx bx-filter-alt text-secondary'></i> Filter Results:</span>
+                @if($sort != 'all')
+                    <span class="btn-batch">
+                        @if($sort == 'newest') Newest @endif
+                        @if($sort == 'a_z') A to Z @endif
+                        @if($sort == 'z_a') Z to A @endif
+                        <a wire:navigate href="{{ route('client.index',['sort'=>'all','filter'=>$filter]) }}" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
+                @endif
+
+                @if($filter != 'all')
+                    <span class="btn-batch">{{ ucfirst($filter) }} <a wire:navigate href="{{ route('client.index',['sort'=>$sort,'filter'=>'all']) }}" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
+                @endif
+                
+
+                <a href="{{ route('client.index') }}" class="text-danger d-flex align-items-center">Reset <span class="ms-1 d-inline-flex"><i class='bx bx-refresh'></i></span></a>
+            </div>
+        @endif
+
         @foreach($clients as $client)
         @php
             $activeProjects = $client->projects->where('status', 'active');
             $completedProjects = $client->projects->where('status', 'completed');
         @endphp
-        <div class="col-md-4 mb-4"  wire:key="{{ $client->id }}">
+        <div class="col-md-4 mb-4 mt-2"  wire:key="{{ $client->id }}">
             <div class="card_style card_style-client h-100">
                 <div wire:loading wire:target="emitDeleteEvent({{ $client->id }})" class="card_style-loader">
                     <div class="card_style-loader-wrap"><i class='bx bx-trash text-danger me-2' ></i> Removing ...</div>
@@ -100,7 +114,11 @@
                 <div class="card_style-client-head">
                     <div><img src="{{ asset('storage/'.$client->image) }}" alt="" class="img-fluid"></div>
                     <div>
-                        <h4><a wire:navigate href="{{ route('client.profile', $client->id ) }}">{{ $client->name }}</a></h4>
+                        <h4>
+                            <a wire:navigate href="{{ route('client.profile', $client->id ) }}">
+                                {{ Str::limit($client->visible_name, 20, '...') }}
+                            </a>
+                        </h4>
                         <div class="btn-withIcon"><i class='bx bx-layer text-secondary' ></i> {{ $client->projects->count() }} Projects</div>
                     </div>
                 </div>
