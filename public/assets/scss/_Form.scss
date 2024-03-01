@@ -178,4 +178,31 @@ input {
         -webkit-text-fill-color: $text_form;
     }
 }
+
+.custom-select {
+    position: relative;
+    .form-control, .form-style {
+        padding: 10px 15px;
+        padding-right: 35px;
+        min-height: inherit;
+        border-color: $grey_xd;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        text-indent: 1px;
+
+        &::-ms-expand {
+            display: none;
+        }
+    }
+    &:after {
+        content: '';
+        background: #eee url('/assets/images/chevron-down.png') no-repeat center/16px;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 20px;
+        height: 20px;
+        border-radius: $border_radius_xs;
+    }
+}
 /*---- Form Style End Here ----*/

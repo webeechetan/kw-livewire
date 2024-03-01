@@ -15,7 +15,7 @@
             </div>
         </div>
         <div class="offcanvas-body scrollbar">
-            <form class="taskPane" method="POST" wire:submit="saveTask" enctype="multipart/form-data">
+            <form class="taskPane px-4 py-3" method="POST" wire:submit="saveTask" enctype="multipart/form-data">
                 <div class="taskPane-head">
                     <div class="taskPane-heading">
                         <div class="taskPane-heading-label"><i class='bx bx-notepad text-primary'></i> Task Heading</div>

@@ -439,6 +439,13 @@ hr.space-sm {
             h4 {
                 font-size: 22px;
             }
+            &-client {
+                font-size: 14px;
+                margin-bottom: 5px;
+                i {
+                    color: $warning;
+                }
+            }
         }
         &-options {
             @include flex_align_center;
@@ -586,7 +593,7 @@ hr.space-sm {
         @include flex;
         justify-content: space-between;
         font-weight: 500;
-        margin-bottom: 20px;
+        margin-bottom: 25px;
 
         &-days {
             span {
@@ -596,9 +603,9 @@ hr.space-sm {
     }
     &-btm {
         &-date {
-            font-size: 12px;
+            font-size: 14px;
             font-weight: 500;
-            margin-top: 5px;
+            margin-top: 10px;
         }
     }
 }
@@ -1169,5 +1176,39 @@ hr.space-sm {
     &-left {
         display: grid;
         grid-template-columns: auto 1fr;
+    }
+}
+
+/* ----- Toaster Style ----- */
+#toast-container {
+    > div {
+        background-size: 16px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        opacity: 1;
+        box-shadow: 0 3px 30px rgba(0,0,0,0.2);
+        width: inherit;
+        padding-left: 40px;
+        font-weight: 600;
+        &:hover {
+            box-shadow: 0 3px 30px rgba(0,0,0,0.2);
+        }
+    }
+    > .toast {
+        &-success {
+            background-image: url('/assets/images/success_green.svg') !important;
+            background-color: $success_light;
+            border-color: $success;
+            color: $success;
+            background-size: 20px;
+        }
+
+        &-error {
+            background-image: url('/assets/images/error_red.svg') !important;
+            background-color: $danger_light;
+            border-color: $danger;
+            color: $danger;
+            background-size: 20px;
+        }
     }
 }

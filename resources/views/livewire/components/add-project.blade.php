@@ -14,12 +14,14 @@
                                     <label for="">Select Client<sup class="text-primary">*</sup></label>
                                 </div>
                                 <div class="col-md-8 mb-4">
-                                    <select wire:model.live="client_id" class="form-style">
-                                        <option value="">Select Client</option>
-                                        @foreach ($clients as $client)
-                                            <option value="{{ $client->id }}">{{ $client->name }}</option>
-                                        @endforeach
-                                    </select>
+                                    <div class="custom-select">
+                                        <select wire:model.live="client_id" class="form-style">
+                                            <option value="">Select Client</option>
+                                            @foreach ($clients as $client)
+                                                <option value="{{ $client->id }}">{{ $client->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
                             <div class="row">
@@ -28,17 +30,6 @@
                                 </div>
                                 <div class="col-md-8 mb-4">
                                     <input wire:model="project_name" type="text" class="form-style" placeholder="Project Name">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-4 mb-4">
-                                    <label for="">Select Date</label>
-                                </div>
-                                <div class="col-md-8 mb-4">
-                                    <div class="btn-list btn-list-full-2 justify-content-between gap-10">
-                                        <a  class="btn btn-50 btn-sm btn-border-secondary project_start_date"><i class='bx bx-calendar-alt' ></i> Start Date</a>
-                                        <a  class="btn btn-50 btn-sm btn-border-danger project_due_date"><i class='bx bx-calendar-alt' ></i> Due Date</a>
-                                    </div>
                                 </div>
                             </div>
                             <div class="row">
@@ -57,10 +48,10 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-4 mb-4">
+                                <div class="col-md-4 mb-4 mb-md-0">
                                     <label for="">Add Users</label>
                                 </div>
-                                <div class="col-md-8 mb-4">
+                                <div class="col-md-8">
                                     <select name="" id="" class="form-control users" multiple>
                                         @foreach ($users as $user)
                                             <option data-image="{{ $user->image }}"  value="{{ $user->id }}">{{ $user->name }}</option>
@@ -68,12 +59,22 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-md-4 mb-4">
-                                    <label for="">Add Description</label>
+                            <hr>
+                            <label for="" class="mb-2">Select Date</label>
+                            <div class="row align-items-center">
+                                <div class="col mb-4 mb-md-0">
+                                    <a href="javascript:;" class="btn w-100 btn-sm btn-border-secondary project_start_date"><i class='bx bx-calendar-alt' ></i> Start Date</a>
                                 </div>
-                                <div class="col-md-8 mb-4">
-                                    <textarea wire:model="project_description" type="text" class="form-style" placeholder="Add Description" rows="2" cols="30"></textarea>
+                                <div class="col-auto text-center font-500 mb-4 mb-md-0">To</div>
+                                <div class="col">
+                                    <a href="javascript:;" class="btn w-100 btn-sm btn-border-danger project_due_date"><i class='bx bx-calendar-alt' ></i> Due Date</a>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-12">
+                                    <label for="" class="mb-2">Add Description</label>
+                                    <textarea wire:model="project_description" type="text" class="form-style" placeholder="Add Description" rows="4" cols="30"></textarea>
                                 </div>
                             </div>
                             
