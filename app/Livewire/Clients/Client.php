@@ -62,30 +62,4 @@ class Client extends Component
         
     }
 
-    public function changeClientStatus($status){
-
-        if($status == 'archived'){
-            $this->client->delete();
-            $this->redirect(route('client.index'),navigate:true);
-            // $this->dispatch('success', 'Client archived successfully.');
-        }else{
-            $this->client->restore();
-            $this->dispatch('success', 'Client status updated successfully.');
-        }
-        $this->redirect(route('client.profile', $this->client_id),navigate:true);
-    }
-
-    public function emitEditClient($id)
-    {
-        $this->dispatch('editClient', $id);
-    }
-
-    public function forceDeleteClient($id)
-    {
-        $client = ClientModel::withTrashed()->find($id);
-        $client->forceDelete();
-        $this->dispatch('success', 'Client deleted successfully.');
-        $this->redirect(route('client.index'),navigate:true);
-    }
-
 }

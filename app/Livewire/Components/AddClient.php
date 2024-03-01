@@ -14,6 +14,7 @@ class AddClient extends Component
     public $client_image;
     public $brand_name;
     public $use_brand_name;
+    public $point_of_contact;
 
     public $client;
 
@@ -43,6 +44,7 @@ class AddClient extends Component
         $client->brand_name = $this->brand_name;
         $client->use_brand_name = $this->use_brand_name;
         $client->created_by = session('user')->id;
+        $client->point_of_contact = $this->point_of_contact;
 
         if($this->client_image){
             $this->validate([
@@ -80,6 +82,7 @@ class AddClient extends Component
         $this->client_onboard_date = $this->client->onboard_date;
         $this->brand_name = $this->client->brand_name;
         $this->use_brand_name = $this->client->use_brand_name;
+        $this->point_of_contact = $this->client->point_of_contact;
         $this->dispatch('edit-client', $this->client);
     }
 
@@ -93,6 +96,7 @@ class AddClient extends Component
         $client->description = $this->client_description;
         $client->brand_name = $this->brand_name;
         $client->use_brand_name = $this->use_brand_name;
+        $client->point_of_contact = $this->point_of_contact;
         if($this->client_image){
             $this->validate([
                 'client_image' => 'image|max:1024', // 1MB Max
@@ -128,6 +132,9 @@ class AddClient extends Component
         $this->client_description = '';
         $this->client_onboard_date = '';
         $this->client_image = '';
+        $this->brand_name = '';
+        $this->use_brand_name = '';
+        $this->point_of_contact = '';
     }
 
     public function restoreClient($id)

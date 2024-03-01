@@ -3,14 +3,14 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\Client;
-use App\Models\Organization;
+use App\Models\Team;
 use App\Helpers\Helper;
 
+
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Client>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Team>
  */
-class ClientFactory extends Factory
+class TeamFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -23,7 +23,7 @@ class ClientFactory extends Factory
             'org_id' => '1',
             'name' => $this->faker->name(),
             'description' => $this->faker->text(),
-            'image' => Helper::createAvatar($this->faker->name,'clients')
+            'image' => Helper::createAvatar($this->faker->name,'teams')
         ];
     }
 }

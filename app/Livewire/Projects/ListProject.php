@@ -17,7 +17,7 @@ class ListProject extends Component
     public $sort = 'all';
     public $filter = 'all';
     public $byTeam = 'all';
-    public $byUser = 'all';
+    public $byUser = 'all'; 
     public $users;
 
     public function render()

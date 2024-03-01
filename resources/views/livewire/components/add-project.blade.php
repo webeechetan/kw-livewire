@@ -92,7 +92,7 @@
     </div>
 </div>
 
-@push('scripts')
+@script
 
     <script>
         $(document).ready(function() {
@@ -133,7 +133,7 @@
 
             });
 
-            $('.project_start_date').flatpickr({
+            flatpickr('.project_start_date', {
                 dateFormat: "Y-m-d",
                 onChange: function(selectedDates, dateStr, instance) {
                     $(".project_start_date").html(dateStr);
@@ -141,7 +141,7 @@
                 },
             });
 
-            $('.project_due_date').flatpickr({
+            flatpickr('.project_due_date', {
                 dateFormat: "Y-m-d",
                 onChange: function(selectedDates, dateStr, instance) {
                     $(".project_due_date").html(dateStr);
@@ -155,6 +155,7 @@
                 templateResult: format,
                 templateSelection: format,
             });
+            
 
             $('.users').on('change', function (e) {
                 var data = $(this).select2("val");
@@ -174,6 +175,6 @@
         });
     </script>
 
-@endpush
+@endscript
 
 
