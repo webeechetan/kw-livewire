@@ -32,6 +32,15 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-4 mb-4">
+                                    <label for="">Point Of Contact</label>
+                                </div>
+                                <div class="col-md-8 mb-4">
+                                    <input wire:model="point_of_contact" type="text" class="form-style" placeholder="Point Of Contact">
+                                </div>
+                                <span class="text-danger">@error('point_of_contact') {{ $message }} @enderror</span>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 mb-4">
                                     <label for="">Onboard Date</label>
                                 </div>
                                 <div class="col-md-8 mb-4">

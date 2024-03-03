@@ -145,7 +145,7 @@
                                         @endphp
                                         @foreach($activeProjects as $project)
                                             @if($loop->index < 7)
-                                                <a href="#" class="avatarGroup-avatar">
+                                                <a wire:navigate href="{{ route('project.profile',$project->id) }}" class="avatarGroup-avatar">
                                                     <span class="avatar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{ $project->name }}">
                                                         <img alt="avatar" src="{{ asset('storage/'.$project->image) }}" class="rounded-circle">
                                                     </span>

@@ -10,6 +10,7 @@ use Laravel\Sanctum\HasApiTokens;
 use App\Models\Team;
 use App\Models\Project;
 use App\Models\Scopes\OrganizationScope;
+use App\Models\Organization;
 
 class User extends Authenticatable
 {
@@ -73,5 +74,9 @@ class User extends Authenticatable
 
     public function projects(){
         return $this->belongsToMany(Project::class);
+    }
+
+    public function organization(){
+        return $this->belongsTo(Organization::class);
     }
 }

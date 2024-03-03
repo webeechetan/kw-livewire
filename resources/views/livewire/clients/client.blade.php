@@ -7,50 +7,7 @@
             <li class="breadcrumb-item active" aria-current="page">{{ $client->name }}</li>
         </ol>
     </nav>
-    <div class="dashboard-head mb-2">
-        <div class="row align-items-center">
-            <div class="col">
-                <div class="dashboard-head-title-wrap">
-                    <div class="client_head_logo"><img src="{{ env('APP_URL') }}/storage/{{ $client->image }}" alt=""></div>
-                    <div>
-                        <h3 class="main-body-header-title">{{ $client->visible_name }}</h3>
-                        <div class="client_head-date">
-                            {{ \Carbon\Carbon::parse($client->onboard_date)->format('d M-Y') }}
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="text-end col">
-                <div class="main-body-header-right">
-                    <!-- Edit -->
-                    <div class="cus_dropdown">
-                        <!-- For Active Class = btn-border-success | For Archived Class = btn-border-archived -->
-                        @if(!$client->trashed())
-                            <div class="cus_dropdown-icon btn-border btn-border-success">Active <i class='bx bx-chevron-down' ></i></div>
-                        @else
-                            <div class="cus_dropdown-icon btn-border btn-border-archived">Archived <i class='bx bx-chevron-down' ></i></div>
-                        @endif
-
-                        <div class="cus_dropdown-body cus_dropdown-body-widh_s">
-                            <div class="cus_dropdown-body-wrap">
-                                <ul class="cus_dropdown-list">
-                                    <li><a href="javascript:;" wire:click="changeClientStatus('active')" @if(!$client->trashed()) class="active" @endif>Active</a></li>
-                                    <li><a href="javascript:;" wire:click="changeClientStatus('archived')" @if($client->trashed()) class="active" @endif>Archive</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <button @if($client->trashed()) disabled @endif wire:click="emitEditClient({{$client->id}})" class="btn-sm btn-border btn-border-secondary "><i class='bx bx-pencil'></i> Edit</button>
-                    <a href="#" class="btn-sm btn-border btn-border-danger" wire:click="forceDeleteClient({{$client->id}})"><i class='bx bx-trash'></i> Delete</a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="tabNavigationBar-tab border_style mb-3">
-        <a class="tabNavigationBar-item active" href="{{ route('client.profile', $client->id) }}"><i class='bx bx-line-chart'></i> Overview</a>
-        <a class="tabNavigationBar-item" href="{{ route('client.projects', $client->id) }}"><i class='bx bx-layer' ></i> Projects</a>
-        <a class="tabNavigationBar-item" href="{{ route('client.file-manager', $client->id ) }}"><i class='bx bx-objects-horizontal-left' ></i> File Manager</a>
-    </div>
+    <livewire:clients.components.client-tabs :client="$client" @saved="$refresh" />
 
     <!-- Dashboard Body -->
     <div class="row">
@@ -93,12 +50,18 @@
             <div class="col-lg-8 pe-lg-5">
                 <div class="column-title mb-2">Description</div>
                 <hr>
-                <div>{!! $client->description !!}</div>
+                <div>
+                    @if($client->description)
+                        {!! $client->description !!}
+                    @else
+                        <p class="text-muted">No Description Available</p>
+                    @endif
+                </div>
                 <h5 class="column-title mt-4">Teams</h5>
                 <hr>
                 <!-- Teams -->
                 <div class="team-list row">
-                    @foreach($client_teams as $team)
+                    @forelse($client_teams as $team)
                         <div class="col-auto">
                             <div class="team team-style_2 editTeam">
                                 <div class="team-style_2-head_wrap">
@@ -124,7 +87,17 @@
                                 </div>
                             </div>
                         </div>
-                    @endforeach
+                        @empty
+                        <div class="col-auto">
+                            <div class="team team-style_2">
+                                <div class="team-style_2-head_wrap">
+                                    <div>
+                                        <h4 class="team-style_2-title">No Team Assigned</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforelse
                 </div>
             </div>
             <div class="col-lg-4 font-500">
@@ -143,15 +116,12 @@
                 <div class="column-box bg-light">
                     <div class="row align-items-center">
                         <div class="col"><span><i class='bx bx-user text-primary'></i></span> Point Of Contact</div>
-                        <div class="col text-primary">Md. Husain</div>
+                        <div class="col text-primary">{{ $client->point_of_contact }}</div>
                     </div>
                 </div>
             </div>
         </div>        
-    </div>
-
-    <livewire:components.add-client @saved="$refresh" />
-    
+    </div>    
 </div>
 @push('scripts')
 <script>

@@ -42,19 +42,11 @@
                                         </ul>
                                         <hr>
                                         <h5 class="filterSort-header"><i class='bx bx-objects-horizontal-left text-primary'></i> Filter By User</h5>
-                                        <div class="custom-select">
-                                            <select class="form-control" wire:model.live="byUser">
-                                                <option value="all">All</option>
-                                                @foreach($users as $user)
-                                                    <option value="{{ $user->id }}">{{ $user->name }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        <hr>
-                                        <h5 class="filterSort-header"><i class='bx bx-briefcase text-primary' ></i> Filter By Clients</h5>
-                                        <select class="form-control"name="" id="">
-                                            <option value="Rakesh">Rakesh</option>
-                                            <option value="Rajiv">Rajiv</option>
+                                        <select class="form-control" wire:model.live="byUser">
+                                            <option value="all">All</option>
+                                            @foreach($users as $user)
+                                                <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
@@ -67,6 +59,29 @@
     </div>
     
     <div class="row mt-4">
+        @if($sort != 'all' || $filter != 'all')
+            <div class="d-flex flex-wrap gap-2 align-items-center py-3">
+                <span class="pe-2"><i class='bx bx-filter-alt text-secondary'></i> Filter Results:</span>
+                @if($sort != 'all')
+                    <span class="btn-batch">
+                        @if($sort == 'newest') Newest @endif
+                        @if($sort == 'a_z') A to Z @endif
+                        @if($sort == 'z_a') Z to A @endif
+                        <a wire:navigate href="{{ route('project.index',['sort'=>'all','filter'=>$filter]) }}" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
+                @endif
+
+                @if($filter != 'all')
+                    <span class="btn-batch">{{ ucfirst($filter) }} <a wire:navigate href="{{ route('project.index',['sort'=>$sort,'filter'=>'all']) }}" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
+                @endif
+
+                @if($byUser != 'all')
+                    <span class="btn-batch">{{ $users->find($byUser)->name }} <a wire:navigate href="{{ route('project.index',['sort'=>$sort,'filter'=>$filter,'byUser'=>'all']) }}" class="ms-1"><i class='bx bx-x'></i></a></span>
+                @endif
+                
+
+                <a href="{{ route('project.index') }}" class="text-danger d-flex align-items-center">Reset <span class="ms-1 d-inline-flex"><i class='bx bx-refresh'></i></span></a>
+            </div>
+        @endif
         @foreach($projects as $project)
             <div class="col-md-4 mt-4">
                 <div class="card_style card_style-overdue">

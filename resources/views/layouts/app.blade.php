@@ -80,7 +80,7 @@
                 <ul class="list-none menu-sidebar">
                     <li><a wire:navigate href="{{ route('dashboard') }}" class="@if (request()->routeIs('dashboard')) active @endif"><i class='bx bx-line-chart' ></i> Dashboard</a></li>
                     @if (session('guard') == 'orginizations')
-                        <li><a wire:navigate href="{{ route('client.index') }}" class="@if (request()->routeIs('client.index') || request()->routeIs('client.profile')) active @endif"><i class='bx bx-briefcase-alt-2'></i> Clients</a></li>
+                        <li><a wire:navigate href="{{ route('client.index') }}" class="@if (request()->routeIs('client.index') || request()->routeIs('client.profile') || request()->routeIs('client.projects') || request()->routeIs('client.file-manager')) active @endif"><i class='bx bx-briefcase-alt-2'></i> Clients</a></li>
                         <li><a wire:navigate href="{{ route('project.index') }}" class="@if (request()->routeIs('project.index') || request()->routeIs('project.profile')) active @endif"><i class='bx bx-objects-horizontal-left'></i> Projects</a></li>
                         <li><a wire:navigate href="{{ route('user.index') }}" class="@if (request()->routeIs('user.index') || request()->routeIs('user.add')) active @endif"><i class='bx bx-user'></i> Users</a></li>
                         <li><a wire:navigate href="{{ route('team.index') }}" class="@if (request()->routeIs('team.index') || request()->routeIs('team.add')) active @endif"><i class='bx bx-sitemap'></i> Teams</a></li>

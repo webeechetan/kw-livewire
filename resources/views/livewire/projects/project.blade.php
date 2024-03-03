@@ -11,7 +11,7 @@
         <div class="row align-items-center">
             <div class="col">
                 <div class="dashboard-head-title-wrap">
-                    <div class="client_head_logo"><img src="{{ asset('storage/'.$project->image) }}" alt=""></div>
+                    <div class="client_head_logo"><img src="{{ asset('storage/'.$project->client->image) }}" alt=""></div>
                     <div>
                         <div class="client_head-date">{{ \Carbon\Carbon::parse($project->start_date)->format('d M-Y') }}</div>
                         <h3 class="main-body-header-title mb-0">{{ $project->name }}</h3>

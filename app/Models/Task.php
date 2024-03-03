@@ -72,10 +72,11 @@ class Task extends Model
     // scopes 
 
     public function scopeTasksByUserType($query){
-        if(session('guard') == 'web'){
-            return $query->whereHas('users', function($q){
-                $q->where('user_id', auth()->user()->id);
-            });
-        }
+        return $query;
+        // if(session('guard') == 'web'){
+        //     return $query->whereHas('users', function($q){
+        //         $q->where('user_id', auth()->user()->id);
+        //     });
+        // }
     }
 }
