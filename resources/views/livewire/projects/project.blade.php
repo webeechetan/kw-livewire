@@ -7,7 +7,7 @@
             <li class="breadcrumb-item active" aria-current="page">{{ $project->name }}</li>
         </ol>
     </nav>
-    <div class="dashboard-head mb-4">
+    <div class="dashboard-head">
         <div class="row align-items-center">
             <div class="col">
                 <div class="dashboard-head-title-wrap">
@@ -38,6 +38,12 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <div class="tabNavigationBar-tab border_style mb-3">
+        <a class="tabNavigationBar-item active" href="#"><i class='bx bx-line-chart'></i> Overview</a>
+        <a class="tabNavigationBar-item" href="#"><i class='bx bx-layer' ></i> Tasks</a>
+        <a class="tabNavigationBar-item" href="#"><i class='bx bx-objects-horizontal-left' ></i> File Manager</a>
     </div>
 
     <!-- Dashboard Body -->

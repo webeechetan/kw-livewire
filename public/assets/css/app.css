@@ -518,6 +518,13 @@ hr.space-sm {
 .card_style-project-head h4 {
   font-size: 22px;
 }
+.card_style-project-head-client {
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+.card_style-project-head-client i {
+  color: #e7bf1d;
+}
 .card_style-project-options {
   display: flex;
   align-items: center;
@@ -628,15 +635,15 @@ hr.space-sm {
   flex-wrap: wrap;
   justify-content: space-between;
   font-weight: 500;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
 }
 .task_progress-head-days span {
   color: #e7bf1d;
 }
 .task_progress-btm-date {
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 500;
-  margin-top: 5px;
+  margin-top: 10px;
 }
 
 /* ----- Filter Sort ----- */
@@ -1121,6 +1128,35 @@ hr.space-sm {
 .states_style-left {
   display: grid;
   grid-template-columns: auto 1fr;
+}
+
+/* ----- Toaster Style ----- */
+#toast-container > div {
+  background-size: 16px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  opacity: 1;
+  box-shadow: 0 3px 30px rgba(0, 0, 0, 0.2);
+  width: inherit;
+  padding-left: 40px;
+  font-weight: 600;
+}
+#toast-container > div:hover {
+  box-shadow: 0 3px 30px rgba(0, 0, 0, 0.2);
+}
+#toast-container > .toast-success {
+  background-image: url("/assets/images/success_green.svg") !important;
+  background-color: #dae9db;
+  border-color: #48914d;
+  color: #48914d;
+  background-size: 20px;
+}
+#toast-container > .toast-error {
+  background-image: url("/assets/images/error_red.svg") !important;
+  background-color: #fedddc;
+  border-color: #ff0000;
+  color: #ff0000;
+  background-size: 20px;
 }
 
 /*---- Buttons Style Start Here ----*/
@@ -2004,6 +2040,32 @@ input:-webkit-autofill, input:-webkit-autofill:focus {
   -webkit-text-fill-color: #9c9c9c;
 }
 
+.custom-select {
+  position: relative;
+}
+.custom-select .form-control, .custom-select .form-style {
+  padding: 10px 15px;
+  padding-right: 35px;
+  min-height: inherit;
+  border-color: #ddd;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  text-indent: 1px;
+}
+.custom-select .form-control::-ms-expand, .custom-select .form-style::-ms-expand {
+  display: none;
+}
+.custom-select:after {
+  content: "";
+  background: #eee url("/assets/images/chevron-down.png") no-repeat center/16px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+}
+
 /*---- Form Style End Here ----*/
 /*---- Progress Style End Here ----*/
 .progress {
@@ -2852,12 +2914,11 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
 
 .dashboard-head {
   background-color: #fff;
-  padding: 10px 15px;
+  padding: 15px 20px;
   border-radius: 4px;
 }
 .dashboard-head-title-wrap {
   display: flex;
-  align-items: center;
   gap: 10px;
 }
 

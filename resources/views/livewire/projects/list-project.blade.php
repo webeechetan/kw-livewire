@@ -91,14 +91,14 @@
                         <div class="cus_dropdown-body cus_dropdown-body-widh_s">
                             <div class="cus_dropdown-body-wrap">
                                 <ul class="cus_dropdown-list">
-                                    <li><a wire:click="emitEditEvent({{ $project->id }})"><span class="text-secondary"><i class='bx bx-pencil' ></i></span> Edit</a></li>
-                                    <li><a wire:confirm="Are you sure you want to delete this project?" wire:click="emitDeleteEvent({{ $project->id }})"><span class="text-danger"><i class='bx bx-trash' ></i></span> Delete</a></li>
+                                    <li><a href="javascript:;" wire:click="emitEditEvent({{ $project->id }})"><span><i class='bx bx-pencil' ></i></span> Edit</a></li>
+                                    <li><a href="javascript:;" wire:confirm="Are you sure you want to delete this project?" wire:click="emitDeleteEvent({{ $project->id }})"><span><i class='bx bx-trash' ></i></span> Delete</a></li>
                                 </ul>
                             </div>
                         </div>
                     </div>
                     <div class="card_style-project-head">
-                {{-- <div class="card_style-project-head-client"><span><i class='bx bx-user'></i></span> {{ $project->client->name }}</div> --}}
+                        <div class="card_style-project-head-client"><span><i class='bx bx-user'></i></span> {{ $project->client->name }}</div>
                         <h4><a href="{{ route('project.profile',$project->id) }}" wire:navigate>{{ $project->name }}</a></h4>
                         <!-- Avatar Group -->
                         <div class="avatarGroup avatarGroup-lg avatarGroup-overlap mt-2">
@@ -114,7 +114,7 @@
                     </div>
                     <div class="card_style-project-body card_style-overdue">
                         <div class="card_style-project-options">
-                            <div><span><i class='bx bx-layer' ></i></span> 5 Attachements</div>
+                            <div><span><i class='bx bx-layer' ></i></span> 5 Attachments</div>
                             <div><span><i class='bx bx-calendar' ></i></span> {{ \Carbon\Carbon::parse($project->due_date)->diffInDays($project->start_date) }} Days</div>
                         </div>
                         <hr>
@@ -162,11 +162,10 @@
                                         }
                                     @endphp
                                     <div class="progress-bar progress-success" style="width: {{$percentage}}%"><span class="progress-bar-text">{{$percentage}}%</span></div>
-
                                 </div>
                                 <div class="task_progress-btm-date d-flex justify-content-between">
-                                    <div><i class='bx bx-calendar text-primary' ></i> {{ \Carbon\Carbon::parse($project->start_date)->format('d M,Y') }}</div>
-                                    <div class="text-success"><i class='bx bx-calendar-check ' ></i> {{ \Carbon\Carbon::parse($project->due_date)->format('d M,Y') }}</div>
+                                    <div><i class='bx bx-calendar' ></i> {{ \Carbon\Carbon::parse($project->start_date)->format('d M') }}</div>
+                                    <div class="text-danger"><i class='bx bx-calendar' ></i> {{ \Carbon\Carbon::parse($project->due_date)->format('d M') }}</div>
                                 </div>
                             </div>
                         </div>
