@@ -13,7 +13,7 @@
                 <div class="dashboard-head-title-wrap">
                     <div class="client_head_logo"><img src="{{ env('APP_URL') }}/storage/{{ $client->image }}" alt=""></div>
                     <div>
-                        <h3 class="main-body-header-title mb-0">{{ $client->visible_name }}</h3>
+                        <h3 class="main-body-header-title">{{ $client->visible_name }}</h3>
                         <div class="client_head-date">
                             {{ \Carbon\Carbon::parse($client->onboard_date)->format('d M-Y') }}
                         </div>
@@ -137,7 +137,7 @@
                 <div class="column-box bg-light mb-2">
                     <div class="row align-items-center">
                         <div class="col"><span><i class='bx bx-calendar text-success'></i></span> Onboard Date</div>
-                        <div class="col text-success">{{ \Carbon\Carbon::parse($client->onboard_date)->format('d M-Y') }}</div>
+                        <div class="col text-success">{{ \Carbon\Carbon::parse($client->onboard_date)->format('d M Y') }}</div>
                     </div>
                 </div>
                 <div class="column-box bg-light">

@@ -2914,12 +2914,11 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
 
 .dashboard-head {
   background-color: #fff;
-  padding: 10px 15px;
+  padding: 15px 20px;
   border-radius: 4px;
 }
 .dashboard-head-title-wrap {
   display: flex;
-  align-items: center;
   gap: 10px;
 }
 

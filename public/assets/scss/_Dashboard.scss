@@ -36,11 +36,11 @@
 
 .dashboard-head {
     background-color: #fff;
-    padding: $spacing_xs $spacing_s;
+    padding: 15px 20px;
     border-radius: $border_radius_xs;
 
     &-title-wrap {
-        @include flex_align_center;
+        display: flex;
         gap: 10px;
     }
 }

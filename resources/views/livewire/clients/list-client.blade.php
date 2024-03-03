@@ -8,7 +8,7 @@
             </ol>
         </nav>
     </div>
-    <div class="dashboard-head">
+    <div class="dashboard-head mb-3">
         <div class="row align-items-center">
             <div class="col d-flex align-items-center gap-3">
                 <h3 class="main-body-header-title mb-0">All Clients</h3>
@@ -65,7 +65,7 @@
     
     <div class="row">
         @if($sort != 'all' || $filter != 'all')
-            <div class="d-flex flex-wrap gap-2 align-items-center py-3">
+            <div class="d-flex flex-wrap gap-2 align-items-center mb-2">
                 <span class="pe-2"><i class='bx bx-filter-alt text-secondary'></i> Filter Results:</span>
                 @if($sort != 'all')
                     <span class="btn-batch">
