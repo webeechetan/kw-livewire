@@ -298,7 +298,7 @@
     </div>
     
     <livewire:components.add-task @saved="$refresh" :project="$project" wire:key="task-{{$project->id}}"  />
-    <livewire:components.add-project @saved="$refresh" wire:key="project-{{$project->id}}" />
+    <livewire:components.add-project @saved="$refresh" wire:key="project-{{$project->id}}" /> 
     
 </div>
 @push('scripts')

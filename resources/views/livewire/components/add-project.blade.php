@@ -129,7 +129,6 @@
                 });
 
                 $('.users').val(project_users_array).trigger('change');
-                $(".users").select2();
 
             });
 
@@ -149,17 +148,21 @@
                 },
             });
 
-            $('.users').select2({
-                placeholder: "Select Users",
-                allowClear: true,
-                templateResult: format,
-                templateSelection: format,
-            });
+            setTimeout(() => {
+                $('.users').select2({
+                    placeholder: "Select Users",
+                    allowClear: true,
+                    templateResult: format,
+                    templateSelection: format,
+                });
+            }, 2000);
+
             
 
             $('.users').on('change', function (e) {
                 var data = $(this).select2("val");
                 @this.set('project_users', data);
+                console.log(data);
             });
 
             function format(state) {
