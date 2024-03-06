@@ -91,8 +91,13 @@
                         <div class="cus_dropdown-body cus_dropdown-body-widh_s">
                             <div class="cus_dropdown-body-wrap">
                                 <ul class="cus_dropdown-list">
+                                    @if($project->trashed())
+                                    <li><a href="javascript:;" wire:click="emitRestoreEvent({{ $project->id }})"><span><i class='bx bx-undo' ></i></span> Restore</a></li>
+                                    <li><a href="javascript:;" wire:confirm="Are you sure you want to delete this project?" wire:click="emitForceDeleteEvent({{ $project->id }})"><span><i class='bx bx-trash' ></i></span> Delete Permanently</a></li>
+                                    @else
                                     <li><a href="javascript:;" wire:click="emitEditEvent({{ $project->id }})"><span><i class='bx bx-pencil' ></i></span> Edit</a></li>
                                     <li><a href="javascript:;" wire:confirm="Are you sure you want to delete this project?" wire:click="emitDeleteEvent({{ $project->id }})"><span><i class='bx bx-trash' ></i></span> Delete</a></li>
+                                    @endif
                                 </ul>
                             </div>
                         </div>

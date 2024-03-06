@@ -16,6 +16,9 @@ use App\Livewire\Clients\Components\Projects as ClientProjects;
 
 use App\Livewire\Projects\ListProject;
 use App\Livewire\Projects\Project;
+use App\Livewire\Projects\Components\Tasks as ProjectTasks;
+use App\Livewire\Projects\Components\FileManager as ProjectFileManager;
+
 use App\Livewire\Users\AddUser;
 use App\Livewire\Users\ListUser;
 use App\Livewire\Users\User as UserProfile;
@@ -70,7 +73,9 @@ Route::group(['middleware' => ['myauth']], function() {
     Route::get('/client/view/{id?}/file-manager',ClientFileManager::class)->name('client.file-manager');
     
     Route::get('/projects/{sort?}/{filter?}/{byUser?}/{byTeam?}',ListProject::class)->name('project.index');
-    Route::get('/project/view/{id}/{sort?}/{filter?}/{byUser?}/{byTeam?}',Project::class)->name('project.profile');
+    Route::get('/project/view/{id}',Project::class)->name('project.profile');
+    Route::get('/project/view/{project}/tasks',ProjectTasks::class)->name('project.tasks');
+    Route::get('/project/view/{id}/file-manager',ProjectFileManager::class)->name('project.file-manager');
     
     Route::get('/teams',ListTeam::class)->name('team.index');
     Route::get('/teams/add',AddTeam::class)->name('team.add');

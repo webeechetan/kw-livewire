@@ -36,6 +36,14 @@ class DatabaseSeeder extends Seeder
             mkdir($path, 0777, true);
         }
 
+        $user = new User();
+        $user->name = $org->name;
+        $user->email = $org->email;
+        $user->password = Hash::make($org->password);
+        $user->org_id = $org->id;
+        $user->image = Helper::createAvatar($org->name,'users');
+        $user->save();
+
         Team::factory()
             ->count(100)
             ->create();

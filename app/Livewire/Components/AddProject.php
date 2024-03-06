@@ -159,6 +159,16 @@ class AddProject extends Component
         $this->dispatch('saved');
     }
 
+    public function restoreProject($id)
+    {
+        $project = Project::withTrashed()->find($id);
+        $project->restore();
+        $this->dispatch('success', 'Project restored successfully.');
+        $this->dispatch('saved');
+    }
+
+
+
 
     public function resetForm(){
         $this->project_name = '';

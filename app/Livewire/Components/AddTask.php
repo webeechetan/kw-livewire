@@ -69,7 +69,6 @@ class AddTask extends Component
             }
         }
         $this->dispatch('saved','Task saved successfully');
-        $this->redirect(route('project.profile',['id'=>$this->project->id]), navigate: true);
     }
 
     public function editTask($id){
@@ -107,7 +106,11 @@ class AddTask extends Component
         }
 
         $this->dispatch('saved','Task updated successfully');
-        $this->redirect(route('project.profile',['id'=>$this->project->id]), navigate: true);
+    }
+
+    public function changeProjectStatus($id){
+        $project = Project::find($id);
+        $project->status = !$project->status;
     }
     
 }

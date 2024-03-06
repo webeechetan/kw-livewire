@@ -52,7 +52,7 @@
                                     <label for="">Add Users</label>
                                 </div>
                                 <div class="col-md-8">
-                                    <select name="" id="" class="form-control users" multiple>
+                                    <select name="" id="" class="form-control project-users" multiple>
                                         @foreach ($users as $user)
                                             <option data-image="{{ $user->image }}"  value="{{ $user->id }}">{{ $user->name }}</option>
                                         @endforeach 
@@ -103,7 +103,7 @@
                 $('#add-project-modal').modal('hide');
                 $('.project-form-text').html('Add Project');
                 $('.project-form-btn').html('Add Project');
-                $('.users').val(null).trigger('change');
+                $('.project-users').val(null).trigger('change');
                 $('.project_start_date').html('Start Date');
                 $('.project_due_date').html('Due Date');
 
@@ -129,7 +129,7 @@
                     project_users_array.push(user.id);
                 });
 
-                $('.users').val(project_users_array).trigger('change');
+                $('.project-users').val(project_users_array).trigger('change');
 
             });
 
@@ -150,7 +150,7 @@
             });
 
             setTimeout(() => {
-                $('.users').select2({
+                $('.project-users').select2({
                     placeholder: "Select Users",
                     allowClear: true,
                     templateResult: format,
@@ -160,7 +160,7 @@
 
             
 
-            $('.users').on('change', function (e) {
+            $('.project-users').on('change', function (e) {
                 var data = $(this).select2("val");
                 @this.set('project_users', data);
                 console.log(data);
