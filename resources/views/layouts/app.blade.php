@@ -124,13 +124,12 @@
 
     <script>
         document.addEventListener('error', event => {
-            toastr.clear()
+            toastr.remove()
             toastr.error(event.detail)
         })
 
         document.addEventListener('success', event => {
-            // remove all toasts
-            toastr.clear()
+            toastr.remove();
             toastr.success(event.detail)
         })
         $('.cus_dropdown-icon').click(function(){
