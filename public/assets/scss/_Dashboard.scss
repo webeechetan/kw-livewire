@@ -1172,25 +1172,11 @@
         display: inline-flex;
         justify-content: center;
         align-items: center;
-        border: 1px solid $grey;
-        color: $text_light;
+        background-color: $brand_light;
+        border: 1px solid $brand;
+        color: $brand;
         border-radius: $border-radius_xs;
         font-size: 20px;
-
-        &-yellow {
-            background-color: $yellow_light;
-            color: $yellow-dark;
-        }
-
-        &-secondary {
-            background-color: $secondary_light;
-            color: $secondary;
-        }
-
-        &-green {
-            background-color: $success_light;
-            color: $success;
-        }
     }
 
     &-tabs {
@@ -1203,66 +1189,80 @@
 
                 .nav-link {
                     color: $text_color;
-                    text-transform: uppercase;
-                    min-width: 100px;
-                    border: 1px solid $grey;
-                    background: $light;
+                    min-width: 70px;
+                    border: 1px solid $grey_xd;
+                    background: #fff;
                     font-weight: 500;
                     border-radius: $border-radius_rounded;
                     transition: $ease_03;
-                    font-size: 12px;
+                    font-size: 14px;
                     letter-spacing: 0.5px;
-                    padding: 7px 15px;
+                    padding: 6px 15px;
 
-                    &.active, &:hover, &:focus {
-                        background-color: $brand_light;
-                        color: $brand;
-                        box-shadow: none;
-                        outline: none;
-                        border-color: $brand;
+                    span {
+                        min-width: 26px;
+                        min-height: 20px;
+                        background-color: $grey;
+                        border: 1px solid $grey_xd;
+                        font-size: 12px;
+                        @include inline_flex_center;
+                        border-radius: 4px;
                     }
 
-                    &.project-tabs {
-                        &-active {
-                            background-color: $brand_light;
-                            color: $brand;
-                            border-color: $brand;
-                            &.active, &:hover, &:focus {
-                                background-color: $brand;
-                                color: #fff;
+                    &.active, &:hover, &:focus {
+                        background-color: #fff;
+                        color: $text_color;
+                        box-shadow: none;
+                        outline: none;
+                        border-color: $text-color;
+
+                        span {
+                            background-color: $dark;
+                            border-color: $dark;
+                            color: #fff;
+                        }
+                        &#project {
+                            &-active-tab {
+                                background-color: $brand_light;
                                 border-color: $brand;
+                                color: $brand;
+
+                                span {
+                                    background-color: $brand;
+                                    border-color: $brand;
+                                }
                             }
-                        }
-                        &-completed {
-                            background-color: $success_light;
-                            color: $success;
-                            border-color: $success;
-                            &.active, &:hover, &:focus {
-                                background-color: $success;
-                                color: #fff;
+                            &-done-tab {
+                                background-color: $success_light;
                                 border-color: $success;
+                                color: $success;
+
+                                span {
+                                    background-color: $success;
+                                    border-color: $success;
+                                }
                             }
-                        }
-                        &-overdue {
-                            background-color: $danger_light;
-                            color: $danger;
-                            border-color: $danger;
-                            &.active, &:hover, &:focus {
-                                background-color: $danger;
-                                color: #fff;
+                            &-overdue-tab {
+                                background-color: $danger_light;
                                 border-color: $danger;
+                                color: $danger;
+
+                                span {
+                                    background-color: $danger;
+                                    border-color: $danger;
+                                }
                             }
-                        }
-                        &-archived {
-                            background-color: $warning_light;
-                            color: $yellow_dark;
-                            border-color: $yellow_dark;
-                            &.active, &:hover, &:focus {
-                                background-color: $yellow-dark;
-                                color: #fff;
-                                border-color: $yellow-dark;
+                            &-archived-tab {
+                                background-color: $warning_light;
+                                border-color: $warning;
+                                color: $yellow_dark;
+
+                                span {
+                                    background-color: $yellow_dark;
+                                    border-color: $warning;
+                                }
                             }
-                        }
+                        }                         
                     }
                 }
             }
@@ -1294,8 +1294,8 @@
         margin-bottom: $spacing_xs;
         span {
             font-size: 12px;
-            color: $success;
-            background: $success_light;
+            color: $brand;
+            background: $brand_light;
             padding: 2px 7px;
             border-radius: $border-radius_xs;
             font-weight: 600;
@@ -1303,10 +1303,31 @@
     }
 
     &-overdue {
-        .project-selected-date span {
-            color: $danger;
-            background: $danger_light;
+        .project {
+            &-icon, &-selected-date span {
+                background-color: $danger_light;
+                color: $danger;
+                border-color: $danger;
+            }
         }   
+    }
+    &-success {
+        .project {
+            &-icon, &-selected-date span {
+                background-color: $success_light;
+                color: $success;
+                border-color: $success;
+            }
+        }
+    }
+    &-warning {
+        .project {
+            &-icon, &-selected-date span {
+                background-color: $warning_light;
+                color: $warning;
+                border-color: $warning;
+            }
+        }
     }
 
     &-list {
@@ -1349,6 +1370,14 @@
                     color: $yellow_dark;
                 }
             }
+        }
+    }
+
+    &:hover {
+        .card_style-open {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(0);
         }
     }
 }

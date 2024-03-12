@@ -378,7 +378,7 @@ hr.space-sm {
         position: absolute;
         right: 10px;
         top: 10px;
-        z-index: 99;
+        z-index: 999;
         opacity: 0;
         visibility: hidden;
         transform: translateX(5px);
@@ -1156,10 +1156,7 @@ hr.space-sm {
 
 /* ----- All Stats Style ----- */
 
-.states_style {
-    display: grid;
-    gap: 15px;
-    
+.states_style {    
     &-icon {
         width: 40px;
         height: 40px;
@@ -1174,6 +1171,7 @@ hr.space-sm {
     &-text {
         color: $text-color;
         font-weight: 500;
+        font-size: 16px;
     }
 
     &-success {
@@ -1221,11 +1219,31 @@ hr.space-sm {
             color: $yellow_dark;
         }
     }
+}
 
-    &-left {
-        display: grid;
-        grid-template-columns: auto 1fr;
+/* ----- Dashbaord Filters ----- */
+.dashboard_filters {
+    @include flex;
+    gap: 25px;
+
+    .btn-batch {
+        transition: $ease_03;
+        margin-left: 3px;
     }
+
+    a {
+        font-weight: 500;
+        &:hover, &.active {
+            color: $success;
+            .btn-batch {
+                background-color: $success;
+                border-color: $success;
+                color: #fff;
+            }
+        }
+    }
+
+    
 }
 
 /* ----- Toaster Style ----- */

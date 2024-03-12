@@ -20,7 +20,7 @@
             <div class="col">
                 <div class="main-body-header-right">
                     <form class="search-box" wire:submit="search" action="">
-                        <input wire:model="query" type="text" class="form-control" placeholder="Search Companies">
+                        <input wire:model="query" type="text" class="form-control" placeholder="Search Company">
                         <button type="submit" class="search-box-icon"><i class='bx bx-search me-1'></i> Search</button>
                     </form>
                     <div class="main-body-header-filters">
@@ -68,8 +68,8 @@
 
     <div class="row">
         <div class="col-md-6">
-            <div class="d-flex flex-wrap gap-4 align-items-center mb-2">
-                <a href="javascript:;">All <span class="btn-batch active">150</span></a>
+            <div class="dashboard_filters mb-2">
+                <a href="javascript:;" class="active">All <span class="btn-batch">150</span></a>
                 <a href="javascript:;">Active <span class="btn-batch">20</span></a>
                 <a href="javascript:;">Completed <span class="btn-batch">02</span></a>
                 <a href="javascript:;">Archive <span class="btn-batch">03</span></a>
