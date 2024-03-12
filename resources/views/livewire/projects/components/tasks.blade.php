@@ -77,13 +77,13 @@
                         <div class="taskList-dashbaord_header_title taskList_col ms-2">Task Name</div>
                     </div>
                     <div class="col text-center">
+                        <div class="taskList-dashbaord_header_title taskList_col">Project</div>
+                    </div>
+                    <div class="col text-center">
+                        <div class="taskList-dashbaord_header_title taskList_col">Due Date</div>
+                    </div>
+                    <div class="col text-center">
                         <div class="taskList-dashbaord_header_title taskList_col">Assignee</div>
-                    </div>
-                    <div class="col text-center">
-                        <div class="taskList-dashbaord_header_title taskList_col">Notify</div>
-                    </div>
-                    <div class="col text-center">
-                        <div class="taskList-dashbaord_header_title taskList_col">Status</div>
                     </div>
                 </div>
             </div>
@@ -94,12 +94,26 @@
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class="taskList_col taskList_col_title">
-                                    <div class="taskList_col_title_complete_icon"><i class='bx bx-check'></i></div>
+                                    <div class="taskList_col_title_complete_icon edit-task" data-id="{{ $task->id }}"><i class='bx bx-check'></i></div>
                                     <div>
                                         <div>{{ $task->name }}</div>
                                         <div class="text-xs"><i class='bx bx-calendar-alt' ></i> 
                                             {{ \Carbon\Carbon::parse($task->due_date)->format('d M-Y') }}
                                         </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="taskList_col">
+                                    <div class="taskList_col_project">
+                                        <div class="taskList_col_project_name"> <span class="btn-batch  ">{{ $project->name }}</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="taskList_col">
+                                    <div class="taskList_col_project">
+                                        <div class="taskList_col_project_name"> <span class="btn-batch ">{{ \Carbon\Carbon::parse($task->due_date)->format('d M-Y') }}</span></div>
                                     </div>
                                 </div>
                             </div>
@@ -114,25 +128,6 @@
                                             </a>
                                         @endforeach
                                     </div>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="taskList_col">
-                                    <div class="avatarGroup avatarGroup-overlap">
-                                        @foreach($task->notifiers as $user)
-                                            <a href="javascript:" class="avatarGroup-avatar" wire-key="task-notifier-{{$user->id}}">
-                                                <span class="avatar avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ $user->name }}">
-                                                    <img alt="avatar" src="{{ asset('storage/'.$user->image) }}" class="rounded-circle" />
-                                                </span>
-                                            </a>
-                                        @endforeach
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col">                                    
-                                <div class="btn-list justify-content-center">
-                                    <a class="btn-icon btn-icon-rounded btn-icon-edit edit-task" data-id="{{ $task->id }}" href="javascript:void(0);"><i class='bx bx-pencil'></i></a>
-                                    <a wire:click="deleteTask({{ $task->id }})" class="btn-icon btn-icon-rounded btn-icon-danger" href="javascript:void(0);"><i class='bx bx-trash' ></i></a>
                                 </div>
                             </div>
                         </div>

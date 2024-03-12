@@ -82,6 +82,7 @@
                 <a href="{{ route('project.index') }}" class="text-danger d-flex align-items-center">Reset <span class="ms-1 d-inline-flex"><i class='bx bx-refresh'></i></span></a>
             </div>
         @endif
+  
         @foreach($projects as $project)
             <div class="col-md-4 mt-4">
                 <div class="card_style card_style-overdue">

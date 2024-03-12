@@ -10,7 +10,7 @@ class AddTask extends Component
 {
     use WithFileUploads;
 
-    protected $listeners = ['editTask'];
+    protected $listeners = ['editTask','deleteTask'];
 
     public $project;
     public $task;
@@ -111,6 +111,16 @@ class AddTask extends Component
     public function changeProjectStatus($id){
         $project = Project::find($id);
         $project->status = !$project->status;
+    }
+
+    public function deleteTask(){
+        $this->task->delete();
+        $this->dispatch('success','Task deleted successfully');
+        $this->dispatch('saved','Task deleted successfully');
+    }
+
+    public function viewFullscree(){
+        $this->redirect(route('task.view',$this->task->id), navigate: true);
     }
     
 }

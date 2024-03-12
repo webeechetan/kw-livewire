@@ -92,7 +92,7 @@ Route::group(['middleware' => ['myauth']], function() {
     Route::get('/tasks',ListTask::class)->name('task.index');
     Route::get('/tasks/add',AddTask::class)->name('task.add');
     Route::get('/tasks/list-view',TaskListView::class)->name('task.list-view');
-    Route::get('/task/view',View::class)->name('task.view');
+    Route::get('/task/view/{id?}',View::class)->name('task.view');
 
     Route::get('/file-manager',FileManager::class)->name('file-manager');
     

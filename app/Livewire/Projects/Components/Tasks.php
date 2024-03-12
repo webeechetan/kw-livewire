@@ -66,10 +66,8 @@ class Tasks extends Component
         $this->dispatch('editTask', $id);
     }
 
-    public function deleteTask($id){
-        $task = Task::find($id);
-        $task->delete();
-        $this->dispatch('task-deleted','Task deleted successfully');
+    public function emitDeleteTaskEvent($id){
+        $this->dispatch('deleteTask', $id);
     }
 
 }
