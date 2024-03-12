@@ -8,6 +8,8 @@
             </ol>
         </nav>
     </div>
+
+    <!-- Dashboard Body -->
     <div class="dashboard-head mb-3">
         <div class="row align-items-center">
             <div class="col d-flex align-items-center gap-3">
@@ -42,6 +44,7 @@
                                         <hr>
                                         <h5 class="filterSort-header"><i class='bx bx-briefcase text-primary' ></i> Filter By Clients</h5>
                                         <ul class="filterSort_btn_group list-none">
+                                            <li class="filterSort_item"><a href="#" class="btn-batch">All</a></li>
                                             <li class="filterSort_item"><a wire:navigate href="{{ route('client.index',['sort'=>$sort,'filter'=>'active']) }}" class="btn-batch  @if($filter == 'active') active @endif">Active</a></li>
                                             <li class="filterSort_item"><a wire:navigate href="{{ route('client.index',['sort'=>$sort,'filter'=>'completed']) }}" class="btn-batch  @if($filter == 'completed') active @endif">Completed</a></li>
                                             <li class="filterSort_item"><a wire:navigate href="{{ route('client.index',['sort'=>$sort,'filter'=>'archived']) }}" class="btn-batch  @if($filter == 'archived') active @endif">Archive</a></li>
@@ -62,10 +65,19 @@
             </div>
         </div>
     </div>
-    
+
     <div class="row">
+        <div class="col-md-6">
+            <div class="d-flex flex-wrap gap-4 align-items-center mb-2">
+                <a href="javascript:;">All <span class="btn-batch active">150</span></a>
+                <a href="javascript:;">Active <span class="btn-batch">20</span></a>
+                <a href="javascript:;">Completed <span class="btn-batch">02</span></a>
+                <a href="javascript:;">Archive <span class="btn-batch">03</span></a>
+            </div>
+        </div>
+        <div class="col-md-6">
         @if($sort != 'all' || $filter != 'all')
-            <div class="d-flex flex-wrap gap-2 align-items-center mb-2">
+            <div class="d-flex flex-wrap gap-2 align-items-center justify-content-end mb-2">
                 <span class="pe-2"><i class='bx bx-filter-alt text-secondary'></i> Filter Results:</span>
                 @if($sort != 'all')
                     <span class="btn-batch">
@@ -83,13 +95,14 @@
                 <a href="{{ route('client.index') }}" class="text-danger d-flex align-items-center">Reset <span class="ms-1 d-inline-flex"><i class='bx bx-refresh'></i></span></a>
             </div>
         @endif
+        </div>
 
         @foreach($clients as $client)
         @php
             $activeProjects = $client->projects->where('status', 'active');
             $completedProjects = $client->projects->where('status', 'completed');
         @endphp
-        <div class="col-md-4 mb-4 mt-2"  wire:key="{{ $client->id }}">
+        <div class="col-md-4 mb-3 mt-2"  wire:key="{{ $client->id }}">
             <div class="card_style card_style-client h-100">
                 <div wire:loading wire:target="emitDeleteEvent({{ $client->id }})" class="card_style-loader">
                     <div class="card_style-loader-wrap"><i class='bx bx-trash text-danger me-2' ></i> Removing ...</div>
@@ -111,10 +124,12 @@
                         </div>
                     </div>
                 </div>
-                <div class="card_style-client-head">
-                    <div><img src="{{ asset('storage/'.$client->image) }}" alt="" class="img-fluid"></div>
+                <a href="{{ route('client.profile', $client->id ) }}" class="card_style-open"><i class='bx bx-chevron-right'></i></a>
+                <div class="card_style-head card_style-client-head mb-3">
+                    {{-- <div><img src="{{ asset('storage/'.$client->image) }}" alt="" class="img-fluid"></div> --}}
+                    <div class="avatar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="">BS</div>
                     <div>
-                        <h4>
+                        <h4 class="mb-1">
                             <a wire:navigate href="{{ route('client.profile', $client->id ) }}">
                                 {{ Str::limit($client->visible_name, 20, '...') }}
                             </a>
@@ -122,8 +137,39 @@
                         <div class="btn-withIcon"><i class='bx bx-layer text-secondary' ></i> {{ $client->projects->count() }} Projects</div>
                     </div>
                 </div>
-                <div class="card_style-client-body">
+                <div class="d-flex flex-wrap">
+                    <h4 class="text-md mb-0">Active <span class="btn-batch-bg btn-batch-bg-secondary ms-2">{{count($activeProjects)}} Projects</span></h4>
+                    <span class="px-2 text-grey">|</span>
+                    <h4 class="text-md mb-0">Completed <span class="btn-batch-bg btn-batch-bg-success ms-2">{{count($completedProjects)}} Projects</span></h4>
+                </div>
+                <hr class="my-2">
+                <div class="row align-items-center">
+                    <div class="col-auto">
+                        <h4 class="text-md mb-0"><i class="bx bx-user text-primary"></i> Users</h4>
+                    </div>
+                    <div class="col">
+                        <div class="avatarGroup avatarGroup-overlap">
+                            <a href="#" class="avatarGroup-avatar">
+                                <span class="avatar avatar-sm avatar-pink" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="">BW</span>
+                            </a>
+                            <a href="#" class="avatarGroup-avatar">
+                                <span class="avatar avatar-sm avatar-purple" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="">RJ</span>
+                            </a>
+                            <a href="#" class="avatarGroup-avatar">
+                                <span class="avatar avatar-sm avatar-green" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="">HS</span>
+                            </a>
+                            <a href="#" class="avatarGroup-avatar">
+                                <span class="avatar avatar-sm avatar-blue" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="">AT</span>
+                            </a>
+                            <a href="#" class="avatarGroup-avatar">
+                                <span class="avatar avatar-sm avatar-more">+10</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {{-- <div class="card_style-client-body">
                     <div class="card_style-projects_tab">
+
                         <ul class="nav nav-pills mb-2" role="tablist">
                             <li class="nav-item" role="presentation">
                                 <div class="card_style-projects_tab-title active text-primary"  data-bs-toggle="pill" data-bs-target="#active-{{$client->id}}" role="tab" aria-controls="pills-home" aria-selected="true">Active <span class="btn-batch-bg btn-batch-bg ms-2">{{count($activeProjects)}} Projects</span></div>
@@ -134,9 +180,10 @@
                         </ul>
                         <div class="tab-content" id="pills-tabContent">
                             <div class="tab-pane fade show active" id="active-{{$client->id}}" role="tabpanel" aria-labelledby="pills-home-tab" tabindex="0">
-                                <div class="card_style-projects_tab-items">
+                                <div class="card_style-projects_tab-items align-items-center">
+                                    <i class="bx bx-user text-primary"></i>
                                     <!-- Avatar Group (Add + More option after 6) -->
-                                    <div class="avatarGroup avatarGroup-lg mt-2">
+                                    <div class="avatarGroup avatarGroup-lg">
                                         @php
                                             $plus_more_projects = 0;
                                             if(count($activeProjects) > 7){
@@ -146,7 +193,7 @@
                                         @foreach($activeProjects as $project)
                                             @if($loop->index < 7)
                                                 <a wire:navigate href="{{ route('project.profile',$project->id) }}" class="avatarGroup-avatar">
-                                                    <span class="avatar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{ $project->name }}">
+                                                    <span class="avatar avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{ $project->name }}">
                                                         <img alt="avatar" src="{{ asset('storage/'.$project->image) }}" class="rounded-circle">
                                                     </span>
                                                 </a>
@@ -178,15 +225,14 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
             </div>
         </div>
         @endforeach
-
-        <div class="pagintaions mt-4">
-            {{ $clients->links(data: ['scrollTo' => false]) }}
-        </div>
     </div>
+    <hr>
+    <!-- Pagination -->
+    {{ $clients->links(data: ['scrollTo' => false]) }}
 
     <!-- Client Modal Component -->
     <livewire:components.add-client @saved="$refresh" />

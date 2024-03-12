@@ -45,20 +45,38 @@
             </div>
         </div>
     </div>
-    <div class="column-box mb-5">
-        <div class="row">
-            <div class="col-lg-8 pe-lg-5">
-                <div class="column-title mb-2">Description</div>
-                <hr>
-                <div>
-                    @if($client->description)
-                        {!! $client->description !!}
-                    @else
-                        <p class="text-muted">No Description Available</p>
-                    @endif
+    <div class="row">
+        <div class="col-lg-4 mb-4">
+            <div class="column-box font-500">
+                <div class="row align-items-center">
+                    <div class="col"><span><i class='bx bx-layer text-secondary' ></i></span> Created By</div>
+                    <div class="col text-secondary">@if($client->createdBy) {{ $client->createdBy->name }} @else Auto Generated @endif</div>
                 </div>
-                <h5 class="column-title mt-4">Teams</h5>
-                <hr>
+            </div>
+        </div>
+        <div class="col-lg-4 mb-4">
+            <div class="column-box font-500">
+                <div class="row align-items-center">
+                    <div class="col"><span><i class='bx bx-calendar text-success'></i></span> Onboard Date</div>
+                    <div class="col text-success">{{ \Carbon\Carbon::parse($client->onboard_date)->format('d M Y') }}</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="column-box font-500">
+                <div class="row align-items-center">
+                    <div class="col"><span><i class='bx bx-user text-primary'></i></span> Point Of Contact</div>
+                    <div class="col text-primary">{{ $client->point_of_contact }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="column-box mb-4">
+        <div class="row">
+            <div class="col-sm-auto pe-5">
+                <h5 class="column-title mb-0">Teams</h5>
+            </div>
+            <div class="col">
                 <!-- Teams -->
                 <div class="team-list row">
                     @forelse($client_teams as $team)
@@ -88,40 +106,22 @@
                             </div>
                         </div>
                         @empty
-                        <div class="col-auto">
-                            <div class="team team-style_2">
-                                <div class="team-style_2-head_wrap">
-                                    <div>
-                                        <h4 class="team-style_2-title">No Team Assigned</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <div>No Team Assigned</div>
                     @endforelse
                 </div>
             </div>
-            <div class="col-lg-4 font-500">
-                <div class="column-box bg-light mb-2">
-                    <div class="row align-items-center">
-                        <div class="col"><span><i class='bx bx-layer text-secondary' ></i></span> Created By</div>
-                        <div class="col text-secondary">@if($client->createdBy) {{ $client->createdBy->name }} @else Auto Generated @endif</div>
-                    </div>
-                </div>
-                <div class="column-box bg-light mb-2">
-                    <div class="row align-items-center">
-                        <div class="col"><span><i class='bx bx-calendar text-success'></i></span> Onboard Date</div>
-                        <div class="col text-success">{{ \Carbon\Carbon::parse($client->onboard_date)->format('d M Y') }}</div>
-                    </div>
-                </div>
-                <div class="column-box bg-light">
-                    <div class="row align-items-center">
-                        <div class="col"><span><i class='bx bx-user text-primary'></i></span> Point Of Contact</div>
-                        <div class="col text-primary">{{ $client->point_of_contact }}</div>
-                    </div>
-                </div>
-            </div>
-        </div>        
-    </div>    
+        </div>
+    </div>
+    <div class="column-box">
+        <div class="column-title mb-3">Description</div>
+        <div>
+            @if($client->description)
+                {!! $client->description !!}
+            @else
+                <p class="text-muted">No Description Available</p>
+            @endif
+        </div>
+    </div>
 </div>
 @push('scripts')
 <script>

@@ -20,7 +20,8 @@
                 /*---- Sidebar Menu Icon Style ----*/
                 i {
                     font-size: 18px;
-                    color: $brand;
+                    color: $text-color;
+                    transition: $ease_05;
                 }
 
                 &:after {
@@ -31,13 +32,17 @@
                     position: absolute;
                     left: -100%;
                     top: 0;
-                    border-radius: 0 30px 30px 0;
+                    border-radius: 0 4px 4px 0;
                     transition: $ease_05;
                 }
 
                 &.active, &:hover {
                     color: $brand;
                     background-color: $sidebar_active_bg_color;
+
+                    i {
+                        color: $brand;
+                    }
                     
                     &:after {
                         left: 0;

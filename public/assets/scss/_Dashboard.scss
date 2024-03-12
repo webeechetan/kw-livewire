@@ -43,6 +43,10 @@
         display: flex;
         gap: 10px;
     }
+
+    .tabNavigationBar-tab {
+        border-color: transparent;
+    }
 }
 
 /* ----- Auth Forms ----- */
@@ -73,6 +77,93 @@
 }
 
 /* ----- Avatar ----- */
+.avatar {
+    width: 35px;
+    height: 35px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: $dark;
+    border-radius: 50%;
+    border: 1px solid $grey_xd;
+    font-weight: 600;
+    color: #fff;
+    font-size: 14px;
+    transition: $ease_03;
+
+    &:hover, &:focus {
+        color: #fff;
+        z-index: 9;
+    }
+
+    img {
+        width: 100%;
+    }
+
+    &-more {
+        background-color: transparent;
+        color: $text_color;
+        width: inherit;
+        height: inherit;
+        border-radius: 0;
+        border: none;
+
+        &:hover, &:focus {
+            color: $brand;
+            text-decoration: underline;
+        }
+    }
+
+    &-orange {
+        background-color: #FF5E0E;
+        border-color: #FF5E0E;
+        color: #fff;
+    }
+    &-purple {
+        background-color: #7407FF;
+        border-color: #7407FF;
+        color: #fff;
+    }
+    &-green {
+        background-color: #48914D;
+        border-color: #48914D;
+        color: #fff;
+    }
+    &-pink {
+        background-color: #F83890;
+        border-color: #F83890;
+        color: #fff;
+    }
+    &-yellow {
+        background-color: #c9b101;
+        border-color: #c9b101;
+        color: #fff;
+    }
+    &-blue {
+        background-color: #0000F7;
+        border-color: #0000F7;
+        color: #fff;
+    }
+    &-blue {
+        background-color: #0000F7;
+        border-color: #0000F7;
+        color: #fff;
+    }
+
+    &-sm {
+        width: 26px;
+        height: 26px;
+        font-size: 10px;
+        letter-spacing: 1px;
+
+        &.avatar-more {
+            font-size: 13px;
+            width: inherit;
+            height: inherit;
+        }
+    }
+}
+
 .avatarGroup {
     display: flex;
     gap: 3px;
@@ -87,32 +178,10 @@
     }
 
     &-overlap {
-        .avatar {
+        .avatar:not(.avatar-more) {
             margin-left: -10px;
+            border: 1px solid #fff;
         }
-    }
-}
-
-.avatar {
-    width: 35px;
-    height: 35px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    background: $grey;
-    border-radius: 50%;
-    border: 1px solid $light;
-    font-weight: 600;
-    color: $dark;
-    img {
-        width: 100%;
-    }
-
-    &-sm {
-        width: 28px;
-        height: 28px;
-        font-size: 10px;
-        letter-spacing: 1px;
     }
 }
 
@@ -1086,10 +1155,8 @@
 /* ----- Project ----- */
 .project {
     background-color: #fff;
-    border: 1px solid $grey;
     padding: $spacing_s;
     border-radius: $border_radius_xs;
-    box-shadow: $box_shadow_xtra_light;
     gap: 15px;
     width: calc(33% - 12px);
     position: relative;
@@ -1105,11 +1172,10 @@
         display: inline-flex;
         justify-content: center;
         align-items: center;
-        background-color: $brand_light;
-        color: $brand;
-        font-weight: 500;
+        border: 1px solid $grey;
+        color: $text_light;
         border-radius: $border-radius_xs;
-        font-size: 26px;
+        font-size: 20px;
 
         &-yellow {
             background-color: $yellow_light;

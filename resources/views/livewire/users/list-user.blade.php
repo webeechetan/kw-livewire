@@ -78,26 +78,25 @@
                     </div>
                     <div class="card_style-user-head">
                         <div class="card_style-user-profile-img"><span><img src="{{ env('APP_URL') }}/storage/{{ $user->image }}" alt="{{ $user->name }}"></span></div>
-                        <div class="card_style-user-profile-content">
+                        <div class="card_style-user-profile-content mt-3">
                             <h4><a wire:navigate href="{{ route('user.profile') }}">{{ $user->name }}</a></h4>
-                            <div class="d-flex align-items-center"><i class='bx bx-envelope me-1 text-secondary' ></i> {{ $user->email }}</div>
+                            <div class="d-flex align-items-center justify-content-center"><i class='bx bx-envelope me-1 text-secondary' ></i> {{ $user->email }}</div>
                             <div class="card_style-user-head-position mt-2"><i class='bx bx-user'></i> Web Developer | Tech Team</div>
-                            <div class="mt-2">Assigned <span class="btn-batch btn-batch-warning">5 Teams</span></div>
+                            <div class="card_style-user-head-team"><span class="btn-batch btn-batch-warning">5 Teams</span></div>
                         </div>
                     </div>
                     <hr>
                     <div class="card_style-user-body">
-                        <div class="card_style-options">
+                        <div class="card_style-options d-none">
                             <div class="card_style-options-head"><span><i class='bx bx-layer text-secondary' ></i></span> 30 Projects <span class="text-dark-grey ms-1">|</span> 5 Clients</div>
                             <div class="card_style-options-list d-flex">
                                 <div class="text-primary">Active <span class="btn-batch-bg btn-batch-bg-primary">10 Projects</span></div>
                                 <div class="text-success ms-4">Completed <span class="btn-batch-bg btn-batch-bg-success">5 Projects</span></div>
                             </div>
                         </div>
-                        <hr>
-                        <div class="card_style-tasks">
+                        <div class="card_style-tasks text-center">
                             <div class="card_style-tasks-title"><span><i class='bx bx-objects-horizontal-left' ></i></span> 60 Tasks</div>
-                            <div class="card_style-tasks-list">
+                            <div class="card_style-tasks-list justify-content-center">
                                 <div class="card_style-tasks-item card_style-tasks-item-pending"><span><i class='bx bx-objects-horizontal-center' ></i></span> 30 Active</div>
                                 <div class="card_style-tasks-item card_style-tasks-item-overdue"><span><i class='bx bx-objects-horizontal-center' ></i></span> 20 Overdue</div>
                                 <div class="card_style-tasks-item card_style-tasks-item-done"><span><i class='bx bx-objects-horizontal-center' ></i></span> 10 Completed</div>
@@ -107,9 +106,9 @@
                 </div>
             </div>
         @endforeach
-        <div class="pagintaions mt-4">
-            {{ $users->links(data: ['scrollTo' => false]) }}
-        </div>
+
+        <!-- Pagination -->
+        {{ $users->links(data: ['scrollTo' => false]) }}
     </div>
 
     <!-- User Modal -->

@@ -16,6 +16,7 @@ hr {
 a {
     color: $text_color;
     text-decoration: none;
+    transition: $ease_03;
     &:hover {
         color: $link_hover;
     }
@@ -49,6 +50,9 @@ b, strong {
     }
     &-primary {
         color: $brand !important;
+    }
+    &-md {
+        font-size: 16px;
     }
     &-sm {
         font-size: 13px;
@@ -171,6 +175,9 @@ ul {
 .font {
     &-500 {
         font-weight: 500;
+    }
+    &-400 {
+        font-weight: 400;
     }
 }
 
@@ -349,18 +356,45 @@ hr.space-sm {
 /* ----- Card ----- */
 .card_style {
     background-color: #fff;
-    padding: $spacing_md;
+    padding: $spacing_sm;
     border-radius: $border_radius_xs;
     box-shadow: $box_shadow_xtra_light;
     transition: $ease_03;
     position: relative;
     overflow: hidden;
 
+    &-label {
+        font-size: 18px;
+    }
+
+    &-open {
+        width: 30px;
+        height: 30px;
+        font-size: 22px;
+        @include flex_center;
+        background-color: $brand_light;
+        color: $brand;
+        border-radius: $border-radius_xs;
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        z-index: 99;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateX(5px);
+        transition: $ease_03;
+
+        &:hover {
+            background-color: $brand;
+            color: #fff;
+        }
+    }
+
     &:after {
         content: "";
         width: 100%;
         height: 2px;
-        background-color: $yellow;
+        background-color: $brand;
         transform: translateX(-100%);
         transition: $ease_03;
         position: absolute;
@@ -370,9 +404,25 @@ hr.space-sm {
 
     &:hover {
         box-shadow: $box_shadow_light;
+
+        .card_style-open {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(0);
+        }
         
         &:after {
             transform: translateX(0);
+        }
+    }
+
+    &-head {
+        h4 {
+            font-size: 18px;
+
+            a:hover {
+                color: $brand;
+            }
         }
     }
 
@@ -392,18 +442,13 @@ hr.space-sm {
 
     &-client {
         &-head {
-            @include flex;
+            display: grid;
+            grid-template-columns: auto 1fr;
             gap: $spacing_xs;
-            padding-bottom: $spacing_xs;
+            margin-right: 30px;
 
             img {
                 width: 30px;
-                margin-top: 3px;
-            }
-
-            h4 {
-                font-size: 26px;
-                margin-bottom: 0;
             }
         }
     }
@@ -509,14 +554,18 @@ hr.space-sm {
 
     &-user {
         &-head {
-            display: grid;
-            grid-template-columns: 50px 1fr;
-            gap: 15px;
+            text-align: center;
+
+            &-team {
+                position: absolute;
+                top: 10px;
+                left: 10px;
+            }
         }
         &-profile {
             &-img {
                 img {
-                    width: 100%;
+                    width: 100px;
                 }
             }
             &-content {

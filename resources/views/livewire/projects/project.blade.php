@@ -12,6 +12,62 @@
 
     <!-- Dashboard Body -->
     <div class="row">
+        <div class="col-lg-4 mb-4">
+            <div class="column-box">
+                <div class="states_style states_style-left states_style-success">
+                    <div class="states_style-icon"><i class='bx bx-layer'></i></div>
+                    <div>
+                        <h5 class="title-md mb-1">72</h5>
+                        <div class="states_style-text">Active Tasks</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 mb-4">
+            <div class="column-box">
+                <div class="states_style states_style-left states_style-progress">
+                    <div class="states_style-icon"><i class='bx bx-line-chart' ></i></div>
+                    <div>
+                        <h5 class="title-md mb-1">60%</h5>
+                        <div class="states_style-text">Progress</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="column-box">
+                <div class="states_style states_style-left states_style-active">
+                    <div class="states_style-icon"><i class='bx bx-user-plus' ></i></div>
+                    <div>
+                        <h5 class="title-md mb-1">16</h5>
+                        <div class="states_style-text">Members Assigned</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="column-box">
+        <div class="row font-500">
+            <div class="col-lg-3">
+                <div class="column-box bg-light mb-2">
+                    <div class="row align-items-center">
+                        <div class="col"><span><i class='bx bx-layer text-secondary' ></i></span> Created By</div>
+                        <div class="col text-secondary">John Deo</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="column-box bg-light mb-2">
+                    <div class="row align-items-center">
+                        <div class="col"><span><i class='bx bx-layer text-secondary' ></i></span> Start Date</div>
+                        <div class="col text-secondary">30 Jan 2024</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-md-4">
             <div class="column-box">
                 <div class="row align-items-center mb-2">

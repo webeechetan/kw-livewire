@@ -51,9 +51,10 @@ $yellow_hover: $yellow;
 
 /*---- Pagination ---*/
 $pagination_color: $text_color;
-$pagination_bg: $light;
+$pagination_bg: #fff;
 $pagination_border_width: 1px;
-$pagination_border_color: $pagination_color;
+$pagination_border_color: $grey;
+$pagination_border_radius: 30px;
 
 $pagination_hover_color: $white;
 $pagination_focus_color: $pagination_hover_color;

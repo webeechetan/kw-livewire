@@ -37,7 +37,7 @@
                     <div class="col-md-6">
                         <div class="taskPane-dashbaord-head-right">
                             <button type="button" class="btn-icon" data-bs-toggle="modal" data-bs-target="#attached-file-modal"><i class='bx bx-paperclip' style="transform: rotate(90deg);"></i></button>
-                            <button type="button" class="btn-icon"><i class='bx bx-link' ></i></button>
+                            <button type="button" class="btn-icon"><i class='bx bx-share-alt' ></i></button>
                             <button type="button" class="btn-border btn-border-secondary"><i class='bx bx-check' ></i> Save Task</button>
                         </div>
                     </div>
@@ -145,7 +145,7 @@
             <div class="cmnt_sec pt-4">
                 <!-- Activity -->
                 <div class="cmnt_item">
-                    <h5 class="cmnt_item_title"><span><i class='bx bx-line-chart text-primary'></i> Activity</span><span class="text-sm"><i class='bx bx-comment-dots text-secondary'></i> 15 Comments</span></h5>
+                    <h5 class="cmnt_item_title"><span><i class='bx bx-line-chart text-primary'></i> Comments</span><span class="text-sm"><i class='bx bx-comment-dots text-secondary'></i> 15 Comments</span></h5>
                     <div class="cmnt_item-tabs">
                         <div class="nav nav-tabs" id="nav-tab" role="tablist">
                             <button class="nav-link active" id="nav-internal-tab" data-bs-toggle="tab" data-bs-target="#nav-internal" type="button" role="tab" aria-controls="nav-internal" aria-selected="true">Internal Feedback <span class="text-sm btn-batch btn-batch-secondary ms-3"><i class='bx bx-comment-dots text-secondary'></i> 07 Comments</span></button>

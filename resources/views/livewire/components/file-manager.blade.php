@@ -81,7 +81,7 @@
                 </div>
                 <form class="search-box search-box-float-style ms-auto" action="">
                     <span class="search-box-float-icon"><i class="bx bx-search"></i></span>
-                    <input type="text" class="form-control" placeholder="Search Task...">
+                    <input type="text" class="form-control" placeholder="Search">
                 </form>
             </div>
         </div>
