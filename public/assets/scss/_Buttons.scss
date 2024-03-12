@@ -272,6 +272,12 @@
         color: $dark;
         display: inline-block;
 
+        &.active {
+            background-color: $success;
+            border-color: $success;
+            color: #fff;
+        }
+
         &-bg {
             padding: 3px 10px;
             border-radius: $border_radius_rounded;

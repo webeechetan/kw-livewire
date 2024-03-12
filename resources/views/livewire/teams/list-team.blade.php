@@ -63,30 +63,39 @@
                     <div class="card_style-list_head">
                         <div class="card_style-team-profile-img"><span><img src="{{ env('APP_URL') }}/storage/{{ $team->image }}" alt="{{ $team->name }}"></span></div>
                         <div class="card_style-team-profile-content">
-                            <h4 class="mb-1"><a wire:navigate href="{{ route('team.profile') }}">{{ $team->name }}</a></h4>
-                            <div class="mb-1">
+                            <h4 class="mb-2"><a wire:navigate href="{{ route('team.profile') }}">{{ $team->name }}</a></h4>
+                            <div class="mb-2">
                                 <span class="font-500"><i class='bx bx-user text-success' ></i> Manager</span> <span class="btn-batch ms-2">Vikram Malhotra</span>
                             </div>
-                            <div class="mb-3">15 Members</div>
-                            <div class="avatarGroup avatarGroup-overlap">
-                                @foreach($team->users as $user)
-                                <a href="#" class="avatarGroup-avatar">
-                                    <span class="avatar avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ $user->name }}">
-                                        <img alt="avatar" src="{{ env('APP_URL') }}/storage/{{ $user->image }}" class="rounded-circle" />
-                                    </span>
-                                </a>
-                                @endforeach
+                            <div class="row">
+                                <div class="col-auto">
+                                    <div>15 Members</div>
+                                </div>
+                                <div class="col-auto px-0">
+                                    <span class="text-dark-grey ms-1">|</span>
+                                </div>
+                                <div class="col">
+                                    <div class="avatarGroup avatarGroup-overlap">
+                                        @foreach($team->users as $user)
+                                        <a href="#" class="avatarGroup-avatar">
+                                            <span class="avatar avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ $user->name }}">
+                                                <img alt="avatar" src="{{ env('APP_URL') }}/storage/{{ $user->image }}" class="rounded-circle" />
+                                            </span>
+                                        </a>
+                                        @endforeach
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <hr>
                     
                     <div class="card_style-options">
-                        <div class="card_style-options-head mb-3">
-                            <span><i class='bx bx-layer text-secondary' ></i></span> 15 Projects <span class="text-dark-grey ms-1">|</span><span href="#" class="text-secondary"> <i class='bx bx-briefcase-alt-2' ></i></span> 5 Clients
+                        <div class="card_style-options-head">
+                            <span><i class='bx bx-layer text-secondary' ></i></span> 15 Projects <span class="text-dark-grey ms-1">|</span><span href="#" class="text-secondary"> <i class='bx bx-briefcase-alt-2' ></i></span> 5 Clients <span class="text-dark-grey ms-1">|</span> <span href="#"><i class='bx bx-objects-horizontal-left text-primary' ></i></span> 60 Tasks
                         </div>
                         <div class="card_style-options-head">
-                            <span href="#"><i class='bx bx-objects-horizontal-left text-primary' ></i></span> 60 Active Tasks
+                            
                         </div>
                     </div>
                 </div>

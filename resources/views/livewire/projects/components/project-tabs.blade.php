@@ -6,8 +6,9 @@
                     <div class="dashboard-head-title-wrap">
                         <div class="client_head_logo"><img src="{{ asset('storage/'.$project->client->image) }}" alt=""></div>
                         <div>
-                            <div class="client_head-date">{{ \Carbon\Carbon::parse($project->start_date)->format('d M-Y') }}</div>
-                            <h3 class="main-body-header-title mb-0">{{ $project->name }}</h3>
+                            <h3 class="main-body-header-title mb-2">{{ $project->name }}</h3>
+                            <div class="text-sm text-uppercase">Acma</div>
+                            {{-- <div>{{ \Carbon\Carbon::parse($project->start_date)->format('d M-Y') }}</div> --}}
                         </div>
                     </div>
                 </div>

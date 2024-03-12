@@ -1,15 +1,13 @@
 <div>
     <div class="client-tab">
-        <div class="dashboard-head mb-2">
+        <div class="dashboard-head pb-0 mb-4">
             <div class="row align-items-center">
                 <div class="col">
                     <div class="dashboard-head-title-wrap">
                         <div class="client_head_logo"><img src="{{ env('APP_URL') }}/storage/{{ $client->image }}" alt=""></div>
                         <div>
-                            <h3 class="main-body-header-title mb-0">{{ $client->visible_name }}</h3>
-                            <div class="client_head-date">
-                                {{ \Carbon\Carbon::parse($client->onboard_date)->format('d M-Y') }}
-                            </div>
+                            <h3 class="main-body-header-title mb-2">{{ $client->visible_name }}</h3>
+                            <div class="text-sm">{{ \Carbon\Carbon::parse($client->onboard_date)->format('d M Y') }}</div>
                         </div>
                     </div>
                 </div>
@@ -38,11 +36,12 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="tabNavigationBar-tab border_style mb-3">
-            <a wire:navigate class="tabNavigationBar-item @if(request()->routeIs('client.profile')) active @endif" href="{{ route('client.profile', $client->id) }}"><i class='bx bx-line-chart'></i> Overview</a>
-            <a wire:navigate class="tabNavigationBar-item @if(request()->routeIs('client.projects')) active @endif" href="{{ route('client.projects', $client->id) }}"><i class='bx bx-layer' ></i> Projects</a>
-            <a wire:navigate class="tabNavigationBar-item @if(request()->routeIs('client.file-manager')) active @endif" href="{{ route('client.file-manager', $client->id ) }}"><i class='bx bx-objects-horizontal-left' ></i> File Manager</a>
+            <hr class="mb-0">
+            <div class="tabNavigationBar-tab border_style">
+                <a wire:navigate class="tabNavigationBar-item @if(request()->routeIs('client.profile')) active @endif" href="{{ route('client.profile', $client->id) }}"><i class='bx bx-line-chart'></i> Overview</a>
+                <a wire:navigate class="tabNavigationBar-item @if(request()->routeIs('client.projects')) active @endif" href="{{ route('client.projects', $client->id) }}"><i class='bx bx-layer' ></i> Projects</a>
+                <a wire:navigate class="tabNavigationBar-item @if(request()->routeIs('client.file-manager')) active @endif" href="{{ route('client.file-manager', $client->id ) }}"><i class='bx bx-objects-horizontal-left' ></i> File Manager</a>
+            </div>
         </div>
     </div>
     <livewire:components.add-client @saved="$refresh" />
