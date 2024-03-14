@@ -76,7 +76,7 @@
         <div class="files-items-wrap mt-4 mb-3">
             <div class="column-head column-head-light d-flex flex-wrap align-items-center">
                 <div>
-                    <h5 class="title-sm mb-2"></h5>
+                    <h5 class="title-sm mb-2">Directory Attachments</h5>
                     <div><i class='bx bx-data text-primary' ></i> {{ $directories_count }} Attachments <span class="px-2">|</span> {{$used_storage_size_in_mb}}MB Used / 100MB</div>
                 </div>
                 <form class="search-box search-box-float-style ms-auto" action="">
