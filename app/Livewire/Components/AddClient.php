@@ -5,9 +5,12 @@ namespace App\Livewire\Components;
 use Livewire\Component;
 use App\Models\Client;
 use App\Helpers\Helper;
+use Livewire\WithFileUploads;
 
 class AddClient extends Component
 {
+    use WithFileUploads;
+
     public $client_onboard_date;
     public $client_name;
     public $client_description;
@@ -51,13 +54,11 @@ class AddClient extends Component
                 'client_image' => 'image|max:1024', // 1MB Max
             ]);
 
-            $image = $this->client_image->store('public/images/clients');
+            $image = $this->client_image->store('images/clients');
             // remove public from the path as we need to store only the path in the db
             $image = str_replace('public/', '', $image);
             
             $client->image = $image;
-        }else{
-            $client->image = Helper::createAvatar($this->client_name,'clients');
         }
         // create a folder for the client
         $path = 'storage/'. session('org_name') . '/clients/' . $this->client_name;
@@ -102,7 +103,7 @@ class AddClient extends Component
                 'client_image' => 'image|max:1024', // 1MB Max
             ]);
 
-            $image = $this->client_image->store('public/images/clients');
+            $image = $this->client_image->store('images/clients');
             // remove public from the path as we need to store only the path in the db
             $image = str_replace('public/', '', $image);
             

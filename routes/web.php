@@ -75,7 +75,7 @@ Route::group(['middleware' => ['myauth']], function() {
     Route::get('/projects/{sort?}/{filter?}/{byUser?}/{byTeam?}',ListProject::class)->name('project.index');
     Route::get('/project/view/{id}',Project::class)->name('project.profile');
     Route::get('/project/view/{project}/tasks',ProjectTasks::class)->name('project.tasks');
-    Route::get('/project/view/{id}/file-manager',ProjectFileManager::class)->name('project.file-manager');
+    Route::get('/project/view/{project}/file-manager',ProjectFileManager::class)->name('project.file-manager');
     
     Route::get('/teams',ListTeam::class)->name('team.index');
     Route::get('/teams/add',AddTeam::class)->name('team.add');

@@ -7,7 +7,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form wire:submit="addClient" method="POST">
+                    <form wire:submit="addClient" method="POST" enctype="multipart/form-data">
                         <div class="modal-form-body">
                             <div class="row">
                                 <div class="col-md-4 mb-4">

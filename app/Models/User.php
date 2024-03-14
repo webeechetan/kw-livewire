@@ -79,4 +79,13 @@ class User extends Authenticatable
     public function organization(){
         return $this->belongsTo(Organization::class);
     }
+
+    public function getInitialsAttribute(){
+        // only take first 2 words and get their first letter if the name is in one word then take first 2 letters
+        $words = explode(' ', $this->name);
+        if(count($words) == 1){
+            return substr($this->name, 0, 2);
+        }
+        return $words[0][0].$words[1][0];
+    }
 }

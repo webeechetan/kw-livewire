@@ -29,10 +29,6 @@ class Client extends Model
         return $this->belongsToMany(Team::class);
     }
 
-    public function users(){
-        return $this->belongsToMany(User::class)->withPivot('team_id');
-    }
-
     protected static function booted()
     {
         static::addGlobalScope(new OrganizationScope);
@@ -45,8 +41,39 @@ class Client extends Model
         return $this->name;
     }
 
+    public function getInitialsAttribute(){
+        // only take first 2 words and get their first letter if the name is in one word then take first 2 letters
+        $words = explode(' ', $this->name);
+        if(count($words) == 1){
+            return substr($this->name, 0, 2);
+        }
+        return $words[0][0].$words[1][0];
+        
+    }
+
+    public function getNameAttribute($value){
+        if($this->use_brand_name){
+            return $this->brand_name;
+        }else{
+            return $value;
+        }
+    }
+
     public function createdBy(){
         return $this->belongsTo(User::class,'created_by');
     }
+
+    public function getUsersAttribute(){
+        $projects = $this->projects->pluck('id')->toArray();
+        $tasks = Task::whereIn('project_id', $projects)->get();
+        $task_users = [];
+        foreach ($tasks as $task) {
+            $task_users = array_merge($task_users, $task->users->pluck('id')->toArray());
+        }
+        return User::whereIn('id', $task_users)->get();
+        
+    }
+
+    
 
 }

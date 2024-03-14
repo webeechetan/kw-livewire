@@ -69,10 +69,10 @@
     <div class="row">
         <div class="col-md-6">
             <div class="d-flex flex-wrap gap-4 align-items-center mb-2">
-                <a href="javascript:;">All <span class="btn-batch active">150</span></a>
-                <a href="javascript:;">Active <span class="btn-batch">20</span></a>
-                <a href="javascript:;">Completed <span class="btn-batch">02</span></a>
-                <a href="javascript:;">Archive <span class="btn-batch">03</span></a>
+                <a wire:navigate href="{{ route('client.index',['sort'=>$sort,'filter'=>'all']) }}">All <span class="btn-batch @if($filter == 'all') active @endif">{{$allClients}}</span></a>
+                <a wire:navigate href="{{ route('client.index',['sort'=>$sort,'filter'=>'active']) }}">Active <span class="btn-batch  @if($filter == 'active') active @endif">{{$activeClients}}</span></a>
+                <a wire:navigate href="{{ route('client.index',['sort'=>$sort,'filter'=>'completed']) }}">Completed <span class="btn-batch @if($filter == 'completed') active @endif">{{$completedClients}}</span></a>
+                <a wire:navigate href="{{ route('client.index',['sort'=>$sort,'filter'=>'archived']) }}">Archive <span class="btn-batch @if($filter == 'archived') active @endif">{{$archivedClients}}</span></a>
             </div>
         </div>
         <div class="col-md-6">
@@ -107,27 +107,13 @@
                 <div wire:loading wire:target="emitDeleteEvent({{ $client->id }})" class="card_style-loader">
                     <div class="card_style-loader-wrap"><i class='bx bx-trash text-danger me-2' ></i> Removing ...</div>
                 </div>
-                <!-- Edit -->
-                <div class="cus_dropdown cus_dropdown-edit">
-                    <div class="cus_dropdown-icon"><i class='bx bx-dots-horizontal-rounded' ></i></div>
-                    <div class="cus_dropdown-body cus_dropdown-body-widh_s">
-                        <div class="cus_dropdown-body-wrap">
-                            <ul class="cus_dropdown-list">
-                                @if($client->trashed())
-                                    <li><a href="javascript:" wire:click="emitRestoreEvent({{ $client->id }})"><span><i class='bx bx-recycle'></i></span> Restore</a></li>
-                                    <li><a href="javascript:" wire:click="emitForceDeleteEvent({{ $client->id }})"><span><i class='bx bx-trash'></i></span> Permanent Delete</a></li>
-                                @else
-                                    <li class="edit_client" wire:click="emitEditEvent({{ $client->id }})"><a href="javascript:"><span><i class='bx bx-pencil' ></i></span> Edit</a></li>
-                                    <li><a href="javascript:" wire:click="emitDeleteEvent({{ $client->id }})"><span><i class='bx bx-trash' ></i></span> Delete</a></li>
-                                @endif
-                            </ul>
-                        </div>
-                    </div>
-                </div>
                 <a href="{{ route('client.profile', $client->id ) }}" class="card_style-open"><i class='bx bx-chevron-right'></i></a>
                 <div class="card_style-head card_style-client-head mb-3">
-                    {{-- <div><img src="{{ asset('storage/'.$client->image) }}" alt="" class="img-fluid"></div> --}}
-                    <div class="avatar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="">BS</div>
+                    @if($client->image != 'default.png')
+                        <div><img src="{{ asset('storage/'.$client->image) }}" alt="" class="img-fluid"></div>
+                    @else
+                        <div class="avatar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{ $client->initials }}">{{ $client->initials }}</div>
+                    @endif
                     <div>
                         <h4 class="mb-1">
                             <a wire:navigate href="{{ route('client.profile', $client->id ) }}">
@@ -149,21 +135,31 @@
                     </div>
                     <div class="col">
                         <div class="avatarGroup avatarGroup-overlap">
-                            <a href="#" class="avatarGroup-avatar">
-                                <span class="avatar avatar-sm avatar-pink" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="">BW</span>
-                            </a>
-                            <a href="#" class="avatarGroup-avatar">
-                                <span class="avatar avatar-sm avatar-purple" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="">RJ</span>
-                            </a>
-                            <a href="#" class="avatarGroup-avatar">
-                                <span class="avatar avatar-sm avatar-green" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="">HS</span>
-                            </a>
-                            <a href="#" class="avatarGroup-avatar">
-                                <span class="avatar avatar-sm avatar-blue" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="">AT</span>
-                            </a>
-                            <a href="#" class="avatarGroup-avatar">
-                                <span class="avatar avatar-sm avatar-more">+10</span>
-                            </a>
+                            @php
+                                $plus_more_users = 0;
+                                if(count($client->users) > 7){
+                                    $plus_more_users = count($client->users) - 7;
+                                }
+                            @endphp
+                            @foreach($client->users as $user)
+                                @if($user->image)
+                                    <a href="#" class="avatarGroup-avatar">
+                                        <span class="avatar avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{ $user->name }}">
+                                            <img alt="avatar" src="{{ asset('storage/'.$user->image) }}" class="rounded-circle">
+                                        </span>
+                                    </a>
+                                @else
+                                    <a href="#" class="avatarGroup-avatar">
+                                        <span class="avatar avatar-sm avatar-pink" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{ $user->name }}">{{ $user->initials }}</span>
+                                    </a>
+                                @endif
+                                
+                            @endforeach
+                            @if($plus_more_users)
+                                <a href="#" class="avatarGroup-avatar">
+                                    <span class="avatar avatar-sm avatar-more">+{{$plus_more_users}}</span>
+                                </a>
+                            @endif
                         </div>
                     </div>
                 </div>

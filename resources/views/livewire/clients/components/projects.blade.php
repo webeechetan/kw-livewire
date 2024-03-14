@@ -82,24 +82,12 @@
                             <span class="d-inline-flex"><i class='bx bx-layer'></i></span>
                         </div>
                         <div class="project-content">
-                            <a href="#" class="project-title">{{ $project->name }}</a>
+                            <a wire:navigate href="{{ route('project.profile',$project->id) }}" class="project-title">{{ $project->name }}</a>
                             @if($project->due_date)
                                 <div class="project-selected-date">Due on <span>{{ $project->due_date }}</span></div>
                             @else
                                 <div class="project-selected-date">Due on <span>No Due Date</span></div>
                             @endif
-                        </div>
-                        <!-- Edit -->
-                        <div class="cus_dropdown cus_dropdown-edit">
-                            <div class="cus_dropdown-icon"><i class='bx bx-dots-horizontal-rounded' ></i></div>
-                            <div class="cus_dropdown-body cus_dropdown-body-widh_s">
-                                <div class="cus_dropdown-body-wrap">
-                                    <ul class="cus_dropdown-list">
-                                        <li><a href="#" wire:click="emitEditEvent({{ $project->id }})"><span><i class='bx bx-pencil' ></i></span> Edit</a></li>
-                                        <li wire:click="emitDeleteEvent({{ $project->id }})"><a href="javascript:;"><span><i class='bx bx-trash' ></i></span> Delete</a></li>
-                                    </ul>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 @endforeach
@@ -113,7 +101,7 @@
                         <span class="d-inline-flex"><i class='bx bx-list-ul'></i></span>
                     </div>
                     <div class="project-content">
-                        <a href="#" class="project-title">{{ $project->name }}</a>
+                        <a wire:navigate href="{{ route('project.profile',$project->id) }}" class="project-title">{{ $project->name }}</a>
                     </div>
                 </div>
                 @endforeach
@@ -127,7 +115,7 @@
                             <span class="d-inline-flex"><i class='bx bx-list-ul'></i></span>
                         </div>
                         <div class="project-content">
-                            <a href="#" class="project-title">{{ $project->name }}</a>
+                            <a wire:navigate href="{{ route('project.profile',$project->id) }}" class="project-title">{{ $project->name }}</a>
                         </div>
                     </div>
                 @endforeach
@@ -141,7 +129,7 @@
                         <span class="d-inline-flex"><i class='bx bx-list-ul'></i></span>
                     </div>
                     <div class="project-content">
-                        <a href="#" class="project-title">{{ $project->name }}</a>
+                        <a wire:navigate href="{{ route('project.profile',$project->id) }}" class="project-title">{{ $project->name }}</a>
                     </div>
                 </div>
                 @endforeach

@@ -109,11 +109,17 @@
                         <!-- Avatar Group -->
                         <div class="avatarGroup avatarGroup-lg avatarGroup-overlap mt-2">
                             @foreach($project->users as $user)
-                                <a href="#" class="avatarGroup-avatar">
-                                    <span class="avatar avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="{{$user->name}}">
-                                        <img alt="avatar" src="{{ asset('storage/'.$user->image) }}" class="rounded-circle">
-                                    </span>
-                                </a>
+                                @if($user->image)
+                                    <a href="#" class="avatarGroup-avatar">
+                                        <span class="avatar avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="{{$user->name}}">
+                                            <img alt="avatar" src="{{ asset('storage/'.$user->image) }}" class="rounded-circle">
+                                        </span>
+                                    </a>
+                                @else
+                                    <a href="#" class="avatarGroup-avatar">
+                                        <span class="avatar avatar-sm avatar-pink" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{ $user->name }}">{{ $user->initials }}</span>
+                                    </a>
+                                @endif
                             @endforeach
                             
                         </div>

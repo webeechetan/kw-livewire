@@ -121,11 +121,17 @@
                                 <div class="taskList_col">
                                     <div class="avatarGroup avatarGroup-overlap">
                                         @foreach($task->users as $user)
-                                            <a href="javascript:" wire-key="task-user-{{$user->id}}" class="avatarGroup-avatar">
-                                                <span class="avatar avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ $user->name }}">
-                                                    <img alt="avatar" src="{{ asset('storage/'.$user->image) }}" class="rounded-circle" />
-                                                </span>
-                                            </a>
+                                            @if($user->image)
+                                                <a href="javascript:" wire-key="task-user-{{$user->id}}" class="avatarGroup-avatar">
+                                                    <span class="avatar avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ $user->name }}">
+                                                        <img alt="avatar" src="{{ asset('storage/'.$user->image) }}" class="rounded-circle" />
+                                                    </span>
+                                                </a>
+                                            @else
+                                                <a href="#" class="avatarGroup-avatar">
+                                                    <span class="avatar avatar-sm avatar-pink" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{ $user->name }}">{{ $user->initials }}</span>
+                                                </a>
+                                            @endif
                                         @endforeach
                                     </div>
                                 </div>

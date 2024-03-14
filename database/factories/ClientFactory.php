@@ -23,7 +23,6 @@ class ClientFactory extends Factory
             'org_id' => '1',
             'name' => $this->faker->name(),
             'description' => $this->faker->text(),
-            'image' => Helper::createAvatar($this->faker->name,'clients')
         ];
     }
 }

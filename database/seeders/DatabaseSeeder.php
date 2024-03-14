@@ -41,7 +41,8 @@ class DatabaseSeeder extends Seeder
         $user->email = $org->email;
         $user->password = Hash::make($org->password);
         $user->org_id = $org->id;
-        $user->image = Helper::createAvatar($org->name,'users');
+        $colors = ['orange','purple','green','pink','yellow','blue'];
+        $user->color = $colors[array_rand($colors)];
         $user->save();
 
         Team::factory()

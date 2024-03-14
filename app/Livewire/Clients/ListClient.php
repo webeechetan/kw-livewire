@@ -17,6 +17,11 @@ class ListClient extends Component
 
     protected $listeners = ['refreshClients' => '$refresh'];
 
+    public $allClients;
+    public $activeClients;
+    public $completedClients;
+    public $archivedClients;
+
     public $query = '';
 
     //  filters & sorts
@@ -34,6 +39,12 @@ class ListClient extends Component
 
     public function render()
     {
+        $this->allClients = Client::count();
+        $this->activeClients = Client::where('status','active')->count();
+        $this->completedClients = Client::where('status','completed')->count();
+        $this->archivedClients = Client::onlyTrashed()->count();
+
+
         $clients = Client::where('name','like','%'.$this->query.'%');
 
         if($this->sort == 'newest'){
@@ -54,6 +65,7 @@ class ListClient extends Component
             $clients->onlyTrashed();
         }
 
+        $clients->orderBy('created_at','desc');
 
         $clients = $clients->paginate(9);
 

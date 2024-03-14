@@ -16,9 +16,10 @@ return new class extends Migration
             $table->unsignedBigInteger('org_id');
             $table->string('name');
             $table->string('email')->unique();
-            $table->string('image')->default('public/images/users/default.png');
+            $table->string('image')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('color')->default('#000000');
             $table->rememberToken();
             $table->timestamps();
         });
