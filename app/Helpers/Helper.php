@@ -28,5 +28,9 @@ class Helper
         $avtar->save(storage_path('app/public/images/'.$folder.'/'.$name.'.png'));
         return 'images/'.$folder.'/'.$name.'.png';
     }
+
+    public static function colors(){
+        return ['orange','purple','green','pink','yellow','blue'];
+    }
 }
 ?>

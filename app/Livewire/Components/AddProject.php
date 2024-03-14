@@ -38,8 +38,8 @@ class AddProject extends Component
 
     public function mount()
     {
-        $this->users = User::all();
-        $this->clients = Client::all();
+        $this->users = User::orderBy('name')->get();
+        $this->clients = Client::orderBy('name')->get();
     }
 
     public function updatedClientId($value)
@@ -69,14 +69,6 @@ class AddProject extends Component
             $image = Helper::createAvatar($this->project_name,'projects');
         }
 
-        // create a folder for the project
-
-        $path = 'storage/'. session('org_name') . '/projects/' . $this->project_name;
-        $path = public_path($path);
-        if (!file_exists($path)) {
-            mkdir($path, 0777, true);
-        }
-
         $project = new Project();
         $project->org_id = session('org_id');
         $project->client_id = $this->client->id;
@@ -88,6 +80,14 @@ class AddProject extends Component
         $project->created_by = session('user')->id;
         try {
             if($project->save()){
+                // create a folder for the project inside its client folder
+
+                $path = 'storage/'. session('org_name') . '/' . $this->client->name . '/' . $this->project_name;
+                $path = public_path($path);
+                if (!file_exists($path)) {
+                    mkdir($path, 0777, true);
+                }
+
                 if(count($this->project_users) > 0){
                     $project->users()->sync($this->project_users);
                 }

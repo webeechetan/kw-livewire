@@ -51,6 +51,8 @@ class ListProject extends Component
             });
         }
 
+        $projects->orderBy('id','desc');
+
         $projects = $projects->paginate(15);
 
         return view('livewire.projects.list-project',[
