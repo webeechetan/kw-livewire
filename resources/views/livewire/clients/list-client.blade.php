@@ -20,7 +20,7 @@
             <div class="col">
                 <div class="main-body-header-right">
                     <form class="search-box" wire:submit="search" action="">
-                        <input wire:model="query" type="text" class="form-control" placeholder="Search Companies">
+                        <input wire:model="query" type="text" class="form-control" placeholder="Search Company">
                         <button type="submit" class="search-box-icon"><i class='bx bx-search me-1'></i> Search</button>
                     </form>
                     <div class="main-body-header-filters">
@@ -69,10 +69,10 @@
     <div class="row">
         <div class="col-md-6">
             <div class="d-flex flex-wrap gap-4 align-items-center mb-2">
-                <a wire:navigate href="{{ route('client.index',['sort'=>$sort,'filter'=>'all']) }}">All <span class="btn-batch @if($filter == 'all') active @endif">{{$allClients}}</span></a>
-                <a wire:navigate href="{{ route('client.index',['sort'=>$sort,'filter'=>'active']) }}">Active <span class="btn-batch  @if($filter == 'active') active @endif">{{$activeClients}}</span></a>
-                <a wire:navigate href="{{ route('client.index',['sort'=>$sort,'filter'=>'completed']) }}">Completed <span class="btn-batch @if($filter == 'completed') active @endif">{{$completedClients}}</span></a>
-                <a wire:navigate href="{{ route('client.index',['sort'=>$sort,'filter'=>'archived']) }}">Archive <span class="btn-batch @if($filter == 'archived') active @endif">{{$archivedClients}}</span></a>
+                <a class="@if($filter == 'all') active @endif" wire:navigate href="{{ route('client.index',['sort'=>$sort,'filter'=>'all']) }}">All <span class="btn-batch">{{$allClients}}</span></a>
+                <a class="@if($filter == 'active') active @endif" wire:navigate href="{{ route('client.index',['sort'=>$sort,'filter'=>'active']) }}">Active <span class="btn-batch">{{$activeClients}}</span></a>
+                <a class="@if($filter == 'completed') active @endif" wire:navigate href="{{ route('client.index',['sort'=>$sort,'filter'=>'completed']) }}">Completed <span class="btn-batch">{{$completedClients}}</span></a>
+                <a class="@if($filter == 'archived') active @endif" wire:navigate href="{{ route('client.index',['sort'=>$sort,'filter'=>'archived']) }}">Archive <span class="btn-batch">{{$archivedClients}}</span></a>
             </div>
         </div>
         <div class="col-md-6">

@@ -478,7 +478,7 @@ hr.space-sm {
   position: absolute;
   right: 10px;
   top: 10px;
-  z-index: 99;
+  z-index: 999;
   opacity: 0;
   visibility: hidden;
   transform: translateX(5px);
@@ -1119,10 +1119,6 @@ hr.space-sm {
 }
 
 /* ----- All Stats Style ----- */
-.states_style {
-  display: grid;
-  gap: 15px;
-}
 .states_style-icon {
   width: 40px;
   height: 40px;
@@ -1139,6 +1135,7 @@ hr.space-sm {
 .states_style-text {
   color: #191919;
   font-weight: 500;
+  font-size: 16px;
 }
 .states_style-success .states_style-icon {
   background-color: #dae9db;
@@ -1168,9 +1165,27 @@ hr.space-sm {
 .states_style-active .states_style-icon, .states_style-active .states_style-text {
   color: #cdb110;
 }
-.states_style-left {
-  display: grid;
-  grid-template-columns: auto 1fr;
+
+/* ----- Dashbaord Filters ----- */
+.dashboard_filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 25px;
+}
+.dashboard_filters .btn-batch {
+  transition: all 0.3s ease;
+  margin-left: 3px;
+}
+.dashboard_filters a {
+  font-weight: 500;
+}
+.dashboard_filters a:hover, .dashboard_filters a.active {
+  color: #48914d;
+}
+.dashboard_filters a:hover .btn-batch, .dashboard_filters a.active .btn-batch {
+  background-color: #48914d;
+  border-color: #48914d;
+  color: #fff;
 }
 
 /* ----- Toaster Style ----- */
@@ -4016,22 +4031,11 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid #eee;
-  color: #9c9c9c;
+  background-color: #ffe6f1;
+  border: 1px solid #f83890;
+  color: #f83890;
   border-radius: 4px;
   font-size: 20px;
-}
-.project-icon-yellow {
-  background-color: #fdf4c1;
-  color: #cdb110;
-}
-.project-icon-secondary {
-  background-color: #e8ddf7;
-  color: #7407ff;
-}
-.project-icon-green {
-  background-color: #dae9db;
-  color: #48914d;
 }
 .project-tabs .nav-tabs {
   width: 100%;
@@ -4040,63 +4044,75 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
 }
 .project-tabs .nav-tabs .nav-link {
   color: #191919;
-  text-transform: uppercase;
-  min-width: 100px;
-  border: 1px solid #eee;
-  background: #f3f6f9;
+  min-width: 70px;
+  border: 1px solid #ddd;
+  background: #fff;
   font-weight: 500;
   border-radius: 30px;
   transition: all 0.3s ease;
-  font-size: 12px;
+  font-size: 14px;
   letter-spacing: 0.5px;
-  padding: 7px 15px;
+  padding: 6px 15px;
+}
+.project-tabs .nav-tabs .nav-link span {
+  min-width: 26px;
+  min-height: 20px;
+  background-color: #eee;
+  border: 1px solid #ddd;
+  font-size: 12px;
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
 }
 .project-tabs .nav-tabs .nav-link.active, .project-tabs .nav-tabs .nav-link:hover, .project-tabs .nav-tabs .nav-link:focus {
-  background-color: #ffe6f1;
-  color: #f83890;
+  background-color: #fff;
+  color: #191919;
   box-shadow: none;
   outline: none;
-  border-color: #f83890;
+  border-color: #191919;
 }
-.project-tabs .nav-tabs .nav-link.project-tabs-active {
+.project-tabs .nav-tabs .nav-link.active span, .project-tabs .nav-tabs .nav-link:hover span, .project-tabs .nav-tabs .nav-link:focus span {
+  background-color: #191919;
+  border-color: #191919;
+  color: #fff;
+}
+.project-tabs .nav-tabs .nav-link.active#project-active-tab, .project-tabs .nav-tabs .nav-link:hover#project-active-tab, .project-tabs .nav-tabs .nav-link:focus#project-active-tab {
   background-color: #ffe6f1;
+  border-color: #f83890;
   color: #f83890;
-  border-color: #f83890;
 }
-.project-tabs .nav-tabs .nav-link.project-tabs-active.active, .project-tabs .nav-tabs .nav-link.project-tabs-active:hover, .project-tabs .nav-tabs .nav-link.project-tabs-active:focus {
+.project-tabs .nav-tabs .nav-link.active#project-active-tab span, .project-tabs .nav-tabs .nav-link:hover#project-active-tab span, .project-tabs .nav-tabs .nav-link:focus#project-active-tab span {
   background-color: #f83890;
-  color: #fff;
   border-color: #f83890;
 }
-.project-tabs .nav-tabs .nav-link.project-tabs-completed {
+.project-tabs .nav-tabs .nav-link.active#project-done-tab, .project-tabs .nav-tabs .nav-link:hover#project-done-tab, .project-tabs .nav-tabs .nav-link:focus#project-done-tab {
   background-color: #dae9db;
+  border-color: #48914d;
   color: #48914d;
-  border-color: #48914d;
 }
-.project-tabs .nav-tabs .nav-link.project-tabs-completed.active, .project-tabs .nav-tabs .nav-link.project-tabs-completed:hover, .project-tabs .nav-tabs .nav-link.project-tabs-completed:focus {
+.project-tabs .nav-tabs .nav-link.active#project-done-tab span, .project-tabs .nav-tabs .nav-link:hover#project-done-tab span, .project-tabs .nav-tabs .nav-link:focus#project-done-tab span {
   background-color: #48914d;
-  color: #fff;
   border-color: #48914d;
 }
-.project-tabs .nav-tabs .nav-link.project-tabs-overdue {
+.project-tabs .nav-tabs .nav-link.active#project-overdue-tab, .project-tabs .nav-tabs .nav-link:hover#project-overdue-tab, .project-tabs .nav-tabs .nav-link:focus#project-overdue-tab {
   background-color: #fedddc;
+  border-color: #ff0000;
   color: #ff0000;
-  border-color: #ff0000;
 }
-.project-tabs .nav-tabs .nav-link.project-tabs-overdue.active, .project-tabs .nav-tabs .nav-link.project-tabs-overdue:hover, .project-tabs .nav-tabs .nav-link.project-tabs-overdue:focus {
+.project-tabs .nav-tabs .nav-link.active#project-overdue-tab span, .project-tabs .nav-tabs .nav-link:hover#project-overdue-tab span, .project-tabs .nav-tabs .nav-link:focus#project-overdue-tab span {
   background-color: #ff0000;
-  color: #fff;
   border-color: #ff0000;
 }
-.project-tabs .nav-tabs .nav-link.project-tabs-archived {
+.project-tabs .nav-tabs .nav-link.active#project-archived-tab, .project-tabs .nav-tabs .nav-link:hover#project-archived-tab, .project-tabs .nav-tabs .nav-link:focus#project-archived-tab {
   background-color: #fff7d8;
+  border-color: #e7bf1d;
   color: #cdb110;
-  border-color: #cdb110;
 }
-.project-tabs .nav-tabs .nav-link.project-tabs-archived.active, .project-tabs .nav-tabs .nav-link.project-tabs-archived:hover, .project-tabs .nav-tabs .nav-link.project-tabs-archived:focus {
+.project-tabs .nav-tabs .nav-link.active#project-archived-tab span, .project-tabs .nav-tabs .nav-link:hover#project-archived-tab span, .project-tabs .nav-tabs .nav-link:focus#project-archived-tab span {
   background-color: #cdb110;
-  color: #fff;
-  border-color: #cdb110;
+  border-color: #e7bf1d;
 }
 .project-title {
   font-size: 18px;
@@ -4121,15 +4137,26 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
 }
 .project-selected-date span {
   font-size: 12px;
-  color: #48914d;
-  background: #dae9db;
+  color: #f83890;
+  background: #ffe6f1;
   padding: 2px 7px;
   border-radius: 4px;
   font-weight: 600;
 }
-.project-overdue .project-selected-date span {
+.project-overdue .project-icon, .project-overdue .project-selected-date span {
+  background-color: #fedddc;
   color: #ff0000;
-  background: #fedddc;
+  border-color: #ff0000;
+}
+.project-success .project-icon, .project-success .project-selected-date span {
+  background-color: #dae9db;
+  color: #48914d;
+  border-color: #48914d;
+}
+.project-warning .project-icon, .project-warning .project-selected-date span {
+  background-color: #fff7d8;
+  color: #e7bf1d;
+  border-color: #e7bf1d;
 }
 .project-list {
   display: flex;
@@ -4157,6 +4184,11 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
 }
 .project-list-archive .project-title:hover {
   color: #cdb110;
+}
+.project:hover .card_style-open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(0);
 }
 
 /* ----- Files & Folder ----- */

@@ -12,34 +12,67 @@
     <!-- Dashboard Body -->
     <div class="row">
         <div class="col-lg-4 mb-4">
-            <div class="column-box">
-                <div class="states_style states_style-left states_style-progress">
-                    <div class="states_style-icon"><i class='bx bx-layer' ></i></div>
-                    <div>
-                        <h5 class="title-md mb-1">{{ $client->projects->count() }}</h5>
-                        <div class="states_style-text">Projects</div>
+            <div class="column-box states_style-progress">
+                <div class="row align-items-center">
+                    <div class="col-auto">
+                        <div class="states_style-icon"><i class='bx bx-layer' ></i></div>                        
+                    </div>
+                    <div class="col">
+                        <div class="row align-items-center g-2">
+                            <div class="col-auto">
+                                <h5 class="title-md mb-0">{{ $client->projects->count() }}</h5>
+                            </div>
+                            <div class="col-auto">
+                                <span class="font-400 text-grey">|</span>
+                            </div>
+                            <div class="col-auto">
+                                <div class="states_style-text">Projects</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="col-lg-4">
-            <div class="column-box">
-                <div class="states_style states_style-left states_style-active">
-                    <div class="states_style-icon"><i class='bx bx-sitemap' ></i></div>
-                    <div>
-                        <h5 class="title-md mb-1">{{ $client_teams->count() }}</h5>
-                        <div class="states_style-text">Teams Assigned</div>
+            <div class="column-box states_style-active">
+                <div class="row align-items-center">
+                    <div class="col-auto">
+                        <div class="states_style-icon"><i class='bx bx-sitemap' ></i></div>                        
+                    </div>
+                    <div class="col">
+                        <div class="row align-items-center g-2">
+                            <div class="col-auto">
+                                <h5 class="title-md mb-0">{{ $client_teams->count() }}</h5>
+                            </div>
+                            <div class="col-auto">
+                                <span class="font-400 text-grey">|</span>
+                            </div>
+                            <div class="col-auto">
+                                <div class="states_style-text">Teams Assigned</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="col-lg-4 mb-4">
-            <div class="column-box">
-                <div class="states_style states_style-left states_style-success">
-                    <div class="states_style-icon"><i class='bx bx-user-plus'></i></div>
-                    <div>
-                        <h5 class="title-md mb-1">{{ $client_users->count() }}</h5>
-                        <div class="states_style-text">Members Assigned</div>
+            <div class="column-box states_style-success">
+                <div class="row align-items-center">
+                    <div class="col-auto">
+                        <div class="states_style-icon"><i class='bx bx-user-plus' ></i></div>                        
+                    </div>
+                    <div class="col">
+                        <div class="row align-items-center g-2">
+                            <div class="col-auto">
+                                <h5 class="title-md mb-0">{{ $client_users->count() }}</h5>
+                            </div>
+                            <div class="col-auto">
+                                <span class="font-400 text-grey">|</span>
+                            </div>
+                            <div class="col-auto">
+                                <div class="states_style-text">Members Assigned</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
