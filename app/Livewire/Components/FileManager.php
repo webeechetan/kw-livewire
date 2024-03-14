@@ -56,10 +56,14 @@ class FileManager extends Component
         return view('livewire.components.file-manager');
     }
 
-    public function mount($client)
+    public function mount($client, $project = null)
     {
         $this->client = $client;
-        $this->path = session('org_name').'/'.$this->client->name;
+        if($project){
+            $this->path = session('org_name').'/'.$this->client->name.'/'.$project->name;
+        }else{
+            $this->path = session('org_name').'/'.$this->client->name;
+        }
         $this->path_array = explode('/', $this->path);
         $this->getMedia($this->path);
     }

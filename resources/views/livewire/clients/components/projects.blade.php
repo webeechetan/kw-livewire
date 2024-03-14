@@ -92,24 +92,42 @@
     <div class="project-tabs mb-2">
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="project-all-tab" data-bs-toggle="tab" data-bs-target="#project-all-tab-pane" type="button" role="tab" aria-controls="project-all-tab-pane" aria-selected="true">All <span class="ms-2">50</span></button>
+                <button class="nav-link active" id="project-all-tab" data-bs-toggle="tab" data-bs-target="#project-all-tab-pane" type="button" role="tab" aria-controls="project-all-tab-pane" aria-selected="true">All <span class="ms-2">{{ $all_projects->count() }}</span></button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link" id="project-active-tab" data-bs-toggle="tab" data-bs-target="#project-active-tab-pane" type="button" role="tab" aria-controls="project-active-tab-pane" aria-selected="true">Active <span class="ms-2">40</span></button>
+                <button class="nav-link" id="project-active-tab" data-bs-toggle="tab" data-bs-target="#project-active-tab-pane" type="button" role="tab" aria-controls="project-active-tab-pane" aria-selected="true">Active <span class="ms-2">{{$active_projects->count()}}</span></button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link" id="project-done-tab" data-bs-toggle="tab" data-bs-target="#project-done-tab-pane" type="button" role="tab" aria-controls="project-done-tab-pane" aria-selected="false">Completed <span class="ms-2">08</span></button>
+                <button class="nav-link" id="project-done-tab" data-bs-toggle="tab" data-bs-target="#project-done-tab-pane" type="button" role="tab" aria-controls="project-done-tab-pane" aria-selected="false">Completed <span class="ms-2">{{$completed_projects->count()}}</span></button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link" id="project-overdue-tab" data-bs-toggle="tab" data-bs-target="#project-overdue-tab-pane" type="button" role="tab" aria-controls="project-overdue-tab-pane" aria-selected="false">Overdue <span class="ms-2">01</span></button>
+                <button class="nav-link" id="project-overdue-tab" data-bs-toggle="tab" data-bs-target="#project-overdue-tab-pane" type="button" role="tab" aria-controls="project-overdue-tab-pane" aria-selected="false">Overdue <span class="ms-2">{{$overdue_projects->count()}}</span></button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link" id="project-archived-tab" data-bs-toggle="tab" data-bs-target="#project-archived-tab-pane" type="button" role="tab" aria-controls="project-archived-tab-pane" aria-selected="false">Archive <span class="ms-2">02</span></button>
+                <button class="nav-link" id="project-archived-tab" data-bs-toggle="tab" data-bs-target="#project-archived-tab-pane" type="button" role="tab" aria-controls="project-archived-tab-pane" aria-selected="false">Archive <span class="ms-2">{{$archived_projects->count()}}</span></button>
             </li>
         </ul>
     </div>
     <div class="tab-content" id="myTabContent">
-        <div class="tab-pane fade show active" id="project-active-tab-pane" role="tabpanel" aria-labelledby="project-active-tab" tabindex="0">
+        <div class="tab-pane fade active show" id="project-all-tab-pane" role="tabpanel" aria-labelledby="project-all-tab" tabindex="0">
+            <div class="project-list">
+                <!-- project-overdue, project-success, project-warning -->
+                @foreach($all_projects as $project)
+                    <div class="project project-align_left">
+                        <div class="project-icon"><i class='bx bx-layer'></i></div>
+                        <div class="project-content">
+                            <a wire:navigate href="{{ route('project.profile',$project->id) }}" class="project-title">{{ $project->name }}</a>
+                            @if($project->due_date)
+                                <div class="project-selected-date">Due on <span>{{ $project->due_date }}</span></div>
+                            @else
+                                <div class="project-selected-date">Due on <span>No Due Date</span></div>
+                            @endif
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+        <div class="tab-pane fade " id="project-active-tab-pane" role="tabpanel" aria-labelledby="project-active-tab" tabindex="0">
             <div class="project-list">
                 <!-- project-overdue, project-success, project-warning -->
                 @foreach($active_projects as $project)
