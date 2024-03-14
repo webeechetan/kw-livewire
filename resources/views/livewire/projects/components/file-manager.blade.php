@@ -12,7 +12,7 @@
     <div class="row">
         <div class="col-lg-12">
 
-            <livewire:components.file-manager :client="$project" />
+            <livewire:components.file-manager :client="$project->client" :project="$project" />
 
         </div>
     </div>

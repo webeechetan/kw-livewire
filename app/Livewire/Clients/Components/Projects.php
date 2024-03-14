@@ -12,6 +12,7 @@ class Projects extends Component
     public $client;
     public $projects;
 
+    public $all_projects;
     public $active_projects;
     public $completed_projects;
     public $overdue_projects;
@@ -27,6 +28,7 @@ class Projects extends Component
         $this->id = $id;
         $this->client = Client::find($id);
         $this->projects = $this->client->projects;
+        $this->all_projects = $this->client->projects;
         $this->active_projects = $this->client->projects()->where('status', 'active')->get();
         $this->completed_projects = $this->client->projects()->where('status', 'completed')->get();
         $this->overdue_projects = $this->client->projects()->where('status', 'overdue')->get();

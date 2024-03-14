@@ -153,8 +153,6 @@
                 $('.project-users').select2({
                     placeholder: "Select Users",
                     allowClear: true,
-                    templateResult: format,
-                    templateSelection: format,
                 });
             }, 2000);
 
@@ -166,16 +164,16 @@
                 console.log(data);
             });
 
-            function format(state) {
-                if (!state.id) {
-                    return state.text;
-                }
-                var baseUrl = "{{ env('APP_URL') }}/storage";
-                var $state = $(
-                    '<span><img class="select2-selection__choice__display_userImg" src="' + baseUrl + '/' + state.element.attributes[0].value + '" /> ' + state.text + '</span>'
-                );
-                return $state;
-            };
+            // function format(state) {
+            //     if (!state.id) {
+            //         return state.text;
+            //     }
+            //     var baseUrl = "{{ env('APP_URL') }}/storage";
+            //     var $state = $(
+            //         '<span><img class="select2-selection__choice__display_userImg" src="' + baseUrl + '/' + state.element.attributes[0].value + '" /> ' + state.text + '</span>'
+            //     );
+            //     return $state;
+            // };
         });
     </script>
 
