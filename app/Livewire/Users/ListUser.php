@@ -13,5 +13,5 @@ class ListUser extends Component
         return view('livewire.users.list-user',[
             'users' => User::paginate(10)
         ]);
-    }
+    } 
 }
