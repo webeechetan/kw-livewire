@@ -77,12 +77,22 @@
                         </div>
                     </div>
                     <div class="card_style-user-head">
-                        <div class="card_style-user-profile-img"><span><img src="{{ env('APP_URL') }}/storage/{{ $user->image }}" alt="{{ $user->name }}"></span></div>
+                        <div class="card_style-user-profile-img">
+                            <span>
+                                @if($user->image)
+                                    <img src="{{ env('APP_URL') }}/storage/{{ $user->image }}" alt="{{ $user->name }}">
+                                @else
+                                    <span class="avatar avatar-sm avatar-{{$user->color}}">{{ $user->initials }}</span>
+                                @endif
+                            </span>
+                        </div>
                         <div class="card_style-user-profile-content mt-3">
                             <h4><a wire:navigate href="{{ route('user.profile') }}">{{ $user->name }}</a></h4>
                             <div class="d-flex align-items-center justify-content-center"><i class='bx bx-envelope me-1 text-secondary' ></i> {{ $user->email }}</div>
                             <div class="card_style-user-head-position mt-2"><i class='bx bx-user'></i> Web Developer | Tech Team</div>
-                            <div class="card_style-user-head-team"><span class="btn-batch btn-batch-warning">5 Teams</span></div>
+                            @if($user->teams->count() > 0)
+                                <div class="card_style-user-head-team"><span class="btn-batch btn-batch-warning">{{ $user->teams->count() }} Teams</span></div>
+                            @endif
                         </div>
                     </div>
                     <hr>
@@ -95,106 +105,29 @@
                             </div>
                         </div>
                         <div class="card_style-tasks text-center">
-                            <div class="card_style-tasks-title"><span><i class='bx bx-objects-horizontal-left' ></i></span> 60 Tasks</div>
+                            <div class="card_style-tasks-title"><span><i class='bx bx-objects-horizontal-left' ></i></span> {{ $user->tasks->count() }} Tasks</div>
                             <div class="card_style-tasks-list justify-content-center">
-                                <div class="card_style-tasks-item card_style-tasks-item-pending"><span><i class='bx bx-objects-horizontal-center' ></i></span> 30 Active</div>
-                                <div class="card_style-tasks-item card_style-tasks-item-overdue"><span><i class='bx bx-objects-horizontal-center' ></i></span> 20 Overdue</div>
-                                <div class="card_style-tasks-item card_style-tasks-item-done"><span><i class='bx bx-objects-horizontal-center' ></i></span> 10 Completed</div>
+                                <div class="card_style-tasks-item card_style-tasks-item-pending"><span><i class='bx bx-objects-horizontal-center' ></i></span>
+                                {{
+                                    $user->tasks->where(function($query) {
+                                        $query->where('status', 'pending')->orWhere('status', 'in_progress')->orWhere('status', 'in_review');
+                                    })->count()
+                                }} Active</div>
+                                <div class="card_style-tasks-item card_style-tasks-item-overdue"><span><i class='bx bx-objects-horizontal-center' ></i></span>{{ $user->tasks->where('due_date', '<', now())->where('status','!=','completed')->count() }} Overdue</div>
+                                <div class="card_style-tasks-item card_style-tasks-item-done"><span><i class='bx bx-objects-horizontal-center' ></i></span>{{ $user->tasks->where('status', 'completed')->count() }}  Completed</div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        @endforeach
+        @endforeach 
 
         <!-- Pagination -->
         {{ $users->links(data: ['scrollTo' => false]) }}
     </div>
 
-    <!-- User Modal -->
-    <div wire:ignore class="modal fade" id="add-user-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header d-flex align-items-center justify-content-between gap-20">
-                    <h3 class="modal-title"><span class="btn-icon btn-icon-primary me-1"><i class='bx bx-user' ></i></span> Add User</h3>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form action="">
-                        <div class="modal-form-body">
-                            <div class="row">
-                                <div class="col-12">
-                                    <h5 class="title-sm title-with_icon"><i class='bx bx-mail-send text-secondary' ></i> Invite User</h5>
-                                </div>
-                                <div class="col-lg mb-4 mb-lg-0">
-                                    <div class="single-add">
-                                        <div class="single-add-wrap">
-                                            <input wire:model="project_name" type="text" class="form-control" placeholder="Email Here..."> 
-                                        </div>
-                                        <button type="submit" class="btn-border btn-border-secondary"><i class='bx bx-send' ></i> Send</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                    <div class="divider-or"><span></span> OR <span></span></div>
-                    <form wire:submit="addProject" method="POST" enctype="multipart/form-data">
-                        <div class="modal-form-body">
-                            <div class="row">
-                                <div class="col-md-4 mb-4">
-                                    <label for="">User Name<sup class="text-primary">*</sup></label>
-                                </div>
-                                <div class="col-md-8 mb-4">
-                                    <input wire:model="project_name" type="text" class="form-style" placeholder="User Name Here...">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-4 mb-4">
-                                    <label for="">Designation<sup class="text-primary">*</sup></label>
-                                </div>
-                                <div class="col-md-8 mb-4">
-                                    <input wire:model="project_name" type="text" class="form-style" placeholder="Designation Here...">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-4 mb-4">
-                                    <label for="">Email<sup class="text-primary">*</sup></label>
-                                </div>
-                                <div class="col-md-8 mb-4">
-                                    <input  type="email" class="form-style" placeholder="Email Here...">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-4 mb-4">
-                                    <label for="">Password<sup class="text-primary">*</sup></label>
-                                </div>
-                                <div class="col-md-8 mb-4">
-                                    <input type="text" class="form-style" placeholder="Password Here...">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-4 mb-4 mb-lg-0">
-                                    <label for="">Team<sup class="text-primary">*</sup></label>
-                                </div>
-                                <div class="col-md-8">
-                                    <select name="" id="">
-                                        <option value="">Rakesh</option>
-                                        <option value="">Rajiv</option>
-                                        <option value="">Akash</option>
-                                    </select>
-                                </div>
-                            </div>                            
-                        </div>
-                        <div class="modal-form-btm">
-                            <div class="row">
-                                <div class="col-md-6 ms-auto text-end">
-                                    <button type="submit" class="btn btn-primary">Add Project</button>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+    <!-- User Modal Component -->
+
+    <livewire:components.add-user  @saved="$refresh" />
+    
 </div>
