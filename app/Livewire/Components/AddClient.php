@@ -61,7 +61,13 @@ class AddClient extends Component
             $client->image = $image;
         }
         // create a folder for the client
-        $path = 'storage/'. session('org_name') . '/clients/' . $this->client_name;
+        if($client->use_brand_name){
+            $path = 'storage/'. session('org_name') . '/clients/' . $this->brand_name;
+        }else{
+            $path = 'storage/'. session('org_name') . '/clients/' . $this->client_name;
+        }
+
+
 
         $path = public_path($path);
         if (!file_exists($path)) {

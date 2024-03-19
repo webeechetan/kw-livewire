@@ -2,9 +2,9 @@
     <!-- Dashboard Header -->
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a wire:navigate href="#"><i class='bx bx-line-chart'></i> Dashboard</a></li>
-            <li class="breadcrumb-item"><a wire:navigate href="#">All Projects</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Himanshu Sharma</li>
+            <li class="breadcrumb-item"><a wire:navigate href="{{ route('dashboard') }}"><i class='bx bx-line-chart'></i> Dashboard</a></li>
+            <li class="breadcrumb-item"><a wire:navigate href="{{ route('user.index') }}">All Users</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ $user->name }}</li>
         </ol>
     </nav>
     <div class="row">
@@ -12,44 +12,44 @@
             <div class="column-box">
                 <div class="user-profile">
                     <div class="user-profile-img"><img src="/storage/images/user_pro.jpg" alt=""></div>
-                    <h3 class="main-body-header-title mb-2">Himanshu Sharma</h3>
-                    <div><i class="bx bx-envelope me-1 text-secondary"></i> ajay@gmail.com</div>
-                    <div class="card_style-user-head-position mt-2"><i class="bx bx-user text-primary"></i> Web Developer | Tech Team</div>
+                    <h3 class="main-body-header-title mb-2">{{ $user->name }}</h3>
+                    <div><i class="bx bx-envelope me-1 text-secondary"></i> {{$user->email}}</div>
+                    <div class="card_style-user-head-position mt-2"><i class="bx bx-user text-primary"></i> {{$user->designation}}</div>
                 </div>
                 <hr>
                 <div class="row align-items-center mb-2">
                     <div class="col"><span><i class='bx bx-cake text-warning'></i></span> Date Of Birth</div>
-                    <div class="col">26 Jan 1999</div>
+                    <div class="col">@if($user->dob) {{  $user->dob }} @else Not Added  @endif</div>
                 </div>
                 <div class="row align-items-center mb-2">
                     <div class="col"><span><i class='bx bx-calendar-alt text-success' ></i></span> Joining Date</div>
-                    <div class="col">06 March 2023</div>
+                    <div class="col">{{ \Carbon\Carbon::parse($user->created_at)->format('d M,Y') }}</div>
                 </div>
                 <hr>
                 <div>
                     <div class="title-label"><i class='bx bx-sitemap text-primary' ></i> Assign Teams</div>
                     <div class="btn-list">
-                        <a href="javascript:" class="btn-batch btn-batch-profile"><span><img alt="avatar" src="http://localhost:8000/storage/images/users/Ajay Kumar.png" class="rounded-circle"></span> Tech Team</a>
-                        <a href="javascript:" class="btn-batch btn-batch-profile"><span><img alt="avatar" src="http://localhost:8000/storage/images/users/Ajay Kumar.png" class="rounded-circle"></span> Tech Team</a>
-                        <a href="javascript:" class="btn-batch btn-batch-profile"><span><img alt="avatar" src="http://localhost:8000/storage/images/users/Ajay Kumar.png" class="rounded-circle"></span> Tech Team</a>
+                        @foreach($user->teams as $team)
+                            <a href="javascript:" class="btn-batch">{{ $team->name }}</a>
+                        @endforeach
                     </div>
                 </div>
                 <hr>
                 <div>
                     <div class="title-label"><i class='bx bx-briefcase text-primary' ></i> Assign Clients</div>
                     <div class="btn-list">
-                        <a href="javascript:" class="btn-batch">Acma</a>
-                        <a href="javascript:" class="btn-batch">Refresh Botainicals</a>
-                        <a href="javascript:" class="btn-batch">Prunell</a>
+                        @foreach($user_clients as $client)
+                            <a wire:navigate href="{{ route('client.profile',$client->id) }}" class="btn-batch">{{ $client->name }}</a>
+                        @endforeach
                     </div>
                 </div>
                 <hr>
                 <div>
                     <div class="title-label"><i class='bx bx-briefcase text-primary' ></i> Projects</div>
                     <div class="btn-list">
-                        <a href="javascript:" class="btn-batch">Acma</a>
-                        <a href="javascript:" class="btn-batch">Refresh Botainicals</a>
-                        <a href="javascript:" class="btn-batch">Prunell</a>
+                        @foreach($user_projects as $project)
+                            <a wire:navigate href="{{ route('project.profile',$project->id) }}" class="btn-batch">{{ $project->name }}</a>
+                        @endforeach
                     </div>
                 </div>
             </div>
