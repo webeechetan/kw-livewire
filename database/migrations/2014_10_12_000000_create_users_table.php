@@ -20,6 +20,8 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('color')->default('#000000');
+            $table->string('designation')->nullable();
+            $table->unsignedBigInteger('created_by')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

@@ -81,7 +81,7 @@ class AddProject extends Component
         try {
             if($project->save()){
                 // create a folder for the project inside its client folder
-
+                
                 $path = 'storage/'. session('org_name') . '/' . $this->client->name . '/' . $this->project_name;
                 $path = public_path($path);
                 if (!file_exists($path)) {
