@@ -590,7 +590,6 @@ hr.space-sm {
   display: flex;
   flex-wrap: wrap;
   gap: 5px;
-  margin-top: 15px;
 }
 .card_style-tasks-item {
   font-size: 12px;
@@ -784,8 +783,8 @@ hr.space-sm {
   margin-right: 7px;
 }
 .cus_dropdown-list li a:hover, .cus_dropdown-list li a.active {
-  color: #f83890;
-  background-color: #ffe6f1;
+  color: #191919;
+  background-color: #eee;
 }
 .cus_dropdown-list li:not(:last-child) {
   border-bottom: 2px solid #fff;

@@ -522,7 +522,6 @@ hr.space-sm {
         &-list {
             @include flex;
             gap: 5px;
-            margin-top: 15px;
         }
         &-item {
             font-size: 12px;
@@ -762,8 +761,8 @@ hr.space-sm {
                 }
 
                 &:hover, &.active {
-                    color: $brand;
-                    background-color: $brand_light;
+                    color: $text_color;
+                    background-color: $grey;
                 }
             }
             &:not(:last-child) {

@@ -58,11 +58,7 @@
             <div class="column-box mb-4">
                 <div class="row align-items-center">
                     <div class="col">
-                        <div class="tabNavigationBar-tab">
-                            <a class="tabNavigationBar-item tabNavigationBar-item-active" href="#"><i class="bx bx-list-ul"></i>Overview</a>
-                            <a class="tabNavigationBar-item" href="#"><i class="bx bx-columns"></i> Projects <span class="btn-icon btn-icon-primary">15</span></a>
-                            <a class="tabNavigationBar-item" href="#"><i class="bx bx-columns"></i> Tasks <span class="btn-icon btn-icon-primary">50</span></a>
-                        </div>
+                        <h3 class="column-title mb-0"><i class="bx bx-line-chart text-primary"></i> Overview</h3>
                     </div>
                     <div class="col">
                         <div class="main-body-header-right">
@@ -87,34 +83,40 @@
             </div>
             <div class="row">
                 <div class="col-lg-4 mb-4">
-                    <div class="column-box">
-                        <div class="states_style states_style-left states_style-progress">
-                            <div class="states_style-icon"><i class='bx bx-objects-horizontal-left' ></i></div>
-                            <div>
+                    <div class="column-box states_style-progress">
+                        <div class="row">
+                            <div class="col">
                                 <h5 class="title-md mb-1">12</h5>
                                 <div class="states_style-text">Projects Done</div>
+                            </div>
+                            <div class="col-auto">
+                                <div class="states_style-icon"><i class='bx bx-objects-horizontal-left' ></i></div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-4 mb-4">
-                    <div class="column-box">
-                        <div class="states_style states_style-left states_style-success">
-                            <div class="states_style-icon"><i class='bx bx-task'></i></div>
-                            <div>
+                    <div class="column-box states_style-success">
+                        <div class="row">
+                            <div class="col">
                                 <h5 class="title-md mb-1">1.23k</h5>
                                 <div class="states_style-text">Tasks Done</div>
+                            </div>
+                            <div class="col-auto">
+                                <div class="states_style-icon"><i class='bx bx-task' ></i></div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-4">
-                    <div class="column-box">
-                        <div class="states_style states_style-left states_style-overdue">
-                            <div class="states_style-icon"><i class='bx bx-task-x' ></i></div>
-                            <div>
-                                <h5 class="title-md mb-1">25</h5>
+                    <div class="column-box states_style-danger">
+                        <div class="row">
+                            <div class="col">
+                                <h5 class="title-md mb-1">12</h5>
                                 <div class="states_style-text">Tasks Overdue</div>
+                            </div>
+                            <div class="col-auto">
+                                <div class="states_style-icon"><i class='bx bx-task-x' ></i></div>
                             </div>
                         </div>
                     </div>
