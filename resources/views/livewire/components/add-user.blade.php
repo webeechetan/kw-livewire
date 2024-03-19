@@ -16,7 +16,7 @@
                                 <div class="col-lg mb-4 mb-lg-0">
                                     <div class="single-add">
                                         <div class="single-add-wrap">
-                                            <input wire:model="project_name" type="text" class="form-control" placeholder="Email Here..."> 
+                                            <input wire:model="email" type="text" class="form-control" placeholder="Email Here..."> 
                                         </div>
                                         <button type="submit" class="btn-border btn-border-secondary"><i class='bx bx-send' ></i> Send</button>
                                     </div>
@@ -25,14 +25,14 @@
                         </div>
                     </form>
                     <div class="divider-or"><span></span> OR <span></span></div>
-                    <form wire:submit="addProject" method="POST" enctype="multipart/form-data">
+                    <form wire:submit="addUser" method="POST" enctype="multipart/form-data">
                         <div class="modal-form-body">
                             <div class="row">
                                 <div class="col-md-4 mb-4">
                                     <label for="">User Name<sup class="text-primary">*</sup></label>
                                 </div>
                                 <div class="col-md-8 mb-4">
-                                    <input wire:model="project_name" type="text" class="form-style" placeholder="User Name Here...">
+                                    <input wire:model="name" type="text" class="form-style" placeholder="User Name Here...">
                                 </div>
                             </div>
                             <div class="row">
@@ -40,7 +40,7 @@
                                     <label for="">Designation<sup class="text-primary">*</sup></label>
                                 </div>
                                 <div class="col-md-8 mb-4">
-                                    <input wire:model="project_name" type="text" class="form-style" placeholder="Designation Here...">
+                                    <input wire:model="designation" type="text" class="form-style" placeholder="Designation Here...">
                                 </div>
                             </div>
                             <div class="row">
@@ -48,7 +48,7 @@
                                     <label for="">Email<sup class="text-primary">*</sup></label>
                                 </div>
                                 <div class="col-md-8 mb-4">
-                                    <input  type="email" class="form-style" placeholder="Email Here...">
+                                    <input wire:model="email"  type="email" class="form-style" placeholder="Email Here...">
                                 </div>
                             </div>
                             <div class="row">
@@ -56,7 +56,7 @@
                                     <label for="">Password<sup class="text-primary">*</sup></label>
                                 </div>
                                 <div class="col-md-8 mb-4">
-                                    <input type="text" class="form-style" placeholder="Password Here...">
+                                    <input wire:model="password"  type="text" class="form-style" placeholder="Password Here...">
                                 </div>
                             </div>
                             <div class="row">
@@ -64,10 +64,11 @@
                                     <label for="">Team<sup class="text-primary">*</sup></label>
                                 </div>
                                 <div class="col-md-8">
-                                    <select name="" id="">
-                                        <option value="">Rakesh</option>
-                                        <option value="">Rajiv</option>
-                                        <option value="">Akash</option>
+                                    <select class="teams" name="" id="" multiple>
+                                        <option value="">Select Team</option>
+                                        @foreach ($teams as $team)
+                                            <option value="{{ $team->id }}">{{ $team->name }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>                            
@@ -85,3 +86,29 @@
         </div>
     </div>
 </div>
+
+@script
+    <script>
+        $(document).ready(function() {
+
+            setTimeout(() => {
+                initPlugins();
+            }, 2000);
+
+            $(".teams").on('change', function(){
+                @this.set('selectedTeams', $(this).val());
+            });
+
+            document.addEventListener('user-added', event => {
+                $('#add-user-modal').modal('hide');
+            })
+        });
+
+        function initPlugins(){
+            $(".teams").select2({
+                placeholder: "Select Team",
+                allowClear: true
+            });
+        }
+    </script>
+@endscript

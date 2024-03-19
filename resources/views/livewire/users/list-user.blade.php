@@ -64,18 +64,6 @@
         @foreach($users as $user)
             <div class="col-md-4 mb-4">
                 <div class="card_style card_style-user h-100">
-                    <!-- Edit -->
-                    <div class="cus_dropdown cus_dropdown-edit">
-                        <div class="cus_dropdown-icon"><i class='bx bx-dots-horizontal-rounded' ></i></div>
-                        <div class="cus_dropdown-body cus_dropdown-body-widh_s">
-                            <div class="cus_dropdown-body-wrap">
-                                <ul class="cus_dropdown-list">
-                                    <li><a href="#"><span class="text-secondary"><i class='bx bx-pencil' ></i></span> Edit</a></li>
-                                    <li><a href="#"><span class="text-danger"><i class='bx bx-trash' ></i></span> Delete</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
                     <div class="card_style-user-head">
                         <div class="card_style-user-profile-img">
                             <span>
@@ -87,7 +75,7 @@
                             </span>
                         </div>
                         <div class="card_style-user-profile-content mt-3">
-                            <h4><a wire:navigate href="{{ route('user.profile') }}">{{ $user->name }}</a></h4>
+                            <h4><a wire:navigate href="{{ route('user.profile',$user->id) }}">{{ $user->name }}</a></h4>
                             <div class="d-flex align-items-center justify-content-center"><i class='bx bx-envelope me-1 text-secondary' ></i> {{ $user->email }}</div>
                             <div class="card_style-user-head-position mt-2"><i class='bx bx-user'></i> Web Developer | Tech Team</div>
                             @if($user->teams->count() > 0)

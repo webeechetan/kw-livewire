@@ -11,7 +11,7 @@ class ListUser extends Component
     public function render()
     {
         return view('livewire.users.list-user',[
-            'users' => User::paginate(10)
+            'users' => User::orderBy('id','desc')->paginate(10)
         ]);
     } 
 }

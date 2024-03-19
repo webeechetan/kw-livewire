@@ -101,7 +101,7 @@
             </p>
         </div>
     </div>
-    <livewire:components.voice-control />
+    {{-- <livewire:components.voice-control /> --}}
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
