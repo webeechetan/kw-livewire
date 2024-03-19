@@ -1,6 +1,6 @@
 <div>
     <div>
-        <div class="dashboard-head">
+        <div class="dashboard-head pb-0 mb-4">
             <div class="row align-items-center">
                 <div class="col">
                     <div class="dashboard-head-title-wrap">
@@ -33,12 +33,12 @@
                     </div>
                 </div>
             </div>
-        </div>
-
-        <div class="tabNavigationBar-tab border_style mb-3">
-            <a href="{{ route('project.profile',$project->id) }}" class="tabNavigationBar-item @if(request()->routeIs('project.profile')) active @endif" wire:navigate ><i class='bx bx-line-chart'></i> Overview</a>
-            <a href="{{ route('project.tasks',$project->id) }}" class="tabNavigationBar-item @if(request()->routeIs('project.tasks')) active @endif" wire:navigate><i class='bx bx-layer' ></i> Tasks</a>
-            <a href="{{ route('project.file-manager',$project->id) }}" class="tabNavigationBar-item @if(request()->routeIs('project.file-manager')) active @endif" wire:navigate><i class='bx bx-objects-horizontal-left' ></i> File Manager</a>
+            <hr class="mb-0">
+            <div class="tabNavigationBar-tab border_style">
+                <a href="{{ route('project.profile',$project->id) }}" class="tabNavigationBar-item @if(request()->routeIs('project.profile')) active @endif" wire:navigate ><i class='bx bx-line-chart'></i> Overview</a>
+                <a href="{{ route('project.tasks',$project->id) }}" class="tabNavigationBar-item @if(request()->routeIs('project.tasks')) active @endif" wire:navigate><i class='bx bx-layer' ></i> Tasks</a>
+                <a href="{{ route('project.file-manager',$project->id) }}" class="tabNavigationBar-item @if(request()->routeIs('project.file-manager')) active @endif" wire:navigate><i class='bx bx-objects-horizontal-left' ></i> File Manager</a>
+            </div>
         </div>
     </div>
     <livewire:components.add-project @saved="$refresh" />

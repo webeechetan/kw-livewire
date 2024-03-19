@@ -1,20 +1,10 @@
 <div class="column-box p-3" style="margin-bottom:150px;">
     <div class="files-head column-head d-flex flex-wrap align-items-center">
         <div>
-            <h5 class="column-title">Files & Folders</h5>
-            <div class="text-light"><span class="text-secondary"><i class='bx bx-file-blank' ></i></span> {{$files_count}} <span class="px-2">|</span> <span class="text-primary"><i class='bx bx-folder' ></i></span> {{ $directories_count }} <span class="px-2">|</span> <span class="text-primary"><i class='bx bx-link-alt' ></i></span> {{ $directories_count }} <span class="px-2">|</span> {{$used_storage_size_in_mb}}MB Used / 100MB</div>
+            <h5 class="column-title mb-0">Files & Folders</h5>
         </div>
         <div class="files-options ms-auto">
-            <div class="btn-list align-items-center gap-10">
-                <a wire:click="downloadSelected" class="btn btn-sm btn-border-success 
-                @if(empty($selected_files)) disabled @endif
-                " data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Download Here">
-                    <span><i class='bx bx-download' ></i></span>
-                </a>
-                <a data-bs-toggle="modal" data-bs-target="#add-new-file" class="btn-border btn-border-primary"><span><i class='bx bx-plus'></i></span></a>
-                <a data-bs-toggle="modal" data-bs-target="#add-new-link" class="btn-border btn-border-secondary"><span><i class='bx bx-link'></i></span></a>
-                <a wire:click="deleteSelected" class="btn btn-sm btn-border-danger @if(empty($selected_files) && empty($selected_directories) && empty($selected_links)) disabled @endif "><span><i class='bx bx-trash' ></i></span></a>
-            </div>
+            <div class="text-light"><span class="text-secondary"><i class='bx bx-file-blank' ></i></span> {{$files_count}} <span class="px-2">|</span> <span class="text-primary"><i class='bx bx-folder' ></i></span> {{ $directories_count }} <span class="px-2">|</span> <span class="text-primary"><i class='bx bx-link-alt' ></i></span> {{ $directories_count }} <span class="px-2">|</span> {{$used_storage_size_in_mb}}MB Used / 100MB</div>
         </div>
     </div>
     <div class="files-body">
@@ -22,26 +12,6 @@
         <!-- <div class="spinner-border text-primary " role="status" >
             <span class="sr-only"></span>
         </div> -->
-        <div class="row pt-3">
-            <div class="col-12">
-                <nav aria-label="breadcrumb">
-                    <ul class="breadcrumb mb-0">
-                        @foreach($path_array as $p )
-                            @php
-                                $path_for_folder_open = '';
-                                foreach($path_array as $path_key => $path_value){
-                                    if($path_key <= $loop->index){
-                                        $path_for_folder_open .= $path_value.'/';
-                                    }
-                                }
-
-                            @endphp
-                            <li class="breadcrumb-item" wire:click="openFolder('{{$path_for_folder_open}}')"><a>{{ $p }}</a></li>
-                        @endforeach
-                    </ul>
-                </nav>
-            </div>
-        </div>
 
         <!-- Loader -->
         <div class="loader_cus loader_column w-100" wire:loading.delay>
@@ -72,8 +42,25 @@
             </div>
         </div>
 
+        <nav aria-label="breadcrumb" class="mt-5">
+            <ul class="breadcrumb mb-0">
+                @foreach($path_array as $p )
+                    @php
+                        $path_for_folder_open = '';
+                        foreach($path_array as $path_key => $path_value){
+                            if($path_key <= $loop->index){
+                                $path_for_folder_open .= $path_value.'/';
+                            }
+                        }
+
+                    @endphp
+                    <li class="breadcrumb-item" wire:click="openFolder('{{$path_for_folder_open}}')"><a>{{ $p }}</a></li>
+                @endforeach
+            </ul>
+        </nav>
+
         <!-- File & Folder Wrap -->
-        <div class="files-items-wrap mt-4 mb-3">
+        <div class="files-items-wrap my-3">
             <div class="column-head column-head-light d-flex flex-wrap align-items-center">
                 <div>
                     <h5 class="title-sm mb-2">Directory Attachments</h5>
@@ -86,12 +73,26 @@
             </div>
         </div>
 
-        <!-- Filters -->
-        <div class="btn-list mb-3">
-            <a href="#" class="btn-border btn-border-success"><i class='bx bx-data'></i> All {{ count($selected_files) }}</a>
-            <a href="#" class="btn-border btn-border-primary"><i class='bx bx-file-blank' ></i> Files {{ count($selected_files) }}</a>
-            <a href="#" class="btn-border btn-border-warning"><i class='bx bx-folder me-1' ></i> Folders {{ count($selected_directories) }}</a>
-            <a href="#" class="btn-border btn-border-secondary"><i class='bx bx-link-alt' ></i> Links {{ count($selected_links) }}</a>
+        <div class="row">
+            <div class="col-md-6">
+                <!-- Filters -->
+                <div class="btn-list mb-3">
+                    <a href="#" class="btn-border btn-border-success"><i class='bx bx-data'></i> All {{ count($selected_files) }}</a>
+                    <a href="#" class="btn-border btn-border-primary"><i class='bx bx-file-blank' ></i> Files {{ count($selected_files) }}</a>
+                    <a href="#" class="btn-border btn-border-warning"><i class='bx bx-folder me-1' ></i> Folders {{ count($selected_directories) }}</a>
+                    <a href="#" class="btn-border btn-border-secondary"><i class='bx bx-link-alt' ></i> Links {{ count($selected_links) }}</a>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="btn-list align-items-center justify-content-end gap-10">
+                    <a wire:click="downloadSelected" class="btn btn-sm btn-border-success 
+                    @if(empty($selected_files)) disabled @endif
+                    " data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Download Here">
+                        <span><i class='bx bx-download' ></i> Download</span>
+                    </a>
+                    <a wire:click="deleteSelected" class="btn btn-sm btn-border-danger @if(empty($selected_files) && empty($selected_directories) && empty($selected_links)) disabled @endif "><span><i class='bx bx-trash' ></i></span> Delete</a>
+                </div>
+            </div>
         </div>
 
         <div class="files-list">
@@ -106,7 +107,7 @@
             {{-- Files --}}
             @foreach($files as $file_name => $file_data)
                 <div class="files-item select_file @if(in_array($file_data['file_path'], $selected_files)) selected @endif" data-file="{{ $file_data['file_path'] }}">
-                    <div class="files-size">{{ $file_data['size'] }} KB | {{ $file_data['last_modified'] }}</div>
+                    <div class="files-size">{{ $file_data['size'] }} KB</div>
                     
                     <div class="files-item-icon">
                         @if($this->createThumbnailFromFileName($file_name))
@@ -118,6 +119,7 @@
                     <div class="files-item-content">
                         <div class="files-item-content-title mb-2">{{$file_name}}</div>
                     </div>
+                    {{-- <div class="text-sm">{{ $file_data['last_modified'] }}</div> --}}
                 </div>
             @endforeach
             {{-- Links --}}

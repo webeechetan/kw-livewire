@@ -13,61 +13,248 @@
     <!-- Dashboard Body -->
     <div class="row">
         <div class="col-lg-4 mb-4">
-            <div class="column-box">
-                <div class="states_style states_style-left states_style-success">
-                    <div class="states_style-icon"><i class='bx bx-layer'></i></div>
-                    <div>
-                        <h5 class="title-md mb-1">72</h5>
-                        <div class="states_style-text">Active Tasks</div>
+            <div class="column-box states_style-success">
+                <div class="row align-items-center">
+                    <div class="col-auto">
+                        <div class="states_style-icon"><i class='bx bx-layer' ></i></div>                        
+                    </div>
+                    <div class="col">
+                        <div class="row align-items-center g-2">
+                            <div class="col-auto">
+                                <h5 class="title-md mb-0">50</h5>
+                            </div>
+                            <div class="col-auto">
+                                <span class="font-400 text-grey">|</span>
+                            </div>
+                            <div class="col-auto">
+                                <div class="states_style-text">Active Tasks</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="col-lg-4 mb-4">
-            <div class="column-box">
-                <div class="states_style states_style-left states_style-progress">
-                    <div class="states_style-icon"><i class='bx bx-line-chart' ></i></div>
-                    <div>
-                        <h5 class="title-md mb-1">60%</h5>
-                        <div class="states_style-text">Progress</div>
+            <div class="column-box states_style-progress">
+                <div class="row align-items-center">
+                    <div class="col-auto">
+                        <div class="states_style-icon"><i class='bx bx-layer' ></i></div>                        
+                    </div>
+                    <div class="col">
+                        <div class="row align-items-center g-2">
+                            <div class="col-auto">
+                                <h5 class="title-md mb-0">60%</h5>
+                            </div>
+                            <div class="col-auto">
+                                <span class="font-400 text-grey">|</span>
+                            </div>
+                            <div class="col-auto">
+                                <div class="states_style-text">Progress</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="col-lg-4">
-            <div class="column-box">
-                <div class="states_style states_style-left states_style-active">
-                    <div class="states_style-icon"><i class='bx bx-user-plus' ></i></div>
-                    <div>
-                        <h5 class="title-md mb-1">16</h5>
-                        <div class="states_style-text">Members Assigned</div>
+            <div class="column-box states_style-active">
+                <div class="row align-items-center">
+                    <div class="col-auto">
+                        <div class="states_style-icon"><i class='bx bx-layer' ></i></div>                        
+                    </div>
+                    <div class="col">
+                        <div class="row align-items-center g-2">
+                            <div class="col-auto">
+                                <h5 class="title-md mb-0">16</h5>
+                            </div>
+                            <div class="col-auto">
+                                <span class="font-400 text-grey">|</span>
+                            </div>
+                            <div class="col-auto">
+                                <div class="states_style-text">Members</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="column-box">
-        <div class="row font-500">
-            <div class="col-lg-3">
-                <div class="column-box bg-light mb-2">
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="column-box mb-3">
+                <div class="column-box font-500 bg-light mb-2">
                     <div class="row align-items-center">
                         <div class="col"><span><i class='bx bx-layer text-secondary' ></i></span> Created By</div>
                         <div class="col text-secondary">John Deo</div>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-3">
+                <div class="column-box mb-2">
+                    <div class="row align-items-center">
+                        <div class="col"><span><i class='bx bx-calendar-alt text-primary' ></i></span> Start Date</div>
+                        <div class="col text-secondary">30 Jan 2024</div>
+                    </div>
+                </div>
                 <div class="column-box bg-light mb-2">
                     <div class="row align-items-center">
-                        <div class="col"><span><i class='bx bx-layer text-secondary' ></i></span> Start Date</div>
-                        <div class="col text-secondary">30 Jan 2024</div>
+                        <div class="col"><span><i class='bx bx-calendar text-primary' ></i></span> Due Date</div>
+                        <div class="col project-due-date">
+                            @if($project->due_date)
+                                {{ \Carbon\Carbon::parse($project->due_date)->format('d M-Y') }} 
+                            @else
+                                <span class="text-danger">Not Set</span>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+                <div class="column-box mb-2">
+                    <div class="row align-items-center">
+                        <div class="col"><span><i class='bx bx-time text-success'></i></span> Duration</div>
+                        <div class="col text-secondary">{{ \Carbon\Carbon::parse($project->due_date)->diffInDays($project->start_date)}} Days</div>
+                    </div>
+                </div>
+                <div class="column-box bg-light">
+                    <div class="row">
+                        <div class="col"><span><i class='bx bx-layer text-primary'></i></span> Attachements</div>
+                        <div class="col">
+                            <div class="d-flex align-items-center flex-wrap"><span class="text-primary d-flex"><i class='bx bx-folder me-1' ></i></span> 2 <span class="px-2">|</span> <span class="text-secondary d-flex"><i class='bx bx-file-blank me-1' ></i></span>4 <a href="javascript:" class="ms-3 btn_link btn_link-border btn_link-sm">Add</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-8">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="column-box">
+                        <div class="column-head row align-items-center">
+                            <div class="col">
+                                <div class="column-title">Recent Activity</div>
+                            </div>
+                            <a href="javascript:;" class="col-auto btn-link">View All</a>
+                        </div>
+                        <div class="activity-recent mt-3">
+                            <div class="activity-recent-scroll custom_scrollbar">
+                                <div class="activity row space-last_child_0">
+                                    <div class="activity-profile col-auto pe-0">
+                                        <a href="javascript:" class="avatar" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Roshan Jajoria" data-bs-original-title="Roshan Jajoria">RJ</a>
+                                    </div>
+                                    <div class="activity-text col">
+                                        <div class="mb-0 font-500">Roshan Jajroia</div>
+                                        <span class="text-sm">Changed his profile picture</span>
+                                    </div>
+                                    <div class="activity-timeline col-auto text-sm"><span>2 min ago</span></div>
+                                </div>
+                                <div class="activity row space-last_child_0">
+                                    <div class="activity-profile col-auto pe-0">
+                                        <a href="javascript:" class="avatar" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Roshan Jajoria" data-bs-original-title="Roshan Jajoria">RJ</a>
+                                    </div>
+                                    <div class="activity-text col">
+                                        <div class="mb-0 font-500">Roshan Jajroia</div>
+                                        <span class="text-sm">Changed his profile picture</span>
+                                    </div>
+                                    <div class="activity-timeline col-auto text-sm"><span>2 min ago</span></div>
+                                </div>
+                                <div class="activity row space-last_child_0">
+                                    <div class="activity-profile col-auto pe-0">
+                                        <a href="javascript:" class="avatar" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Roshan Jajoria" data-bs-original-title="Roshan Jajoria">RJ</a>
+                                    </div>
+                                    <div class="activity-text col">
+                                        <div class="mb-0 font-500">Roshan Jajroia</div>
+                                        <span class="text-sm">Changed his profile picture</span>
+                                    </div>
+                                    <div class="activity-timeline col-auto text-sm"><span>2 min ago</span></div>
+                                </div>
+                                <div class="activity row space-last_child_0">
+                                    <div class="activity-profile col-auto pe-0">
+                                        <a href="javascript:" class="avatar" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Roshan Jajoria" data-bs-original-title="Roshan Jajoria">RJ</a>
+                                    </div>
+                                    <div class="activity-text col">
+                                        <div class="mb-0 font-500">Roshan Jajroia</div>
+                                        <span class="text-sm">Changed his profile picture</span>
+                                    </div>
+                                    <div class="activity-timeline col-auto text-sm"><span>2 min ago</span></div>
+                                </div>
+                                <div class="activity row space-last_child_0">
+                                    <div class="activity-profile col-auto pe-0">
+                                        <a href="javascript:" class="avatar" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Roshan Jajoria" data-bs-original-title="Roshan Jajoria">RJ</a>
+                                    </div>
+                                    <div class="activity-text col">
+                                        <div class="mb-0 font-500">Roshan Jajroia</div>
+                                        <span class="text-sm">Changed his profile picture</span>
+                                    </div>
+                                    <div class="activity-timeline col-auto text-sm"><span>2 min ago</span></div>
+                                </div>
+                                <div class="activity row space-last_child_0">
+                                    <div class="activity-profile col-auto pe-0">
+                                        <a href="javascript:" class="avatar" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Roshan Jajoria" data-bs-original-title="Roshan Jajoria">RJ</a>
+                                    </div>
+                                    <div class="activity-text col">
+                                        <div class="mb-0 font-500">Roshan Jajroia</div>
+                                        <span class="text-sm">Changed his profile picture</span>
+                                    </div>
+                                    <div class="activity-timeline col-auto text-sm"><span>2 min ago</span></div>
+                                </div>
+                                <div class="activity row space-last_child_0">
+                                    <div class="activity-profile col-auto pe-0">
+                                        <a href="javascript:" class="avatar" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Roshan Jajoria" data-bs-original-title="Roshan Jajoria">RJ</a>
+                                    </div>
+                                    <div class="activity-text col">
+                                        <div class="mb-0 font-500">Roshan Jajroia</div>
+                                        <span class="text-sm">Changed his profile picture</span>
+                                    </div>
+                                    <div class="activity-timeline col-auto text-sm"><span>2 min ago</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="column-box mb-3">
+                        <div class="column-head"><div class="column-title">Assigness</div></div>
+                        <!-- Avatar Group -->
+                        <div class="avatarGroup mt-3">
+                            @php
+                                $usersCount = $project->users->count();  
+                            @endphp
+                            @foreach($project->users as $user)
+                                @if($loop->index > 2)
+                                    @break
+                                @endif
+                                <a href="javascript:" class="avatar avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ $user->name }}" wire-key="project-user-{{$user->id}}">
+                                    <img alt="avatar" src="{{ asset('storage/'.$user->image) }}" class="rounded-circle">
+                                </a>
+                            @endforeach
+                            @if($usersCount > 3)
+                                <a href="javascript:" class="avatar avatar-sm" wire-key="project-user-more">
+                                    +{{ $usersCount - 3 }}
+                                </a>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="column-box">
+                        <div class="column-head"><div class="column-title">Teams</div></div>
+                        <div class="btn-list mt-3">
+                            <a href="javascript:" class="btn-batch btn-batch-profile"><span><img alt="avatar" src="http://localhost:8000/storage/images/users/Ajay Kumar.png" class="rounded-circle"></span> Tech Team</a>
+                            <a href="javascript:" class="btn-batch btn-batch-profile"><span><img alt="avatar" src="http://localhost:8000/storage/images/users/Ajay Kumar.png" class="rounded-circle"></span> Tech Team</a>
+                            <a href="javascript:" class="btn-batch btn-batch-profile"><span><img alt="avatar" src="http://localhost:8000/storage/images/users/Ajay Kumar.png" class="rounded-circle"></span> Tech Team</a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="row">
+    <div class="column-box mt-3">
+        <div wire:ignore class="project-description-container">
+            <div class="column-title d-flex align-items-center mb-3">Description <a href="javascript:" class="ms-2 d-inline-flex edit-description"><i class='bx bx-pencil text-primary'></i></a></div>
+            <div class="project-description txtarea">
+                {!! $project->description !!}
+            </div>
+        </div>
+        {{-- <a href="javascript:" class="btn_link btn_link-primary">see more</a> --}}
+    </div>
+
+    {{-- <div class="row">
         <div class="col-md-4">
             <div class="column-box">
                 <div class="row align-items-center mb-2">
@@ -188,7 +375,7 @@
                 {{-- <a href="javascript:" class="btn_link btn_link-primary">see more</a> --}}
             </div>
         </div>
-    </div>    
+    </div>  --}}
 </div>
 @push('scripts')
     

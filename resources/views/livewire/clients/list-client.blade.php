@@ -1,15 +1,12 @@
 <div class="container">
     <!-- Dashboard Header -->
-    <div class="d-flex flex-wrap justify-content-between align-items-start">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a wire:navigate href="{{ route('dashboard') }}"><i class='bx bx-line-chart'></i> Webeesocial</a></li>
-                <li class="breadcrumb-item active" aria-current="page">All Clients</li>
-            </ol>
-        </nav>
-    </div>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a wire:navigate href="{{ route('dashboard') }}"><i class='bx bx-line-chart'></i> Webeesocial</a></li>
+            <li class="breadcrumb-item active" aria-current="page">All Clients</li>
+        </ol>
+    </nav>
 
-    <!-- Dashboard Body -->
     <div class="dashboard-head mb-3">
         <div class="row align-items-center">
             <div class="col d-flex align-items-center gap-3">
@@ -66,6 +63,7 @@
         </div>
     </div>
 
+    <!-- Dashboard Body -->
     <div class="row">
         <div class="col-md-6">
             <div class="d-flex flex-wrap gap-4 align-items-center mb-2">

@@ -200,6 +200,11 @@ ul {
             margin-top: $spacing_lg;
         }
     }
+    &-last_child_0 {
+        &:not(:last-child) {
+            margin-bottom: 15px;
+        }
+    }
 }
 
 hr.space-sm {
@@ -257,7 +262,7 @@ hr.space-sm {
         }
     }
     &-title {
-        font-size: 22px;
+        font-size: 20px;
         font-weight: 500;
     }
 }

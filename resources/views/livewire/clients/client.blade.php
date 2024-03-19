@@ -7,6 +7,7 @@
             <li class="breadcrumb-item active" aria-current="page">{{ $client->name }}</li>
         </ol>
     </nav>
+    
     <livewire:clients.components.client-tabs :client="$client" @saved="$refresh" />
 
     <!-- Dashboard Body -->

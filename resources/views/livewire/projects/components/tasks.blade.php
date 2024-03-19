@@ -77,10 +77,10 @@
                         <div class="taskList-dashbaord_header_title taskList_col ms-2">Task Name</div>
                     </div>
                     <div class="col text-center">
-                        <div class="taskList-dashbaord_header_title taskList_col">Project</div>
+                        <div class="taskList-dashbaord_header_title taskList_col">Due Date</div>
                     </div>
                     <div class="col text-center">
-                        <div class="taskList-dashbaord_header_title taskList_col">Due Date</div>
+                        <div class="taskList-dashbaord_header_title taskList_col">Project</div>
                     </div>
                     <div class="col text-center">
                         <div class="taskList-dashbaord_header_title taskList_col">Assignee</div>
@@ -103,21 +103,13 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col">
-                                <div class="taskList_col">
-                                    <div class="taskList_col_project">
-                                        <div class="taskList_col_project_name"> <span class="btn-batch  ">{{ $project->name }}</span></div>
-                                    </div>
-                                </div>
+                            <div class="col text-center">
+                                <div class="taskList_col"><span>{{ \Carbon\Carbon::parse($task->due_date)->format('d M-Y') }}</span></div>
                             </div>
-                            <div class="col">
-                                <div class="taskList_col">
-                                    <div class="taskList_col_project">
-                                        <div class="taskList_col_project_name"> <span class="btn-batch ">{{ \Carbon\Carbon::parse($task->due_date)->format('d M-Y') }}</span></div>
-                                    </div>
-                                </div>
+                            <div class="col text-center">
+                                <div class="taskList_col"><span>{{ $project->name }}</span></div>
                             </div>
-                            <div class="col">
+                            <div class="col text-center">
                                 <div class="taskList_col">
                                     <div class="avatarGroup avatarGroup-overlap">
                                         @foreach($task->users as $user)

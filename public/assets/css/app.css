@@ -309,6 +309,9 @@ ul.list-none {
 .space-top-btn {
   margin-top: 50px;
 }
+.space-last_child_0:not(:last-child) {
+  margin-bottom: 15px;
+}
 
 hr.space-sm {
   margin: 10px 0;
@@ -361,7 +364,7 @@ hr.space-sm {
   border-radius: 4px;
 }
 .column-title {
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 500;
 }
 
@@ -3116,13 +3119,7 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   display: flex;
   gap: 3px;
 }
-.avatarGroup-avatar {
-  display: flex;
-}
-.avatarGroup-avatar:first-child .avatar {
-  margin-left: 0;
-}
-.avatarGroup-overlap .avatar:not(.avatar-more) {
+.avatarGroup-overlap .avatar:not(.avatar-more, .avatar:first-child) {
   margin-left: -10px;
   border: 1px solid #fff;
 }
@@ -3730,6 +3727,27 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
 .taskList_row > .row {
   align-items: center;
 }
+.taskList_row.completed {
+  color: #48914d;
+}
+.taskList_row.overdue {
+  color: #ff0000;
+}
+.taskList_row.overdue .taskList_col_title_complete_icon, .taskList_row.overdue .taskList_col_title_complete_icon:hover, .taskList_row.overdue .taskList_col_title_complete_icon:focus {
+  border-color: #ff0000;
+}
+.taskList_row.warning {
+  color: #e7bf1d;
+}
+.taskList_row.warning .taskList_col_title_complete_icon, .taskList_row.warning .taskList_col_title_complete_icon:hover, .taskList_row.warning .taskList_col_title_complete_icon:focus {
+  border-color: #e7bf1d;
+}
+.taskList_row.in_review {
+  color: #7407ff;
+}
+.taskList_row.in_review .taskList_col_title_complete_icon, .taskList_row.in_review .taskList_col_title_complete_icon:hover, .taskList_row.in_review .taskList_col_title_complete_icon:focus {
+  border-color: #7407ff;
+}
 .taskList-dashbaord_tabs {
   margin-top: 20px;
 }
@@ -4335,6 +4353,23 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   border-color: #f83890;
 }
 
-/* ----- Client ----- */
+/* ----- Recent Activity ----- */
+.activity-recent-scroll {
+  height: 295px;
+  overflow-x: auto;
+  padding-right: 12px;
+}
+.activity-recent-scroll::-webkit-scrollbar-track, .activity-recent-scroll::-webkit-scrollbar-thumb {
+  -webkit-box-shadow: none;
+  border-radius: 7px;
+  background-color: #f3f6f9;
+}
+.activity-recent-scroll::-webkit-scrollbar-thumb {
+  background-color: #fdf4c1;
+}
+.activity-recent-scroll::-webkit-scrollbar {
+  width: 6px;
+  background-color: transparent;
+}
 
 /*# sourceMappingURL=app.css.map */

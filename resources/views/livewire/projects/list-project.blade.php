@@ -6,14 +6,15 @@
             <li class="breadcrumb-item active" aria-current="page">All Projects</li>
         </ol>
     </nav>
-    <div class="dashboard-head">
+
+    <div class="dashboard-head mb-3">
         <div class="row align-items-center">
             <div class="col d-flex align-items-center gap-3">
                 <h3 class="main-body-header-title mb-0">All Projects</h3>
                 <span class="text-light">|</span>
                 <a data-bs-toggle="modal" data-bs-target="#add-project-modal" href="javascript:void(0);" class="btn-border btn-border-sm btn-border-primary"><i class="bx bx-plus"></i> Add Project</a>
             </div>
-            <div class="text-end col">
+            <div class="col">
                 <div class="main-body-header-right">
                     <form class="search-box" wire:submit="search" action="">
                         <input wire:model="query" type="text" class="form-control" placeholder="Search Projects...">
@@ -58,34 +59,44 @@
         </div>
     </div>
     
-    <div class="row mt-4">
-        @if($sort != 'all' || $filter != 'all')
-            <div class="d-flex flex-wrap gap-2 align-items-center py-3">
-                <span class="pe-2"><i class='bx bx-filter-alt text-secondary'></i> Filter Results:</span>
-                @if($sort != 'all')
-                    <span class="btn-batch">
-                        @if($sort == 'newest') Newest @endif
-                        @if($sort == 'a_z') A to Z @endif
-                        @if($sort == 'z_a') Z to A @endif
-                        <a wire:navigate href="{{ route('project.index',['sort'=>'all','filter'=>$filter]) }}" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
-                @endif
-
-                @if($filter != 'all')
-                    <span class="btn-batch">{{ ucfirst($filter) }} <a wire:navigate href="{{ route('project.index',['sort'=>$sort,'filter'=>'all']) }}" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
-                @endif
-
-                @if($byUser != 'all')
-                    <span class="btn-batch">{{ $users->find($byUser)->name }} <a wire:navigate href="{{ route('project.index',['sort'=>$sort,'filter'=>$filter,'byUser'=>'all']) }}" class="ms-1"><i class='bx bx-x'></i></a></span>
-                @endif
-                
-
-                <a href="{{ route('project.index') }}" class="text-danger d-flex align-items-center">Reset <span class="ms-1 d-inline-flex"><i class='bx bx-refresh'></i></span></a>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="d-flex flex-wrap gap-4 align-items-center mb-2">
+                <a class="active" href="#">All <span class="btn-batch">50</span></a>
+                <a href="#">Active <span class="btn-batch">20</span></a>
+                <a href="#">Completed <span class="btn-batch">15</span></a>
+                <a href="#">Archive <span class="btn-batch">05</span></a>
             </div>
-        @endif
+        </div>
+        <div class="col-md-6">
+            @if($sort != 'all' || $filter != 'all')
+                <div class="d-flex flex-wrap gap-2 align-items-center justify-content-end">
+                    <span class="pe-2"><i class='bx bx-filter-alt text-secondary'></i> Filter Results:</span>
+                    @if($sort != 'all')
+                        <span class="btn-batch">
+                            @if($sort == 'newest') Newest @endif
+                            @if($sort == 'a_z') A to Z @endif
+                            @if($sort == 'z_a') Z to A @endif
+                            <a wire:navigate href="{{ route('project.index',['sort'=>'all','filter'=>$filter]) }}" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
+                    @endif
+
+                    @if($filter != 'all')
+                        <span class="btn-batch">{{ ucfirst($filter) }} <a wire:navigate href="{{ route('project.index',['sort'=>$sort,'filter'=>'all']) }}" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
+                    @endif
+
+                    @if($byUser != 'all')
+                        <span class="btn-batch">{{ $users->find($byUser)->name }} <a wire:navigate href="{{ route('project.index',['sort'=>$sort,'filter'=>$filter,'byUser'=>'all']) }}" class="ms-1"><i class='bx bx-x'></i></a></span>
+                    @endif
+                    
+
+                    <a href="{{ route('project.index') }}" class="text-danger d-flex align-items-center">Reset <span class="ms-1 d-inline-flex"><i class='bx bx-refresh'></i></span></a>
+                </div>
+            @endif
+        </div>
   
         @foreach($projects as $project)
-            <div class="col-md-4 mt-4">
-                <div class="card_style card_style-overdue">
+            <div class="col-md-4 mb-3 mt-2">
+                <div class="card_style h-100">
                     <!-- Edit -->
                     <div class="cus_dropdown cus_dropdown-edit">
                         <div class="cus_dropdown-icon"><i class='bx bx-dots-horizontal-rounded' ></i></div>
@@ -103,6 +114,7 @@
                             </div>
                         </div>
                     </div>
+                    <a href="{{ route('project.profile', $project->id ) }}" class="card_style-open"><i class='bx bx-chevron-right'></i></a>
                     <div class="card_style-project-head">
                         <div class="card_style-project-head-client"><span><i class='bx bx-briefcase-alt-2'></i></span> {{ $project->client->name }}</div>
                         <h4><a href="{{ route('project.profile',$project->id) }}" wire:navigate>{{ $project->name }}</a></h4>
@@ -110,26 +122,22 @@
                         <div class="avatarGroup avatarGroup-lg avatarGroup-overlap mt-2">
                             @foreach($project->users as $user)
                                 @if($user->image)
-                                    <a href="#" class="avatarGroup-avatar">
-                                        <span class="avatar avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="{{$user->name}}">
-                                            <img alt="avatar" src="{{ asset('storage/'.$user->image) }}" class="rounded-circle">
-                                        </span>
+                                    <a href="javascript:;" class="avatar avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="{{$user->name}}">
+                                        <img alt="avatar" src="{{ asset('storage/'.$user->image) }}" class="rounded-circle">
                                     </a>
                                 @else
-                                    <a href="#" class="avatarGroup-avatar">
-                                        <span class="avatar avatar-sm avatar-pink" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{ $user->name }}">{{ $user->initials }}</span>
-                                    </a>
+                                    <a href="javascript:;" class="avatar avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="{{$user->name}}">{{ $user->initials }}</a>
                                 @endif
                             @endforeach
                             
                         </div>
                     </div>
-                    <div class="card_style-project-body card_style-overdue">
-                        <div class="card_style-project-options">
+                    <!-- User this class for overdue (card_style-overdue) -->
+                    <div class="card_style-project-body mt-3">
+                        {{-- <div class="card_style-project-options">
                             <div><span><i class='bx bx-layer' ></i></span> 5 Attachments</div>
                             <div><span><i class='bx bx-calendar' ></i></span> {{ \Carbon\Carbon::parse($project->due_date)->diffInDays($project->start_date) }} Days</div>
-                        </div>
-                        <hr>
+                        </div> --}}
                         <div class="card_style-tasks">
                             <div class="card_style-tasks-title"><span><i class='bx bx-objects-horizontal-left' ></i></span> {{ $project->tasks->count() }} Tasks</div>
                             <div class="card_style-tasks-list">
@@ -144,8 +152,7 @@
                                 </div>
                             </div>
                         </div>
-                        <hr>
-                        <div class="task_progress ">
+                        <div class="task_progress mt-3">
                             <div class="task_progress-head">
                                 <div class="task_progress-head-title">Progress</div>
                                 <div class="task_progress-head-days"><span><i class='bx bx-calendar-minus'></i></span> 
@@ -185,10 +192,10 @@
                 </div>
             </div>
         @endforeach
-
-        <!-- Pagination -->
-        {{ $projects->links(data: ['scrollTo' => false]) }}
     </div>
+    <hr>
+    <!-- Pagination -->
+    {{ $projects->links(data: ['scrollTo' => false]) }}
     
     <!-- Add Project Component -->
     <livewire:components.add-project @saved="$refresh" />
