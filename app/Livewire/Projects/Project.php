@@ -6,12 +6,17 @@ use Livewire\Component;
 use App\Models\Project as ProjectModel;
 use App\Models\User;
 use App\Models\Task;
+use App\Models\Team;
 
 class Project extends Component
 {
 
     public $project;
     public $users;
+
+    public $projectTasks;
+    public $projectUsers;
+    public $projectTeams = [];
 
     public function render()
     {
@@ -21,6 +26,18 @@ class Project extends Component
     public function mount($id){ 
         $this->project = ProjectModel::withTrashed()->with('client')->find($id);
         $this->users = User::all();
+        $this->projectTasks = Task::where('project_id',$id)->where('status','!=','completed')->get();
+        $this->projectUsers = $this->project->users;
+        $tasks = Task::whereIn('project_id', [$this->project->id])->get();
+        $task_users = [];
+        foreach ($tasks as $task) {
+            $task_users = array_merge($task_users, $task->users->pluck('id')->toArray());
+        }
+
+        $this->projectTeams = Team::whereHas('users', function ($query) use ($task_users) {
+            $query->whereIn('user_id', $task_users);
+        })->get();
+
     }
 
     public function changeDueDate($date){
