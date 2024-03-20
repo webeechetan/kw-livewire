@@ -64,17 +64,16 @@
         @foreach($users as $user)
             <div class="col-md-4 mb-4">
                 <div class="card_style card_style-user h-100">
+                    <a href="{{ route('user.profile',$user->id) }}" class="card_style-open"><i class='bx bx-chevron-right'></i></a>
                     <div class="card_style-user-head">
                         <div class="card_style-user-profile-img">
-                            <span>
-                                @if($user->image)
-                                    <img src="{{ env('APP_URL') }}/storage/{{ $user->image }}" alt="{{ $user->name }}">
-                                @else
-                                    <span class="avatar avatar-sm avatar-{{$user->color}}">{{ $user->initials }}</span>
-                                @endif
-                            </span>
+                            @if($user->image)
+                                <img src="{{ env('APP_URL') }}/storage/{{ $user->image }}" alt="{{ $user->name }}">
+                            @else
+                                <span class="avatar avatar-{{$user->color}}">{{ $user->initials }}</span>
+                            @endif
                         </div>
-                        <div class="card_style-user-profile-content mt-3">
+                        <div class="card_style-user-profile-content mt-2">
                             <h4><a wire:navigate href="{{ route('user.profile',$user->id) }}">{{ $user->name }}</a></h4>
                             <div class="d-flex align-items-center justify-content-center"><i class='bx bx-envelope me-1 text-secondary' ></i> {{ $user->email }}</div>
                             <div class="card_style-user-head-position mt-2"><i class='bx bx-user'></i> Web Developer | Tech Team</div>
@@ -83,8 +82,7 @@
                             @endif
                         </div>
                     </div>
-                    <hr>
-                    <div class="card_style-user-body">
+                    <div class="card_style-user-body mt-3">
                         <div class="card_style-options d-none">
                             <div class="card_style-options-head"><span><i class='bx bx-layer text-secondary' ></i></span> 30 Projects <span class="text-dark-grey ms-1">|</span> 5 Clients</div>
                             <div class="card_style-options-list d-flex">
@@ -94,7 +92,7 @@
                         </div>
                         <div class="card_style-tasks text-center">
                             <div class="card_style-tasks-title"><span><i class='bx bx-objects-horizontal-left' ></i></span> {{ $user->tasks->count() }} Tasks</div>
-                            <div class="card_style-tasks-list justify-content-center">
+                            <div class="card_style-tasks-list justify-content-center mt-2">
                                 <div class="card_style-tasks-item card_style-tasks-item-pending"><span><i class='bx bx-objects-horizontal-center' ></i></span>
                                 {{
                                     $user->tasks->where(function($query) {
