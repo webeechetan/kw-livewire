@@ -11,10 +11,11 @@ use App\Models\Team;
 use App\Models\Project;
 use App\Models\Scopes\OrganizationScope;
 use App\Models\Organization;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles;
 
     /**
      * The attributes that are mass assignable.

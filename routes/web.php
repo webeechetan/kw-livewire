@@ -39,6 +39,11 @@ use App\Models\User;
 use App\Models\Scopes\OrganizationScope;
 use App\Notifications\InviteUser;
 
+// Role and Permission
+
+use App\Livewire\Roles\ListRole;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -94,6 +99,10 @@ Route::group(['middleware' => ['myauth']], function() {
     Route::get('/tasks/list-view',TaskListView::class)->name('task.list-view');
     Route::get('/task/view/{id?}',View::class)->name('task.view');
 
+    // Role and Permission
+
+    Route::get('/roles',ListRole::class)->name('role.index');
+
     Route::get('/file-manager',FileManager::class)->name('file-manager');
     
     Route::get('/logout',function(){
@@ -134,3 +143,112 @@ Route::get('/new-user-mail',function(){
         'user' => User::withoutGlobalScope(OrganizationScope::class)->first()
     ]);
 });
+
+// create permissions
+
+Route::get('/create-permissions',function(){
+    $permissions = [
+        'create-client',
+        'edit-client',
+        'delete-client',
+        'view-client',
+        'create-project',
+        'edit-project',
+        'delete-project',
+        'view-project',
+        'create-task',
+        'edit-task',
+        'delete-task',
+        'view-task',
+        'create-team',
+        'edit-team',
+        'delete-team',
+        'view-team',
+        'create-user',
+        'edit-user',
+        'delete-user',
+        'view-user',
+        'create-role',
+        'edit-role',
+        'delete-role',
+        'view-role',
+        'create-permission',
+        'edit-permission',
+        'delete-permission',
+        'view-permission',
+        'create-organization',
+        'edit-organization',
+        'delete-organization',
+        'view-organization',
+        'create-project-file',
+        'edit-project-file',
+        'delete-project-file',
+        'view-project-file',
+        'create-client-file',
+        'edit-client-file',
+        'delete-client-file',
+        'view-client-file',
+        'create-task-file',
+        'edit-task-file',
+        'delete-task-file',
+        'view-task-file',
+        'create-team-file',
+        'edit-team-file',
+        'delete-team-file',
+        'view-team-file',
+        'create-user-file',
+        'edit-user-file',
+        'delete-user-file',
+        'view-user-file',
+        'create-role-file',
+        'edit-role-file',
+        'delete-role-file',
+        'view-role-file',
+        'create-permission-file',
+        'edit-permission-file',
+        'delete-permission-file',
+        'view-permission-file',
+        'create-organization-file',
+        'edit-organization-file',
+        'delete-organization-file',
+        'view-organization-file',
+        'create-project-task',
+        'edit-project-task',
+        'delete-project-task',
+        'view-project-task',
+        'create-client-task',
+        'edit-client-task',
+        'delete-client-task',
+        'view-client-task',
+        'create-task-task',
+        'edit-task-task',
+        'delete-task-task',
+        'view-task-task',
+        'create-team-task',
+        'edit-team-task',
+        'delete-team-task',
+        'view-team-task',
+        'create-user-task',
+        'edit-user-task',
+        'delete-user-task',
+        'view-user-task',
+        'create-role-task',
+        'edit-role-task',
+        'delete-role-task',
+        'view-role-task',
+        'create-permission-task',
+        'edit-permission-task',
+        'delete-permission-task',
+        'view-permission-task',
+        'create-organization-task',
+        'edit-organization-task',
+        'delete-organization-task',
+    ];
+
+    foreach($permissions as $permission){
+        \Spatie\Permission\Models\Permission::create(['name' => $permission,'guard_name' => 'web','org_id' => 1]);
+    }
+    return 'Permissions created';
+})->name('create-permissions');
+
+
