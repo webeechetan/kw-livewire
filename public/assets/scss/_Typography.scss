@@ -72,6 +72,22 @@ ul {
             margin: 0;
         }
     }
+    /* ----- Social Icons ----- */
+    &.social-icons {
+        @include flex_align_center;
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+        gap: 10px;
+
+        li a {
+            width: 30px;
+            height: 30px;
+            @include flex_center;
+            border: 1px solid $grey_xd;
+            border-radius: 50%;
+        }
+    }
 }
 
 .list {

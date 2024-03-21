@@ -160,6 +160,9 @@ b, strong {
 }
 
 /*---- List Style ----*/
+ul {
+  /* ----- Social Icons ----- */
+}
 ul.list {
   /*---- List None Style ----*/
 }
@@ -167,6 +170,24 @@ ul.list-none {
   list-style-type: none;
   padding: 0;
   margin: 0;
+}
+ul.social-icons {
+  display: flex;
+  align-items: center;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  gap: 10px;
+}
+ul.social-icons li a {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #ddd;
+  border-radius: 50%;
 }
 
 .list-group-item {
