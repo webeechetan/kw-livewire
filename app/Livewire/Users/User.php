@@ -27,4 +27,8 @@ class User extends Component
         $this->user_projects = Project::whereIn('id',$users_task_array->keys())->get();
         
     }
+
+    public function emitEditUserEvent($user_id){
+        $this->dispatch('editUser', $user_id);
+    }
 }

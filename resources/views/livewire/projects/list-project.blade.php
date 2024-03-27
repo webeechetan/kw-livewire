@@ -126,7 +126,7 @@
                                         <img alt="avatar" src="{{ asset('storage/'.$user->image) }}" class="rounded-circle">
                                     </a>
                                 @else
-                                    <a href="javascript:;" class="avatar avatar-{{ $user->color }} avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="{{$user->name}}">{{ $user->initials }}</a>
+                                    <a href="javascript:;" class="avatar avatar-{{$user->color}} avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="{{$user->name}}">{{ $user->initials }}</a>
                                 @endif
                             @endforeach
                             

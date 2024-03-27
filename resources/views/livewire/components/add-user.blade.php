@@ -3,11 +3,11 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header d-flex align-items-center justify-content-between gap-20">
-                    <h3 class="modal-title"><span class="btn-icon btn-icon-primary me-1"><i class='bx bx-user' ></i></span> Add User</h3>
+                    <h3 class="modal-title"><span class="btn-icon btn-icon-primary me-1"><i class='bx bx-user' ></i></span> <span class="modal-title">Add User</span></h3>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="">
+                    <form action="" class="invite-user-form">
                         <div class="modal-form-body">
                             <div class="row">
                                 <div class="col-12">
@@ -51,7 +51,7 @@
                                     <input wire:model="email"  type="email" class="form-style" placeholder="Email Here...">
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="row password-col">
                                 <div class="col-md-4 mb-4">
                                     <label for="">Password<sup class="text-primary">*</sup></label>
                                 </div>
@@ -76,7 +76,7 @@
                         <div class="modal-form-btm">
                             <div class="row">
                                 <div class="col-md-6 ms-auto text-end">
-                                    <button type="submit" class="btn btn-primary">Add Project</button>
+                                    <button type="submit" class="btn btn-primary form-btn">Add Project</button>
                                 </div>
                             </div>
                         </div>
@@ -110,5 +110,20 @@
                 allowClear: true
             });
         }
+
+        document.addEventListener('edit-user', event => {
+            $('#add-user-modal').modal('show');
+            $(".modal-title").text("Edit User");
+            $(".form-btn").text("Update User");
+            $(".invite-user-form").hide();
+            $(".password-col").hide();
+            $(".divider-or").hide();
+            $(".teams").val(event.detail[0]).trigger('change');
+        });
+
+        document.addEventListener('user-updated', event => {
+            $('#add-user-modal').modal('hide');
+            location.reload();
+        });
     </script>
 @endscript

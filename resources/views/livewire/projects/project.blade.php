@@ -21,7 +21,7 @@
                     <div class="col">
                         <div class="row align-items-center g-2">
                             <div class="col-auto">
-                                <h5 class="title-md mb-0">50</h5>
+                                <h5 class="title-md mb-0">{{ $projectTasks->count() }}</h5>
                             </div>
                             <div class="col-auto">
                                 <span class="font-400 text-grey">|</span>
@@ -43,7 +43,15 @@
                     <div class="col">
                         <div class="row align-items-center g-2">
                             <div class="col-auto">
-                                <h5 class="title-md mb-0">60%</h5>
+                                <h5 class="title-md mb-0">
+                                    @php
+                                        $progress = 0;
+                                        if($projectTasks->count() > 0){
+                                            $progress = ($projectTasks->where('status', 'completed')->count() / $projectTasks->count()) * 100;
+                                        }
+                                    @endphp
+                                    {{ round($progress) }} %
+                                </h5>
                             </div>
                             <div class="col-auto">
                                 <span class="font-400 text-grey">|</span>
@@ -65,7 +73,7 @@
                     <div class="col">
                         <div class="row align-items-center g-2">
                             <div class="col-auto">
-                                <h5 class="title-md mb-0">16</h5>
+                                <h5 class="title-md mb-0">{{$projectUsers->count()}}</h5>
                             </div>
                             <div class="col-auto">
                                 <span class="font-400 text-grey">|</span>
@@ -86,13 +94,13 @@
                 <div class="column-box font-500 bg-light mb-2">
                     <div class="row align-items-center">
                         <div class="col"><span><i class='bx bx-layer text-secondary' ></i></span> Created By</div>
-                        <div class="col text-secondary">John Deo</div>
+                        <div class="col text-secondary">{{ $project->createdBy->name }}</div>
                     </div>
                 </div>
                 <div class="column-box mb-2">
                     <div class="row align-items-center">
                         <div class="col"><span><i class='bx bx-calendar-alt text-primary' ></i></span> Start Date</div>
-                        <div class="col text-secondary">30 Jan 2024</div>
+                        <div class="col text-secondary">{{ \Carbon\Carbon::parse($project->start_date)->format('d M-Y') }}</div>
                     </div>
                 </div>
                 <div class="column-box bg-light mb-2">
@@ -117,7 +125,7 @@
                     <div class="row">
                         <div class="col"><span><i class='bx bx-layer text-primary'></i></span> Attachements</div>
                         <div class="col">
-                            <div class="d-flex align-items-center flex-wrap"><span class="text-primary d-flex"><i class='bx bx-folder me-1' ></i></span> 2 <span class="px-2">|</span> <span class="text-secondary d-flex"><i class='bx bx-file-blank me-1' ></i></span>4 <a href="javascript:" class="ms-3 btn_link btn_link-border btn_link-sm">Add</a></div>
+                            <div class="d-flex align-items-center flex-wrap"><a wire:navigate href="{{ route('project.file-manager',$project->id) }}" class="ms-3 btn_link btn_link-border btn_link-sm">Add</a></div>
                         </div>
                     </div>
                 </div>
@@ -218,16 +226,20 @@
                                 $usersCount = $project->users->count();  
                             @endphp
                             @foreach($project->users as $user)
-                                @if($loop->index > 2)
+                                @if($loop->index > 10)
                                     @break
                                 @endif
-                                <a href="javascript:" class="avatar avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ $user->name }}" wire-key="project-user-{{$user->id}}">
-                                    <img alt="avatar" src="{{ asset('storage/'.$user->image) }}" class="rounded-circle">
-                                </a>
+                                @if($user->image)
+                                    <a href="javascript:;" class="avatar avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="{{$user->name}}">
+                                        <img alt="avatar" src="{{ asset('storage/'.$user->image) }}" class="rounded-circle">
+                                    </a>
+                                @else
+                                    <a href="javascript:;" class="avatar avatar-sm avatar-{{$user->color}}" data-bs-toggle="tooltip" data-bs-placement="top" title="{{$user->name}}">{{ $user->initials }}</a>
+                                @endif
                             @endforeach
-                            @if($usersCount > 3)
+                            @if($usersCount > 10)
                                 <a href="javascript:" class="avatar avatar-sm" wire-key="project-user-more">
-                                    +{{ $usersCount - 3 }}
+                                    +{{ $usersCount - 10 }}
                                 </a>
                             @endif
                         </div>
@@ -235,9 +247,9 @@
                     <div class="column-box">
                         <div class="column-head"><div class="column-title">Teams</div></div>
                         <div class="btn-list mt-3">
-                            <a href="javascript:" class="btn-batch btn-batch-profile"><span><img alt="avatar" src="http://localhost:8000/storage/images/users/Ajay Kumar.png" class="rounded-circle"></span> Tech Team</a>
-                            <a href="javascript:" class="btn-batch btn-batch-profile"><span><img alt="avatar" src="http://localhost:8000/storage/images/users/Ajay Kumar.png" class="rounded-circle"></span> Tech Team</a>
-                            <a href="javascript:" class="btn-batch btn-batch-profile"><span><img alt="avatar" src="http://localhost:8000/storage/images/users/Ajay Kumar.png" class="rounded-circle"></span> Tech Team</a>
+                            @foreach($projectTeams as $team)
+                                <a href="javascript:" class="btn-batch btn-batch-profile">{{ $team->name }} </a>
+                            @endforeach
                         </div>
                     </div>
                 </div>

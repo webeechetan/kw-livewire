@@ -92,7 +92,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <a href="javascript:" class="btn-sm btn-border btn-border-secondary"><i class='bx bx-pencil'></i> Edit</a>
+                            <a href="javascript:" wire:click="emitEditUserEvent({{ $user->id }})" class="btn-sm btn-border btn-border-secondary"><i class='bx bx-pencil'></i> Edit</a>
                             <a href="javascript:" class="btn-sm btn-border btn-border-danger"><i class='bx bx-trash'></i> Delete</a>
                         </div>
                     </div>
@@ -157,4 +157,5 @@
             </div>
         </div>
     </div>
+    <livewire:components.add-user @saved="$refresh" />
 </div>
