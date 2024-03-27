@@ -14,7 +14,24 @@
                     <div class="user-profile-img"><img src="/storage/images/user_pro.jpg" alt=""></div>
                     <h3 class="main-body-header-title mb-2">{{ $user->name }}</h3>
                     <div><i class="bx bx-envelope me-1 text-secondary"></i> {{$user->email}}</div>
-                    <div class="card_style-user-head-position mt-2"><i class="bx bx-user text-primary"></i> {{$user->designation}}</div>
+                    <div class="row">
+                        <div class="col-lg-8 mx-auto">
+                            <div class="row align-items-center justify-content-center gap-2">
+                                <div class="col-auto px-0">
+                                    <ul class="social-icons justify-content-center my-2">
+                                        <li><a href="#"><i class='bx bxl-facebook'></i></a></li>
+                                        <li><a href="#"><i class='bx bxl-linkedin' ></i></a></li>
+                                        <li><a href="#"><i class='bx bxl-instagram' ></i></a></li>
+                                        <li><a href="#"><i class='bx bxl-github' ></i></a></li>
+                                        <li><a href="#"><i class='bx bxl-twitter' ></i></a></li>
+                                    </ul> 
+                                </div>
+                                <div class="col-auto">
+                                    <div class="card_style-user-head-position"><i class="bx bx-user text-primary"></i> Web Developer {{$user->designation}}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <hr>
                 <div class="row align-items-center mb-2">
@@ -51,7 +68,7 @@
                             <a wire:navigate href="{{ route('project.profile',$project->id) }}" class="btn-batch">{{ $project->name }}</a>
                         @endforeach
                     </div>
-                </div>
+                </div>                             
             </div>
         </div>
         <div class="col-lg-8">
