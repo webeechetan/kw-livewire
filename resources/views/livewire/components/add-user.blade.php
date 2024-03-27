@@ -71,6 +71,19 @@
                                         @endforeach
                                     </select>
                                 </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 mb-4 mb-lg-0">
+                                    <label for="">Role<sup class="text-primary">*</sup></label>
+                                </div>
+                                <div class="col-md-8">
+                                    <select class="roles">
+                                        <option value="">Select Role</option>
+                                        @foreach ($roles as $role)
+                                            <option value="{{ $role->id }}">{{ $role->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>                            
                         </div>
                         <div class="modal-form-btm">
@@ -99,6 +112,10 @@
                 @this.set('selectedTeams', $(this).val());
             });
 
+            $(".roles").on('change', function(){
+                @this.set('role', $(this).val());
+            });
+
             document.addEventListener('user-added', event => {
                 $('#add-user-modal').modal('hide');
             })
@@ -107,6 +124,10 @@
         function initPlugins(){
             $(".teams").select2({
                 placeholder: "Select Team",
+                allowClear: true
+            });
+            $(".roles").select2({
+                placeholder: "Select Role",
                 allowClear: true
             });
         }
@@ -118,7 +139,9 @@
             $(".invite-user-form").hide();
             $(".password-col").hide();
             $(".divider-or").hide();
-            $(".teams").val(event.detail[0]).trigger('change');
+            console.log(event.detail[0][0]);
+            $(".teams").val(event.detail[0][0]).trigger('change');
+            $(".roles").val(event.detail[1][1]).trigger('change');
         });
 
         document.addEventListener('user-updated', event => {

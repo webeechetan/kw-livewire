@@ -23,7 +23,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-
         $org = new Organization();
         $org->name = 'Webeesocial';
         $org->email = 'wbs@gmail.com';
@@ -66,6 +65,8 @@ class DatabaseSeeder extends Seeder
             ->create();
 
         // $this->call(OrgSeeder::class);
+        $this->call(PermissionSedder::class);
+
 
     }
 }

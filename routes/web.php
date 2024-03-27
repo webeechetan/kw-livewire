@@ -246,7 +246,7 @@ Route::get('/create-permissions',function(){
     ];
 
     foreach($permissions as $permission){
-        \Spatie\Permission\Models\Permission::create(['name' => $permission,'guard_name' => 'web','org_id' => 1]);
+        \Spatie\Permission\Models\Permission::create(['name' => $permission]);
     }
     return 'Permissions created';
 })->name('create-permissions');

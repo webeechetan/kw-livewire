@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\Team;
 use App\Helpers\Helper;
 use Livewire\WithFileUploads;
+use Illuminate\Support\Facades\Storage;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 
 class AddUser extends Component
 {
@@ -21,6 +24,9 @@ class AddUser extends Component
     public $designation;
     public $teams = [];
     public $selectedTeams = [];
+    public $role;
+
+    public $roles = [];
 
     // for edit
 
@@ -35,6 +41,7 @@ class AddUser extends Component
     public function mount()
     {
         $this->teams = Team::all();
+        $this->roles = Role::where('org_id',session('org_id'))->get();
     }
 
     public function addUser(){
@@ -59,6 +66,8 @@ class AddUser extends Component
         $user->created_by = session('user')->id;
         $user->save();
         $user->teams()->sync($this->selectedTeams);
+        $this->role = (int)$this->role;
+        $user->assignRole($this->role);
         $this->dispatch('saved');
         $this->dispatch('user-added');
     }
@@ -70,7 +79,8 @@ class AddUser extends Component
         $this->email = $user->email;
         $this->designation = $user->designation;
         $this->selectedTeams = $user->teams->pluck('id')->toArray();
-        $this->dispatch('edit-user',$this->selectedTeams);
+        $this->role = $user->roles->first()->id ?? null;
+        $this->dispatch('edit-user',[$this->selectedTeams,$user->roles->pluck('id')->toArray()]);
     }
 
     public function updateUser(){
@@ -85,6 +95,8 @@ class AddUser extends Component
         $user->designation = $this->designation;
         $user->save();
         $user->teams()->sync($this->selectedTeams);
+        $this->role = (int)$this->role;
+        $user->syncRoles([$this->role]);
         $this->dispatch('saved');
         $this->dispatch('user-updated');
     }

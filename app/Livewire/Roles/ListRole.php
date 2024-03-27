@@ -17,4 +17,8 @@ class ListRole extends Component
     public function mount(){
         $this->roles = Role::where('org_id',session('org_id'))->get();
     }
+
+    public function emitEditRoleEvent($role_id){
+        $this->dispatch('editRole',$role_id);
+    }
 }

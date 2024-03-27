@@ -33,16 +33,16 @@
                 <div class="card_style-user-head">
                     <div class="card_style-user-profile-content mt-2">
                         <h4><a wire:navigate="" href="http://localhost:8000/user/view/152">{{$role->name}}</a></h4>
+                        <button class="btn btn-primary btn-sm edit-role" wire:click="emitEditRoleEvent({{$role->id}})"> Edit </button>
                     </div>
                 </div>
                 <div class="card_style-user-body mt-3">
                     <div class="card_style-tasks text-center">
-                        <div class="card_style-tasks-title"><span><i class="bx bx-objects-horizontal-left"></i></span> 1 Permissions</div>
+                        <div class="card_style-tasks-title"><span><i class="bx bx-objects-horizontal-left"></i></span> {{ $role->permissions->count() }} Permissions</div>
                         <div class="card_style-tasks-list justify-content-center mt-2">
-                            <div class="card_style-tasks-item card_style-tasks-item-pending"><span><i class="bx bx-objects-horizontal-center"></i></span>
-                            0 Active</div>
-                            <div class="card_style-tasks-item card_style-tasks-item-overdue"><span><i class="bx bx-objects-horizontal-center"></i></span>1 Overdue</div>
-                            <div class="card_style-tasks-item card_style-tasks-item-done"><span><i class="bx bx-objects-horizontal-center"></i></span>0  Completed</div>
+                            @foreach($role->permissions as $permission)
+                                <div class="card_style-tasks-item card_style-tasks-item-overdue">{{ $permission->name }}</div>
+                            @endforeach
                         </div>
                     </div>
                 </div>
@@ -57,6 +57,18 @@
 @script
     <script>
         window.addEventListener('role-added', event => {
+            toastr.success(event.detail.message, 'Success');
+            location.reload();
+        });
+
+        window.addEventListener('edit-role', event => {
+            console.log('edit');
+            $('.role-form-text').text('Edit Role');
+            $('.role-form-btn').text('Update Role');
+            $('#add-role-modal').modal('show');
+        });
+
+        window.addEventListener('role-updated', event => {
             toastr.success(event.detail.message, 'Success');
             location.reload();
         });

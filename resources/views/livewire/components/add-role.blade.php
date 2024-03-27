@@ -1,5 +1,5 @@
 <div>
-    <div wire:ignore class="modal fade" id="add-role-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div wire:ignore class="modal fade modal-lg" id="add-role-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header d-flex align-items-center justify-content-between gap-20">
@@ -19,17 +19,119 @@
                                 <span class="text-danger">@error('role_name') {{ $message }} @enderror</span>
                             </div>
                             <div class="row">
-                                <div class="col-md-4 mb-4">
-                                    <label for="">Permissions<sup class="text-primary">*</sup></label>
-                                </div>
-                                <div class="col-md-8 mb-4">
-                                    <select class="form-style permissions" multiple>
-                                        @foreach($permissions as $permission)
-                                            <option value="{{ $permission->id }}">{{ $permission->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <span class="text-danger">@error('role_name') {{ $message }} @enderror</span>
+                                <div class="table-responsive">
+                                    <table class="table table-flush-spacing">
+                                      <tbody>
+                                        <tr>
+                                          <td class="text-nowrap fw-medium">Administrator Access <i class="bx bx-info-circle bx-xs" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Allows a full access to the system" data-bs-original-title="Allows a full access to the system"></i></td>
+                                          <td>
+                                            <div class="form-check">
+                                              <input class="form-check-input" type="checkbox" id="selectAll">
+                                              <label class="form-check-label" for="selectAll">
+                                                Select All
+                                              </label>
+                                            </div>
+                                          </td>
+                                        </tr>
+                                        {{-- Client --}}
+                                        <tr>
+                                            <td class="text-nowrap fw-medium">Client Management</td>
+                                            <td>
+                                              <div class="d-flex">
+                                                  @foreach($client_permissions as $permission)
+                                                  <div class="form-check me-3 me-lg-5">
+                                                      <input class="form-check-input" wire:model="client_selected_permissions" value="{{ $permission->id }}" type="checkbox" id="ClientManagementRead">
+                                                      <label class="form-check-label" for="ClientManagementRead">
+                                                          {{ str_replace('Client', ' ', $permission->name)}}
+                                                      </label>
+                                                  </div>
+                                                  @endforeach
+                                              </div>
+                                            </td>
+                                        </tr>
+                                        {{-- Project --}}
+                                        <tr>
+                                            <td class="text-nowrap fw-medium">Project Management</td>
+                                            <td>
+                                              <div class="d-flex">
+                                                    @foreach($project_permissions as $permission)
+                                                        <div class="form-check me-3 me-lg-5">
+                                                            <input class="form-check-input" wire:model="project_selected_permissions" value="{{ $permission->id }}" type="checkbox" id="ProjectManagementRead">
+                                                            <label class="form-check-label" for="ProjectManagementRead">
+                                                                {{ str_replace('Project', ' ', $permission->name)}}
+                                                            </label>
+                                                        </div>
+                                                    @endforeach
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        {{-- User --}}
+                                        <tr>
+                                            <td class="text-nowrap fw-medium">User Management</td>
+                                            <td>
+                                              <div class="d-flex">
+                                                  @foreach($user_permissions as $permission)
+                                                  <div class="form-check me-3 me-lg-5">
+                                                      <input class="form-check-input" wire:model="user_selected_permissions" value="{{ $permission->id }}" type="checkbox" id="userManagementRead">
+                                                      <label class="form-check-label" for="userManagementRead">
+                                                          {{ str_replace('User', ' ', $permission->name)}}
+                                                      </label>
+                                                  </div>
+                                                  @endforeach
+                                              </div>
+                                            </td>
+                                          </tr>
+                                        {{-- Team --}}
+                                        <tr>
+                                            <td class="text-nowrap fw-medium">Team Management</td>
+                                            <td>
+                                              <div class="d-flex">
+                                                    @foreach($team_permissions as $permission)
+                                                        <div class="form-check-me-3 me-lg-5">
+                                                            <input class="form-check-input" wire:model="team_selected_permissions" value="{{ $permission->id }}" type="checkbox" id="TeamManagementRead">
+                                                            <label class="form-check-label" for="TeamManagementRead">
+                                                                {{ str_replace('Team', ' ', $permission->name)}}
+                                                            </label>
+                                                        </div>
+                                                    @endforeach
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        {{-- Task --}}
+                                        <tr>
+                                            <td class="text-nowrap fw-medium">Task Management</td>
+                                            <td>
+                                              <div class="d-flex">
+                                                    @foreach($task_permissions as $permission)
+                                                        <div class="form-check-me-3 me-lg-5">
+                                                            <input class="form-check-input" wire:model="task_selected_permissions" value="{{ $permission->id }}" type="checkbox" id="TaskManagementRead">
+                                                            <label class="form-check-label" for="TaskManagementRead">
+                                                                {{ str_replace('Task', ' ', $permission->name)}}
+                                                            </label>
+                                                        </div>
+                                                    @endforeach
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        {{-- Role --}}
+                                        <tr>
+                                          <td class="text-nowrap fw-medium">Role Management</td>
+                                            <td>
+                                                <div class="d-flex">
+                                                    @foreach($role_permissions as $permission)
+                                                        <div class="form-check me-3 me-lg-5">
+                                                            <input class="form-check-input" wire:model="role_selected_permissions" value="{{ $permission->id }}" type="checkbox" id="roleManagementRead">
+                                                            <label class="form-check-label" for="roleManagementRead">
+                                                                {{ str_replace('Role', ' ', $permission->name)}}
+                                                            </label>
+                                                        </div>
+                                                    @endforeach
+                                                </div>
+                                            </td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </div>
                             </div>
                         </div>
                         <div class="modal-form-btm">
@@ -49,10 +151,36 @@
 @script
 <script>
     $(document).ready(function() {
+
+        $('#selectAll').click(function(event) {
+            if(this.checked) {
+                $(':checkbox').each(function() {
+                    this.checked = true;
+                });
+                @this.set('client_selected_permissions', @json($client_permissions->pluck('id')));
+                @this.set('project_selected_permissions', @json($project_permissions->pluck('id')));
+                @this.set('user_selected_permissions', @json($user_permissions->pluck('id')));
+                @this.set('team_selected_permissions', @json($team_permissions->pluck('id')));
+                @this.set('task_selected_permissions', @json($task_permissions->pluck('id')));
+                @this.set('role_selected_permissions', @json($role_permissions->pluck('id')));
+            } else {
+                $(':checkbox').each(function() {
+                    this.checked = false;
+                });
+                @this.set('client_selected_permissions', []);
+                @this.set('project_selected_permissions', []);
+                @this.set('user_selected_permissions', []);
+                @this.set('team_selected_permissions', []);
+                @this.set('task_selected_permissions', []);
+                @this.set('role_selected_permissions', []);
+            }
+        });
+
         function initPlugins(){
             $('.permissions').select2({
                 placeholder: 'Select Permissions',
-                allowClear: true
+                allowClear: true,
+                closeOnSelect: false
             });
         }
 
