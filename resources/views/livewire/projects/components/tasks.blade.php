@@ -53,7 +53,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> 
             </div>
             <hr class="space-sm">
             <div class="row align-items-center">

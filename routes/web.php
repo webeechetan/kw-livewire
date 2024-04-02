@@ -42,6 +42,7 @@ use App\Notifications\InviteUser;
 // Role and Permission
 
 use App\Livewire\Roles\ListRole;
+use Spatie\Permission\Models\Role;
 
 
 
@@ -56,12 +57,18 @@ use App\Livewire\Roles\ListRole;
 |
 */
 
-Route::get('/create-image',function(){
-    // Avatar::create('Susilo Bambang Yudhoyono')->save('sample.png');
-    // save in storage folder
-    Avatar::create('Susilo Bambang Yudhoyono')->save(storage_path('app/public/sample.png'));
+Route::get('/assign-role', function () {
+    $user = User::withoutGlobalScope(OrganizationScope::class)->find(2);
+    $role = Role::where('id', 1)->where('guard_name', 'web')->first();
+    setPermissionsTeamId(session('org_id'));
+    if ($role) {
+        $user->org_id = 1; // Set a valid org_id value
+        $user->assignRole($role);
+        return 'Role assigned';
+    } else {
+        return 'Role not found';
+    }
 });
-
 Route::get('/',Login::class);
 Route::get('/login',Login::class)->name('login');
 Route::get('/register/{org_id?}',Register::class)->name('register');

@@ -67,13 +67,16 @@ class AddUser extends Component
         $user->save();
         $user->teams()->sync($this->selectedTeams);
         $this->role = (int)$this->role;
+        setPermissionsTeamId(session('org_id'));
         $user->assignRole($this->role);
         $this->dispatch('saved');
         $this->dispatch('user-added');
     }
 
     public function editUser($user_id){
-        $user = User::find($user_id);
+        setPermissionsTeamId(session('org_id'));
+
+        $user = User::with('roles')->find($user_id);
         $this->user = $user;
         $this->name = $user->name;
         $this->email = $user->email;
@@ -96,6 +99,7 @@ class AddUser extends Component
         $user->save();
         $user->teams()->sync($this->selectedTeams);
         $this->role = (int)$this->role;
+        setPermissionsTeamId(session('org_id'));
         $user->syncRoles([$this->role]);
         $this->dispatch('saved');
         $this->dispatch('user-updated');
