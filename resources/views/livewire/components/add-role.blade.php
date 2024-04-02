@@ -10,10 +10,10 @@
                     <form wire:submit="addRole" method="POST" enctype="multipart/form-data">
                         <div class="modal-form-body">
                             <div class="row">
-                                <div class="col-md-4 mb-4">
+                                <div class="col-md-5 mb-4">
                                     <label for="">Role Name<sup class="text-primary">*</sup></label>
                                 </div>
-                                <div class="col-md-8 mb-4">
+                                <div class="col-md-7 mb-4">
                                     <input wire:model="role_name" type="text" class="form-style" placeholder="Role Name">
                                 </div>
                                 <span class="text-danger">@error('role_name') {{ $message }} @enderror</span>
@@ -37,9 +37,9 @@
                                         <tr>
                                             <td class="text-nowrap fw-medium">Client Management</td>
                                             <td>
-                                              <div class="d-flex">
+                                              <div class="d-flex justify-content-between">
                                                   @foreach($client_permissions as $permission)
-                                                  <div class="form-check me-3 me-lg-5">
+                                                  <div class="form-check">
                                                       <input class="form-check-input" wire:model="client_selected_permissions" value="{{ $permission->id }}" type="checkbox" id="ClientManagementRead">
                                                       <label class="form-check-label" for="ClientManagementRead">
                                                           {{ str_replace('Client', ' ', $permission->name)}}
@@ -53,9 +53,9 @@
                                         <tr>
                                             <td class="text-nowrap fw-medium">Project Management</td>
                                             <td>
-                                              <div class="d-flex">
+                                              <div class="d-flex justify-content-between">
                                                     @foreach($project_permissions as $permission)
-                                                        <div class="form-check me-3 me-lg-5">
+                                                        <div class="form-check">
                                                             <input class="form-check-input" wire:model="project_selected_permissions" value="{{ $permission->id }}" type="checkbox" id="ProjectManagementRead">
                                                             <label class="form-check-label" for="ProjectManagementRead">
                                                                 {{ str_replace('Project', ' ', $permission->name)}}
@@ -69,9 +69,9 @@
                                         <tr>
                                             <td class="text-nowrap fw-medium">User Management</td>
                                             <td>
-                                              <div class="d-flex">
+                                              <div class="d-flex justify-content-between">
                                                   @foreach($user_permissions as $permission)
-                                                  <div class="form-check me-3 me-lg-5">
+                                                  <div class="form-check">
                                                       <input class="form-check-input" wire:model="user_selected_permissions" value="{{ $permission->id }}" type="checkbox" id="userManagementRead">
                                                       <label class="form-check-label" for="userManagementRead">
                                                           {{ str_replace('User', ' ', $permission->name)}}
@@ -85,9 +85,9 @@
                                         <tr>
                                             <td class="text-nowrap fw-medium">Team Management</td>
                                             <td>
-                                              <div class="d-flex">
+                                              <div class="d-flex justify-content-between">
                                                     @foreach($team_permissions as $permission)
-                                                        <div class="form-check-me-3 me-lg-5">
+                                                        <div class="form-check">
                                                             <input class="form-check-input" wire:model="team_selected_permissions" value="{{ $permission->id }}" type="checkbox" id="TeamManagementRead">
                                                             <label class="form-check-label" for="TeamManagementRead">
                                                                 {{ str_replace('Team', ' ', $permission->name)}}
@@ -101,9 +101,9 @@
                                         <tr>
                                             <td class="text-nowrap fw-medium">Task Management</td>
                                             <td>
-                                              <div class="d-flex">
+                                              <div class="d-flex justify-content-between">
                                                     @foreach($task_permissions as $permission)
-                                                        <div class="form-check-me-3 me-lg-5">
+                                                        <div class="form-check">
                                                             <input class="form-check-input" wire:model="task_selected_permissions" value="{{ $permission->id }}" type="checkbox" id="TaskManagementRead">
                                                             <label class="form-check-label" for="TaskManagementRead">
                                                                 {{ str_replace('Task', ' ', $permission->name)}}
@@ -117,9 +117,9 @@
                                         <tr>
                                           <td class="text-nowrap fw-medium">Role Management</td>
                                             <td>
-                                                <div class="d-flex">
+                                                <div class="d-flex justify-content-between">
                                                     @foreach($role_permissions as $permission)
-                                                        <div class="form-check me-3 me-lg-5">
+                                                        <div class="form-check">
                                                             <input class="form-check-input" wire:model="role_selected_permissions" value="{{ $permission->id }}" type="checkbox" id="roleManagementRead">
                                                             <label class="form-check-label" for="roleManagementRead">
                                                                 {{ str_replace('Role', ' ', $permission->name)}}

@@ -7,7 +7,7 @@
         </ol>
     </nav>
 
-    <div class="dashboard-head mb-3">
+    <div class="dashboard-head">
         <div class="row align-items-center">
             <div class="col d-flex align-items-center gap-3">
                 <h3 class="main-body-header-title mb-0">Roles</h3>
@@ -25,27 +25,32 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="row mt-4">
         @foreach($roles as $role)
         <div class="col-md-4 mb-4">
-            <div class="card_style card_style-user h-100">
-                <a href="http://localhost:8000/user/view/152" class="card_style-open"><i class="bx bx-chevron-right"></i></a>
-                <div class="card_style-user-head">
-                    <div class="card_style-user-profile-content mt-2">
-                        <h4><a wire:navigate="" href="http://localhost:8000/user/view/152">{{$role->name}}</a></h4>
-                        <button class="btn btn-primary btn-sm edit-role" wire:click="emitEditRoleEvent({{$role->id}})"> Edit </button>
-                    </div>
+            <div class=" card_style card_style-roles h-100">
+                <a href="" class="card_style-open"><i class='bx bx-chevron-right'></i></a>
+                <div class="card_style-roles-head">
+                    <p class="text-muted">Total 4 users</p>
+                     <h4>
+                        <a wire:navigate="" href="http://localhost:8000/user/view/152">{{$role->name}}</a>
+                    </h4>
                 </div>
-                <div class="card_style-user-body mt-3">
-                    <div class="card_style-tasks text-center">
-                        <div class="card_style-tasks-title"><span><i class="bx bx-objects-horizontal-left"></i></span> {{ $role->permissions->count() }} Permissions</div>
-                        <div class="card_style-tasks-list justify-content-center mt-2">
-                            @foreach($role->permissions as $permission)
-                                <div class="card_style-tasks-item card_style-tasks-item-overdue">{{ $permission->name }}</div>
+                <div class="card_style-roles-permission">
+                        <div class="card_style-roles-title mt-2"><span><i class='bx bx-universal-access'></i></span> {{ $role->permissions->count() }} Permissions</div>
+                        <div class="mt-2">
+                          <a class="edit-role" wire:click="emitEditRoleEvent({{$role->id}})"> Edit Role</a>
+                         </div>
+                        <!-- <div class="card_style-roles-list justify-content-center"> -->
+                           @foreach($role->permissions as $permission)
+                                <!-- <div class="card_style-roles-items card_style-roles-permissions">{{ $permission->name }}</div> -->
                             @endforeach
-                        </div>
-                    </div>
+                        <!-- </div> -->
+                        
                 </div>
+              
+              
+              
             </div>
         </div>
         @endforeach
