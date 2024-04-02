@@ -116,6 +116,7 @@ a {
   color: #191919;
   text-decoration: none;
   transition: all 0.3s ease;
+  cursor: pointer;
 }
 a:hover {
   color: #4c1c90;
@@ -693,6 +694,18 @@ hr.space-sm {
   top: 10px;
   left: 10px;
   font-size: 16px;
+}
+.card_style-roles-head h4 {
+  font-size: 22px;
+}
+.card_style-roles-title span {
+  color: #f83890;
+  margin-right: 5px;
+}
+.card_style-roles-permission {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 
 /* ----- Task Progress ----- */
@@ -1798,7 +1811,7 @@ hr.space-sm {
   border-radius: 50%;
   background: #f83890;
   cursor: pointer;
-  box-shadow: 0 3px 15px #f72d01;
+  box-shadow: 0 3px 15px rgb(247, 45, 1);
   animation: pulse 2s infinite;
 }
 .navbar-nav .dropdown-account .nav-link span {
