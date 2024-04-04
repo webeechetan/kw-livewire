@@ -403,7 +403,7 @@
               </div>
               <div class="team-text col">
                 <h4 class="mb-1">Sharuakh</h4>
-                <div>Jr. Frontend Developer</div>
+                <div>Frontend Developer</div>
               </div>
             </div>
           </div>
