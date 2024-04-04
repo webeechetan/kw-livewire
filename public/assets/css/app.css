@@ -139,6 +139,15 @@ b, strong {
   letter-spacing: 1px;
   text-transform: uppercase;
 }
+.badge-notifications {
+  position: absolute;
+  top: 0;
+  right: auto;
+  width: 20px;
+  height: 20px;
+  line-height: 10px;
+  padding: 5px;
+}
 
 /*---- Text Style ----*/
 .text-link {
@@ -1824,7 +1833,7 @@ hr.space-sm {
 }
 
 .dropdown-menu {
-  min-width: 15rem;
+  min-width: 22rem;
   background-color: #fff;
   background-clip: padding-box;
   box-shadow: 0 3px 30px #eee;
@@ -1841,7 +1850,7 @@ hr.space-sm {
   content: "";
   position: absolute;
   top: -10px;
-  left: 15px;
+  right: 16px;
   border-bottom: 10px solid #f3f6f9;
   border-left: 10px solid transparent;
   border-right: 10px solid transparent;
@@ -1850,10 +1859,13 @@ hr.space-sm {
   content: "";
   position: absolute;
   top: -8.5px;
-  left: 16px;
+  right: 16px;
   border-bottom: 10px solid #fff;
   border-left: 10px solid transparent;
   border-right: 10px solid transparent;
+}
+.dropdown-setting {
+  min-width: 15rem;
 }
 .dropdown-item {
   display: flex;
@@ -1868,6 +1880,9 @@ hr.space-sm {
 .dropdown-item:hover .dropdown-subIcon, .dropdown-item:focus .dropdown-subIcon {
   background-color: #f83890;
   color: #fff;
+}
+.dropdown-item:hover .dropdown-notifications-archive, .dropdown-item:focus .dropdown-notifications-archive {
+  display: inline-block;
 }
 .dropdown-item-icon {
   width: 30px;
@@ -1886,6 +1901,10 @@ hr.space-sm {
   font-size: 1rem;
   font-weight: 500;
   color: #191919;
+}
+.dropdown-footer {
+  padding: 15px;
+  text-align: center;
 }
 .dropdown-menu-items .dropdown-item {
   border-bottom: 1px solid #eee;
@@ -1935,6 +1954,10 @@ hr.space-sm {
   left: inherit;
   right: 22px;
   width: 20px;
+}
+.dropdown-notifications-archive {
+  display: none;
+  transition: all ease 0.5s;
 }
 
 /*---- Rocket Animation ----*/
