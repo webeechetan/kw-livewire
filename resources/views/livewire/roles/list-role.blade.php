@@ -33,7 +33,7 @@
                 <div class="card_style-roles-head">
                     <p class="text-muted">Total 4 users</p>
                      <h4>
-                        <a wire:navigate="" href="http://localhost:8000/user/view/152">{{$role->name}}</a>
+                        <a wire:navigate="" href="http://localhost:8000/role">{{$role->name}}</a>
                     </h4>
                 </div>
                 <div class="card_style-roles-permission">

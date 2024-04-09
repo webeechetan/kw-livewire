@@ -54,6 +54,12 @@
             text-align: center;
             text-transform: uppercase;
         }
+        .list-unstyled{
+            padding-left: 15px;
+        }
+        .list-unstyled li{
+            margin-bottom: 10px
+        }
     </style>
 </head>
 <body>
@@ -92,14 +98,14 @@
                                             <table class="emailer-text-wrap mxauto" width="100%" cellcellspacing="0" cellpadding="">
                                                 <tr>
                                                     <td>
-                                                        <h2 style="margin-top: 0; margin-bottom: 30px;">Hi {{ $user->name }}!</h2>
-                                                        <p>
-                                                            Your account has been created successfully.</p>
-                                                            <p>Your login credentials are as follows:</p>
-                                                            <p>Email: <strong>{{ $user->email }}</strong></p>
-                                                             <p>Password: <strong>{{ $password }}</strong></p>
-                                                             <p>Please login to your account and change your password.</p>
-                                                        <a href="{{ route('login') }}" class="btn-primary" style="margin-top: 30px;">Sign In Now</a>
+                                                        <h2 style="margin-top: 0; margin-bottom: 30px;">Hi Himanshu,</h2>
+                                                        <p>Chetan Singh is assigned this task. </p>
+                                                        <p><strong>Task Name:</strong> Change the banner of home page in acma.</p>
+                                                        <p><strong>Task Created:</strong> Chetan Singh</p> 
+                                                        <p><strong>Assigned:</strong> Himanshu Sharma</p>
+                                                        <p><strong>Due Date:</strong> 4th May 2024</p>                                                       
+                                                        <p>Please check your assigned task.</p>
+                                                        <a href=""  class="btn-primary" style="margin-top: 30px;">View Task</a>
                                                     </td>
                                                 </tr>
                                             </table>

@@ -133,6 +133,11 @@ b, strong {
   font-size: 0.6rem;
 }
 
+/*---- Width ----*/
+.w-200 {
+  width: 200px;
+}
+
 /*---- Batch ----*/
 .badge {
   line-height: inherit;
@@ -2788,6 +2793,15 @@ table.dataTable > thead .sorting_desc_disabled:after {
   content: "↓";
   bottom: 10px;
   opacity: 0;
+}
+table.dataTable > tbody > tr > td {
+  padding: 15px 20px;
+}
+table.dataTable > tbody > tr > td:active {
+  outline: none;
+}
+table.dataTable > tbody > tr > td:not(.sorting_disabled) {
+  padding-right: 30px;
 }
 table > :not(caption) > * > * {
   background-color: #f3f6f9;
