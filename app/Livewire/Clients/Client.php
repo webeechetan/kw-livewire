@@ -41,6 +41,7 @@ class Client extends Component
 
     public function mount($id)
     {
+        $this->authorize('View Client');
         $this->client_id = $id;
         $this->client = ClientModel::withTrashed()->with('projects')->find($id);
         $this->active_projects = $this->client->projects()->where('status', 'active')->get();

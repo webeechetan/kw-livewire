@@ -30,6 +30,7 @@ class AddClient extends Component
 
     public function addClient()
     {
+        $this->authorize('Create Client');
         if($this->client){
             $this->updateClient();
             return;
@@ -94,6 +95,7 @@ class AddClient extends Component
     }
 
     public function updateClient(){
+        $this->authorize('Edit Client');
         $this->validate([
             'client_name' => 'required',
         ]);
@@ -127,6 +129,7 @@ class AddClient extends Component
 
     public function deleteClient($id)
     {
+        $this->authorize('Delete Client');
         $client = Client::find($id);
         $client->delete();
         $this->dispatch('success', 'Client deleted successfully');

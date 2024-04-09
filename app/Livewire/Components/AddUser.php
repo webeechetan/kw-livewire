@@ -67,7 +67,6 @@ class AddUser extends Component
         $user->save();
         $user->teams()->sync($this->selectedTeams);
         $this->role = (int)$this->role;
-        setPermissionsTeamId(session('org_id'));
         $user->assignRole($this->role);
         $this->dispatch('saved');
         $this->dispatch('user-added');

@@ -25,6 +25,7 @@ class Projects extends Component
 
     public function mount($id)
     {
+        $this->authorize('View Client');
         $this->id = $id;
         $this->client = Client::find($id);
         $this->projects = $this->client->projects;

@@ -37,6 +37,11 @@ class ListClient extends Component
 
     public $client;
 
+    public function mount()
+    {
+        $this->authorize('View Client');
+    }
+
     public function render()
     {
         $this->allClients = Client::count();

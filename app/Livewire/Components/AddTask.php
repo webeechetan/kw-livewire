@@ -5,6 +5,7 @@ namespace App\Livewire\Components;
 use Livewire\Component;
 use App\Models\ { Project, Task, User, Attachment, Comment};
 use Livewire\WithFileUploads;
+use App\Notifications\NewTaskAssignNotification;
 
 class AddTask extends Component
 {
@@ -72,6 +73,12 @@ class AddTask extends Component
                 $at->save();
             }
         }
+
+        foreach($this->task_users as $user_id){
+            $user = User::find($user_id);
+            $user->notify(new NewTaskAssignNotification($task));
+        }
+        
         $this->dispatch('saved','Task saved successfully');
     }
 

@@ -105,10 +105,11 @@
             </div>
         </aside>
         <div class="main-body-content">
-            {{ $slot }}
-            <p class="alert alert-warning" wire:offline>
-                Whoops, your device has lost connection. The web page you are viewing is offline.
-            </p>
+            <div class="text-center">
+                <h5>
+                    403 | Unauthorized
+                </h5>
+            </div>
         </div>
     </div>
     {{-- <livewire:components.voice-control /> --}}
