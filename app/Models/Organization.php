@@ -14,10 +14,11 @@ use App\Models\Task;
 use App\Models\Comment;
 use App\Models\Attachment;
 use App\Models\User;
+use Spatie\Permission\Traits\HasRoles;
 
 class Organization extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasRoles;
 
     public function clients(){
         return $this->hasMany(Client::class);

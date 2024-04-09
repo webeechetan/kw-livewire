@@ -89,7 +89,7 @@
                         <div class="modal-form-btm">
                             <div class="row">
                                 <div class="col-md-6 ms-auto text-end">
-                                    <button type="submit" class="btn btn-primary form-btn">Add Project</button>
+                                    <button type="submit" class="btn btn-primary form-btn">Add User</button>
                                 </div>
                             </div>
                         </div>
@@ -139,9 +139,8 @@
             $(".invite-user-form").hide();
             $(".password-col").hide();
             $(".divider-or").hide();
-            console.log(event.detail[0][0]);
             $(".teams").val(event.detail[0][0]).trigger('change');
-            $(".roles").val(event.detail[1][1]).trigger('change');
+            $(".roles").val(@this.role).trigger('change');
         });
 
         document.addEventListener('user-updated', event => {

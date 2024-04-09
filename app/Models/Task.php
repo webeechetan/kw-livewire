@@ -49,12 +49,7 @@ class Task extends Model
     }
 
     public function assignedBy(){
-        $guard = $this->created_by;
-        if($guard == 'web'){
-            return $this->belongsTo(User::class, 'assigned_by');
-        }else{
-            return $this->belongsTo(Organization::class, 'assigned_by');
-        }
+        return $this->belongsTo(User::class, 'assigned_by');
     }
 
     public function comments(){

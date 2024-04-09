@@ -25,32 +25,48 @@ class Login extends Component
             'email' => 'required|email',
             'password' => 'required'
         ]);
+        // dd(Hash::make('123456'));
 
-        $res = Auth::guard('orginizations')->attempt(['email' => $this->email, 'password' => $this->password]);
+        // $res = Auth::guard('orginizations')->attempt(['email' => $this->email, 'password' => $this->password]);
 
-        if(!$res){
-            $user = User::withoutGlobalScope(OrganizationScope::class)->where('email',$this->email)->first();
-            if($user){
-                $res = Hash::check($this->password,$user->password);
-                if($res){
-                    Auth::guard('web')->login($user);
-                    session()->put('guard','web');
-                    session()->put('org_id',User::withoutGlobalScope(OrganizationScope::class)->where('email',$this->email)->first()->org_id);
-                    session()->put('org_name',Organization::find(session('org_id'))->name);
-                    session()->put('user',User::withoutGlobalScope(OrganizationScope::class)->where('email',$this->email)->first()->id);
-                }
+        // if(!$res){
+        //     $user = User::withoutGlobalScope(OrganizationScope::class)->where('email',$this->email)->first();
+        //     if($user){
+        //         $res = Hash::check($this->password,$user->password);
+        //         if($res){
+        //             Auth::guard('web')->login($user);
+        //             session()->put('guard','web');
+        //             session()->put('org_id',User::withoutGlobalScope(OrganizationScope::class)->where('email',$this->email)->first()->org_id);
+        //             session()->put('org_name',Organization::find(session('org_id'))->name);
+        //             session()->put('user',User::withoutGlobalScope(OrganizationScope::class)->where('email',$this->email)->first()->id);
+        //         }
+        //     }
+        // }else{
+        //     session()->put('guard','orginizations');
+        //     session()->put('org_id',Organization::where('email',$this->email)->first()->id);
+        //     session()->put('org_name',Organization::where('email',$this->email)->first()->name);
+        //     session()->put('user',User::where('email',$this->email)->first());
+        // }
+        $user = User::withoutGlobalScope(OrganizationScope::class)->where('email',$this->email)->first();
+        // dd($user);
+        if($user){
+            $res = Hash::check($this->password,$user->password);
+            if($res){
+                Auth::login($user);
+                session()->put('guard','web');
+                session()->put('org_id',User::withoutGlobalScope(OrganizationScope::class)->where('email',$this->email)->first()->org_id);
+                session()->put('org_name',Organization::find(session('org_id'))->name);
+                session()->put('user',User::withoutGlobalScope(OrganizationScope::class)->where('email',$this->email)->first());
+                return $this->redirect(route('dashboard'),navigate: true);
+            }else{
+                session()->flash('error','Invalid email or password');
             }
-        }else{
-            session()->put('guard','orginizations');
-            session()->put('org_id',Organization::where('email',$this->email)->first()->id);
-            session()->put('org_name',Organization::where('email',$this->email)->first()->name);
-            session()->put('user',User::where('email',$this->email)->first());
         }
 
-        if($res){
-            return $this->redirect(route('dashboard'),navigate: true);
-        }else{
-            session()->flash('error','Invalid email or password');
-        }
+        // if($res){
+        //     return $this->redirect(route('dashboard'),navigate: true);
+        // }else{
+        //     session()->flash('error','Invalid email or password');
+        // }
     }
 }

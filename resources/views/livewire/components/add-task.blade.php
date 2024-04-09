@@ -2,9 +2,14 @@
     <div wire:ignore class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
         <div class="offcanvas-header taskPane-dashbaord-head py-3 px-4">
             <div class="btn-list">
-                <button type="button" class="btn-batch btn-batch-secondary">Accepted</button>
-                <button type="button" class="btn-batch btn-batch-success">Completed</button>
-            </div>
+                <select name="" id="" wire:model="status">
+                    <option value="" disabled selected>Select Status</option>
+                    <option value="pending">Pending</option>
+                    <option value="in_progress">In-Progress</option>
+                    <option value="in_review">In-Review</option>
+                    <option value="completed">Completed</option>
+                </select>
+            </div> 
             <div class="taskPane-dashbaord-head-right">
                 <button type="button" class="btn-icon"><i class='bx bx-check text-success' ></i></button>
                 <button type="button" class="btn-icon" data-bs-toggle="modal" data-bs-target="#attached-file-modal"><i class='bx bx-paperclip' style="transform: rotate(60deg);"></i></button>
@@ -95,50 +100,29 @@
                     </div>
                 </div>
             </form>
-            <div class="cmnt_sec p-4">
+            <div class="cmnt_sec p-4 d-none">
                 <!-- Activity -->
                 <div class="cmnt_item">
                     <h5 class="cmnt_item_title"><span><i class='bx bx-line-chart text-primary'></i> Activity</span><span class="text-sm"><i class='bx bx-comment-dots text-secondary'></i> 15 Comments</span></h5>
                     <div class="cmnt_item-tabs">
                         <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                            <button class="nav-link active" id="nav-internal-tab" data-bs-toggle="tab" data-bs-target="#nav-internal" type="button" role="tab" aria-controls="nav-internal" aria-selected="true">Internal Feedback <span class="text-sm ms-2"><i class='bx bx-comment-dots text-secondary'></i> 07</span></button>
+                            <button class="nav-link active" id="nav-internal-tab" data-bs-toggle="tab" data-bs-target="#nav-internal" type="button" role="tab" aria-controls="nav-internal" aria-selected="true">Internal Comment <span class="text-sm ms-2"><i class='bx bx-comment-dots text-secondary'></i> 07</span></button>
                             <button class="nav-link" id="nav-client-tab" data-bs-toggle="tab" data-bs-target="#nav-client" type="button" role="tab" aria-controls="nav-client" aria-selected="false">Client Feedback <span class="text-sm ms-2"><i class='bx bx-comment-dots text-secondary'></i> 08</span></button>
                         </div>
                     </div>
                     <div class="tab-content" id="nav-tabContent">
                         <div class="tab-pane fade show active" id="nav-internal" role="tabpanel" aria-labelledby="nav-internal-tab" tabindex="0">
-                            <div class="cmnt_item_row">
-                                <div class="cmnt_item_user">
-                                    <div class="cmnt_item_user_img">
-                                        <img class="rounded-circle" src="{{ env('APP_URL') }}/storage/images/users/Chetan%20Singh.png">
+                            <div class="custComment">
+                                <div class="custComment-wrap">
+                                    <div class="custComment-editor" wire:ignore>
+                                        <textarea wire:model="comment" name="" id="comment_box" cols="30" rows="5"></textarea>
                                     </div>
-                                    <div class="cmnt_item_user_name-wrap">
-                                        <div class="cmnt_item_user_name">Chetan Kumar</div>
-                                        <div class="cmnt_item_date">1 Week Ago</div>
-                                        <div class="cmnt_item_user_text">Add logo in the client section and make it live</div>
-                                    </div>
-                                    <div class="cmnt_item_user-edit btn-list">
-                                        <a href="#" class="btn_link"><i class='bx bx-pencil' ></i></a>
-                                        <a href="#" class="btn_link"><i class='bx bx-trash' ></i></a>
-                                    </div>
+                                    <button wire:click="saveComment" class="custComment-btn"><i class='bx bx-send'></i> Comment</button>
                                 </div>
                             </div>
-                            <div class="cmnt_item_row">
-                                <div class="cmnt_item_user">
-                                    <div class="cmnt_item_user_img">
-                                        <img class="rounded-circle" src="{{ env('APP_URL') }}/storage/images/users/Chetan%20Singh.png">
-                                    </div>
-                                    <div class="cmnt_item_user_name-wrap">
-                                        <div class="cmnt_item_user_name">Chetan Kumar</div>
-                                        <div class="cmnt_item_date">1 Week Ago</div>
-                                        <div class="cmnt_item_user_text">Add logo in the client section and make it live</div>
-                                    </div>
-                                    <div class="cmnt_item_user-edit btn-list">
-                                        <a href="#" class="btn_link"><i class='bx bx-pencil' ></i></a>
-                                        <a href="#" class="btn_link"><i class='bx bx-trash' ></i></a>
-                                    </div>
-                                </div>
+                            <div class="comment-rows mt-4">
                             </div>
+                            
                         </div>
                         <div class="tab-pane fade" id="nav-client" role="tabpanel" aria-labelledby="nav-client-tab" tabindex="0">
                             <div class="cmnt_item_row">
@@ -179,14 +163,6 @@
             </div>
         </div>
         <div class="offcanvas-footer">
-            {{-- <div class="custComment">
-                <div class="custComment-wrap">
-                    <div class="custComment-editor" wire:ignore>
-                        <textarea name="" id="comment_box" cols="30" rows="5"></textarea>
-                    </div>
-                    <button wire:click="saveComment" class="custComment-btn"><i class='bx bx-send'></i> Comment</button>
-                </div>
-            </div> --}}
             <div class="taskPane-footer-wrap py-3 px-4">
                 <button type="button" wire:click="deleteTask" class="btn-border btn-sm btn-border-danger"><i class='bx bx-trash' ></i> Delete Task</button>
                 <button type="button" wire:click="saveTask" class="btn-border btn-sm btn-border-primary ms-auto"><i class='bx bx-check'></i> Save Task</button>
@@ -198,18 +174,66 @@
 
 @push('scripts')
     <script>
-            // add-attachments
+
+            if(typeof users_for_mention === 'undefined'){
+                var users_for_mention = [];
+                var users = @json($users);
+                users.forEach(user => {
+                    users_for_mention.push(user.name);
+                });
+            }else{
+                var users_for_mention = users_for_mention;
+                var users = @json($users);
+            }
+
+
+            function initPlugins(){
+                $("#editor").summernote({
+                    height: 200,
+                    hint: {
+                        mentions: users_for_mention,
+                        match: /\B@(\w*)$/,
+                        search: function (keyword, callback) {
+                            callback($.grep(this.mentions, function (item) {
+                                return item.indexOf(keyword) == 0;
+                            }));
+                        },
+                        template : function (item) {
+                            return '<span class="mention_user" data-id=" ' + users[users_for_mention.indexOf(item)].id + ' ">' + item + '</span>';
+                        },
+                        content: function (item) {
+                            item = item.replace(/\s/g, '_');
+                            let span = document.createElement('span');
+                            $(span).addClass('mention_user');
+                            $(span).text(' '+'@' + item + ' ');
+                            return span;
+                        },    
+                    },
+                    toolbar: [
+                        ['font', ['bold', 'underline']],
+                        ['para', ['ul', 'ol']],
+                        ['insert', ['link']],
+                    ],
+                    callbacks: {
+                        onChange: function(contents, $editable) {
+                            @this.set('description', contents);
+                        }
+                    }
+                });
+            }
 
             $('.add-attachments').on('click', function(){
                 $('.attachments').click();
             });
 
+            setInterval(() => {
+                initPlugins();
+            }, 1000);
+
             // Select2
             $('.task-users').select2({
                 placeholder: "Select User",
                 allowClear: true,
-                templateResult: format,
-                templateSelection: format
             });
 
             $(".task-users").on('change', function (e) {
@@ -220,8 +244,6 @@
             $('.task-notify-users').select2({
                 placeholder: "Select User",
                 allowClear: true,
-                templateResult: format,
-                templateSelection: format
             });
 
             $(".task-notify-users").on('change', function (e) {
@@ -229,16 +251,7 @@
                 @this.set('task_notifiers', data);
             });
 
-            function format(state) {
-                if (!state.id) {
-                    return state.text;
-                }
-                var baseUrl = "{{ env('APP_URL') }}/storage";
-                var $state = $(
-                    '<span><img class="select2-selection__choice__display_userImg" src="' + baseUrl + '/' + state.element.attributes[0].value + '" /> ' + state.text + '</span>'
-                );
-                return $state;
-            };
+            
 
             flatpickr(".task-due-date", {
                 dateFormat: "Y-m-d",
@@ -249,6 +262,8 @@
             });
 
             document.addEventListener('edit-task', event => {
+                $(".cmnt_sec").removeClass('d-none');
+                
                 $('.taskPane-heading-label').html('Edit Task');
                 $('.btn-border-primary').html('Update Task');
                 let task_users = event.detail[0].users;
@@ -307,6 +322,23 @@
                 // });
 
                 // $('.task-attachments').html(attachment_html);
+                console.log(event.detail[0].comments);
+                event.detail[0].comments.forEach(comment => {
+                    let comment_html = `<div class="cmnt_item_row">
+                        <div class="cmnt_item_user">
+                            <div class="cmnt_item_user_img">
+                                <img class="rounded-circle" src="{{ env('APP_URL') }}/storage/images/users/Chetan%20Singh.png">
+                            </div>
+                            <div class="cmnt_item_user_name-wrap">
+                                <div class="cmnt_item_user_name">${comment.user.name}</div>
+                                <div class="cmnt_item_date">${comment.created_at}</div>
+                                <div class="cmnt_item_user_text">${comment.comment}</div>
+                            </div>
+                        </div>
+                    </div>`;
+
+                    $('.comment-rows').append(comment_html);
+                });
 
 
                 $('#offcanvasRight').offcanvas('show');
@@ -317,6 +349,27 @@
             document.addEventListener('file-attached', event => {
                 $(".task-attachment-count").html(event.detail.length);
                 $('#attached-file-modal').modal('hide');
+            });
+
+            // comment-added 
+
+            document.addEventListener('comment-added', event => {
+                console.log(event.detail);
+                let comment_html = `<div class="cmnt_item_row">
+                    <div class="cmnt_item_user">
+                        <div class="cmnt_item_user_img">
+                            <img class="rounded-circle" src="{{ env('APP_URL') }}/storage/images/users/Chetan%20Singh.png">
+                        </div>
+                        <div class="cmnt_item_user_name-wrap">
+                            <div class="cmnt_item_user_name">${event.detail[0].user.name}</div>
+                            <div class="cmnt_item_date">${event.detail[0].created_at}</div>
+                            <div class="cmnt_item_user_text">${event.detail[0].comment}</div>
+                        </div>
+                    </div>
+                </div>`;
+
+                $('.comment-rows').append(comment_html);
+                $('#comment_box').val('');
             });
 
     </script>

@@ -84,9 +84,11 @@
             <div>
                 <h5 class="mb-0">All Projects <span class="text-light text-md font-400 ms-2">{{ count($client->projects) }} Projects</span></h5>
             </div>
+            @can('Create Project')
             <div class="ms-auto">
                 <a class="btn btn-sm btn-border-primary" href="#" data-bs-toggle="modal" data-bs-target="#add-project-modal"><i class="bx bx-plus"></i> Add Project</a>
             </div>
+            @endcan
         </div>
     </div>
     <div class="project-tabs mb-2">

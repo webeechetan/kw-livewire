@@ -14,25 +14,30 @@
                 <div class="text-end col">
                     <div class="main-body-header-right">
                         <!-- Edit -->
-                        <div class="cus_dropdown">
-                            <!-- For Active Class = btn-border-success | For Archived Class = btn-border-archived -->
-                            @if(!$client->trashed())
-                                <div class="cus_dropdown-icon btn-border btn-border-success">Active <i class='bx bx-chevron-down' ></i></div>
-                            @else
-                                <div class="cus_dropdown-icon btn-border btn-border-archived">Archived <i class='bx bx-chevron-down' ></i></div>
-                            @endif
+                        @can('Edit Client')
+                            <div class="cus_dropdown">
+                                <!-- For Active Class = btn-border-success | For Archived Class = btn-border-archived -->
+                                @if(!$client->trashed())
+                                    <div class="cus_dropdown-icon btn-border btn-border-success">Active <i class='bx bx-chevron-down' ></i></div>
+                                @else
+                                    <div class="cus_dropdown-icon btn-border btn-border-archived">Archived <i class='bx bx-chevron-down' ></i></div>
+                                @endif
 
-                            <div class="cus_dropdown-body cus_dropdown-body-widh_s">
-                                <div class="cus_dropdown-body-wrap">
-                                    <ul class="cus_dropdown-list">
-                                        <li><a href="javascript:;" wire:click="changeClientStatus('active')" @if(!$client->trashed()) class="active" @endif>Active</a></li>
-                                        <li><a href="javascript:;" wire:click="changeClientStatus('archived')" @if($client->trashed()) class="active" @endif>Archive</a></li>
-                                    </ul>
+                                <div class="cus_dropdown-body cus_dropdown-body-widh_s">
+                                    <div class="cus_dropdown-body-wrap">
+                                        <ul class="cus_dropdown-list">
+                                            <li><a href="javascript:;" wire:click="changeClientStatus('active')" @if(!$client->trashed()) class="active" @endif>Active</a></li>
+                                            <li><a href="javascript:;" wire:click="changeClientStatus('archived')" @if($client->trashed()) class="active" @endif>Archive</a></li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <button @if($client->trashed()) disabled @endif wire:click="emitEditClient({{$client->id}})" class="btn-sm btn-border btn-border-secondary "><i class='bx bx-pencil'></i> Edit</button>
-                        <a href="#" class="btn-sm btn-border btn-border-danger" wire:click="forceDeleteClient({{$client->id}})"><i class='bx bx-trash'></i> Delete</a>
+                            <button @if($client->trashed()) disabled @endif wire:click="emitEditClient({{$client->id}})" class="btn-sm btn-border btn-border-secondary "><i class='bx bx-pencil'></i> Edit</button>
+                        @endcan
+                        <!-- Delete -->
+                        @can('Delete Client')
+                            <a href="#" class="btn-sm btn-border btn-border-danger" wire:click="forceDeleteClient({{$client->id}})"><i class='bx bx-trash'></i> Delete</a>
+                        @endcan
                     </div>
                 </div>
             </div>

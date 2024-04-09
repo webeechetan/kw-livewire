@@ -180,7 +180,7 @@ class ListTask extends Component
         foreach($this->user_ids as $user_id){
             $user = User::find($user_id);
             // $user->notify(new NewTaskAssignNotification($task));
-        }
+        } 
         session()->flash('message','Task created successfully');
         $this->redirect(route('task.index'),navigate:true);
     }

@@ -362,36 +362,40 @@
       </div>
     </header>
     <div class="main-body">
-      <aside class="sidebar-l">
-        <div class="sidebar-l-menu">
-          <ul class="list-none menu-sidebar">
-            <li>
-              <a wire:navigate href="{{ route('dashboard') }}" class="@if (request()->routeIs('dashboard')) active @endif">
-                <i class='bx bx-line-chart'></i> Dashboard </a>
-            </li> @if (session('guard') == 'orginizations') <li>
-              <a wire:navigate href="{{ route('client.index') }}" class="@if (request()->routeIs('client.index') || request()->routeIs('client.profile') || request()->routeIs('client.projects') || request()->routeIs('client.file-manager')) active @endif">
-                <i class='bx bx-briefcase-alt-2'></i> Clients </a>
-            </li>
-            <li>
-              <a wire:navigate href="{{ route('project.index') }}" class="@if (request()->segment(1) == 'projects' || request()->segment(1) == 'project' ) active @endif">
-                <i class='bx bx-objects-horizontal-left'></i> Projects </a>
-            </li>
-            <li>
-              <a wire:navigate href="{{ route('user.index') }}" class="@if (request()->routeIs('user.index') || request()->routeIs('user.add')) active @endif">
-                <i class='bx bx-user'></i> Users </a>
-            </li>
-            <li>
-              <a wire:navigate href="{{ route('team.index') }}" class="@if (request()->routeIs('team.index') || request()->routeIs('team.add')) active @endif">
-                <i class='bx bx-sitemap'></i> Teams </a>
-            </li>
-            <li>
-              <a wire:navigate href="{{ route('role.index') }}" class="@if (request()->segment(1) == 'roles' || request()->segment(1) == 'role' ) active @endif">
-                <i class='bx bx-sitemap'></i> Role & Permissions </a>
-            </li> @endif <li>
-              <a wire:navigate href="{{ route('task.index') }}" class="@if (request()->routeIs('task.index') || request()->routeIs('task.list-view') || request()->routeIs('task.add')) active @endif">
-                <i class='bx bx-task'></i> Tasks </a>
-            </li>
-          </ul>
+        <aside class="sidebar-l">
+            <div class="sidebar-l-menu">
+                <ul class="list-none menu-sidebar">
+                    <li><a wire:navigate href="{{ route('dashboard') }}" class="@if (request()->routeIs('dashboard')) active @endif"><i class='bx bx-line-chart' ></i> Dashboard</a></li>
+                        @can('View Client')
+                            <li><a wire:navigate href="{{ route('client.index') }}" class="@if (request()->routeIs('client.index') || request()->routeIs('client.profile') || request()->routeIs('client.projects') || request()->routeIs('client.file-manager')) active @endif"><i class='bx bx-briefcase-alt-2'></i> Clients</a></li>
+                        @endcan
+                        @can('View Project')
+                            <li><a wire:navigate href="{{ route('project.index') }}" class="@if (request()->segment(1) == 'projects' || request()->segment(1) == 'project' ) active @endif"><i class='bx bx-objects-horizontal-left'></i> Projects</a></li>
+                        @endcan
+                        @can('View User')
+                            <li><a wire:navigate href="{{ route('user.index') }}" class="@if (request()->routeIs('user.index') || request()->routeIs('user.add')) active @endif"><i class='bx bx-user'></i> Users</a></li>
+                        @endcan
+                        @can('View Team')
+                            <li><a wire:navigate href="{{ route('team.index') }}" class="@if (request()->routeIs('team.index') || request()->routeIs('team.add')) active @endif"><i class='bx bx-sitemap'></i> Teams</a></li>
+                        @endcan
+                        @can('View Role')
+                            <li><a wire:navigate href="{{ route('role.index') }}" class="@if (request()->segment(1) == 'roles' || request()->segment(1) == 'role' ) active @endif"><i class='bx bx-sitemap'></i> Role & Permissions</a></li>
+                        @endcan
+                        @can('View Task')
+                            <li><a wire:navigate href="{{ route('task.index') }}" class="@if (request()->routeIs('task.index') || request()->routeIs('task.list-view') || request()->routeIs('task.add')) active @endif"><i class='bx bx-task' ></i> Tasks</a></li>
+                        @endcan
+                </ul>
+            </div>
+            <div class="sidebar-l-btm">
+                <img src="{{ asset('') }}assets/images/logo.png" width="150" alt="Kaykewalk Profile" />
+                <p class="mb-0 mt-3">Copyright © 2024, Kaykewalk, All Rights Reserved.</p>
+            </div>
+        </aside>
+        <div class="main-body-content">
+            {{ $slot }}
+            <p class="alert alert-warning" wire:offline>
+                Whoops, your device has lost connection. The web page you are viewing is offline.
+            </p>
         </div>
         <div class="sidebar-l-btm">
           <img src="{{ asset('') }}assets/images/logo.png" width="150" alt="Kaykewalk Profile" />
