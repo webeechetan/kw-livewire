@@ -450,7 +450,7 @@
                 <div class="custComment">
                     <div class="custComment-wrap">
                         <div class="custComment-editor" wire:ignore>
-                            <textarea name="" id="comment_box" cols="30" rows="5"></textarea>
+                            <textarea name="" id="comment_box" class="from-control" cols="30" rows="5"></textarea>
                         </div>
                         <button wire:click="saveComment" class="btn-border btn-border-sm btn-border-primary"><i class='bx bx-send'></i> Comment</button>
                     </div>

@@ -114,10 +114,10 @@
                         <div class="tab-pane fade show active" id="nav-internal" role="tabpanel" aria-labelledby="nav-internal-tab" tabindex="0">
                             <div class="custComment">
                                 <div class="custComment-wrap">
-                                    <div class="custComment-editor" wire:ignore>
-                                        <textarea wire:model="comment" name="" id="comment_box" cols="30" rows="5"></textarea>
+                                    <div class="custComment-editor p-0" wire:ignore>
+                                        <textarea wire:model="comment" name="" id="comment_box" class="form-control mb-3" cols="30" rows="5"></textarea>
                                     </div>
-                                    <button wire:click="saveComment" class="custComment-btn"><i class='bx bx-send'></i> Comment</button>
+                                    <button wire:click="saveComment" class="custComment-btn btn-sm btn-border-primary"><i class='bx bx-send'></i> Comment</button>
                                 </div>
                             </div>
                             <div class="comment-rows mt-4">
@@ -165,7 +165,7 @@
         <div class="offcanvas-footer">
             <div class="taskPane-footer-wrap py-3 px-4">
                 <button type="button" wire:click="deleteTask" class="btn-border btn-sm btn-border-danger"><i class='bx bx-trash' ></i> Delete Task</button>
-                <button type="button" wire:click="saveTask" class="btn-border btn-sm btn-border-primary ms-auto"><i class='bx bx-check'></i> Save Task</button>
+                <button type="button" wire:click="saveTask" class="btn-border btn-sm btn-border-primary save-task-button ms-auto"><i class='bx bx-check'></i> Save Task</button>
             </div>
         </div>
     </div>
@@ -265,7 +265,7 @@
                 $(".cmnt_sec").removeClass('d-none');
                 
                 $('.taskPane-heading-label').html('Edit Task');
-                $('.btn-border-primary').html('Update Task');
+                $('.save-task-button').html('Update Task');
                 let task_users = event.detail[0].users;
                 let task_notifiers = event.detail[0].notifiers;
 

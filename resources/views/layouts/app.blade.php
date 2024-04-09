@@ -51,7 +51,7 @@
                   </a>
                 </li>
                 <li class="nav-item navbar-dropdown dropdown">
-                  <a id="modal-search" href="#" class="nav-link dropdown-toggle      hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="true">
+                  <a id="modal-search" href="#" class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="true">
                     <i class='bx bx-chat'></i>
                     <span class="badge bg-primary rounded-pill badge-notifications badge-message">5</span>
                   </a>
@@ -391,17 +391,6 @@
                 <p class="mb-0 mt-3">Copyright © 2024, Kaykewalk, All Rights Reserved.</p>
             </div>
         </aside>
-        <div class="main-body-content">
-            {{ $slot }}
-            <p class="alert alert-warning" wire:offline>
-                Whoops, your device has lost connection. The web page you are viewing is offline.
-            </p>
-        </div>
-        <div class="sidebar-l-btm">
-          <img src="{{ asset('') }}assets/images/logo.png" width="150" alt="Kaykewalk Profile" />
-          <p class="mb-0 mt-3">Copyright © 2024, Kaykewalk, All Rights Reserved.</p>
-        </div>
-      </aside>
       <div class="main-body-content">
         {{ $slot }}
         <p class="alert alert-warning" wire:offline> Whoops, your device has lost connection. The web page you are viewing is offline. </p>

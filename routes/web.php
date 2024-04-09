@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Hash;
 use App\Livewire\Login;
 use App\Livewire\Register;
 use App\Livewire\ForgotPassword;
@@ -293,6 +294,17 @@ Route::get('/task-mention-notification',function(){
 Route::get('/comment-notification',function(){
   
     return view('mails.comment-notification-mail');
+    
+});
+Route::get('/comment-notification',function(){
+  
+    return view('mails.comment-notification-mail');
+    
+});
+
+Route::get('/create-password',function(){
+  
+   dd(Hash::make(123456));
     
 });
 

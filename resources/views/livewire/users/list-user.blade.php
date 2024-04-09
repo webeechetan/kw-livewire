@@ -6,7 +6,7 @@
             <li class="breadcrumb-item active" aria-current="page">All Users</li>
         </ol>
     </nav>
-    <div class="dashboard-head">
+    <div class="dashboard-head mb-4">
         <div class="row align-items-center">
             <div class="col d-flex align-items-center gap-3">
                 <h3 class="main-body-header-title mb-0">All Users</h3>
@@ -60,7 +60,7 @@
         </div>
     </div>
 
-    <div class="row mt-4">        
+    <div class="row">        
         @foreach($users as $user)
             <div class="col-md-4 mb-4">
                 <div class="card_style card_style-user h-100">

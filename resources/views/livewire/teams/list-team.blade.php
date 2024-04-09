@@ -45,7 +45,7 @@
     <div class="row mt-4">
         
         @foreach($teams as $team)
-            <div class="col-md-4 mt-2">
+            <div class="col-md-4 mb-4">
                 <div class="card_style card_style-team">
                     <!-- Edit -->
                     <div class="cus_dropdown cus_dropdown-edit">
