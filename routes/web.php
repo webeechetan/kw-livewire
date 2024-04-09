@@ -42,6 +42,7 @@ use App\Notifications\InviteUser;
 // Role and Permission
 
 use App\Livewire\Roles\ListRole;
+use App\Livewire\Roles\RoleView;
 use Spatie\Permission\Models\Role;
 
 
@@ -258,4 +259,48 @@ Route::get('/create-permissions',function(){
     return 'Permissions created';
 })->name('create-permissions');
 
+
+// New route created for emailer by ajay on 8 april-24
+
+Route::get('/user-new-user',function(){
+  
+     return view('mails.user-new-user');
+   
+});
+
+
+Route::get('/user-permission',function(){
+  
+     return view('mails.user-permission-mail');
+     
+});
+// Himanshu Created This Route
+Route::get('/task-assigned-notification',function(){
+  
+    return view('mails.task-assigned-notification-mail');
+    
+});
+Route::get('/task-notifier-notification',function(){
+  
+    return view('mails.task-notifier-notification-mail');
+    
+});
+Route::get('/task-mention-notification',function(){
+  
+    return view('mails.task-mention-notification-mail');
+    
+});
+Route::get('/comment-notification',function(){
+  
+    return view('mails.comment-notification-mail');
+    
+});
+
+// Route::get('/roles/view', function(){
+//     return view('roles.role-view');
+// });
+
+
+
+Route::get('/role', RoleView::class)->name('role');
 

@@ -54,6 +54,12 @@
             text-align: center;
             text-transform: uppercase;
         }
+        .list-unstyled{
+            padding-left: 15px;
+        }
+        .list-unstyled li{
+            margin-bottom: 10px
+        }
     </style>
 </head>
 <body>
@@ -92,13 +98,15 @@
                                             <table class="emailer-text-wrap mxauto" width="100%" cellcellspacing="0" cellpadding="">
                                                 <tr>
                                                     <td>
-                                                        <h2 style="margin-top: 0; margin-bottom: 30px;">Hi {{ $user->name }}!</h2>
-                                                        <p>
-                                                            Your account has been created successfully.</p>
-                                                            <p>Your login credentials are as follows:</p>
-                                                            <p>Email: <strong>{{ $user->email }}</strong></p>
-                                                             <p>Password: <strong>{{ $password }}</strong></p>
-                                                             <p>Please login to your account and change your password.</p>
+                                                        <h2 style="margin-top: 0; margin-bottom: 30px;">Hi Himanshu,</h2>
+                                                        <p>Admin gives total three permission</p>
+                                                        <ol class="list-unstyled">
+                                                            <li>Edit</li>
+                                                            <li>Delete</li>
+                                                            <li>Create</li>
+                                                            <li>Assigned</li>
+                                                        </ol>
+                                                        <p>Please login to your account and accept</p>
                                                         <a href="{{ route('login') }}" class="btn-primary" style="margin-top: 30px;">Sign In Now</a>
                                                     </td>
                                                 </tr>

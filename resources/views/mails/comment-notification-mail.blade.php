@@ -54,6 +54,12 @@
             text-align: center;
             text-transform: uppercase;
         }
+        .list-unstyled{
+            padding-left: 15px;
+        }
+        .list-unstyled li{
+            margin-bottom: 10px
+        }
     </style>
 </head>
 <body>
@@ -92,14 +98,13 @@
                                             <table class="emailer-text-wrap mxauto" width="100%" cellcellspacing="0" cellpadding="">
                                                 <tr>
                                                     <td>
-                                                        <h2 style="margin-top: 0; margin-bottom: 30px;">Hi {{ $user->name }}!</h2>
-                                                        <p>
-                                                            Your account has been created successfully.</p>
-                                                            <p>Your login credentials are as follows:</p>
-                                                            <p>Email: <strong>{{ $user->email }}</strong></p>
-                                                             <p>Password: <strong>{{ $password }}</strong></p>
-                                                             <p>Please login to your account and change your password.</p>
-                                                        <a href="{{ route('login') }}" class="btn-primary" style="margin-top: 30px;">Sign In Now</a>
+                                                        <h2 style="margin-top: 0; margin-bottom: 30px;">Hi Chetan,</h2>
+                                                         <p>Ajay is commented on this task</p>
+                                                         <p><strong>Comment:</strong> This task is done please check</p>
+                                                         <p><strong>Task Name:</strong> Add new datatable in acma database.</p>
+                                                         <p><strong>Task Created:</strong> Chetan Singh</p> 
+                                                         <p><strong>Assigned:</strong> Ajay</p>
+                                                        <a href=""  class="btn-primary" style="margin-top: 30px;">View Task</a>
                                                     </td>
                                                 </tr>
                                             </table>

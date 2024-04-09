@@ -3,10 +3,10 @@
     <div class="main-body-header">
         <div class="row align-items-center">
             <div class="col">
-                <h3 class="main-body-header-title mb-0">All Tasks</h3>
-                <div class="tabNavigationBar-tab">
-                    <a class="tabNavigationBar-item tabNavigationBar-item-active" href="javascript:void(0);"><i class='bx bx-list-ul' ></i> List</a>
-                    <a class="tabNavigationBar-item" wire:navigate href="{{ route('task.index') }}"><i class='bx bx-columns' ></i> Board</a>
+                <h3 class="main-body-header-title mb-3">All Tasks</h3>
+                <div class="tabNavigationBar-tab border-bottom-0 border_style">
+                <a class="tabNavigationBar-item ps-0 active" wire:navigate href="{{ route('task.list-view') }}"><i class='bx bx-list-ul' ></i> List</a> 
+                <a class="tabNavigationBar-item" wire:navigate href="{{ route('task.index') }}"><i class='bx bx-columns' ></i> Board</a>
                 </div>
             </div>
             <div class="text-end col">
