@@ -1826,7 +1826,7 @@ hr.space-sm {
   border-radius: 50%;
   background: #f83890;
   cursor: pointer;
-  box-shadow: 0 3px 15px rgb(247, 45, 1);
+  box-shadow: 0 3px 15px #f72d01;
   animation: pulse 2s infinite;
 }
 .navbar-nav .dropdown-account .nav-link span {
