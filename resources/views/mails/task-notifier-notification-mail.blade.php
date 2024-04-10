@@ -84,27 +84,10 @@
                                 <table width="100%" cellspacing="0" cellpadding="">
                                     <tr>
                                         <td>
-                                            <img src="https://kw.webeetest.tech/assets/images/invite_banner.jpg" alt="">
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <table width="100%" cellspacing="0" cellpadding="">
-                                    <tr>
-                                        <td>
                                             <table class="emailer-text-wrap mxauto" width="100%" cellcellspacing="0" cellpadding="">
                                                 <tr>
                                                     <td>
-                                                        <h2 style="margin-top: 0; margin-bottom: 30px;">Hi Roshan sir,</h2>
-                                                        <p>New task notify</p>
-                                                        <p><strong>Task Name:</strong> Change the banner of home page in acma.</p>
-                                                        <p><strong>Task Created:</strong> Chetan Singh</p> 
-                                                        <p><strong>Assigned:</strong> Himanshu Sharma</p>
-                                                        <p><strong>Notifier Name: </strong>Roshan Sir and Vikram</p>                                                       
-                                                        <p>Please check completed Task.</p>
+                                                        <p>Himanshu notify you in this task</p>
                                                         <a href=""  class="btn-primary" style="margin-top: 30px;">View Task</a>
                                                     </td>
                                                 </tr>
