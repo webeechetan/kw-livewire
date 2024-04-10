@@ -205,209 +205,205 @@
     <div class="col-lg-12 mt-4">
       <h3 class="main-body-header-title mb-3">Projects</h3>
     </div>
-    <div class="row">
-      <div class="col-lg-3">
-        <div class="card_style h-100">
-          <div class="card_style-head card_style-client-head">
-            <div class="avatar avatar-sm avatar-pink" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Website Development">WD</div>
-            <div>
-              <h4 class="mb-1">
-                <a href="http://127.0.0.1:8000/project/view/701" wire:navigate="">Website Development</a>
-              </h4>
-              <div>Acma</div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-3">
-        <div class="card_style h-100">
-          <div class="card_style-head card_style-client-head">
-            <div class="avatar avatar-sm avatar-blue" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Dashboard">DB</div>
-            <div>
-              <h4 class="mb-0">
-                <a href="http://127.0.0.1:8000/project/view/701" wire:navigate="">Dashboard</a>
-              </h4>
-              <div>True Consultant</div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-3">
-        <div class="card_style h-100">
-          <div class="card_style-head card_style-client-head">
-            <div class="avatar avatar-sm avatar-green" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Time Management">TM</div>
-            <div>
-              <h4 class="mb-1">
-                <a href="http://127.0.0.1:8000/project/view/701" wire:navigate="">Time Management</a>
-              </h4>
-              <div>Webeesocial</div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-3">
-        <div class="card_style h-100">
-          <div class="card_style-head card_style-client-head">
-            <div class="avatar avatar-sm avatar-black" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Ecommerce Website">EW</div>
-            <div>
-              <h4 class="mb-1">
-                <a href="http://127.0.0.1:8000/project/view/701" wire:navigate="">Ecommerce Website</a>
-              </h4>
-              <div>Refresh Botanical</div>
-            </div>
+    <div class="col-lg-3">
+      <div class="card_style h-100">
+        <div class="card_style-head card_style-client-head">
+          <div class="avatar avatar-sm avatar-pink" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Website Development">WD</div>
+          <div>
+            <h4 class="mb-1">
+              <a href="http://127.0.0.1:8000/project/view/701" wire:navigate="">Website Development</a>
+            </h4>
+            <div>Acma</div>
           </div>
         </div>
       </div>
     </div>
-    <div class="row">
-      <div class="col-lg-12 mt-4">
-        <h3 class="main-body-header-title mb-3">Clients</h3>
-      </div>
-      <div class="row">
-        <div class="col-lg-3 mb-3">
-          <div class="card_style h-100">
-            <div class="card_style-head card_style-client-head">
-              <div class="avatar avatar-sm avatar-blue" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Acma">AC</div>
-              <div>
-                <h4 class="mb-0">
-                  <a href="http://127.0.0.1:8000/project/view/701" wire:navigate="">ACMA</a>
-                </h4>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-3 mb-3">
-          <div class="card_style h-100">
-            <div class="card_style-head card_style-client-head">
-              <div class="avatar avatar-sm avatar-pink" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Kakelwalk">KW</div>
-              <div>
-                <h4 class="mb-0">
-                  <a href="http://127.0.0.1:8000/project/view/701" wire:navigate="">Kakeywalk</a>
-                </h4>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-3 mb-3">
-          <div class="card_style h-100">
-            <div class="card_style-head card_style-client-head">
-              <div class="avatar avatar-sm avatar-yellow" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Buyers Guide">BG</div>
-              <div>
-                <h4 class="mb-0">
-                  <a href="http://127.0.0.1:8000/project/view/701" wire:navigate="">Buyers Guide</a>
-                </h4>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-3 mb-3">
-          <div class="card_style h-100">
-            <div class="card_style-head card_style-client-head">
-              <div class="avatar avatar-sm avatar-blue" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="True Consultant">TC</div>
-              <div>
-                <h4 class="mb-0">
-                  <a href="http://127.0.0.1:8000/project/view/701" wire:navigate="">True Consultant</a>
-                </h4>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-3">
-          <div class="card_style h-100">
-            <div class="card_style-head card_style-client-head">
-              <div class="avatar avatar-sm avatar-pink" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Dial-a Physio">DP</div>
-              <div>
-                <h4 class="mb-0">
-                  <a href="http://127.0.0.1:8000/project/view/701" wire:navigate="">Dail a Physio</a>
-                </h4>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-3">
-          <div class="card_style h-100">
-            <div class="card_style-head card_style-client-head">
-              <div class="avatar avatar-sm avatar-green" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Refresh Botanical">RB</div>
-              <div>
-                <h4 class="mb-0">
-                  <a href="http://127.0.0.1:8000/project/view/701" wire:navigate="">Refresh Botanical</a>
-                </h4>
-              </div>
-            </div>
+    <div class="col-lg-3">
+      <div class="card_style h-100">
+        <div class="card_style-head card_style-client-head">
+          <div class="avatar avatar-sm avatar-blue" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Dashboard">DB</div>
+          <div>
+            <h4 class="mb-0">
+              <a href="http://127.0.0.1:8000/project/view/701" wire:navigate="">Dashboard</a>
+            </h4>
+            <div>True Consultant</div>
           </div>
         </div>
       </div>
-      <div class="row">
-        <div class="col-lg-12 mt-4">
-          <h3 class="main-body-header-title mb-3">Members</h3>
-        </div>
-        <div class="row">
-          <div class="col-lg-3 mb-3">
-            <div class="card_style h-100">
-              <div class="card_style-head card_style-client-head">
-                <div class="team-member col-auto pe-0">
-                  <a href="javascript:" class="avatar avatar-sm avatar-yellow" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Ajay" data-bs-original-title="Ajay Kumar">AJ</a>
-                </div>
-                <div class="team-text col">
-                  <h4 class="mb-1">Ajay</h4>
-                  <div>Php Developer</div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-3 mb-3">
-            <div class="card_style h-100">
-              <div class="card_style-head card_style-client-head">
-                <div class="team-member col-auto pe-0">
-                  <a href="javascript:" class="avatar avatar-sm avatar-blue" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Chetan" data-bs-original-title="Chetan Singh">CS</a>
-                </div>
-                <div class="team-text col">
-                  <h4 class="mb-1">Chetan Singh</h4>
-                  <div>Sr. Backend Developer</div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-3 mb-3">
-            <div class="card_style h-100">
-              <div class="card_style-head card_style-client-head">
-                <div class="team-member col-auto pe-0">
-                  <a href="javascript:" class="avatar avatar-sm avatar-primary" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Roshan Jajoriya" data-bs-original-title="Roshan Jajoriya">RJ</a>
-                </div>
-                <div class="team-text col">
-                  <h4 class="mb-1">Roshan Jajoriya</h4>
-                  <div>Sr. UI Developer</div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-3">
-            <div class="card_style h-100">
-              <div class="card_style-head card_style-client-head">
-                <div class="team-member col-auto pe-0">
-                  <a href="javascript:" class="avatar avatar-sm avatar-pink" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Himanshu Sharma" data-bs-original-title="Himanshu Sharma">HS</a>
-                </div>
-                <div class="team-text col">
-                  <h4 class="mb-1">Himanshu Sharma</h4>
-                  <div>Jr. Frontend Developer</div>
-                </div>
-              </div>
-            </div>
+    </div>
+    <div class="col-lg-3">
+      <div class="card_style h-100">
+        <div class="card_style-head card_style-client-head">
+          <div class="avatar avatar-sm avatar-green" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Time Management">TM</div>
+          <div>
+            <h4 class="mb-1">
+              <a href="http://127.0.0.1:8000/project/view/701" wire:navigate="">Time Management</a>
+            </h4>
+            <div>Webeesocial</div>
           </div>
         </div>
-        <div class="col-lg-3">
-          <div class="card_style h-100">
-            <div class="card_style-head card_style-client-head">
-              <div class="team-member col-auto pe-0">
-                <a href="javascript:" class="avatar avatar-sm avatar-green" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Sharuakh" data-bs-original-title="Sharuakh">Sk</a>
-              </div>
-              <div class="team-text col">
-                <h4 class="mb-1">Sharuakh</h4>
-                <div>Frontend Developer</div>
-              </div>
-            </div>
+      </div>
+    </div>
+    <div class="col-lg-3">
+      <div class="card_style h-100">
+        <div class="card_style-head card_style-client-head">
+          <div class="avatar avatar-sm avatar-black" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Ecommerce Website">EW</div>
+          <div>
+            <h4 class="mb-1">
+              <a href="http://127.0.0.1:8000/project/view/701" wire:navigate="">Ecommerce Website</a>
+            </h4>
+            <div>Refresh Botanical</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>  
+  <div class="row">
+    <div class="col-lg-12 mt-4">
+      <h3 class="main-body-header-title mb-3">Clients</h3>
+    </div>
+    <div class="col-lg-3 mb-4">
+      <div class="card_style h-100">
+        <div class="card_style-head card_style-client-head">
+          <div class="avatar avatar-sm avatar-blue" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Acma">AC</div>
+          <div>
+            <h4 class="mb-0">
+              <a href="http://127.0.0.1:8000/project/view/701" wire:navigate="">ACMA</a>
+            </h4>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 mb-4">
+      <div class="card_style h-100">
+        <div class="card_style-head card_style-client-head">
+          <div class="avatar avatar-sm avatar-pink" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Kakelwalk">KW</div>
+          <div>
+            <h4 class="mb-0">
+              <a href="http://127.0.0.1:8000/project/view/701" wire:navigate="">Kakeywalk</a>
+            </h4>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 mb-4">
+      <div class="card_style h-100">
+        <div class="card_style-head card_style-client-head">
+          <div class="avatar avatar-sm avatar-yellow" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Buyers Guide">BG</div>
+          <div>
+            <h4 class="mb-0">
+              <a href="http://127.0.0.1:8000/project/view/701" wire:navigate="">Buyers Guide</a>
+            </h4>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 mb-4">
+      <div class="card_style h-100">
+        <div class="card_style-head card_style-client-head">
+          <div class="avatar avatar-sm avatar-blue" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="True Consultant">TC</div>
+          <div>
+            <h4 class="mb-0">
+              <a href="http://127.0.0.1:8000/project/view/701" wire:navigate="">True Consultant</a>
+            </h4>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3">
+      <div class="card_style h-100">
+        <div class="card_style-head card_style-client-head">
+          <div class="avatar avatar-sm avatar-pink" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Dial-a Physio">DP</div>
+          <div>
+            <h4 class="mb-0">
+              <a href="http://127.0.0.1:8000/project/view/701" wire:navigate="">Dail a Physio</a>
+            </h4>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3">
+      <div class="card_style h-100">
+        <div class="card_style-head card_style-client-head">
+          <div class="avatar avatar-sm avatar-green" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Refresh Botanical">RB</div>
+          <div>
+            <h4 class="mb-0">
+              <a href="http://127.0.0.1:8000/project/view/701" wire:navigate="">Refresh Botanical</a>
+            </h4>
           </div>
         </div>
       </div>
     </div>
   </div>
+  <div class="row">
+    <div class="col-lg-12 mt-4">
+      <h3 class="main-body-header-title mb-3">Members</h3>
+    </div>
+    <div class="col-lg-3 mb-4">
+      <div class="card_style h-100">
+        <div class="card_style-head card_style-client-head">
+          <div class="team-member col-auto pe-0">
+            <a href="javascript:" class="avatar avatar-sm avatar-yellow" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Ajay" data-bs-original-title="Ajay Kumar">AJ</a>
+          </div>
+          <div class="team-text col">
+            <h4 class="mb-1">Ajay</h4>
+            <div>Php Developer</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 mb-4">
+      <div class="card_style h-100">
+        <div class="card_style-head card_style-client-head">
+          <div class="team-member col-auto pe-0">
+            <a href="javascript:" class="avatar avatar-sm avatar-blue" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Chetan" data-bs-original-title="Chetan Singh">CS</a>
+          </div>
+          <div class="team-text col">
+            <h4 class="mb-1">Chetan Singh</h4>
+            <div>Sr. Backend Developer</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 mb-4">
+      <div class="card_style h-100">
+        <div class="card_style-head card_style-client-head">
+          <div class="team-member col-auto pe-0">
+            <a href="javascript:" class="avatar avatar-sm avatar-primary" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Roshan Jajoriya" data-bs-original-title="Roshan Jajoriya">RJ</a>
+          </div>
+          <div class="team-text col">
+            <h4 class="mb-1">Roshan Jajoriya</h4>
+            <div>Sr. UI Developer</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 mb-4">
+      <div class="card_style h-100">
+        <div class="card_style-head card_style-client-head">
+          <div class="team-member col-auto pe-0">
+            <a href="javascript:" class="avatar avatar-sm avatar-pink" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Himanshu Sharma" data-bs-original-title="Himanshu Sharma">HS</a>
+          </div>
+          <div class="team-text col">
+            <h4 class="mb-1">Himanshu Sharma</h4>
+            <div>Jr. Frontend Developer</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3">
+      <div class="card_style h-100">
+        <div class="card_style-head card_style-client-head">
+          <div class="team-member col-auto pe-0">
+            <a href="javascript:" class="avatar avatar-sm avatar-green" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Sharuakh" data-bs-original-title="Sharuakh">Sk</a>
+          </div>
+          <div class="team-text col">
+            <h4 class="mb-1">Sharuakh</h4>
+            <div>Frontend Developer</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+      
+</div>

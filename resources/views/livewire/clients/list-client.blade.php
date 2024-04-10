@@ -68,7 +68,7 @@
     <!-- Dashboard Body -->
     <div class="row">
         <div class="col-md-6">
-            <div class="d-flex flex-wrap gap-4 align-items-center mb-2">
+            <div class="d-flex flex-wrap gap-4 align-items-center mb-4">
                 <a class="@if($filter == 'all') active @endif" wire:navigate href="{{ route('client.index',['sort'=>$sort,'filter'=>'all']) }}">All <span class="btn-batch">{{$allClients}}</span></a>
                 <a class="@if($filter == 'active') active @endif" wire:navigate href="{{ route('client.index',['sort'=>$sort,'filter'=>'active']) }}">Active <span class="btn-batch">{{$activeClients}}</span></a>
                 <a class="@if($filter == 'completed') active @endif" wire:navigate href="{{ route('client.index',['sort'=>$sort,'filter'=>'completed']) }}">Completed <span class="btn-batch">{{$completedClients}}</span></a>
@@ -102,7 +102,7 @@
             $activeProjects = $client->projects->where('status', 'active');
             $completedProjects = $client->projects->where('status', 'completed');
         @endphp
-        <div class="col-md-4 mb-3 mt-2"  wire:key="{{ $client->id }}">
+        <div class="col-md-4 mb-4"  wire:key="{{ $client->id }}">
             <div class="card_style card_style-client h-100">
                 <div wire:loading wire:target="emitDeleteEvent({{ $client->id }})" class="card_style-loader">
                     <div class="card_style-loader-wrap"><i class='bx bx-trash text-danger me-2' ></i> Removing ...</div>

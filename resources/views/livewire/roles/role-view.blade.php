@@ -239,7 +239,7 @@
                         </td>
                         <td><span>Employee</span></td>
                         <td><span class=" badge bg-dark">In Active</span></td>
-                        <td><span><button class="btn btn-sm btn-icon me-2"><i class="bx bx-show-alt"></i></button></span></td>
+                        <td><span><button class="btn-icon me-2"><i class="bx bx-show-alt"></i></button></span></td>
                      </tr>
                      <tr class="even">
                         <td>
@@ -254,7 +254,7 @@
                         </td>
                         <td><span>Manager</span></td>
                         <td><span class="badge bg-warning">pending</span></td>
-                        <td><span><button class="btn btn-sm btn-icon me-2"><i class="bx bx-show-alt"></i></button></span></td>
+                        <td><span><button class="btn-icon me-2"><i class="bx bx-show-alt"></i></button></span></td>
                      </tr>
                      <tr class="odd">
                         <td>
@@ -269,7 +269,7 @@
                         </td>
                         <td>Admin</td>
                         <td><span class="badge bg-success">Active</span></td>
-                        <td><span><button class="btn btn-sm btn-icon me-2"><i class="bx bx-show-alt"></i></button></span></td>
+                        <td><span><button class="btn-icon me-2"><i class="bx bx-show-alt"></i></button></span></td>
                      </tr>
                   </tbody>
                </table>
@@ -319,19 +319,19 @@
                         <td><span>Management</span></td>
                         <td><span><span class="badge bg-secondary m-1">Admin</span></span></td>
                         <td><span>14 Apr 2021, 8:43 PM</span></td>
-                        <td><span><button class="btn btn-sm btn-icon me-2"><i class="bx bx-edit"></i></button><button class="btn btn-sm btn-icon"><i class="bx bx-trash"></i></button></span></td>
+                        <td><span><button class="btn-icon me-2"><i class="bx bx-edit"></i></button><button class="btn-icon"><i class="bx bx-trash"></i></button></span></td>
                      </tr>
                      <tr class="even">
                         <td><span>Manage Billing &amp; Roles</span></td>
                         <td><span><span class="badge bg-primary m-1">Admin</span></span></td>
                         <td><span>16 Sep 2021, 5:20 PM</span></td>
-                        <td><span><button class="btn btn-sm btn-icon me-2"><i class="bx bx-edit"></i></button><button class="btn btn-sm btn-icon"><i class="bx bx-trash"></i></button></span></td>
+                        <td><span><button class="btn-icon me-2"><i class="bx bx-edit"></i></button><button class="btn-icon"><i class="bx bx-trash"></i></button></span></td>
                      </tr>
                      <tr class="odd">
                         <td><span>Add &amp; Remove Users</span></td>
                         <td><span><span class="badge bg-primary m-1">Admin</span><span class="badge bg-warning m-1">Manager</span></span></td>
                         <td><span>14 Oct 2021, 10:20 AM</span></td>
-                        <td><span><button class="btn btn-sm btn-icon me-2"><i class="bx bx-edit"></i></button><button class="btn btn-sm btn-icon"><i class="bx bx-trash"></i></button></span></td>
+                        <td><span><button class="btn-icon me-2"><i class="bx bx-edit"></i></button><button class="btn-icon"><i class="bx bx-trash"></i></button></span></td>
                      </tr>
                   </tbody>
                </table>
