@@ -73,17 +73,7 @@
                                 </table>
                             </td>
                         </tr>
-                        <tr>
-                            <td>
-                                <table width="100%" cellspacing="0" cellpadding="">
-                                    <tr>
-                                        <td>
-                                            <img src="https://kw.webeetest.tech/assets/images/invite_banner.jpg" alt="">
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
+                      
                         <tr>
                             <td>
                                 <table width="100%" cellspacing="0" cellpadding="">

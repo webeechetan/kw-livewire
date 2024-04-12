@@ -3,10 +3,11 @@
     <div class="main-body-header">
         <div class="row align-items-center">
             <div class="col">
-                <h3 class="main-body-header-title mb-0">All Tasks</h3>
-                <div class="tabNavigationBar-tab">
-                    <a class="tabNavigationBar-item" wire:navigate href="{{ route('task.list-view') }}"><i class='bx bx-list-ul' ></i> List</a>
-                    <a class="tabNavigationBar-item tabNavigationBar-item-active" href="#"><i class='bx bx-columns' ></i> Board</a>
+                <h3 class="main-body-header-title mb-3">All Tasks</h3>
+                <div class="tabNavigationBar-tab border_style border-bottom-0">
+                    <a class="tabNavigationBar-item ps-0" wire:navigate href="{{ route('task.list-view') }}"><i class='bx bx-list-ul' ></i> List</a>
+                    <a class="tabNavigationBar-item active" wire:navigate href="{{ route('task.index') }}"><i class='bx bx-columns' ></i> Board</a>
+                   
                 </div>
             </div>
             <div class="text-end col">
@@ -21,7 +22,7 @@
     </div>
     <!-- Kanban -->
     <div class="kanban_bord">
-        <div class="kanban_bord_scrollbar">
+        <div class="kanban_bord_scrollbar scrollbar">
             <div class="kanban_bord_body_columns" wire:sortable-group="updateTaskOrder">
                 @php
                     $groups = ['pending','in_progress','in_review','completed'];
@@ -81,22 +82,30 @@
                                 @endphp
                                 <div class="kanban_column_task {{ $date_class }} h-100" wire:key="task-{{$task['id']}}" wire:sortable-group.item="{{ $task['id'] }}" >
                                     <div class="kanban_column_task-wrap" wire:sortable-group.handle>
-                                        <div class="card-options d-none">
-                                            <i class='bx bx-dots-horizontal-rounded' ></i>
+                                        <div class="cus_dropdown cus_dropdown-edit z-0">
+                                            <div class="cus_dropdown-icon"><i class="bx bx-dots-horizontal-rounded"></i></div>
+                                            <div class="cus_dropdown-body cus_dropdown-body-widh_s">
+                                                <div class="cus_dropdown-body-wrap">
+                                                    <ul class="cus_dropdown-list">
+                                                        <li><a wire:navigate="" href="http://127.0.0.1:8000/teams/edit/1"><span class="text-secondary"><i class="bx bx-pencil"></i></span> Edit</a></li>
+                                                        <li><a href="#"><span class="text-danger"><i class="bx bx-trash"></i></span> Delete</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="kanban_column_task_name">
                                             <div class="kanban_column_task_complete_icon d-none">
                                                 <i class='bx bx-check' ></i>
                                             </div>
                                             <div class="kanban_column_task_name_text">
-                                                <div wire:click="enableEditForm({{$task['id']}})">{{ $task['name'] }}</div>
+                                                <h4 wire:click="enableEditForm({{$task['id']}})" class="fs-6">{{ $task['name'] }}</h4>
                                                 <div class="kanban_column_task_project_name">
-                                                    <span>
+                                                    <span class="text-black">
                                                         @if($task['project'])
                                                         <i class='bx bx-file-blank' ></i>  {{ $task['project']['name'] }} 
                                                         @endif
                                                     </span>
-                                                    <span>
+                                                    <span class="text-black">
                                                         @if(count($task['comments']) > 0)
                                                         <i class='bx bx-chat' ></i>  {{ count($task['comments'])  }}
                                                         @endif
@@ -104,7 +113,8 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="kanban_column_task_bot">
+                                        <hr>
+                                        <div class="kanban_column_task_bot mt-0 pt-0 border-top-0">
                                             <div class="kanban_column_task_actions">
                                                 <a href="#" class="kanban_column_task_date task">
                                                     <span class="btn-icon-task-action"><i class='bx bx-calendar-alt' ></i></span>
@@ -115,11 +125,7 @@
                                                 <!-- avatar group -->
                                                 <div class="avatarGroup avatarGroup-overlap">
                                                     @foreach($task['users'] as $user)
-                                                    <a href="#" class="avatarGroup-avatar">
-                                                        <span class="avatar avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ $user->name }}">
-                                                            <img alt="avatar" src="{{ env('APP_URL') }}/storage/{{ $user->image }}" class="rounded-circle" />
-                                                        </span>
-                                                    </a>
+                                                    <a href="javascript:;" class="avatar avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Aadil Prasad Brahmbhatt">AP</a>
                                                     @endforeach
                                                 </div>
                                             </div>
@@ -423,7 +429,7 @@
                 <!-- Activity -->
                 {{-- comments --}}
 
-                <h5 class="cmnt_act_title"><i class='bx bx-line-chart text-primary'></i> Activity</h5>
+                <h5 class="cmnt_act_title fs-5"><i class='bx bx-line-chart text-primary'></i> Activity</h5>
                 <div class="cmnt_act">
                     @foreach( $comments as $comment)
                     <div class="cmnt_act_row">
@@ -444,9 +450,9 @@
                 <div class="custComment">
                     <div class="custComment-wrap">
                         <div class="custComment-editor" wire:ignore>
-                            <textarea name="" id="comment_box" cols="30" rows="5"></textarea>
+                            <textarea name="" id="comment_box" class="from-control" cols="30" rows="5"></textarea>
                         </div>
-                        <button wire:click="saveComment" class="custComment-btn"><i class='bx bx-send'></i> Comment</button>
+                        <button wire:click="saveComment" class="btn-border btn-border-sm btn-border-primary"><i class='bx bx-send'></i> Comment</button>
                     </div>
                 </div>
             </div>

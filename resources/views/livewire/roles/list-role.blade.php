@@ -7,7 +7,7 @@
         </ol>
     </nav>
 
-    <div class="dashboard-head">
+    <div class="dashboard-head mb-4">
         <div class="row align-items-center">
             <div class="col d-flex align-items-center gap-3">
                 <h3 class="main-body-header-title mb-0">Roles</h3>
@@ -25,15 +25,15 @@
         </div>
     </div>
 
-    <div class="row mt-4">
+    <div class="row mb-4">
         @foreach($roles as $role)
-        <div class="col-md-4 mb-4">
+        <div class="col-md-3">
             <div class=" card_style card_style-roles h-100">
                 <a href="" class="card_style-open"><i class='bx bx-chevron-right'></i></a>
                 <div class="card_style-roles-head">
-                    <p class="text-muted">Total 4 users</p>
+                    <p class="text-muted mb-2">Total 4 users</p>
                      <h4>
-                        <a wire:navigate="" href="http://localhost:8000/user/view/152">{{$role->name}}</a>
+                        <a wire:navigate="" href="http://localhost:8000/role">{{$role->name}}</a>
                     </h4>
                 </div>
                 <div class="card_style-roles-permission">
@@ -55,7 +55,113 @@
         </div>
         @endforeach
     </div>
-
+    <div class="row">
+        <div class="col-lg-12 mt-4">
+            <h3 class="main-body-header-title mb-3">Permission</h3>
+        </div>
+        <div class="col-md-12">
+            <div class="column-box">
+                <div class="taskList-dashbaord_header">
+                    <div class="row">
+                        <div class="col">
+                            <div class="taskList-dashbaord_header_title taskList_col">Name</div>
+                        </div>
+                        <div class="col text-center">
+                            <div class="taskList-dashbaord_header_title taskList_col">Assigned To</div>
+                        </div>
+                        <div class="col text-center">
+                            <div class="taskList-dashbaord_header_title taskList_col">Permission Date</div>
+                        </div>
+                        <div class="col text-center">
+                            <div class="taskList-dashbaord_header_title taskList_col">Action</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="taskList scrollbar">
+                    <div class="taskList_row" wire:key="task-row-100">
+                        <div class="row">
+                            <div class="col">
+                              <div class="taskList_col"><span>Management</span></div>
+                            </div>
+                            <div class="col text-center">
+                                <div class="taskList_col"><span class="badge bg-primary">Administrator</span></div>
+                            </div>
+                            <div class="col text-center">
+                                <div class="taskList_col"><span class="text-nowrap">14 Apr 2021, 8:43 PM</span></div>
+                            </div>
+                            <div class="col text-center">
+                                <div class="taskList_col"><span><button class="btn-icon me-2"><i class="bx bx-edit"></i></button><button class="btn-icon"><i class="bx bx-trash"></i></button></span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="taskList_row" wire:key="task-row-100">
+                        <div class="row">
+                            <div class="col">
+                              <div class="taskList_col"><span>Billing</span></div>
+                            </div>
+                            <div class="col text-center">
+                                <div class="taskList_col"><span><span class="badge bg-primary">Administrator</span> <span class="badge bg-secondary">Finance</span></span></div>
+                            </div>
+                            <div class="col text-center">
+                                <div class="taskList_col"><span class="text-nowrap">11 Apr 2024, 8:43 PM</span></div>
+                            </div>
+                            <div class="col text-center">
+                                <div class="taskList_col"><span><button class="btn-icon me-2"><i class="bx bx-edit"></i></button><button class="btn-icon"><i class="bx bx-trash"></i></button></span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="taskList_row" wire:key="task-row-100">
+                        <div class="row">
+                            <div class="col">
+                                <div class="taskList_col"><span>Project Planning</span></div>
+                            </div>
+                            <div class="col text-center">
+                                <div class="taskList_col"><span class="text-nowrap"><span class="badge bg-primary">Administrator</span> <span class="badge bg-secondary">Finance</span></span> <span class="badge bg-warning">Support</span></span></div>
+                            </div>
+                            <div class="col text-center">
+                                <div class="taskList_col"><span class="text-nowrap">2 Apr 2023, 4:43 PM</span></div>
+                            </div>
+                            <div class="col text-center">
+                                <div class="taskList_col"><span><button class="btn-icon me-2"><i class="bx bx-edit"></i></button><button class="btn-icon"><i class="bx bx-trash"></i></button></span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="taskList_row" wire:key="task-row-100">
+                        <div class="row">
+                            <div class="col">
+                                <div class="taskList_col"><span>Manage Email Sequences</span></div>
+                            </div>
+                            <div class="col text-center">
+                               <div class="taskList_col"><span class="text-nowrap"><span class="badge bg-primary">Administrator</span> <span class="badge bg-info">User</span></span> <span class="badge bg-warning">Support</span></span></div>
+                            </div>
+                            <div class="col text-center">
+                                <div class="taskList_col"><span class="text-nowrap">14 Apr 2021, 8:43 PM</span></div>
+                            </div>
+                            <div class="col text-center">
+                                <div class="taskList_col"><span><button class="btn-icon me-2"><i class="bx bx-edit"></i></button><button class="btn-icon"><i class="bx bx-trash"></i></button></span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="taskList_row" wire:key="task-row-100">
+                        <div class="row">
+                            <div class="col">
+                                <div class="taskList_col"><span>Management</span></div>
+                            </div>
+                            <div class="col text-center">
+                                 <div class="taskList_col"><span class="text-nowrap"><span class="badge bg-primary">Administrator</span> <span class="badge bg-success">Manager</span></span> <span class="badge bg-warning">Support</span></span></div>
+                            </div>
+                            <div class="col text-center">
+                                <div class="taskList_col"><span class="text-nowrap">14 May 2024, 8:43 PM</span></div>
+                            </div>
+                            <div class="col text-center">
+                                <div class="taskList_col"><span><button class="btn-icon me-2"><i class="bx bx-edit"></i></button><button class="btn-icon"><i class="bx bx-trash"></i></button></span></div>
+                            </div>
+                        </div>`
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <livewire:components.add-role  @saved="$refresh" />
 </div>
 

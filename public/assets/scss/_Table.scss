@@ -141,6 +141,19 @@ table {
             }
         }
     }
+    > tbody{
+        > tr{
+            > td{
+                padding: $table_header_spacing;
+                &:active {
+                    outline: none;
+                }
+                &:not(.sorting_disabled) {
+                    padding-right: 30px;
+                }
+            }
+        }
+    }
     }
     >:not(caption)>*>* {
         background-color: $light;

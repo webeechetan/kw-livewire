@@ -54,6 +54,12 @@
             text-align: center;
             text-transform: uppercase;
         }
+        .list-unstyled{
+            padding-left: 15px;
+        }
+        .list-unstyled li{
+            margin-bottom: 10px
+        }
     </style>
 </head>
 <body>
@@ -73,6 +79,7 @@
                                 </table>
                             </td>
                         </tr>
+                       
                         <tr>
                             <td>
                                 <table width="100%" cellspacing="0" cellpadding="">
@@ -81,9 +88,9 @@
                                             <table class="emailer-text-wrap mxauto" width="100%" cellcellspacing="0" cellpadding="">
                                                 <tr>
                                                     <td>
-                                                        <h2 style="margin-top: 0; margin-bottom: 30px;">Hi there {{ $user->name }}!</h2>
-                                                        <p>{{ $org->name }} has invited you to join the team on Kaykewalk. Please Sign up via the link below and join the huddle.</p>
-                                                        <a href="#" class="btn-primary" style="margin-top: 30px;">Sign Up Now</a>
+                                                         <p>Ajay is commented on this task</p>
+                                                         
+                                                        <a href=""  class="btn-primary" style="margin-top: 30px;">View Task</a>
                                                     </td>
                                                 </tr>
                                             </table>

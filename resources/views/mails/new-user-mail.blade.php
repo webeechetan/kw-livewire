@@ -94,22 +94,11 @@
                                                     <td>
                                                         <h2 style="margin-top: 0; margin-bottom: 30px;">Hi {{ $user->name }}!</h2>
                                                         <p>
-                                                            Your account has been created successfully.
-                                                        <br>
-                                                        <br>
-                                                        Your login credentials are as follows:
-                                                        <br>
-                                                        <br>
-                                                        Email: <strong>{{ $user->email }}</strong>
-                                                        <br>
-                                                        <br>
-                                                        Password: <strong>{{ $password }}</strong>
-                                                        <br>
-                                                        <br>
-                                                        Please login to your account and change your password.
-                                                        <br>
-                                                        <br>
-                                                        </p>
+                                                            Your account has been created successfully.</p>
+                                                            <p>Your login credentials are as follows:</p>
+                                                            <p>Email: <strong>{{ $user->email }}</strong></p>
+                                                             <p>Password: <strong>{{ $password }}</strong></p>
+                                                             <p>Please login to your account and change your password.</p>
                                                         <a href="{{ route('login') }}" class="btn-primary" style="margin-top: 30px;">Sign In Now</a>
                                                     </td>
                                                 </tr>
