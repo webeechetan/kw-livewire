@@ -98,13 +98,7 @@
                                             <table class="emailer-text-wrap mxauto" width="100%" cellcellspacing="0" cellpadding="">
                                                 <tr>
                                                     <td>
-                                                        <h2 style="margin-top: 0; margin-bottom: 30px;">Hi Ajay,</h2>
-                                                        <p>Chetan Singh is mention you in this task. </p>
-                                                        <p><strong>Task Name:</strong> Change the banner of home page in acma.</p>
-                                                        <p><strong>Task Created:</strong> Chetan Singh</p> 
-                                                        <p><strong>Assigned:</strong> Himanshu Sharma</p>
-                                                        <p><strong>Mention:</strong> Ajay, Sharuakh, Vikrma</p>
-                                                        <p><strong>Due Date:</strong> 4th May 2024</p>                                                       
+                                                        <p>Chetan Singh is mention you in this task. </p>                                                     
                                                         <a href=""  class="btn-primary" style="margin-top: 30px;">View Task</a>
                                                     </td>
                                                 </tr>
