@@ -6,7 +6,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use App\Models\Organization;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
+use App\Observers\Task\CommentObserver;
 
+#[ObservedBy(CommentObserver::class)]
 class Comment extends Model
 {
     use HasFactory;

@@ -13,8 +13,10 @@ use App\Models\Scopes\OrganizationScope;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Notifications\Notification;
 use App\Models\Attachment;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
+use App\Observers\Task\TaskObserver;
 
-
+#[ObservedBy(TaskObserver::class)]
 class Task extends Model
 {
     use HasFactory, Notifiable;
@@ -50,7 +52,7 @@ class Task extends Model
 
     public function assignedBy(){
         return $this->belongsTo(User::class, 'assigned_by');
-    }
+    } 
 
     public function comments(){
         return $this->hasMany(Comment::class);

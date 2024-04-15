@@ -73,7 +73,7 @@ class AddTask extends Component
                 $at->save();
             }
         }
-
+ 
         foreach($this->task_users as $user_id){
             $user = User::find($user_id);
             $user->notify(new NewTaskAssignNotification($task));

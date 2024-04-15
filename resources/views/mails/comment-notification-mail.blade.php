@@ -88,7 +88,7 @@
                                             <table class="emailer-text-wrap mxauto" width="100%" cellcellspacing="0" cellpadding="">
                                                 <tr>
                                                     <td>
-                                                         <p>Ajay is commented on this task</p>
+                                                         <p>A new internal comment has been added to <b>{{ Str::limit($task->name, 15, '...') }}</b></p>
                                                          
                                                         <a href=""  class="btn-primary" style="margin-top: 30px;">View Task</a>
                                                     </td>

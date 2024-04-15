@@ -44,6 +44,7 @@ use App\Notifications\InviteUser;
 
 use App\Livewire\Roles\ListRole;
 use App\Livewire\Roles\RoleView;
+use App\Models\Task;
 use Spatie\Permission\Models\Role;
 
 
@@ -58,6 +59,10 @@ use Spatie\Permission\Models\Role;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+Route::get('/task-testing',function(){
+    dd(Task::find(110));
+});
 
 Route::get('/assign-role', function () {
     $user = User::withoutGlobalScope(OrganizationScope::class)->find(2);
