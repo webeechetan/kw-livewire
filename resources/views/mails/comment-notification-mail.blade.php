@@ -79,17 +79,7 @@
                                 </table>
                             </td>
                         </tr>
-                        <tr>
-                            <td>
-                                <table width="100%" cellspacing="0" cellpadding="">
-                                    <tr>
-                                        <td>
-                                            <img src="https://kw.webeetest.tech/assets/images/invite_banner.jpg" alt="">
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
+                       
                         <tr>
                             <td>
                                 <table width="100%" cellspacing="0" cellpadding="">
@@ -98,12 +88,8 @@
                                             <table class="emailer-text-wrap mxauto" width="100%" cellcellspacing="0" cellpadding="">
                                                 <tr>
                                                     <td>
-                                                        <h2 style="margin-top: 0; margin-bottom: 30px;">Hi Chetan,</h2>
-                                                         <p>Ajay is commented on this task</p>
-                                                         <p><strong>Comment:</strong> This task is done please check</p>
-                                                         <p><strong>Task Name:</strong> Add new datatable in acma database.</p>
-                                                         <p><strong>Task Created:</strong> Chetan Singh</p> 
-                                                         <p><strong>Assigned:</strong> Ajay</p>
+                                                         <p>A new internal comment has been added to <b>{{ Str::limit($task->name, 15, '...') }}</b></p>
+                                                         
                                                         <a href=""  class="btn-primary" style="margin-top: 30px;">View Task</a>
                                                     </td>
                                                 </tr>

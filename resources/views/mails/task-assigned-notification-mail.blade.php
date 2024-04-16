@@ -84,28 +84,12 @@
                                 <table width="100%" cellspacing="0" cellpadding="">
                                     <tr>
                                         <td>
-                                            <img src="https://kw.webeetest.tech/assets/images/invite_banner.jpg" alt="">
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <table width="100%" cellspacing="0" cellpadding="">
-                                    <tr>
-                                        <td>
                                             <table class="emailer-text-wrap mxauto" width="100%" cellcellspacing="0" cellpadding="">
                                                 <tr>
                                                     <td>
-                                                        <h2 style="margin-top: 0; margin-bottom: 30px;">Hi Himanshu,</h2>
-                                                        <p>Chetan Singh is assigned this task. </p>
-                                                        <p><strong>Task Name:</strong> Change the banner of home page in acma.</p>
-                                                        <p><strong>Task Created:</strong> Chetan Singh</p> 
-                                                        <p><strong>Assigned:</strong> Himanshu Sharma</p>
-                                                        <p><strong>Due Date:</strong> 4th May 2024</p>                                                       
-                                                        <p>Please check your assigned task.</p>
-                                                        <a href=""  class="btn-primary" style="margin-top: 30px;">View Task</a>
+                                                        <p> <b>{{ $assignedBy->name }}</b> assigned you a task {{ Str::limit($task->name, 20, '...') }} in <b>{{ $project->name }}</b> </p>
+                                                        {{-- <p>  assigned you a task {{ Str::limit($task->name, 15, '...') }} in </p> --}}
+                                                        <a href="{{ route('task.view',$task->id) }}"  class="btn-primary" style="margin-top: 30px;">View Task</a>
                                                     </td>
                                                 </tr>
                                             </table>
