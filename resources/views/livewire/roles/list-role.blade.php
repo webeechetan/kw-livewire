@@ -55,7 +55,7 @@
         </div>
         @endforeach
     </div>
-    <div class="row">
+    {{-- <div class="row">
         <div class="col-lg-12 mt-4">
             <h3 class="main-body-header-title mb-3">Permission</h3>
         </div>
@@ -161,7 +161,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
     <livewire:components.add-role  @saved="$refresh" />
 </div>
 
