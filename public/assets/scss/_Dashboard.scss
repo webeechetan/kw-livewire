@@ -319,8 +319,11 @@
 /* ----- Kanban ----- */
 .kanban {
     &_column {
+        height: 60vh;
+        padding: 0 15px;
+        margin: 15px 0;
         &_task {
-            border: 3px solid #fff;
+            border: 1px solid #fff;
             border-radius: 6px;
             background-color: #fff;
 
@@ -423,6 +426,10 @@
                     opacity: 1;
                 }
             }
+
+            .cus_dropdown-list li a {
+                font-size: 14px;
+            }
         }
         &_empty {
             width: 286px;
@@ -438,10 +445,10 @@
     &_bord {
         &_body {
             &_columns {
-                padding-top: $spacing_sm;
+                padding-top: $spacing_xs;
                 display: grid;
                 grid-template-columns: repeat(4, 1fr);
-                gap: $spacing_lg;
+                gap: 20px;
 
                 @media (max-width: 1440px) {
                     gap: $spacing_md;
@@ -449,41 +456,89 @@
             }
         }
         &_column {
+            background-color: #fff;
+            border-radius: $border_radius_xs;
+            overflow: hidden;
             &_title {
-                font-size: 20px;
+                font-size: 16px;
                 color: $text_color;
-                &_wrap {
-                    display: flex;
-                    align-items: center;
-                    justify-content: space-between;
-                    margin-bottom: 15px;
-                }
+                padding: 10px 17px;
+                font-weight: 500;
+                text-transform: uppercase;
+                letter-spacing: 1px;
             }
             &_assigned {
+                background-color: $brand_light;
+                .scrollbar {
+                    &::-webkit-scrollbar-track {
+                        background-color: $brand_light;
+                    }
+                    &::-webkit-scrollbar-thumb {
+                        background-color: $brand;
+                    }
+                }
                 .kanban_column_task {
-                    border-color: $grey;
+                    border-color: $brand;
                 }
-            }
-            &_accepted {
-                .kanban_column_task {
-                    border-color: $yellow_light;
-                }
-                .avatarGroup .avatar {
-                    background-color: $yellow;
-                }
-            }
-            &_in_review {
-                .kanban_column_task {
-                    border-color: $progress_light;
-                }
-                .avatarGroup .avatar {
-                    background-color: $progress;
+                .kanban_bord_column_title {
+                    background-color: $brand;
                     color: #fff;
                 }
             }
-            &_completed {
+            &_accepted {
+                background-color: $secondary_light;
+                .scrollbar {
+                    &::-webkit-scrollbar-track {
+                        background-color: $secondary_light;
+                    }
+                    &::-webkit-scrollbar-thumb {
+                        background-color: $secondary;
+                    }
+                }
                 .kanban_column_task {
-                    border-color: $success_light;
+                    border-color: $secondary;
+                }
+                .avatarGroup .avatar {
+                    background-color: $secondary;
+                }
+                .kanban_bord_column_title {
+                    background-color: $secondary;
+                    color: #fff;
+                }
+            }
+            &_in_review {
+                background-color: $warning_light;
+                .scrollbar {
+                    &::-webkit-scrollbar-track {
+                        background-color: $warning_light;
+                    }
+                    &::-webkit-scrollbar-thumb {
+                        background-color: $warning;
+                    }
+                }
+                .kanban_column_task {
+                    border-color: $warning;
+                }
+                .avatarGroup .avatar {
+                    background-color: $warning;
+                    color: #fff;
+                }
+                .kanban_bord_column_title {
+                    background-color: $warning;
+                }
+            }
+            &_completed {
+                background-color: $success_light;
+                .scrollbar {
+                    &::-webkit-scrollbar-track {
+                        background-color: $success_light;
+                    }
+                    &::-webkit-scrollbar-thumb {
+                        background-color: $success;
+                    }
+                }
+                .kanban_column_task {
+                    border-color: $success;
 
                     &_bot {
                         border-color: $success_light;
@@ -497,12 +552,11 @@
                     background-color: $success;
                     color: #fff;
                 }
+                .kanban_bord_column_title {
+                    background-color: $success;
+                    color: #fff;
+                }
             }
-        }
-        &_scrollbar{
-            height: calc(100vh - 12rem);
-            overflow-y: auto;
-            padding-right: 12px;
         }
     }
 }

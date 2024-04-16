@@ -7,7 +7,7 @@
         </ol>
     </nav>
 
-    <div class="dashboard-head pb-0 mb-3">
+    <div class="dashboard-head">
         <div class="row align-items-center">
             <div class="col d-flex align-items-center gap-3">
                 <h3 class="main-body-header-title mb-0">All Tasks</h3>
@@ -61,129 +61,124 @@
                 </div>
             </div>
         </div>
-        <hr class="mb-0">
-        <div class="tabNavigationBar-tab border_style">
-            <a href="{{ route('task.list-view') }}" class="tabNavigationBar-item @if(request()->routeIs('task.list-view')) active @endif" wire:navigate ><i class='bx bx-list-ul'></i> List</a>
-            <a href="{{ route('task.index') }}" class="tabNavigationBar-item @if(request()->routeIs('task.index')) active @endif" wire:navigate><i class='bx bx-columns' ></i> Board</a>
-        </div>
+    </div>
+    <div class="tabNavigationBar-tab border_style my-2">
+        <a href="{{ route('task.list-view') }}" class="tabNavigationBar-item @if(request()->routeIs('task.list-view')) active @endif" wire:navigate ><i class='bx bx-list-ul'></i> List</a>
+        <a href="{{ route('task.index') }}" class="tabNavigationBar-item @if(request()->routeIs('task.index')) active @endif" wire:navigate><i class='bx bx-columns' ></i> Board</a>
     </div>
     <!-- Kanban -->
     <div class="kanban_bord">
-        <div class="kanban_bord_scrollbar scrollbar">
-            <div class="kanban_bord_body_columns" wire:sortable-group="updateTaskOrder">
+        <div class="kanban_bord_body_columns" wire:sortable-group="updateTaskOrder">
+            @php
+                $groups = ['pending','in_progress','in_review','completed'];
+            @endphp
+            @foreach($groups as $group)
                 @php
-                    $groups = ['pending','in_progress','in_review','completed'];
+                    $board_class = '';
+                    if($group=='pending'){
+                        $board_class = 'kanban_bord_column_assigned';
+                    }
+                    if($group=='in_progress'){
+                        $board_class = 'kanban_bord_column_accepted';
+                    }
+                    if($group=='in_review'){
+                        $board_class = 'kanban_bord_column_in_review';
+                    }
+                    if($group=='completed'){
+                        $board_class = 'kanban_bord_column_completed';
+                    }
                 @endphp
-                @foreach($groups as $group)
-                    @php
-                        $board_class = '';
-                        if($group=='pending'){
-                            $board_class = 'kanban_bord_column_assigned';
-                        }
-                        if($group=='in_progress'){
-                            $board_class = 'kanban_bord_column_accepted';
-                        }
-                        if($group=='in_review'){
-                            $board_class = 'kanban_bord_column_in_review';
-                        }
-                        if($group=='completed'){
-                            $board_class = 'kanban_bord_column_completed';
-                        }
-                    @endphp
-                    <div class="kanban_bord_column {{ $board_class }}" wire:key="group-{{$group}}"  wire:sortable.item="{{ $group  }}">
-                        <div class="kanban_bord_column_title_wrap">
-                            <div class="kanban_bord_column_title" wire:sortable.handle>
-                                @if($group == 'pending')
-                                    Assigned
-                                @elseif($group == 'in_progress')
-                                    Accepted
-                                @elseif($group == 'in_review')
-                                    In Review
-                                @elseif($group == 'completed')
-                                    Completed
-                                @endif
-                            </div>
-                        </div>
-                        <div class="kanban_column" wire:sortable-group.item-group="{{$group}}" wire:sortable-group.options="{ 
-                            animation: 400 ,
-                            easing: 'cubic-bezier(1, 0, 0, 1)',
-                            onStart: function (evt) {
-                                console.log(evt);
-                                // change the color of the dragging item
-                                evt.item.style.background = '#fff';
-                            },
-                        }">
-                            @if(!count($tasks[$group]))
-                            <div class="kanban_column_empty"><i class='bx bx-add-to-queue'></i></div>
-                            @endif
-                            @foreach($tasks[$group] as $task)
-                                @php
-                                    $date_class = '';
-                                    if($task['due_date'] < date('Y-m-d')){
-                                        $date_class = 'kanban_column_task_overdue';
-                                    }
-                                    if($task['due_date'] == date('Y-m-d')){
-                                        $date_class = 'kanban_column_task_warning';
-                                    }
-                                    
-                                @endphp
-                                <div class="kanban_column_task {{ $date_class }} h-100" wire:key="task-{{$task['id']}}" wire:sortable-group.item="{{ $task['id'] }}" >
-                                    <div class="kanban_column_task-wrap" wire:sortable-group.handle>
-                                        <div class="cus_dropdown cus_dropdown-edit z-0">
-                                            <div class="cus_dropdown-icon"><i class="bx bx-dots-horizontal-rounded"></i></div>
-                                            <div class="cus_dropdown-body cus_dropdown-body-widh_s">
-                                                <div class="cus_dropdown-body-wrap">
-                                                    <ul class="cus_dropdown-list">
-                                                        <li><a wire:navigate="" href="http://127.0.0.1:8000/teams/edit/1"><span class="text-secondary"><i class="bx bx-pencil"></i></span> Edit</a></li>
-                                                        <li><a href="#"><span class="text-danger"><i class="bx bx-trash"></i></span> Delete</a></li>
-                                                    </ul>
-                                                </div>
+                <div class="kanban_bord_column {{ $board_class }}" wire:key="group-{{$group}}"  wire:sortable.item="{{ $group  }}">
+                    <div class="kanban_bord_column_title" wire:sortable.handle>
+                        @if($group == 'pending')
+                            Assigned
+                        @elseif($group == 'in_progress')
+                            Accepted
+                        @elseif($group == 'in_review')
+                            In Review
+                        @elseif($group == 'completed')
+                            Completed
+                        @endif
+                    </div>
+                    <div class="kanban_column scrollbar" wire:sortable-group.item-group="{{$group}}" wire:sortable-group.options="{ 
+                        animation: 400 ,
+                        easing: 'cubic-bezier(1, 0, 0, 1)',
+                        onStart: function (evt) {
+                            console.log(evt);
+                            // change the color of the dragging item
+                            evt.item.style.background = '#fff';
+                        },
+                    }">
+                        @if(!count($tasks[$group]))
+                        <div class="kanban_column_empty"><i class='bx bx-add-to-queue'></i></div>
+                        @endif
+                        @foreach($tasks[$group] as $task)
+                            @php
+                                $date_class = '';
+                                if($task['due_date'] < date('Y-m-d')){
+                                    $date_class = 'kanban_column_task_overdue';
+                                }
+                                if($task['due_date'] == date('Y-m-d')){
+                                    $date_class = 'kanban_column_task_warning';
+                                }
+                                
+                            @endphp
+                            <div class="kanban_column_task {{ $date_class }}" wire:key="task-{{$task['id']}}" wire:sortable-group.item="{{ $task['id'] }}" >
+                                <div class="kanban_column_task-wrap" wire:sortable-group.handle>
+                                    <div class="cus_dropdown cus_dropdown-edit z-0">
+                                        <div class="cus_dropdown-icon"><i class="bx bx-dots-horizontal-rounded"></i></div>
+                                        <div class="cus_dropdown-body cus_dropdown-body-widh_s">
+                                            <div class="cus_dropdown-body-wrap">
+                                                <ul class="cus_dropdown-list">
+                                                    <li><a wire:navigate="" href="http://127.0.0.1:8000/teams/edit/1"><span class="text-secondary"><i class="bx bx-pencil"></i></span> Edit</a></li>
+                                                    <li><a href="#"><span class="text-danger"><i class="bx bx-trash"></i></span> Delete</a></li>
+                                                </ul>
                                             </div>
                                         </div>
-                                        <div class="kanban_column_task_name">
-                                            <div class="kanban_column_task_complete_icon d-none">
-                                                <i class='bx bx-check' ></i>
-                                            </div>
-                                            <div class="kanban_column_task_name_text">
-                                                <h4 wire:click="enableEditForm({{$task['id']}})" class="fs-6">{{ $task['name'] }}</h4>
-                                                <div class="kanban_column_task_project_name">
-                                                    <span class="text-black">
-                                                        @if($task['project'])
-                                                        <i class='bx bx-file-blank' ></i>  {{ $task['project']['name'] }} 
-                                                        @endif
-                                                    </span>
-                                                    <span class="text-black">
-                                                        @if(count($task['comments']) > 0)
-                                                        <i class='bx bx-chat' ></i>  {{ count($task['comments'])  }}
-                                                        @endif
-                                                    </span>
-                                                </div>
+                                    </div>
+                                    <div class="kanban_column_task_name">
+                                        <div class="kanban_column_task_complete_icon d-none">
+                                            <i class='bx bx-check' ></i>
+                                        </div>
+                                        <div class="kanban_column_task_name_text">
+                                            <h4 wire:click="enableEditForm({{$task['id']}})" class="fs-6">{{ $task['name'] }}</h4>
+                                            <div class="kanban_column_task_project_name">
+                                                <span class="text-black">
+                                                    @if($task['project'])
+                                                    <i class='bx bx-file-blank' ></i>  {{ $task['project']['name'] }} 
+                                                    @endif
+                                                </span>
+                                                <span class="text-black">
+                                                    @if(count($task['comments']) > 0)
+                                                    <i class='bx bx-chat' ></i>  {{ count($task['comments'])  }}
+                                                    @endif
+                                                </span>
                                             </div>
                                         </div>
-                                        <hr>
-                                        <div class="kanban_column_task_bot mt-0 pt-0 border-top-0">
-                                            <div class="kanban_column_task_actions">
-                                                <a href="#" class="kanban_column_task_date task">
-                                                    <span class="btn-icon-task-action"><i class='bx bx-calendar-alt' ></i></span>
-                                                    <span class="">{{ $task['due_date'] }}</span>
-                                                </a>
-                                            </div>
-                                            <div>
-                                                <!-- avatar group -->
-                                                <div class="avatarGroup avatarGroup-overlap">
-                                                    @foreach($task['users'] as $user)
-                                                    <a href="javascript:;" class="avatar avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Aadil Prasad Brahmbhatt">AP</a>
-                                                    @endforeach
-                                                </div>
+                                    </div>
+                                    <hr class="my-2">
+                                    <div class="kanban_column_task_bot mt-0 pt-0 border-top-0">
+                                        <div class="kanban_column_task_actions">
+                                            <a href="#" class="kanban_column_task_date task">
+                                                <span class="btn-icon-task-action"><i class='bx bx-calendar-alt' ></i></span>
+                                                <span class="">{{ $task['due_date'] }}</span>
+                                            </a>
+                                        </div>
+                                        <div>
+                                            <!-- avatar group -->
+                                            <div class="avatarGroup avatarGroup-overlap">
+                                                @foreach($task['users'] as $user)
+                                                <a href="javascript:;" class="avatar avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Aadil Prasad Brahmbhatt">AP</a>
+                                                @endforeach
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            @endforeach
-                        </div>
+                            </div>
+                        @endforeach
                     </div>
-                @endforeach
-            </div>
+                </div>
+            @endforeach
         </div>
     </div>
     

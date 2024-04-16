@@ -29,7 +29,7 @@
         @foreach($roles as $role)
         <div class="col-md-3">
             <div class=" card_style card_style-roles h-100">
-                <a href="" class="card_style-open"><i class='bx bx-chevron-right'></i></a>
+                <a wire:navigate="" href="http://localhost:8000/role"class="card_style-open"><i class='bx bx-chevron-right'></i></a>
                 <div class="card_style-roles-head">
                     <p class="text-muted mb-2">Total 4 users</p>
                      <h4>
@@ -37,20 +37,16 @@
                     </h4>
                 </div>
                 <div class="card_style-roles-permission">
-                        <div class="card_style-roles-title mt-2"><span><i class='bx bx-universal-access'></i></span> {{ $role->permissions->count() }} Permissions</div>
-                        <div class="mt-2">
-                          <a class="edit-role" wire:click="emitEditRoleEvent({{$role->id}})"> Edit Role</a>
-                         </div>
-                        <!-- <div class="card_style-roles-list justify-content-center"> -->
-                           @foreach($role->permissions as $permission)
-                                <!-- <div class="card_style-roles-items card_style-roles-permissions">{{ $permission->name }}</div> -->
-                            @endforeach
-                        <!-- </div> -->
-                        
-                </div>
-              
-              
-              
+                    <div class="card_style-roles-title mt-2"><span><i class='bx bx-universal-access'></i></span> {{ $role->permissions->count() }} Permissions</div>
+                    <div class="mt-2">
+                        <a class="edit-role" wire:click="emitEditRoleEvent({{$role->id}})"> Edit Role</a>
+                        </div>
+                    <!-- <div class="card_style-roles-list justify-content-center"> -->
+                        @foreach($role->permissions as $permission)
+                            <!-- <div class="card_style-roles-items card_style-roles-permissions">{{ $permission->name }}</div> -->
+                        @endforeach
+                    <!-- </div> --> 
+                </div>              
             </div>
         </div>
         @endforeach
