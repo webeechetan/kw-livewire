@@ -12,6 +12,7 @@ use App\Models\Task;
 use App\Models\Scopes\OrganizationScope;
 use App\Models\User;
 use Illuminate\Support\Facades\Log;
+use App\Models\Notification as NotificationModel;
 
 class NewTaskAssignNotification extends Notification implements ShouldQueue
 {
@@ -46,6 +47,13 @@ class NewTaskAssignNotification extends Notification implements ShouldQueue
         $task = Task::withoutGlobalScope(OrganizationScope::class)->where('id',$this->task->id)->first();
         $assignedBy = User::withoutGlobalScope(OrganizationScope::class)->where('id',$this->task->assigned_by)->first();
         $project = Project::withoutGlobalScope(OrganizationScope::class)->where('id',$this->task->project_id)->first();
+        $notification = new NotificationModel();
+        $notification->org_id = $task->org_id;
+        $notification->user_id = $notifiable->id;
+        $notification->title = 'You have been assigned a new task '.$task->name;
+        $notification->message = 'You have been assigned a new task '.$task->name;
+        $notification->save();
+
         return (new MailMessage)
             ->view('mails.task-assigned-notification-mail', ['task' => $task, 'user' => $notifiable,'assignedBy' => $assignedBy,'project' => $project]);
 

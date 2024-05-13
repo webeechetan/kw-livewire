@@ -84,7 +84,7 @@
                                                     <td>
                                                         <h2 style="margin-top: 0; margin-bottom: 30px;">Hi there {{ $user->name }}!</h2>
                                                         @if($comment)
-                                                            <p>{{ $comment->user->name }} has commented on a task.</p>
+                                                            <p>{{ $mentioner->name }} has mentioned you in a task.</p>
                                                             <p>Task: {{ $task->name }}</p>
                                                             <p>Comment: {!! $comment->comment !!}</p>
                                                         @else

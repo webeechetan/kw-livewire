@@ -2,10 +2,13 @@
 
 namespace App\Notifications;
 
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Illuminate\Support\Facades\Log;
+use App\Models\Scopes\OrganizationScope;
 
 class UserMentionNotification extends Notification implements ShouldQueue
 {
@@ -19,6 +22,7 @@ class UserMentionNotification extends Notification implements ShouldQueue
      */
     public function __construct($task , $comment = null)
     {
+        Log::warning('UserMentionNotification C');
         $this->task = $task;
         $this->comment = $comment;
     }
@@ -38,12 +42,16 @@ class UserMentionNotification extends Notification implements ShouldQueue
      */
     public function toMail(object $notifiable): MailMessage
     {
+        $mentioner = User::withoutGlobalScope(OrganizationScope::class)->find($this->comment->user_id);
+        Log::info($mentioner);
+        // dd($mentioner);
         return (new MailMessage)->view(
             'mails.mention-user-mail',
             [
                 'task' => $this->task,
-                'user' => $notifiable,
-                'comment' => $this->comment
+                'user' => $notifiable, 
+                'comment' => $this->comment,
+                'mentioner' => $mentioner,
             ]
         );
     }

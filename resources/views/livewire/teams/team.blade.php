@@ -17,10 +17,10 @@
          <div class="col">
             <div class="dashboard-head-title-wrap">
                <div class="client_head_logo">
-                  <img src="" alt="">
+                  <div class="avatar avatar-sm avatar-blue" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{$team->name}}">{{$team->initials}}</div>
                </div>
                <div>
-                  <h3 class="main-body-header-title mb-2">Tech Team</h3>
+                  <h3 class="main-body-header-title mb-2">{{$team->name}}</h3>
                   <div class="row align-items-center">
                      <div class="col-auto">
                         <span>
@@ -120,7 +120,7 @@
                <div class="col">
                   <div class="row align-items-center g-2">
                      <div class="col-auto">
-                        <h5 class="title-md mb-0">12</h5>
+                        <h5 class="title-md mb-0">{{$team->clients->count()}}</h5>
                      </div>
                      <div class="col-auto">
                         <span class="font-400 text-grey">|</span>
@@ -144,7 +144,7 @@
                <div class="col">
                   <div class="row align-items-center g-2">
                      <div class="col-auto">
-                        <h5 class="title-md mb-0"> 5 </h5>
+                        <h5 class="title-md mb-0"> {{ $team->projects->count() }} </h5>
                      </div>
                      <div class="col-auto">
                         <span class="font-400 text-grey">|</span>
@@ -168,7 +168,7 @@
                <div class="col">
                   <div class="row align-items-center g-2">
                      <div class="col-auto">
-                        <h5 class="title-md mb-0">5</h5>
+                        <h5 class="title-md mb-0">{{ $team->users->count() }}</h5>
                      </div>
                      <div class="col-auto">
                         <span class="font-400 text-grey">|</span>
@@ -190,46 +190,18 @@
          <div class="col">
             <!-- Teams -->
             <div class="team-list row">
+               @foreach($team->clients as $client)
                <div class="col-auto">
                   <div class="card_style-client-head taskList_col border rounded-3 me-0">
-                     <div class="avatar avatar-sm avatar-blue" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Acma">AC</div>
+                     <div class="avatar avatar-sm avatar-blue" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{$client->name}}">{{$client->initials}}</div>
                      <div>
                         <h6 class="mb-0">
-                           <a href="http://127.0.0.1:8000/project/view/701" wire:navigate="">Acma</a>
+                           <a href="{{route('client.profile',$client->id)}}" wire:navigate="">{{$client->name}}</a>
                         </h6>
                      </div>
                   </div>
                </div>
-               <div class="col-auto">
-                  <div class="card_style-client-head taskList_col border rounded-3 me-0">
-                     <div class="avatar avatar-sm avatar-pink" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="True Consultant">TC</div>
-                     <div>
-                        <h6 class="mb-0">
-                           <a href="http://127.0.0.1:8000/project/view/701" wire:navigate="">True Consultant</a>
-                        </h6>
-                     </div>
-                  </div>
-               </div>
-               <div class="col-auto">
-                  <div class="card_style-client-head taskList_col border rounded-3 me-0">
-                     <div class="avatar avatar-sm avatar-red" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Indestch">ID</div>
-                     <div>
-                        <h6 class="mb-0">
-                           <a href="http://127.0.0.1:8000/project/view/701" wire:navigate="">Indestuch</a>
-                        </h6>
-                     </div>
-                  </div>
-               </div>
-               <div class="col-auto">
-                  <div class="card_style-client-head taskList_col border rounded-3 me-0">
-                     <div class="avatar avatar-sm avatar-blue" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Acma">AC</div>
-                     <div>
-                        <h6 class="mb-0">
-                           <a href="http://127.0.0.1:8000/project/view/701" wire:navigate="">Acma</a>
-                        </h6>
-                     </div>
-                  </div>
-               </div>
+               @endforeach
             </div>
          </div>
       </div>
@@ -244,129 +216,120 @@
    <div class="project-tabs mb-2">
       <ul class="nav nav-tabs" id="myTab" role="tablist">
          <li class="nav-item" role="presentation">
-            <button class="nav-link active" id="project-all-tab" data-bs-toggle="tab" data-bs-target="#project-all-tab-pane" type="button" role="tab" aria-controls="project-all-tab-pane" aria-selected="true">All <span class="ms-2">1</span></button>
+            <button class="nav-link active" id="project-all-tab" data-bs-toggle="tab" data-bs-target="#project-all-tab-pane" type="button" role="tab" aria-controls="project-all-tab-pane" aria-selected="true">All <span class="ms-2">{{ $team->projects->count() }}</span></button>
          </li>
          <li class="nav-item" role="presentation">
-            <button class="nav-link" id="project-active-tab" data-bs-toggle="tab" data-bs-target="#project-active-tab-pane" type="button" role="tab" aria-controls="project-active-tab-pane" aria-selected="false" tabindex="-1">Active <span class="ms-2">1</span></button>
+            <button class="nav-link" id="project-active-tab" data-bs-toggle="tab" data-bs-target="#project-active-tab-pane" type="button" role="tab" aria-controls="project-active-tab-pane" aria-selected="false" tabindex="-1">Active <span class="ms-2">
+               {{ $team->projects->where('status','active')->count() }}   
+            </span></button>
          </li>
          <li class="nav-item" role="presentation">
-            <button class="nav-link" id="project-done-tab" data-bs-toggle="tab" data-bs-target="#project-done-tab-pane" type="button" role="tab" aria-controls="project-done-tab-pane" aria-selected="false" tabindex="-1">Completed <span class="ms-2">0</span></button>
+            <button class="nav-link" id="project-done-tab" data-bs-toggle="tab" data-bs-target="#project-done-tab-pane" type="button" role="tab" aria-controls="project-done-tab-pane" aria-selected="false" tabindex="-1">Completed <span class="ms-2">{{ $team->projects->where('status','completed')->count() }}   </span></button>
          </li>
          <li class="nav-item" role="presentation">
-            <button class="nav-link" id="project-overdue-tab" data-bs-toggle="tab" data-bs-target="#project-overdue-tab-pane" type="button" role="tab" aria-controls="project-overdue-tab-pane" aria-selected="false" tabindex="-1">Overdue <span class="ms-2">0</span></button>
+            <button class="nav-link" id="project-overdue-tab" data-bs-toggle="tab" data-bs-target="#project-overdue-tab-pane" type="button" role="tab" aria-controls="project-overdue-tab-pane" aria-selected="false" tabindex="-1">Overdue <span class="ms-2">{{ $team->projects->where('status','overdue')->count() }}   </span></button>
          </li>
          <li class="nav-item" role="presentation">
-            <button class="nav-link" id="project-archived-tab" data-bs-toggle="tab" data-bs-target="#project-archived-tab-pane" type="button" role="tab" aria-controls="project-archived-tab-pane" aria-selected="false" tabindex="-1">Archive <span class="ms-2">0</span></button>
+            <button class="nav-link" id="project-archived-tab" data-bs-toggle="tab" data-bs-target="#project-archived-tab-pane" type="button" role="tab" aria-controls="project-archived-tab-pane" aria-selected="false" tabindex="-1">Archive <span class="ms-2">{{ $team->projects->where('status','archived')->count() }}   </span></button>
          </li>
       </ul>
    </div>
    <div class="tab-content" id="myTabContent">
       <div class="tab-pane fade active show" id="project-all-tab-pane" role="tabpanel" aria-labelledby="project-all-tab" tabindex="0">
          <div class="row">
+            @foreach($team->projects as $project)
             <div class="col-lg-3">
                <div class="project-list">
                   <div class="project project-align_left w-100">
                      <div class="project-icon"><i class="bx bx-layer"></i></div>
                      <div class="project-content">
-                        <a href="#" class="project-title">Acma</a>
-                        <div class="project-selected-date">Due on <span>4 April</span></div>
+                        <a href="{{ route('project.profile',$project->id) }}" class="project-title">{{$project->name}}</a>
+                        <div class="project-selected-date">Due on <span>{{  \Carbon\Carbon::parse($project->due_date)->diffForHumans()}}</span></div>
                      </div>
                   </div>
                </div>
             </div>
-            <div class="col-lg-3">
-               <div class="project-list">
-                  <div class="project project-align_left w-100">
-                     <div class="project-icon"><i class="bx bx-layer"></i></div>
-                     <div class="project-content">
-                        <a href="#" class="project-title">Acma</a>
-                        <div class="project-selected-date">Due on <span>4 April</span></div>
-                     </div>
-                  </div>
-               </div>
-            </div>
-            <div class="col-lg-3">
-               <div class="project-list">
-                  <div class="project project-align_left w-100">
-                     <div class="project-icon"><i class="bx bx-layer"></i></div>
-                     <div class="project-content">
-                        <a href="#" class="project-title">Acma</a>
-                        <div class="project-selected-date">Due on <span>4 April</span></div>
-                     </div>
-                  </div>
-               </div>
-            </div>
-            <div class="col-lg-3">
-               <div class="project-list">
-                  <div class="project project-align_left w-100">
-                     <div class="project-icon"><i class="bx bx-layer"></i></div>
-                     <div class="project-content">
-                        <a href="#" class="project-title">Acma</a>
-                        <div class="project-selected-date">Due on <span>4 April</span></div>
-                     </div>
-                  </div>
-               </div>
-            </div>
+            @endforeach
          </div>
       </div>
       <div class="tab-pane fade" id="project-active-tab-pane" role="tabpanel" aria-labelledby="project-active-tab" tabindex="0">
          <div class="row">
-            <div class="col-lg-3">
-               <div class="project-list">
-                  <div class="project project-align_left w-100">
-                     <div class="project-icon"><i class="bx bx-layer"></i></div>
-                     <div class="project-content">
-                        <a href="#" class="project-title">Acma</a>
-                        <div class="project-selected-date">Due on <span>4 April</span></div>
+            @foreach($team->projects as $project)
+               @if($project->status != 'active')
+                  @continue
+               @endif
+               <div class="col-lg-3">
+                  <div class="project-list">
+                     <div class="project project-align_left w-100">
+                        <div class="project-icon"><i class="bx bx-layer"></i></div>
+                        <div class="project-content">
+                           <a href="{{ route('project.profile',$project->id) }}" class="project-title">{{$project->name}}</a>
+                           <div class="project-selected-date">Due on <span>{{  \Carbon\Carbon::parse($project->due_date)->diffForHumans()}}</span></div>
+                        </div>
                      </div>
                   </div>
                </div>
-            </div>
-            <div class="col-lg-3">
-               <div class="project-list">
-                  <div class="project project-align_left w-100">
-                     <div class="project-icon"><i class="bx bx-layer"></i></div>
-                     <div class="project-content">
-                        <a href="#" class="project-title">Acma</a>
-                        <div class="project-selected-date">Due on <span>4 April</span></div>
-                     </div>
-                  </div>
-               </div>
-            </div>
-            <div class="col-lg-3">
-               <div class="project-list">
-                  <div class="project project-align_left w-100">
-                     <div class="project-icon"><i class="bx bx-layer"></i></div>
-                     <div class="project-content">
-                        <a href="#" class="project-title">Acma</a>
-                        <div class="project-selected-date">Due on <span>4 April</span></div>
-                     </div>
-                  </div>
-               </div>
-            </div>
-            <div class="col-lg-3">
-               <div class="project-list">
-                  <div class="project project-align_left w-100">
-                     <div class="project-icon"><i class="bx bx-layer"></i></div>
-                     <div class="project-content">
-                        <a href="#" class="project-title">Acma</a>
-                        <div class="project-selected-date">Due on <span>4 April</span></div>
-                     </div>
-                  </div>
-               </div>
-            </div>
+            @endforeach
          </div>
       </div>
       <div class="tab-pane fade" id="project-done-tab-pane" role="tabpanel" aria-labelledby="project-done-tab" tabindex="0">
-         <div class="project-list project-list-completed">
+         <div class="row">
+            @foreach($team->projects as $project)
+               @if($project->status != 'completed')
+                  @continue
+               @endif
+               <div class="col-lg-3">
+                  <div class="project-list">
+                     <div class="project project-align_left w-100">
+                        <div class="project-icon"><i class="bx bx-layer"></i></div>
+                        <div class="project-content">
+                           <a href="{{ route('project.profile',$project->id) }}" class="project-title">{{$project->name}}</a>
+                           <div class="project-selected-date">Due on <span>{{  \Carbon\Carbon::parse($project->due_date)->diffForHumans()}}</span></div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            @endforeach
          </div>
       </div>
       <div class="tab-pane fade" id="project-overdue-tab-pane" role="tabpanel" aria-labelledby="project-overdue-tab" tabindex="0">
-         <div class="project-list project-list-overdue">
+        <div class="row">
+         @foreach($team->projects as $project)
+         @if($project->status != 'overdue')
+            @continue
+         @endif
+         <div class="col-lg-3">
+            <div class="project-list">
+               <div class="project project-align_left w-100">
+                  <div class="project-icon"><i class="bx bx-layer"></i></div>
+                  <div class="project-content">
+                     <a href="{{ route('project.profile',$project->id) }}" class="project-title">{{$project->name}}</a>
+                     <div class="project-selected-date">Due on <span>{{  \Carbon\Carbon::parse($project->due_date)->diffForHumans()}}</span></div>
+                  </div>
+               </div>
+            </div>
          </div>
+      @endforeach
+        </div>
       </div>
       <div class="tab-pane fade" id="project-archived-tab-pane" role="tabpanel" aria-labelledby="project-archived-tab" tabindex="0">
-         <div class="project-list project-list-archive">
+         <div class="row">
+            @foreach($team->projects as $project)
+            @if($project->status != 'archived')
+               @continue
+            @endif
+            <div class="col-lg-3">
+               <div class="project-list">
+                  <div class="project project-align_left w-100">
+                     <div class="project-icon"><i class="bx bx-layer"></i></div>
+                     <div class="project-content">
+                        <a href="{{ route('project.profile',$project->id) }}" class="project-title">{{$project->name}}</a>
+                        <div class="project-selected-date">Due on <span>{{  \Carbon\Carbon::parse($project->due_date)->diffForHumans()}}</span></div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         @endforeach
          </div>
       </div>
    </div>
@@ -393,6 +356,7 @@
                   </div>
                </div>
                <div class="taskList scrollbar">
+                  @foreach($team->users as  $user)
                   <div class="taskList_row" wire:key="task-row-100">
                      <div class="row">
                            <div class="col-lg-4">
@@ -400,7 +364,7 @@
                                  <div class="avatar avatar-sm avatar-blue" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Himanshu Sharma">HS</div>
                                  <div>
                                        <h6 class="mb-0">
-                                          <a href="http://127.0.0.1:8000/project/view/701" wire:navigate="">Himanshu Sharma</a>
+                                          <a href="{{route('user.profile',$user->id)}}" wire:navigate="">{{$user->name }}</a>
                                        </h6>
                                  </div>
                               </div>
@@ -416,99 +380,7 @@
                            </div>
                      </div>
                   </div>
-                  <div class="taskList_row" wire:key="task-row-100">
-                     <div class="row">
-                           <div class="col-lg-4">
-                              <div class="card_style-client-head taskList_col me-0">
-                                 <div class="avatar avatar-sm avatar-pink" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Ajay">Ajay</div>
-                                 <div>
-                                       <h6 class="mb-0">
-                                          <a href="http://127.0.0.1:8000/project/view/701" wire:navigate="">Ajay Kumar</a>
-                                       </h6>
-                                 </div>
-                              </div>
-                           </div>
-                           <div class="col text-center">
-                              <div class="taskList_col"><span class="btn-batch">Php Developer</span></div>
-                           </div>
-                           <div class="col text-center">
-                              <div class="taskList_col"><span class=" badge bg-warning">In Active</span></div>
-                           </div>
-                           <div class="col text-center">
-                              <div class="taskList_col"><span><button class="btn-icon"><i class="bx bx-trash"></i></button></span></div>
-                           </div>
-                     </div>
-                  </div>
-                  <div class="taskList_row" wire:key="task-row-100">
-                     <div class="row">
-                           <div class="col-lg-4">
-                              <div class="card_style-client-head taskList_col me-0">
-                                 <div class="avatar avatar-sm avatar-green" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Sharukh">SK</div>
-                                 <div>
-                                       <h6 class="mb-0">
-                                          <a href="http://127.0.0.1:8000/project/view/701" wire:navigate="">Md. Sharukh</a>
-                                       </h6>
-                                 </div>
-                              </div>
-                           </div>
-                           <div class="col text-center">
-                              <div class="taskList_col"><span class="btn-batch">Front End Developer</span></div>
-                           </div>
-                           <div class="col text-center">
-                              <div class="taskList_col"><span class=" badge bg-success">Active</span></div>
-                           </div>
-                           <div class="col text-center">
-                              <div class="taskList_col"><span><button class="btn-icon"><i class="bx bx-trash"></i></button></span></div>
-                           </div>
-                     </div>
-                  </div>
-                  <div class="taskList_row" wire:key="task-row-100">
-                     <div class="row">
-                           <div class="col-lg-4">
-                              <div class="card_style-client-head taskList_col me-0">
-                                 <div class="avatar avatar-sm avatar-yellow" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Chetan">CS</div>
-                                 <div>
-                                       <h6 class="mb-0">
-                                          <a href="http://127.0.0.1:8000/project/view/701" wire:navigate="">Chetan Singh</a>
-                                       </h6>
-                                 </div>
-                              </div>
-                           </div>
-                           <div class="col text-center">
-                              <div class="taskList_col"><span class="btn-batch">Sr. Php Developer</span></div>
-                           </div>
-                           <div class="col text-center">
-                              <div class="taskList_col"><span class=" badge bg-warning">In Active</span></div>
-                           </div>
-                           <div class="col text-center">
-                              <div class="taskList_col"><span><button class="btn-icon"><i class="bx bx-trash"></i></button></span></div>
-                           </div>
-                     </div>
-                  </div>
-                  <div class="taskList_row" wire:key="task-row-100">
-                     <div class="row">
-                           <div class="col-lg-4">
-                              <div class="card_style-client-head taskList_col me-0">
-                                 <div class="avatar avatar-sm avatar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Roshan">Rj</div>
-                                 <div>
-                                       <h6 class="mb-0">
-                                          <a href="http://127.0.0.1:8000/project/view/701" wire:navigate="">Roshan Jajoriya</a>
-                                       </h6>
-                                 </div>
-                              </div>
-                           </div>
-                           <div class="col text-center">
-                              <div class="taskList_col"><span class="btn-batch">Sr. Ui Developer</span></div>
-                           </div>
-                           <div class="col text-center">
-                              <div class="taskList_col"><span class=" badge bg-dark">Moderate</span></div>
-                           </div>
-                           <div class="col text-center">
-                              <div class="taskList_col"><span><button class="btn-icon"><i class="bx bx-trash"></i></button></span></div>
-                           </div>
-                     </div>
-                  </div>
-                 
+                  @endforeach
                </div>
          </div>
       </div>

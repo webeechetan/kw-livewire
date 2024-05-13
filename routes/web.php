@@ -99,7 +99,7 @@ Route::group(['middleware' => ['myauth']], function() {
     Route::get('/teams',ListTeam::class)->name('team.index');
     Route::get('/teams/add',AddTeam::class)->name('team.add');
     Route::get('/teams/edit/{id}',EditTeam::class)->name('team.edit');
-    Route::get('/team/view',TeamProfile::class)->name('team.profile');
+    Route::get('/team/view/{team}',TeamProfile::class)->name('team.profile');
     
 
     Route::get('/users',ListUser::class)->name('user.index');

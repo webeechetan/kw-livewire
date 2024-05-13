@@ -8,7 +8,7 @@
                     <option value="in_progress">In-Progress</option>
                     <option value="in_review">In-Review</option>
                     <option value="completed">Completed</option>
-                </select>
+                </select> 
             </div> 
             <div class="taskPane-dashbaord-head-right">
                 <button type="button" class="btn-icon"><i class='bx bx-check text-success' ></i></button>
@@ -16,7 +16,7 @@
                 <button type="button" class="btn-icon"><i class='bx bx-link' ></i></button>
                 <button type="button" class="btn-icon" wire:click="viewFullscree"><i class='bx bx-fullscreen'></i></button>
                 <button type="button" class="btn-icon"><i class='bx bx-trash'></i></button>
-                <button type="button" class="btn-icon" data-bs-dismiss="offcanvas" aria-label="Close"><i class='bx bx-arrow-to-right'></i></button>
+                <a href=""><button type="button" class="btn-icon" data-bs-dismiss="offcanvas" aria-label="Close"><i class='bx bx-arrow-to-right'></i></button></a>
             </div>
         </div>
         <div class="offcanvas-body scrollbar">
@@ -217,6 +217,39 @@
                     callbacks: {
                         onChange: function(contents, $editable) {
                             @this.set('description', contents);
+                        }
+                    }
+                });
+
+                $("#comment_box").summernote({
+                    height: 200,
+                    hint: {
+                        mentions: users_for_mention,
+                        match: /\B@(\w*)$/,
+                        search: function (keyword, callback) {
+                            callback($.grep(this.mentions, function (item) {
+                                return item.indexOf(keyword) == 0;
+                            }));
+                        },
+                        template : function (item) {
+                            return '<span class="mention_user" data-id=" ' + users[users_for_mention.indexOf(item)].id + ' ">' + item + '</span>';
+                        },
+                        content: function (item) {
+                            item = item.replace(/\s/g, '_');
+                            let span = document.createElement('span');
+                            $(span).addClass('mention_user');
+                            $(span).text(' '+'@' + item + ' ');
+                            return span;
+                        },    
+                    },
+                    toolbar: [
+                        ['font', ['bold', 'underline']],
+                        ['para', ['ul', 'ol']],
+                        ['insert', ['link']],
+                    ],
+                    callbacks: {
+                        onChange: function(contents, $editable) {
+                            @this.set('comment', contents);
                         }
                     }
                 });

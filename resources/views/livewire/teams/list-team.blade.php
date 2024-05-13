@@ -10,7 +10,7 @@
         <div class="row align-items-center">
             <div class="col d-flex align-items-center gap-3">
                 <h3 class="main-body-header-title mb-0">All Teams</h3>
-                <span class="text-light">|</span>
+                <span class="text-light">|</span> 
                 <a data-bs-toggle="modal" data-bs-target="#add-team-modal" href="javascript:void(0);" class="btn-border btn-border-sm btn-border-primary"><i class="bx bx-plus"></i> Add Team</a>
                 <!-- <a wire:navigate href="{{ route('team.add') }}" href="javascript:void(0);" class="btn-border btn-border-sm btn-border-primary"><i class="bx bx-plus"></i> Add Team</a> -->
             </div>
@@ -63,13 +63,15 @@
                     <div class="card_style-list_head">
                         <div class="card_style-team-profile-img"><span><img src="{{ env('APP_URL') }}/storage/{{ $team->image }}" alt="{{ $team->name }}"></span></div>
                         <div class="card_style-team-profile-content">
-                            <h4 class="mb-2"><a wire:navigate href="{{ route('team.profile') }}">{{ $team->name }}</a></h4>
+                            <h4 class="mb-2"><a wire:navigate href="{{ route('team.profile',$team->id) }}">{{ $team->name }}</a></h4>
                             <div class="mb-2">
                                 <span class="font-500"><i class='bx bx-user text-success' ></i> Manager</span> <span class="btn-batch ms-2">Vikram Malhotra</span>
                             </div>
                             <div class="row">
                                 <div class="col-auto">
-                                    <div>15 Members</div>
+                                    <div>
+                                        {{ $team->users->count() }} Members
+                                    </div>
                                 </div>
                                 <div class="col-auto px-0">
                                     <span class="text-dark-grey ms-1">|</span>
@@ -94,7 +96,58 @@
                     
                     <div class="card_style-options">
                         <div class="card_style-options-head">
-                            <span><i class='bx bx-layer text-secondary' ></i></span> 15 Projects <span class="text-dark-grey ms-1">|</span><span href="#" class="text-secondary"> <i class='bx bx-briefcase-alt-2' ></i></span> 5 Clients <span class="text-dark-grey ms-1">|</span> <span href="#"><i class='bx bx-objects-horizontal-left text-primary' ></i></span> 60 Tasks
+                            <span>
+                                <i class='bx bx-layer text-secondary' ></i>
+                            </span> 
+                            {{-- 15 Projects  --}}
+                            @php
+                                $project_text = 'Projects';    
+                            @endphp
+                            @if($team->projects->count() > 1)
+                                @php
+                                    $project_text = 'Projects';    
+                                @endphp
+                            @else
+                                @php
+                                    $project_text = 'Project';    
+                                @endphp
+                            @endif
+                            {{ $team->projects->count() }} {{ $project_text }}
+                            <span class="text-dark-grey ms-1">|</span>
+                            <span href="#" class="text-secondary"> <i class='bx bx-briefcase-alt-2' ></i></span> 
+                            {{-- 5 Clients  --}}
+                            @php
+                                $client_text = 'Clients';
+                            @endphp
+
+                            @if($team->clients->count() > 1)
+                                @php
+                                    $client_text = 'Clients';    
+                                @endphp
+                            @else
+                                @php
+                                    $client_text = 'Client';    
+                                @endphp
+                            @endif
+                            {{ $team->clients->count() }} {{ $client_text }}        
+                        
+                            <span class="text-dark-grey ms-1">|</span> 
+                            <span href="#"><i class='bx bx-objects-horizontal-left text-primary' ></i></span>
+                            {{-- 60 Tasks --}}
+                            @php
+                                $task_text = 'Tasks';
+                            @endphp
+
+                            @if($team->tasks->count() > 1)
+                                @php
+                                    $task_text = 'Tasks';    
+                                @endphp
+                            @else
+                                @php
+                                    $task_text = 'Task';    
+                                @endphp
+                            @endif
+                            {{ $team->users->count() }} {{ $task_text }}  
                         </div>
                         <div class="card_style-options-head">
                             

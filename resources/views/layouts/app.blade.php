@@ -50,7 +50,7 @@
                     <i class='bx bx-search'></i>
                   </a>
                 </li>
-                <li class="nav-item navbar-dropdown dropdown">
+                {{-- <li class="nav-item navbar-dropdown dropdown">
                   <a id="modal-search" href="#" class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="true">
                     <i class='bx bx-chat'></i>
                     <span class="badge bg-primary rounded-pill badge-notifications badge-message">5</span>
@@ -189,136 +189,8 @@
                       <a href="" class="btn-border btn-border-sm btn-border-primary">View All Message</a>
                     </li>
                   </ul>
-                </li>
-                <li class="nav-item navbar-dropdown dropdown">
-                  <a id="modal-search" href="#" class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);void(0);" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="true">
-                    <i class='bx bx-bell'></i>
-                    <span class="badge bg-danger rounded-pill badge-notifications">5</span>
-                  </a>
-                  <ul class="dropdown-menu dropdown-menu-end py-0" data-bs-popper="static">
-                    <li class="dropdown-menu-header">
-                      <div class="dropdown-header">
-                        <h5 class="fs-5 mb-0 me-auto">Notification</h5>
-                        <a href="javascript:void(0);void(0)" class="text-decoration-underline text-danger">Clear All</a>
-                      </div>
-                    </li>
-                    <li class="activity-recent-scroll custom_scrollbar pe-0">
-                      <ul class="ps-0">
-                        <li class="border-bottom d-grid dropdown-item">
-                          <div class="d-flex justify-content-between cursor-pointer">
-                            <div class="col-auto pe-2">
-                              <a href="javascript:void(0);" class="avatar avatar-sm avatar-green">Sk</a>
-                            </div>
-                            <div class="team-text col">
-                              <div class="mb-1 text-sm">Won the monthly best seller gold badge</div>
-                              <span class="text-sm text-muted"> 1 hr ago</span>
-                            </div>
-                            <div class="col-auto">
-                              <div>
-                                <a href="javascript:void(0);void(0)" class="dropdown-notifications-archive">
-                                  <span class="bx bx-x"></span>
-                                </a>
-                              </div>
-                            </div>
-                          </div>
-                        </li>
-                        <li class="border-bottom d-grid dropdown-item">
-                          <div class="d-flex justify-content-between cursor-pointer">
-                            <div class="col-auto pe-2">
-                              <a href="javascript:void(0);" class="avatar avatar-sm avatar-light">CF</a>
-                            </div>
-                            <div class="team-text col">
-                              <div class="mb-1 text-sm">Won the monthly best seller gold badge</div>
-                              <span class="text-sm text-muted">4 min ago</span>
-                            </div>
-                            <div class="col-auto">
-                              <div>
-                                <a href="javascript:void(0);void(0)" class="dropdown-notifications-archive">
-                                  <span class="bx bx-x"></span>
-                                </a>
-                              </div>
-                            </div>
-                          </div>
-                        </li>
-                        <li class="border-bottom d-grid dropdown-item">
-                          <div class="d-flex justify-content-between cursor-pointer">
-                            <div class="col-auto pe-2">
-                              <a href="javascript:void(0);" class="avatar avatar-sm avatar-green">HS</a>
-                            </div>
-                            <div class="team-text col">
-                              <div class="mb-1 text-sm">Lorem ipsum dolor sit amet consectetur,.</div>
-                              <span class="text-sm text-muted">2 hr ago</span>
-                            </div>
-                            <div class="col-auto">
-                              <div>
-                                <a href="javascript:void(0);void(0)" class="dropdown-notifications-archive">
-                                  <span class="bx bx-x "></span>
-                                </a>
-                              </div>
-                            </div>
-                          </div>
-                        </li>
-                        <li class="border-bottom d-grid dropdown-item">
-                          <div class="d-flex justify-content-between cursor-pointer">
-                            <div class="col-auto pe-2">
-                              <a href="javascript:void(0);" class="avatar avatar-sm avatar-green">Sk</a>
-                            </div>
-                            <div class="team-text col">
-                              <div class="mb-1 text-sm">Won the monthly best seller gold badge</div>
-                              <span class="text-sm text-muted">1 hr ago</span>
-                            </div>
-                            <div class="col-auto">
-                              <div>
-                                <a href="javascript:void(0);void(0)" class="dropdown-notifications-archive">
-                                  <span class="bx bx-x"></span>
-                                </a>
-                              </div>
-                            </div>
-                          </div>
-                        </li>
-                        <li class="border-bottom d-grid dropdown-item">
-                          <div class="d-flex justify-content-between cursor-pointer">
-                            <div class="col-auto pe-2">
-                              <a href="javascript:void(0);" class="avatar avatar-sm avatar-light">CF</a>
-                            </div>
-                            <div class="team-text col">
-                              <div class="mb-1 text-sm">Won the monthly best seller gold badge</div>
-                              <span class="text-sm text-muted"> 1min ago</span>
-                            </div>
-                            <div class="col-auto">
-                              <div>
-                                <a href="javascript:void(0);void(0)" class="dropdown-notifications-archive">
-                                  <span class="bx bx-x"></span>
-                                </a>
-                              </div>
-                            </div>
-                          </div>
-                        </li>
-                        <li class=" d-grid dropdown-item">
-                          <div class="d-flex justify-content-between cursor-pointer">
-                            <div class="col-auto pe-2">
-                              <a href="javascript:void(0);" class="avatar avatar-sm avatar-green">HS</a>
-                            </div>
-                            <div class="team-text col">
-                              <div class="mb-1 text-sm">Lorem ipsum dolor sit amet consectetur,.</div>
-                              <span class="text-sm text-muted">2 hr ago</span>
-                            </div>
-                            <div class="col-auto">
-                              <div>
-                                <a href="javascript:void(0);void(0)" class="dropdown-notifications-archive">
-                                  <span class="bx bx-x "></span>
-                                </a>
-                              </div>
-                            </div>
-                          </div>
-                        </li>
-                      </ul>
-                    </li>
-                    <li class="dropdown-footer border-top">
-                      <a href="" class="btn-border btn-border-sm btn-border-primary">View All Notification</a>
-                    </li>
-                  </ul>
-                </li>
+                </li> --}}
+                <livewire:notifications.notification-drop-down />
                 <li class="nav-item  navbar-dropdown dropdown">
                   <a id="modal-search" href="#" class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="true">
                     <span class="avatar avatar-sm avatar-green">AJ</span>
@@ -430,6 +302,7 @@
         setTimeout(() => {
           $(function() {
             $('[data-bs-toggle="tooltip"]').tooltip();
+            $('[data-bs-toggle="dropdown"]').dropdown();
           })
         }, 1000);
       });

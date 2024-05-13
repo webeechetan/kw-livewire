@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\Team;
 use App\Models\Project;
+use App\Models\Notification;
 use App\Models\Scopes\OrganizationScope;
 use App\Models\Organization;
 use Spatie\Permission\Traits\HasRoles;
@@ -90,5 +91,9 @@ class User extends Authenticatable
             return substr($this->name, 0, 2);
         }
         return $words[0][0].$words[1][0];
+    }
+
+    public function notifications(){
+        return $this->hasMany(Notification::class);
     }
 }

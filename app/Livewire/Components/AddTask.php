@@ -6,6 +6,7 @@ use Livewire\Component;
 use App\Models\ { Project, Task, User, Attachment, Comment};
 use Livewire\WithFileUploads;
 use App\Notifications\NewTaskAssignNotification;
+use App\Notifications\UserMentionNotification;
 
 class AddTask extends Component
 {
@@ -83,6 +84,7 @@ class AddTask extends Component
     }
 
     public function saveComment(){
+        // dd($this->comment);
         $this->validate([
             'comment' => 'required'
         ]);
@@ -118,17 +120,24 @@ class AddTask extends Component
             }
         }
 
+        $mentioned_users = array_unique($mentioned_users);
+
+        $mentioned_users = array_map('trim',$mentioned_users);
+
+        $mentioned_users = array_filter($mentioned_users);
+
         // get user ids from mentioned users
 
         $mentioned_user_ids = User::whereIn('name',$mentioned_users)->pluck('id')->toArray();
 
-        foreach($mentioned_user_ids as $user_id){
-            $user = User::find($user_id);
-            // $user->notify(new UserMentionNotification($this->task , $comment));
-        }
-
         $comment->mentioned_users = implode(',',$mentioned_user_ids);
         $comment->save();
+        foreach($mentioned_user_ids as $user_id){
+            $user = User::find($user_id);
+            if($user){
+                $user->notify(new UserMentionNotification($this->task , $comment));
+            }
+        }
         $this->comments = $this->task->comments;
         $this->dispatch('comment-added',Comment::with('user')->find($comment->id));
         $this->comment = '';
