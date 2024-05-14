@@ -9,6 +9,7 @@ use App\Models\Task;
 use App\Models\Project;
 use App\Models\Client;
 use App\Models\Scopes\OrganizationScope;
+use PDO;
 
 class Team extends Model
 {
@@ -20,6 +21,10 @@ class Team extends Model
 
     public function users(){
         return $this->belongsToMany(User::class);
+    }
+
+    public function manager(){
+        return $this->belongsTo(User::class,'manager_id');
     }
 
     protected static function booted()

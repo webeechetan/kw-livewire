@@ -28,6 +28,6 @@ class ListTeam extends Component
         return view('livewire.teams.list-team',[
             'teams' => Team::paginate(10)
         ]);
-    }
+    } 
 }
 

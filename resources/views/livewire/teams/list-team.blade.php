@@ -59,13 +59,14 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card_style-star_active"><span class="text-success"><i class='bx bxs-star' ></i></span></div>
+                    {{-- <div class="card_style-star_active"><span class="text-success"><i class='bx bxs-star' ></i></span></div> --}}
                     <div class="card_style-list_head">
-                        <div class="card_style-team-profile-img"><span><img src="{{ env('APP_URL') }}/storage/{{ $team->image }}" alt="{{ $team->name }}"></span></div>
+                        
+                        <div class="card_style-team-profile-img"><span><div class="avatar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{$team->name}}">{{$team->initials}}</div></span></div>
                         <div class="card_style-team-profile-content">
                             <h4 class="mb-2"><a wire:navigate href="{{ route('team.profile',$team->id) }}">{{ $team->name }}</a></h4>
                             <div class="mb-2">
-                                <span class="font-500"><i class='bx bx-user text-success' ></i> Manager</span> <span class="btn-batch ms-2">Vikram Malhotra</span>
+                                <span class="font-500"><i class='bx bx-user text-success' ></i> Manager</span> @if($team->manager)<span class="btn-batch ms-2">{{ $team->manager?->name }}</span> @endif
                             </div>
                             <div class="row">
                                 <div class="col-auto">
@@ -162,74 +163,7 @@
     </div>
 
     <!-- Team Modal -->
-    <div wire:ignore class="modal fade" id="add-team-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header d-flex align-items-center justify-content-between gap-20">
-                    <h3 class="modal-title"><span class="btn-icon btn-icon-primary me-1"><i class='bx bx-user' ></i></span> Add Team</h3>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form wire:submit="addProject" method="POST" enctype="multipart/form-data">
-                        <div class="modal-form-body">
-                            <div class="row">
-                                <div class="col-md-4 mb-4">
-                                    <label for="">Team Name<sup class="text-primary">*</sup></label>
-                                </div>
-                                <div class="col-md-8 mb-4">
-                                    <input wire:model="project_name" type="text" class="form-style" placeholder="Team Name Here...">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-4 mb-4">
-                                    <label for="">Upload Logo</label>
-                                </div>
-                                <div class="col-md-8 mb-4">
-                                    <div class="form-file_upload form-file_upload-logo">
-                                        <input type="file" id="formFile">
-                                        <div class="form-file_upload-box">
-                                            <div class="form-file_upload-box-icon"><i class='bx bx-image'></i></div>
-                                            <div class="form-file_upload-box-text">Upload Image</div>
-                                        </div>
-                                        <div class="form-file_upload-valText">Allowed *.jpeg, *.jpg, *.png, *.gif max size of 3 Mb</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-4 mb-4">
-                                    <label for="">Add Users<sup class="text-primary">*</sup></label>
-                                </div>
-                                <div class="col-md-8 mb-4">
-                                    <select name="" id="" class="form-style">
-                                        <option value="">Rakesh</option>
-                                        <option value="">Rajiv</option>
-                                        <option value="">Akash</option>
-                                    </select>
-                                </div>
-                            </div>   
-                            <div class="row">
-                                <div class="col-md-4 mb-4 mb-lg-0">
-                                    <label for="">Assign Manager<sup class="text-primary">*</sup></label>
-                                </div>
-                                <div class="col-md-8">
-                                    <select name="" id="" class="form-style">
-                                        <option value="">Rakesh</option>
-                                        <option value="">Rajiv</option>
-                                        <option value="">Akash</option>
-                                    </select>
-                                </div>
-                            </div>                            
-                        </div>
-                        <div class="modal-form-btm">
-                            <div class="row">
-                                <div class="col-md-6 ms-auto text-end">
-                                    <button type="submit" class="btn btn-primary">Add Team</button>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+
+    <livewire:components.add-team />
+    
 </div>

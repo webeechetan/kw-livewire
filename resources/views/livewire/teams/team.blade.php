@@ -27,82 +27,15 @@
                         <i class="bx bx-user text-secondary"></i>
                         </span> Manager
                      </div>
-                     <div class="col text-nowrap btn-batch">Roshan Jajoriya</div>
+                     <div class="col text-nowrap btn-batch">{{ $team->manager?->name }}</div>
                   </div>
                </div>
             </div>
          </div>
          <div class="text-end col">
             <div class="main-body-header-right">
-               <a data-bs-toggle="modal" data-bs-target="#add-team-modal" href="javascript:void(0);" class="btn-sm btn-border btn-border-primary">
-               <i class='bx bx-plus'></i> Add Team </a>
-            </div>
-         </div>
-      </div>
-   </div>
-   <!--- Modal --->
-   <div>
-      <div class="modal fade" id="add-team-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-         <div class="modal-dialog">
-            <div class="modal-content">
-               <div class="modal-header d-flex align-items-center justify-content-between gap-20">
-                  <h3 class="modal-title">
-                     <span class="btn-icon btn-icon-primary me-1">
-                     <i class='bx bx-layer'></i>
-                     </span>
-                     <span class="project-form-text">Add Member</span>
-                  </h3>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-               </div>
-               <div class="modal-body">
-                  <form method="POST" enctype="multipart/form-data">
-                     <div class="modal-form-body">
-                        <div class="row">
-                           <div class="col-md-4 mb-4 mb-md-0">
-                              <label for="">Select Team <sup class="text-primary">*</sup>
-                              </label>
-                           </div>
-                           <div class="col-md-8 mb-4">
-                              <div class="custom-select">
-                                 <select wire:model.live="client_id" class="form-style">
-                                    <option value="">Select Team</option>
-                                    <option value="">Tech Team</option>
-                                    <option value="">Media Team</option>
-                                    <option value="">Design Team</option>
-                                    <option value="">Cs Team</option>
-                                 </select>
-                              </div>
-                           </div>
-                        </div>
-                        <div class="row">
-                           <div class="col-md-4 mb-4">
-                              <label for=""> Manger Name <sup class="text-primary">*</sup>
-                              </label>
-                           </div>
-                           <div class="col-md-8 mb-4">
-                              <input type="text" class="form-style" placeholder="Name">
-                           </div>
-                        </div>
-                        <div class="row">
-                           <div class="col-md-4 mb-4 mb-md-0">
-                              <label for="">Start Date <sup class="text-primary">*</sup>
-                              </label>
-                           </div>
-                           <div class="col mb-8 mb-4">
-                              <a href="javascript:;" class="btn btn-sm w-100 btn-border-secondary project_start_date">
-                              <i class='bx bx-calendar-alt'></i> Start Date </a>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="modal-form-btm">
-                        <div class="row">
-                           <div class="col-md-6 ms-auto text-end">
-                              <button type="submit" class="btn btn-primary project-form-btn">Add Member</button>
-                           </div>
-                        </div>
-                     </div>
-                  </form>
-               </div>
+               <a wire:click="dispatchEditEvent({{ $team->id }})" href="javascript:void(0);" class="btn-sm btn-border btn-border-primary ">
+               <i class='bx bx-plus'></i> Edit Team </a>
             </div>
          </div>
       </div>
@@ -385,4 +318,5 @@
          </div>
       </div>
    </div>
+   <livewire:components.add-team @saved="$refresh" />
 </div>

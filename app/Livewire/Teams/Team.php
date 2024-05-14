@@ -17,4 +17,8 @@ class Team extends Component
     public function mount(TeamModel $team){
         $this->team = $team;
     }
+
+    public function dispatchEditEvent($id){
+        $this->dispatch('editTeam',$id);
+    }
 }

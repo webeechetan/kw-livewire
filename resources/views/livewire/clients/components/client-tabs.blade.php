@@ -4,7 +4,7 @@
             <div class="row align-items-center">
                 <div class="col">
                     <div class="dashboard-head-title-wrap">
-                        <div class="client_head_logo"><img src="{{ env('APP_URL') }}/storage/{{ $client->image }}" alt=""></div>
+                        <div class="avatar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Ac">{{$client->initials}}</div>
                         <div>
                             <h3 class="main-body-header-title mb-2">{{ $client->visible_name }}</h3>
                             <div class="text-sm">{{ \Carbon\Carbon::parse($client->onboard_date)->format('d M Y') }}</div>

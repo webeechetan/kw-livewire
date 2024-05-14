@@ -4,7 +4,7 @@
             <div class="row align-items-center">
                 <div class="col">
                     <div class="dashboard-head-title-wrap">
-                        <div class="client_head_logo"><img src="{{ asset('storage/'.$project->client->image) }}" alt=""></div>
+                        <div class="avatar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Ac">{{$project->initials}}</div>
                         <div>
                             <h3 class="main-body-header-title mb-2">{{ $project->name }}</h3>
                             <div class="text-sm text-uppercase">Acma</div>
