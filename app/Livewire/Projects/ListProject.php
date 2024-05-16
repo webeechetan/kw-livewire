@@ -4,13 +4,23 @@ namespace App\Livewire\Projects;
 
 use Livewire\Component;
 use Livewire\WithPagination;
+use App\Helpers\Helper;
 use App\Models\Project;
 use App\Models\User;
 use Livewire\Attributes\Lazy;
+use ProtoneMedia\LaravelCrossEloquentSearch\Search;
 
 class ListProject extends Component
 {
     use WithPagination;
+
+
+    public $allProjects;
+    public $activeProjects;
+    public $completedProjects;
+    public $archivedProjects;
+
+
 
     public $query = '';
  
@@ -22,8 +32,17 @@ class ListProject extends Component
 
     public function render()
     {
+
+
+        $this->allProjects = Project::count();
+
+        $this->activeProjects = Project::where('status', 'active')->count();
+        $this->completedProjects = Project::where('status', 'completed')->count();
+        $this->archivedProjects = Project::onlyTrashed()->count();
+        
         $projects = Project::where('name','like','%'.$this->query.'%');
         
+
         if($this->filter == 'active'){
             $projects->where('status','active');
         }elseif($this->filter == 'archived'){
@@ -92,6 +111,9 @@ class ListProject extends Component
     {
         $this->dispatch('forceDeleteProject', $projectId);
     }
+
+
+  
 
     // public function placeholder(){
     //     return view('placeholders.card');

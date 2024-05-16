@@ -50,6 +50,7 @@ class AddProject extends Component
 
     public function addProject()
     {
+
         if($this->project){
             $this->updateProject();
             return;
