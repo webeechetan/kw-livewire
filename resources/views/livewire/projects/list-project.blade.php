@@ -77,15 +77,15 @@
                             @if($sort == 'newest') Newest @endif
                             @if($sort == 'a_z') A to Z @endif
                             @if($sort == 'z_a') Z to A @endif
-                            <a wire:navigate href="{{ route('project.index',['sort'=>'all','filter'=>$filter]) }}" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
+                            <a href="{{ route('project.index',['sort'=>'all','filter'=>$filter]) }}" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
                     @endif
 
                     @if($filter != 'all')
-                        <span class="btn-batch">{{ ucfirst($filter) }} <a wire:navigate href="{{ route('project.index',['sort'=>$sort,'filter'=>'all']) }}" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
+                        <span class="btn-batch">{{ ucfirst($filter) }} <a href="{{ route('project.index',['sort'=>$sort,'filter'=>'all']) }}" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
                     @endif
 
                     @if($byUser != 'all')
-                        <span class="btn-batch">{{ $users->find($byUser)->name }} <a wire:navigate href="{{ route('project.index',['sort'=>$sort,'filter'=>$filter,'byUser'=>'all']) }}" class="ms-1"><i class='bx bx-x'></i></a></span>
+                        <span class="btn-batch">{{ $users->find($byUser)->name }} <a href="{{ route('project.index',['sort'=>$sort,'filter'=>$filter,'byUser'=>'all']) }}" class="ms-1"><i class='bx bx-x'></i></a></span>
                     @endif
                     
 
@@ -142,7 +142,7 @@
                             <div class="card_style-tasks-title mb-2"><span><i class='bx bx-objects-horizontal-left' ></i></span> {{ $project->tasks->count() }} Tasks</div>
                             <div class="card_style-tasks-list">
                                 <div class="card_style-tasks-item card_style-tasks-item-pending"><span><i class='bx bx-objects-horizontal-center' ></i></span>
-                                    {{ $project->tasks->where('status', 'pending')->count() }} Active
+                                    {{ $project->tasks->where('status', 'pending')->where('due_date', '>', now())->count() }} Active
                                 </div>
                                 <div class="card_style-tasks-item card_style-tasks-item-overdue"><span><i class='bx bx-objects-horizontal-center' ></i></span> 
                                     {{ $project->tasks->where('due_date', '<', now())->count() }} Overdue
@@ -180,7 +180,7 @@
                                             $percentage = 0;
                                         }
                                     @endphp
-                                    <div class="progress-bar progress-success" style="width: {{$percentage}}%"><span class="progress-bar-text">{{$percentage}}%</span></div>
+                                    <div class="progress-bar progress-success" style="width: {{$percentage}}%"><span class="progress-bar-text">{{ round($percentage)}}%</span></div>
                                 </div>
                                 <div class="task_progress-btm-date d-flex justify-content-between">
                                     <div><i class='bx bx-calendar' ></i> {{ \Carbon\Carbon::parse($project->start_date)->format('d M') }}</div>

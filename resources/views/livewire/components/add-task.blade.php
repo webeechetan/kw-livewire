@@ -85,17 +85,8 @@
                     <div class="taskPane-item mb-2">
                         <div class="taskPane-item-label mb-3"><a href="#"><i class="bx bx-paperclip text-secondary add-attachments" style="transform: rotate(60deg);"></i></a> <span class="task-attachment-count">0</span> Attachements</div>
                         <input class="d-none attachments" type="file" wire:model="attachments" multiple id="formFile" />
-                        <div class="attached_files">
-                            <div class="attached_files-item">
-                                <div class="attached_files-item-preview">
-                                    <img class="attached_files-item-thumb" src="{{ env('APP_URL') }}/storage/images/invite_banner.jpg" alt="" />
-                                </div>
-                            </div>
-                            <div class="attached_files-item">
-                                <div class="attached_files-item-preview">
-                                    <img class="attached_files-item-thumb" src="{{ env('APP_URL') }}/storage/images/thankyou.jpg" alt="" />
-                                </div>
-                            </div>
+                        <div class="attached_files d-none">
+                            <a data-bs-toggle="modal" data-bs-target="#exampleModal">View Attachements</a>
                         </div>
                     </div>
                 </div>
@@ -106,7 +97,7 @@
                     <h5 class="cmnt_item_title"><span><i class='bx bx-line-chart text-primary'></i> Activity</span><span class="text-sm"><i class='bx bx-comment-dots text-secondary'></i> 15 Comments</span></h5>
                     <div class="cmnt_item-tabs">
                         <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                            <button class="nav-link active" id="nav-internal-tab" data-bs-toggle="tab" data-bs-target="#nav-internal" type="button" role="tab" aria-controls="nav-internal" aria-selected="true">Internal Comment <span class="text-sm ms-2"><i class='bx bx-comment-dots text-secondary'></i> 07</span></button>
+                            <button class="nav-link active" id="nav-internal-tab" data-bs-toggle="tab" data-bs-target="#nav-internal" type="button" role="tab" aria-controls="nav-internal" aria-selected="true">Internal Comment <span class="text-sm ms-2"><i class='bx bx-comment-dots text-secondary'></i> <span class="task-comments-count">07</span></span></button>
                             <button class="nav-link" id="nav-client-tab" data-bs-toggle="tab" data-bs-target="#nav-client" type="button" role="tab" aria-controls="nav-client" aria-selected="false">Client Feedback <span class="text-sm ms-2"><i class='bx bx-comment-dots text-secondary'></i> 08</span></button>
                         </div>
                     </div>
@@ -169,6 +160,42 @@
             </div>
         </div>
     </div>
+    {{-- Attachments modal --}}
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Attachements </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body attachements-body mt-4 mb-4">
+            <div class="attached_files">
+                @if($task)
+                    @foreach($task->attachments as $attach)
+                    <div class="attached_files-item">
+                        @if($attach->can_view)
+                            <div class="attached_files-item-preview">
+                                <a target="_blank" href="{{ env('APP_URL') }}/storage/{{$attach->attachment_path}}"><img class="attached_files-item-thumb" src="{{ env('APP_URL') }}/storage/{{$attach->attachment_path}}" alt="" /></a>
+                            </div>
+                        @else
+                            <div class="attached_files-item-preview">
+                                <a target="_blank" href="{{ env('APP_URL') }}/storage/{{$attach->attachment_path}}"><img class="attached_files-item-thumb" src="{{$attach->thumbnail}}" alt="" /></a>
+                            </div>
+                        @endif
+                    </div>
+                    @endforeach
+                @endif
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>
 
 
@@ -296,7 +323,7 @@
 
             document.addEventListener('edit-task', event => {
                 $(".cmnt_sec").removeClass('d-none');
-                
+                $(".attached_files").removeClass('d-none');
                 $('.taskPane-heading-label').html('Edit Task');
                 $('.save-task-button').html('Update Task');
                 let task_users = event.detail[0].users;
@@ -356,6 +383,7 @@
 
                 // $('.task-attachments').html(attachment_html);
                 console.log(event.detail[0].comments);
+                $(".task-comments-count").html(event.detail[0].comments.length)
                 event.detail[0].comments.forEach(comment => {
                     let comment_html = `<div class="cmnt_item_row">
                         <div class="cmnt_item_user">

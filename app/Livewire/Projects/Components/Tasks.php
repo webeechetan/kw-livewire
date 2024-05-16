@@ -53,6 +53,8 @@ class Tasks extends Component
                 return $task->teams->contains('id',$this->byTeam);
             });
         }
+
+        $this->project->tasks()->paginate(5);
         
 
     }

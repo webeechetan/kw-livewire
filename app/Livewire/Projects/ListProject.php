@@ -13,7 +13,7 @@ class ListProject extends Component
     use WithPagination;
 
     public $query = '';
-
+ 
     public $sort = 'all';
     public $filter = 'all';
     public $byTeam = 'all';

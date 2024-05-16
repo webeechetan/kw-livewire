@@ -89,7 +89,10 @@
             </div>
             <div class="taskList scrollbar">
                 <div>
-                    @foreach($project->tasks as $task)
+                    @php
+                        $tasks = $project->tasks()->paginate(10)     
+                    @endphp
+                    @foreach($tasks as $task)
                     <div class="taskList_row" wire:key="task-row-{{ $task->id }}">
                         <div class="row">
                             <div class="col-lg-6">
@@ -133,6 +136,9 @@
                     @endforeach
                 </div>
             </div>
+        </div>
+        <div class="mt-4">
+            {{  $tasks->links()  }}
         </div>
     </div>
     <livewire:components.add-task @saved="$refresh" :project="$project" wire:key="task-{{$project->id}}"  />

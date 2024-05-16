@@ -3,7 +3,7 @@
 namespace App\Livewire\Components;
 
 use Livewire\Component;
-use App\Models\ { Project, Task, User, Attachment, Comment};
+use App\Models\ { Project, Task, User, Attachment, Comment, Client};
 use Livewire\WithFileUploads;
 use App\Notifications\NewTaskAssignNotification;
 use App\Notifications\UserMentionNotification;
@@ -29,6 +29,7 @@ class AddTask extends Component
     public $attachments;
     public $comment;
     public $comments = [];
+
 
     public function render()
     {
@@ -64,7 +65,10 @@ class AddTask extends Component
          // attach files to task from $this->attachments
         if($this->attachments){
             foreach($this->attachments as $attachment){
-                $path = $attachment->store('attachments');
+                $p = Project::find($this->project_id);
+                $c = Client::find($p->client_id);
+                $path = session('org_name').'/'.$c->name.'/'.$p->name;
+                $path = $attachment->store($path);
                 $at = new Attachment();
                 $at->org_id = session('org_id');
                 $at->name = $attachment->getClientOriginalName();
@@ -170,7 +174,10 @@ class AddTask extends Component
         // attach files to task from $this->attachments
         if($this->attachments){ 
             foreach($this->attachments as $attachment){
-                $path = $attachment->store('attachments');
+                $p = Project::find($this->task->project_id);
+                $c = Client::find($p->client_id);
+                $path = session('org_name').'/'.$c->name.'/'.$p->name;
+                $path = $attachment->store($path);
                 $at = new Attachment();
                 $at->org_id = session('org_id');
                 $at->name = $attachment->getClientOriginalName();
