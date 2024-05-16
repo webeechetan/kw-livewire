@@ -62,10 +62,10 @@
     <div class="row">
         <div class="col-md-6">
             <div class="d-flex flex-wrap gap-4 align-items-center mb-4">
-                <a class="active" href="#">All <span class="btn-batch">50</span></a>
-                <a href="#">Active <span class="btn-batch">20</span></a>
-                <a href="#">Completed <span class="btn-batch">15</span></a>
-                <a href="#">Archive <span class="btn-batch">05</span></a>
+                <a class="@if($filter == 'all') active @endif" wire:navigate href="{{ route('project.index',['sort'=>$sort,'filter'=>'all'])}}">All <span class="btn-batch">{{$allProjects}}</span></a>
+                <a class="@if($filter == 'active') active @endif" wire:navigate href="{{ route('project.index',['sort'=>$sort,'filter'=>'active']) }}">Active <span class="btn-batch">{{$activeProjects}}</span></a>
+                <a class="@if($filter == 'completed') active @endif" wire:navigate href="{{ route('project.index',['sort'=>$sort,'filter'=>'completed']) }}">Completed <span class="btn-batch">{{$completedProjects}}</span></a>
+                <a class="@if($filter == 'archived') active @endif" wire:navigate href="{{ route('project.index',['sort'=>$sort,'filter'=>'archived']) }}">Archive <span class="btn-batch">{{$archivedProjects}}</span></a>
             </div>
         </div>
         <div class="col-md-6">

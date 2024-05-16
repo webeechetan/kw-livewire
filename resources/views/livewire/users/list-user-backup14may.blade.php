@@ -29,14 +29,10 @@
                                         <h5 class="filterSort-header"><i class='bx bx-sort-down text-primary' ></i> Sort By</h5>
                                         <ul class="filterSort_btn_group list-none">
                                             <li class="filterSort_item">
-                                                <a wire:navigate href="{{ route('user.index',['sort'=>'newest','filter'=>$filter])}}" class="btn-batch">Newest</a>
+                                                <a wire:navigate href="{{route('user.index',['sort'=>'newest', 'filter'=>$filter])}}" class="btn-batch @if($sort == 'newest') active @endif">Newest</a>
                                             </li>
-                                            <li class="filterSort_item">
-                                                <a wire:navigate href="{{ route('user.index',['sort'=>'a_z','filter'=>$filter])}}" class="btn-batch"><i class='bx bx-down-arrow-alt' ></i> A To Z</a>
-                                            </li>
-                                            <li class="filterSort_item">
-                                                <a wire:navigate href="{{ route('user.index',['sort'=>'z_a','filter'=>$filter])}}" class="btn-batch"><i class='bx bx-up-arrow-alt' ></i> Z To A</a>
-                                            </li>
+                                            <li class="filterSort_item"><a href="#" class="btn-batch"><i class='bx bx-down-arrow-alt' ></i> A To Z</a></li>
+                                            <li class="filterSort_item"><a href="#" class="btn-batch"><i class='bx bx-up-arrow-alt' ></i> Z To A</a></li>
                                         </ul>
                                         <hr>
                                         <h5 class="filterSort-header"><i class='bx bx-briefcase text-primary' ></i> Filter By Status</h5>
@@ -46,21 +42,15 @@
                                         </ul>
                                         <hr>
                                         <h5 class="filterSort-header"><i class='bx bx-briefcase text-primary' ></i> Filter By Clients</h5>
-                                        <select class="form-control" wire:model.live="byClient" name="" id="">
-                                            <option value="all">All</option>
-                                            @foreach($clients as $client)
-                                            <option value="{{ $client->id}}">{{ $client->name }}</option>
-
-                                            @endforeach
+                                        <select class="form-control"name="" id="">
+                                            <option value="Rakesh">Rakesh</option>
+                                            <option value="Rajiv">Rajiv</option>
                                         </select>
                                         <hr>
                                         <h5 class="filterSort-header"><i class='bx bx-objects-horizontal-left text-primary'></i> Filter By Projects</h5>
-                                        <select class="form-control" wire:model.live="byProject" name="" id="">
-                                            <option value="all">All</option> 
-                                            @foreach($projects as $project)
-                                                <option value="{{ $project->id}}">{{ $project->name }}</option>
-
-                                            @endforeach
+                                        <select class="form-control"name="" id="">
+                                            <option value="Rakesh">Tech Team</option>
+                                            <option value="Rajiv">Copy Team</option>
                                         </select>
                                     </div>
                                 </div>
@@ -73,20 +63,6 @@
     </div>
 
     <div class="row">        
-        <div class="col-md-6">
-            <div class="d-flex flex-wrap gap-4 align-items-center mb-4">
-                <a class="@if($filter == 'all') active @endif" wire:navigate href="{{ route('client.index',['sort'=>$sort,'filter'=>'all']) }}">All <span class="btn-batch">{{$allUsers}}</span></a>
-                <a class="@if($filter == 'active') active @endif" wire:navigate href="{{ route('client.index',['sort'=>$sort,'filter'=>'active']) }}">Active <span class="btn-batch">{{$activeUsers}}</span></a>
-                {{-- <a class="@if($filter == 'completed') active @endif" wire:navigate href="{{ route('client.index',['sort'=>$sort,'filter'=>'completed']) }}">Completed <span class="btn-batch">{{$completedUsers}}</span></a> --}}
-                <a class="@if($filter == 'archived') active @endif" wire:navigate href="{{ route('client.index',['sort'=>$sort,'filter'=>'archived']) }}">Archive <span class="btn-batch">2</span></a>
-            </div>
-        </div>
-
-        <div class="col-md-6"></div>
-
-
-       
-
         @foreach($users as $user)
             <div class="col-md-4 mb-4">
                 <div class="card_style card_style-user h-100">
