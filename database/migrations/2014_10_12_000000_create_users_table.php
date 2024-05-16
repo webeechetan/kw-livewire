@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('color')->default('#000000');
             $table->string('designation')->nullable();
             $table->unsignedBigInteger('created_by')->nullable();
+            $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();
         });

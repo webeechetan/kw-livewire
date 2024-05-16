@@ -31,4 +31,17 @@ class User extends Component
     public function emitEditUserEvent($user_id){
         $this->dispatch('editUser', $user_id);
     }
+
+    public function changeUserStatus($status)
+    {
+        if($status == 'archived'){
+            $this->user->delete();
+            $this->redirect(route('user.index'),navigate:true);
+            // $this->dispatch('success', 'Client archived successfully.');
+        }else{
+            $this->user->restore();
+            $this->dispatch('success', 'User status updated successfully.');
+        }
+        $this->redirect(route('user.profile', $this->user->id),navigate:true);
+    }
 }

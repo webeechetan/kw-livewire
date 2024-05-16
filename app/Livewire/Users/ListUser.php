@@ -48,7 +48,7 @@ class ListUser extends Component
         $this->allUsers = User::count();
         $this->activeUsers = User::where('status', 'active')->count();
         $this->completedUsers = User::where('status', 'completed')->count();
-       // $this->archivedUsers = User::onlyTrashed()->count();
+        $this->archivedUsers = User::onlyTrashed()->count();
 
 
         $users = User::where('name', 'like', '%'.$this->query.'%');
