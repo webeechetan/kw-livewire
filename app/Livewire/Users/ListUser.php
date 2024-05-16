@@ -31,6 +31,7 @@ class ListUser extends Component
      public $byProject = 'all';
 
      public $clients = [] ;
+     public $projects = [] ;
 
     // //  filters & sorts
 
@@ -70,6 +71,11 @@ class ListUser extends Component
             $users->onlyTrashed();
         }
 
+        if($this->byProject){
+            $p = Project::find($this->byProject);
+            dd($p->members);
+        }
+
         
           
         if($this->byClient != 'all'){
@@ -95,16 +101,9 @@ class ListUser extends Component
         $users->orderBy('created_at', 'desc');
         $users = $users->paginate(9);
 
-        // dd($users);
-
-        //$clients = Client::all();
-        $projects = Project::all();
-
 
         return view('livewire.users.list-user',[
             'users' => $users,
-            //'clients' => $clients,
-            'projects' => $projects,
         ]);
        
         // return view('livewire.users.list-user',[
@@ -115,8 +114,8 @@ class ListUser extends Component
 
 
     public function mount(){
-
-        $this->clients = Client::all();
+        $this->clients = Client::orderBy('name')->get();
+        $this->projects = Project::orderBy('name')->get();
     }
 
     public function search()

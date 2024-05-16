@@ -49,7 +49,7 @@ class ListProject extends Component
             $projects->onlyTrashed();
         }elseif($this->filter == 'completed'){
             $projects->where('status','completed');
-        }elseif($this->filter == 'overdue'){
+        }elseif($this->filter == 'overdue'){ 
             $projects->where('status','overdue');
         }
         // dd($projects->toSql());
