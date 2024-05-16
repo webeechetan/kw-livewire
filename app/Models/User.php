@@ -14,6 +14,7 @@ use App\Models\Scopes\OrganizationScope;
 use App\Models\Organization;
 use Spatie\Permission\Traits\HasRoles;
 
+
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles;
