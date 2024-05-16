@@ -4,7 +4,7 @@ namespace App\Livewire\Users;
 
 use Livewire\Component;
 use App\Models\User;
-use App\Models\Client;
+use App\Models\Team;
 use App\Models\Project;
 use Livewire\WithPagination;
 use App\Helpers\Helper;
@@ -27,11 +27,11 @@ class ListUser extends Component
 
      public $byTeam = 'all';
      public $byUser = 'all'; 
-     public $byClient = 'all';
      public $byProject = 'all';
 
-     public $clients = [] ;
+     public $teams = [] ;
      public $projects = [] ;
+
 
     // //  filters & sorts
 
@@ -40,6 +40,7 @@ class ListUser extends Component
 
 
       public $user;
+  
 
     public function render()
     {
@@ -73,48 +74,29 @@ class ListUser extends Component
 
         if($this->byProject){
             $p = Project::find($this->byProject);
-            dd($p->members);
+            //dd($p->members);
         }
 
-        
-          
-        if($this->byClient != 'all'){
-
-           
-            $users->whereHas('clients', function($query){
-                $query->where('client_id', $this->byClient);
+        if($this->byTeam != 'all'){
+            $users->whereHas('teams', function($query){
+                $query->where('team_id', $this->byTeam);
             });
         }
-        
-        
-
        
-        
-        // if($this->byProject != 'all'){
-        //     $users->whereHas('projects', function($query){
-        //         $query->where('id', $this->byProject);
-        //     });
-        // }
 
-        
 
         $users->orderBy('created_at', 'desc');
         $users = $users->paginate(9);
 
-
         return view('livewire.users.list-user',[
             'users' => $users,
         ]);
-       
-        // return view('livewire.users.list-user',[
-        //     'users' => User::orderBy('id','desc')->paginate(10)
-        // ]);
         
     }
 
 
     public function mount(){
-        $this->clients = Client::orderBy('name')->get();
+        $this->teams = Team::orderBy('name')->get();
         $this->projects = Project::orderBy('name')->get();
     }
 

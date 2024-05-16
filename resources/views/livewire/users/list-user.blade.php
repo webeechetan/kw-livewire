@@ -29,13 +29,13 @@
                                         <h5 class="filterSort-header"><i class='bx bx-sort-down text-primary' ></i> Sort By</h5>
                                         <ul class="filterSort_btn_group list-none">
                                             <li class="filterSort_item">
-                                                <a wire:navigate href="{{ route('user.index',['sort'=>'newest','filter'=>$filter])}}" class="btn-batch">Newest</a>
+                                                <a wire:navigate href="{{ route('user.index',['sort'=>'newest','filter'=>$filter])}}" class="btn-batch @if($sort == 'newest') active @endif">Newest</a>
                                             </li>
                                             <li class="filterSort_item">
-                                                <a wire:navigate href="{{ route('user.index',['sort'=>'a_z','filter'=>$filter])}}" class="btn-batch"><i class='bx bx-down-arrow-alt' ></i> A To Z</a>
+                                                <a wire:navigate href="{{ route('user.index',['sort'=>'a_z','filter'=>$filter])}}" class="btn-batch @if($sort == 'a_z') active @endif"><i class='bx bx-down-arrow-alt' ></i> A To Z</a>
                                             </li>
                                             <li class="filterSort_item">
-                                                <a wire:navigate href="{{ route('user.index',['sort'=>'z_a','filter'=>$filter])}}" class="btn-batch"><i class='bx bx-up-arrow-alt' ></i> Z To A</a>
+                                                <a wire:navigate href="{{ route('user.index',['sort'=>'z_a','filter'=>$filter])}}" class="btn-batch" @if($sort == 'z_a') active @endif><i class='bx bx-up-arrow-alt' ></i> Z To A</a>
                                             </li>
                                         </ul>
                                         <hr>
@@ -45,12 +45,11 @@
                                             <li class="filterSort_item"><a href="#" class="btn-batch">Archived</a></li>
                                         </ul>
                                         <hr>
-                                        <h5 class="filterSort-header"><i class='bx bx-briefcase text-primary' ></i> Filter By Clients</h5>
-                                        <select class="form-control" wire:model.live="byClient" name="" id="">
+                                        <h5 class="filterSort-header"><i class='bx bx-briefcase text-primary' ></i> Filter By Teams</h5>
+                                        <select class="form-control" wire:model.live="byTeam" name="" id="">
                                             <option value="all">All</option>
-                                            @foreach($clients as $client)
-                                            <option value="{{ $client->id}}">{{ $client->name }}</option>
-
+                                            @foreach($teams as $team)
+                                                <option value="{{ $team->id}}">{{ $team->name }}</option>
                                             @endforeach
                                         </select>
                                         <hr>
@@ -75,14 +74,37 @@
     <div class="row">        
         <div class="col-md-6">
             <div class="d-flex flex-wrap gap-4 align-items-center mb-4">
-                <a class="@if($filter == 'all') active @endif" wire:navigate href="{{ route('client.index',['sort'=>$sort,'filter'=>'all']) }}">All <span class="btn-batch">{{$allUsers}}</span></a>
-                <a class="@if($filter == 'active') active @endif" wire:navigate href="{{ route('client.index',['sort'=>$sort,'filter'=>'active']) }}">Active <span class="btn-batch">{{$activeUsers}}</span></a>
-                {{-- <a class="@if($filter == 'completed') active @endif" wire:navigate href="{{ route('client.index',['sort'=>$sort,'filter'=>'completed']) }}">Completed <span class="btn-batch">{{$completedUsers}}</span></a> --}}
-                <a class="@if($filter == 'archived') active @endif" wire:navigate href="{{ route('client.index',['sort'=>$sort,'filter'=>'archived']) }}">Archive <span class="btn-batch">2</span></a>
+                <a class="@if($filter == 'all') active @endif" wire:navigate href="{{ route('user.index',['sort'=>$sort,'filter'=>'all']) }}">All <span class="btn-batch">{{$allUsers}}</span></a>
+                <a class="@if($filter == 'active') active @endif" wire:navigate href="{{ route('user.index',['sort'=>$sort,'filter'=>'active']) }}">Active <span class="btn-batch">{{$activeUsers}}</span></a>
+                <a href="#">Archive <span class="btn-batch">2</span></a>
             </div>
         </div>
 
-        <div class="col-md-6"></div>
+        <div class="col-md-6">
+            @if($sort != 'all' || $filter != 'all')
+                <div class="d-flex flex-wrap gap-2 align-items-center justify-content-end">
+                    <span class="pe-2"><i class='bx bx-filter-alt text-secondary'></i> Filter Results:</span>
+                    @if($sort != 'all')
+                        <span class="btn-batch">
+                            @if($sort == 'newest') Newest @endif
+                            @if($sort == 'a_z') A to Z @endif
+                            @if($sort == 'z_a') Z to A @endif
+                            <a href="{{ route('user.index',['sort'=>'all','filter'=>$filter]) }}" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
+                    @endif
+
+                    @if($filter != 'all')
+                        <span class="btn-batch">{{ ucfirst($filter) }} <a href="{{ route('user.index',['sort'=>$sort,'filter'=>'all']) }}" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
+                    @endif
+
+                    @if($byUser != 'all')
+                        <span class="btn-batch">{{ $users->find($byUser)->name }} <a href="{{ route('user.index',['sort'=>$sort,'filter'=>$filter,'byUser'=>'all']) }}" class="ms-1"><i class='bx bx-x'></i></a></span>
+                    @endif
+                    
+
+                    <a href="{{ route('user.index') }}" class="text-danger d-flex align-items-center">Reset <span class="ms-1 d-inline-flex"><i class='bx bx-refresh'></i></span></a>
+                </div>
+            @endif
+        </div>
 
 
        
