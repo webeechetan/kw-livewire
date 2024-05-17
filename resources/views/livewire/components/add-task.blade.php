@@ -11,12 +11,11 @@
                 </select> 
             </div> 
             <div class="taskPane-dashbaord-head-right">
-                <button type="button" class="btn-icon"><i class='bx bx-check text-success' ></i></button>
                 <button type="button" class="btn-icon" data-bs-toggle="modal" data-bs-target="#attached-file-modal"><i class='bx bx-paperclip' style="transform: rotate(60deg);"></i></button>
                 <button type="button" class="btn-icon"><i class='bx bx-link' ></i></button>
                 <button type="button" class="btn-icon" wire:click="viewFullscree"><i class='bx bx-fullscreen'></i></button>
-                <button type="button" class="btn-icon"><i class='bx bx-trash'></i></button>
-                <a href=""><button type="button" class="btn-icon" data-bs-dismiss="offcanvas" aria-label="Close"><i class='bx bx-arrow-to-right'></i></button></a>
+                <button type="button" wire:click="deleteTask" class="btn-icon"><i class='bx bx-trash'></i></button>
+                <button type="button" class="btn-icon" data-bs-dismiss="offcanvas" aria-label="Close"><i class='bx bx-arrow-to-right'></i></button>
             </div>
         </div>
         <div class="offcanvas-body scrollbar">
@@ -155,7 +154,6 @@
         </div>
         <div class="offcanvas-footer">
             <div class="taskPane-footer-wrap py-3 px-4">
-                <button type="button" wire:click="deleteTask" class="btn-border btn-sm btn-border-danger"><i class='bx bx-trash' ></i> Delete Task</button>
                 <button type="button" wire:click="saveTask" class="btn-border btn-sm btn-border-primary save-task-button ms-auto"><i class='bx bx-check'></i> Save Task</button>
             </div>
         </div>
