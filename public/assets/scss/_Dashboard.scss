@@ -10,6 +10,11 @@
     &-content {
         width: calc(100% - 300px);
         padding: $spacing_sm;
+        &.archived_content {
+            .dashboard-head-title-wrap {
+                opacity: 0.5;
+            }
+        }
         @media (max-width: 1440px) {
             width: calc(100% - 200px);
         }
