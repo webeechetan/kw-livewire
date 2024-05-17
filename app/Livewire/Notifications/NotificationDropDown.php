@@ -25,4 +25,10 @@ class NotificationDropDown extends Component
     {
         Notification::markAllAsRead(auth()->user()->id);
     }
+
+    public function clearAll()
+    {
+        Notification::clearAll(auth()->user()->id);
+        return redirect()->back();
+    }
 }

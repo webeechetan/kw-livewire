@@ -25,4 +25,12 @@ class Notification extends Model
             $notification->update(['is_read' => 1]);
         }
     }
+
+    public static function clearAll($user_id)
+    {
+        $notifications = Notification::where('user_id', $user_id)->get();
+        foreach ($notifications as $notification) {
+            $notification->delete();
+        }
+    }
 }

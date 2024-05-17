@@ -29,7 +29,7 @@ class Project extends Component
         $this->projectTasks = Task::where('project_id',$id)->where('status','!=','completed')->get();
         $this->projectUsers = $this->project->users;
         $tasks = Task::whereIn('project_id', [$this->project->id])->get();
-        $task_users = [];
+        $task_users = []; 
         foreach ($tasks as $task) {
             $task_users = array_merge($task_users, $task->users->pluck('id')->toArray());
         }

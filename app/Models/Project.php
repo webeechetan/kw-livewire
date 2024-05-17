@@ -8,8 +8,12 @@ use App\Models\Client;
 use App\Models\User;
 use App\Models\Scopes\OrganizationScope;
 use App\Models\Task;
+use App\Models\Activity;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
+use App\Observers\Project\ProjectObserver;
 
+#[ObservedBy(ProjectObserver::class)]
 class Project extends Model
 {
     use HasFactory, SoftDeletes;
@@ -54,6 +58,10 @@ class Project extends Model
 
     public function createdBy(){
         return $this->belongsTo(User::class,'created_by');
+    }
+
+    public function activities(){
+        return $this->morphMany(Activity::class, 'activityable');
     }
 
     protected static function booted()

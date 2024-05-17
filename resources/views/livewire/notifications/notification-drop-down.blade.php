@@ -7,7 +7,7 @@
       <li class="dropdown-menu-header">
         <div class="dropdown-header">
           <h5 class="fs-5 mb-0 me-auto">Notification</h5>
-          <a href="javascript:void(0);void(0)" class="text-decoration-underline text-danger">Clear All</a>
+          <a href="javascript:void(0);void(0)" wire:click="clearAll" class="text-decoration-underline text-danger">Clear All</a>
         </div>
       </li>
       <li class="activity-recent-scroll custom_scrollbar pe-0">

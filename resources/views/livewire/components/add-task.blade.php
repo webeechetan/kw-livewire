@@ -50,14 +50,15 @@
                                 @endforeach 
                             </select>
                         </div>
-                    </div>
+                    </div> 
+                    @if(!request()->routeIs('project.tasks'))
                     <div class="taskPane-item d-flex flex-wrap mb-3">
                         <div class="taskPane-item-left"><div class="taskPane-item-label">Project</div></div>
-                        <div class="taskPane-item-right">
-                            <select name="" id="" class="task-projects">
+                        <div class="taskPane-item-right"> 
+                            <select wire:model="project_id" name="" id="" class="task-projects">
                                 <option value="" disabled>Select Project</option>
                                 @foreach ($projects as $p)
-                                    @if($project->id == $p->id)
+                                    @if($project_id && $project && $project->id == $p->id)
                                         <option value="{{ $p->id }}" selected>{{ $p->name }}</option>
                                     @else
                                         <option value="{{ $p->id }}">{{ $p->name }}</option>
@@ -66,6 +67,7 @@
                             </select>
                         </div>
                     </div>
+                    @endif
                     <div class="taskPane-item d-flex flex-wrap mb-3">
                         <div class="taskPane-item-left"><div class="taskPane-item-label">Due Date</div></div>
                         <div class="taskPane-item-right">
