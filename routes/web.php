@@ -105,7 +105,7 @@ Route::group(['middleware' => ['myauth']], function() {
     Route::get('/users/{sort?}/{filter?}/{byProject?}',ListUser::class)->name('user.index');
     // Route::get('/users',ListUser::class)->name('user.index');
     Route::get('/users/add',AddUser::class)->name('user.add');
-    Route::get('/user/view/{user?}',UserProfile::class)->name('user.profile');
+    Route::get('/user/view/{user_id?}',UserProfile::class)->name('user.profile');
 
     
     

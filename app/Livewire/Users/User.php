@@ -18,9 +18,9 @@ class User extends Component
         return view('livewire.users.user');
     }
 
-    public function mount(UserModel $user)
+    public function mount($user_id)
     {
-        $this->user = $user;
+        $this->user = UserModel::where('id' , $user_id)->withTrashed()->first();
         $users_task_array = $this->user->tasks->groupBy('project_id');
         $this->user_clients = Project::whereIn('id',$users_task_array->keys())->get()->groupBy('client_id');
         $this->user_clients = Client::whereIn('id',$this->user_clients->keys())->get();
