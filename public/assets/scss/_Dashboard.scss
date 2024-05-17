@@ -877,9 +877,6 @@
         padding: 8px $spacing_s;
         font-size: 14px;
         &_title {
-            display: grid;
-            grid-template-columns: 30px 1fr;
-            grid-gap: 5px;
             cursor: pointer;
             &_complete_icon {
                 width: 20px;

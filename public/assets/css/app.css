@@ -3815,9 +3815,6 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   font-size: 14px;
 }
 .taskList_col_title {
-  display: grid;
-  grid-template-columns: 30px 1fr;
-  grid-gap: 5px;
   cursor: pointer;
 }
 .taskList_col_title_complete_icon {

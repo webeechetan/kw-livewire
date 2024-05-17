@@ -77,18 +77,7 @@
         @foreach($teams as $team)
             <div class="col-md-4 mb-4">
                 <div class="card_style card_style-team">
-                    <!-- Edit -->
-                    <div class="cus_dropdown cus_dropdown-edit">
-                        <div class="cus_dropdown-icon"><i class='bx bx-dots-horizontal-rounded' ></i></div>
-                        <div class="cus_dropdown-body cus_dropdown-body-widh_s">
-                            <div class="cus_dropdown-body-wrap">
-                                <ul class="cus_dropdown-list">
-                                    <li><a wire:navigate href="{{ route('team.edit' , $team->id ) }}"><span class="text-secondary"><i class='bx bx-pencil' ></i></span> Edit</a></li>
-                                    <li><a href="#"><span class="text-danger"><i class='bx bx-trash' ></i></span> Delete</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
+                    <a href="{{ route('team.profile',$team->id) }}" class="card_style-open"><i class='bx bx-chevron-right'></i></a>
                     {{-- <div class="card_style-star_active"><span class="text-success"><i class='bx bxs-star' ></i></span></div> --}}
                     <div class="card_style-list_head">
                         
