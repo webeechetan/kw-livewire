@@ -86,8 +86,8 @@
                                 <div class="cus_dropdown-body cus_dropdown-body-widh_s">
                                     <div class="cus_dropdown-body-wrap">
                                         <ul class="cus_dropdown-list">
-                                            <li><a href="javascript:" class="active"><span><i class='bx bx-user-check' ></i></span> Active</a></li>
-                                            <li><a href="javascript:"><span><i class='bx bx-user-minus' ></i></span> Archived</a></li>
+                                            <li><a href="javascript:" wire:click="changeUserStatus('active')" @if(!$user->trashed()) class="active" @endif><span><i class='bx bx-user-check' ></i></span> Active</a></li>
+                                            <li><a href="javascript:" wire:click="changeUserStatus('archived')" @if(!$user->trashed()) class="active" @endif><span><i class='bx bx-user-minus' ></i></span> Archived</a></li>
                                         </ul>
                                     </div>
                                 </div>

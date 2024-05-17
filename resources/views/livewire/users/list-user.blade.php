@@ -35,14 +35,14 @@
                                                 <a wire:navigate href="{{ route('user.index',['sort'=>'a_z','filter'=>$filter])}}" class="btn-batch @if($sort == 'a_z') active @endif"><i class='bx bx-down-arrow-alt' ></i> A To Z</a>
                                             </li>
                                             <li class="filterSort_item">
-                                                <a wire:navigate href="{{ route('user.index',['sort'=>'z_a','filter'=>$filter])}}" class="btn-batch" @if($sort == 'z_a') active @endif><i class='bx bx-up-arrow-alt' ></i> Z To A</a>
+                                                <a wire:navigate href="{{ route('user.index',['sort'=>'z_a','filter'=>$filter])}}" class="btn-batch @if($sort == 'z_a') active @endif"><i class='bx bx-up-arrow-alt' ></i> Z To A</a>
                                             </li>
                                         </ul>
                                         <hr>
                                         <h5 class="filterSort-header"><i class='bx bx-briefcase text-primary' ></i> Filter By Status</h5>
                                         <ul class="filterSort_btn_group list-none">
-                                            <li class="filterSort_item"><a href="#" class="btn-batch">Active</a></li>
-                                            <li class="filterSort_item"><a href="#" class="btn-batch">Archived</a></li>
+                                            <li class="filterSort_item"><a wire:navigate href="{{ route('user.index',['sort'=>$sort,'filter'=>'active'])}}" class="btn-batch @if($filter == 'active') active @endif">Active</a></li>
+                                            <li class="filterSort_item"><a wire:navigate href="{{ route('user.index',['sort'=>$sort,'filter'=>'archived'])}}" class="btn-batch @if($filter == 'archived') active @endif">Archived</a></li>
                                         </ul>
                                         <hr>
                                         <h5 class="filterSort-header"><i class='bx bx-briefcase text-primary' ></i> Filter By Teams</h5>
@@ -76,7 +76,7 @@
             <div class="d-flex flex-wrap gap-4 align-items-center mb-4">
                 <a class="@if($filter == 'all') active @endif" wire:navigate href="{{ route('user.index',['sort'=>$sort,'filter'=>'all']) }}">All <span class="btn-batch">{{$allUsers}}</span></a>
                 <a class="@if($filter == 'active') active @endif" wire:navigate href="{{ route('user.index',['sort'=>$sort,'filter'=>'active']) }}">Active <span class="btn-batch">{{$activeUsers}}</span></a>
-                <a href="#">Archive <span class="btn-batch">2</span></a>
+                <a class="@if($filter == 'active') active @endif" wire:navigate href="{{ route('user.index',['sort'=>$sort,'filter'=>'archived']) }}">Archive <span class="btn-batch">{{$archivedUsers}}</span></a>
             </div>
         </div>
 
