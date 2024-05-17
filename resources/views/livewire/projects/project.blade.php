@@ -143,76 +143,18 @@
                         </div>
                         <div class="activity-recent mt-3">
                             <div class="activity-recent-scroll custom_scrollbar">
-                                <div class="activity row space-last_child_0">
-                                    <div class="activity-profile col-auto pe-0">
-                                        <a href="javascript:" class="avatar" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Roshan Jajoria" data-bs-original-title="Roshan Jajoria">RJ</a>
+                                @foreach($project->activities()->paginate(10) as $activity)
+                                    <div class="activity row space-last_child_0">
+                                        <div class="activity-profile col-auto pe-0">
+                                            <a href="javascript:" class="avatar" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="{{ $activity->createdBy->name }}" data-bs-original-title="{{ $activity->createdBy->name }}">{{ $activity->createdBy->initials }}</a>
+                                        </div>
+                                        <div class="activity-text col">
+                                            <div class="mb-0 font-500">{{ $activity->createdBy->name }}</div>
+                                            <span class="text-sm">{!! $activity->text !!}</span>
+                                        </div>
+                                        <div class="activity-timeline col-auto text-sm"><span>{{ \Carbon\Carbon::parse($activity->created_at)->diffForHumans() }}</span></div>
                                     </div>
-                                    <div class="activity-text col">
-                                        <div class="mb-0 font-500">Roshan Jajroia</div>
-                                        <span class="text-sm">Changed his profile picture</span>
-                                    </div>
-                                    <div class="activity-timeline col-auto text-sm"><span>2 min ago</span></div>
-                                </div>
-                                <div class="activity row space-last_child_0">
-                                    <div class="activity-profile col-auto pe-0">
-                                        <a href="javascript:" class="avatar" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Roshan Jajoria" data-bs-original-title="Roshan Jajoria">RJ</a>
-                                    </div>
-                                    <div class="activity-text col">
-                                        <div class="mb-0 font-500">Roshan Jajroia</div>
-                                        <span class="text-sm">Changed his profile picture</span>
-                                    </div>
-                                    <div class="activity-timeline col-auto text-sm"><span>2 min ago</span></div>
-                                </div>
-                                <div class="activity row space-last_child_0">
-                                    <div class="activity-profile col-auto pe-0">
-                                        <a href="javascript:" class="avatar" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Roshan Jajoria" data-bs-original-title="Roshan Jajoria">RJ</a>
-                                    </div>
-                                    <div class="activity-text col">
-                                        <div class="mb-0 font-500">Roshan Jajroia</div>
-                                        <span class="text-sm">Changed his profile picture</span>
-                                    </div>
-                                    <div class="activity-timeline col-auto text-sm"><span>2 min ago</span></div>
-                                </div>
-                                <div class="activity row space-last_child_0">
-                                    <div class="activity-profile col-auto pe-0">
-                                        <a href="javascript:" class="avatar" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Roshan Jajoria" data-bs-original-title="Roshan Jajoria">RJ</a>
-                                    </div>
-                                    <div class="activity-text col">
-                                        <div class="mb-0 font-500">Roshan Jajroia</div>
-                                        <span class="text-sm">Changed his profile picture</span>
-                                    </div>
-                                    <div class="activity-timeline col-auto text-sm"><span>2 min ago</span></div>
-                                </div>
-                                <div class="activity row space-last_child_0">
-                                    <div class="activity-profile col-auto pe-0">
-                                        <a href="javascript:" class="avatar" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Roshan Jajoria" data-bs-original-title="Roshan Jajoria">RJ</a>
-                                    </div>
-                                    <div class="activity-text col">
-                                        <div class="mb-0 font-500">Roshan Jajroia</div>
-                                        <span class="text-sm">Changed his profile picture</span>
-                                    </div>
-                                    <div class="activity-timeline col-auto text-sm"><span>2 min ago</span></div>
-                                </div>
-                                <div class="activity row space-last_child_0">
-                                    <div class="activity-profile col-auto pe-0">
-                                        <a href="javascript:" class="avatar" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Roshan Jajoria" data-bs-original-title="Roshan Jajoria">RJ</a>
-                                    </div>
-                                    <div class="activity-text col">
-                                        <div class="mb-0 font-500">Roshan Jajroia</div>
-                                        <span class="text-sm">Changed his profile picture</span>
-                                    </div>
-                                    <div class="activity-timeline col-auto text-sm"><span>2 min ago</span></div>
-                                </div>
-                                <div class="activity row space-last_child_0">
-                                    <div class="activity-profile col-auto pe-0">
-                                        <a href="javascript:" class="avatar" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Roshan Jajoria" data-bs-original-title="Roshan Jajoria">RJ</a>
-                                    </div>
-                                    <div class="activity-text col">
-                                        <div class="mb-0 font-500">Roshan Jajroia</div>
-                                        <span class="text-sm">Changed his profile picture</span>
-                                    </div>
-                                    <div class="activity-timeline col-auto text-sm"><span>2 min ago</span></div>
-                                </div>
+                                @endforeach
                             </div>
                         </div>
                     </div>
