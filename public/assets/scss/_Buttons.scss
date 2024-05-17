@@ -161,7 +161,6 @@
 
         &-primary {
             border: 1px solid $brand;
-            background-color: $brand_light;
             color: $brand;
             &:hover, &.active {
                 background-color: $brand;
@@ -170,7 +169,6 @@
             }
         }
         &-secondary {
-            background-color: $secondary_light;
             border: 1px solid $secondary;
             color: $secondary;
             &:hover, &.active {
@@ -181,7 +179,6 @@
         }
         &-success {
             border: 1px solid $success;
-            background-color: $success_light;
             color: $success;
             &:hover, &.active {
                 background-color: $success;
@@ -191,7 +188,6 @@
         }
         &-warning {
             border: 1px solid $warning;
-            background-color: $warning_light;
             color: $yellow-dark;
             &:hover, &.active {
                 background-color: $yellow-dark;
@@ -201,7 +197,6 @@
         }
         &-danger {
             border: 1px solid $danger;
-            background-color: $danger_light;
             color: $danger;
             &:hover, &.active {
                 background-color: $danger;
