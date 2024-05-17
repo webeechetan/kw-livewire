@@ -13,11 +13,12 @@ use App\Models\Notification;
 use App\Models\Scopes\OrganizationScope;
 use App\Models\Organization;
 use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRoles;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles, SoftDeletes;
 
     protected function getDefaultGuardName(): string { return 'web'; }
 

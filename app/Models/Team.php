@@ -9,6 +9,7 @@ use App\Models\Task;
 use App\Models\Project;
 use App\Models\Client;
 use App\Models\Scopes\OrganizationScope;
+
 use PDO;
 
 class Team extends Model

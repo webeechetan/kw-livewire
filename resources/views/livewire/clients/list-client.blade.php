@@ -41,9 +41,9 @@
                                             </li>
                                         </ul>
                                         <hr>
-                                        <h5 class="filterSort-header"><i class='bx bx-briefcase text-primary' ></i> Filter By Clients</h5>
+                                        <h5 class="filterSort-header"><i class='bx bx-briefcase text-primary' ></i> Filter By Status</h5>
                                         <ul class="filterSort_btn_group list-none">
-                                            <li class="filterSort_item"><a href="#" class="btn-batch">All</a></li>
+                                            <li class="filterSort_item"><a wire:navigate href="{{ route('client.index',['sort'=>$sort,'filter'=>'all']) }}" class="btn-batch">All</a></li>
                                             <li class="filterSort_item"><a wire:navigate href="{{ route('client.index',['sort'=>$sort,'filter'=>'active']) }}" class="btn-batch  @if($filter == 'active') active @endif">Active</a></li>
                                             <li class="filterSort_item"><a wire:navigate href="{{ route('client.index',['sort'=>$sort,'filter'=>'completed']) }}" class="btn-batch  @if($filter == 'completed') active @endif">Completed</a></li>
                                             <li class="filterSort_item"><a wire:navigate href="{{ route('client.index',['sort'=>$sort,'filter'=>'archived']) }}" class="btn-batch  @if($filter == 'archived') active @endif">Archive</a></li>
