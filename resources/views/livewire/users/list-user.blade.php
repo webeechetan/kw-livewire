@@ -35,7 +35,7 @@
                                                 <a wire:navigate href="{{ route('user.index',['sort'=>'a_z','filter'=>$filter])}}" class="btn-batch @if($sort == 'a_z') active @endif"><i class='bx bx-down-arrow-alt' ></i> A To Z</a>
                                             </li>
                                             <li class="filterSort_item">
-                                                <a wire:navigate href="{{ route('user.index',['sort'=>'z_a','filter'=>$filter])}}" class="btn-batch" @if($sort == 'z_a') active @endif><i class='bx bx-up-arrow-alt' ></i> Z To A</a>
+                                                <a wire:navigate href="{{ route('user.index',['sort'=>'z_a','filter'=>$filter])}}" class="btn-batch @if($sort == 'z_a') active @endif"><i class='bx bx-up-arrow-alt' ></i> Z To A</a>
                                             </li>
                                         </ul>
                                         <hr>

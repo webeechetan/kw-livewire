@@ -28,10 +28,18 @@
                                     <div class="filterSort">
                                         <h5 class="filterSort-header"><i class='bx bx-sort-down text-primary' ></i> Sort By</h5>
                                         <ul class="filterSort_btn_group list-none">
-                                            <li class="filterSort_item"><a href="#" class="btn-batch">Newest</a></li>
-                                            <li class="filterSort_item"><a href="#" class="btn-batch"><i class='bx bx-down-arrow-alt' ></i> A To Z</a></li>
-                                            <li class="filterSort_item"><a href="#" class="btn-batch"><i class='bx bx-up-arrow-alt' ></i> Z To A</a></li>
+                                            <li class="filterSort_item"><a wire:navigate href="{{ route('team.index',['sort'=>'newest','filter'=>$filter])}}" class="btn-batch @if($sort == 'newest') active @endif" >Newest</a></li>
+                                            <li class="filterSort_item"><a wire:navigate href="{{ route('team.index',['sort'=>'a_z','filter'=>$filter])}}" class="btn-batch @if($sort == 'a_z') active @endif"><i class='bx bx-down-arrow-alt' ></i> A To Z</a></li>
+                                            <li class="filterSort_item"><a wire:navigate href="{{ route('team.index',['sort'=>'z_a','filter'=>$filter])}}" class="btn-batch @if($sort == 'z_a') active @endif"><i class='bx bx-up-arrow-alt' ></i> Z To A</a></li>
                                         </ul>
+                                        <hr>
+                                        <h5 class="filterSort-header"><i class='bx bx-objects-horizontal-left text-primary'></i> Filter By User</h5>
+                                        <select class="form-control" wire:model.live="byUser">
+                                            <option value="all">All</option>
+                                            @foreach($users as $user)
+                                                <option value="{{ $user->id }}">{{ $user->name}}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -43,6 +51,28 @@
     </div>
 
     <div class="row mt-4">
+
+        <div class="col-md-6">
+            <div class="d-flex flex-wrap gap-4 align-items-center mb-4">
+                <a class="@if($filter == 'all') active @endif" wire:navigate href="{{ route('team.index',['sort'=>$sort,'filter'=>'all']) }}">All <span class="btn-batch">{{ $allTeams }}</span></a>
+            </div>
+        </div>
+        <div class="col-md-6">
+            @if($sort != 'all' || $filter != 'all')
+                <div class="d-flex flex-wrap gap-2 align-items-center justify-content-end">
+                    <span class="pe-2"><i class='bx bx-filter-alt text-secondary'></i> Filter Results:</span>
+                    @if($sort != 'all')
+                        <span class="btn-batch">
+                            @if($sort == 'newest') Newest @endif
+                            @if($sort == 'a_z') A to Z @endif
+                            @if($sort == 'z_a') Z to A @endif
+                            <a href="{{ route('team.index',['sort'=>'all','filter'=>$filter]) }}" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
+                    @endif                    
+
+                    <a href="{{ route('team.index') }}" class="text-danger d-flex align-items-center">Reset <span class="ms-1 d-inline-flex"><i class='bx bx-refresh'></i></span></a>
+                </div>
+            @endif
+        </div>
         
         @foreach($teams as $team)
             <div class="col-md-4 mb-4">
