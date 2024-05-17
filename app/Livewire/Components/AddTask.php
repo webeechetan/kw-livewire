@@ -36,11 +36,13 @@ class AddTask extends Component
         return view('livewire.components.add-task');
     }
 
-    public function mount($project){
+    public function mount($project = null){
         $this->project = $project;
         $this->users = User::all();
         $this->projects = Project::all();
-        $this->project_id = $project->id;
+        if($project){
+            $this->project_id = $project->id;
+        }
     }
 
     public function saveTask(){

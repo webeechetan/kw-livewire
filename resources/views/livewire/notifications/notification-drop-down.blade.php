@@ -1,5 +1,5 @@
 <li class="nav-item navbar-dropdown dropdown" wire:click="markAllAsRead" wire:ignore>
-    <a id="modal-search" href="#" class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);void(0);" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="true">
+    <a href="#" class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);void(0);" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="true">
       <i class='bx bx-bell'></i>
       <span class="badge bg-danger rounded-pill badge-notifications">@if($unreadNotifications->count()) {{ $unreadNotifications->count() }} @endif</span>
     </a>
@@ -7,7 +7,7 @@
       <li class="dropdown-menu-header">
         <div class="dropdown-header">
           <h5 class="fs-5 mb-0 me-auto">Notification</h5>
-          <a href="javascript:void(0);void(0)" class="text-decoration-underline text-danger">Clear All</a>
+          <a href="javascript:void(0);void(0)" wire:click="clearAll" class="text-decoration-underline text-danger">Clear All</a>
         </div>
       </li>
       <li class="activity-recent-scroll custom_scrollbar pe-0">
@@ -34,8 +34,8 @@
             @endforeach
         </ul>
       </li>
-      <li class="dropdown-footer border-top">
+      <!-- <li class="dropdown-footer border-top">
         <a href="" class="btn-border btn-border-sm btn-border-primary">View All Notification</a>
-      </li>
+      </li> -->
     </ul>
   </li>

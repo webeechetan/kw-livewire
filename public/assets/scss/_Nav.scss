@@ -71,6 +71,14 @@
     }
     &-nav {
         .dropdown {
+            a.nav-link {
+                font-size: 20px;
+                padding: 0;
+                display: flex;
+            }
+            &:not(:last-child) {
+                margin-right: 40px;
+            }
             &-toggle {
                 &:after {
                     display: none;
@@ -93,18 +101,6 @@
                     }
                 }
             }
-            &-account {
-                .nav-link {
-                    span {
-                        display: inline-flex;
-                        width: 40px;
-                        height: 40px;
-                        border-radius: $border_radius;
-                        overflow: hidden;
-                        border: 2px solid $border_light;
-                    }
-                }
-            }
         }
     }
 }
@@ -117,6 +113,7 @@
         box-shadow: $box_shadow;
         border: 1px solid $light;
         position: relative;
+        overflow: hidden;
         &[data-bs-popper] {
             right: 0;
             left: inherit;
@@ -141,15 +138,20 @@
             border-left: 10px solid transparent;
             border-right: 10px solid transparent;
         }
+
+        li:not(:last-child) {
+            border-bottom: 1px solid $border_light2;
+        }
     }
-    &-setting{
-        min-width: 15rem;
+    &-account{
+        min-width: 16rem;
     }
     &-item {
         display: flex;
         flex-wrap: wrap;
-        font-size: 0.9rem;
+        font-size: 14px;
         padding: $spacing_dropdown_item;
+        position: relative;
         &:hover, &:focus {
             background-color: $light;
             color: $text_color;
@@ -157,7 +159,7 @@
                 background-color: $brand;
                 color: $white;
             }
-            .dropdown-notifications-archive{
+            .dropdown-notifications-archive {
                 display: inline-block;
             }
         }
@@ -198,7 +200,7 @@
             font-size: 0.8em;
         }
     }
-    &-subIcon {
+    &-subIcon { 
         width: 30px;
         height: 30px;
         display: inline-flex;
@@ -224,11 +226,6 @@
         transition: $ease_03;
         overflow: hidden;
     }
-    &-account {
-        .dropdown-menu {
-            min-width: 13rem;
-        }
-    }
     &-search {
         .dropdown-menu {
             border-color: transparent;
@@ -242,7 +239,7 @@
             width: 20px;
         }
     }
-    &-notifications-archive{
+    &-notifications-archive {
         display: none;
         transition: all ease .5s;
     }

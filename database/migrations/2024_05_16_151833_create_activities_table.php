@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('activities', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('org_id');
-            
+            $table->unsignedBigInteger('activityable_id');
+            $table->string('activityable_type');
             $table->mediumText('text');
-            $table->unsignedBigInteger('attachable_id');
-            $table->string('attachable_type');
+            $table->unsignedBigInteger('created_by');
             $table->softDeletes();
             $table->timestamps();
         });

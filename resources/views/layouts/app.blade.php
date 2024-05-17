@@ -44,168 +44,28 @@
               <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse justify-content-end" id="responsive-navbar-nav">
-              <ul class="navbar-nav align-items-center">
-                <li class="nav-item">
-                  <a id="modal-search" href="#" class="nav-link">
-                    <i class='bx bx-search'></i>
-                  </a>
-                </li>
-                {{-- <li class="nav-item navbar-dropdown dropdown">
-                  <a id="modal-search" href="#" class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="true">
-                    <i class='bx bx-chat'></i>
-                    <span class="badge bg-primary rounded-pill badge-notifications badge-message">5</span>
-                  </a>
-                  <ul class="dropdown-menu dropdown-menu-end py-0" data-bs-popper="static">
-                    <li class="dropdown-menu-header ">
-                      <div class="dropdown-header">
-                        <h5 class="fs-5 mb-0 me-auto">Message</h5>
-                        <a href="javascript:void(0);" class="text-decoration-underline text-danger">Clear All</a>
-                      </div>
-                    </li>
-                    <li class="activity-recent-scroll custom_scrollbar pe-0">
-                      <ul class="ps-0">
-                        <li class="border-bottom d-grid dropdown-item">
-                          <div class="d-flex justify-content-between cursor-pointer">
-                            <div class="col-auto pe-2">
-                              <a href="javascript:void(0);" class="avatar avatar-sm avatar-green">Sk</a>
-                            </div>
-                            <div class="team-text col">
-                              <h6 class="mb-1 fs-6">Sharuakh</h6>
-                              <div class="mb-1 text-sm text-wrap">Won the monthly best seller gold badge</div>
-                            </div>
-                            <div class="col-auto">
-                              <div class="text-sm text-muted">12:20 PM</div>
-                              <a href="javascript:void(0);" class="dropdown-notifications-archive">
-                                <span class="bx bx-x"></span>
-                              </a>
-                            </div>
-                          </div>
-                        </li>
-                        <li class="border-bottom d-grid dropdown-item">
-                          <div class="d-flex justify-content-between cursor-pointer">
-                            <div class="col-auto pe-2">
-                              <a href="javascript:void(0);" class="avatar avatar-sm avatar-black">HS</a>
-                            </div>
-                            <div class="team-text col">
-                              <h6 class="mb-1 fs-6">Himanshu Sharma</h6>
-                              <div class="mb-1 text-sm text-wrap">Won the monthly best seller gold badge</div>
-                            </div>
-                            <div class="col-auto">
-                              <div class="text-sm text-muted">12:20 PM</div>
-                              <a href="javascript:void(0);" class="dropdown-notifications-archive">
-                                <span class="bx bx-x"></span>
-                              </a>
-                            </div>
-                          </div>
-                        </li>
-                        <li class="border-bottom d-grid dropdown-item">
-                          <div class="d-flex justify-content-between cursor-pointer">
-                            <div class="col-auto pe-2">
-                              <a href="javascript:void(0);" class="avatar avatar-sm avatar-pink">CS</a>
-                            </div>
-                            <div class="team-text col">
-                              <h6 class="mb-1 fs-6">Chetan Singh</h6>
-                              <div class="mb-1 text-sm text-wrap">Won the monthly best seller gold badge</div>
-                            </div>
-                            <div class="col-auto">
-                              <div class="text-sm text-muted">12:20 PM</div>
-                              <a href="javascript:void(0);" class="dropdown-notifications-archive">
-                                <span class="bx bx-x"></span>
-                              </a>
-                            </div>
-                          </div>
-                        </li>
-                        <li class="border-bottom d-grid dropdown-item">
-                          <div class="d-flex justify-content-between cursor-pointer">
-                            <div class="col-auto pe-2">
-                              <a href="javascript:void(0);" class="avatar avatar-sm avatar-blue">VM</a>
-                            </div>
-                            <div class="team-text col">
-                              <h6 class="mb-1 fs-6">Vikram Malhotra</h6>
-                              <div class="mb-1 text-sm text-wrap">Won the monthly best seller gold badge</div>
-                            </div>
-                            <div class="col-auto">
-                              <div class="text-sm text-muted">12:20 PM</div>
-                              <a href="javascript:void(0);" class="dropdown-notifications-archive">
-                                <span class="bx bx-x"></span>
-                              </a>
-                            </div>
-                          </div>
-                        </li>
-                        <li class="border-bottom d-grid dropdown-item">
-                          <div class="d-flex justify-content-between cursor-pointer">
-                            <div class="col-auto pe-2">
-                              <a href="javascript:void(0);" class="avatar avatar-sm avatar-green">SS</a>
-                            </div>
-                            <div class="team-text col">
-                              <h6 class="mb-1 fs-6">Shukmhan Singh Dhillon</h6>
-                              <div class="mb-1 text-sm text-wrap">Won the monthly best seller gold badge</div>
-                            </div>
-                            <div class="col-auto">
-                              <div class="text-sm text-muted">12:20 PM</div>
-                              <a href="javascript:void(0);" class="dropdown-notifications-archive">
-                                <span class="bx bx-x"></span>
-                              </a>
-                            </div>
-                          </div>
-                        </li>
-                        <li class="border-bottom d-grid dropdown-item">
-                          <div class="d-flex justify-content-between cursor-pointer">
-                            <div class="col-auto pe-2">
-                              <a href="javascript:void(0);" class="avatar avatar-sm avatar-yellow">DK</a>
-                            </div>
-                            <div class="team-text col">
-                              <h6 class="mb-1 fs-6">Dinesh Kartik</h6>
-                              <div class="mb-1 text-sm text-wrap">Won the monthly best seller gold badge</div>
-                            </div>
-                            <div class="col-auto">
-                              <div class="text-sm text-muted">12:20 PM</div>
-                              <a href="javascript:void(0);" class="dropdown-notifications-archive">
-                                <span class="bx bx-x"></span>
-                              </a>
-                            </div>
-                          </div>
-                        </li>
-                        <li class="border-bottom d-grid dropdown-item">
-                          <div class="d-flex justify-content-between cursor-pointer">
-                            <div class="col-auto pe-2">
-                              <a href="javascript:void(0);" class="avatar avatar-sm avatar-blue">VK</a>
-                            </div>
-                            <div class="team-text col">
-                              <h6 class="mb-1 fs-6">Virat Kohli</h6>
-                              <div class="mb-1 text-sm text-wrap">Won the monthly best Batsmen award by icc</div>
-                            </div>
-                            <div class="col-auto">
-                              <div class="text-sm text-muted">12:20 PM</div>
-                              <a href="javascript:void(0);" class="dropdown-notifications-archive">
-                                <span class="bx bx-x"></span>
-                              </a>
-                            </div>
-                          </div>
-                        </li>
-                      </ul>
-                    </li>
-                    <li class="dropdown-footer border-top">
-                      <a href="" class="btn-border btn-border-sm btn-border-primary">View All Message</a>
-                    </li>
-                  </ul>
-                </li> --}}
+              <ul class="navbar-nav align-items-center">                
+                <!-- Message -->
+                <!-- <livewire:messages.message /> -->
+                
+                <!-- Notifications -->
                 <livewire:notifications.notification-drop-down />
-                <li class="nav-item  navbar-dropdown dropdown">
-                  <a id="modal-search" href="#" class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="true">
+                
+                <!-- Login -->
+                <li class="nav-item navbar-dropdown dropdown">
+                  <span></span>
+                  <a href="#" class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="true">
                     <span class="avatar avatar-sm avatar-green">AJ</span>
                   </a>
-                  <ul class="dropdown-menu dropdown-menu-end dropdown-setting" data-bs-popper="static">
+                  <ul class="dropdown-menu dropdown-menu-end dropdown-account" data-bs-popper="static">
                    <li>
-                      <a href="" class="dropdown-item border-bottom">
-                        <div class="flex">
-                            <div class="avatar avatar-sm avatar-green">AJ</div>
-                            <div class="flex-grow-1 ps-2">
-                                    <span class="fw-medium d-block">Ajay Kumar</span>
-                                    <small class="text-muted">Admin</small>
-                            </div>
-                        </div>
-                      </a>
+                    <div class="d-flex p-3">
+                      <div class="avatar avatar-green">AJ</div>
+                      <div class="flex-grow-1 ps-2">
+                          <span class="fw-medium d-block">Ajay Kumar</span>
+                          <span class="text-muted">Admin</span>
+                      </div>
+                    </div>
                    </li>
                     <li>
                       <a class="dropdown-item align-items-center" href="#">
@@ -213,16 +73,16 @@
                         <span class="align-middle">My Profile</span>
                       </a>
                     </li>
-                    <li>
+                    <!-- <li>
                       <a class="dropdown-item align-items-center" href="#">
                         <i class="bx bx-cog me-2"></i>
                         <span class="align-middle">Settings</span>
                       </a>
-                    </li>
+                    </li> -->
                     <li>
-                      <a class="dropdown-item align-items-center" href="auth-login-cover.html" target="_blank">
+                      <a class="dropdown-item align-items-center text-danger" href="auth-login-cover.html" target="_blank">
                         <i class="bx bx-power-off me-2"></i>
-                        <span class="align-middle text-danger">Log Out</span>
+                        <span class="align-middle">Log Out</span>
                       </a>
                     </li>
                   </ul>
