@@ -90,13 +90,13 @@ Route::group(['middleware' => ['myauth']], function() {
     Route::get('/client/view/{id}',ClientProfile::class)->name('client.profile');
     Route::get('/client/view/{id?}/projects',ClientProjects::class)->name('client.projects');
     Route::get('/client/view/{id?}/file-manager',ClientFileManager::class)->name('client.file-manager');
-    
+
     Route::get('/projects/{sort?}/{filter?}/{byUser?}/{byTeam?}',ListProject::class)->name('project.index');
     Route::get('/project/view/{id}',Project::class)->name('project.profile');
     Route::get('/project/view/{project}/tasks',ProjectTasks::class)->name('project.tasks');
     Route::get('/project/view/{project}/file-manager',ProjectFileManager::class)->name('project.file-manager');
     
-    Route::get('/teams',ListTeam::class)->name('team.index');
+    Route::get('/teams/{sort?}/{filter?/{byUser?}',ListTeam::class)->name('team.index');
     Route::get('/teams/add',AddTeam::class)->name('team.add');
     Route::get('/teams/edit/{id}',EditTeam::class)->name('team.edit');
     Route::get('/team/view/{team}',TeamProfile::class)->name('team.profile');
@@ -106,7 +106,7 @@ Route::group(['middleware' => ['myauth']], function() {
     // Route::get('/users',ListUser::class)->name('user.index');
     Route::get('/users/add',AddUser::class)->name('user.add');
     Route::get('/user/view/{user?}',UserProfile::class)->name('user.profile');
-    
+
     
     
     Route::get('/tasks',ListTask::class)->name('task.index');
