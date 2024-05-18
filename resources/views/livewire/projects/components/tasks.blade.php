@@ -15,7 +15,7 @@
             <div class="d-flex flex-wrap justify-content-between align-items-center">
                 <div><h4 class="column-title mb-0"><i class='bx bx-objects-horizontal-left text-primary' ></i> {{ $project->tasks->count() }} Tasks</h4></div>
                 <div class="btn-list">
-                    <a href="javascript:;" class="btn-sm btn-border" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><i class='bx bx-plus' ></i> Add Task</a>
+                    <a href="javascript:;" class="btn-sm btn-border btn-border-primary" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><i class='bx bx-plus' ></i> Add Task</a>
                     <div class="cus_dropdown">
                         <div class="cus_dropdown-icon btn-border btn-border-secondary"><i class='bx bx-filter-alt' ></i> Filter</div>
                         <div class="cus_dropdown-body cus_dropdown-body-widh_l">
@@ -77,6 +77,9 @@
                         <div class="taskList-dashbaord_header_title taskList_col ms-2">Task Name</div>
                     </div>
                     <div class="col text-center">
+                        <div class="taskList-dashbaord_header_title taskList_col">Created Date</div>
+                    </div>
+                    <div class="col text-center">
                         <div class="taskList-dashbaord_header_title taskList_col">Due Date</div>
                     </div>
                     <div class="col text-center">
@@ -97,14 +100,14 @@
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class="taskList_col taskList_col_title">
-                                    <div class="taskList_col_title_complete_icon edit-task" data-id="{{ $task->id }}"><i class='bx bx-check'></i></div>
-                                    <div>
+                                    <!-- <div class="taskList_col_title_complete_icon" data-id="{{ $task->id }}"><i class='bx bx-check'></i></div> -->
+                                    <div class="edit-task" data-id="{{ $task->id }}">
                                         <div>{{ $task->name }}</div>
-                                        <div class="text-xs"><i class='bx bx-calendar-alt' ></i> 
-                                            {{ \Carbon\Carbon::parse($task->due_date)->format('d M-Y') }}
-                                        </div>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="col text-center">
+                                <div class="taskList_col"><span>{{ \Carbon\Carbon::parse($task->created_at)->format('d M-Y') }}</span></div>
                             </div>
                             <div class="col text-center">
                                 <div class="taskList_col"><span>{{ \Carbon\Carbon::parse($task->due_date)->format('d M-Y') }}</span></div>

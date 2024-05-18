@@ -68,7 +68,7 @@
     <!-- Dashboard Body -->
     <div class="row">
         <div class="col-md-6">
-            <div class="d-flex flex-wrap gap-4 align-items-center mb-4">
+            <div class="dashboard_filters d-flex flex-wrap gap-4 align-items-center mb-4">
                 <a class="@if($filter == 'all') active @endif" wire:navigate href="{{ route('client.index',['sort'=>$sort,'filter'=>'all']) }}">All <span class="btn-batch">{{$allClients}}</span></a>
                 <a class="@if($filter == 'active') active @endif" wire:navigate href="{{ route('client.index',['sort'=>$sort,'filter'=>'active']) }}">Active <span class="btn-batch">{{$activeClients}}</span></a>
                 <a class="@if($filter == 'completed') active @endif" wire:navigate href="{{ route('client.index',['sort'=>$sort,'filter'=>'completed']) }}">Completed <span class="btn-batch">{{$completedClients}}</span></a>

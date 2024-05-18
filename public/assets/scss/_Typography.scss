@@ -1219,6 +1219,7 @@ hr.space-sm {
         color: $text-color;
         border: 1px solid $grey_xd;
         background-color: #fff;
+        color: #fff;
     }
 
     &-text {
@@ -1230,47 +1231,34 @@ hr.space-sm {
     &-success {
 
         .states_style-icon {
-            background-color: $success_light;
+            background-color: $success;
             border-color:  $success;
-        }
-
-        .states_style-icon, .states_style-text {
-            color: $success;
         }
     }
 
     &-danger {
 
         .states_style-icon {
-            background-color: $danger_light;
+            background-color: $danger;
             border-color:  $danger;
         }
 
-        .states_style-icon, .states_style-text {
-            color: $danger;
-        }
     }
 
     &-progress {
         .states_style-icon {
-            background-color: $secondary_light;
+            background-color: $secondary;
             border-color:  $secondary;
         }
 
-        .states_style-icon, .states_style-text {
-            color: $secondary;
-        }
     }
 
     &-active {
         .states_style-icon {
-            background-color: $yellow_light;
+            background-color: $yellow;
             border-color:  $yellow;
         }
 
-        .states_style-icon, .states_style-text {
-            color: $yellow_dark;
-        }
     }
 }
 
@@ -1282,6 +1270,8 @@ hr.space-sm {
     .btn-batch {
         transition: $ease_03;
         margin-left: 3px;
+        min-width: 42px;
+        text-align: center;
     }
 
     a {
@@ -1289,8 +1279,8 @@ hr.space-sm {
         &:hover, &.active {
             color: $success;
             .btn-batch {
-                background-color: $success;
-                border-color: $success;
+                background-color: $brand;
+                border-color: $brand;
                 color: #fff;
             }
         }

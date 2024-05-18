@@ -10,6 +10,11 @@
     &-content {
         width: calc(100% - 300px);
         padding: $spacing_sm;
+        &.archived_content {
+            .dashboard-head-title-wrap {
+                opacity: 0.6;
+            }
+        }
         @media (max-width: 1440px) {
             width: calc(100% - 200px);
         }
@@ -872,9 +877,6 @@
         padding: 8px $spacing_s;
         font-size: 14px;
         &_title {
-            display: grid;
-            grid-template-columns: 30px 1fr;
-            grid-gap: 5px;
             cursor: pointer;
             &_complete_icon {
                 width: 20px;
@@ -1257,46 +1259,43 @@
             &-tabs {
                 width: 100%;
                 border-bottom: none;
-                gap: 10px;
+                gap: 30px;
 
                 .nav-link {
                     color: $text_color;
-                    min-width: 70px;
-                    border: 1px solid $grey_xd;
-                    background: #fff;
                     font-weight: 500;
-                    border-radius: $border-radius_rounded;
-                    transition: $ease_03;
-                    font-size: 14px;
-                    letter-spacing: 0.5px;
-                    padding: 6px 15px;
+                    font-size: 16px;
+                    border: none;
+                    background-color: inherit;
+                    padding: 0;
 
                     span {
-                        min-width: 26px;
-                        min-height: 20px;
-                        background-color: $grey;
-                        border: 1px solid $grey_xd;
+                        background-color: #fff;
+                        border: 1px solid $grey;
+                        padding: 3px 10px;
+                        border-radius: 30px;
                         font-size: 12px;
-                        @include inline_flex_center;
-                        border-radius: 4px;
+                        font-weight: 500;
+                        color: #191919;
+                        display: inline-block;
+                        min-width: 42px;
+                        transition: all 0.3s ease;
                     }
 
                     &.active, &:hover, &:focus {
-                        background-color: #fff;
                         color: $text_color;
                         box-shadow: none;
                         outline: none;
                         border-color: $text-color;
 
                         span {
-                            background-color: $dark;
-                            border-color: $dark;
+                            background-color: $secondary;
+                            border-color: $secondary;
                             color: #fff;
                         }
+
                         &#project {
                             &-active-tab {
-                                background-color: $brand_light;
-                                border-color: $brand;
                                 color: $brand;
 
                                 span {
@@ -1305,8 +1304,6 @@
                                 }
                             }
                             &-done-tab {
-                                background-color: $success_light;
-                                border-color: $success;
                                 color: $success;
 
                                 span {
@@ -1315,8 +1312,6 @@
                                 }
                             }
                             &-overdue-tab {
-                                background-color: $danger_light;
-                                border-color: $danger;
                                 color: $danger;
 
                                 span {
@@ -1325,8 +1320,6 @@
                                 }
                             }
                             &-archived-tab {
-                                background-color: $warning_light;
-                                border-color: $warning;
                                 color: $yellow_dark;
 
                                 span {

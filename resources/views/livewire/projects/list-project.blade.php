@@ -97,23 +97,6 @@
         @foreach($projects as $project)
             <div class="col-md-4 mb-4">
                 <div class="card_style h-100">
-                    <!-- Edit -->
-                    <div class="cus_dropdown cus_dropdown-edit">
-                        <div class="cus_dropdown-icon"><i class='bx bx-dots-horizontal-rounded' ></i></div>
-                        <div class="cus_dropdown-body cus_dropdown-body-widh_s">
-                            <div class="cus_dropdown-body-wrap">
-                                <ul class="cus_dropdown-list">
-                                    @if($project->trashed())
-                                    <li><a href="javascript:;" wire:click="emitRestoreEvent({{ $project->id }})"><span><i class='bx bx-undo' ></i></span> Restore</a></li>
-                                    <li><a href="javascript:;" wire:confirm="Are you sure you want to delete this project?" wire:click="emitForceDeleteEvent({{ $project->id }})"><span><i class='bx bx-trash' ></i></span> Delete Permanently</a></li>
-                                    @else
-                                    <li><a href="javascript:;" wire:click="emitEditEvent({{ $project->id }})"><span><i class='bx bx-pencil' ></i></span> Edit</a></li>
-                                    <li><a href="javascript:;" wire:confirm="Are you sure you want to delete this project?" wire:click="emitDeleteEvent({{ $project->id }})"><span><i class='bx bx-trash' ></i></span> Delete</a></li>
-                                    @endif
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
                     <a href="{{ route('project.profile', $project->id ) }}" class="card_style-open"><i class='bx bx-chevron-right'></i></a>
                     <div class="card_style-project-head">
                         <div class="card_style-project-head-client"><span><i class='bx bx-briefcase-alt-2'></i></span> {{ $project->client?->name }}</div>
