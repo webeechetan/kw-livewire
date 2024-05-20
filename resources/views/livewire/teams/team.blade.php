@@ -12,32 +12,7 @@
          <li class="breadcrumb-item active" aria-current="page">Tech Team</li>
       </ol>
    </nav>
-   <div class="dashboard-head mb-4">
-      <div class="row align-items-center">
-         <div class="col">
-            <div class="dashboard-head-title-wrap">
-               <div class="avatar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{$team->name}}">{{$team->initials}}</div>
-               <div>
-                  <h3 class="main-body-header-title mb-2">{{$team->name}}</h3>
-                  <div class="row align-items-center">
-                     <div class="col-auto">
-                        <span>
-                        <i class="bx bx-user text-secondary"></i>
-                        </span> Manager
-                     </div>
-                     <div class="col text-nowrap btn-batch">{{ $team->manager?->name }}</div>
-                  </div>
-               </div>
-            </div>
-         </div>
-         <div class="text-end col">
-            <div class="main-body-header-right">
-               <a wire:click="dispatchEditEvent({{ $team->id }})" href="javascript:void(0);" class="btn-sm btn-border btn-border-primary ">
-               <i class='bx bx-plus'></i> Edit Team </a>
-            </div>
-         </div>
-      </div>
-   </div>
+   <livewire:teams.components.teams-tab :team="$team" @saved="$refresh"/>
    <!--- Dashboard Body --->
    <div class="row mb-4">
       <div class="col-lg-4">
@@ -51,7 +26,7 @@
                <div class="col">
                   <div class="row align-items-center g-2">
                      <div class="col-auto">
-                        <h5 class="title-md mb-0">{{$team->clients->count()}}</h5>
+                        <h5 class="title-md mb-0">{{$team->projects->count()}}</h5>
                      </div>
                      <div class="col-auto">
                         <span class="font-400 text-grey">|</span>
@@ -81,7 +56,7 @@
                         <span class="font-400 text-grey">|</span>
                      </div>
                      <div class="col-auto">
-                        <div class="states_style-text">Project</div>
+                        <div class="states_style-text">Projects</div>
                      </div>
                   </div>
                </div>
@@ -121,13 +96,13 @@
          <div class="col">
             <!-- Teams -->
             <div class="team-list row">
-               @foreach($team->clients as $client)
+               @foreach($team->projects as $project)
                <div class="col-auto">
                   <div class="card_style-client-head taskList_col border rounded-3 me-0">
-                     <div class="avatar avatar-sm avatar-blue" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{$client->name}}">{{$client->initials}}</div>
+                     <div class="avatar avatar-sm avatar-blue" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{$project->name}}">{{$project->initials}}</div>
                      <div>
                         <h6 class="mb-0">
-                           <a href="{{route('client.profile',$client->id)}}" wire:navigate="">{{$client->name}}</a>
+                           <a href="{{route('client.profile',$project->id)}}" wire:navigate="">{{$project->client->name}}</a>
                         </h6>
                      </div>
                   </div>

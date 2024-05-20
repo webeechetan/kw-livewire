@@ -1,0 +1,38 @@
+<div>
+    <div class="client-tab">
+        <div class="dashboard-head pb-0 mb-4">
+            <div class="row align-items-center">
+                <div class="col">
+                    <div class="dashboard-head-title-wrap">
+                        <div class="avatar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Ac">{{$team->initials}}</div>
+                        <div>
+                            <h3 class="main-body-header-title mb-2">{{ $team->name }}</h3>
+                            <div class="row align-items-center">
+                                <div class="col-auto">
+                                <span>
+                                <i class="bx bx-user text-secondary"></i>
+                                </span> Manager
+                                </div>
+                                <div class="col text-nowrap btn-batch">{{ $team->manager?->name }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-end col">
+                    <div class="main-body-header-right">
+                        <!-- Delete -->
+                        @can('Delete Client')
+                            <a href="#" class="btn-sm btn-border btn-border-danger" wire:click="forceDeleteClient({{$team->id}})"><i class='bx bx-trash'></i> Delete</a>
+                        @endcan
+                    </div>
+                </div>
+            </div>
+            <hr class="mb-0">
+            <div class="tabNavigationBar-tab border_style">
+                <a wire:navigate class="tabNavigationBar-item @if(request()->routeIs('team.profile')) active @endif" href=""><i class='bx bx-line-chart'></i> Overview</a>
+                <a wire:navigate class="tabNavigationBar-item @if(request()->routeIs('team.projects')) active @endif" href=""><i class='bx bx-objects-horizontal-left' ></i> Projects</a>
+                <a wire:navigate class="tabNavigationBar-item @if(request()->routeIs('team.projects')) active @endif" href=""><i class='bx bx-layer' ></i> Tasks</a>
+            </div>
+        </div>
+    </div>
+</div>
