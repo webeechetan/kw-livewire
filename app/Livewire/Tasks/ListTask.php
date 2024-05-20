@@ -10,9 +10,20 @@ use App\Models\Team;
 use App\Models\Comment;
 use App\Notifications\NewTaskAssignNotification;
 use App\Notifications\UserMentionNotification;
+use Livewire\WithPagination;
+use App\Helpers\Helper;
+use ProtoneMedia\LaravelCrossEloquentSearch\Search;
 
 class ListTask extends Component
 {
+    use WithPagination;
+
+
+
+    public $allTasks;
+    public $activeTasks;
+    public $completedTasks;
+    public $archivedTasks;
 
     // auth 
 
@@ -25,6 +36,14 @@ class ListTask extends Component
     public $description;
     public $dueDate;
     public $mentioned_users= [];
+
+    
+    public $query = '';
+    public $sort = 'all';
+    public $filter = 'all';
+    public $byProject = 'all';
+ 
+
 
     public $users;
     public $projects;
@@ -46,7 +65,42 @@ class ListTask extends Component
 
     public function render()
     {
-        return view('livewire.tasks.list-task');
+
+        $this->allTasks = Task::count();
+        $this->activeTasks = Task::where('status', 'active')->count();
+        $this->completedTasks = Task::where('status', 'completed')->count();
+        $this->archivedTasks = Task::onlyTrashed()->count();
+      
+
+        $tasks = Task::where('name','like','%'.$this->query.'%');
+        
+         
+        //  if($this->sort == 'a_z'){
+        //     $tasks->orderBy('name');
+        // }elseif($this->sort == 'z_a'){
+        //     $tasks->orderByDesc('name');
+        // }elseif($this->sort == 'newest'){
+            
+        //     $tasks->latest();
+        // }
+
+        // if($this->byProject != 'all'){
+        //     // select from project_user
+        //     $tasks->whereHas('tasks',function($query){
+        //         $query->where('project_id',$this->byProject);
+        //     });
+        // }
+
+
+        $tasks->orderBy('id','desc');
+
+        $tasks = $tasks->paginate(15);
+
+        return view('livewire.tasks.list-task',[
+            'tasks' => $tasks
+        ]);
+
+       // return view('livewire.tasks.list-task');
     }
 
     public function mount()
@@ -116,6 +170,11 @@ class ListTask extends Component
 
     public function emitEditTaskEvent($id){
         $this->dispatch('editTask', $id);
+    }
+
+    public function search()
+    {
+        $this->resetPage();
     }
 
     
