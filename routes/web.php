@@ -29,7 +29,7 @@ use App\Livewire\Teams\AddTeam;
 use App\Livewire\Teams\ListTeam;
 use App\Livewire\Teams\EditTeam;
 use App\Livewire\Teams\Team as TeamProfile;
-use App\Livewire\Teams\Components\Projets as TeamProjects;
+use App\Livewire\Teams\Components\Projects as TeamProjects;
 use App\Livewire\Teams\Components\Tasks as TeamTasks;
 
 use App\Livewire\Tasks\AddTask;
