@@ -167,7 +167,6 @@
                                             </a>
                                         </div>
                                         <div>
-                                            <!-- avatar group -->
                                             <div class="avatarGroup avatarGroup-overlap">
                                                 @foreach($task['users'] as $user)
                                                 <a href="javascript:;" class="avatar avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Aadil Prasad Brahmbhatt">AP</a>
