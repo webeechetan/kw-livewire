@@ -16,9 +16,7 @@
       <div class="row align-items-center">
          <div class="col">
             <div class="dashboard-head-title-wrap">
-               <div class="client_head_logo">
-                  <div class="avatar avatar-sm avatar-blue" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{$team->name}}">{{$team->initials}}</div>
-               </div>
+               <div class="avatar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{$team->name}}">{{$team->initials}}</div>
                <div>
                   <h3 class="main-body-header-title mb-2">{{$team->name}}</h3>
                   <div class="row align-items-center">
