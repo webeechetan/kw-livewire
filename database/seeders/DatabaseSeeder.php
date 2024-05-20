@@ -53,9 +53,15 @@ class DatabaseSeeder extends Seeder
             ->has(Project::factory()->count(5))
             ->create();
 
-        Project::factory()
-            ->count(100)
-            ->create();
+        // Project::factory()
+        //     ->count(100)
+        //     ->create();
+
+        Project::withoutEvents(function () {
+            Project::factory()
+                ->count(100)
+                ->create();
+        });
 
 
 
