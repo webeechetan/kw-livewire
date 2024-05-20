@@ -29,13 +29,13 @@
                                         <h5 class="filterSort-header"><i class='bx bx-sort-down text-primary' ></i> Sort By</h5>
                                         <ul class="filterSort_btn_group list-none">
                                             <li class="filterSort_item">
-                                                <a wire:navigate href="#" class="btn-batch" >Newest</a>
+                                                <a wire:navigate href="{{ route('task.index',['sort'=>'newest','filter'=>$filter, 'byProject'=> $byProject])}}" class="btn-batch @if($sort == 'newest') active @endif " >Newest</a>
                                             </li>
                                             <li class="filterSort_item">
-                                                <a wire:navigate href="#" class="btn-batch"><i class='bx bx-down-arrow-alt' ></i> A To Z</a>
+                                                <a wire:navigate href="{{ route('task.index',['sort'=>'a_z','filter'=>$filter, 'byProject'=> $byProject])}}" class="btn-batch @if($sort == 'a_z') active @endif"><i class='bx bx-down-arrow-alt' ></i> A To Z</a>
                                             </li>
                                             <li class="filterSort_item">
-                                                <a wire:navigate href="#" class="btn-batch"><i class='bx bx-up-arrow-alt' ></i> Z To A</a>
+                                                <a wire:navigate href="{{ route('task.index',['sort'=>'z_a','filter'=>$filter, 'byProject'=> $byProject])}}" class="btn-batch @if($sort == 'z_a') active @endif"><i class='bx bx-up-arrow-alt' ></i> Z To A</a>
                                             </li>
                                         </ul>
                                         <hr>
@@ -46,13 +46,15 @@
                                             <li class="filterSort_item"><a wire:navigate href="#" class="btn-batch">Completed</a></li>
                                             <li class="filterSort_item"><a wire:navigate href="#" class="btn-batch">Archive</a></li>
                                         </ul>
+                                       
                                         <hr>
                                         <h5 class="filterSort-header"><i class='bx bx-objects-horizontal-left text-primary'></i> Filter By Projects</h5>
-                                        <ul class="filterSort_btn_group list-none">
-                                            <li class="filterSort_item"><a href="#" class="btn-batch">Active</a></li>
-                                            <li class="filterSort_item"><a href="#" class="btn-batch">Completed</a></li>
-                                            <li class="filterSort_item"><a href="#" class="btn-batch">Archive</a></li>
-                                        </ul>
+                                        <select class="form-control" wire:model.live="byProject">
+                                            <option value="all">All</option>
+                                            @foreach($projects as $project)
+                                                <option value="{{ $project->id }}">{{ $project->name }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                             </div>

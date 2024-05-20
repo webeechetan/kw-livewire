@@ -13,13 +13,14 @@ use App\Models\Scopes\OrganizationScope;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Notifications\Notification;
 use App\Models\Attachment;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use App\Observers\Task\TaskObserver;
 
 #[ObservedBy(TaskObserver::class)]
 class Task extends Model
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, SoftDeletes;
 
     protected $fillable = [
         'org_id',
