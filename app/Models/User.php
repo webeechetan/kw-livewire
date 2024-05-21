@@ -8,13 +8,14 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\Team;
+use App\Models\UserDetail;
 use App\Models\Project;
 use App\Models\Notification;
 use App\Models\Scopes\OrganizationScope;
 use App\Models\Organization;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Database\Eloquent\SoftDeletes;
-
+use PhpParser\Node\Expr\FuncCall;
 
 class User extends Authenticatable
 {
@@ -84,6 +85,10 @@ class User extends Authenticatable
 
     public function organization(){
         return $this->belongsTo(Organization::class);
+    }
+
+    public function details(){
+        return $this->belongsTo(UserDetail::class);
     }
 
     public function getInitialsAttribute(){
