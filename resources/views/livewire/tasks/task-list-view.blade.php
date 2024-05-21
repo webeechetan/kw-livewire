@@ -12,7 +12,9 @@
             <div class="text-end col">
                 <div class="main-body-header-right">
                     <div class="d-flex gap-2 justify-content-end">
-                        <a href="javascript:void(0);" class="btn-border btn-border-primary toggleForm"><i class='bx bx-plus'></i> Add Task</a>
+                        @can('Create Task')
+                            <a href="javascript:void(0);" class="btn-border btn-border-primary toggleForm"><i class='bx bx-plus'></i> Add Task</a>
+                        @endcan
                         <a class="btn-border btn-border-secondary" href="#"><i class='bx bx-filter' ></i> Filter</a>
                     </div>
                 </div>

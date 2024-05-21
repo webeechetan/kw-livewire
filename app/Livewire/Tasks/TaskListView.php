@@ -43,6 +43,8 @@ class TaskListView extends Component
 
     public function mount()
     {
+
+        $this->authorize('View Task');
         $this->users = User::all();
         $this->projects = Project::all();
         $this->teams = Team::all();
