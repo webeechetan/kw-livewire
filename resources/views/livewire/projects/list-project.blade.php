@@ -124,7 +124,7 @@
                             <div><span><i class='bx bx-calendar' ></i></span> {{ \Carbon\Carbon::parse($project->due_date)->diffInDays($project->start_date) }} Days</div>
                         </div> --}}
                         <div class="card_style-tasks">
-                            <div class="card_style-tasks-title mb-2"><span><i class='bx bx-objects-horizontal-left' ></i></span> {{ $project->tasks->count() }} Tasks</div>
+                            <div class="card_style-tasks-title mb-2"><span><i class='bx bx-objects-horizontal-left' ></i></span> {{ $project->tasks->count() }} {{ $project->tasks->count() >1 ? 'Tasks' : 'Task' }} </div>
                             <div class="card_style-tasks-list">
                                 <div class="card_style-tasks-item card_style-tasks-item-pending"><span><i class='bx bx-objects-horizontal-center' ></i></span>
                                     {{ $project->tasks->where('status', 'pending')->where('due_date', '>', now())->count() }} Active

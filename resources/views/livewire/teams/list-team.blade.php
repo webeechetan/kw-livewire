@@ -90,7 +90,7 @@
                             <div class="row">
                                 <div class="col-auto">
                                     <div>
-                                        {{ $team->users->count() }} Members
+                                        {{ $team->users->count() }}   {{ $team->users->count() >1  ?'Members' : 'Member'}}
                                     </div>
                                 </div>
                                 <div class="col-auto px-0">

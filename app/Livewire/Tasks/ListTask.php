@@ -66,32 +66,25 @@ class ListTask extends Component
     public function render()
     {
 
-        $this->allTasks = Task::count();
-        $this->activeTasks = Task::where('status', 'active')->count();
-        $this->completedTasks = Task::where('status', 'completed')->count();
-        $this->archivedTasks = Task::onlyTrashed()->count();
-      
-
         $tasks = Task::where('name','like','%'.$this->query.'%');
-        
-         
-        //  if($this->sort == 'a_z'){
-        //     $tasks->orderBy('name');
-        // }elseif($this->sort == 'z_a'){
-        //     $tasks->orderByDesc('name');
-        // }elseif($this->sort == 'newest'){
-            
-        //     $tasks->latest();
-        // }
 
-        // if($this->byProject != 'all'){
-        //     // select from project_user
-        //     $tasks->whereHas('tasks',function($query){
-        //         $query->where('project_id',$this->byProject);
-        //     });
-        // }
+        if($this->sort == 'a_z'){
+            $tasks->orderBy('name');
+        }elseif($this->sort == 'z_a'){
+            $tasks->orderByDesc('name');
+        }elseif($this->sort == 'newest'){
+            $tasks->latest();
+        }
 
+        if($this->byProject != 'all'){
+            // select from project_user
+            $tasks->whereHas('tasks',function($query){
+                $query->where('project_id',$this->byProject);
+            });
+        }
 
+       
+       
         $tasks->orderBy('id','desc');
 
         $tasks = $tasks->paginate(15);
@@ -105,24 +98,49 @@ class ListTask extends Component
 
     public function mount()
     {
-        $this->auth_user_id = auth()->guard(session('guard'))->user()->id;
-        $this->users = User::all();
-        $this->projects = Project::all();
-        $this->teams = Team::all();
-        // Fetch all tasks from the database
+            $this->auth_user_id = auth()->guard(session('guard'))->user()->id;
+            $this->users = User::all();
+            $this->projects = Project::all();
+            $this->teams = Team::all();
+            // Fetch all tasks from the database
 
-        $this->tasks = [
-            'pending' => Task::tasksByUserType()->where('status','pending')->orderBy('task_order')->get(),
-            'in_progress' => Task::tasksByUserType()->where('status','in_progress')->orderBy('task_order')->get(),
-            'in_review' => Task::tasksByUserType()->where('status','in_review')->orderBy('task_order')->get(),
-            'completed' => Task::tasksByUserType()->where('status','completed')->orderBy('task_order')->get(),
-        ];
+            $this->tasks = [
+                // 'pending' => Task::tasksByUserType()->where('status','pending')->orderBy('task_order')->get(),
+                // 'in_progress' => Task::tasksByUserType()->where('status','in_progress')->orderBy('task_order')->get(),
+                // 'in_review' => Task::tasksByUserType()->where('status','in_review')->orderBy('task_order')->get(),
+                //'completed' => Task::tasksByUserType()->where('status','completed')->orderBy('task_order')->get(),
+
+                'pending' => $this->applySort(
+                    Task::tasksByUserType()
+                        ->where('status', 'pending')
+                        ->where('name', 'like', '%' . $this->query . '%')
+                )->get(),
+    
+                'in_progress' => $this->applySort(
+                                    Task::tasksByUserType()
+                                        ->where('status', 'in_progress')
+                                        ->where('name', 'like', '%' . $this->query . '%')
+                                )->get(),
+                
+                'in_review' => $this->applySort(
+                                Task::tasksByUserType()
+                                    ->where('status', 'in_review')
+                                    ->where('name', 'like', '%' . $this->query . '%')
+                            )->get(),
+
+                'completed' => $this->applySort(
+                                Task::tasksByUserType()
+                                ->where('status', 'completed')
+                                ->where('name', 'like', '%' . $this->query . '%')
+                            )->get(),
+                
+            ];
     }
 
 
     public function updateTaskOrder($list)
     {
-        // dd($list);
+
         foreach ($list as $item) {
             if($item['value'] == 'pending'){
                 foreach($item['items'] as $t){
@@ -174,8 +192,25 @@ class ListTask extends Component
 
     public function search()
     {
-        $this->resetPage();
+        $this->mount();
     }
+
+    protected function applySort($query)
+    {
+        switch ($this->sort) {
+            case 'a_z':
+                return $query->orderBy('name');
+            case 'z_a':
+                return $query->orderByDesc('name');
+            case 'newest':
+                return $query->latest();
+            case 'oldest':
+                return $query->oldest();
+            default:
+                return $query->orderBy('task_order'); // default sort
+        }
+    }
+
 
     
 
