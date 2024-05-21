@@ -12,7 +12,9 @@
             <div class="col d-flex align-items-center gap-3">
                 <h3 class="main-body-header-title mb-0">Roles</h3>
                 <span class="text-light">|</span>
-                <a data-bs-toggle="modal" data-bs-target="#add-role-modal" href="javascript:void(0);" class="btn-border btn-border-sm btn-border-primary"><i class="bx bx-plus"></i>Create Role</a>
+                @can('Create Role')
+                    <a data-bs-toggle="modal" data-bs-target="#add-role-modal" href="javascript:void(0);" class="btn-border btn-border-sm btn-border-primary"><i class="bx bx-plus"></i>Create Role</a>
+                @endcan
             </div>
             <div class="col">
                 <div class="main-body-header-right">
@@ -37,7 +39,7 @@
                     </h4>
                 </div>
                 <div class="card_style-roles-permission">
-                    <div class="card_style-roles-title mt-2"><span><i class='bx bx-universal-access'></i></span> {{ $role->permissions->count() }} Permissions</div>
+                    <div class="card_style-roles-title mt-2"><span><i class='bx bx-universal-access'></i></span> {{ $role->permissions->count() }}  {{ $role->permissions->count() >1 ? 'Permissions' : 'Permission'}}</div>
                     <div class="mt-2">
                         <a class="edit-role" wire:click="emitEditRoleEvent({{$role->id}})"> Edit Role</a>
                         </div>

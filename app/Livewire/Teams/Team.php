@@ -15,6 +15,8 @@ class Team extends Component
     }
 
     public function mount(TeamModel $team){
+
+        $this->authorize('View Team');
         $this->team = $team;
     }
 

@@ -80,6 +80,7 @@
                     <div class="col">
                         <div class="main-body-header-right">
                             <!-- Edit -->
+                            @can('Edit User')
                             <div class="cus_dropdown">
                                 <!-- For Active Class = btn-border-success | For Archived Class = btn-border-archived -->
                                 <div class="cus_dropdown-icon btn-border btn-border-success">Active <i class='bx bx-chevron-down' ></i></div>
@@ -93,7 +94,10 @@
                                 </div>
                             </div>
                             <a href="javascript:" wire:click="emitEditUserEvent({{ $user->id }})" class="btn-sm btn-border btn-border-secondary"><i class='bx bx-pencil'></i> Edit</a>
+                            @endcan
+                            @can('Delete User')
                             <a href="javascript:" class="btn-sm btn-border btn-border-danger"><i class='bx bx-trash'></i> Delete</a>
+                            @endcan
                         </div>
                     </div>
                 </div>                    

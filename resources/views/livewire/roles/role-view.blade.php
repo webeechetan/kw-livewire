@@ -32,8 +32,10 @@
          </div>
          <div class="text-end col">
             <div class="main-body-header-right">
+               @can('Create Role')
                <a data-bs-toggle="modal" data-bs-target="#add-team-modal" href="javascript:void(0);" class="btn-sm btn-border btn-border-primary">
                <i class='bx bx-plus'></i> Add Role</a>
+               @endcan
             </div>
          </div>
       </div>

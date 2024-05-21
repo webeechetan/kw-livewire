@@ -12,7 +12,9 @@
             <div class="col d-flex align-items-center gap-3">
                 <h3 class="main-body-header-title mb-0">All Tasks</h3>
                 <span class="text-light">|</span>
-                <a data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" href="javascript:void(0);" class="btn-border btn-border-sm btn-border-primary toggleForm"><i class="bx bx-plus"></i> Add Task</a>
+                @can('Create Task')
+                    <a data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" href="javascript:void(0);" class="btn-border btn-border-sm btn-border-primary toggleForm"><i class="bx bx-plus"></i> Add Task</a>
+                @endcan
             </div>
             <div class="col">
                 <div class="main-body-header-right">
