@@ -134,8 +134,11 @@ b, strong {
 }
 
 /*---- Width ----*/
+.w-150 {
+  min-width: 150px;
+}
 .w-200 {
-  width: 200px;
+  min-width: 200px;
 }
 
 /*---- Batch ----*/
@@ -1229,6 +1232,11 @@ hr.space-sm {
   border-color: #f83890;
   color: #fff;
 }
+.dashboard_filters-select {
+  border-radius: 4px;
+  padding: 5px 10px;
+  border-color: #eee;
+}
 
 /* ----- Toaster Style ----- */
 #toast-container > div {
@@ -1550,6 +1558,9 @@ hr.space-sm {
 }
 .btn-batch-warning {
   border-color: #e7bf1d;
+}
+.btn-batch-avatar {
+  padding: 3px 10px 3px 3px;
 }
 .btn-sm {
   padding: 7px 10px;

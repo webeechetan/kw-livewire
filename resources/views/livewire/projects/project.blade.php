@@ -50,7 +50,7 @@
                                             $progress = ($projectTasks->where('status', 'completed')->count() / $projectTasks->count()) * 100;
                                         }
                                     @endphp
-                                    {{ round($progress) }} %
+                                    {{ round($progress) }} <span class="text-md">%</span>
                                 </h5>
                             </div>
                             <div class="col-auto">
