@@ -11,8 +11,10 @@
         <div class="row align-items-center">
             <div class="col d-flex align-items-center gap-3">
                 <h3 class="main-body-header-title mb-0">All Projects</h3>
-                <span class="text-light">|</span>
-                <a data-bs-toggle="modal" data-bs-target="#add-project-modal" href="javascript:void(0);" class="btn-border btn-border-sm btn-border-primary"><i class="bx bx-plus"></i> Add Project</a>
+                @can('Create Project')
+                    <span class="text-light">|</span>
+                    <a data-bs-toggle="modal" data-bs-target="#add-project-modal" href="javascript:void(0);" class="btn-border btn-border-sm btn-border-primary"><i class="bx bx-plus"></i> Add Project</a>
+                @endcan
             </div>
             <div class="col">
                 <div class="main-body-header-right">

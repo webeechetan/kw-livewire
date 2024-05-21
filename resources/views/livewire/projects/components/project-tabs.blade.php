@@ -14,22 +14,26 @@
                 </div>
                 <div class="text-end col">
                     <div class="main-body-header-right">
+                        @can('Edit Project')
                         <!-- Edit -->
-                        <div class="cus_dropdown">
-                            <!-- For Active Class = btn-border-success | For Archived Class = btn-border-archived -->
-                            <div class="cus_dropdown-icon btn-border btn-border-success">Active <i class='bx bx-chevron-down' ></i></div>
-                            <div class="cus_dropdown-body cus_dropdown-body-widh_s">
-                                <div class="cus_dropdown-body-wrap">
-                                    <ul class="cus_dropdown-list">
-                                        <li><a href="javascript:" wire:click="changeProjectStatus('active')" class="active"><span><i class='bx bx-user-check' ></i></span> Active</a></li>
-                                        <li><a href="javascript:" wire:click="changeProjectStatus('completed')"><span><i class='bx bx-user-minus' ></i></span> Completed</a></li>
-                                        <li><a href="javascript:" wire:click="emitDeleteProjectEvent({{$project->id}})"><span><i class='bx bx-user-minus' ></i></span> Archived</a></li>
-                                    </ul>
+                            <div class="cus_dropdown">
+                                <!-- For Active Class = btn-border-success | For Archived Class = btn-border-archived -->
+                                <div class="cus_dropdown-icon btn-border btn-border-success">Active <i class='bx bx-chevron-down' ></i></div>
+                                <div class="cus_dropdown-body cus_dropdown-body-widh_s">
+                                    <div class="cus_dropdown-body-wrap">
+                                        <ul class="cus_dropdown-list">
+                                            <li><a href="javascript:" wire:click="changeProjectStatus('active')" class="active"><span><i class='bx bx-user-check' ></i></span> Active</a></li>
+                                            <li><a href="javascript:" wire:click="changeProjectStatus('completed')"><span><i class='bx bx-user-minus' ></i></span> Completed</a></li>
+                                            <li><a href="javascript:" wire:click="emitDeleteProjectEvent({{$project->id}})"><span><i class='bx bx-user-minus' ></i></span> Archived</a></li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <a href="javascript:" wire:click="emitEditProjectEvent({{ $project->id }})" class="btn-sm btn-border btn-border-secondary"><i class='bx bx-pencil'></i> Edit</a>
+                            <a href="javascript:" wire:click="emitEditProjectEvent({{ $project->id }})" class="btn-sm btn-border btn-border-secondary"><i class='bx bx-pencil'></i> Edit</a>
+                        @endcan
+                        @can('Delete Project')
                         <a href="javascript:" wire:click.confirm="emitDeleteProjectEvent({{ $project->id }})" class="btn-sm btn-border btn-border-danger"><i class='bx bx-trash'></i> Delete</a>
+                        @endcan
                     </div>
                 </div>
             </div>
