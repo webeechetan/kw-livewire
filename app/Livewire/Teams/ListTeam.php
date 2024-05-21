@@ -69,6 +69,8 @@ class ListTeam extends Component
 
 
     public function mount(){
+
+        $this->authorize('View Team');
         $this->users = User::all();
     }
 

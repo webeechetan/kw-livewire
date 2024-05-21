@@ -11,6 +11,7 @@ class ProjectTabs extends Component
 
     public function render()
     {
+        $this->authorize('View Project');
         return view('livewire.projects.components.project-tabs');
     }
 

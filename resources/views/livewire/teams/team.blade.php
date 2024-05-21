@@ -32,7 +32,7 @@
                         <span class="font-400 text-grey">|</span>
                      </div>
                      <div class="col-auto">
-                        <div class="states_style-text">Clients</div>
+                        <div class="states_style-text">{{$team->projects->count() > 1 ? 'Clients' : 'Client'}}</div>
                      </div>
                   </div>
                </div>
@@ -56,7 +56,7 @@
                         <span class="font-400 text-grey">|</span>
                      </div>
                      <div class="col-auto">
-                        <div class="states_style-text">Projects</div>
+                        <div class="states_style-text">  {{ $team->projects->count() >1 ? 'Projects' : 'Project' }}</div>
                      </div>
                   </div>
                </div>
@@ -80,7 +80,7 @@
                         <span class="font-400 text-grey">|</span>
                      </div>
                      <div class="col-auto">
-                        <div class="states_style-text">Members</div>
+                        <div class="states_style-text"> {{ $team->users->count() >1 ? 'Members' : 'Member' }}</div>
                      </div>
                   </div>
                </div>
