@@ -80,6 +80,7 @@ class ListProject extends Component
     }
 
     public function mount(){
+        $this->authorize('View Project');
         $this->users = User::all();
     }
 

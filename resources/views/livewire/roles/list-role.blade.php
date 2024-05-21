@@ -27,7 +27,7 @@
 
     <div class="row mb-4">
         @foreach($roles as $role)
-        <div class="col-md-3">
+        <div class="col-md-3 mt-3">
             <div class=" card_style card_style-roles h-100">
                 <a wire:navigate="" href="http://localhost:8000/role"class="card_style-open"><i class='bx bx-chevron-right'></i></a>
                 <div class="card_style-roles-head">

@@ -139,7 +139,7 @@
                             </div>
                         </div>
                         <div class="card_style-tasks text-center">
-                            <div class="card_style-tasks-title"><span><i class='bx bx-objects-horizontal-left' ></i></span> {{ $user->tasks->count() }} Tasks</div>
+                            <div class="card_style-tasks-title"><span><i class='bx bx-objects-horizontal-left' ></i></span> {{ $user->tasks->count() }}  {{ $user->tasks->count() >1 ? 'Tasks' : 'Task'}}</div>
                             <div class="card_style-tasks-list justify-content-center mt-2">
                                 <div class="card_style-tasks-item card_style-tasks-item-pending"><span><i class='bx bx-objects-horizontal-center' ></i></span>
                                 {{

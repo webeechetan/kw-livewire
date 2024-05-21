@@ -27,7 +27,7 @@
                                 <span class="font-400 text-grey">|</span>
                             </div>
                             <div class="col-auto">
-                                <div class="states_style-text">Active Tasks</div>
+                                <div class="states_style-text">{{ $projectTasks->count() >1 ? 'Active Tasks' : 'Active Task' }}</div>
                             </div>
                         </div>
                     </div>
@@ -79,7 +79,7 @@
                                 <span class="font-400 text-grey">|</span>
                             </div>
                             <div class="col-auto">
-                                <div class="states_style-text">Members</div>
+                                <div class="states_style-text"> {{$projectUsers->count()> 1 ? 'Members' : 'Member'}}</div>
                             </div>
                         </div>
                     </div>
