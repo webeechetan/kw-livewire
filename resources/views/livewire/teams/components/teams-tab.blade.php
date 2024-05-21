@@ -29,9 +29,9 @@
             </div>
             <hr class="mb-0">
             <div class="tabNavigationBar-tab border_style">
-                <a wire:navigate class="tabNavigationBar-item @if(request()->routeIs('team.profile')) active @endif" href=""><i class='bx bx-line-chart'></i> Overview</a>
-                <a wire:navigate class="tabNavigationBar-item @if(request()->routeIs('team.projects')) active @endif" href=""><i class='bx bx-objects-horizontal-left' ></i> Projects</a>
-                <a wire:navigate class="tabNavigationBar-item @if(request()->routeIs('team.projects')) active @endif" href=""><i class='bx bx-layer' ></i> Tasks</a>
+                <a wire:navigate class="tabNavigationBar-item @if(request()->routeIs('team.profile')) active @endif" href="{{ route('team.profile', $team->id) }}"><i class='bx bx-line-chart'></i> Overview</a>
+                <a wire:navigate class="tabNavigationBar-item @if(request()->routeIs('team.projects')) active @endif" href="{{ route('team.projects', $team->id) }}"><i class='bx bx-objects-horizontal-left' ></i> Projects</a>
+                <a wire:navigate class="tabNavigationBar-item @if(request()->routeIs('team.tasks')) active @endif" href="{{ route('team.tasks', $team->id) }}"><i class='bx bx-layer' ></i> Tasks</a>
             </div>
         </div>
     </div>

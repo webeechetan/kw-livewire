@@ -34,8 +34,13 @@ b, strong {
     font-size: .6rem;
 }
 /*---- Width ----*/
-.w-200{
-    width: 200px;
+.w {
+    &-150 {
+        min-width: 150px;
+    }
+    &-200 {
+        min-width: 200px;
+    }
 }
 /*---- Batch ----*/
 .badge {
@@ -1285,8 +1290,11 @@ hr.space-sm {
             }
         }
     }
-
-    
+    &-select {
+        border-radius: $border_radius_xs;
+        padding: 5px 10px;
+        border-color: $grey;
+    }
 }
 
 /* ----- Toaster Style ----- */
