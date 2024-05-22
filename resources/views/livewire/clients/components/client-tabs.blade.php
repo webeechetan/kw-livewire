@@ -6,7 +6,7 @@
                     <div class="dashboard-head-title-wrap">
                         <div class="avatar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Ac">{{$client->initials}}</div>
                         <div>
-                            <h3 class="main-body-header-title mb-2">{{ $client->visible_name }}</h3>
+                            <h3 class="main-body-header-title mb-2 @if($client->trashed()) archived_content @endif">{{ $client->visible_name }}</h3>
                             <div class="text-sm">{{ \Carbon\Carbon::parse($client->onboard_date)->format('d M Y') }}</div>
                         </div>
                     </div>
@@ -36,7 +36,8 @@
                         @endcan
                         <!-- Delete -->
                         @can('Delete Client')
-                            <a href="#" class="btn-sm btn-border btn-border-danger" wire:click="forceDeleteClient({{$client->id}})"><i class='bx bx-trash'></i> Delete</a>
+                            {{-- <a href="#" class="btn-sm btn-border btn-border-danger" wire:click="forceDeleteClient({{$client->id}})"><i class='bx bx-trash'></i> Delete</a>--}}
+                             <a href="#" class="btn-sm btn-border btn-border-danger" wire:click="forceDeleteClient({{$client->id}})" wire:confirm="Are you sure you want to delete?"><i class='bx bx-trash'></i> Delete</a> 
                         @endcan
                     </div>
                 </div>

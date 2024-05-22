@@ -7,7 +7,7 @@
             <li class="breadcrumb-item active" aria-current="page">{{ $user->name }}</li>
         </ol>
     </nav>
-    <div class="row">
+    <div class="row @if($user->trashed()) archived_content @endif">
         <div class="col-lg-4">
             <div class="column-box">
                 <div class="user-profile">
@@ -83,12 +83,19 @@
                             @can('Edit User')
                             <div class="cus_dropdown">
                                 <!-- For Active Class = btn-border-success | For Archived Class = btn-border-archived -->
+
+                                @if(!$user->trashed())
                                 <div class="cus_dropdown-icon btn-border btn-border-success">Active <i class='bx bx-chevron-down' ></i></div>
+                                @else
+                                <div class="cus_dropdown-icon btn-border btn-border-archived">Archived <i class='bx bx-chevron-down'></i></div>
+                                @endif
+
+
                                 <div class="cus_dropdown-body cus_dropdown-body-widh_s">
                                     <div class="cus_dropdown-body-wrap">
                                         <ul class="cus_dropdown-list">
                                             <li><a href="javascript:;" wire:click="changeUserStatus('active')" @if(!$user->trashed()) class="active" @endif><span><i class='bx bx-user-check' ></i></span> Active</a></li>
-                                            <li><a href="javascript:;" wire:click="changeUserStatus('archived')" @if(!$user->trashed()) class="active" @endif><span><i class='bx bx-user-minus' ></i></span> Archived</a></li>
+                                            <li><a href="javascript:;" wire:click="changeUserStatus('archived')" @if($user->trashed()) class="active" @endif><span><i class='bx bx-user-minus' ></i></span> Archived</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -96,7 +103,8 @@
                             <a href="javascript:" wire:click="emitEditUserEvent({{ $user->id }})" class="btn-sm btn-border btn-border-secondary"><i class='bx bx-pencil'></i> Edit</a>
                             @endcan
                             @can('Delete User')
-                            <a href="javascript:" class="btn-sm btn-border btn-border-danger"><i class='bx bx-trash'></i> Delete</a>
+                            <a href="#" class="btn-sm btn-border btn-border-danger" wire:click="forceDeleteUser({{$user->id}})" wire:confirm="Are you sure you want to delete?"><i class='bx bx-trash'></i> Delete</a>
+                            {{-- <a href="javascript:" class="btn-sm btn-border btn-border-danger"><i class='bx bx-trash'></i> Delete</a> --}}
                             @endcan
                         </div>
                     </div>
