@@ -10,7 +10,7 @@
     <div class="dashboard-head mb-3">
         <div class="row align-items-center">
             <div class="col d-flex align-items-center gap-3">
-                <h3 class="main-body-header-title mb-0">All Clients</h3>
+                <h3 class="main-body-header-title mb-0 @if($filter == 'archived') archived_content @endif">All Clients</h3>
                 <span class="text-light">|</span>
                 @can('Create Client')
                     <a data-bs-toggle="modal" data-bs-target="#add-client-modal" href="javascript:void(0);" class="btn-border btn-border-sm btn-border-primary"><i class="bx bx-plus"></i> Add Client</a>
