@@ -6,7 +6,7 @@
                     <div class="dashboard-head-title-wrap">
                         <div class="avatar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Ac">{{$project->initials}}</div>
                         <div>
-                            <h3 class="main-body-header-title mb-2">{{ $project->name }}</h3>
+                            <h3 class="main-body-header-title mb-2 @if($project->trashed()) archived_content @endif">{{ $project->name }}</h3>
                             <div class="text-sm text-uppercase">Acma</div>
                             {{-- <div>{{ \Carbon\Carbon::parse($project->start_date)->format('d M-Y') }}</div> --}}
                         </div>
@@ -18,7 +18,12 @@
                         <!-- Edit -->
                             <div class="cus_dropdown">
                                 <!-- For Active Class = btn-border-success | For Archived Class = btn-border-archived -->
+
+                                @if(!$project->trashed())
                                 <div class="cus_dropdown-icon btn-border btn-border-success">Active <i class='bx bx-chevron-down' ></i></div>
+                                @else
+                                <div class="cus_dropdown-icon btn-border btn-border-archived">Archived <i class='bx bx-chevron-down' ></i></div>
+                                @endif
                                 <div class="cus_dropdown-body cus_dropdown-body-widh_s">
                                     <div class="cus_dropdown-body-wrap">
                                         <ul class="cus_dropdown-list">
