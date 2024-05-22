@@ -79,12 +79,19 @@ class User extends Authenticatable
         return $this->belongsToMany(Client::class);
     }
 
-    public function projects(){
-        return $this->belongsToMany(Project::class);
-    }
+    // public function projects(){
+    //     return $this->belongsToMany(Project::class);
+    // }
 
     public function organization(){
         return $this->belongsTo(Organization::class);
+    }
+
+    public function getProjectsAttribute(){
+        $users_projects_ids = $this->tasks->pluck('project_id')->toArray();
+        $users_projects_ids = array_unique($users_projects_ids);
+        $projects = Project::whereIn('id', $users_projects_ids)->get();
+        return $projects;
     }
 
     public function details(){
