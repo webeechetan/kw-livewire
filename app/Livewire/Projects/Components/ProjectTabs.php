@@ -25,6 +25,7 @@ class ProjectTabs extends Component
     }
 
     public function emitDeleteProjectEvent($id){
+
         $this->dispatch('deleteProject',$id);
     }
 

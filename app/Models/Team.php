@@ -9,12 +9,13 @@ use App\Models\Task;
 use App\Models\Project;
 use App\Models\Client;
 use App\Models\Scopes\OrganizationScope;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 use PDO;
 
 class Team extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     public function setNameAttribute($value){
         $this->attributes['name'] = ucwords($value);

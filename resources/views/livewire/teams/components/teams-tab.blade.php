@@ -22,7 +22,7 @@
                     <div class="main-body-header-right">
                         <!-- Delete -->
                         @can('Delete Client')
-                            <a href="#" class="btn-sm btn-border btn-border-danger" wire:click="forceDeleteClient({{$team->id}})"><i class='bx bx-trash'></i> Delete</a>
+                            <a href="#" class="btn-sm btn-border btn-border-danger" wire:click="forceDeleteTeam({{$team->id}})" wire:confirm="Are you sure you want to delete?"><i class='bx bx-trash'></i> Delete</a>
                         @endcan
                     </div>
                 </div>
