@@ -105,8 +105,6 @@ class ListUser extends Component
     public function search()
     {
         $this->resetPage();
-    }
-
-
+    }  
 
 }

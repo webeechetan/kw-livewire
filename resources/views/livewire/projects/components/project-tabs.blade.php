@@ -37,7 +37,8 @@
                             <a href="javascript:" wire:click="emitEditProjectEvent({{ $project->id }})" class="btn-sm btn-border btn-border-secondary"><i class='bx bx-pencil'></i> Edit</a>
                         @endcan
                         @can('Delete Project')
-                        <a href="javascript:" wire:click.confirm="emitDeleteProjectEvent({{ $project->id }})" class="btn-sm btn-border btn-border-danger"><i class='bx bx-trash'></i> Delete</a>
+                        {{-- <a href="javascript:" wire:click.confirm="emitDeleteProjectEvent({{ $project->id }})" class="btn-sm btn-border btn-border-danger"><i class='bx bx-trash'></i> Delete</a> --}}
+                        <a href="#" wire:click="emitDeleteProjectEvent({{ $project->id }})" wire:confirm="Are you sure you want to delete?" class="btn-sm btn-border btn-border-danger"><i class='bx bx-trash'></i> Delete</a>
                         @endcan
                     </div>
                 </div>
