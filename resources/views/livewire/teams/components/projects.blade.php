@@ -15,30 +15,29 @@
    <livewire:teams.components.teams-tab :team="$team" @saved="$refresh"/>
    <!--- Dashboard Body --->
    <div class="row mb-4">
-      <div class="col-sm-4">
+      <div class="col-sm-4 @if($filterByUser) opacity-25 @endif">
          <div class="column-box py-2">
             <div class="d-flex align-items-center">
-               <label for="" class="font-500"><i class='bx bx-briefcase-alt-2 text-primary' ></i> Filter By Client</label>
-               <select class="dashboard_filters-select ms-auto w-200" name="" id="">
-                  <option value="" disabled="">Select Client</option>
-                  <option value="1">Acma</option>
-                  <option value="2">Buyers Guide</option>
-                  <option value="3">GRG</option>
-                  <option value="4">Webeesocial</option>
+               <label for="" class="font-500"><i class='bx bx-briefcase-alt-2 text-primary' ></i> Filter By Client  @if($filterByClient) <i class="bx bx-refresh" onclick="window.location.reload()" ></i> @endif</label>
+               <select wire:model.live="filterByClient" class="dashboard_filters-select ms-auto w-200" name="" id="">
+                  <option selected >Select Client</option>
+                  @foreach($clients as $client)
+                  <option value="{{ $client->id }}">{{$client->name}}</option>
+                  @endforeach
                </select>
             </div>
+            
          </div>
       </div>
-      <div class="col-sm-4">
+      <div class="col-sm-4 @if($filterByClient) opacity-25 @endif">
          <div class="column-box py-2">
             <div class="d-flex align-items-center">
-               <label for="" class="font-500"><i class='bx bx-user text-secondary'></i> Filter By User</label>
-               <select class="dashboard_filters-select ms-auto w-200" name="" id="">
-                  <option value="" disabled="">Select Client</option>
-                  <option value="1">Acma</option>
-                  <option value="2">Buyers Guide</option>
-                  <option value="3">GRG</option>
-                  <option value="4">Webeesocial</option>
+               <label for="" class="font-500"><i class='bx bx-user text-secondary'></i> Filter By User @if($filterByUser) <i class="bx bx-refresh" onclick="window.location.reload()" ></i> @endif</label>
+               <select wire:model.live="filterByUser" class="dashboard_filters-select ms-auto w-200" name="" id="">
+                  <option   selected>Select User</option>
+                  @foreach($users as $user)
+                     <option value="{{ $user->id }}">{{$user->name}}</option>
+                  @endforeach
                </select>
             </div>
          </div>
@@ -47,33 +46,48 @@
          <div class="column-box py-2">
             <div class="d-flex align-items-center">
                <label for="" class="font-500"><i class='bx bx-calendar-alt text-success' ></i> Filter By Date</label>
-               <input type="date" class="dashboard_filters-select ms-auto w-200">
+               <i class="dashboard_filters-select ms-auto w-200 filter-projects-by-date bx bx-calendar"></i>
             </div>
+            @if($start_date)
+            {{ $start_date }}, {{ $end_date}}
+            @endif
          </div>
       </div>
    </div>
 
    <!-- Projects -->
+   @php
+      $projects = $team->projects;
+      if($start_date && $end_date){
+         $projects = $projects->whereBetween('due_date',[$start_date,$end_date]);
+      }
+      if($filterByClient){
+         $projects = $projects->where('client_id',$filterByClient);
+      }
+      if($filterByUser){
+         $projects = \App\Models\User::find($filterByUser)->projects;
+      }
+   @endphp
    <div class="project-tabs mb-2">
       <div class="row">
          <div class="col-sm-7">
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                <li class="nav-item" role="presentation">
-                  <button class="nav-link active" id="project-all-tab" data-bs-toggle="tab" data-bs-target="#project-all-tab-pane" type="button" role="tab" aria-controls="project-all-tab-pane" aria-selected="true">All <span class="ms-2">{{ $team->projects->count() }}</span></button>
+                  <button class="nav-link active" id="project-all-tab" data-bs-toggle="tab" data-bs-target="#project-all-tab-pane" type="button" role="tab" aria-controls="project-all-tab-pane" aria-selected="true">All <span class="ms-2">{{ $projects->count() }}</span></button>
                </li>
                <li class="nav-item" role="presentation">
                   <button class="nav-link" id="project-active-tab" data-bs-toggle="tab" data-bs-target="#project-active-tab-pane" type="button" role="tab" aria-controls="project-active-tab-pane" aria-selected="false" tabindex="-1">Active <span class="ms-2">
-                     {{ $team->projects->where('status','active')->count() }}   
+                     {{ $projects->count() }}   
                   </span></button>
                </li>
                <li class="nav-item" role="presentation">
-                  <button class="nav-link" id="project-done-tab" data-bs-toggle="tab" data-bs-target="#project-done-tab-pane" type="button" role="tab" aria-controls="project-done-tab-pane" aria-selected="false" tabindex="-1">Completed <span class="ms-2">{{ $team->projects->where('status','completed')->count() }}   </span></button>
+                  <button class="nav-link" id="project-done-tab" data-bs-toggle="tab" data-bs-target="#project-done-tab-pane" type="button" role="tab" aria-controls="project-done-tab-pane" aria-selected="false" tabindex="-1">Completed <span class="ms-2">{{ $projects->where('status','completed')->count() }}   </span></button>
                </li>
                <li class="nav-item" role="presentation">
-                  <button class="nav-link" id="project-overdue-tab" data-bs-toggle="tab" data-bs-target="#project-overdue-tab-pane" type="button" role="tab" aria-controls="project-overdue-tab-pane" aria-selected="false" tabindex="-1">Overdue <span class="ms-2">{{ $team->projects->where('status','overdue')->count() }}   </span></button>
+                  <button class="nav-link" id="project-overdue-tab" data-bs-toggle="tab" data-bs-target="#project-overdue-tab-pane" type="button" role="tab" aria-controls="project-overdue-tab-pane" aria-selected="false" tabindex="-1">Overdue <span class="ms-2">{{ $projects->where('status','overdue')->count() }}   </span></button>
                </li>
                <li class="nav-item" role="presentation">
-                  <button class="nav-link" id="project-archived-tab" data-bs-toggle="tab" data-bs-target="#project-archived-tab-pane" type="button" role="tab" aria-controls="project-archived-tab-pane" aria-selected="false" tabindex="-1">Archive <span class="ms-2">{{ $team->projects->where('status','archived')->count() }}   </span></button>
+                  <button class="nav-link" id="project-archived-tab" data-bs-toggle="tab" data-bs-target="#project-archived-tab-pane" type="button" role="tab" aria-controls="project-archived-tab-pane" aria-selected="false" tabindex="-1">Archive <span class="ms-2">{{ $projects->where('status','archived')->count() }}   </span></button>
                </li>
             </ul>
          </div>
@@ -82,7 +96,7 @@
    <div class="tab-content" id="myTabContent">
       <div class="tab-pane fade active show" id="project-all-tab-pane" role="tabpanel" aria-labelledby="project-all-tab" tabindex="0">
          <div class="row">
-            @foreach($team->projects as $project)
+            @foreach($projects as $project)
             <div class="col-lg-3">
                <div class="project-list">
                   <div class="project project-align_left w-100">
@@ -94,12 +108,12 @@
                   </div>
                </div>
             </div>
-            @endforeach
+            @endforeach 
          </div>
       </div>
       <div class="tab-pane fade" id="project-active-tab-pane" role="tabpanel" aria-labelledby="project-active-tab" tabindex="0">
          <div class="row">
-            @foreach($team->projects as $project)
+            @foreach($projects as $project)
                @if($project->status != 'active')
                   @continue
                @endif
@@ -119,7 +133,7 @@
       </div>
       <div class="tab-pane fade" id="project-done-tab-pane" role="tabpanel" aria-labelledby="project-done-tab" tabindex="0">
          <div class="row">
-            @foreach($team->projects as $project)
+            @foreach($projects as $project)
                @if($project->status != 'completed')
                   @continue
                @endif
@@ -139,7 +153,7 @@
       </div>
       <div class="tab-pane fade" id="project-overdue-tab-pane" role="tabpanel" aria-labelledby="project-overdue-tab" tabindex="0">
         <div class="row">
-         @foreach($team->projects as $project)
+         @foreach($projects as $project)
          @if($project->status != 'overdue')
             @continue
          @endif
@@ -159,7 +173,7 @@
       </div>
       <div class="tab-pane fade" id="project-archived-tab-pane" role="tabpanel" aria-labelledby="project-archived-tab" tabindex="0">
          <div class="row">
-            @foreach($team->projects as $project)
+            @foreach($projects as $project)
             @if($project->status != 'archived')
                @continue
             @endif
@@ -179,3 +193,20 @@
       </div>
    </div>
 </div>
+
+@script
+<script>
+   $(document).ready(function(){
+      $('.filter-projects-by-date').flatpickr({
+         mode: "range",
+         onChange: function(selectedDates, dateStr, instance){
+            let date = dateStr.split(' to ');
+            let startDate = date[0];
+            let endDate = date[1];
+            @this.set('start_date',startDate);
+            @this.set('end_date',endDate);
+         }
+      });
+   });
+</script>
+@endscript

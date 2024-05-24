@@ -9,9 +9,11 @@
     <div class="dashboard-head mb-4">
         <div class="row align-items-center">
             <div class="col d-flex align-items-center gap-3">
-                <h3 class="main-body-header-title mb-0">All Users</h3>
+                <h3 class="main-body-header-title mb-0 @if($filter == 'archived') archived_content @endif">All Users</h3>
                 <span class="text-light">|</span>
+                @can('Create User')
                 <a data-bs-toggle="modal" data-bs-target="#add-user-modal" href="javascript:void(0);" class="btn-border btn-border-sm btn-border-primary"><i class="bx bx-plus"></i> Add User</a>
+                @endcan
                 <!-- <a wire:navigate href="{{ route('user.add') }}" href="javascript:void(0);" class="btn-border btn-border-sm btn-border-primary"><i class="bx bx-plus"></i> Add User</a> -->
             </div>
             <div class="text-end col">
@@ -126,7 +128,7 @@
                             <div class="d-flex align-items-center justify-content-center"><i class='bx bx-envelope me-1 text-secondary' ></i> {{ $user->email }}</div>
                             <div class="card_style-user-head-position mt-2"><i class='bx bx-user'></i> Web Developer | Tech Team</div>
                             @if($user->teams->count() > 0)
-                                <div class="card_style-user-head-team"><span class="btn-batch btn-batch-warning">{{ $user->teams->count() }} Teams</span></div>
+                                <div class="card_style-user-head-team"><span class="btn-batch btn-batch-warning">{{ $user->teams->count() }}  {{ $user->teams->count() >1 ? 'Teams' : 'Team'}}</span></div>
                             @endif
                         </div>
                     </div>

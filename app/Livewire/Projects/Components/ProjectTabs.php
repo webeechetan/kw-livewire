@@ -11,6 +11,7 @@ class ProjectTabs extends Component
 
     public function render()
     {
+        $this->authorize('View Project');
         return view('livewire.projects.components.project-tabs');
     }
 
@@ -24,7 +25,17 @@ class ProjectTabs extends Component
     }
 
     public function emitDeleteProjectEvent($id){
+
         $this->dispatch('deleteProject',$id);
+    }
+
+    public function forceDeleteProject($projectId)
+    {
+        
+        $project = Project::withTrashed()->find($projectId);
+        $project->forceDelete();
+        $this->dispatch('success', 'Project deleted successfully.');
+        $this->redirect(route('project.index'),navigate:true);
     }
 
     public function changeProjectStatus($status){

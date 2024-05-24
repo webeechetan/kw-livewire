@@ -98,6 +98,9 @@ class ListTask extends Component
 
     public function mount()
     {
+
+            $this->authorize('View Task');
+            
             $this->auth_user_id = auth()->guard(session('guard'))->user()->id;
             $this->users = User::all();
             $this->projects = Project::all();

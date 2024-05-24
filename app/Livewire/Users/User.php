@@ -20,6 +20,8 @@ class User extends Component
 
     public function mount($user_id)
     {
+
+        $this->authorize('View User');
         $this->user = UserModel::where('id' , $user_id)->withTrashed()->first();
         $users_task_array = $this->user->tasks->groupBy('project_id');
         $this->user_clients = Project::whereIn('id',$users_task_array->keys())->get()->groupBy('client_id');
@@ -43,5 +45,16 @@ class User extends Component
             $this->dispatch('success', 'User status updated successfully.');
         }
         $this->redirect(route('user.profile', $this->user->id),navigate:true);
+    }
+
+    public function forceDeleteUser($userId)
+    {
+
+       
+        $user = UserModel::withTrashed()->find($userId);
+        $user->forceDelete();
+        $this->dispatch('success', 'User deleted successfully.');
+        $this->redirect(route('user.index'),navigate:true);
+
     }
 }

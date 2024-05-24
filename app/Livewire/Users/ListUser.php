@@ -96,6 +96,8 @@ class ListUser extends Component
 
 
     public function mount(){
+
+        $this->authorize('View User');
         $this->teams = Team::orderBy('name')->get();
         $this->projects = Project::orderBy('name')->get();
     }
@@ -103,8 +105,6 @@ class ListUser extends Component
     public function search()
     {
         $this->resetPage();
-    }
-
-
+    }  
 
 }

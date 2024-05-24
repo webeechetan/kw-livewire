@@ -9,12 +9,13 @@ use App\Models\Task;
 use App\Models\Project;
 use App\Models\Client;
 use App\Models\Scopes\OrganizationScope;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 use PDO;
 
 class Team extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     public function setNameAttribute($value){
         $this->attributes['name'] = ucwords($value);
@@ -53,12 +54,11 @@ class Team extends Model
 
     public function getInitialsAttribute(){
         // only take first 2 words and get their first letter if the name is in one word then take first 2 letters
-        // $words = explode(' ', $this->name);
-        // if(count($words) == 1){
-        //     return substr($this->name, 0, 2);
-        // }
-        // return $words[0][0].$words[1][0];
-        return $this->name;
+        $words = explode(' ', $this->name);
+        if(count($words) == 1){
+            return substr($this->name, 0, 2);
+        }
+        return $words[0][0].$words[1][0];
         
     }
 
