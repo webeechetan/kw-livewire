@@ -50,10 +50,14 @@
                 
                 <!-- Notifications -->
                 <livewire:notifications.notification-drop-down />
+
+                <!-- Roles & Permission -->
+                <li class="nav-item">
+                  <a class="nav-link" wire:navigate href="{{ route('role.index') }}" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip" data-bs-title="Roles & Permission"><i class='bx bx-slider-alt'></i></a>
+                </li>
                 
                 <!-- Login -->
                 <li class="nav-item navbar-dropdown dropdown">
-                  <span></span>
                   <a href="#" class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="true">
                     <span class="avatar avatar-sm avatar-green">AJ</span>
                   </a>
@@ -110,9 +114,9 @@
                         @can('View Team')
                             <li><a wire:navigate href="{{ route('team.index') }}" class="@if (request()->routeIs('team.index') || request()->routeIs('team.add')) active @endif"><i class='bx bx-sitemap'></i> Teams</a></li>
                         @endcan
-                        @can('View Role')
+                        {{-- @can('View Role')
                             <li><a wire:navigate href="{{ route('role.index') }}" class="@if (request()->segment(1) == 'roles' || request()->segment(1) == 'role' ) active @endif"><i class='bx bx-sitemap'></i> Role & Permissions</a></li>
-                        @endcan
+                        @endcan --}}
                         @can('View Task')
                             <li><a wire:navigate href="{{ route('task.index') }}" class="@if (request()->routeIs('task.index') || request()->routeIs('task.list-view') || request()->routeIs('task.add')) active @endif"><i class='bx bx-task' ></i> Tasks</a></li>
                         @endcan

@@ -437,7 +437,7 @@
             }
         }
         &_empty {
-            width: 286px;
+            width: 280px;
             min-height: 116px;
             border-radius: $border_radius_xs;
             @include flex_center;
@@ -473,7 +473,6 @@
                 letter-spacing: 1px;
             }
             &_assigned {
-                background-color: $brand_light;
                 .scrollbar {
                     &::-webkit-scrollbar-track {
                         background-color: $brand_light;
@@ -491,7 +490,6 @@
                 }
             }
             &_accepted {
-                background-color: $secondary_light;
                 .scrollbar {
                     &::-webkit-scrollbar-track {
                         background-color: $secondary_light;
@@ -512,7 +510,6 @@
                 }
             }
             &_in_review {
-                background-color: $warning_light;
                 .scrollbar {
                     &::-webkit-scrollbar-track {
                         background-color: $warning_light;
@@ -533,7 +530,6 @@
                 }
             }
             &_completed {
-                background-color: $success_light;
                 .scrollbar {
                     &::-webkit-scrollbar-track {
                         background-color: $success_light;
