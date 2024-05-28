@@ -21,13 +21,13 @@
                     <div class="col">
                         <div class="row align-items-center g-2">
                             <div class="col-auto">
-                                <h5 class="title-md mb-0">{{ $projectTasks->count() }}</h5>
+                                <h5 class="title-md mb-0">{{ $projectTasks->where('status','!=','completed')->count() }}</h5>
                             </div>
                             <div class="col-auto">
                                 <span class="font-400 text-grey">|</span>
                             </div>
                             <div class="col-auto">
-                                <div class="states_style-text">{{ $projectTasks->count() >1 ? 'Active Tasks' : 'Active Task' }}</div>
+                                <div class="states_style-text">{{ $projectTasks->count() > 1 ? 'Active Tasks' : 'Active Task' }}</div>
                             </div>
                         </div>
                     </div>
@@ -46,6 +46,7 @@
                                 <h5 class="title-md mb-0">
                                     @php
                                         $progress = 0;
+                                        
                                         if($projectTasks->count() > 0){
                                             $progress = ($projectTasks->where('status', 'completed')->count() / $projectTasks->count()) * 100;
                                         }

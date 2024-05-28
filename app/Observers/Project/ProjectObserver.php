@@ -24,6 +24,11 @@ class ProjectObserver
         $activity->org_id = $project->org_id;
         $activity_text = 'updated ';
 
+        // check if description is updated if yes then don't create activity 
+        if($project->isDirty('description')){
+            return false;
+        }
+
         $original = $project->getOriginal();
         $updated = $project->getAttributes();
 
@@ -32,9 +37,6 @@ class ProjectObserver
                 $activity_text .= $key.' from <b>'.$original[$key].'</b> to <b>'.$value .'</b> </br>';
             }
         }
-
-        
-
 
         $activity->text = $activity_text;
         $activity->activityable_id = $project->id;
