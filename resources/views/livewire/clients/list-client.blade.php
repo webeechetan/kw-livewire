@@ -132,7 +132,7 @@
                 <div class="row align-items-center">
                     <div class="col-auto">
                         {{-- <h4 class="text-md mb-0"><i class="bx bx-user text-primary"></i> {{count($client->users)}} Users</h4> --}}
-                        <h4 class="text-md mb-0"><i class="bx bx-user text-primary"></i>{{ count($client->users) > 1 ? 'Users' : 'User' }}</h4> 
+                        <h4 class="text-md mb-0"><i class="bx bx-user text-primary me-1"></i>{{ count($client->users) > 1 ? 'Users' : 'User' }}</h4> 
                     </div>
                     <div class="col">
                         <div class="avatarGroup avatarGroup-overlap">
