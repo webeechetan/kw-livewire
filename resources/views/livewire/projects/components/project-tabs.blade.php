@@ -27,9 +27,9 @@
                                 <div class="cus_dropdown-body cus_dropdown-body-widh_s">
                                     <div class="cus_dropdown-body-wrap">
                                         <ul class="cus_dropdown-list">
-                                            <li><a href="javascript:" wire:click="changeProjectStatus('active')" class="active">Active</a></li>
-                                            <li><a href="javascript:" wire:click="changeProjectStatus('completed')">Completed</a></li>
-                                            <li><a href="javascript:" wire:click="emitDeleteProjectEvent({{$project->id}})">Archived</a></li>
+                                            <li><a href="javascript:" wire:click="changeProjectStatus('active')" @if(!$project->trashed()) class="active" @endif>Active</a></li>
+                                            <li><a href="javascript:" wire:click="changeProjectStatus('completed')" @if($project->status == 'completed') class="active" @endif>Completed</a></li>
+                                            <li><a href="javascript:" wire:click="emitDeleteProjectEvent({{$project->id}}) @if($project->trashed())" class="active" @endif>Archived</a></li>
                                         </ul>
                                     </div>
                                 </div>
