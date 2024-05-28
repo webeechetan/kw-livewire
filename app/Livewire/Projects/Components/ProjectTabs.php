@@ -39,6 +39,7 @@ class ProjectTabs extends Component
     }
 
     public function changeProjectStatus($status){
+
         $this->project->status = $status;
         $this->project->save();
         $this->dispatch('success','Project status changed successfully');

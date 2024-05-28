@@ -170,7 +170,7 @@
             @endforeach
             @else
             <div class="col-md-12">
-                <h4 class="text text-danger">No clients found.
+                <h4 class="text text-danger">No clients found
                     @if($query) 
                         with {{$query}}
                     @endif
