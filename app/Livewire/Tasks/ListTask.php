@@ -87,7 +87,7 @@ class ListTask extends Component
        
         $tasks->orderBy('id','desc');
 
-        $tasks = $tasks->paginate(15);
+        $tasks = $tasks->paginate(12);
 
         return view('livewire.tasks.list-task',[
             'tasks' => $tasks

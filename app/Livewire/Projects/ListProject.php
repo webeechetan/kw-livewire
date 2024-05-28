@@ -7,6 +7,7 @@ use Livewire\WithPagination;
 use App\Helpers\Helper;
 use App\Models\Project;
 use App\Models\User;
+use Carbon\Carbon;
 use Livewire\Attributes\Lazy;
 use ProtoneMedia\LaravelCrossEloquentSearch\Search;
 
@@ -19,6 +20,7 @@ class ListProject extends Component
     public $activeProjects;
     public $completedProjects;
     public $archivedProjects;
+    public $overdueProjects;
 
 
 
@@ -39,6 +41,8 @@ class ListProject extends Component
         $this->activeProjects = Project::where('status', 'active')->count();
         $this->completedProjects = Project::where('status', 'completed')->count();
         $this->archivedProjects = Project::onlyTrashed()->count();
+        //$this->overdueProjects = Project::where('status', 'overdue')->count();
+        $this->overdueProjects = Project::where('due_date', '<', Carbon::today())->count();
         
         $projects = Project::where('name','like','%'.$this->query.'%');
         
@@ -50,8 +54,10 @@ class ListProject extends Component
         }elseif($this->filter == 'completed'){
             $projects->where('status','completed');
         }elseif($this->filter == 'overdue'){ 
-            $projects->where('status','overdue');
+            $projects->where('due_date','<', Carbon::today());
         }
+
+        
         // dd($projects->toSql());
         if($this->sort == 'a_z'){
             $projects->orderBy('name');
@@ -72,7 +78,7 @@ class ListProject extends Component
 
         $projects->orderBy('id','desc');
 
-        $projects = $projects->paginate(15);
+        $projects = $projects->paginate(12);
 
         return view('livewire.projects.list-project',[
             'projects' => $projects

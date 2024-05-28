@@ -72,7 +72,7 @@ class ListClient extends Component
 
         $clients->orderBy('created_at','desc');
 
-        $clients = $clients->paginate(9);
+        $clients = $clients->paginate(12);
 
         return view('livewire.clients.list-client',[
             'clients' => $clients,
