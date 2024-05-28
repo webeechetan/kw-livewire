@@ -939,6 +939,14 @@ hr.space-sm {
 
 /* ------ Offcanvas ------ */
 .offcanvas {
+    &-header {
+        .form-select {
+            min-height: inherit;
+            font-size: 14px;
+            padding: 4px 10px;
+            min-width: 120px;
+        }
+    }
     &-backdrop.show {
         opacity: 0.2;
     }

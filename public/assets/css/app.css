@@ -937,6 +937,12 @@ hr.space-sm {
 }
 
 /* ------ Offcanvas ------ */
+.offcanvas-header .form-select {
+  min-height: inherit;
+  font-size: 14px;
+  padding: 4px 10px;
+  min-width: 120px;
+}
 .offcanvas-backdrop.show {
   opacity: 0.2;
 }
@@ -3585,6 +3591,9 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   z-index: 999999;
   width: 100% !important;
 }
+.select2-container--default .select2-selection--multiple {
+  padding-bottom: 0;
+}
 .select2-container--default .select2-selection--multiple, .select2-container--default .select2-selection--single {
   border: none;
 }
@@ -3621,6 +3630,8 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   margin: 0;
   vertical-align: inherit;
   font-family: inherit;
+  width: inherit !important;
+  height: 31px !important;
 }
 .select2-container--default .select2-search--inline .select2-search__field::placeholder {
   color: #9c9c9c;
@@ -3658,6 +3669,12 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
 }
 .select2-container--open .select2-dropdown--below {
   border-top: 1px solid #eee;
+}
+.select2-container .select2-selection--multiple {
+  min-height: 31px;
+}
+.select2-container .select2-selection--multiple .select2-selection__rendered {
+  margin: 0;
 }
 .select2-hidden-accessible {
   min-height: inherit;
