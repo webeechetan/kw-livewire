@@ -26,7 +26,7 @@ class Project extends Component
     public function mount($id){ 
         $this->project = ProjectModel::withTrashed()->with('client')->find($id);
         $this->users = User::all();
-        $this->projectTasks = Task::where('project_id',$id)->where('status','!=','completed')->get();
+        $this->projectTasks =  Task::where('project_id',$id)->get();
         $this->projectUsers = $this->project->users;
         $tasks = Task::whereIn('project_id', [$this->project->id])->get();
         $task_users = []; 
