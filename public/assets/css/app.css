@@ -839,7 +839,7 @@ hr.space-sm {
   background-color: #eee;
 }
 .cus_dropdown-list li:not(:last-child) {
-  border-bottom: 2px solid #fff;
+  border-bottom: 1px solid #eee;
 }
 .cus_dropdown-options {
   padding: 20px;

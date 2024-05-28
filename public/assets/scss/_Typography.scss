@@ -820,7 +820,7 @@ hr.space-sm {
                 }
             }
             &:not(:last-child) {
-                border-bottom: 2px solid #fff;
+                border-bottom: 1px solid $grey;
             }
         }
     }
