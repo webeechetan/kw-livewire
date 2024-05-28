@@ -27,7 +27,7 @@
                                     </ul> 
                                 </div>
                                 <div class="col-auto">
-                                    <div class="card_style-user-head-position"><i class="bx bx-user text-primary"></i> Web Developer {{$user->designation}}</div>
+                                    <div class="card_style-user-head-position"><i class="bx bx-user text-primary"></i> {{ $user->designation ?? 'Not Added' }}</div>
                                 </div>
                             </div>
                         </div>
@@ -47,7 +47,7 @@
                     <div class="title-label"><i class='bx bx-sitemap text-primary' ></i> Assign Teams</div>
                     <div class="btn-list">
                         @foreach($user->teams as $team)
-                            <a href="javascript:" class="btn-batch">{{ $team->name }}</a>
+                            <a href="javascript:" class="btn-batch">{{ $team->name ?? 'Not Added' }}</a>
                         @endforeach
                     </div>
                 </div>
