@@ -28,6 +28,7 @@
     </div>
 
     <div class="row mb-4">
+        @if($roles->isNotEmpty())
         @foreach($roles as $role)
         <div class="col-md-3 mt-3">
             <div class=" card_style card_style-roles h-100">
@@ -52,6 +53,16 @@
             </div>
         </div>
         @endforeach
+        @else
+        <div class="col-md-12">
+            {{-- <h4 class="text text-danger">No Roles found.</h4> --}}
+            <h4 class="text text-danger">No Roles found 
+                @if($query) 
+                with {{$query}}
+              @endif
+            </h4>
+        </div>
+        @endif
     </div>
     {{-- <div class="row">
         <div class="col-lg-12 mt-4">

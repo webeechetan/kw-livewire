@@ -55,7 +55,7 @@
     <div class="row mt-4">
 
         <div class="col-md-6">
-            <div class="d-flex flex-wrap gap-4 align-items-center mb-4">
+            <div class="dashboard_filters d-flex flex-wrap gap-4 align-items-center mb-4">
                 <a class="@if($filter == 'all') active @endif" wire:navigate href="{{ route('team.index',['sort'=>$sort,'filter'=>'all']) }}">All <span class="btn-batch">{{ $allTeams }}</span></a>
             </div>
         </div>
@@ -76,6 +76,7 @@
             @endif
         </div>
         
+        @if($teams->isNotEmpty())
         @foreach($teams as $team)
             <div class="col-md-4 mb-4">
                 <div class="card_style card_style-team">
@@ -162,6 +163,7 @@
 
                             @if($team->tasks->count() > 1)
                                 @php
+                                // echo($team->tasks->count());
                                     $task_text = 'Tasks';    
                                 @endphp
                             @else
@@ -178,6 +180,16 @@
                 </div>
             </div>
         @endforeach
+        @else
+        <div class="col-md-12">               
+            {{-- <h4 class="text text-danger">No Teams found.</h4> --}}
+            <h4 class="text text-danger">No Teams found 
+                @if($query) 
+                    with {{$query}}
+                @endif
+            </h4>
+        </div>
+        @endif
         <div class="pagintaions mt-4">
             {{ $teams->links(data: ['scrollTo' => false]) }}
         </div>

@@ -72,9 +72,14 @@ class ListUser extends Component
             $users->onlyTrashed();
         }
 
-        if($this->byProject){
-            $p = Project::find($this->byProject);
-            //dd($p->members);
+        if($this->byProject != 'all'){
+
+            // dd($this->byProject);
+            // $p = Project::find($this->byProject);
+            $users->whereHas('projects', function($query){
+
+                $query->where('project_id', $this->byProject);
+            });
         }
 
         if($this->byTeam != 'all'){
