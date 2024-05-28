@@ -59,7 +59,7 @@
             <div class="row align-items-center">
                 <div class="col-lg-6">
                 <div class="btn-list">
-                    <a href="javascript:" class="btn-border btn-border-sm btn-border-secondary active"><span><i class='bx bx-objects-horizontal-center' ></i></span> {{ $project->tasks->where('status', 'assigned')->count() }} Active</a>
+                    <a href="javascript:" class="btn-border btn-border-sm btn-border-secondary active"><span><i class='bx bx-objects-horizontal-center' ></i></span> {{ $project->tasks->where('status', 'pending')->where('due_date', '>', now())->count() }} Active</a>
                     <a href="javascript:" class="btn-border btn-border-sm btn-border-danger"><span><i class='bx bx-objects-horizontal-center' ></i></span> {{ $project->tasks->where('due_date', '<', now())->count() }} Overdue</a>
                     <a href="javascript:" class="btn-border btn-border-sm btn-border-success"><span><i class='bx bx-objects-horizontal-center' ></i></span> {{ $project->tasks->where('status', 'completed')->count() }} Completed</a>
                 </div>

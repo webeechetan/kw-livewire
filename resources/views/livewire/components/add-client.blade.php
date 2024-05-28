@@ -49,7 +49,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
+                            {{-- <div class="row">
                                 <div class="col-md-4 mb-4">
                                     <label for="">Upload Logo</label>
                                 </div>
@@ -66,7 +66,36 @@
                                         <img src="" alt="" class="img-fluid old-image-src">
                                     </div>
                                 </div>
+                            </div> --}}
+
+                            <div class="row">
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Upload Logo</label>
+                                </div>
+                                <div class="col-md-8 mb-4">
+                                    <div class="form-file_upload form-file_upload-logo">
+                                        <input type="file" id="formFile" wire:model="client_image">
+                                        <div class="form-file_upload-box">
+                                            <div class="form-file_upload-box-icon"><i class='bx bx-image'></i></div>
+                                            <div class="form-file_upload-box-text">Upload Image</div>
+                                        </div>
+                                        <div class="form-file_upload-valText">Allowed *.jpeg, *.jpg, *.png, *.gif max size of 3 Mb</div>
+                                    </div>
+                            
+                                    @if ($client_image)
+                                   
+                                        <div class="mt-3">
+                                            <img src="{{ $client_image }}" alt="Image Preview" class="img-fluid" style="max-width: 200px;">
+                                        </div>
+                                    @else
+                                        <div class="old-image mt-3">
+                                            <img src="" alt="" class="img-fluid old-image-src">
+                                        </div>
+                                    @endif
+                                </div>
                             </div>
+
+
                             <div class="row">
                                 <div class="col-12">
                                     <label for="" class="mb-2">Add Description</label>

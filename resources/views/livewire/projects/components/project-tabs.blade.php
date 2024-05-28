@@ -7,7 +7,7 @@
                         <div class="avatar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Ac">{{$project->initials}}</div>
                         <div>
                             <h3 class="main-body-header-title mb-2 @if($project->trashed()) archived_content @endif">{{ $project->name }}</h3>
-                            <div class="text-sm text-uppercase">Acma</div>
+                            <div class="text-sm text-uppercase">{{$project->client->name}}</div>
                             {{-- <div>{{ \Carbon\Carbon::parse($project->start_date)->format('d M-Y') }}</div> --}}
                         </div>
                     </div>

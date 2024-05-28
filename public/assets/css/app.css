@@ -578,26 +578,6 @@ hr.space-sm {
 .card_style-client-head img {
   width: 30px;
 }
-.card_style-projects_tab {
-  margin-top: 10px;
-}
-.card_style-projects_tab .nav-pills {
-  gap: 15px;
-  border-bottom: 1px solid #ddd;
-}
-.card_style-projects_tab-title {
-  padding-bottom: 10px;
-  border-bottom: 2px solid transparent;
-  cursor: pointer;
-}
-.card_style-projects_tab-title.active {
-  border-color: #f83890;
-}
-.card_style-projects_tab-items {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 5px;
-}
 .card_style-project-head h4 {
   font-size: 22px;
 }

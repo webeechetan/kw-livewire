@@ -4,14 +4,26 @@ namespace App\Livewire\Roles;
 
 use Livewire\Component;
 use Spatie\Permission\Models\Role;
+use Livewire\WithPagination;
+use ProtoneMedia\LaravelCrossEloquentSearch\Search;
+
 
 class ListRole extends Component
 {
+
+    use WithPagination;
+
+    public $query = '';
+
     public $roles = [];
 
     public function render()
     {
-        return view('livewire.roles.list-role');
+        
+        return view('livewire.roles.list-role',[
+            'roles' => $this->roles,
+        ]);
+        //return view('livewire.roles.list-role');
     }
 
     public function mount(){
@@ -21,5 +33,9 @@ class ListRole extends Component
 
     public function emitEditRoleEvent($role_id){
         $this->dispatch('editRole',$role_id);
+    }
+
+    public function search(){
+        $this->resetPage();
     }
 }

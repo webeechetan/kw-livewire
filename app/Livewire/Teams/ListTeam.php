@@ -60,7 +60,7 @@ class ListTeam extends Component
         }
 
         $teams->orderBy('created_at', 'desc');
-        $teams = $teams->paginate(10);
+        $teams = $teams->paginate(12);
 
         return view('livewire.teams.list-team',[
             'teams' => $teams,

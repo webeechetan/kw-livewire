@@ -165,7 +165,7 @@
                                         <div class="kanban_column_task_actions">
                                             <a href="#" class="kanban_column_task_date task">
                                                 <span class="btn-icon-task-action"><i class='bx bx-calendar-alt' ></i></span>
-                                                <span class="">{{ $task['due_date'] }}</span>
+                                                <span class="">{{  \Carbon\Carbon::parse($task['due_date'])->format('d M Y') }}</span>
                                             </a>
                                         </div>
                                         <div>

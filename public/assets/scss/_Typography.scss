@@ -493,32 +493,6 @@ hr.space-sm {
         }
     }
 
-    &-projects_tab {
-        margin-top: $spacing_xs;
-
-        .nav {
-            &-pills {
-                gap: $spacing_s;
-                border-bottom: 1px solid $grey_xd;
-            }
-        }
-
-        &-title {
-            padding-bottom: $spacing_xs;
-            border-bottom: 2px solid transparent;
-            cursor: pointer;
-
-            &.active {
-                border-color: $brand;
-            }
-        }
-
-        &-items {
-            @include flex;
-            gap: 5px;
-        }
-    }
-
     &-project {
         &-head {
             h4 {

@@ -43,6 +43,7 @@
                                         <hr>
                                         <h5 class="filterSort-header"><i class='bx bx-briefcase text-primary' ></i> Filter By Status</h5>
                                         <ul class="filterSort_btn_group list-none">
+                                            <li class="filterSort_item"><a wire:navigate href="{{ route('user.index',['sort'=>$sort,'filter'=>'all']) }}" class="btn-batch @if($filter == 'all') active @endif">All</a></li>
                                             <li class="filterSort_item"><a wire:navigate href="{{ route('user.index',['sort'=>$sort,'filter'=>'active'])}}" class="btn-batch @if($filter == 'active') active @endif">Active</a></li>
                                             <li class="filterSort_item"><a wire:navigate href="{{ route('user.index',['sort'=>$sort,'filter'=>'archived'])}}" class="btn-batch @if($filter == 'archived') active @endif">Archived</a></li>
                                         </ul>
@@ -75,10 +76,10 @@
 
     <div class="row">        
         <div class="col-md-6">
-            <div class="d-flex flex-wrap gap-4 align-items-center mb-4">
+            <div class="dashboard_filters d-flex flex-wrap gap-4 align-items-center mb-4">
                 <a class="@if($filter == 'all') active @endif" wire:navigate href="{{ route('user.index',['sort'=>$sort,'filter'=>'all']) }}">All <span class="btn-batch">{{$allUsers}}</span></a>
                 <a class="@if($filter == 'active') active @endif" wire:navigate href="{{ route('user.index',['sort'=>$sort,'filter'=>'active']) }}">Active <span class="btn-batch">{{$activeUsers}}</span></a>
-                <a class="@if($filter == 'active') active @endif" wire:navigate href="{{ route('user.index',['sort'=>$sort,'filter'=>'archived']) }}">Archive <span class="btn-batch">{{$archivedUsers}}</span></a>
+                <a class="@if($filter == 'archived') active @endif" wire:navigate href="{{ route('user.index',['sort'=>$sort,'filter'=>'archived']) }}">Archive <span class="btn-batch">{{$archivedUsers}}</span></a>
             </div>
         </div>
 
@@ -102,15 +103,12 @@
                         <span class="btn-batch">{{ $users->find($byUser)->name }} <a href="{{ route('user.index',['sort'=>$sort,'filter'=>$filter,'byUser'=>'all']) }}" class="ms-1"><i class='bx bx-x'></i></a></span>
                     @endif
                     
-
                     <a href="{{ route('user.index') }}" class="text-danger d-flex align-items-center">Reset <span class="ms-1 d-inline-flex"><i class='bx bx-refresh'></i></span></a>
                 </div>
             @endif
         </div>
 
-
-       
-
+        @if($users->isNotEmpty())
         @foreach($users as $user)
             <div class="col-md-4 mb-4">
                 <div class="card_style card_style-user h-100">
@@ -157,6 +155,16 @@
                 </div>
             </div>
         @endforeach 
+        @else 
+        <div class="col-md-12">
+            {{-- <h4 class="text text-danger">No Users found.</h4> --}}
+            <h4 class="text text-danger">No Users found 
+               @if($query) 
+                 with {{$query}}
+               @endif
+            </h4>
+        </div>
+        @endif
 
         <!-- Pagination -->
         {{ $users->links(data: ['scrollTo' => false]) }}
