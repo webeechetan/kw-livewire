@@ -78,6 +78,7 @@
         
         @if($teams->isNotEmpty())
         @foreach($teams as $team)
+
             <div class="col-md-4 mb-4">
                 <div class="card_style card_style-team">
                     <a href="{{ route('team.profile',$team->id) }}" class="card_style-open"><i class='bx bx-chevron-right'></i></a>
@@ -88,7 +89,16 @@
                         <div class="card_style-team-profile-content">
                             <h4 class="mb-2"><a wire:navigate href="{{ route('team.profile',$team->id) }}">{{ $team->name }}</a></h4>
                             <div class="mb-2">
-                                <span class="font-500"><i class='bx bx-user text-success' ></i> Manager</span> @if($team->manager)<span class="btn-batch ms-2">{{ $team->manager?->name }}</span> @endif
+                                {{-- <span class="font-500"><i class='bx bx-user text-success' ></i> Manager</span> @if($team->manager)<span class="btn-batch ms-2">{{ $team->manager?->name }}</span> @endif --}}
+
+                                <span class="font-500"><i class='bx bx-user text-success' ></i> Manager</span> 
+                                    @if($team->manager)
+                                        <span class="btn-batch ms-2">{{ $team->manager?->name }}</span>
+
+                                        {{-- <span>
+                                            <div class="avatar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{$team->manager?->name}}">{{$team->manager?->name}}</div>
+                                        </span> --}}
+                                    @endif
                             </div>
                             <div class="row">
                                 <div class="col-auto">
@@ -200,3 +210,16 @@
     <livewire:components.add-team />
     
 </div>
+
+
+
+
+
+
+
+
+{{-- 
+
+<a href="javascript:;" class="avatar avatar-{{ $user->color }} avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="{{$user->name}}">{{ $user->initials }}</a>
+
+<span class="font-500"><i class='bx bx-user text-success' ></i> Manager</span> @if($team->manager)<span class="btn-batch ms-2">{{ $team->manager?->name }}</span> @endif  --}}
