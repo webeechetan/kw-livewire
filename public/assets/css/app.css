@@ -3031,7 +3031,7 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   width: calc(100% - 300px);
   padding: 20px;
 }
-.main-body-content.archived_content .dashboard-head-title-wrap {
+.main-body-content .archived_content .dashboard-head-title-wrap {
   opacity: 0.6;
 }
 @media (max-width: 1440px) {
