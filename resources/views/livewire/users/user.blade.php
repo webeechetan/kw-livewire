@@ -27,7 +27,7 @@
                                     </ul> 
                                 </div>
                                 <div class="col-auto">
-                                    <div class="card_style-user-head-position"><i class="bx bx-user text-primary"></i> {{ $user->designation ?? 'Not Added' }}</div>
+                                    <div class="card_style-user-head-position"><i class="bx bx-briefcase text-primary"></i> {{ $user->designation ?? 'Not Added' }}</div>
                                 </div>
                             </div>
                         </div>

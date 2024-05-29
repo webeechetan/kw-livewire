@@ -2016,6 +2016,11 @@ hr.space-sm {
     min-height: 50px;
   }
 }
+.form-select-sm {
+  min-height: inherit;
+  padding: 6px 12px;
+  font-size: 14px;
+}
 .form-control-typeStyle {
   border: 1px solid #eee;
   padding: 0 15px;
