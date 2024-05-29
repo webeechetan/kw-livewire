@@ -2,7 +2,7 @@
     <div wire:ignore class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
         <div class="offcanvas-header taskPane-dashbaord-head py-3 px-4">
             <div class="btn-list">
-                <select name="" id="" wire:model="status">
+                <select class="form-select" name="" id="" wire:model="status">
                     <option value="" disabled selected>Select Status</option>
                     <option value="pending">Pending</option>
                     <option value="in_progress">In-Progress</option>
@@ -11,7 +11,7 @@
                 </select> 
             </div> 
             <div class="taskPane-dashbaord-head-right">
-                <button type="button" class="btn-icon" data-bs-toggle="modal" data-bs-target="#attached-file-modal"><i class='bx bx-paperclip' style="transform: rotate(60deg);"></i></button>
+                <button type="button" class="btn-icon add-attachments" data-bs-toggle="modal" data-bs-target="#attached-file-modal"><i class='bx bx-paperclip' style="transform: rotate(60deg);"></i></button>
                 <button type="button" class="btn-icon"><i class='bx bx-link' ></i></button>
                 <button type="button" class="btn-icon" wire:click="viewFullscree"><i class='bx bx-fullscreen'></i></button>
                 <button type="button" wire:click="deleteTask" class="btn-icon"><i class='bx bx-trash'></i></button>

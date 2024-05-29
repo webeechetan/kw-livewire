@@ -54,7 +54,15 @@
         <div class="col-sm-3">
             <div class="column-box">
                 <label for="" class="font-500"><i class='bx bx-calendar-alt text-success' ></i> Filter By Date</label>
-                <input type="date" class="dashboard_filters-select mt-2 w-100">
+                <div class="row align-items-center mt-2">
+                    <div class="col mb-4 mb-md-0">
+                        <a href="javascript:;" class="btn w-100 btn-sm btn-border-secondary project_start_date"><i class='bx bx-calendar-alt' ></i> Start Date</a>
+                    </div>
+                    <div class="col-auto text-center font-500 mb-4 mb-md-0 px-0">To</div>
+                    <div class="col">
+                        <a href="javascript:;" class="btn w-100 btn-sm btn-border-danger project_due_date"><i class='bx bx-calendar-alt' ></i> Due Date</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
