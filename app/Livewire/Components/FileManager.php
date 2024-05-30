@@ -171,6 +171,11 @@ class FileManager extends Component
     }
 
     public function selectFile($file_name, $selection_type = 'single'){
+        if($selection_type == 'remove'){
+            $this->selected_files = [];
+            return;
+        }
+
         if($selection_type == 'single'){
             $this->selected_files = [];
         }
@@ -192,7 +197,7 @@ class FileManager extends Component
         }else{
             $this->selected_directories[] = $directory_name;
         }
-    }
+    } 
 
     public function selectLink($link_id, $selection_type = 'single'){
         if($selection_type == 'single'){

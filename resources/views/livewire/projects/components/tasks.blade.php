@@ -15,7 +15,7 @@
             <div class="d-flex flex-wrap justify-content-between align-items-center">
                 <div><h4 class="column-title mb-0"><i class='bx bx-objects-horizontal-left text-primary' ></i> {{ $project->tasks->count() }} Tasks</h4></div>
                 <div class="btn-list">
-                    <a href="javascript:;" class="btn-sm btn-border btn-border-primary" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><i class='bx bx-plus' ></i> Add Task</a>
+                    <a href="javascript:;" class="btn-sm btn-border btn-border-primary open-add-task-canvas" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><i class='bx bx-plus' ></i> Add Task</a>
                     <div class="cus_dropdown">
                         <div class="cus_dropdown-icon btn-border btn-border-secondary"><i class='bx bx-filter-alt' ></i> Filter</div>
                         <div class="cus_dropdown-body cus_dropdown-body-widh_l">

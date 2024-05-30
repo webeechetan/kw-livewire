@@ -11,10 +11,10 @@
                 </select> 
             </div> 
             <div class="taskPane-dashbaord-head-right">
-                <button type="button" class="btn-icon add-attachments" data-bs-toggle="modal" data-bs-target="#attached-file-modal"><i class='bx bx-paperclip' style="transform: rotate(60deg);"></i></button>
-                <button type="button" class="btn-icon"><i class='bx bx-link' ></i></button>
-                <button type="button" class="btn-icon" wire:click="viewFullscree"><i class='bx bx-fullscreen'></i></button>
-                <button type="button" wire:click="deleteTask" class="btn-icon"><i class='bx bx-trash'></i></button>
+                <button type="button" class="btn-icon" data-bs-toggle="modal" data-bs-target="#attached-file-modal"><i class='bx bx-paperclip' style="transform: rotate(60deg);"></i></button>
+                <button type="button" class="btn-icon task-sharable-link d-none"><i class='bx bx-link' ></i></button>
+                <button type="button" class="btn-icon view-task-btn d-none" wire:click="viewFullscree"><i class='bx bx-fullscreen'></i></button>
+                <button type="button" wire:click="deleteTask" class="btn-icon delete-task-btn d-none"><i class='bx bx-trash'></i></button>
                 <button type="button" class="btn-icon" data-bs-dismiss="offcanvas" aria-label="Close"><i class='bx bx-arrow-to-right'></i></button>
             </div>
         </div>
@@ -84,7 +84,7 @@
                         </div>
                     </div>
                     <div class="taskPane-item mb-2">
-                        <div class="taskPane-item-label mb-3"><a href="#"><i class="bx bx-paperclip text-secondary add-attachments" style="transform: rotate(60deg);"></i></a> <span class="task-attachment-count">0</span> Attachements</div>
+                        <div class="taskPane-item-label mb-3"><a href="#"><i class="bx bx-paperclip text-secondary add-attachments" style="transform: rotate(60deg);"></i></a> <span class="task-attachment-count"> {{ count($attachments) }}</span> Attachements</div>
                         <input class="d-none attachments" type="file" wire:model="attachments" multiple id="formFile" />
                         <div class="attached_files d-none">
                             <a data-bs-toggle="modal" data-bs-target="#exampleModal">View Attachements</a>
@@ -99,7 +99,7 @@
                     <div class="cmnt_item-tabs">
                         <div class="nav nav-tabs" id="nav-tab" role="tablist">
                             <button class="nav-link active" id="nav-internal-tab" data-bs-toggle="tab" data-bs-target="#nav-internal" type="button" role="tab" aria-controls="nav-internal" aria-selected="true">Internal Comment <span class="text-sm ms-2"><i class='bx bx-comment-dots text-secondary'></i> <span class="task-comments-count">07</span></span></button>
-                            <button class="nav-link" id="nav-client-tab" data-bs-toggle="tab" data-bs-target="#nav-client" type="button" role="tab" aria-controls="nav-client" aria-selected="false">Client Feedback <span class="text-sm ms-2"><i class='bx bx-comment-dots text-secondary'></i> 08</span></button>
+                            <button class="nav-link" id="nav-client-tab" data-bs-toggle="tab" data-bs-target="#nav-client" type="button" role="tab" aria-controls="nav-client" aria-selected="false">Client Feedback <span class="text-sm ms-2"><i class='bx bx-comment-dots text-secondary'></i> <span class="client-comment-count">08</span></span></button>
                         </div>
                     </div>
                     <div class="tab-content" id="nav-tabContent">
@@ -109,7 +109,7 @@
                                     <div class="custComment-editor p-0" wire:ignore>
                                         <textarea wire:model="comment" name="" id="comment_box" class="form-control mb-3" cols="30" rows="5"></textarea>
                                     </div>
-                                    <button wire:click="saveComment" class="custComment-btn btn-sm btn-border-primary"><i class='bx bx-send'></i> Comment</button>
+                                    <button wire:click="saveComment('internal')" class="custComment-btn btn-sm btn-border-primary"><i class='bx bx-send'></i> Comment</button>
                                 </div>
                             </div>
                             <div class="comment-rows mt-4">
@@ -117,37 +117,15 @@
                             
                         </div>
                         <div class="tab-pane fade" id="nav-client" role="tabpanel" aria-labelledby="nav-client-tab" tabindex="0">
-                            <div class="cmnt_item_row">
-                                <div class="cmnt_item_user">
-                                    <div class="cmnt_item_user_img">
-                                        <img class="rounded-circle" src="{{ env('APP_URL') }}/storage/images/users/Chetan%20Singh.png">
+                            <div class="custComment">
+                                <div class="custComment-wrap">
+                                    <div class="custComment-editor p-0" wire:ignore>
+                                        <textarea wire:model="internalComment" name="" id="internal_comment_box" class="form-control mb-3" cols="30" rows="5"></textarea>
                                     </div>
-                                    <div class="cmnt_item_user_name-wrap">
-                                        <div class="cmnt_item_user_name">Chetan Kumar</div>
-                                        <div class="cmnt_item_date">1 Week Ago</div>
-                                        <div class="cmnt_item_user_text">Add logo in the client section and make it live</div>
-                                    </div>
-                                    <div class="cmnt_item_user-edit btn-list">
-                                        <a href="#" class="btn_link"><i class='bx bx-pencil' ></i></a>
-                                        <a href="#" class="btn_link"><i class='bx bx-trash' ></i></a>
-                                    </div>
+                                    <button wire:click="saveComment('client')" class="custComment-btn btn-sm btn-border-primary"><i class='bx bx-send'></i> Comment</button>
                                 </div>
                             </div>
-                            <div class="cmnt_item_row">
-                                <div class="cmnt_item_user">
-                                    <div class="cmnt_item_user_img">
-                                        <img class="rounded-circle" src="{{ env('APP_URL') }}/storage/images/users/Chetan%20Singh.png">
-                                    </div>
-                                    <div class="cmnt_item_user_name-wrap">
-                                        <div class="cmnt_item_user_name">Chetan Kumar</div>
-                                        <div class="cmnt_item_date">1 Week Ago</div>
-                                        <div class="cmnt_item_user_text">Add logo in the client section and make it live</div>
-                                    </div>
-                                    <div class="cmnt_item_user-edit btn-list">
-                                        <a href="#" class="btn_link"><i class='bx bx-pencil' ></i></a>
-                                        <a href="#" class="btn_link"><i class='bx bx-trash' ></i></a>
-                                    </div>
-                                </div>
+                            <div class="client-comment-rows mt-4">
                             </div>
                         </div>
                     </div>
@@ -201,6 +179,36 @@
 
 @push('scripts')
     <script>
+
+        // clear all fields when offcanvas is closed or dismissed 
+
+        $(".bx-arrow-to-right").click(function(){
+            location.reload();
+        });
+
+        $('#offcanvasRight').on('hidden.bs.offcanvas', function () {
+            $(".taskPane").trigger('reset');
+            $(".task-users").val(null).trigger('change');
+            $(".task-notify-users").val(null).trigger('change');
+            $(".task-projects").val(null).trigger('change');
+            $(".task-due-date").text('No Due Date');
+            $('#editor').summernote('code', '');
+            $(".attachments").val(null);
+            $(".task-attachment-count").html(0);
+            $(".comment-rows").html('');
+            $(".client-comment-rows").html('');
+            $(".task-comments-count").html(0);
+            $(".client-comment-count").html(0);
+            $(".cmnt_sec").addClass('d-none');
+            $(".delete-task-btn").addClass('d-none');
+            $(".view-task-btn").addClass('d-none');
+            $(".task-sharable-link").addClass('d-none');
+            $(".attached_files").addClass('d-none');
+            $('.taskPane-heading-label').html('Add Task');
+            $('.save-task-button').html('Save Task');
+            @this.set('task', null);
+        });
+
 
             if(typeof users_for_mention === 'undefined'){
                 var users_for_mention = [];
@@ -280,11 +288,52 @@
                         }
                     }
                 });
+
+                $("#internal_comment_box").summernote({
+                    height: 200,
+                    hint: {
+                        mentions: users_for_mention,
+                        match: /\B@(\w*)$/,
+                        search: function (keyword, callback) {
+                            callback($.grep(this.mentions, function (item) {
+                                return item.indexOf(keyword) == 0;
+                            }));
+                        },
+                        template : function (item) {
+                            return '<span class="mention_user" data-id=" ' + users[users_for_mention.indexOf(item)].id + ' ">' + item + '</span>';
+                        },
+                        content: function (item) {
+                            item = item.replace(/\s/g, '_');
+                            let span = document.createElement('span');
+                            $(span).addClass('mention_user');
+                            $(span).text(' '+'@' + item + ' ');
+                            return span;
+                        },    
+                    },
+                    toolbar: [
+                        ['font', ['bold', 'underline']],
+                        ['para', ['ul', 'ol']],
+                        ['insert', ['link']],
+                    ],
+                    callbacks: {
+                        onChange: function(contents, $editable) {
+                            @this.set('comment', contents);
+                        }
+                    }
+                });
+
+                
             }
 
             $('.add-attachments').on('click', function(){
                 $('.attachments').click();
             });
+
+            $(".attachments").change(function(){
+                $(".task-attachment-count").html(this.files.length);
+            });
+
+            
 
             setInterval(() => {
                 initPlugins();
@@ -323,6 +372,9 @@
 
             document.addEventListener('edit-task', event => {
                 $(".cmnt_sec").removeClass('d-none');
+                $(".delete-task-btn").removeClass('d-none');
+                $(".view-task-btn").removeClass('d-none');
+                $(".task-sharable-link").removeClass('d-none');
                 $(".attached_files").removeClass('d-none');
                 $('.taskPane-heading-label').html('Edit Task');
                 $('.save-task-button').html('Update Task');
@@ -342,21 +394,7 @@
 
                 $('.task-users').val(task_users_ids).trigger('change');
 
-                // $('.task-users').select2({
-                //     placeholder: "Select User",
-                //     allowClear: true,
-                //     templateResult: format,
-                //     templateSelection: format
-                // });
-
                 $('.task-notify-users').val(task_notifiers_ids).trigger('change');
-
-                // $('.task-notify-users').select2({
-                //     placeholder: "Select User",
-                //     allowClear: true,
-                //     templateResult: format,
-                //     templateSelection: format
-                // });
 
                 $('.task-projects').val(event.detail[0].project_id).trigger('change');
 
@@ -366,25 +404,22 @@
                     $('.task-due-date').text('No Due Date');
                 }
                 $(".task-attachment-count").html(event.detail[0].attachments.length);
-                
-                // .task-attachments
-
-                // let attachment_html = '';
-
-                // event.detail[0].attachments.forEach(attachment => {
-                //     attachment_html += `<div class="task-attachments-item">
-                //         <div class="task-attachments-item-img">
-                //             <a href="{{ env('APP_URL') }}/storage/${attachment.attachment_path}" target="_blank">
-                //                 ${attachment.attachment_path}
-                //             </a>
-                //         </div>
-                //     </div>`;
-                // });
-
-                // $('.task-attachments').html(attachment_html);
                 console.log(event.detail[0].comments);
-                $(".task-comments-count").html(event.detail[0].comments.length)
+
+                let internal_comments_count = 0;
+
                 event.detail[0].comments.forEach(comment => {
+                    if(comment.type == 'internal'){
+                        internal_comments_count++;
+                    }
+                });
+
+                $(".task-comments-count").html(internal_comments_count);
+
+                $(".client-comment-count").html(event.detail[0].comments.length - internal_comments_count);
+
+                event.detail[0].comments.forEach(comment => {
+                    let comment_type = comment.type;
                     let comment_html = `<div class="cmnt_item_row">
                         <div class="cmnt_item_user">
                             <div class="cmnt_item_user_img">
@@ -398,7 +433,11 @@
                         </div>
                     </div>`;
 
-                    $('.comment-rows').append(comment_html);
+                    if(comment_type == 'internal'){
+                        $('.comment-rows').append(comment_html);
+                    }else{
+                        $('.client-comment-rows').append(comment_html);
+                    }
                 });
 
 
@@ -415,7 +454,6 @@
             // comment-added 
 
             document.addEventListener('comment-added', event => {
-                console.log(event.detail);
                 let comment_html = `<div class="cmnt_item_row">
                     <div class="cmnt_item_user">
                         <div class="cmnt_item_user_img">
@@ -429,9 +467,20 @@
                     </div>
                 </div>`;
 
-                $('.comment-rows').append(comment_html);
-                $('#comment_box').val('');
+                if(event.detail[0].type == 'internal'){
+                    $(".task-comments-count").html(parseInt($(".task-comments-count").html()) + 1);
+                    $('.comment-rows').append(comment_html);
+                    $('#comment_box').summernote('code', '');
+                }else{
+                    $(".client-comment-count").html(parseInt($(".client-comment-count").html()) + 1);
+                    $('.client-comment-rows').append(comment_html);
+                    $('#internal_comment_box').summernote('code', '');
+                }
+
+
+
             });
+            
 
     </script>
 @endpush

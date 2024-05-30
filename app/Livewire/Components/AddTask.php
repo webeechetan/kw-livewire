@@ -26,7 +26,7 @@ class AddTask extends Component
     public $project_id;
     public $status = 'pending'; 
 
-    public $attachments;
+    public $attachments = [];
     public $comment;
     public $comments = [];
 
@@ -81,15 +81,17 @@ class AddTask extends Component
             }
         }
  
-        foreach($this->task_users as $user_id){
-            $user = User::find($user_id);
-            $user->notify(new NewTaskAssignNotification($task));
+        if($this->task_users){
+            foreach($this->task_users as $user_id){
+                $user = User::find($user_id);
+                $user->notify(new NewTaskAssignNotification($task));
+            }
         }
         
         $this->dispatch('saved','Task saved successfully');
     }
 
-    public function saveComment(){
+    public function saveComment($type = 'internal'){
         // dd($this->comment);
         $this->validate([
             'comment' => 'required'
@@ -137,6 +139,7 @@ class AddTask extends Component
         $mentioned_user_ids = User::whereIn('name',$mentioned_users)->pluck('id')->toArray();
 
         $comment->mentioned_users = implode(',',$mentioned_user_ids);
+        $comment->type = $type;
         $comment->save();
         foreach($mentioned_user_ids as $user_id){
             $user = User::find($user_id);
