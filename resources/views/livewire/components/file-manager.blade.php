@@ -66,10 +66,6 @@
                     <h5 class="title-sm mb-2">Directory Attachments</h5>
                     <div><i class='bx bx-data text-primary' ></i> {{ $directories_count }} Attachments <span class="px-2">|</span> {{$used_storage_size_in_mb}}MB Used / 100MB</div>
                 </div>
-                <form class="search-box search-box-float-style ms-auto" action="">
-                    <span class="search-box-float-icon"><i class="bx bx-search"></i></span>
-                    <input type="text" class="form-control" placeholder="Search">
-                </form>
             </div>
         </div>
 
@@ -106,7 +102,7 @@
             @endforeach
             {{-- Files --}}
             @foreach($files as $file_name => $file_data)
-                <div class="files-item select_file @if(in_array($file_data['file_path'], $selected_files)) selected @endif" data-file="{{ $file_data['file_path'] }}">
+                <div class="files-item select_file open-file @if(in_array($file_data['file_path'], $selected_files)) selected @endif" data-file="{{ $file_data['file_path'] }}">
                     <div class="files-size">{{ $file_data['size'] }} KB</div>
                     
                     <div class="files-item-icon">
@@ -304,6 +300,14 @@
 
     $(document).ready(function(){
 
+        // when double click on .open-file class file should open in new tab
+
+        $(document).on("dblclick", ".open-file", function(){
+            let file_path = $(this).data("file");
+            file_path = "{{ url('storage') }}/"+file_path;
+            window.open(file_path, '_blank');
+        });
+
         setInterval(() => {
             let progress = $(".progress-bar").width();
             if(progress >= 100){
@@ -315,20 +319,30 @@
 
         $(document).on("click", ".select_file", function(event){
             let file_path = $(this).data("file");
+            console.log(file_path);
             if(event.ctrlKey){
                 $(this).toggleClass("selected");
                 @this.selectFile(file_path,'multipe');
                 return;
             }
+            if($(this).hasClass("selected")){
+                $(this).removeClass("selected");
+                @this.selectFile(file_path,'remove');
+                return;
+            }
+
             @this.selectFile(file_path,'single');
             $(".select_file").removeClass("selected");
             $(this).addClass("selected");
+
         });
 
         let clickedOnce = false;
 
         $(document).on("click", ".select_directory", function(event){
+            console.log('select_directory clicked');
             if (!clickedOnce) {
+                console.log('single clicked');
                 // Set a delay to detect double-click
                 setTimeout(function() {
 
@@ -351,6 +365,13 @@
                 clickedOnce = true;
                 event.preventDefault(); // Prevent default action
                 return false;
+            }else{
+                // console.log('double clicked');
+                // // If double-clicked, return false to prevent further action
+                // let directory_path = $(this).data("directory");
+                // @this.openFolder(directory_path);
+                // event.preventDefault(.);
+                // return false;
             }
         });
 

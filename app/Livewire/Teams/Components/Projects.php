@@ -11,6 +11,8 @@ class Projects extends Component
     public $clients;
     public $users;
     public $users_projects = [];
+   
+ 
 
     // filters
 
@@ -21,8 +23,10 @@ class Projects extends Component
 
     public function render()
     {
-        return view('livewire.teams.components.projects');
+       return view('livewire.teams.components.projects');
     }
+    
+
     public function mount(Team $team){
         $this->team = $team;
         $this->clients = Client::orderBy('name', 'asc')->get();

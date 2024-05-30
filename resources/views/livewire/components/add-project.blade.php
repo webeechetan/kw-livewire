@@ -9,6 +9,7 @@
                 <div class="modal-body">
                     <form wire:submit="addProject" method="POST" enctype="multipart/form-data">
                         <div class="modal-form-body">
+                            @if(!request()->routeIs('client.projects'))
                             <div class="row">
                                 <div class="col-md-4 mb-4">
                                     <label for="">Select Client<sup class="text-primary">*</sup></label>
@@ -18,12 +19,17 @@
                                         <select wire:model.live="client_id" class="form-style">
                                             <option value="">Select Client</option>
                                             @foreach ($clients as $client)
-                                                <option value="{{ $client->id }}">{{ $client->name }}</option>
+                                                @if($client->id == $client_id)
+                                                    <option value="{{ $client->id }}" selected>{{ $client->name }}</option>
+                                                @else
+                                                    <option value="{{ $client->id }}">{{ $client->name }}</option>
+                                                @endif
                                             @endforeach
                                         </select>
                                     </div>
                                 </div>
                             </div>
+                            @endif
                             <div class="row">
                                 <div class="col-md-4 mb-4">
                                     <label for="">Project Name<sup class="text-primary">*</sup></label>
@@ -45,18 +51,6 @@
                                         </div>
                                         <div class="form-file_upload-valText">Allowed *.jpeg, *.jpg, *.png, *.gif max size of 3 Mb</div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-4 mb-4 mb-md-0">
-                                    <label for="">Add Users</label>
-                                </div>
-                                <div class="col-md-8">
-                                    <select name="" id="" class="form-control project-users" multiple>
-                                        @foreach ($users as $user)
-                                            <option data-image="{{ $user->image }}"  value="{{ $user->id }}">{{ $user->name }}</option>
-                                        @endforeach 
-                                    </select>
                                 </div>
                             </div>
                             <hr>
@@ -148,32 +142,6 @@
                     @this.set('project_due_date', dateStr);
                 },
             });
-
-            setTimeout(() => {
-                $('.project-users').select2({
-                    placeholder: "Select Users",
-                    allowClear: true,
-                });
-            }, 2000);
-
-            
-
-            $('.project-users').on('change', function (e) {
-                var data = $(this).select2("val");
-                @this.set('project_users', data);
-                console.log(data);
-            });
-
-            // function format(state) {
-            //     if (!state.id) {
-            //         return state.text;
-            //     }
-            //     var baseUrl = "{{ env('APP_URL') }}/storage";
-            //     var $state = $(
-            //         '<span><img class="select2-selection__choice__display_userImg" src="' + baseUrl + '/' + state.element.attributes[0].value + '" /> ' + state.text + '</span>'
-            //     );
-            //     return $state;
-            // };
         });
     </script>
 

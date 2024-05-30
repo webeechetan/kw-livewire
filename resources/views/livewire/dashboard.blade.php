@@ -8,7 +8,7 @@
                             <div class="col-md-7">
                                 <div class="welcome-box">
                                     <h2 class="title">Hi {{ Auth::guard(session('guard'))->user()->name }}, <br /><b>Welcome back</b></h2>
-                                    {{ Auth::user()->roles->pluck('name') }}
+                                    {{-- {{ Auth::user()->roles->pluck('name') }} --}}
                                 </div>
                             </div>
                             <div class="col-md-5 text-end">

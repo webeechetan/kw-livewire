@@ -17,6 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->string('mentioned_users')->nullable();
             $table->string('created_by')->default('web')->comment('web','orginizations');
+            $table->string('type')->default('internal')->comment('internal','client');
             $table->text('comment');
             $table->timestamps();
         });

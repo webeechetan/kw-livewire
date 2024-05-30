@@ -15,7 +15,7 @@
             <div class="d-flex flex-wrap justify-content-between align-items-center">
                 <div><h4 class="column-title mb-0"><i class='bx bx-objects-horizontal-left text-primary' ></i> {{ $project->tasks->count() }} Tasks</h4></div>
                 <div class="btn-list">
-                    <a href="javascript:;" class="btn-sm btn-border btn-border-primary" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><i class='bx bx-plus' ></i> Add Task</a>
+                    <a href="javascript:;" class="btn-sm btn-border btn-border-primary open-add-task-canvas" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><i class='bx bx-plus' ></i> Add Task</a>
                     <div class="cus_dropdown">
                         <div class="cus_dropdown-icon btn-border btn-border-secondary"><i class='bx bx-filter-alt' ></i> Filter</div>
                         <div class="cus_dropdown-body cus_dropdown-body-widh_l">
@@ -23,10 +23,28 @@
                                 <div class="filterSort">
                                     <h5 class="filterSort-header"><i class='bx bx-sort-down text-primary' ></i> Sort By</h5>
                                     <ul class="filterSort_btn_group list-none">
-                                        <li class="filterSort_item"><a wire:navigate href="{{ route('project.profile',['id' => $project->id ,'sort'=>'newest','filter'=>$filter,'byUser'=>$byUser, 'byTeam' => $byTeam])}}" class="btn-batch  @if($sort == 'newest') active @endif">Newest</a></li>
+                                        {{-- <li class="filterSort_item"><a wire:navigate href="{{ route('project.profile',['id' => $project->id ,'sort'=>'newest','filter'=>$filter,'byUser'=>$byUser, 'byTeam' => $byTeam])}}" class="btn-batch  @if($sort == 'newest') active @endif">Newest</a></li>
                                         <li class="filterSort_item"><a wire:navigate href="{{ route('project.profile',['id' => $project->id,'sort'=>'oldest','filter'=>$filter,'byUser'=>$byUser, 'byTeam' => $byTeam])}}" class="btn-batch  @if($sort == 'oldest') active @endif">Oldest</a></li>
                                         <li class="filterSort_item"><a wire:navigate href="{{ route('project.profile',['id' => $project->id ,'sort'=>'a_z','filter'=>$filter,'byUser'=>$byUser, 'byTeam' => $byTeam])}}" class="btn-batch  @if($sort == 'a_z') active @endif"><i class='bx bx-down-arrow-alt' ></i> A To Z</a></li>
-                                        <li class="filterSort_item"><a wire:navigate href="{{ route('project.profile',['id' => $project->id ,'sort'=>'z_a','filter'=>$filter,'byUser'=>$byUser, 'byTeam' => $byTeam])}}" class="btn-batch  @if($sort == 'z_a') active @endif"><i class='bx bx-up-arrow-alt' ></i> Z To A</a></li>
+                                        <li class="filterSort_item"><a wire:navigate href="{{ route('project.profile',['id' => $project->id ,'sort'=>'z_a','filter'=>$filter,'byUser'=>$byUser, 'byTeam' => $byTeam])}}" class="btn-batch  @if($sort == 'z_a') active @endif"><i class='bx bx-up-arrow-alt' ></i> Z To A</a></li> --}}
+
+                                        <li class="filterSort_item">
+                                            <a wire:navigate href="{{ route('project.tasks', ['project' => $project->id, 'sort' => 'newest', 'filter' => $filter ?? null]) }}" class="btn-batch @if($sort == 'newest') active @endif">Newest</a>
+                                        </li>
+                                        <li class="filterSort_item">
+                                            <a wire:navigate href="{{ route('project.tasks', ['project' => $project->id, 'sort' => 'oldest', 'filter' => $filter ?? null]) }}" class="btn-batch @if($sort == 'oldest') active @endif">Oldest</a>
+                                        </li>
+                                        <li class="filterSort_item">
+                                            <a wire:navigate href="{{ route('project.tasks', ['project' => $project->id, 'sort' => 'a_z', 'filter' => $filter ?? null]) }}" class="btn-batch @if($sort == 'a_z') active @endif">
+                                                <i class='bx bx-down-arrow-alt'></i> A To Z
+                                            </a>
+                                        </li>
+                                        <li class="filterSort_item">
+                                            <a wire:navigate href="{{ route('project.tasks', ['project' => $project->id, 'sort' => 'z_a', 'filter' => $filter ?? null, 'byUser' => $byUser ?? null, 'byTeam' => $byTeam ?? null]) }}" class="btn-batch @if($sort == 'z_a') active @endif">
+                                                <i class='bx bx-up-arrow-alt'></i> Z To A
+                                            </a>
+                                        </li>
+                                      
                                     </ul>
                                     <hr>
                                     <div class="d-flex flex-wrap align-items-center justify-content-between">
@@ -46,8 +64,10 @@
                                     <hr>
                                     <h5 class="filterSort-header"><i class='bx bx-sitemap text-primary' ></i> Teams</h5>
                                     <select class="form-control"name="" id="">
-                                        <option value="Rakesh">Rakesh</option>
-                                        <option value="Rajiv">Rajiv</option>
+                                        <option value="byTeam">All</option>
+                                        @foreach($teams as $team)
+                                            <option value="{{ $team->id }}">{{ $team->name }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -94,8 +114,11 @@
                 <div>
                     @php
                         $tasks = $project->tasks()->paginate(10)     
+
+                       
                     @endphp
                     @foreach($tasks as $task)
+                  
                     <div class="taskList_row" wire:key="task-row-{{ $task->id }}">
                         <div class="row">
                             <div class="col-lg-6">
