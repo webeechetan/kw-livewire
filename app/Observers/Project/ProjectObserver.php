@@ -33,7 +33,14 @@ class ProjectObserver
         $updated = $project->getAttributes();
 
         foreach($updated as $key => $value){
+            if($key == 'updated_at' || $key == 'created_at'){
+                continue;
+            }
             if($original[$key] != $value){
+                if($original[$key] == null){
+                    $activity_text .= $key.' null to <b>'.$value .'</b> </br>';
+                    continue;
+                }
                 $activity_text .= $key.' from <b>'.$original[$key].'</b> to <b>'.$value .'</b> </br>';
             }
         }

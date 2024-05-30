@@ -4,10 +4,20 @@
             <div class="row align-items-center">
                 <div class="col">
                     <div class="dashboard-head-title-wrap">
-                        <div class="avatar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Ac">{{$client->initials}}</div>
+                        @if(!$client->image || $client->image == 'default.png')
+                            <div class="client-logo">
+                                <span class="avatar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Ac">{{$client->initials}}</span>
+                            </div>
+                        @else
+                            <div class="team-avtar">
+                                <span>
+                                    <img src="{{ env('APP_URL') }}/storage/{{ $client->image }}" alt="">
+                                </span>
+                            </div>
+                        @endif
                         <div>
                             <h3 class="main-body-header-title mb-2 @if($client->trashed()) archived_content @endif">{{ $client->visible_name }}</h3>
-                            <div class="text-sm">{{ \Carbon\Carbon::parse($client->onboard_date)->format('d M Y') }}</div>
+                            <div class="text-sm">{{ \Carbon\Carbon::parse($client->created_at)->format('d M Y') }}</div>
                         </div>
                     </div>
                 </div>
