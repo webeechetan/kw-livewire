@@ -143,7 +143,10 @@
         <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="attachmentModalLabel">Attachements </h5>
+                <div>
+                    <h5 class="modal-title" id="attachmentModalLabel">Attachements</h5>
+                    <div><i class="bx bx-data text-primary"></i> <span class="task-attachment-count">1</span> Attachments</div>
+                </div>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body attachements-body mt-4 mb-4">
@@ -164,9 +167,6 @@
                         @endforeach
                     @endif
                 </div>
-            </div>
-            <div class="modal-footer">
-            <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
         </div>
