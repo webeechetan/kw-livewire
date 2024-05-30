@@ -6,6 +6,7 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use App\Helpers\Helper;
 use App\Models\Project;
+use App\Models\Team;
 use App\Models\User;
 use Carbon\Carbon;
 use Livewire\Attributes\Lazy;
@@ -23,6 +24,7 @@ class ListProject extends Component
     public $overdueProjects;
 
 
+    public $teams = [] ;
 
     public $query = '';
  
@@ -75,6 +77,19 @@ class ListProject extends Component
                 $query->where('user_id',$this->byUser);
             });
         }
+        
+
+
+        //filter by team
+        if($this->byTeam != 'all'){
+
+            dd($this->byTeam);
+            $projects->whereHas('teams', function($query){
+                $query->where('', $this->byTeam);
+            });
+        }
+
+        //filter by team
 
         $projects->orderBy('id','desc');
 
@@ -88,6 +103,7 @@ class ListProject extends Component
     public function mount(){
         $this->authorize('View Project');
         $this->users = User::all();
+        $this->teams = Team::orderBy('name')->get();
     }
 
     public function search(){
