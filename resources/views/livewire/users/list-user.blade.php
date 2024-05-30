@@ -125,7 +125,18 @@
                             <h4><a wire:navigate href="{{ route('user.profile',$user->id) }}">{{ $user->name }}</a></h4>
                             <div class="d-flex align-items-center justify-content-center"><i class='bx bx-envelope me-1 text-secondary' ></i> {{ $user->email }}</div>
                             <div class="d-flex align-items-center justify-content-center mt-2"><i class='bx bx-briefcase me-1 text-primary'></i> {{ $user->designation ?? 'Not Added'}} </div>
-                            <div class="d-flex align-items-center justify-content-center mt-2"><i class='bx bx-sitemap me-1 text-secondary'></i> @foreach($user->teams as $team){{ $team->name ?? 'Not Added' }}@endforeach</div>
+                            <div class="d-flex align-items-center justify-content-center mt-2">
+                                <i class='bx bx-sitemap me-1 text-secondary'></i> 
+                                @if($user->teams->isEmpty())
+                                    Not Added
+                                @else
+                                    @foreach($user->teams as $team)
+                                        {{ $team->name ?? 'Not Added' }}
+                                    @endforeach
+                                @endif
+                            </div>
+
+
                             @if($user->teams->count() > 0)
                                 <div class="card_style-user-head-team"><span class="btn-batch btn-batch-warning"> {{ $user->teams->count() }}  {{ $user->teams->count() >1 ? 'Teams' : 'Team'}}</span></div>
                             @endif

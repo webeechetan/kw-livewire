@@ -60,6 +60,7 @@ class Tasks extends Component
             });
         }
 
+        dd($this->project->tasks());
         $this->project->tasks()->paginate(5);
         
 

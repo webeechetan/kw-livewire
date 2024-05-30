@@ -41,6 +41,7 @@ class Project extends Model
         return $this->belongsToMany(User::class);
     }
 
+
     public function getMembersAttribute(){
         $project_tasks_ids = Task::where('project_id',$this->id)->pluck('id');
         $user_ids = [];
