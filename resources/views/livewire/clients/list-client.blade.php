@@ -31,7 +31,10 @@
                                         <h5 class="filterSort-header"><i class='bx bx-sort-down text-primary' ></i> Sort By</h5>
                                         <ul class="filterSort_btn_group list-none">
                                             <li class="filterSort_item">
-                                                <a wire:navigate href="{{ route('client.index',['sort'=>'newest','filter'=>$filter])}}" class="btn-batch  @if($sort == 'newest') active @endif" >Newest</a>
+                                                <a wire:navigate href="{{ route('client.index',['sort'=>'newest','filter'=>$filter])}}" class="btn-batch @if($sort == 'newest') active @endif" >Newest</a>
+                                            </li>
+                                            <li class="filterSort_item">
+                                                <a wire:navigate href="{{ route('client.index',['sort'=>'oldest','filter'=>$filter])}}" class="btn-batch  @if($sort == 'oldest') active @endif" >Oldest</a>
                                             </li>
                                             <li class="filterSort_item">
                                                 <a wire:navigate href="{{ route('client.index',['sort'=>'a_z','filter'=>$filter])}}" class="btn-batch  @if($sort == 'a_z') active @endif"><i class='bx bx-down-arrow-alt' ></i> A To Z</a>
@@ -83,6 +86,7 @@
                 @if($sort != 'all')
                     <span class="btn-batch">
                         @if($sort == 'newest') Newest @endif
+                        @if($sort == 'oldest') Oldest @endif
                         @if($sort == 'a_z') A to Z @endif
                         @if($sort == 'z_a') Z to A @endif
                         <a wire:navigate href="{{ route('client.index',['sort'=>'all','filter'=>$filter]) }}" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>

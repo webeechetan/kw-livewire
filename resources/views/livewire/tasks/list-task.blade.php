@@ -34,6 +34,9 @@
                                                 <a wire:navigate href="{{ route('task.index',['sort'=>'newest','filter'=>$filter, 'byProject'=> $byProject])}}" class="btn-batch @if($sort == 'newest') active @endif " >Newest</a>
                                             </li>
                                             <li class="filterSort_item">
+                                                <a wire:navigate href="{{ route('task.index',['sort'=>'newest','filter'=>$filter, 'byProject'=> $byProject])}}" class="btn-batch @if($sort == 'newest') active @endif " >Oldest</a>
+                                            </li>
+                                            <li class="filterSort_item">
                                                 <a wire:navigate href="{{ route('task.index',['sort'=>'a_z','filter'=>$filter, 'byProject'=> $byProject])}}" class="btn-batch @if($sort == 'a_z') active @endif"><i class='bx bx-down-arrow-alt' ></i> A To Z</a>
                                             </li>
                                             <li class="filterSort_item">
@@ -50,6 +53,14 @@
                                                 <a href="javascript:;" class="btn w-100 btn-sm btn-border-danger project_due_date"><i class='bx bx-calendar-alt' ></i> Due Date</a>
                                             </div>
                                         </div>
+                                        <h5 class="filterSort-header mt-4"><i class='bx bx-calendar-alt text-primary' ></i> Filter By Status</h5>
+                                        <ul class="filterSort_btn_group list-none">
+                                            <li class="filterSort_item"><a wire:navigate="" href="#" class="btn-batch active">All</a></li>
+                                            <li class="filterSort_item"><a wire:navigate="" href="#" class="btn-batch">Active</a></li>
+                                            <li class="filterSort_item"><a wire:navigate="" href="#" class="btn-batch">Overdue</a></li>
+                                            <li class="filterSort_item"><a wire:navigate="" href="#" class="btn-batch">Completed</a></li>
+                                            <li class="filterSort_item"><a wire:navigate="" href="#" class="btn-batch">Archived</a></li>
+                                        </ul>
                                         <h5 class="filterSort-header mt-4"><i class='bx bx-briefcase text-primary' ></i> Filter By Clients</h5>
                                         <select class="dashboard_filters-select w-100" name="" id="">
                                             <option value="" disabled="">Select Client</option>
@@ -68,6 +79,14 @@
                                         <h5 class="filterSort-header mt-4"><i class='bx bx-user text-primary'></i> Filter By User</h5>
                                         <select class="dashboard_filters-select mt-2 w-100" name="" id="">
                                             <option value="" disabled="">Select Client</option>
+                                            <option value="1">Acma</option>
+                                            <option value="2">Buyers Guide</option>
+                                            <option value="3">GRG</option>
+                                            <option value="4">Webeesocial</option>
+                                        </select>
+                                        <h5 class="filterSort-header mt-4"><i class='bx bx-user text-primary'></i> Filter By Team</h5>
+                                        <select class="dashboard_filters-select mt-2 w-100" name="" id="">
+                                            <option value="" disabled="">Select Team</option>
                                             <option value="1">Acma</option>
                                             <option value="2">Buyers Guide</option>
                                             <option value="3">GRG</option>

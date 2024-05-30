@@ -93,7 +93,7 @@
             </div>
             <div class="taskList-dashbaord_header">
                 <div class="row">
-                    <div class="col-lg-6">
+                    <div class="col-lg-4">
                         <div class="taskList-dashbaord_header_title taskList_col ms-2">Task Name</div>
                     </div>
                     <div class="col text-center">
@@ -108,6 +108,9 @@
                     <div class="col text-center">
                         <div class="taskList-dashbaord_header_title taskList_col">Assignee</div>
                     </div>
+                    <div class="col text-center">
+                        <div class="taskList-dashbaord_header_title taskList_col">Status</div>
+                    </div>
                 </div>
             </div>
             <div class="taskList scrollbar">
@@ -121,7 +124,7 @@
                   
                     <div class="taskList_row" wire:key="task-row-{{ $task->id }}">
                         <div class="row">
-                            <div class="col-lg-6">
+                            <div class="col-lg-4">
                                 <div class="taskList_col taskList_col_title">
                                     <div class="taskList_col_title_open edit-task" data-id="{{ $task->id }}"><i class='bx bx-chevron-right' ></i></div>
                                     <div class="edit-task" data-id="{{ $task->id }}">
@@ -130,10 +133,10 @@
                                 </div>
                             </div>
                             <div class="col text-center">
-                                <div class="taskList_col"><span>{{ \Carbon\Carbon::parse($task->created_at)->format('d M-Y') }}</span></div>
+                                <div class="taskList_col"><span>{{ \Carbon\Carbon::parse($task->created_at)->format('d M Y') }}</span></div>
                             </div>
                             <div class="col text-center">
-                                <div class="taskList_col"><span>{{ \Carbon\Carbon::parse($task->due_date)->format('d M-Y') }}</span></div>
+                                <div class="taskList_col"><span class="btn-batch @if ($task->due_date < \Carbon\Carbon::now())  btn-batch btn-batch-danger @endif">{{ \Carbon\Carbon::parse($task->due_date)->format('d M Y') }}</span></div>
                             </div>
                             <div class="col text-center">
                                 <div class="taskList_col"><span>{{ $project->name }}</span></div>
@@ -156,6 +159,25 @@
                                         @endforeach
                                     </div>
                                 </div>
+                            </div>
+                            <div class="col text-center">
+                                <div class="taskList_col"><span class="btn-batch 
+                                    @if($task->status == 'pending') btn-batch-primary 
+                                    @elseif ($task->status == 'in_progress') btn-batch-danger 
+                                    @elseif ($task->status == 'in_review') btn-batch-success 
+                                    @elseif ($task->status == 'completed') btn-batch-warning 
+                                    @endif"
+                                >
+                                    @if($task->status == 'pending')
+                                        Assigned
+                                    @elseif($task->status == 'in_progress')
+                                        Accepted
+                                    @elseif($task->status == 'in_review')
+                                        In Review
+                                    @elseif($task->status == 'completed')
+                                        Completed
+                                    @endif
+                                </span></div>
                             </div>
                         </div>
                     </div>

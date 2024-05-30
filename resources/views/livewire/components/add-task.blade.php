@@ -109,7 +109,7 @@
                                     <div class="custComment-editor p-0" wire:ignore>
                                         <textarea wire:model="comment" name="" id="comment_box" class="form-control mb-3" cols="30" rows="5"></textarea>
                                     </div>
-                                    <button wire:click="saveComment('internal')" class="custComment-btn btn-sm btn-border-primary"><i class='bx bx-send'></i> Comment</button>
+                                    <button wire:click="saveComment('internal')" class="btn btn-sm btn-border-primary"><i class='bx bx-send'></i> Comment</button>
                                 </div>
                             </div>
                             <div class="comment-rows mt-4">
@@ -122,7 +122,7 @@
                                     <div class="custComment-editor p-0" wire:ignore>
                                         <textarea wire:model="internalComment" name="" id="internal_comment_box" class="form-control mb-3" cols="30" rows="5"></textarea>
                                     </div>
-                                    <button wire:click="saveComment('client')" class="custComment-btn btn-sm btn-border-primary"><i class='bx bx-send'></i> Comment</button>
+                                    <button wire:click="saveComment('client')" class="btn btn-sm btn-border-primary"><i class='bx bx-send'></i> Comment</button>
                                 </div>
                             </div>
                             <div class="client-comment-rows mt-4">

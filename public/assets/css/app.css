@@ -794,6 +794,8 @@ hr.space-sm {
 .cus_dropdown-body-wrap {
   background-color: #fff;
   box-shadow: 0 3px 30px rgba(0, 0, 0, 0.07);
+  max-height: 80vh;
+  overflow: auto;
 }
 .cus_dropdown-body_left {
   right: inherit;
@@ -1528,6 +1530,7 @@ hr.space-sm {
   font-weight: 500;
   color: #191919;
   display: inline-block;
+  text-transform: capitalize;
 }
 .btn-batch.active {
   background-color: #48914d;
@@ -1558,6 +1561,11 @@ hr.space-sm {
   color: #fff;
   border-color: #7407ff;
 }
+.btn-batch-bg-danger {
+  background-color: #ff0000;
+  color: #fff;
+  border-color: #ff0000;
+}
 .btn-batch-success {
   border-color: #48914d;
   color: #48914d;
@@ -1572,6 +1580,10 @@ hr.space-sm {
 }
 .btn-batch-warning {
   border-color: #e7bf1d;
+}
+.btn-batch-danger {
+  color: #ff0000;
+  border-color: #ff0000;
 }
 .btn-batch-avatar {
   padding: 3px 10px 3px 3px;

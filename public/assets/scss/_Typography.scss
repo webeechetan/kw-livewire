@@ -765,6 +765,8 @@ hr.space-sm {
         &-wrap {
             background-color: #fff;
             box-shadow: $box_shadow_light;
+            max-height: 80vh;
+            overflow: auto;
         }
         &_left {
             right: inherit;
