@@ -158,8 +158,8 @@
                                     </div>
                                 </div>
                                 <div class="task_progress-btm">
-                                    <div class="progress" role="progressbar" aria-label="Project Progress" aria-valuemin="0" aria-valuemax="100">
-                                        @php
+                                    <div class="progress w-100" role="progressbar" aria-label="Project Progress" aria-valuemin="0" aria-valuemax="100">
+                                        <!-- @php
                                             $percentage = 0;
                                             $completed = $project->tasks->where('status', 'completed')->count();
                                             $total = $project->tasks->count();
@@ -168,7 +168,7 @@
                                             }else{
                                                 $percentage = 0;
                                             }
-                                        @endphp
+                                        @endphp -->
                                         <div class="progress-bar progress-success" style="width: {{$percentage}}%"><span class="progress-bar-text">{{ round($percentage)}}%</span></div>
                                     </div>
                                     <div class="task_progress-btm-date d-flex justify-content-between">

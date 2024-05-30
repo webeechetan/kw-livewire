@@ -1253,6 +1253,34 @@ hr.space-sm {
   background-size: 20px;
 }
 
+/* ----- Note Edtor ----- */
+.mention_user {
+  color: #f83890;
+}
+
+.note-popover {
+  font-family: "Jost", sans-serif;
+}
+
+.note-hint-popover .popover-content .note-hint-group .note-hint-item {
+  background-color: #fff;
+  transition: all 0.3s ease;
+  padding: 5px 10px;
+}
+.note-hint-popover .popover-content .note-hint-group .note-hint-item .mention_user {
+  color: #191919;
+}
+.note-hint-popover .popover-content .note-hint-group .note-hint-item:not(:last-child) {
+  border-bottom: 1px solid #eee;
+}
+.note-hint-popover .popover-content .note-hint-group .note-hint-item:hover, .note-hint-popover .popover-content .note-hint-group .note-hint-item.active {
+  background-color: #f83890;
+  line-height: inherit;
+}
+.note-hint-popover .popover-content .note-hint-group .note-hint-item:hover .mention_user, .note-hint-popover .popover-content .note-hint-group .note-hint-item.active .mention_user {
+  color: #fff;
+}
+
 /*---- Buttons Style Start Here ----*/
 .btn {
   padding: 0.5rem 1.4rem;
@@ -3412,7 +3440,6 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   font-size: 14px;
 }
 .kanban_column_empty {
-  width: 280px;
   min-height: 116px;
   border-radius: 4px;
   display: flex;
@@ -3422,7 +3449,6 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   font-size: 32px;
   color: #ddd;
   background-color: #eee;
-  position: absolute;
 }
 .kanban_bord_body_columns {
   padding-top: 10px;
@@ -3447,6 +3473,8 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 1px;
+  display: flex;
+  justify-content: space-between;
 }
 .kanban_bord_column_assigned .scrollbar::-webkit-scrollbar-track {
   background-color: #ffe6f1;
@@ -3810,7 +3838,7 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
 
 /* ----- Task List View ----- */
 .taskList {
-  margin-top: 5px;
+  padding: 5px 0;
   /* ----- Task List Header ----- */
 }
 .taskList_col {
@@ -3819,34 +3847,46 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
 }
 .taskList_col_title {
   cursor: pointer;
+  transition: all 0.3s ease;
 }
-.taskList_col_title_complete_icon {
+.taskList_col_title_open {
   width: 20px;
   height: 20px;
   font-size: 16px;
-  border: 1px solid #48914d;
-  border-radius: 50%;
+  background-color: #f83890;
+  color: #fff;
+  border-radius: 4px;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  position: absolute;
+  left: 6px;
   transition: all 0.3s ease;
-  margin-top: 3px;
-}
-.taskList_col_title_complete_icon:hover, .taskList_col_title_complete_icon.active {
-  background-color: #48914d;
-  color: #fff;
+  transform: translateX(-15px);
+  opacity: 0;
+  visibility: hidden;
 }
 .taskList_col .avatarGroup {
   justify-content: center;
 }
 .taskList_row {
-  background-color: #fff;
-  border-radius: 4px;
-}
-.taskList_row:not(:last-child) {
+  position: relative;
   border-bottom: 1px solid #eee;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+.taskList_row:hover, .taskList_row.active {
+  background-color: #e8ddf7;
+}
+.taskList_row:hover .taskList_col_title, .taskList_row.active .taskList_col_title {
+  padding-left: 35px;
+}
+.taskList_row:hover .taskList_col_title_open, .taskList_row.active .taskList_col_title_open {
+  transform: translateX(0);
+  opacity: 1;
+  visibility: visible;
 }
 .taskList_row > .row {
   align-items: center;
@@ -3876,7 +3916,7 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   margin-top: 20px;
 }
 .taskList-dashbaord_header {
-  background-color: #e8ddf7;
+  background-color: #f83890;
   margin-top: 15px;
   border-radius: 4px;
 }
@@ -3886,6 +3926,7 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   font-size: 13px;
   font-weight: 500;
   text-transform: uppercase;
+  color: #fff;
 }
 
 /* ----- Item Submit ----- */
@@ -3925,7 +3966,7 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
 }
 
 .note-editor .note-toolbar, .note-popover .popover-content {
-  padding-bottom: 3px;
+  padding: 7px;
 }
 
 .note-editor.note-airframe, .note-editor.note-frame {
@@ -4462,6 +4503,9 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
 }
 .files-item.selected {
   border-color: #f83890;
+}
+.files-item-content {
+  overflow: hidden;
 }
 
 /* ----- Recent Activity ----- */

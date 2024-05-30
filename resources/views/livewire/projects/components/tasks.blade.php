@@ -100,7 +100,7 @@
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class="taskList_col taskList_col_title">
-                                    <!-- <div class="taskList_col_title_complete_icon" data-id="{{ $task->id }}"><i class='bx bx-check'></i></div> -->
+                                    <div class="taskList_col_title_open edit-task" data-id="{{ $task->id }}"><i class='bx bx-chevron-right' ></i></div>
                                     <div class="edit-task" data-id="{{ $task->id }}">
                                         <div>{{ $task->name }}</div>
                                     </div>
