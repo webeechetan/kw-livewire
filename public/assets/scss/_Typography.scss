@@ -493,32 +493,6 @@ hr.space-sm {
         }
     }
 
-    &-projects_tab {
-        margin-top: $spacing_xs;
-
-        .nav {
-            &-pills {
-                gap: $spacing_s;
-                border-bottom: 1px solid $grey_xd;
-            }
-        }
-
-        &-title {
-            padding-bottom: $spacing_xs;
-            border-bottom: 2px solid transparent;
-            cursor: pointer;
-
-            &.active {
-                border-color: $brand;
-            }
-        }
-
-        &-items {
-            @include flex;
-            gap: 5px;
-        }
-    }
-
     &-project {
         &-head {
             h4 {
@@ -820,7 +794,7 @@ hr.space-sm {
                 }
             }
             &:not(:last-child) {
-                border-bottom: 2px solid #fff;
+                border-bottom: 1px solid $grey;
             }
         }
     }
@@ -965,6 +939,14 @@ hr.space-sm {
 
 /* ------ Offcanvas ------ */
 .offcanvas {
+    &-header {
+        .form-select {
+            min-height: inherit;
+            font-size: 14px;
+            padding: 4px 10px;
+            min-width: 120px;
+        }
+    }
     &-backdrop.show {
         opacity: 0.2;
     }

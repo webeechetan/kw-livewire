@@ -10,7 +10,7 @@
     &-content {
         width: calc(100% - 300px);
         padding: $spacing_sm;
-        &.archived_content {
+        .archived_content {
             .dashboard-head-title-wrap {
                 opacity: 0.6;
             }
@@ -437,7 +437,7 @@
             }
         }
         &_empty {
-            width: 286px;
+            width: 280px;
             min-height: 116px;
             border-radius: $border_radius_xs;
             @include flex_center;
@@ -473,7 +473,6 @@
                 letter-spacing: 1px;
             }
             &_assigned {
-                background-color: $brand_light;
                 .scrollbar {
                     &::-webkit-scrollbar-track {
                         background-color: $brand_light;
@@ -491,7 +490,6 @@
                 }
             }
             &_accepted {
-                background-color: $secondary_light;
                 .scrollbar {
                     &::-webkit-scrollbar-track {
                         background-color: $secondary_light;
@@ -512,7 +510,6 @@
                 }
             }
             &_in_review {
-                background-color: $warning_light;
                 .scrollbar {
                     &::-webkit-scrollbar-track {
                         background-color: $warning_light;
@@ -533,7 +530,6 @@
                 }
             }
             &_completed {
-                background-color: $success_light;
                 .scrollbar {
                     &::-webkit-scrollbar-track {
                         background-color: $success_light;
@@ -656,6 +652,9 @@
         width: 100% !important;
         &--default {
             .select2-selection {
+                &--multiple {
+                    padding-bottom: 0;
+                }
                 &--multiple, &--single {
                     border: none;
                     .select2-selection__choice {
@@ -699,6 +698,8 @@
                     margin: 0;
                     vertical-align: inherit;
                     font-family: inherit;
+                    width: inherit !important;
+                    height: 31px !important;
                     &::placeholder {
                         color: $text_light;
                     }
@@ -739,6 +740,13 @@
 
         &--open .select2-dropdown--below {
             border-top: 1px solid $grey;
+        }
+
+        .select2-selection--multiple  {
+            min-height: 31px;
+            .select2-selection__rendered {
+                margin: 0;
+            }
         }
     }
     

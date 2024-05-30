@@ -578,26 +578,6 @@ hr.space-sm {
 .card_style-client-head img {
   width: 30px;
 }
-.card_style-projects_tab {
-  margin-top: 10px;
-}
-.card_style-projects_tab .nav-pills {
-  gap: 15px;
-  border-bottom: 1px solid #ddd;
-}
-.card_style-projects_tab-title {
-  padding-bottom: 10px;
-  border-bottom: 2px solid transparent;
-  cursor: pointer;
-}
-.card_style-projects_tab-title.active {
-  border-color: #f83890;
-}
-.card_style-projects_tab-items {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 5px;
-}
 .card_style-project-head h4 {
   font-size: 22px;
 }
@@ -839,7 +819,7 @@ hr.space-sm {
   background-color: #eee;
 }
 .cus_dropdown-list li:not(:last-child) {
-  border-bottom: 2px solid #fff;
+  border-bottom: 1px solid #eee;
 }
 .cus_dropdown-options {
   padding: 20px;
@@ -957,6 +937,12 @@ hr.space-sm {
 }
 
 /* ------ Offcanvas ------ */
+.offcanvas-header .form-select {
+  min-height: inherit;
+  font-size: 14px;
+  padding: 4px 10px;
+  min-width: 120px;
+}
 .offcanvas-backdrop.show {
   opacity: 0.2;
 }
@@ -1810,13 +1796,12 @@ hr.space-sm {
 .navbar-light .navbar-nav .nav-link {
   color: #191919;
 }
+.navbar-nav .nav-item:not(:last-child) {
+  margin-right: 30px;
+}
 .navbar-nav .dropdown a.nav-link {
-  font-size: 20px;
   padding: 0;
   display: flex;
-}
-.navbar-nav .dropdown:not(:last-child) {
-  margin-right: 40px;
 }
 .navbar-nav .dropdown-toggle:after {
   display: none;
@@ -1833,6 +1818,9 @@ hr.space-sm {
   cursor: pointer;
   box-shadow: 0 3px 15px #f72d01;
   animation: pulse 2s infinite;
+}
+.navbar-nav .nav-link i {
+  font-size: 20px;
 }
 
 .dropdown-menu {
@@ -2027,6 +2015,11 @@ hr.space-sm {
   .form-control, .form-select {
     min-height: 50px;
   }
+}
+.form-select-sm {
+  min-height: inherit;
+  padding: 6px 12px;
+  font-size: 14px;
 }
 .form-control-typeStyle {
   border: 1px solid #eee;
@@ -3038,7 +3031,7 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   width: calc(100% - 300px);
   padding: 20px;
 }
-.main-body-content.archived_content .dashboard-head-title-wrap {
+.main-body-content .archived_content .dashboard-head-title-wrap {
   opacity: 0.6;
 }
 @media (max-width: 1440px) {
@@ -3419,7 +3412,7 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   font-size: 14px;
 }
 .kanban_column_empty {
-  width: 286px;
+  width: 280px;
   min-height: 116px;
   border-radius: 4px;
   display: flex;
@@ -3455,9 +3448,6 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   text-transform: uppercase;
   letter-spacing: 1px;
 }
-.kanban_bord_column_assigned {
-  background-color: #ffe6f1;
-}
 .kanban_bord_column_assigned .scrollbar::-webkit-scrollbar-track {
   background-color: #ffe6f1;
 }
@@ -3470,9 +3460,6 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
 .kanban_bord_column_assigned .kanban_bord_column_title {
   background-color: #f83890;
   color: #fff;
-}
-.kanban_bord_column_accepted {
-  background-color: #e8ddf7;
 }
 .kanban_bord_column_accepted .scrollbar::-webkit-scrollbar-track {
   background-color: #e8ddf7;
@@ -3490,9 +3477,6 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   background-color: #7407ff;
   color: #fff;
 }
-.kanban_bord_column_in_review {
-  background-color: #fff7d8;
-}
 .kanban_bord_column_in_review .scrollbar::-webkit-scrollbar-track {
   background-color: #fff7d8;
 }
@@ -3508,9 +3492,6 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
 }
 .kanban_bord_column_in_review .kanban_bord_column_title {
   background-color: #e7bf1d;
-}
-.kanban_bord_column_completed {
-  background-color: #dae9db;
 }
 .kanban_bord_column_completed .scrollbar::-webkit-scrollbar-track {
   background-color: #dae9db;
@@ -3615,6 +3596,9 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   z-index: 999999;
   width: 100% !important;
 }
+.select2-container--default .select2-selection--multiple {
+  padding-bottom: 0;
+}
 .select2-container--default .select2-selection--multiple, .select2-container--default .select2-selection--single {
   border: none;
 }
@@ -3651,6 +3635,8 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   margin: 0;
   vertical-align: inherit;
   font-family: inherit;
+  width: inherit !important;
+  height: 31px !important;
 }
 .select2-container--default .select2-search--inline .select2-search__field::placeholder {
   color: #9c9c9c;
@@ -3688,6 +3674,12 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
 }
 .select2-container--open .select2-dropdown--below {
   border-top: 1px solid #eee;
+}
+.select2-container .select2-selection--multiple {
+  min-height: 31px;
+}
+.select2-container .select2-selection--multiple .select2-selection__rendered {
+  margin: 0;
 }
 .select2-hidden-accessible {
   min-height: inherit;

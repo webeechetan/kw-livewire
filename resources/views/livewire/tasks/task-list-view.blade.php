@@ -86,7 +86,8 @@
                                                     @foreach($task['users'] as $user)
                                                     <a href="#" class="avatarGroup-avatar">
                                                         <span class="avatar avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ $user->name }}">
-                                                            <img alt="avatar" src="{{ env('APP_URL') }}/storage/{{ $user->image }}" class="rounded-circle" />
+                                                            {{-- <img alt="avatar" src="{{ env('APP_URL') }}/storage/{{ $user->image }}" class="rounded-circle" /> --}}
+                                                            <div class="rounded-circle" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{ $user->name }}">{{ $user->initials }}</div>
                                                         </span>
                                                     </a>
                                                     @endforeach
@@ -99,7 +100,8 @@
                                                     @foreach($task['users'] as $user)
                                                     <a href="#" class="avatarGroup-avatar">
                                                         <span class="avatar avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ $user->name }}">
-                                                            <img alt="avatar" src="{{ env('APP_URL') }}/storage/{{ $user->image }}" class="rounded-circle" />
+                                                            {{-- <img alt="avatar" src="{{ env('APP_URL') }}/storage/{{ $user->image }}" class="rounded-circle" /> --}}
+                                                            <div class="rounded-circle" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{ $user->name }}">{{ $user->initials }}</div>
                                                         </span>
                                                     </a>
                                                     @endforeach

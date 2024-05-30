@@ -1,5 +1,5 @@
 <div>
-    <div class="client-tab">
+    <div class="client-tab @if($client->trashed()) archived_content @endif">
         <div class="dashboard-head pb-0 mb-4">
             <div class="row align-items-center">
                 <div class="col">

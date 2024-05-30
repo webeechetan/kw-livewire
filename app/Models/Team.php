@@ -62,4 +62,8 @@ class Team extends Model
         
     }
 
+    // public function getInitialsAttribute(){
+    //     return $this->name;
+    // }
+
 }

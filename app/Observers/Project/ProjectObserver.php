@@ -22,7 +22,7 @@ class ProjectObserver
     {
         $activity = new Activity();
         $activity->org_id = $project->org_id;
-        $activity_text = 'updated ';
+        $activity_text = 'Updated ';
 
         // check if description is updated if yes then don't create activity 
         if($project->isDirty('description')){

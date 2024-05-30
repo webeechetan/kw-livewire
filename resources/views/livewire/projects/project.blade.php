@@ -140,7 +140,7 @@
                             <div class="col">
                                 <div class="column-title">Recent Activity</div>
                             </div>
-                            <a href="javascript:;" class="col-auto btn-link">View All</a>
+                            <div class="col-auto">In this week</div>
                         </div>
                         <div class="activity-recent mt-3">
                             <div class="activity-recent-scroll custom_scrollbar">

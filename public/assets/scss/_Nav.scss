@@ -70,14 +70,15 @@
         }   
     }
     &-nav {
+        .nav-item {
+            &:not(:last-child) {
+                margin-right: 30px;
+            }
+        }
         .dropdown {
             a.nav-link {
-                font-size: 20px;
                 padding: 0;
                 display: flex;
-            }
-            &:not(:last-child) {
-                margin-right: 40px;
             }
             &-toggle {
                 &:after {
@@ -100,6 +101,11 @@
                         animation: pulse 2s infinite;
                     }
                 }
+            }
+        }
+        .nav-link {
+            i {
+                font-size: 20px;
             }
         }
     }

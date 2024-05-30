@@ -25,6 +25,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"> @livewireStyles @stack('styles')
   </head>
   <body>
+
+    @php
+    $user = Auth::user();
+    @endphp
+
+
     <header class="header-main">
       <div class="header-main-wrap">
         <div class="header-main-left">
@@ -50,25 +56,33 @@
                 
                 <!-- Notifications -->
                 <livewire:notifications.notification-drop-down />
+
+                <!-- Roles & Permission -->
+                <li class="nav-item">
+                  <a class="nav-link" wire:navigate href="{{ route('role.index') }}" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip" data-bs-title="Roles & Permission"><i class='bx bx-slider-alt'></i></a>
+                </li>
                 
                 <!-- Login -->
                 <li class="nav-item navbar-dropdown dropdown">
-                  <span></span>
                   <a href="#" class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="true">
-                    <span class="avatar avatar-sm avatar-green">AJ</span>
+                    <span class="avatar avatar-sm avatar-{{$user->color}}">{{$user->initials}}</span>
                   </a>
                   <ul class="dropdown-menu dropdown-menu-end dropdown-account" data-bs-popper="static">
                    <li>
                     <div class="d-flex p-3">
-                      <div class="avatar avatar-green">AJ</div>
+                      <div class="avatar avatar-{{$user->color}}">{{$user->initials}}</div>
                       <div class="flex-grow-1 ps-2">
-                          <span class="fw-medium d-block">Ajay Kumar</span>
-                          <span class="text-muted">Admin</span>
+                          <span class="fw-medium d-block">{{$user->name}}</span>
+                          <span class="text-muted">
+                            @foreach($user->roles as $role)
+                              {{ $role->name }}
+                            @endforeach
+                          </span>
                       </div>
                     </div>
                    </li>
                     <li>
-                      <a class="dropdown-item align-items-center" href="#">
+                      <a class="dropdown-item align-items-center" wire:navigate href="{{ route('user.profile',$user->id) }}">
                         <i class="bx bx-user me-2"></i>
                         <span class="align-middle">My Profile</span>
                       </a>
@@ -110,9 +124,9 @@
                         @can('View Team')
                             <li><a wire:navigate href="{{ route('team.index') }}" class="@if (request()->segment(1) == 'teams' || request()->segment(1) == 'team' ) active @endif"><i class='bx bx-sitemap'></i> Teams</a></li>
                         @endcan
-                        @can('View Role')
+                        {{-- @can('View Role')
                             <li><a wire:navigate href="{{ route('role.index') }}" class="@if (request()->segment(1) == 'roles' || request()->segment(1) == 'role' ) active @endif"><i class='bx bx-sitemap'></i> Role & Permissions</a></li>
-                        @endcan
+                        @endcan --}}
                         @can('View Task')
                             <li><a wire:navigate href="{{ route('task.index') }}" class="@if (request()->routeIs('task.index') || request()->routeIs('task.list-view') || request()->routeIs('task.add')) active @endif"><i class='bx bx-task' ></i> Tasks</a></li>
                         @endcan

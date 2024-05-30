@@ -27,7 +27,7 @@
                                     </ul> 
                                 </div>
                                 <div class="col-auto">
-                                    <div class="card_style-user-head-position"><i class="bx bx-user text-primary"></i> Web Developer {{$user->designation}}</div>
+                                    <div class="card_style-user-head-position"><i class="bx bx-briefcase text-primary"></i> {{ $user->designation ?? 'Not Added' }}</div>
                                 </div>
                             </div>
                         </div>
@@ -47,7 +47,7 @@
                     <div class="title-label"><i class='bx bx-sitemap text-primary' ></i> Assign Teams</div>
                     <div class="btn-list">
                         @foreach($user->teams as $team)
-                            <a href="javascript:" class="btn-batch">{{ $team->name }}</a>
+                            <a href="javascript:" class="btn-batch">{{ $team->name ?? 'Not Added' }}</a>
                         @endforeach
                     </div>
                 </div>
@@ -94,8 +94,8 @@
                                 <div class="cus_dropdown-body cus_dropdown-body-widh_s">
                                     <div class="cus_dropdown-body-wrap">
                                         <ul class="cus_dropdown-list">
-                                            <li><a href="javascript:;" wire:click="changeUserStatus('active')" @if(!$user->trashed()) class="active" @endif><span><i class='bx bx-user-check' ></i></span> Active</a></li>
-                                            <li><a href="javascript:;" wire:click="changeUserStatus('archived')" @if($user->trashed()) class="active" @endif><span><i class='bx bx-user-minus' ></i></span> Archived</a></li>
+                                            <li><a href="javascript:;" wire:click="changeUserStatus('active')" @if(!$user->trashed()) class="active" @endif> Active</a></li>
+                                            <li><a href="javascript:;" wire:click="changeUserStatus('archived')" @if($user->trashed()) class="active" @endif> Archived</a></li>
                                         </ul>
                                     </div>
                                 </div>

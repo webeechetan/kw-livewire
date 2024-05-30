@@ -2,7 +2,7 @@
     <div wire:ignore class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
         <div class="offcanvas-header taskPane-dashbaord-head py-3 px-4">
             <div class="btn-list">
-                <select name="" id="" wire:model="status">
+                <select class="form-select" name="" id="" wire:model="status">
                     <option value="" disabled selected>Select Status</option>
                     <option value="pending">Pending</option>
                     <option value="in_progress">In-Progress</option>
