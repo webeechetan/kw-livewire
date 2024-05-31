@@ -40,7 +40,6 @@ class ListProject extends Component
     public function render()
     {
 
-
         $this->allProjects = Project::count();
 
         $this->activeProjects = Project::where('status', 'active')->count();
@@ -50,7 +49,6 @@ class ListProject extends Component
         $this->overdueProjects = Project::where('due_date', '<', Carbon::today())->count();
         
         $projects = Project::where('name','like','%'.$this->query.'%');
-        
 
         if($this->filter == 'active'){
             $projects->where('status','active');
@@ -88,7 +86,6 @@ class ListProject extends Component
         
         //filter by team
         if($this->byTeam != 'all'){
-
             dd($this->byTeam);
             $projects->whereHas('teams', function($query){
                 $query->where('', $this->byTeam);
@@ -98,7 +95,6 @@ class ListProject extends Component
         //filter by team
 
         $projects->orderBy('id','desc');
-
         $projects = $projects->paginate(12);
 
         return view('livewire.projects.list-project',[

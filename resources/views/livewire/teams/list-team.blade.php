@@ -93,11 +93,9 @@
 
                                 <span class="font-500"><i class='bx bx-user text-success' ></i> Manager</span> 
                                     @if($team->manager)
-                                        <span class="btn-batch ms-2">{{ $team->manager?->name }}</span>
-
-                                        {{-- <span>
-                                            <div class="avatar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{$team->manager?->name}}">{{$team->manager?->name}}</div>
-                                        </span> --}}
+                                        {{-- <span class="btn-batch ms-2">{{ $team->manager?->name }}</span>--}}
+                                        <a href="javascript:;"class="avatar avatar-orange avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="{{$team->manager?->name}}"> {{ $team->manager?->initials ?? 'NA' }}</a>
+                                        
                                     @endif
                             </div>
                             <div class="row">
