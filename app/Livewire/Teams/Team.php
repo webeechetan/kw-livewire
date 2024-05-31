@@ -20,7 +20,4 @@ class Team extends Component
         $this->team = $team;
     }
 
-    public function dispatchEditEvent($id){
-        $this->dispatch('editTeam',$id);
-    }
 }

@@ -122,4 +122,8 @@ class User extends Authenticatable
     public function myTeam(){
         return $this->hasOne(Team::class,'manager_id');
     }
+
+    public function mainTeam(){
+        return $this->belongsTo(Team::class,'main_team_id');
+    }
 }

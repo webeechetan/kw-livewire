@@ -23,7 +23,7 @@ class AddUser extends Component
     public $password;
     public $designation;
     public $teams = [];
-    public $selectedTeams = [];
+    public $selectedTeams;
     public $role;
 
     public $roles = [];
@@ -48,7 +48,7 @@ class AddUser extends Component
         if($this->user){
             $this->updateUser();
             return;
-        }
+        } 
 
         $this->validate([
             'name' => 'required',
@@ -64,8 +64,8 @@ class AddUser extends Component
         $user->color = Helper::colors()[rand(0,5)];
         $user->org_id = session('org_id');
         $user->created_by = session('user')->id;
+        $user->main_team_id = $this->selectedTeams;
         $user->save();
-        $user->teams()->sync($this->selectedTeams);
         $this->role = (int)$this->role;
         $user->assignRole($this->role);
         $this->dispatch('saved');
@@ -96,7 +96,7 @@ class AddUser extends Component
         $user->email = $this->email;
         $user->designation = $this->designation;
         $user->save();
-        $user->teams()->sync($this->selectedTeams);
+        $user->main_team_id = $this->selectedTeams;
         $this->role = (int)$this->role;
         setPermissionsTeamId(session('org_id'));
         $user->syncRoles([$this->role]);

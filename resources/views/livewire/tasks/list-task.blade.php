@@ -110,9 +110,9 @@
             <input class="form-check-input task-switch" type="checkbox" role="switch" id="flexSwitchCheckChecked">
             <label class="form-check-label task-switch-text" for="flexSwitchCheckChecked">
                 @if($ViewTasksAs == 'manager')
-                Show My Tasks
+                Showing {{ auth()->user()->myTeam->name }} Tasks
                 @else
-                Show Team Tasks
+                Showing My Tasks
                 @endif
             </label>
         </div>

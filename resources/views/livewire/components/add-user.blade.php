@@ -64,7 +64,7 @@
                                     <label for="">Team<sup class="text-primary">*</sup></label>
                                 </div>
                                 <div class="col-md-8">
-                                    <select class="teams" name="" id="" multiple>
+                                    <select class="teams" name="" id="">
                                         <option value="">Select Team</option>
                                         @foreach ($teams as $team)
                                             <option value="{{ $team->id }}">{{ $team->name }}</option>
