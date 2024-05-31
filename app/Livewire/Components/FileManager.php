@@ -21,7 +21,9 @@ class FileManager extends Component
     public $path = '';
     public $path_array = [];
     public $files_count = 0;
+    public $links_count = 0;
     public $directories_count = 0;
+    
 
     // add new file
     public $new_file_name = '';
@@ -93,6 +95,7 @@ class FileManager extends Component
             $directory_name = end($directory_array);
             $this->directories[$directory_name] = [
                 'files_count' => count(Storage::files($directory)),
+                'links_count' => Link::where('path', $path)->count(),
                 'directories_count' => count(Storage::directories($directory)),
                 'directory_path' => $directory,
             ];
@@ -101,6 +104,7 @@ class FileManager extends Component
         $this->files_count = count($this->files);
         $this->directories_count = count($this->directories);
         $this->used_storage_size_in_mb = $this->getDirectorySize($this->path);
+        $this->links_count = Link::where('path', $path)->count();
 
         $this->links = $this->getLinks($this->path);
     }
