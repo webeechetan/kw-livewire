@@ -154,11 +154,19 @@
                             <div class="card_style-tasks-title"><span><i class='bx bx-objects-horizontal-left' ></i></span> {{ $user->tasks->count() }}  {{ $user->tasks->count() >1 ? 'Tasks' : 'Task'}}</div>
                             <div class="card_style-tasks-list justify-content-center mt-2">
                                 <div class="card_style-tasks-item card_style-tasks-item-pending"><span><i class='bx bx-objects-horizontal-center' ></i></span>
-                                {{
+                                {{-- {{
                                     $user->tasks->where(function($query) {
                                         $query->where('status', 'pending')->orWhere('status', 'in_progress')->orWhere('status', 'in_review');
                                     })->count()
-                                }} Active</div>
+                                }} Active
+                                 --}}
+                                 {{ 
+                                    $user->tasks->filter(function($task) {
+                                        return in_array($task->status, ['pending', 'in_progress', 'in_review']);
+                                    })->count() 
+                                }} Active
+                            
+                            </div>
                                 <div class="card_style-tasks-item card_style-tasks-item-overdue"><span><i class='bx bx-objects-horizontal-center' ></i></span>{{ $user->tasks->where('due_date', '<', now())->where('status','!=','completed')->count() }} Overdue</div>
                                 <div class="card_style-tasks-item card_style-tasks-item-done"><span><i class='bx bx-objects-horizontal-center' ></i></span>{{ $user->tasks->where('status', 'completed')->count() }}  Completed</div>
                             </div>
