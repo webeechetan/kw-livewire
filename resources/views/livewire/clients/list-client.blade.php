@@ -95,7 +95,6 @@
                 @if($filter != 'all')
                     <span class="btn-batch">{{ ucfirst($filter) }} <a wire:navigate href="{{ route('client.index',['sort'=>$sort,'filter'=>'all']) }}" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
                 @endif
-                
 
                 <a href="{{ route('client.index') }}" class="text-danger d-flex align-items-center">Reset <span class="ms-1 d-inline-flex"><i class='bx bx-refresh'></i></span></a>
             </div>
@@ -174,11 +173,11 @@
             @endforeach
             @else
             <div class="col-md-12">
-                <h4 class="text text-danger">No clients found
+                <h5 class="text text-danger">No clients found
                     @if($query) 
                         with {{$query}}
                     @endif
-                </h4>
+                </h5>
             </div>
         @endif
     </div>

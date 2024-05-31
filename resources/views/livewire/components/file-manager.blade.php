@@ -4,7 +4,7 @@
             <h5 class="column-title mb-0">Files & Folders</h5>
         </div>
         <div class="files-options ms-auto">
-            <div class="text-light"><span class="text-secondary"><i class='bx bx-file-blank' ></i></span> {{$files_count}} <span class="px-2">|</span> <span class="text-primary"><i class='bx bx-folder' ></i></span> {{ $directories_count }} <span class="px-2">|</span> <span class="text-primary"><i class='bx bx-link-alt' ></i></span> {{ $directories_count }} <span class="px-2">|</span> {{$used_storage_size_in_mb}}MB Used / 100MB</div>
+            <div class="text-light"><span class="text-success"><i class='bx bx-data' ></i></span> {{ $directories_count + $files_count + $links_count }} Attachments <span class="px-2">|</span><span class="text-primary"><i class='bx bx-file-blank' ></i></span> {{$files_count}} <span class="px-2">|</span> <span class="text-warning"><i class='bx bx-folder' ></i></span> {{ $directories_count }} <span class="px-2">|</span> <span class="text-secondary"><i class='bx bx-link-alt' ></i></span> {{ $links_count }} <span class="px-2">|</span> {{$used_storage_size_in_mb}}MB Used / 100MB</div>
         </div>
     </div>
     <div class="files-body">
@@ -64,7 +64,7 @@
             <div class="column-head column-head-light d-flex flex-wrap align-items-center">
                 <div>
                     <h5 class="title-sm mb-2">Directory Attachments</h5>
-                    <div><i class='bx bx-data text-primary' ></i> {{ $directories_count }} Attachments <span class="px-2">|</span> {{$used_storage_size_in_mb}}MB Used / 100MB</div>
+                    <div><i class='bx bx-data text-primary' ></i> {{ $directories_count + $files_count + $links_count }} Attachments <span class="px-2">|</span> {{$used_storage_size_in_mb}}MB Used / 100MB</div>
                 </div>
             </div>
         </div>
@@ -113,7 +113,7 @@
                         @endif
                     </div>
                     <div class="files-item-content">
-                        <div class="files-item-content-title mb-2">{{$file_name}}</div>
+                        <div class="files-item-content-title mb-2">{{ Str::limit($file_name, 15) }}</div>
                     </div>
                     {{-- <div class="text-sm">{{ $file_data['last_modified'] }}</div> --}}
                 </div>
@@ -122,28 +122,16 @@
             @foreach($links as $l)
                 <div class="files-item select_link @if(in_array($l->id, $selected_links)) selected @endif" data-link="{{ $l->id }}">
                     <div class="files-item-icon">
-                        @php
-                            $og_data = json_decode($l->og_data);
-                        @endphp
-                        @if($l->og_data && $l->og_data != 'null' && $l->og_data != '[]' && $l->og_data != '{}' && $l->og_data != '')
-                            @if($og_data->image )
-                                <span><img src="{{ $og_data->image }}" alt=""></span>
-                            @endif
-                        @else
                         <span><i class='bx bx-link-alt'></i></span>
-                        @endif
                     </div>
                     <div class="files-item-content">
                         <a href="{{ $l->link }}" target="_blank" class="files-item-content-title">
                             @if($l->link_alias)
-                                {{ $l->link_alias }}
-                            @elseif($l->og_data && $l->og_data != 'null' && $l->og_data != '[]' && $l->og_data != '{}' && $l->og_data != '')
-                                {{ $og_data->title }}
+                                {{ $l->link_alias }}                            
                             @else
-                                {{ $l->link }}
+                                {{ Str::limit($l->link, 20) }}
                             @endif
                         </a>
-                        <div><b>External Link</b></div>
                     </div>
                 </div>
             @endforeach
