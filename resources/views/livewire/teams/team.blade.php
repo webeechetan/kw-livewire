@@ -9,7 +9,8 @@
          <li class="breadcrumb-item">
             <a wire:navigate href="{{ route('team.index') }}">All Team</a>
          </li>
-         <li class="breadcrumb-item active" aria-current="page">Tech Team</li>
+         <li class="breadcrumb-item active" aria-current="page">{{$team->name}}
+         </li>
       </ol>
    </nav>
    <livewire:teams.components.teams-tab :team="$team" @saved="$refresh"/>

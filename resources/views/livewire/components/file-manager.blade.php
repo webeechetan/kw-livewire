@@ -130,7 +130,7 @@
                                 <span><img src="{{ $og_data->image }}" alt=""></span>
                             @endif
                         @else
-                        <span><i class='bx bx-link'></i></span>
+                        <span><i class='bx bx-link-alt'></i></span>
                         @endif
                     </div>
                     <div class="files-item-content">
@@ -143,7 +143,7 @@
                                 {{ $l->link }}
                             @endif
                         </a>
-                        <b>External Link</b>
+                        <div><b>External Link</b></div>
                     </div>
                 </div>
             @endforeach

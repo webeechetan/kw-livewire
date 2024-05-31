@@ -34,28 +34,63 @@
                                                 <a wire:navigate href="{{ route('task.index',['sort'=>'newest','filter'=>$filter, 'byProject'=> $byProject])}}" class="btn-batch @if($sort == 'newest') active @endif " >Newest</a>
                                             </li>
                                             <li class="filterSort_item">
+                                                <a wire:navigate href="{{ route('task.index',['sort'=>'newest','filter'=>$filter, 'byProject'=> $byProject])}}" class="btn-batch @if($sort == 'newest') active @endif " >Oldest</a>
+                                            </li>
+                                            <li class="filterSort_item">
                                                 <a wire:navigate href="{{ route('task.index',['sort'=>'a_z','filter'=>$filter, 'byProject'=> $byProject])}}" class="btn-batch @if($sort == 'a_z') active @endif"><i class='bx bx-down-arrow-alt' ></i> A To Z</a>
                                             </li>
                                             <li class="filterSort_item">
                                                 <a wire:navigate href="{{ route('task.index',['sort'=>'z_a','filter'=>$filter, 'byProject'=> $byProject])}}" class="btn-batch @if($sort == 'z_a') active @endif"><i class='bx bx-up-arrow-alt' ></i> Z To A</a>
                                             </li>
                                         </ul>
-                                        <hr>
-                                        <h5 class="filterSort-header"><i class='bx bx-briefcase text-primary' ></i> Filter By Clients</h5>
+                                        <h5 class="filterSort-header mt-4"><i class='bx bx-calendar-alt text-primary' ></i> Filter By Date</h5>
+                                        <div class="row align-items-center mt-2">
+                                            <div class="col mb-4 mb-md-0">
+                                                <a href="javascript:;" class="btn w-100 btn-sm btn-border-secondary project_start_date"><i class='bx bx-calendar-alt' ></i> Start Date</a>
+                                            </div>
+                                            <div class="col-auto text-center font-500 mb-4 mb-md-0 px-0">To</div>
+                                            <div class="col">
+                                                <a href="javascript:;" class="btn w-100 btn-sm btn-border-danger project_due_date"><i class='bx bx-calendar-alt' ></i> Due Date</a>
+                                            </div>
+                                        </div>
+                                        <h5 class="filterSort-header mt-4"><i class='bx bx-calendar-alt text-primary' ></i> Filter By Status</h5>
                                         <ul class="filterSort_btn_group list-none">
-                                            <li class="filterSort_item"><a href="#" class="btn-batch">All</a></li>
-                                            <li class="filterSort_item"><a wire:navigate href="#" class="btn-batch">Active</a></li>
-                                            <li class="filterSort_item"><a wire:navigate href="#" class="btn-batch">Completed</a></li>
-                                            <li class="filterSort_item"><a wire:navigate href="#" class="btn-batch">Archive</a></li>
+                                            <li class="filterSort_item"><a wire:navigate="" href="#" class="btn-batch active">All</a></li>
+                                            <li class="filterSort_item"><a wire:navigate="" href="#" class="btn-batch">Active</a></li>
+                                            <li class="filterSort_item"><a wire:navigate="" href="#" class="btn-batch">Overdue</a></li>
+                                            <li class="filterSort_item"><a wire:navigate="" href="#" class="btn-batch">Completed</a></li>
+                                            <li class="filterSort_item"><a wire:navigate="" href="#" class="btn-batch">Archived</a></li>
                                         </ul>
-                                       
-                                        <hr>
-                                        <h5 class="filterSort-header"><i class='bx bx-objects-horizontal-left text-primary'></i> Filter By Projects</h5>
-                                        <select class="form-control" wire:model.live="byProject">
+                                        <h5 class="filterSort-header mt-4"><i class='bx bx-briefcase text-primary' ></i> Filter By Clients</h5>
+                                        <select class="dashboard_filters-select w-100" name="" id="">
+                                            <option value="" disabled="">Select Client</option>
+                                            <option value="1">Acma</option>
+                                            <option value="2">Buyers Guide</option>
+                                            <option value="3">GRG</option>
+                                            <option value="4">Webeesocial</option>
+                                        </select>
+                                        <h5 class="filterSort-header mt-4"><i class='bx bx-objects-horizontal-left text-primary'></i> Filter By Projects</h5>
+                                        <select class="dashboard_filters-select w-100" wire:model.live="byProject">
                                             <option value="all">All</option>
                                             @foreach($projects as $project)
                                                 <option value="{{ $project->id }}">{{ $project->name }}</option>
                                             @endforeach
+                                        </select>
+                                        <h5 class="filterSort-header mt-4"><i class='bx bx-user text-primary'></i> Filter By User</h5>
+                                        <select class="dashboard_filters-select mt-2 w-100" name="" id="">
+                                            <option value="" disabled="">Select Client</option>
+                                            <option value="1">Acma</option>
+                                            <option value="2">Buyers Guide</option>
+                                            <option value="3">GRG</option>
+                                            <option value="4">Webeesocial</option>
+                                        </select>
+                                        <h5 class="filterSort-header mt-4"><i class='bx bx-user text-primary'></i> Filter By Team</h5>
+                                        <select class="dashboard_filters-select mt-2 w-100" name="" id="">
+                                            <option value="" disabled="">Select Team</option>
+                                            <option value="1">Acma</option>
+                                            <option value="2">Buyers Guide</option>
+                                            <option value="3">GRG</option>
+                                            <option value="4">Webeesocial</option>
                                         </select>
                                     </div>
                                 </div>
@@ -66,6 +101,7 @@
             </div>
         </div>
     </div>
+    <!-- Tabs -->
     <div class="tabNavigationBar-tab border_style my-2">
         <a href="{{ route('task.list-view') }}" class="tabNavigationBar-item @if(request()->routeIs('task.list-view')) active @endif" wire:navigate ><i class='bx bx-list-ul'></i> List</a>
         <a href="{{ route('task.index') }}" class="tabNavigationBar-item @if(request()->routeIs('task.index')) active @endif" wire:navigate><i class='bx bx-columns' ></i> Board</a>
@@ -95,13 +131,13 @@
                 <div class="kanban_bord_column {{ $board_class }}" wire:key="group-{{$group}}"  wire:sortable.item="{{ $group  }}">
                     <div class="kanban_bord_column_title" wire:sortable.handle>
                         @if($group == 'pending')
-                            Assigned
+                            Assigned <span class="btn-batch">50</span>
                         @elseif($group == 'in_progress')
-                            Accepted
+                            Accepted <span class="btn-batch">100</span>
                         @elseif($group == 'in_review')
-                            In Review
+                            In Review <span class="btn-batch">10</span>
                         @elseif($group == 'completed')
-                            Completed
+                            Completed <span class="btn-batch">72</span>
                         @endif
                     </div>
                     <div class="kanban_column scrollbar" wire:sortable-group.item-group="{{$group}}" wire:sortable-group.options="{ 

@@ -23,10 +23,28 @@
                                 <div class="filterSort">
                                     <h5 class="filterSort-header"><i class='bx bx-sort-down text-primary' ></i> Sort By</h5>
                                     <ul class="filterSort_btn_group list-none">
-                                        <li class="filterSort_item"><a wire:navigate href="{{ route('project.profile',['id' => $project->id ,'sort'=>'newest','filter'=>$filter,'byUser'=>$byUser, 'byTeam' => $byTeam])}}" class="btn-batch  @if($sort == 'newest') active @endif">Newest</a></li>
+                                        {{-- <li class="filterSort_item"><a wire:navigate href="{{ route('project.profile',['id' => $project->id ,'sort'=>'newest','filter'=>$filter,'byUser'=>$byUser, 'byTeam' => $byTeam])}}" class="btn-batch  @if($sort == 'newest') active @endif">Newest</a></li>
                                         <li class="filterSort_item"><a wire:navigate href="{{ route('project.profile',['id' => $project->id,'sort'=>'oldest','filter'=>$filter,'byUser'=>$byUser, 'byTeam' => $byTeam])}}" class="btn-batch  @if($sort == 'oldest') active @endif">Oldest</a></li>
                                         <li class="filterSort_item"><a wire:navigate href="{{ route('project.profile',['id' => $project->id ,'sort'=>'a_z','filter'=>$filter,'byUser'=>$byUser, 'byTeam' => $byTeam])}}" class="btn-batch  @if($sort == 'a_z') active @endif"><i class='bx bx-down-arrow-alt' ></i> A To Z</a></li>
-                                        <li class="filterSort_item"><a wire:navigate href="{{ route('project.profile',['id' => $project->id ,'sort'=>'z_a','filter'=>$filter,'byUser'=>$byUser, 'byTeam' => $byTeam])}}" class="btn-batch  @if($sort == 'z_a') active @endif"><i class='bx bx-up-arrow-alt' ></i> Z To A</a></li>
+                                        <li class="filterSort_item"><a wire:navigate href="{{ route('project.profile',['id' => $project->id ,'sort'=>'z_a','filter'=>$filter,'byUser'=>$byUser, 'byTeam' => $byTeam])}}" class="btn-batch  @if($sort == 'z_a') active @endif"><i class='bx bx-up-arrow-alt' ></i> Z To A</a></li> --}}
+
+                                        <li class="filterSort_item">
+                                            <a wire:navigate href="{{ route('project.tasks', ['project' => $project->id, 'sort' => 'newest', 'filter' => $filter ?? null]) }}" class="btn-batch @if($sort == 'newest') active @endif">Newest</a>
+                                        </li>
+                                        <li class="filterSort_item">
+                                            <a wire:navigate href="{{ route('project.tasks', ['project' => $project->id, 'sort' => 'oldest', 'filter' => $filter ?? null]) }}" class="btn-batch @if($sort == 'oldest') active @endif">Oldest</a>
+                                        </li>
+                                        <li class="filterSort_item">
+                                            <a wire:navigate href="{{ route('project.tasks', ['project' => $project->id, 'sort' => 'a_z', 'filter' => $filter ?? null]) }}" class="btn-batch @if($sort == 'a_z') active @endif">
+                                                <i class='bx bx-down-arrow-alt'></i> A To Z
+                                            </a>
+                                        </li>
+                                        <li class="filterSort_item">
+                                            <a wire:navigate href="{{ route('project.tasks', ['project' => $project->id, 'sort' => 'z_a', 'filter' => $filter ?? null, 'byUser' => $byUser ?? null, 'byTeam' => $byTeam ?? null]) }}" class="btn-batch @if($sort == 'z_a') active @endif">
+                                                <i class='bx bx-up-arrow-alt'></i> Z To A
+                                            </a>
+                                        </li>
+                                      
                                     </ul>
                                     <hr>
                                     <div class="d-flex flex-wrap align-items-center justify-content-between">
@@ -46,8 +64,10 @@
                                     <hr>
                                     <h5 class="filterSort-header"><i class='bx bx-sitemap text-primary' ></i> Teams</h5>
                                     <select class="form-control"name="" id="">
-                                        <option value="Rakesh">Rakesh</option>
-                                        <option value="Rajiv">Rajiv</option>
+                                        <option value="byTeam">All</option>
+                                        @foreach($teams as $team)
+                                            <option value="{{ $team->id }}">{{ $team->name }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -73,7 +93,7 @@
             </div>
             <div class="taskList-dashbaord_header">
                 <div class="row">
-                    <div class="col-lg-6">
+                    <div class="col-lg-4">
                         <div class="taskList-dashbaord_header_title taskList_col ms-2">Task Name</div>
                     </div>
                     <div class="col text-center">
@@ -88,29 +108,35 @@
                     <div class="col text-center">
                         <div class="taskList-dashbaord_header_title taskList_col">Assignee</div>
                     </div>
+                    <div class="col text-center">
+                        <div class="taskList-dashbaord_header_title taskList_col">Status</div>
+                    </div>
                 </div>
             </div>
             <div class="taskList scrollbar">
                 <div>
                     @php
                         $tasks = $project->tasks()->paginate(10)     
+
+                       
                     @endphp
                     @foreach($tasks as $task)
+                  
                     <div class="taskList_row" wire:key="task-row-{{ $task->id }}">
                         <div class="row">
-                            <div class="col-lg-6">
+                            <div class="col-lg-4">
                                 <div class="taskList_col taskList_col_title">
-                                    <!-- <div class="taskList_col_title_complete_icon" data-id="{{ $task->id }}"><i class='bx bx-check'></i></div> -->
+                                    <div class="taskList_col_title_open edit-task" data-id="{{ $task->id }}"><i class='bx bx-chevron-right' ></i></div>
                                     <div class="edit-task" data-id="{{ $task->id }}">
                                         <div>{{ $task->name }}</div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col text-center">
-                                <div class="taskList_col"><span>{{ \Carbon\Carbon::parse($task->created_at)->format('d M-Y') }}</span></div>
+                                <div class="taskList_col"><span>{{ \Carbon\Carbon::parse($task->created_at)->format('d M Y') }}</span></div>
                             </div>
                             <div class="col text-center">
-                                <div class="taskList_col"><span>{{ \Carbon\Carbon::parse($task->due_date)->format('d M-Y') }}</span></div>
+                                <div class="taskList_col"><span class="btn-batch @if ($task->due_date < \Carbon\Carbon::now())  btn-batch btn-batch-danger @endif">{{ \Carbon\Carbon::parse($task->due_date)->format('d M Y') }}</span></div>
                             </div>
                             <div class="col text-center">
                                 <div class="taskList_col"><span>{{ $project->name }}</span></div>
@@ -133,6 +159,25 @@
                                         @endforeach
                                     </div>
                                 </div>
+                            </div>
+                            <div class="col text-center">
+                                <div class="taskList_col"><span class="btn-batch 
+                                    @if($task->status == 'pending') btn-batch-primary 
+                                    @elseif ($task->status == 'in_progress') btn-batch-danger 
+                                    @elseif ($task->status == 'in_review') btn-batch-success 
+                                    @elseif ($task->status == 'completed') btn-batch-warning 
+                                    @endif"
+                                >
+                                    @if($task->status == 'pending')
+                                        Assigned
+                                    @elseif($task->status == 'in_progress')
+                                        Accepted
+                                    @elseif($task->status == 'in_review')
+                                        In Review
+                                    @elseif($task->status == 'completed')
+                                        Completed
+                                    @endif
+                                </span></div>
                             </div>
                         </div>
                     </div>
