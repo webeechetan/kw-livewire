@@ -39,7 +39,6 @@ class ListProject extends Component
 
     public function render()
     {
-
         $this->allProjects = Project::count();
 
         $this->activeProjects = Project::where('status', 'active')->count();
@@ -73,8 +72,9 @@ class ListProject extends Component
         }
 
         if($this->byClient != 'all'){
-            // select from project_client
-            dd('hello bro');
+            $projects->whereHas('client',function($query){
+                $query->where('client_id',$this->byClient);
+            });
         }
 
         if($this->byUser != 'all'){
@@ -83,17 +83,16 @@ class ListProject extends Component
                 $query->where('user_id',$this->byUser);
             });
         }
-        
+       
         //filter by team
+
+
         if($this->byTeam != 'all'){
-            dd($this->byTeam);
-            $projects->whereHas('teams', function($query){
-                $query->where('', $this->byTeam);
+
+            $projects->whereHas('client',function($query){
+                $query->where('client_id',$this->byTeam);
             });
         }
-
-        //filter by team
-
         $projects->orderBy('id','desc');
         $projects = $projects->paginate(12);
 
@@ -103,6 +102,7 @@ class ListProject extends Component
     }
 
     public function mount(){
+        
         $this->authorize('View Project');
         $this->users = User::all();
         $this->clients = Client::all();
@@ -113,10 +113,10 @@ class ListProject extends Component
         $this->resetPage();
     }
 
-    public function updatedByClient($value){
-        $this->byUser = $value;
-        $this->redirect(route('project.index',['sort'=>$this->sort,'filter'=>$this->filter,'byClient'=>$this->byClient,'byUser'=>$this->byUser]), navigate: true);
-    }
+    // public function updatedByClient($value){
+    //     $this->byUser = $value;
+    //     $this->redirect(route('project.index',['sort'=>$this->sort,'filter'=>$this->filter,'byClient'=>$this->byClient,'byUser'=>$this->byUser]), navigate: true);
+    // }
 
     public function updatedByUser($value){
         $this->byUser = $value;
