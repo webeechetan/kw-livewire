@@ -13,7 +13,8 @@
                                 <i class="bx bx-user text-secondary"></i>
                                 </span> Manager
                                 </div>
-                                <div class="col text-nowrap btn-batch">{{ $team->manager?->name }}</div>
+                                <div class="col text-nowrap btn-batch">{{ $team->manager?->name ?? 'Not Added' }}
+                                </div>
                             </div>
                         </div>
                     </div>
