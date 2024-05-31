@@ -24,19 +24,18 @@ class Tasks extends Component
 
         if($this->byClient != 'all'){
 
-            dd($this->byClient);
-            // select from project_user
+            
            
         }
 
         if($this->byProject != 'all'){
-            dd($this->byProject);
+            
             // select from project_user
            
         }
 
         if($this->byUser != 'all'){
-            dd($this->byUser);
+            //dd($this->byUser);
            
         }
 
