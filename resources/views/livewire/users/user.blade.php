@@ -128,7 +128,7 @@
                     <div class="column-box states_style-success">
                         <div class="row">
                             <div class="col">
-                                <h5 class="title-md mb-1">1.23k</h5>
+                                <h5 class="title-md mb-1">{{ $user->tasks->where('status', 'completed')->count() }}</h5>
                                 <div class="states_style-text">Tasks Done</div>
                             </div>
                             <div class="col-auto">
@@ -141,7 +141,8 @@
                     <div class="column-box states_style-danger">
                         <div class="row">
                             <div class="col">
-                                <h5 class="title-md mb-1">12</h5>
+                                <h5 class="title-md mb-1">{{ $user->tasks->where('due_date', '<', now())->where('status', '!=', 'completed')->count() }}
+                                </h5>
                                 <div class="states_style-text">Tasks Overdue</div>
                             </div>
                             <div class="col-auto">
