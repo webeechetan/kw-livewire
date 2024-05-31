@@ -18,36 +18,36 @@
         <div class="col-sm-3">
             <div class="column-box">
                 <label for="" class="font-500"><i class='bx bx-briefcase-alt-2 text-primary' ></i> Filter By Client</label>
-                <select class="dashboard_filters-select mt-2 w-100" name="" id="">
-                    <option value="" disabled="">Select Client</option>
-                    <option value="1">Acma</option>
-                    <option value="2">Buyers Guide</option>
-                    <option value="3">GRG</option>
-                    <option value="4">Webeesocial</option>
+                <select class="dashboard_filters-select mt-2 w-100" wire:model.live="byClient" name="" id="">
+                    <option value="" selected="">Select Client</option>
+                    @foreach($clients as $client)
+                        <option value="{{$client->id}}">{{$client->name}}</option>
+                        {{-- <option value="2">Buyers Guide</option>
+                        <option value="3">GRG</option>
+                        <option value="4">Webeesocial</option> --}}
+                    @endforeach
                 </select>
             </div>
         </div>
         <div class="col-sm-3">
             <div class="column-box">
                 <label for="" class="font-500"><i class='bx bx-objects-horizontal-left text-warning' ></i> Filter By Project</label>
-                <select class="dashboard_filters-select mt-2 w-100" name="" id="">
-                    <option value="" disabled="">Select Client</option>
-                    <option value="1">Acma</option>
-                    <option value="2">Buyers Guide</option>
-                    <option value="3">GRG</option>
-                    <option value="4">Webeesocial</option>
+                <select class="dashboard_filters-select mt-2 w-100" wire:model.live="byProject" name="" id="">
+                    <option value="" selected="">Select Project</option>
+                    @foreach($projects as $project)
+                    <option value="{{$project->id}}">{{$project->name}}</option>
+                    @endforeach
                 </select>
             </div>
         </div>
         <div class="col-sm-3">
             <div class="column-box">
                 <label for="" class="font-500"><i class='bx bx-user text-secondary'></i> Filter By User</label>
-                <select class="dashboard_filters-select mt-2 w-100" name="" id="">
-                    <option value="" disabled="">Select Client</option>
-                    <option value="1">Acma</option>
-                    <option value="2">Buyers Guide</option>
-                    <option value="3">GRG</option>
-                    <option value="4">Webeesocial</option>
+                <select class="dashboard_filters-select mt-2 w-100" wire:model.live="byUser" name="" id="">
+                    <option value="" selected="">Select User</option>
+                    @foreach($users as $user)
+                    <option value="{{$user->id}}">{{$user->name}}</option>
+                @endforeach
                 </select>
             </div>
         </div>
