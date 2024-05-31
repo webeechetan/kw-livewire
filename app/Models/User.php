@@ -110,4 +110,16 @@ class User extends Authenticatable
     public function notifications(){
         return $this->hasMany(Notification::class);
     }
+
+    public function getIsManagerAttribute(){
+        $teams = Team::where('manager_id', $this->id)->get();
+        if($teams->count() > 0){
+            return true;
+        }
+        return false;
+    }
+
+    public function myTeam(){
+        return $this->hasOne(Team::class,'manager_id');
+    }
 }
