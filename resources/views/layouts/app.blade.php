@@ -134,7 +134,7 @@
             </div>
             <div class="sidebar-l-btm">
                 <img src="{{ asset('') }}assets/images/logo.png" width="150" alt="Kaykewalk Profile" />
-                <p class="mb-0 mt-3">Copyright © 2024, Kaykewalk, All Rights Reserved.</p>
+                <p class="mb-0 mt-3 text-white">Copyright © 2024, Kaykewalk, All Rights Reserved.</p>
             </div>
         </aside>
       <div class="main-body-content">

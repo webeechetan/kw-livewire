@@ -1627,6 +1627,10 @@ hr.space-sm {
 }
 .header-main {
   background-color: #fff;
+  position: fixed;
+  top: 0;
+  z-index: 9999;
+  width: 100%;
   /*---- Logo ----*/
   /*---- Header Left Style ----*/
   /*---- Header Right Style ----*/
@@ -1651,10 +1655,12 @@ hr.space-sm {
   max-height: 35px;
 }
 .header-main-left {
-  width: 300px;
+  width: 275px;
+  background-color: #7407ff;
   padding: 0 20px;
   display: flex;
   align-items: center;
+  border-bottom: 1px solid #9c4eff;
 }
 .header-main-right {
   text-align: right;
@@ -1730,10 +1736,9 @@ hr.space-sm {
 .sidebar-l {
   width: 275px;
   max-width: 100%;
-  min-height: calc(100vh - 75px);
-  background-color: #fff;
+  max-height: calc(100vh - 55px);
+  background-color: #7407ff;
   position: relative;
-  padding-bottom: 150px;
   /*---- Sidebar Left Top Style ----*/
 }
 .sidebar-l-top {
@@ -1756,6 +1761,7 @@ hr.space-sm {
   position: absolute;
   left: 0;
   bottom: 0;
+  color: #fff;
 }
 .sidebar-profile {
   display: flex;
@@ -1784,14 +1790,14 @@ hr.space-sm {
   position: relative;
 }
 .menu-sidebar li:not(:last-child) {
-  margin-bottom: 5px;
+  border-bottom: 1px solid #8c3df1;
 }
 .menu-sidebar li a {
-  color: #717579;
-  font-weight: 600;
+  color: #fff;
+  font-weight: 500;
   padding: 12px 25px;
   transition: all 0.5s ease;
-  font-size: 0.9rem;
+  font-size: 15px;
   display: flex;
   align-items: center;
   display: grid;
@@ -1800,26 +1806,28 @@ hr.space-sm {
 }
 .menu-sidebar li a i {
   font-size: 18px;
-  color: #191919;
+  color: #fff;
   transition: all 0.5s ease;
 }
 .menu-sidebar li a:after {
   content: "";
   width: 6px;
-  height: 100%;
-  background-color: #f83890;
+  height: calc(100% - 8px);
+  background-color: #7407ff;
   position: absolute;
   left: -100%;
   top: 0;
+  bottom: 0;
+  margin: auto;
   border-radius: 0 4px 4px 0;
   transition: all 0.5s ease;
 }
 .menu-sidebar li a.active, .menu-sidebar li a:hover {
-  color: #f83890;
-  background-color: #f6f5f5;
+  color: #7407ff;
+  background-color: #f3f6f9;
 }
 .menu-sidebar li a.active i, .menu-sidebar li a:hover i {
-  color: #f83890;
+  color: #7407ff;
 }
 .menu-sidebar li a.active:after, .menu-sidebar li a:hover:after {
   left: 0;
@@ -3060,17 +3068,21 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
 
 /*---- Main Body Style ----*/
 .main-body {
-  background-color: #f6f5f5;
+  background-color: #f3f6f9;
   display: flex;
   flex-wrap: wrap;
   position: relative;
   overflow: hidden;
+  padding-top: 55px;
+  height: 100vh;
   /*---- Content Body Style ----*/
   /*---- Body Header ----*/
 }
 .main-body-content {
-  width: calc(100% - 300px);
+  width: calc(100% - 275px);
   padding: 20px;
+  height: calc(100vh - 55px);
+  overflow-y: auto;
 }
 .main-body-content .archived_content .dashboard-head-title-wrap {
   opacity: 0.6;

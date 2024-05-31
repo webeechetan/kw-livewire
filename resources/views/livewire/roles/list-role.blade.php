@@ -10,10 +10,10 @@
     <div class="dashboard-head mb-4">
         <div class="row align-items-center">
             <div class="col d-flex align-items-center gap-3">
-                <h3 class="main-body-header-title mb-0">Roles</h3>
+                <h3 class="main-body-header-title mb-0">All Roles</h3>
                 <span class="text-light">|</span>
                 @can('Create Role')
-                    <a data-bs-toggle="modal" data-bs-target="#add-role-modal" href="javascript:void(0);" class="btn-border btn-border-sm btn-border-primary"><i class="bx bx-plus"></i>Create Role</a>
+                    <a data-bs-toggle="modal" data-bs-target="#add-role-modal" href="javascript:void(0);" class="btn-border btn-border-sm btn-border-primary"><i class="bx bx-plus"></i> Create Role</a>
                 @endcan
             </div>
             <div class="col">
@@ -30,7 +30,7 @@
     <div class="row mb-4">
         @if($roles->isNotEmpty())
         @foreach($roles as $role)
-        <div class="col-md-3 mt-3">
+        <div class="col-md-3">
             <div class=" card_style card_style-roles h-100">
                 <a wire:navigate="" href="http://localhost:8000/role"class="card_style-open"><i class='bx bx-chevron-right'></i></a>
                 <div class="card_style-roles-head">

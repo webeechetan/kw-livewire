@@ -2,6 +2,10 @@
 .header {
     &-main {
         background-color: $white;
+        position: fixed;
+        top: 0;
+        z-index: 9999;
+        width: 100%;
         &-wrap {
             display: flex;
         }
@@ -23,10 +27,12 @@
         }
         /*---- Header Left Style ----*/
         &-left {
-            width: 300px;
+            width: 275px;
+            background-color: $secondary;
             padding: 0 $spacing_sm;
             display: flex;
             align-items: center;
+            border-bottom: 1px solid #9c4eff;
         }
         /*---- Header Right Style ----*/
         &-right {

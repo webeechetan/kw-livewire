@@ -5,10 +5,9 @@
     &-l {
         width: 275px;
         max-width: 100%;
-        min-height: calc(100vh - 75px);
-        background-color: $white;
+        max-height: calc(100vh - 55px);
+        background-color: $secondary;
         position: relative;
-        padding-bottom: 150px;
 
         /*---- Sidebar Left Top Style ----*/
         &-top {
@@ -32,6 +31,7 @@
             position: absolute;
             left: 0;
             bottom: 0;
+            color: #fff;
         }
     }
 

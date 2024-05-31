@@ -1,15 +1,19 @@
 /*---- Main Body Style ----*/
 .main-body {
-    background-color: $dashboard_bg;
+    background-color: $light;
     display: flex;
     flex-wrap: wrap;
     position: relative;
     overflow: hidden;
+    padding-top: 55px;
+    height: 100vh;
     
     /*---- Content Body Style ----*/
     &-content {
-        width: calc(100% - 300px);
+        width: calc(100% - 275px);
         padding: $spacing_sm;
+        height: calc(100vh - 55px);
+        overflow-y: auto;
         .archived_content {
             .dashboard-head-title-wrap {
                 opacity: 0.6;

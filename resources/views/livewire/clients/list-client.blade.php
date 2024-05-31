@@ -69,7 +69,7 @@
     </div>
 
     <!-- Dashboard Body -->
-    <div class="row">
+    <div class="row mb-2">
         <div class="col-md-6">
             <div class="dashboard_filters d-flex flex-wrap gap-4 align-items-center mb-4">
              
@@ -181,7 +181,6 @@
             </div>
         @endif
     </div>
-    <hr>
     <!-- Pagination -->
     {{ $clients->links(data: ['scrollTo' => false]) }}
 

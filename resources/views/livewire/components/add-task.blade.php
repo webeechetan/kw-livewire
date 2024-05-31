@@ -84,10 +84,10 @@
                         </div>
                     </div>
                     <div class="taskPane-item mb-2">
-                        <div class="taskPane-item-label mb-3"><a href="#"><i class="bx bx-paperclip text-secondary add-attachments" style="transform: rotate(60deg);"></i></a> <span class="task-attachment-count"> {{ count($attachments) }}</span> Attachements</div>
+                        <div class="taskPane-item-label mb-2"><a href="#"><i class="bx bx-paperclip text-secondary add-attachments" style="transform: rotate(60deg);"></i></a> <span class="task-attachment-count"> {{ count($attachments) }}</span> Attachements</div>
                         <input class="d-none attachments" type="file" wire:model="attachments" multiple id="formFile" />
                         <div class="attached_files d-none">
-                            <a data-bs-toggle="modal" data-bs-target="#attachmentModal">View Attachements</a>
+                            <a href="javascript:;" class="btn btn-sm btn-border-secondary" data-bs-toggle="modal" data-bs-target="#attachmentModal">View Attachements</a>
                         </div>
                     </div>
                 </div>

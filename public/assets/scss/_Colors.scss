@@ -11,6 +11,7 @@ $orange_light: #FFFBFD;
 $grey: #eee;
 $grey_xd: #ddd;
 $scrollbar_color: $yellow_light;
+$white: #fff;
 
 $light: #f3f6f9;
 $text_light: #9c9c9c;
@@ -18,21 +19,25 @@ $text_grey: #d1d1d1;
 $text_color: #191919;
 $text_form: $text_light;
 
-$sidebar_link_color: #717579;
-$white: #fff;
 $link_hover: #4c1c90;
+$bg_dropdown: $secondary;
 $dropdown_link_hover: #974eff;
-$dashboard_bg: #f6f5f5;
-$sidebar_active_bg_color: #f6f5f5;
 
+// Sidebar
+$sidebar_link_color: $white;
+$sidebar_icon_color: $white;
+$sidebar_line_color: $secondary;
+$sidebar_active_bg_color: $light;
+$sidebar_active_color: $secondary;
+$sidebar_icon_active_color: $secondary;
+
+// Border
 $border: $text_light;
 $border_light: #f5f5f5;
 $border_light2: #eee;
 $border_grey: #eee;
 $border_dark_grey: #ddd;
 $border_form: #ced4da;
-
-$bg_dropdown: $secondary;
 
 /*---- Actions ----*/
 $success: #48914d;
