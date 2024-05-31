@@ -3,7 +3,7 @@
     <div class="row align-items-center">
         <div class="col-md-6 mb-3">
             <nav aria-label="breadcrumb">
-                <ol class="breadcrumb mb-0">
+                 <ol class="breadcrumb mb-0">
                     <li class="breadcrumb-item"><a wire:navigate href="{{ route('dashboard') }}"><i class='bx bx-line-chart'></i> Dashboard</a></li>
                     <li class="breadcrumb-item"><a wire:navigate href="{{ route('project.index') }}">All Projects</a></li>
                     <li class="breadcrumb-item"><a wire:navigate href="{{ route('project.index') }}">Buyers Guide</a></li>
@@ -55,28 +55,37 @@
                             <div class="taskPane-item d-flex flex-wrap mb-4">
                                 <div class="taskPane-item-left"><div class="taskPane-item-label">Assigned to</div></div>
                                 <div class="taskPane-item-right" wire:ignore>
-                                    <select name="" id="" class="task-users">
+                                    <select name="" id="" class="task-users" multiple>
                                         <option value="" disabled>Select User</option>
-                                        <option value="Rajiv Kumar">Rajiv Kumar</option>
+                                        @foreach($users as $user)
+                                            <option 
+                                                @if(in_array($user->id, $selectedUsers)) selected @endif
+                                            value="{{ $user->id }}">{{ $user->name }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
                             <div class="taskPane-item d-flex flex-wrap mb-4">
                                 <div class="taskPane-item-left"><div class="taskPane-item-label">Notify to</div></div>
                                 <div class="taskPane-item-right">
-                                    <select name="" id="" class="task-notify-users">
+                                    <select name="" id="" class="task-notify-users" multiple>
                                         <option value="" disabled>Select User</option>
-                                        <option value="Rajiv Kumar">Rajiv Kumar</option>
+                                        @foreach($users as $user)
+                                            <option 
+                                                @if(in_array($user->id, $selectedNotifiers)) selected @endif
+                                            value="{{ $user->id }}">{{ $user->name }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
                             <div class="taskPane-item d-flex flex-wrap mb-4">
                                 <div class="taskPane-item-left"><div class="taskPane-item-label">Project</div></div>
                                 <div class="taskPane-item-right">
-                                    <select name="" id="" class="task-projects">
+                                    <select wire:model="project_id" id="" class="task-projects">
                                         <option value="" disabled>Select Project</option>
-                                        <option value="Buyers Guide">Buyers Guide</option>
-                                        <option value="Start Up">Start Up</option>
+                                        @foreach($projects as $project)
+                                            <option value="{{ $project->id }}">{{ $project->name }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -256,6 +265,16 @@
                     ]
                 }
             );
+
+            $('.task-users').select2({
+                placeholder: 'Select User',
+                allowClear: true
+            });
+
+            $('.task-notify-users').select2({
+                placeholder: 'Select Notify User',
+                allowClear: true
+            });
         });
     </script>
 @endpush

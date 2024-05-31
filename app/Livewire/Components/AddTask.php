@@ -208,7 +208,7 @@ class AddTask extends Component
     }
 
     public function viewFullscree(){
-        $this->redirect(route('task.view',$this->task->id), navigate: true);
+        $this->redirect(route('task.view',$this->task->id));
     }
     
 }
