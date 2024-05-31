@@ -266,6 +266,7 @@
         font-weight: 500;
         color: $dark;
         display: inline-block;
+        text-transform: capitalize;
 
         &.active {
             background-color: $success;
@@ -299,6 +300,12 @@
                 color: #fff;
                 border-color: $secondary;
             }
+
+            &-danger   {
+                background-color: $danger;
+                color: #fff;
+                border-color: $danger;
+            }
         }
 
         &-success {
@@ -315,6 +322,10 @@
         }
         &-warning {
             border-color: $warning;
+        }
+        &-danger {
+            color: $danger;
+            border-color: $danger;
         }
         &-avatar {
             padding: 3px 10px 3px 3px;

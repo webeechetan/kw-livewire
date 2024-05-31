@@ -437,14 +437,12 @@
             }
         }
         &_empty {
-            width: 280px;
             min-height: 116px;
             border-radius: $border_radius_xs;
             @include flex_center;
             font-size: 32px;
             color: $grey_xd;
             background-color: $grey;
-            position: absolute;
         }
     }
     &_bord {
@@ -471,6 +469,8 @@
                 font-weight: 500;
                 text-transform: uppercase;
                 letter-spacing: 1px;
+                display: flex;
+                justify-content: space-between;
             }
             &_assigned {
                 .scrollbar {
@@ -880,26 +880,28 @@
 
 /* ----- Task List View ----- */
 .taskList {
-    margin-top: 5px;
+    padding: 5px 0;
     &_col {
         padding: 8px $spacing_s;
         font-size: 14px;
         &_title {
             cursor: pointer;
-            &_complete_icon {
+            transition: $ease_03;            
+            &_open {
                 width: 20px;
                 height: 20px;
                 font-size: 16px;
-                border: 1px solid $success;
-                border-radius: $border_radius;
+                background-color: $brand;
+                color: #fff;
+                border-radius: $border_radius_xs;
                 @include flex_center;
                 cursor: pointer;
+                position: absolute;
+                left: 6px;
                 transition: $ease_03;
-                margin-top: 3px;
-                &:hover, &.active {
-                    background-color: $success;
-                    color: #fff;
-                }
+                transform: translateX(-15px);
+                opacity: 0;
+                visibility: hidden;
             }
         }
         .avatarGroup {
@@ -907,10 +909,21 @@
         }
     }
     &_row {
-        background-color: $white;
+        position: relative;
+        border-bottom: 1px solid $grey;
         border-radius: $border_radius_xs;
-        &:not(:last-child) {
-            border-bottom: 1px solid $grey;
+        transition: $ease_03;
+        &:hover, &.active {
+            background-color: $secondary_light;
+            .taskList_col_title {
+                padding-left: 35px;
+
+                &_open {
+                    transform: translateX(0);
+                    opacity: 1;
+                    visibility: visible;
+                }
+            }
         }
         > .row {
             align-items: center;
@@ -944,7 +957,7 @@
             margin-top: $spacing_sm;
         }
         &_header {
-            background-color: $secondary_light;
+            background-color: $brand;
             margin-top: $spacing_s;
             border-radius: $border_radius_xs;
             &_title {
@@ -953,6 +966,7 @@
                 font-size: 13px;
                 font-weight: 500;
                 text-transform: uppercase;
+                color: #fff;
             }
         }
     }
@@ -990,7 +1004,7 @@
     border: none;
 }
 .note-editor .note-toolbar, .note-popover .popover-content {
-    padding-bottom: 3px
+    padding: 7px;
 }
 .note-editor.note-airframe, .note-editor.note-frame {
     border-color: transparent;
@@ -1624,6 +1638,10 @@
 
         &.selected {
             border-color: $brand;
+        }
+
+        &-content {
+            overflow: hidden;
         }
     }
 

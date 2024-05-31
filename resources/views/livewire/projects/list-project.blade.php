@@ -35,8 +35,7 @@
                                             <li class="filterSort_item"><a wire:navigate href="{{ route('project.index',['sort'=>'a_z','filter'=>$filter,'byUser'=>$byUser, 'byTeam' => $byTeam])}}" class="btn-batch  @if($sort == 'a_z') active @endif"><i class='bx bx-down-arrow-alt' ></i> A To Z</a></li>
                                             <li class="filterSort_item"><a wire:navigate href="{{ route('project.index',['sort'=>'z_a','filter'=>$filter,'byUser'=>$byUser, 'byTeam' => $byTeam])}}" class="btn-batch  @if($sort == 'z_a') active @endif"><i class='bx bx-up-arrow-alt' ></i> Z To A</a></li>
                                         </ul>
-                                        <hr>
-                                        <h5 class="filterSort-header"><i class='bx bx-briefcase text-primary' ></i> Filter By Status</h5>
+                                        <h5 class="filterSort-header mt-4"><i class='bx bx-briefcase text-primary' ></i> Filter By Status</h5>
                                         <ul class="filterSort_btn_group list-none">
                                             <li class="filterSort_item"><a wire:navigate href="{{ route('project.index',['sort'=>$sort,'filter'=>'all']) }}" class="btn-batch @if($filter == 'all') active @endif">All</a></li>
                                             <li class="filterSort_item"><a wire:navigate href="{{ route('project.index',['sort'=>$sort,'filter'=>'active','byUser'=>$byUser, 'byTeam' => $byTeam])}}" class="btn-batch  @if($filter == 'active') active @endif">Active</a></li>
@@ -44,17 +43,22 @@
                                             <li class="filterSort_item"><a wire:navigate href="{{ route('project.index',['sort'=>$sort,'filter'=>'completed','byUser'=>$byUser, 'byTeam' => $byTeam])}}" class="btn-batch  @if($filter == 'completed') active @endif">Completed</a></li>
                                             <li class="filterSort_item"><a wire:navigate href="{{ route('project.index',['sort'=>$sort,'filter'=>'archived','byUser'=>$byUser, 'byTeam' => $byTeam])}}" class="btn-batch  @if($filter == 'archived') active @endif">Archived</a></li>
                                         </ul>
-                                        <hr>
-                                        <h5 class="filterSort-header"><i class='bx bx-objects-horizontal-left text-primary'></i> Filter By User</h5>
-                                        <select class="form-control" wire:model.live="byUser">
+                                        <h5 class="filterSort-header mt-4"><i class='bx bx-briefcase text-primary' ></i> Filter By Client</h5>
+                                        <select class="dashboard_filters-select w-100" wire:model.live="byClient" name="" id="">
+                                            <option value="all">All</option>
+                                            @foreach($clients as $client)
+                                                <option value="{{ $client->id}}">{{ $client->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        <h5 class="filterSort-header mt-4"><i class='bx bx-objects-horizontal-left text-primary'></i> Filter By User</h5>
+                                        <select class="dashboard_filters-select w-100" wire:model.live="byUser">
                                             <option value="all">All</option>
                                             @foreach($users as $user)
                                                 <option value="{{ $user->id }}">{{ $user->name }}</option>
                                             @endforeach
                                         </select>
-                                        <hr>
-                                        <h5 class="filterSort-header"><i class='bx bx-briefcase text-primary' ></i> Filter By Teams</h5>
-                                        <select class="form-control" wire:model.live="byTeam" name="" id="">
+                                        <h5 class="filterSort-header mt-4"><i class='bx bx-briefcase text-primary' ></i> Filter By Teams</h5>
+                                        <select class="dashboard_filters-select w-100" wire:model.live="byTeam" name="" id="">
                                             <option value="all">All</option>
                                             @foreach($teams as $team)
                                                 <option value="{{ $team->id}}">{{ $team->name }}</option>
@@ -166,8 +170,8 @@
                                     </div>
                                 </div>
                                 <div class="task_progress-btm">
-                                    <div class="progress" role="progressbar" aria-label="Project Progress" aria-valuemin="0" aria-valuemax="100">
-                                        @php
+                                    <div class="progress w-100" role="progressbar" aria-label="Project Progress" aria-valuemin="0" aria-valuemax="100">
+                                        <!-- @php
                                             $percentage = 0;
                                             $completed = $project->tasks->where('status', 'completed')->count();
                                             $total = $project->tasks->count();
@@ -176,7 +180,7 @@
                                             }else{
                                                 $percentage = 0;
                                             }
-                                        @endphp
+                                        @endphp -->
                                         <div class="progress-bar progress-success" style="width: {{$percentage}}%"><span class="progress-bar-text">{{ round($percentage)}}%</span></div>
                                     </div>
                                     <div class="task_progress-btm-date d-flex justify-content-between">

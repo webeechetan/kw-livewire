@@ -87,7 +87,7 @@
                         <div class="taskPane-item-label mb-3"><a href="#"><i class="bx bx-paperclip text-secondary add-attachments" style="transform: rotate(60deg);"></i></a> <span class="task-attachment-count"> {{ count($attachments) }}</span> Attachements</div>
                         <input class="d-none attachments" type="file" wire:model="attachments" multiple id="formFile" />
                         <div class="attached_files d-none">
-                            <a data-bs-toggle="modal" data-bs-target="#exampleModal">View Attachements</a>
+                            <a data-bs-toggle="modal" data-bs-target="#attachmentModal">View Attachements</a>
                         </div>
                     </div>
                 </div>
@@ -109,7 +109,7 @@
                                     <div class="custComment-editor p-0" wire:ignore>
                                         <textarea wire:model="comment" name="" id="comment_box" class="form-control mb-3" cols="30" rows="5"></textarea>
                                     </div>
-                                    <button wire:click="saveComment('internal')" class="custComment-btn btn-sm btn-border-primary"><i class='bx bx-send'></i> Comment</button>
+                                    <button wire:click="saveComment('internal')" class="btn btn-sm btn-border-primary"><i class='bx bx-send'></i> Comment</button>
                                 </div>
                             </div>
                             <div class="comment-rows mt-4">
@@ -122,7 +122,7 @@
                                     <div class="custComment-editor p-0" wire:ignore>
                                         <textarea wire:model="internalComment" name="" id="internal_comment_box" class="form-control mb-3" cols="30" rows="5"></textarea>
                                     </div>
-                                    <button wire:click="saveComment('client')" class="custComment-btn btn-sm btn-border-primary"><i class='bx bx-send'></i> Comment</button>
+                                    <button wire:click="saveComment('client')" class="btn btn-sm btn-border-primary"><i class='bx bx-send'></i> Comment</button>
                                 </div>
                             </div>
                             <div class="client-comment-rows mt-4">
@@ -139,40 +139,38 @@
         </div>
     </div>
     {{-- Attachments modal --}}
-  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Attachements </h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body attachements-body mt-4 mb-4">
-            <div class="attached_files">
-                @if($task)
-                    @foreach($task->attachments as $attach)
-                    <div class="attached_files-item">
-                        @if($attach->can_view)
-                            <div class="attached_files-item-preview">
-                                <a target="_blank" href="{{ env('APP_URL') }}/storage/{{$attach->attachment_path}}"><img class="attached_files-item-thumb" src="{{ env('APP_URL') }}/storage/{{$attach->attachment_path}}" alt="" /></a>
-                            </div>
-                        @else
-                            <div class="attached_files-item-preview">
-                                <a target="_blank" href="{{ env('APP_URL') }}/storage/{{$attach->attachment_path}}"><img class="attached_files-item-thumb" src="{{$attach->thumbnail}}" alt="" /></a>
-                            </div>
-                        @endif
-                    </div>
-                    @endforeach
-                @endif
+    <div class="modal fade" id="attachmentModal" tabindex="-1" role="dialog" aria-labelledby="attachmentModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div>
+                    <h5 class="modal-title" id="attachmentModalLabel">Attachements</h5>
+                    <div><i class="bx bx-data text-primary"></i> <span class="task-attachment-count">1</span> Attachments</div>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body attachements-body mt-4 mb-4">
+                <div class="attached_files px-4">
+                    @if($task)
+                        @foreach($task->attachments as $attach)
+                        <div class="attached_files-item">
+                            @if($attach->can_view)
+                                <div class="attached_files-item-preview">
+                                    <a target="_blank" href="{{ env('APP_URL') }}/storage/{{$attach->attachment_path}}"><img class="attached_files-item-thumb" src="{{ env('APP_URL') }}/storage/{{$attach->attachment_path}}" alt="" /></a>
+                                </div>
+                            @else
+                                <div class="attached_files-item-preview">
+                                    <a target="_blank" href="{{ env('APP_URL') }}/storage/{{$attach->attachment_path}}"><img class="attached_files-item-thumb" src="{{$attach->thumbnail}}" alt="" /></a>
+                                </div>
+                            @endif
+                        </div>
+                        @endforeach
+                    @endif
+                </div>
             </div>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
         </div>
-      </div>
     </div>
-  </div>
 
 </div>
 

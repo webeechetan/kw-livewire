@@ -8,6 +8,7 @@ use App\Helpers\Helper;
 use App\Models\Project;
 use App\Models\Team;
 use App\Models\User;
+use App\Models\Client;
 use Carbon\Carbon;
 use Livewire\Attributes\Lazy;
 use ProtoneMedia\LaravelCrossEloquentSearch\Search;
@@ -25,13 +26,15 @@ class ListProject extends Component
 
 
     public $teams = [] ;
+    public $clients = [] ;
 
     public $query = '';
  
     public $sort = 'all';
     public $filter = 'all';
     public $byTeam = 'all';
-    public $byUser = 'all'; 
+    public $byUser = 'all';
+    public $byClient = 'all';
     public $users;
 
     public function render()
@@ -69,6 +72,11 @@ class ListProject extends Component
             $projects->oldest();
         }
 
+        if($this->byClient != 'all'){
+            // select from project_client
+            dd('hello bro');
+        }
+
         if($this->byUser != 'all'){
             // select from project_user
             $projects->whereHas('users',function($query){
@@ -76,8 +84,6 @@ class ListProject extends Component
             });
         }
         
-
-
         //filter by team
         if($this->byTeam != 'all'){
             dd($this->byTeam);
@@ -99,11 +105,17 @@ class ListProject extends Component
     public function mount(){
         $this->authorize('View Project');
         $this->users = User::all();
+        $this->clients = Client::all();
         $this->teams = Team::orderBy('name')->get();
     }
 
     public function search(){
         $this->resetPage();
+    }
+
+    public function updatedByClient($value){
+        $this->byUser = $value;
+        $this->redirect(route('project.index',['sort'=>$this->sort,'filter'=>$this->filter,'byClient'=>$this->byClient,'byUser'=>$this->byUser]), navigate: true);
     }
 
     public function updatedByUser($value){

@@ -765,6 +765,8 @@ hr.space-sm {
         &-wrap {
             background-color: #fff;
             box-shadow: $box_shadow_light;
+            max-height: 80vh;
+            overflow: auto;
         }
         &_left {
             right: inherit;
@@ -1309,6 +1311,32 @@ hr.space-sm {
             border-color: $danger;
             color: $danger;
             background-size: 20px;
+        }
+    }
+}
+
+/* ----- Note Edtor ----- */
+.mention_user {
+    color: $brand;
+}
+.note-popover {
+    font-family: $jost;
+}
+.note-hint-popover .popover-content .note-hint-group .note-hint-item {
+    background-color: #fff;
+    transition: all 0.3s ease;
+    padding: 5px 10px;
+    .mention_user {
+        color: $dark;
+    }
+    &:not(:last-child) {
+        border-bottom: 1px solid $grey;
+    }
+    &:hover, &.active {
+        background-color: $brand;
+        line-height: inherit;
+        .mention_user {
+            color: #fff;
         }
     }
 }
