@@ -23,28 +23,15 @@ class Tasks extends Component
     {
 
         if($this->byClient != 'all'){
-
-            
-           
         }
 
         if($this->byProject != 'all'){
-            
-            // select from project_user
-           
         }
 
         if($this->byUser != 'all'){
-            //dd($this->byUser);
-           
         }
 
-        
-
-
-
-
-         return view('livewire.teams.components.tasks');
+        return view('livewire.teams.components.tasks');
     }
     public function mount(Team $team) {
 
