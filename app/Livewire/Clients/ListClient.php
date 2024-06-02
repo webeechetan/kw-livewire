@@ -26,7 +26,7 @@ class ListClient extends Component
 
     //  filters & sorts
 
-    public $sort = 'all';
+    public $sort = 'newest';
     public $filter = 'all';
 
 
