@@ -39,6 +39,17 @@ class Task extends Model
         return env('SLACK_TASK_NOTIFICATION_WEBHOOK_URL');
     }
 
+    public function addClientId($clientId){
+        $this->client_id = $clientId;
+        return $this;
+    }
+
+    public function setProjectIdAttribute($value){
+        $client = Project::find($value)->client;
+        $this->addClientId($client->id);
+        $this->attributes['project_id'] = $value;
+    }
+
     public function users(){
         return $this->belongsToMany(User::class);
     }
