@@ -85,7 +85,7 @@
             </div>
         </div>
         <div class="col-md-6">
-            @if($sort != 'all' || $filter != 'all')
+             @if($sort != 'all' || $filter != 'all')
                 <div class="d-flex flex-wrap gap-2 align-items-center justify-content-end">
                     <span class="pe-2"><i class='bx bx-filter-alt text-secondary'></i> Filter Results:</span>
                     @if($sort != 'all')

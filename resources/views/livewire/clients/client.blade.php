@@ -100,7 +100,7 @@
             <div class="column-box font-500">
                 <div class="row align-items-center">
                     <div class="col"><span><i class='bx bx-user text-primary'></i></span> Point Of Contact</div>
-                    <div class="col text-primary">{{ $client->point_of_contact }}</div>
+                    <div class="col text-primary">{{ $client->point_of_contact ? $client->point_of_contact : 'Not Added' }}</div>
                 </div>
             </div>
         </div>
