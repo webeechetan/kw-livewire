@@ -21,7 +21,7 @@ class ListTeam extends Component
        
     public $query = '';
 
-    public $sort = 'newest';
+    public $sort = 'all';
     public $filter = 'all';
     public $byUser = 'all'; 
 
