@@ -5,7 +5,7 @@
             <li class="breadcrumb-item">
                 <a wire:navigate href="{{ route('dashboard') }}">
                 <i class='bx bx-line-chart'></i> Dashboard </a>
-            </li>
+            </li> 
             <li class="breadcrumb-item">
                 <a wire:navigate href="{{ route('team.index') }}">All Team</a>
             </li>
@@ -18,7 +18,7 @@
         <div class="col-sm-3">
             <div class="column-box">
                 <label for="" class="font-500"><i class='bx bx-briefcase-alt-2 text-primary' ></i> Filter By Client</label>
-                <select class="dashboard_filters-select mt-2 w-100" wire:model.live="byClient" name="" id="">
+                <select class="dashboard_filters-select mt-2 w-100" wire:model.live="byClient" id="">
                     <option value="all" >Select Client</option>
                     @foreach($clients as $client)
                         <option value="{{$client->id}}">{{$client->name}}</option>
@@ -105,16 +105,21 @@
             </div>
         </div>
        
-        @foreach ($tasks as $task)
+        @php
+            $tasks = $team->tasks;
+            if($byClient != 'all'){
+                $tasks = $tasks->where('client_id',$byClient);
+            }
+        @endphp
 
-        {{$task}}
+        @foreach ($tasks as $task)
             <div class="taskList scrollbar">
                 <div class="taskList_row">
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="taskList_col taskList_col_title">
                                 <div class="edit-task" data-id="100">
-                                    <div>Abdul Pranay Jain {{$task->id}} </div>
+                                    <div>{{$task->name}} </div>
                                 </div>
                             </div>
                         </div>

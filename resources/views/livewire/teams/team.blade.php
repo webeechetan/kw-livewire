@@ -76,7 +76,7 @@
                   <div class="row align-items-center g-2">
                      <div class="col-auto">
                         <h5 class="title-md mb-0">{{ $team->users->count() }}</h5>
-                     </div>
+                     </div> 
                      <div class="col-auto">
                         <span class="font-400 text-grey">|</span>
                      </div>

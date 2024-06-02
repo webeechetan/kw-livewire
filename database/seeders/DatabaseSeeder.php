@@ -48,11 +48,11 @@ class DatabaseSeeder extends Seeder
         //     ->count(100)
         //     ->create();
 
-        Client::withoutEvents(function () {
-            Client::factory()
-                ->count(5)
-                ->create();
-        });
+        // Client::withoutEvents(function () {
+        //     Client::factory()
+        //         ->count(5)
+        //         ->create();
+        // });
 
         // Project::factory()
         //     ->count(100)
@@ -66,10 +66,9 @@ class DatabaseSeeder extends Seeder
 
 
 
-        // User::factory()
-        //     ->count(5)
-        //     ->has(Task::factory()->count(2))
-        //     ->create();
+        User::factory()
+            ->count(5)
+            ->create();
 
         // $this->call(OrgSeeder::class);
         $this->call(PermissionSedder::class);

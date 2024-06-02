@@ -16,7 +16,7 @@ class Tasks extends Component
 
     use WithPagination;
 
-    public $allTasks;
+    public $allTasks; 
     public $activeTasks;
     public $completedTasks;
     public $overDueTasks;
@@ -31,10 +31,10 @@ class Tasks extends Component
     public $byUser = 'all';
     public $filter = 'all';
 
-    public $users;
-    public $projects;
-    public $clients;
-    public $teams;
+    public $users = [];
+    public $projects = [];
+    public $clients = [];
+    public $teams = [];
     public $tasks= [];
 
     public function render()
@@ -48,29 +48,29 @@ class Tasks extends Component
 
         //  $tasks = Task::all();
 
-        $tasks = Task::where('name','like','%'.$this->query.'%');
+        // $tasks = Task::where('name','like','%'.$this->query.'%');
         
 
-        if($this->filter == 'active'){
-            $tasks->whereNotIn('status', ['cancelled', 'completed']);
-        }elseif($this->filter == 'completed'){
-            $tasks->where('status','completed');
-        }elseif($this->filter == 'overdue'){ 
-            $tasks->where('due_date','<', Carbon::today());
-        }
+        // if($this->filter == 'active'){
+        //     $tasks->whereNotIn('status', ['cancelled', 'completed']);
+        // }elseif($this->filter == 'completed'){
+        //     $tasks->where('status','completed');
+        // }elseif($this->filter == 'overdue'){ 
+        //     $tasks->where('due_date','<', Carbon::today());
+        // }
 
-        if($this->byProject != 'all'){
+        // if($this->byProject != 'all'){
             
-            $tasks->whereHas('project', function($query){
-                $query->where('project_id', $this->byProject);
-            });
-        }
+        //     $tasks->whereHas('project', function($query){
+        //         $query->where('project_id', $this->byProject);
+        //     });
+        // }
 
-        $tasks->orderBy('id','desc');
-        $tasks = $tasks->paginate(12);
+        // $tasks->orderBy('id','desc');
+        // $tasks = $tasks->paginate(12);
        
         return view('livewire.teams.components.tasks',[
-            'tasks' => $tasks
+            // 'tasks' => $tasks
         ]);
 
         //return view('livewire.teams.components.tasks');
@@ -82,5 +82,9 @@ class Tasks extends Component
         $this->projects = Project::all();
         $this->clients = Client::all();
         $this->teams = Team::orderBy('name')->get();
+    }
+
+    public function updatedByClient($value){
+        $this->projects = Project::where('client_id', $value)->get();
     }
 }
