@@ -20,7 +20,7 @@ class AddTeam extends Component
 
     public $users = [];
 
-    // edit
+    // edit 
 
     public $team;
 
@@ -37,6 +37,7 @@ class AddTeam extends Component
 
         if($this->team){
             $this->updateTeam();
+            return;
         }
 
         $this->validate([

@@ -127,12 +127,10 @@
                             <div class="d-flex align-items-center justify-content-center mt-2"><i class='bx bx-briefcase me-1 text-primary'></i> {{ $user->designation ?? 'Not Added'}} </div>
                             <div class="d-flex align-items-center justify-content-center mt-2">
                                 <i class='bx bx-sitemap me-1 text-secondary'></i> 
-                                @if($user->teams->isEmpty())
+                                @if(!$user->mainTeam)
                                     Not Added
                                 @else
-                                    @foreach($user->teams as $team)
-                                        {{ $team->name ?? 'Not Added' }}
-                                    @endforeach
+                                   {{ $user->mainTeam->name }}
                                 @endif
                             </div>
 

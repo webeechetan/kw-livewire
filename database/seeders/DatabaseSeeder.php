@@ -38,40 +38,47 @@ class DatabaseSeeder extends Seeder
         $user = new User();
         $user->name = $org->name;
         $user->email = $org->email;
-        $user->password = Hash::make($org->password);
+        $user->password = Hash::make(123456);
         $user->org_id = $org->id;
         $colors = ['orange','purple','green','pink','yellow','blue'];
         $user->color = $colors[array_rand($colors)];
-        $user->save();
+        $user->saveQuietly();
 
-        Team::factory()
-            ->count(100)
-            ->create();
+        // Team::factory()
+        //     ->count(100)
+        //     ->create();
 
-        Client::factory()
-            ->count(100)
-            ->has(Project::factory()->count(5))
-            ->create();
+        Client::withoutEvents(function () {
+            Client::factory()
+                ->count(5)
+                ->create();
+        });
 
         // Project::factory()
         //     ->count(100)
         //     ->create();
 
-        Project::withoutEvents(function () {
-            Project::factory()
-                ->count(100)
-                ->create();
-        });
+        // Project::withoutEvents(function () {
+        //     Project::factory()
+        //         ->count(5)
+        //         ->create();
+        // });
 
 
 
-        User::factory()
-            ->count(50)
-            ->has(Task::factory()->count(2))
-            ->create();
+        // User::factory()
+        //     ->count(5)
+        //     ->has(Task::factory()->count(2))
+        //     ->create();
 
         // $this->call(OrgSeeder::class);
         $this->call(PermissionSedder::class);
+
+        // assign admin role to the user
+        setPermissionsTeamId(1);
+        $user->assignRole(1);
+
+
 
 
     }

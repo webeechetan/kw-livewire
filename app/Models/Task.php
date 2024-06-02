@@ -79,7 +79,13 @@ class Task extends Model
             });
 
         }
-        // also get all task assigned by me
-
     }
+
+    // public function scopeManagerTeamsTasks($query){
+    //     return $query->whereHas('team', function($q){
+    //         $q->where('manager_id', auth()->user()->id);
+    //     });
+    // }
+
+
 }

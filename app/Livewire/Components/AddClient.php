@@ -11,12 +11,12 @@ class AddClient extends Component
 {
     use WithFileUploads;
 
-    public $client_onboard_date;
+    public $client_onboard_date = null;
     public $client_name;
     public $client_description;
     public $client_image;
     public $brand_name;
-    public $use_brand_name;
+    public $use_brand_name = false;
     public $point_of_contact;
 
     public $client;
@@ -78,7 +78,8 @@ class AddClient extends Component
         $this->dispatch('success', 'Client added successfully');
         $this->dispatch('client-added');
         $this->dispatch('saved');
-        $this->resetForm();
+        $this->resetForm(); 
+        $client = null;
 
     }
 
@@ -140,10 +141,10 @@ class AddClient extends Component
         $this->client = null;
         $this->client_name = '';
         $this->client_description = '';
-        $this->client_onboard_date = '';
+        $this->client_onboard_date = null;
         $this->client_image = '';
         $this->brand_name = '';
-        $this->use_brand_name = '';
+        $this->use_brand_name = false;
         $this->point_of_contact = '';
     }
 
