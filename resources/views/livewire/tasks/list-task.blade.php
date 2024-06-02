@@ -182,7 +182,7 @@
                                         <div class="cus_dropdown-body cus_dropdown-body-widh_s">
                                             <div class="cus_dropdown-body-wrap">
                                                 <ul class="cus_dropdown-list">
-                                                    <li><a class="edit-task" data-id="{{$task['id']}}"><span class="text-secondary"><i class="bx bx-pencil"></i></span> Edit</a></li>
+                                                    <li><a><span class="text-secondary"><i class="bx bx-pencil"></i></span> Edit</a></li>
                                                     <li><a href="#"><span class="text-danger"><i class="bx bx-trash"></i></span> Delete</a></li>
                                                 </ul>
                                             </div>
@@ -193,7 +193,7 @@
                                             <i class='bx bx-check' ></i>
                                         </div>
                                         <div class="kanban_column_task_name_text">
-                                            <h4 wire:click="enableEditForm({{$task['id']}})" class="fs-6">{{ $task['name'] }}</h4>
+                                            <h4 class="edit-task fs-6" data-id="{{$task['id']}}">{{ $task['name'] }}</h4>
                                             <div class="kanban_column_task_project_name">
                                                 <span class="text-black">
                                                     @if($task['project'])

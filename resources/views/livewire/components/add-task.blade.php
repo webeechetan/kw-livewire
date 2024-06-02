@@ -178,6 +178,21 @@
 @push('scripts')
     <script>
 
+        // cpoy sharable link
+
+        let task = null;
+
+        $('.task-sharable-link').on('click', function(){
+            var id = task.id;
+            var url = "{{ env('APP_URL') }}/task/"+id;
+            navigator.clipboard.writeText(url).then(function() {
+                console.log('Async: Copying to clipboard was successful!');
+                toastr.success('Task sharbable link copied to clipboard');
+            }, function(err) {
+                console.error('Async: Could not copy text: ', err);
+            });
+        });
+
         // clear all fields when offcanvas is closed or dismissed 
 
         $(".bx-arrow-to-right").click(function(){
@@ -369,6 +384,7 @@
             });
 
             document.addEventListener('edit-task', event => {
+                task = event.detail[0];
                 $(".cmnt_sec").removeClass('d-none');
                 $(".delete-task-btn").removeClass('d-none');
                 $(".view-task-btn").removeClass('d-none');

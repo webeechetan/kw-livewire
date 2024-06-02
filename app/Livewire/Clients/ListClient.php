@@ -7,6 +7,7 @@ use App\Models\Client;
 use Livewire\WithPagination;
 use App\Helpers\Helper;
 use ProtoneMedia\LaravelCrossEloquentSearch\Search;
+use Livewire\Attributes\On;
 
 
 class ListClient extends Component

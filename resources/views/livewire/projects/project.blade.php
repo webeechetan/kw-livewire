@@ -201,7 +201,15 @@
     </div>
     <div class="column-box mt-3">
         <div wire:ignore class="project-description-container">
-            <div class="column-title d-flex align-items-center mb-3">Description <a href="javascript:" class="ms-2 d-inline-flex edit-description"><i class='bx bx-pencil text-primary'></i></a></div>
+            <div class="column-title d-flex align-items-center mb-3">
+                Description 
+                <a href="javascript:" class="ms-2 d-inline-flex edit-description">
+                    <i class='bx bx-pencil text-primary'></i>
+                </a>
+                <button class="btn btn-primary btn-sm update-btn d-none" wire:click="updateDescription('{{ $project->description }}')">
+                    Update
+                </button>
+            </div>
             <div class="project-description txtarea">
                 {!! $project->description !!}
             </div>
@@ -346,7 +354,15 @@
         }
     });
 
+    $(".update-btn").click(function(){
+        $(".project-description").summernote('destroy');
+        $(".update-btn").toggleClass("d-none");
+    });
+
     $(".edit-description").click(function(){
+
+        $(".update-btn").toggleClass("d-none");
+
         $(".project-description").summernote({
             height: 200,
             toolbar: [
@@ -398,23 +414,6 @@
             placeholder: "Select User",
             allowClear: true
         });
-    });
-
-    // edit-task
-
-   
-
-    // $(document).ready(function(){
-    //     $("#comment_box").summernote({
-    //         height: 100,
-    //         toolbar: [
-    //             ['font', ['bold', 'underline']],
-    //             ['para', ['ul', 'ol']],
-    //             ['insert', ['link']],
-    //             ['fm-button', ['fm']],
-    //         ]
-    //     });
-    // });
-    
+    });    
 </script>
 @endpush

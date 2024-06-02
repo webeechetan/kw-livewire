@@ -5,6 +5,8 @@ namespace App\Livewire\Tasks;
 use Livewire\Component;
 use App\Models\{Task, User , Project , Client, Team, Attachment, Comment};
 use Livewire\WithFileUploads;
+use App\Notifications\UserMentionNotification;
+
 
 class View extends Component
 {
@@ -21,6 +23,7 @@ class View extends Component
     public $due_date;
     public $status;
     public $attachments = [];
+    public $comment;
 
     public function render()
     {
@@ -81,8 +84,69 @@ class View extends Component
                 $at->attachable_type = 'App\Models\Task';
                 $at->save();
             }
-        }
+        } 
 
         session()->flash('message', 'Task updated successfully');
+    }
+
+    public function saveComment($type = 'internal'){
+        // dd($this->comment);
+        $this->validate([
+            'comment' => 'required'
+        ]);
+
+        $comment = new Comment();
+        $comment->task_id = $this->task->id;
+        $comment->user_id = auth()->guard(session('guard'))->user()->id;
+        $comment->comment = $this->comment;
+        $comment->created_by = session('guard');
+
+        // take out mentioned users from description and save them in mentioned_users array
+
+        $mentioned_users = [];
+
+        // remove paragraph tags from description
+
+        $temp_comment = str_replace('<p>','',$this->comment);
+        $temp_comment = str_replace('</p>','',$temp_comment);
+        $temp_comment = strip_tags($temp_comment);
+
+
+        // convert description to array of words
+
+        $comment_array = explode(' ',$temp_comment);
+
+        // check if any word starts with @
+
+        foreach($comment_array as $word){
+            if(substr($word,0,1) == '@'){
+                $user_name = substr($word,1);
+                $user_name = str_replace('_',' ',$user_name);
+                $mentioned_users[] = $user_name;
+            }
+        }
+
+        $mentioned_users = array_unique($mentioned_users);
+
+        $mentioned_users = array_map('trim',$mentioned_users);
+
+        $mentioned_users = array_filter($mentioned_users);
+
+        // get user ids from mentioned users
+
+        $mentioned_user_ids = User::whereIn('name',$mentioned_users)->pluck('id')->toArray();
+
+        $comment->mentioned_users = implode(',',$mentioned_user_ids);
+        $comment->type = $type;
+        $comment->save();
+        foreach($mentioned_user_ids as $user_id){
+            $user = User::find($user_id);
+            if($user){
+                $user->notify(new UserMentionNotification($this->task , $comment));
+            }
+        }
+        
+        return $this->redirect(route('task.view', $this->task->id));
+
     }
 }  
