@@ -86,4 +86,9 @@ class Tasks extends Component
     public function updatedByClient($value){
         $this->projects = Project::where('client_id', $value)->get();
     }
+
+    public function updatedByProject($value){
+        $project = Project::find($value);
+        $this->users = $project->members;
+    }
 }
