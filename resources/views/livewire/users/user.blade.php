@@ -115,7 +115,7 @@
                     <div class="column-box states_style-progress">
                         <div class="row">
                             <div class="col">
-                                <h5 class="title-md mb-1">12</h5>
+                                <h5 class="title-md mb-1"> {{$user->projects->where('status', 'completed')->count() }}</h5>
                                 <div class="states_style-text">Projects Done</div>
                             </div>
                             <div class="col-auto">

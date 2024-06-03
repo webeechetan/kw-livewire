@@ -108,8 +108,20 @@
         @php
             $tasks = $team->tasks;
             if($byClient != 'all'){
-                $tasks = $tasks->where('client_id',$byClient);
+                $tasks = $tasks->where('client_id', $byClient);
             }
+
+            if($byProject != 'all'){
+                $tasks = $tasks->where('project_id', $byProject);
+            }
+
+            // if($byUser != 'all'){
+            //     $user = User::find($this->byUser);
+            //     if($user){
+            //         $tasksIds = $user->tasks->pluck('id')->toArray();
+            //         $tasks->whereIn('id',$tasksIds);
+            //     }
+            // }
 
         @endphp
 
@@ -131,7 +143,7 @@
                             <div class="taskList_col"><span>{{ Carbon\Carbon::parse($task->due_date)->format('d M Y') }}</span></div>
                         </div>
                         <div class="col text-center">
-                            <div class="taskList_col"><span>{{$task->name}}</span></div>
+                            <div class="taskList_col"><span>{{$task->project->name}}</span></div>
                         </div>
                         <div class="col text-center">
                             <div class="taskList_col">
@@ -148,3 +160,33 @@
         @endforeach
     </div>
 </div>
+
+
+@assets
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+@endassets
+
+@script
+    <script>
+        $(document).ready(function() {
+            flatpickr('.project_start_date', {
+                dateFormat: "Y-m-d",
+                onChange: function(selectedDates, dateStr, instance) {
+                    $(".project_start_date").html(dateStr);
+                    @this.set('project_start_date', dateStr);
+                },
+            });
+
+
+            flatpickr('.project_due_date', {
+                dateFormat: "Y-m-d",
+                onChange: function(selectedDates, dateStr, instance) {
+                    $(".project_due_date").html(dateStr);
+                    @this.set('project_due_date', dateStr);
+                },
+            });
+
+            });
+    </script>
+@endscript

@@ -77,11 +77,14 @@ class ListProject extends Component
             });
         }
 
+      
+
         if($this->byUser != 'all'){
-            // select from project_user
-            $projects->whereHas('users',function($query){
-                $query->where('user_id',$this->byUser);
-            });
+            $user = User::find($this->byUser);
+            if($user){
+                $projectsIds = $user->projects->pluck('id')->toArray();
+                $projects->whereIn('id',$projectsIds);
+            }
         }
        
 
