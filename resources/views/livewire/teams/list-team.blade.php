@@ -91,7 +91,7 @@
                             <div class="mb-2">
                                 {{-- <span class="font-500"><i class='bx bx-user text-success' ></i> Manager</span> @if($team->manager)<span class="btn-batch ms-2">{{ $team->manager?->name }}</span> @endif --}}
 
-                                <span class="font-500"><i class='bx bx-user text-success' ></i> Manager</span> 
+                                <span class="font-500 me-3"><i class='bx bx-user text-success' ></i> Manager</span> 
                                     @if($team->manager)
                                         {{-- <span class="btn-batch ms-2">{{ $team->manager?->name }}</span>--}}
                                         <a href="javascript:;"class="avatar avatar-orange avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="{{$team->manager?->name}}"> {{ $team->manager?->initials ?? 'NA' }}</a>
