@@ -110,6 +110,7 @@
             if($byClient != 'all'){
                 $tasks = $tasks->where('client_id',$byClient);
             }
+
         @endphp
 
         @foreach ($tasks as $task)
@@ -124,19 +125,19 @@
                             </div>
                         </div>
                         <div class="col text-center">
-                            <div class="taskList_col"><span>10 Apr-2024</span></div>
+                            <div class="taskList_col"><span>{{  Carbon\Carbon::parse($task->created_at)->format('d M Y') }}</span></div>
                         </div>
                         <div class="col text-center">
-                            <div class="taskList_col"><span>12 Aug-1997</span></div>
+                            <div class="taskList_col"><span>{{ Carbon\Carbon::parse($task->due_date)->format('d M Y') }}</span></div>
                         </div>
                         <div class="col text-center">
-                            <div class="taskList_col"><span>Tanuja Lall</span></div>
+                            <div class="taskList_col"><span>{{$task->name}}</span></div>
                         </div>
                         <div class="col text-center">
                             <div class="taskList_col">
                                 <div class="avatarGroup avatarGroup-overlap">
                                     <a href="#" class="avatarGroup-avatar">
-                                        <span class="avatar avatar-sm avatar-pink" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Azhar Vala">AV</span>
+                                        <span class="avatar avatar-sm avatar-pink" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{$task->assignedBy->initials}}">{{$task->assignedBy->name}}</span>
                                     </a>                                
                                 </div>
                             </div>
