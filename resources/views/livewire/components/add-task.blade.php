@@ -32,7 +32,7 @@
                     <div class="taskPane-item d-flex flex-wrap mb-3" >
                         <div class="taskPane-item-left"><div class="taskPane-item-label">Assigned to</div></div>
                         <div class="taskPane-item-right" wire:ignore>
-                            <select name="" id="" class="task-users" multiple>
+                            <select  class="task-users" multiple>
                                 <option value="" disabled>Select User</option>
                                 @foreach ($users as $user)
                                     <option data-image="{{ $user->image }}"  value="{{ $user->id }}">{{ $user->name }}</option>
@@ -120,7 +120,7 @@
                             <div class="custComment">
                                 <div class="custComment-wrap">
                                     <div class="custComment-editor p-0" wire:ignore>
-                                        <textarea wire:model="internalComment" name="" id="internal_comment_box" class="form-control mb-3" cols="30" rows="5"></textarea>
+                                        <textarea name="" id="internal_comment_box" class="form-control mb-3" cols="30" rows="5"></textarea>
                                     </div>
                                     <button wire:click="saveComment('client')" class="btn btn-sm btn-border-primary"><i class='bx bx-send'></i> Comment</button>
                                 </div>
@@ -179,8 +179,11 @@
     <script>
 
         // cpoy sharable link
-
-        let task = null;
+        // if(typeof task === 'undefined'){
+        //     var task = null;
+        // }else{
+        //     var task = task;
+        // }
 
         $('.task-sharable-link').on('click', function(){
             var id = task.id;
@@ -384,7 +387,7 @@
             });
 
             document.addEventListener('edit-task', event => {
-                task = event.detail[0];
+                let task = event.detail[0];
                 $(".cmnt_sec").removeClass('d-none');
                 $(".delete-task-btn").removeClass('d-none');
                 $(".view-task-btn").removeClass('d-none');
@@ -406,7 +409,9 @@
                     task_notifiers_ids.push(user.id);
                 });
 
-                $('.task-users').val(task_users_ids).trigger('change');
+                console.log(task_users_ids);
+
+                $('.task-users').val([5]).trigger('change');
 
                 $('.task-notify-users').val(task_notifiers_ids).trigger('change');
 
@@ -418,8 +423,7 @@
                     $('.task-due-date').text('No Due Date');
                 }
                 $(".task-attachment-count").html(event.detail[0].attachments.length);
-                console.log(event.detail[0].comments);
-
+      
                 let internal_comments_count = 0;
 
                 event.detail[0].comments.forEach(comment => {
