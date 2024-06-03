@@ -91,8 +91,9 @@
         <div class="col-lg-4 mb-4">
             <div class="column-box font-500">
                 <div class="row align-items-center">
-                    <div class="col"><span><i class='bx bx-calendar text-success'></i></span> Onboard Date</div>
-                    <div class="col text-success">{{ \Carbon\Carbon::parse($client->onboard_date)->format('d M Y') }}</div>
+                    <div class="col"><span><i class='bx bx-calendar text-success'></i></span> Onboard Date</div> 
+                    {{-- <div class="col text-success">{{ \Carbon\Carbon::parse($client->onboard_date)->format('d M Y') }}</div> --}}
+                    <div class="col text-success"> {{ $client->onboard_date ? (\Carbon\Carbon::parse($client->onboard_date)->format('d M Y')) : 'Not Added' }}</div>
                 </div>
             </div>
         </div>

@@ -30,6 +30,7 @@ class AddClient extends Component
 
     public function addClient()
     {
+
         $this->authorize('Create Client');
         if($this->client){
             $this->updateClient();
