@@ -20,13 +20,7 @@
                   <img src="" alt="">
                </div>
                <div>
-                  <h3 class="main-body-header-title mb-1">Admin</h3>
-                  <div class="row align-items-center">
-                     <div class="col">
-                        <span class="btn-batch">Roshan Jajoriya</span>
-                     </div>
-                    
-                  </div>
+                  <h3 class="main-body-header-title mb-1">{{$role->name}}</h3>
                </div>
             </div>
          </div>
@@ -36,69 +30,6 @@
                <a data-bs-toggle="modal" data-bs-target="#add-team-modal" href="javascript:void(0);" class="btn-sm btn-border btn-border-primary">
                <i class='bx bx-plus'></i> Add Role</a>
                @endcan
-            </div>
-         </div>
-      </div>
-   </div>
-   <!--- Modal --->
-   <div>
-      <div class="modal fade" id="add-team-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-         <div class="modal-dialog">
-            <div class="modal-content">
-               <div class="modal-header d-flex align-items-center justify-content-between gap-20">
-                  <h3 class="modal-title">
-                     <span class="btn-icon btn-icon-primary me-1">
-                     <i class='bx bx-layer'></i>
-                     </span>
-                     <span class="project-form-text">Add Role</span>
-                  </h3>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-               </div>
-               <div class="modal-body">
-                  <form method="POST" enctype="multipart/form-data">
-                     <div class="modal-form-body">
-                        <div class="row">
-                           <div class="col-md-4 mb-4 mb-md-0">
-                              <label for="">Select Role<sup class="text-primary">*</sup>
-                              </label>
-                           </div>
-                           <div class="col-md-8 mb-4">
-                              <div class="custom-select">
-                                 <select wire:model.live="client_id" class="form-style">
-                                    <option value="">Select Role</option>
-                                    <option value="">Admin</option>
-                                    <option value="">Hr</option>
-                                    <option value="">Manager</option>
-                                    <option value="">Employee</option>
-                                 </select>
-                              </div>
-                           </div>
-                        </div>
-                        <div class="row">
-                           <div class="col-md-4 mb-4">
-                              <label for="">Permission<sup class="text-primary">*</sup>
-                              </label>
-                           </div>
-                           <div class="col-md-8 mb-4">
-                              <select wire:model.live="client_id" class="form-style">
-                                 <option value="">Select Permission</option>
-                                 <option value="">Edit</option>
-                                 <option value="">Create</option>
-                                 <option value="">Delete</option>
-                                 <option value="">Update</option>
-                              </select>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="modal-form-btm">
-                        <div class="row">
-                           <div class="col-md-6 ms-auto text-end">
-                              <button type="submit" class="btn btn-primary project-form-btn">Add Role</button>
-                           </div>
-                        </div>
-                     </div>
-                  </form>
-               </div>
             </div>
          </div>
       </div>
@@ -116,7 +47,7 @@
                <div class="col">
                   <div class="row align-items-center g-2">
                      <div class="col-auto">
-                        <h5 class="title-md mb-0">4</h5>
+                        <h5 class="title-md mb-0">{{ $role->permissions->count() }}</h5>
                      </div>
                      <div class="col-auto">
                         <span class="font-400 text-grey">|</span>
@@ -140,7 +71,7 @@
                <div class="col">
                   <div class="row align-items-center g-2">
                      <div class="col-auto">
-                        <h5 class="title-md mb-0"> 12 </h5>
+                        <h5 class="title-md mb-0"> 4 </h5>
                      </div>
                      <div class="col-auto">
                         <span class="font-400 text-grey">|</span>

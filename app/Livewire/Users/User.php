@@ -6,12 +6,16 @@ use Livewire\Component;
 use App\Models\User as UserModel;
 use App\Models\Project;
 use App\Models\Client;
+use App\Models\UserDetail;
 
 class User extends Component
 {
     public $user;
     public $user_clients = [];
     public $user_projects = [];
+
+    public $bio;
+    public $skills;
 
     public function render()
     {
@@ -49,12 +53,50 @@ class User extends Component
 
     public function forceDeleteUser($userId)
     {
-
-       
         $user = UserModel::withTrashed()->find($userId);
         $user->forceDelete();
         $this->dispatch('success', 'User deleted successfully.');
         $this->redirect(route('user.index'),navigate:true);
 
+    }
+
+    public function updateBio(){
+        $user_details = UserDetail::where('user_id', $this->user->id)->first();
+        if($user_details){
+            $user_details->bio = $this->bio;
+            $user_details->save();
+        }else{
+            $user_details = new UserDetail();
+            $user_details->user_id = $this->user->id;
+            $user_details->bio = $this->bio;
+            $user_details->save();
+        }
+    }
+
+    public function updateSkills(){
+        $user_details = UserDetail::where('user_id', $this->user->id)->first();
+        if($user_details){
+            $user_details->skills = $this->skills;
+            $user_details->save();
+        }else{
+            $user_details = new UserDetail();
+            $user_details->user_id = $this->user->id;
+            $user_details->skills = $this->skills;
+            $user_details->save();
+        }
+        $this->mount($this->user->id);
+    }
+
+    public function updateDob($dob){
+        $user_details = UserDetail::where('user_id', $this->user->id)->first();
+        if($user_details){
+            $user_details->dob = $dob;
+            $user_details->save();
+        }else{
+            $user_details = new UserDetail();
+            $user_details->user_id = $this->user->id;
+            $user_details->dob = $dob;
+            $user_details->save();
+        }
     }
 }

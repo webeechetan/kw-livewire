@@ -32,11 +32,11 @@
         @foreach($roles as $role)
         <div class="col-md-3">
             <div class=" card_style card_style-roles h-100">
-                <a wire:navigate="" href="http://localhost:8000/role"class="card_style-open"><i class='bx bx-chevron-right'></i></a>
+                <a wire:navigate="" href="{{ route('role.profile',$role->id) }}" class="card_style-open"><i class='bx bx-chevron-right'></i></a>
                 <div class="card_style-roles-head">
                     <p class="text-muted mb-2">Total 4 users</p>
                      <h4>
-                        <a wire:navigate="" href="http://localhost:8000/role">{{$role->name}}</a>
+                        <a wire:navigate="" href="{{ route('role.profile',$role->id) }}">{{$role->name}}</a>
                     </h4>
                 </div>
                 <div class="card_style-roles-permission">

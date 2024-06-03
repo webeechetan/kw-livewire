@@ -95,7 +95,7 @@ class User extends Authenticatable
     }
 
     public function details(){
-        return $this->belongsTo(UserDetail::class);
+        return $this->hasOne(UserDetail::class);
     }
 
     public function getInitialsAttribute(){
