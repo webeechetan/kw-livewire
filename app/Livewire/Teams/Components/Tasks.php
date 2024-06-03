@@ -63,7 +63,6 @@ class Tasks extends Component
     }
 
     public function mount(Team $team) {
-
         $this->users = User::all();
         $this->projects = Project::all();
         $this->clients = Client::all();
