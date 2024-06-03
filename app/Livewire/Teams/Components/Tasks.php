@@ -16,6 +16,8 @@ class Tasks extends Component
 
     use WithPagination;
 
+    public $project_start_date = null;
+    public $project_due_date = null;
     public $allTasks; 
     public $activeTasks;
     public $completedTasks;

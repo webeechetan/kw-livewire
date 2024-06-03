@@ -62,35 +62,32 @@
                                             <li class="filterSort_item"><a wire:navigate="" href="#" class="btn-batch">Archived</a></li>
                                         </ul>
                                         <h5 class="filterSort-header mt-4"><i class='bx bx-briefcase text-primary' ></i> Filter By Clients</h5>
-                                        <select class="dashboard_filters-select w-100" name="" id="">
-                                            <option value="" disabled="">Select Client</option>
-                                            <option value="1">Acma</option>
-                                            <option value="2">Buyers Guide</option>
-                                            <option value="3">GRG</option>
-                                            <option value="4">Webeesocial</option>
+                                        <select class="dashboard_filters-select w-100" wire:model.live="byClient" id="">
+                                            <option value="all">Select Client</option>
+                                            @foreach($clients as $client)
+                                            <option value="{{ $client->id }}">{{ $client->name }}</option>
+                                        @endforeach
                                         </select>
                                         <h5 class="filterSort-header mt-4"><i class='bx bx-objects-horizontal-left text-primary'></i> Filter By Projects</h5>
-                                        <select class="dashboard_filters-select w-100" wire:model.live="byProject">
+                                        <select class="dashboard_filters-select w-100" wire:model.live="byProject" id="">
                                             <option value="all">All</option>
                                             @foreach($projects as $project)
                                                 <option value="{{ $project->id }}">{{ $project->name }}</option>
                                             @endforeach
                                         </select>
                                         <h5 class="filterSort-header mt-4"><i class='bx bx-user text-primary'></i> Filter By User</h5>
-                                        <select class="dashboard_filters-select mt-2 w-100" name="" id="">
-                                            <option value="" disabled="">Select Client</option>
-                                            <option value="1">Acma</option>
-                                            <option value="2">Buyers Guide</option>
-                                            <option value="3">GRG</option>
-                                            <option value="4">Webeesocial</option>
+                                        <select class="dashboard_filters-select mt-2 w-100" wire:model.live="byUser" id="">
+                                            <option value="all">Select User</option>
+                                            @foreach($users as $user)
+                                            <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                            @endforeach
                                         </select>
                                         <h5 class="filterSort-header mt-4"><i class='bx bx-user text-primary'></i> Filter By Team</h5>
-                                        <select class="dashboard_filters-select mt-2 w-100" name="" id="">
-                                            <option value="" disabled="">Select Team</option>
-                                            <option value="1">Acma</option>
-                                            <option value="2">Buyers Guide</option>
-                                            <option value="3">GRG</option>
-                                            <option value="4">Webeesocial</option>
+                                        <select class="dashboard_filters-select mt-2 w-100" wire:model.live="byTeam" id="">
+                                            <option value="all">Select Team</option>
+                                            @foreach($teams as $team)
+                                            <option value="{{ $team->id }}">{{ $team->name }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
