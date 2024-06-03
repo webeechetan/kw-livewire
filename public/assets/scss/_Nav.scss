@@ -5,14 +5,14 @@
         li {
             position: relative;
             &:not(:last-child) {
-                border-bottom: 1px solid #8c3df1;
+                margin-bottom: 5px;
             }
             a {
                 color: $sidebar_link_color;
-                font-weight: 500;
+                font-weight: 600;
                 padding: $spacing_sidenav_item;
                 transition: $ease_05;
-                font-size: 15px;
+                font-size: 0.9rem;
                 @include flex_align_center;
                 display: grid;
                 grid-template-columns: 30px 1fr;
@@ -20,30 +20,28 @@
                 /*---- Sidebar Menu Icon Style ----*/
                 i {
                     font-size: 18px;
-                    color: $sidebar_icon_color;
+                    color: $text-color;
                     transition: $ease_05;
                 }
 
                 &:after {
                     content: "";
                     width: 6px;
-                    height: calc(100% - 8px);
-                    background-color: $sidebar_line_color;
+                    height: 100%;
+                    background-color: $brand;
                     position: absolute;
                     left: -100%;
                     top: 0;
-                    bottom: 0;
-                    margin: auto;
                     border-radius: 0 4px 4px 0;
                     transition: $ease_05;
                 }
 
                 &.active, &:hover {
-                    color: $sidebar_active_color;
+                    color: $brand;
                     background-color: $sidebar_active_bg_color;
 
                     i {
-                        color: $sidebar_icon_active_color;
+                        color: $brand;
                     }
                     
                     &:after {

@@ -20,7 +20,7 @@
             }
         }
         @media (max-width: 1440px) {
-            width: calc(100% - 200px);
+            width: calc(100% - 230px);
         }
     }
 
@@ -210,6 +210,15 @@
 
         &::-webkit-scrollbar {
             height: 100px;
+        }
+    }
+
+    &-primary {
+        &::-webkit-scrollbar-track {
+            background-color: $brand_light;
+        }
+        &::-webkit-scrollbar-thumb {
+            background-color: $brand;
         }
     }
 }
@@ -1042,7 +1051,7 @@
     }
 
     .panel-heading.note-toolbar {
-        padding: 10px 10px 10px 37px;
+        padding: 10px;
         border-radius: 4px;
     }
 
