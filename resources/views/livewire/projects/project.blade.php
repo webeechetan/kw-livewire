@@ -83,7 +83,7 @@
                                 <div class="states_style-text"> {{$projectUsers->count()> 1 ? 'Members' : 'Member'}}</div>
                             </div>
                         </div>
-                    </div>
+                    </div> 
                 </div>
             </div>
         </div>
@@ -168,7 +168,7 @@
                             @php
                                 $usersCount = $project->users->count();  
                             @endphp
-                            @foreach($project->users as $user)
+                            @foreach($project->members as $user)
                                 @if($loop->index > 10)
                                     @break
                                 @endif

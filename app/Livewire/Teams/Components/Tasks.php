@@ -74,4 +74,9 @@ class Tasks extends Component
     }
 
    
+
+    public function updatedByProject($value){
+        $project = Project::find($value);
+        $this->users = $project->members;
+    }
 }

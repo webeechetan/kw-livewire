@@ -27,7 +27,7 @@ class Project extends Component
         $this->project = ProjectModel::withTrashed()->with('client')->find($id);
         $this->users = User::all();
         $this->projectTasks =  Task::where('project_id',$id)->get();
-        $this->projectUsers = $this->project->users;
+        $this->projectUsers = $this->project->members;
         $tasks = Task::whereIn('project_id', [$this->project->id])->get();
         $task_users = []; 
         foreach ($tasks as $task) {
