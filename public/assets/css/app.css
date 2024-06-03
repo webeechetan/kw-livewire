@@ -1481,14 +1481,13 @@ hr.space-sm {
   color: #fff;
 }
 .btn-border-archived {
-  border: 1px solid #eee;
-  background-color: #f6f5f5;
-  color: #191919;
+  border: 1px solid #ff0000;
+  color: #ff0000;
 }
 .btn-border-archived:hover, .btn-border-archived.active {
-  background-color: #eee;
-  border-color: #191919;
-  color: #191919;
+  background-color: #ff0000;
+  border-color: #ff0000;
+  color: #fff;
 }
 .btn-border-sm {
   font-size: 13px;
@@ -1629,7 +1628,7 @@ hr.space-sm {
   background-color: #fff;
   position: fixed;
   top: 0;
-  z-index: 9999;
+  z-index: 99;
   width: 100%;
   /*---- Logo ----*/
   /*---- Header Left Style ----*/
@@ -3086,7 +3085,7 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   overflow-y: auto;
 }
 .main-body-content .archived_content .dashboard-head-title-wrap {
-  opacity: 0.6;
+  color: #ff0000;
 }
 @media (max-width: 1440px) {
   .main-body-content {

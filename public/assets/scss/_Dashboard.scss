@@ -16,7 +16,7 @@
         overflow-y: auto;
         .archived_content {
             .dashboard-head-title-wrap {
-                opacity: 0.6;
+                color: $danger;
             }
         }
         @media (max-width: 1440px) {

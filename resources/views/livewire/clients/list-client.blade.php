@@ -189,15 +189,15 @@
 </div>
 
 @assets
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script> -->
 @endassets
 
 @script
 <script>
-    $(document).ready(function(){
-        console.log('ready');
-        $('[data-bs-toggle="tooltip"]').tooltip();
-        $('[data-bs-toggle="dropdown"]').dropdown();
-    });
+    // $(document).ready(function(){
+    //     console.log('ready');
+    //     $('[data-bs-toggle="tooltip"]').tooltip();
+    //     $('[data-bs-toggle="dropdown"]').dropdown();
+    // });
 </script>
 @endscript
