@@ -77,22 +77,26 @@ class ListProject extends Component
             });
         }
 
+      
+
         if($this->byUser != 'all'){
-            // select from project_user
-            $projects->whereHas('users',function($query){
-                $query->where('user_id',$this->byUser);
-            });
+            $user = User::find($this->byUser);
+            if($user){
+                $projectsIds = $user->projects->pluck('id')->toArray();
+                $projects->whereIn('id',$projectsIds);
+            }
         }
        
-        //filter by team
 
-
-        if($this->byTeam != 'all'){
-
-            $projects->whereHas('client',function($query){
-                $query->where('client_id',$this->byTeam);
-            });
+        if ($this->byTeam != 'all') {
+            $team = Team::find($this->byTeam);
+            if ($team) {
+                $projectIds = $team->projects->pluck('id')->toArray();
+                $projects->whereIn('id', $projectIds);
+            }
         }
+
+
         $projects->orderBy('id','desc');
         $projects = $projects->paginate(12);
 

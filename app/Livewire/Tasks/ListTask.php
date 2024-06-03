@@ -5,6 +5,7 @@ namespace App\Livewire\Tasks;
 use Livewire\Component;
 use App\Models\Task;
 use App\Models\User;
+use App\Models\Client;
 use App\Models\Project;
 use App\Models\Team;
 use App\Models\Comment;
@@ -42,12 +43,17 @@ class ListTask extends Component
     public $sort = 'all';
     public $filter = 'all';
     public $byProject = 'all';
+    public $byClient = 'all';
+    public $byUser = 'all';
+    public $byTeam = 'all';
  
 
 
-    public $users;
+    public $teams = [];
+    public $users = [];
+    public $clients = [];
     public $projects;
-    public $teams;
+    // public $teams;
     public $project_id;
     public $user_ids;
 
@@ -78,11 +84,30 @@ class ListTask extends Component
             $tasks->latest();
         }
 
+        if($this->byClient != 'all'){
+          
+        }
+
         if($this->byProject != 'all'){
-            // select from project_user
-            $tasks->whereHas('tasks',function($query){
-                $query->where('project_id',$this->byProject);
-            });
+            $tasks->whereHas('tasks', function($query){
+                $query->where('project_id', $this->byProject);
+            });   
+        }
+
+        if($this->byUser != 'all'){
+            $user = User::find($this->byUser);
+            if($user){
+                $tasksIds = $user->tasks->pluck('id')->toArray();
+                $tasks->whereIn('id',$tasksIds);
+            }
+        }
+
+        if($this->byTeam != 'all'){
+            $team = Team::find($this->byTeam);
+            if($team){
+                $tasksIds = $team->tasks->pluck('id')->toArray();
+                $tasks->whereIn('id',$tasksIds);
+            }
         }
 
        
@@ -91,6 +116,7 @@ class ListTask extends Component
 
         $tasks = $tasks->paginate(12);
 
+       
         return view('livewire.tasks.list-task',[
             'tasks' => $tasks
         ]);
@@ -107,6 +133,7 @@ class ListTask extends Component
             $this->users = User::all();
             $this->projects = Project::all();
             $this->teams = Team::all();
+            $this->clients = Client::all();
             // Fetch all tasks from the database
             if($this->ViewTasksAs == 'manager'){
                 $manager_team = auth()->user()->myTeam;

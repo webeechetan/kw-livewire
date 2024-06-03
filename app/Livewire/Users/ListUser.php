@@ -72,15 +72,6 @@ class ListUser extends Component
             $users->onlyTrashed();
         }
 
-        if($this->byProject != 'all'){
-
-            // dd($this->byProject);
-            // $p = Project::find($this->byProject);
-            $users->whereHas('projects', function($query){
-
-                $query->where('project_id', $this->byProject);
-            });
-        }
 
         if($this->byTeam != 'all'){
             $users->whereHas('teams', function($query){
@@ -88,6 +79,14 @@ class ListUser extends Component
             });
         }
        
+
+        if($this->byProject != 'all'){
+            $users->whereHas('projects', function($query){
+                $query->where('project_id', $this->byProject);
+            });
+        }
+
+     
 
 
         $users->orderBy('created_at', 'desc');

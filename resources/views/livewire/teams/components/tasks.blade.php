@@ -108,8 +108,21 @@
         @php
             $tasks = $team->tasks;
             if($byClient != 'all'){
-                $tasks = $tasks->where('client_id',$byClient);
+                $tasks = $tasks->where('client_id', $byClient);
             }
+
+            if($byProject != 'all'){
+                $tasks = $tasks->where('project_id', $byProject);
+            }
+
+            // if($byUser != 'all'){
+            //     $user = User::find($this->byUser);
+            //     if($user){
+            //         $tasksIds = $user->tasks->pluck('id')->toArray();
+            //         $tasks->whereIn('id',$tasksIds);
+            //     }
+            // }
+
         @endphp
 
         @foreach ($tasks as $task)
@@ -124,19 +137,19 @@
                             </div>
                         </div>
                         <div class="col text-center">
-                            <div class="taskList_col"><span>10 Apr-2024</span></div>
+                            <div class="taskList_col"><span>{{  Carbon\Carbon::parse($task->created_at)->format('d M Y') }}</span></div>
                         </div>
                         <div class="col text-center">
-                            <div class="taskList_col"><span>12 Aug-1997</span></div>
+                            <div class="taskList_col"><span>{{ Carbon\Carbon::parse($task->due_date)->format('d M Y') }}</span></div>
                         </div>
                         <div class="col text-center">
-                            <div class="taskList_col"><span>Tanuja Lall</span></div>
+                            <div class="taskList_col"><span>{{$task->project->name}}</span></div>
                         </div>
                         <div class="col text-center">
                             <div class="taskList_col">
                                 <div class="avatarGroup avatarGroup-overlap">
                                     <a href="#" class="avatarGroup-avatar">
-                                        <span class="avatar avatar-sm avatar-pink" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Azhar Vala">AV</span>
+                                        <span class="avatar avatar-sm avatar-pink" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{$task->assignedBy->initials}}">{{$task->assignedBy->name}}</span>
                                     </a>                                
                                 </div>
                             </div>
@@ -147,3 +160,33 @@
         @endforeach
     </div>
 </div>
+
+
+@assets
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+@endassets
+
+@script
+    <script>
+        $(document).ready(function() {
+            flatpickr('.project_start_date', {
+                dateFormat: "Y-m-d",
+                onChange: function(selectedDates, dateStr, instance) {
+                    $(".project_start_date").html(dateStr);
+                    @this.set('project_start_date', dateStr);
+                },
+            });
+
+
+            flatpickr('.project_due_date', {
+                dateFormat: "Y-m-d",
+                onChange: function(selectedDates, dateStr, instance) {
+                    $(".project_due_date").html(dateStr);
+                    @this.set('project_due_date', dateStr);
+                },
+            });
+
+            });
+    </script>
+@endscript
