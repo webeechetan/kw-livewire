@@ -105,6 +105,18 @@
     <div class="tabNavigationBar-tab border_style my-2">
         <a href="{{ route('task.list-view') }}" class="tabNavigationBar-item @if(request()->routeIs('task.list-view')) active @endif" wire:navigate ><i class='bx bx-list-ul'></i> List</a>
         <a href="{{ route('task.index') }}" class="tabNavigationBar-item @if(request()->routeIs('task.index')) active @endif" wire:navigate><i class='bx bx-columns' ></i> Board</a>
+        @if(auth()->user()->is_manager)
+        <div class="form-check form-switch">
+            <input class="form-check-input task-switch" type="checkbox" role="switch" id="flexSwitchCheckChecked">
+            <label class="form-check-label task-switch-text" for="flexSwitchCheckChecked">
+                @if($ViewTasksAs == 'manager')
+                Showing {{ auth()->user()->myTeam->name }} Tasks
+                @else
+                Showing My Tasks
+                @endif
+            </label>
+        </div>
+        @endif
     </div>
     <!-- Kanban -->
     <div class="kanban_bord">
@@ -131,13 +143,13 @@
                 <div class="kanban_bord_column {{ $board_class }}" wire:key="group-{{$group}}"  wire:sortable.item="{{ $group  }}">
                     <div class="kanban_bord_column_title" wire:sortable.handle>
                         @if($group == 'pending')
-                            Assigned <span class="btn-batch">50</span>
+                            Assigned <span class="btn-batch">{{ count($tasks[$group]) }}</span>
                         @elseif($group == 'in_progress')
-                            Accepted <span class="btn-batch">100</span>
+                            Accepted <span class="btn-batch">{{ count($tasks[$group]) }}</span>
                         @elseif($group == 'in_review')
-                            In Review <span class="btn-batch">10</span>
+                            In Review <span class="btn-batch">{{ count($tasks[$group]) }}</span>
                         @elseif($group == 'completed')
-                            Completed <span class="btn-batch">72</span>
+                            Completed <span class="btn-batch">{{ count($tasks[$group]) }}</span>
                         @endif
                     </div>
                     <div class="kanban_column scrollbar" wire:sortable-group.item-group="{{$group}}" wire:sortable-group.options="{ 
@@ -170,7 +182,7 @@
                                         <div class="cus_dropdown-body cus_dropdown-body-widh_s">
                                             <div class="cus_dropdown-body-wrap">
                                                 <ul class="cus_dropdown-list">
-                                                    <li><a class="edit-task" data-id="{{$task['id']}}"><span class="text-secondary"><i class="bx bx-pencil"></i></span> Edit</a></li>
+                                                    <li><a><span class="text-secondary"><i class="bx bx-pencil"></i></span> Edit</a></li>
                                                     <li><a href="#"><span class="text-danger"><i class="bx bx-trash"></i></span> Delete</a></li>
                                                 </ul>
                                             </div>
@@ -181,7 +193,7 @@
                                             <i class='bx bx-check' ></i>
                                         </div>
                                         <div class="kanban_column_task_name_text">
-                                            <h4 wire:click="enableEditForm({{$task['id']}})" class="fs-6">{{ $task['name'] }}</h4>
+                                            <h4 class="edit-task fs-6" data-id="{{$task['id']}}">{{ $task['name'] }}</h4>
                                             <div class="kanban_column_task_project_name">
                                                 <span class="text-black">
                                                     @if($task['project'])
@@ -207,7 +219,7 @@
                                         <div>
                                             <div class="avatarGroup avatarGroup-overlap">
                                                 @foreach($task['users'] as $user)
-                                                <a href="javascript:;" class="avatar avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Aadil Prasad Brahmbhatt">AP</a>
+                                                <a href="javascript:;" class="avatar avatar-sm avatar-{{$user->color}}" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="{{$user->name}}">{{$user->initials}}</a>
                                                 @endforeach
                                             </div>
                                         </div>
@@ -233,6 +245,16 @@
 
     document.addEventListener('saved', function(){
         $('#offcanvasRight').offcanvas('hide');
+    });
+
+    $(".task-switch").change(function(){
+        if($(this).is(':checked')){
+            // $(".task-switch-text").text('Show Team Tasks');
+            @this.set('ViewTasksAs', 'manager');
+        }else{
+            // $(".task-switch-text").text('Show My Tasks');
+            @this.set('ViewTasksAs', 'user');
+        }
     });
     
 </script>

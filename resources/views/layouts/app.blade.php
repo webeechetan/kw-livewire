@@ -146,15 +146,23 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    <script src="https://unpkg.com/@nextapps-be/livewire-sortablejs@0.4.0/dist/livewire-sortable.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/annyang/2.6.0/annyang.min.js"></script> @livewireScripts @stack('scripts') @if (session()->has('success')) <script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/annyang/2.6.0/annyang.min.js"></script> 
+    @livewireScripts 
+    <script src="https://unpkg.com/@nextapps-be/livewire-sortablejs@0.4.0/dist/livewire-sortable.js"></script>
+    @stack('scripts') 
+    @if (session()->has('success')) 
+    <script>
       toastr.success("{{ session('success') }}")
-    </script> @endif @if (session()->has('error')) <script>
+    </script> 
+    @endif 
+    @if (session()->has('error')) <script>
       toastr.error("{{ session('error') }}")
-    </script> @endif <script>
+    </script> 
+    @endif 
+    <script>
       document.addEventListener('error', event => {
         toastr.remove()
         toastr.error(event.detail)

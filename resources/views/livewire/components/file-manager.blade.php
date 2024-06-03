@@ -328,39 +328,15 @@
         let clickedOnce = false;
 
         $(document).on("click", ".select_directory", function(event){
-            console.log('select_directory clicked');
-            if (!clickedOnce) {
-                console.log('single clicked');
-                // Set a delay to detect double-click
-                setTimeout(function() {
-
-                    // if (!clickedOnce) {
-                        // Single-click action
-                        let directory_path = $(this).data("directory");
-                        if (event.ctrlKey) {
-                            $(this).toggleClass("selected");
-                            @this.selectDirectory(directory_path, 'multipe');
-                            return;
-                        }
-                        console.log('single clicked');
-                        @this.selectDirectory(directory_path, 'single');
-                        $(".select_directory").removeClass("selected");
-                        $(this).addClass("selected");
-                    // }
-                    clickedOnce = false;
-                }.bind(this), 300); // Adjust the delay as needed (300 milliseconds in this case)
-
-                clickedOnce = true;
-                event.preventDefault(); // Prevent default action
-                return false;
-            }else{
-                // console.log('double clicked');
-                // // If double-clicked, return false to prevent further action
-                // let directory_path = $(this).data("directory");
-                // @this.openFolder(directory_path);
-                // event.preventDefault(.);
-                // return false;
+            let directory_path = $(this).data("directory");
+            if (event.ctrlKey) {
+                $(this).toggleClass("selected");
+                @this.selectDirectory(directory_path, 'multipe');
+                return;
             }
+            @this.selectDirectory(directory_path, 'single');
+            $(".select_directory").removeClass("selected");
+            $(this).addClass("selected");
         });
 
         $(document).on("dblclick", ".select_directory", function(event){

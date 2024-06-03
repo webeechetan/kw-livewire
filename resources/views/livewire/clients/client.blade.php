@@ -100,7 +100,7 @@
             <div class="column-box font-500">
                 <div class="row align-items-center">
                     <div class="col"><span><i class='bx bx-user text-primary'></i></span> Point Of Contact</div>
-                    <div class="col text-primary">{{ $client->point_of_contact }}</div>
+                    <div class="col text-primary">{{ $client->point_of_contact ? $client->point_of_contact : 'Not Added' }}</div>
                 </div>
             </div>
         </div>
@@ -127,11 +127,9 @@
                                         <div class="avatarGroup avatarGroup-overlap">
                                             @foreach($team->users as $user)
                                                 @if($client_users->contains($user->id))
-                                                    <a href="#" class="avatarGroup-avatar">
-                                                        <span class="avatar avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="{{ $user->name }}" data-bs-original-title="{{ $user->name }}">
-                                                            <img alt="avatar" src="{{ env('APP_URL') }}/storage/images/users/{{ $user->name }}.png" class="rounded-circle">
-                                                        </span>
-                                                    </a>
+                                                <a href="#" class="avatarGroup-avatar">
+                                                    <span class="avatar avatar-sm avatar-{{ $user->color }}" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{ $user->name }}">{{ $user->initials }}</span>
+                                                </a>
                                                 @endif
                                             @endforeach
                                         </div>

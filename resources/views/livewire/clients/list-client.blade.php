@@ -13,7 +13,7 @@
                 <h3 class="main-body-header-title mb-0 @if($filter == 'archived') archived_content @endif">All Clients</h3>
                 <span class="text-light">|</span>
                 @can('Create Client')
-                    <a data-bs-toggle="modal" data-bs-target="#add-client-modal" href="javascript:void(0);" class="btn-border btn-border-sm btn-border-primary"><i class="bx bx-plus"></i> Add Client</a>
+                    <a data-bs-toggle="modal" data-bs-backdrop="false" data-bs-target="#add-client-modal" href="javascript:void(0);" class="btn-border btn-border-sm btn-border-primary"><i class="bx bx-plus"></i> Add Client</a>
                 @endcan
             </div>
             <div class="col">
@@ -115,9 +115,9 @@
                     <a href="{{ route('client.profile', $client->id ) }}" class="card_style-open"><i class='bx bx-chevron-right'></i></a>
                     <div class="card_style-head card_style-client-head mb-3">
                         @if($client->image != 'default.png')
-                            <div><img src="{{ asset('storage/'.$client->image) }}" alt="" class="img-fluid"></div>
+                            <div><img src="{{ asset('storage/'.$client->image) }}" alt="" class="img-fluid" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{ $client->name }}"></div>
                         @else
-                            <div class="avatar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{ $client->initials }}">{{ $client->initials }}</div>
+                            <div class="avatar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{ $client->name }}">{{ $client->initials }}</div>
                         @endif
                         <div>
                             <h4 class="mb-1">
@@ -187,3 +187,17 @@
     <!-- Client Modal Component -->
     <livewire:components.add-client @saved="$refresh" />
 </div>
+
+@assets
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+@endassets
+
+@script
+<script>
+    $(document).ready(function(){
+        console.log('ready');
+        $('[data-bs-toggle="tooltip"]').tooltip();
+        $('[data-bs-toggle="dropdown"]').dropdown();
+    });
+</script>
+@endscript

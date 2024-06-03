@@ -5,7 +5,7 @@
             <li class="breadcrumb-item">
                 <a wire:navigate href="{{ route('dashboard') }}">
                 <i class='bx bx-line-chart'></i> Dashboard </a>
-            </li>
+            </li> 
             <li class="breadcrumb-item">
                 <a wire:navigate href="{{ route('team.index') }}">All Team</a>
             </li>
@@ -18,13 +18,10 @@
         <div class="col-sm-3">
             <div class="column-box">
                 <label for="" class="font-500"><i class='bx bx-briefcase-alt-2 text-primary' ></i> Filter By Client</label>
-                <select class="dashboard_filters-select mt-2 w-100" wire:model.live="byClient" name="" id="">
-                    <option value="" selected="">Select Client</option>
+                <select class="dashboard_filters-select mt-2 w-100" wire:model.live="byClient" id="">
+                    <option value="all" >Select Client</option>
                     @foreach($clients as $client)
                         <option value="{{$client->id}}">{{$client->name}}</option>
-                        {{-- <option value="2">Buyers Guide</option>
-                        <option value="3">GRG</option>
-                        <option value="4">Webeesocial</option> --}}
                     @endforeach
                 </select>
             </div>
@@ -33,7 +30,7 @@
             <div class="column-box">
                 <label for="" class="font-500"><i class='bx bx-objects-horizontal-left text-warning' ></i> Filter By Project</label>
                 <select class="dashboard_filters-select mt-2 w-100" wire:model.live="byProject" name="" id="">
-                    <option value="" selected="">Select Project</option>
+                    <option value="all">Select Project</option>
                     @foreach($projects as $project)
                     <option value="{{$project->id}}">{{$project->name}}</option>
                     @endforeach
@@ -44,7 +41,7 @@
             <div class="column-box">
                 <label for="" class="font-500"><i class='bx bx-user text-secondary'></i> Filter By User</label>
                 <select class="dashboard_filters-select mt-2 w-100" wire:model.live="byUser" name="" id="">
-                    <option value="" selected="">Select User</option>
+                    <option value="all">Select User</option>
                     @foreach($users as $user)
                     <option value="{{$user->id}}">{{$user->name}}</option>
                 @endforeach
@@ -69,21 +66,21 @@
     <div class="project-tabs mb-3">
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="project-all-tab" data-bs-toggle="tab" data-bs-target="#project-all-tab-pane" type="button" role="tab" aria-controls="project-all-tab-pane" aria-selected="true">All <span class="ms-2">{{ $team->projects->count() }}</span></button>
+                <button class="nav-link active" id="project-all-tab" data-bs-toggle="tab" data-bs-target="#project-all-tab-pane" type="button" role="tab" aria-controls="project-all-tab-pane" aria-selected="true">All <span class="ms-2">{{ $team->tasks->count() }}</span></button>
             </li>
             <li class="nav-item" role="presentation">
                 <button class="nav-link" id="project-active-tab" data-bs-toggle="tab" data-bs-target="#project-active-tab-pane" type="button" role="tab" aria-controls="project-active-tab-pane" aria-selected="false" tabindex="-1">Active <span class="ms-2">
-                    {{ $team->projects->where('status','active')->count() }}   
+                    {{ $team->projects->where('status','active')->count() }}  {{$activeTasks}} 
                 </span></button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link" id="project-done-tab" data-bs-toggle="tab" data-bs-target="#project-done-tab-pane" type="button" role="tab" aria-controls="project-done-tab-pane" aria-selected="false" tabindex="-1">Completed <span class="ms-2">{{ $team->projects->where('status','completed')->count() }}   </span></button>
+                <button class="nav-link" id="project-done-tab" data-bs-toggle="tab" data-bs-target="#project-done-tab-pane" type="button" role="tab" aria-controls="project-done-tab-pane" aria-selected="false" tabindex="-1">Completed <span class="ms-2">{{ $team->tasks->where('status','completed')->count() }} {{$completedTasks}}  </span></button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link" id="project-overdue-tab" data-bs-toggle="tab" data-bs-target="#project-overdue-tab-pane" type="button" role="tab" aria-controls="project-overdue-tab-pane" aria-selected="false" tabindex="-1">Overdue <span class="ms-2">{{ $team->projects->where('status','overdue')->count() }}   </span></button>
+                <button class="nav-link" id="project-overdue-tab" data-bs-toggle="tab" data-bs-target="#project-overdue-tab-pane" type="button" role="tab" aria-controls="project-overdue-tab-pane" aria-selected="false" tabindex="-1">Overdue <span class="ms-2">{{ $team->projects->where('status','overdue')->count() }} {{$overDueTasks}}  </span></button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link" id="project-archived-tab" data-bs-toggle="tab" data-bs-target="#project-archived-tab-pane" type="button" role="tab" aria-controls="project-archived-tab-pane" aria-selected="false" tabindex="-1">Archive <span class="ms-2">{{ $team->projects->where('status','archived')->count() }}   </span></button>
+                <button class="nav-link" id="project-archived-tab" data-bs-toggle="tab" data-bs-target="#project-archived-tab-pane" type="button" role="tab" aria-controls="project-archived-tab-pane" aria-selected="false" tabindex="-1">Archive <span class="ms-2">{{ $team->projects->where('status','archived')->count() }} {{$cancelledTasks}}  </span></button>
             </li>
         </ul>
     </div>
@@ -107,94 +104,47 @@
                 </div>
             </div>
         </div>
-        <div class="taskList scrollbar">
-            <div class="taskList_row">
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="taskList_col taskList_col_title">
-                            <div class="edit-task" data-id="100">
-                                <div>Abdul Pranay Jain</div>
+       
+        @php
+            $tasks = $team->tasks;
+            if($byClient != 'all'){
+                $tasks = $tasks->where('client_id',$byClient);
+            }
+
+        @endphp
+
+        @foreach ($tasks as $task)
+            <div class="taskList scrollbar">
+                <div class="taskList_row">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="taskList_col taskList_col_title">
+                                <div class="edit-task" data-id="100">
+                                    <div>{{$task->name}} </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col text-center">
-                        <div class="taskList_col"><span>10 Apr-2024</span></div>
-                    </div>
-                    <div class="col text-center">
-                        <div class="taskList_col"><span>12 Aug-1997</span></div>
-                    </div>
-                    <div class="col text-center">
-                        <div class="taskList_col"><span>Tanuja Lall</span></div>
-                    </div>
-                    <div class="col text-center">
-                        <div class="taskList_col">
-                            <div class="avatarGroup avatarGroup-overlap">
-                                <a href="#" class="avatarGroup-avatar">
-                                    <span class="avatar avatar-sm avatar-pink" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Azhar Vala">AV</span>
-                                </a>                                
-                            </div>
+                        <div class="col text-center">
+                            <div class="taskList_col"><span>{{  Carbon\Carbon::parse($task->created_at)->format('d M Y') }}</span></div>
                         </div>
-                    </div>
-                </div>
-            </div>
-            <div class="taskList_row">
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="taskList_col taskList_col_title">
-                            <div class="edit-task" data-id="100">
-                                <div>Abdul Pranay Jain</div>
-                            </div>
+                        <div class="col text-center">
+                            <div class="taskList_col"><span>{{ Carbon\Carbon::parse($task->due_date)->format('d M Y') }}</span></div>
                         </div>
-                    </div>
-                    <div class="col text-center">
-                        <div class="taskList_col"><span>10 Apr-2024</span></div>
-                    </div>
-                    <div class="col text-center">
-                        <div class="taskList_col"><span>12 Aug-1997</span></div>
-                    </div>
-                    <div class="col text-center">
-                        <div class="taskList_col"><span>Tanuja Lall</span></div>
-                    </div>
-                    <div class="col text-center">
-                        <div class="taskList_col">
-                            <div class="avatarGroup avatarGroup-overlap">
-                                <a href="#" class="avatarGroup-avatar">
-                                    <span class="avatar avatar-sm avatar-pink" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Azhar Vala">AV</span>
-                                </a>                                
+                        <div class="col text-center">
+                            <div class="taskList_col"><span>{{$task->name}}</span></div>
+                        </div>
+                        <div class="col text-center">
+                            <div class="taskList_col">
+                                <div class="avatarGroup avatarGroup-overlap">
+                                    <a href="#" class="avatarGroup-avatar">
+                                        <span class="avatar avatar-sm avatar-pink" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{$task->assignedBy->initials}}">{{$task->assignedBy->name}}</span>
+                                    </a>                                
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="taskList_row">
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="taskList_col taskList_col_title">
-                            <div class="edit-task" data-id="100">
-                                <div>Abdul Pranay Jain</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col text-center">
-                        <div class="taskList_col"><span>10 Apr-2024</span></div>
-                    </div>
-                    <div class="col text-center">
-                        <div class="taskList_col"><span>12 Aug-1997</span></div>
-                    </div>
-                    <div class="col text-center">
-                        <div class="taskList_col"><span>Tanuja Lall</span></div>
-                    </div>
-                    <div class="col text-center">
-                        <div class="taskList_col">
-                            <div class="avatarGroup avatarGroup-overlap">
-                                <a href="#" class="avatarGroup-avatar">
-                                    <span class="avatar avatar-sm avatar-pink" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Azhar Vala">AV</span>
-                                </a>                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>        
-        </div>
+        @endforeach
     </div>
 </div>

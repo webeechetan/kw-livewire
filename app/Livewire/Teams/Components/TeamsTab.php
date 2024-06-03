@@ -21,5 +21,9 @@ class TeamsTab extends Component
         $this->dispatch('success', 'Team deleted successfully.');
         $this->redirect(route('team.index'),navigate:true);
     }
+
+    public function dispatchEditEvent($id){
+        $this->dispatch('editTeam',$id);
+    }
     
 }

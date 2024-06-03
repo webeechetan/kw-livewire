@@ -177,10 +177,11 @@ class AddProject extends Component
 
 
     public function resetForm(){
+        $this->client_id = null;
         $this->project_name = '';
-        $this->project_due_date = '';
+        $this->project_due_date = null;
         $this->project_description = '';
-        $this->project_start_date = '';
+        $this->project_start_date = null;
         $this->project = null;
     }
 }
