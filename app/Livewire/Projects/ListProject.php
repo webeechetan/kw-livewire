@@ -84,15 +84,16 @@ class ListProject extends Component
             });
         }
        
-        //filter by team
 
-
-        if($this->byTeam != 'all'){
-
-            $projects->whereHas('client',function($query){
-                $query->where('client_id',$this->byTeam);
-            });
+        if ($this->byTeam != 'all') {
+            $team = Team::find($this->byTeam);
+            if ($team) {
+                $projectIds = $team->projects->pluck('id')->toArray();
+                $projects->whereIn('id', $projectIds);
+            }
         }
+
+
         $projects->orderBy('id','desc');
         $projects = $projects->paginate(12);
 

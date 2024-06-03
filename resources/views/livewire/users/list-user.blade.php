@@ -61,7 +61,7 @@
                                             <option value="all">All</option> 
                                             @foreach($projects as $project)
                                                 <option value="{{ $project->id}}">{{ $project->name }}</option>
-
+                                                
                                             @endforeach
                                         </select>
                                     </div>
