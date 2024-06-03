@@ -126,6 +126,7 @@ Route::group(['middleware' => ['myauth']], function() {
     // Role and Permission
 
     Route::get('/roles',ListRole::class)->name('role.index');
+    Route::get('/role/{role}', RoleView::class)->name('role.profile');
 
     Route::get('/file-manager',FileManager::class)->name('file-manager');
     
@@ -329,5 +330,5 @@ Route::get('/create-password',function(){
 
 
 
-Route::get('/role', RoleView::class)->name('role');
+
 

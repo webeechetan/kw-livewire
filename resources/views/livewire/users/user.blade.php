@@ -36,7 +36,10 @@
                 <hr>
                 <div class="row align-items-center mb-2">
                     <div class="col"><span><i class='bx bx-cake text-warning'></i></span> Date Of Birth</div>
-                    <div class="col">@if($user->dob) {{  $user->dob }} @else Not Added  @endif</div>
+                    <div class="col dob">
+                        <i class='bx bx-calendar'></i>
+                        @if($user->details->dob) {{  $user->details->dob }} @else Not Added  @endif
+                    </div>
                 </div>
                 <div class="row align-items-center mb-2">
                     <div class="col"><span><i class='bx bx-calendar-alt text-success' ></i></span> Joining Date</div>
@@ -115,7 +118,7 @@
                     <div class="column-box states_style-progress">
                         <div class="row">
                             <div class="col">
-                                <h5 class="title-md mb-1">12</h5>
+                                <h5 class="title-md mb-1">{{ $user->projects->where('status','completed')->count() }}</h5>
                                 <div class="states_style-text">Projects Done</div>
                             </div>
                             <div class="col-auto">
@@ -152,23 +155,126 @@
                     </div>
                 </div>
             </div>
-            <div class="column-box mb-4">
-                <h5 class="title-sm mb-2">Bio</h5>
-                <div class="user-profile-bio">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</div>      
+            <div class="column-box mb-4" wire:ignore>
+                <h5 class="title-sm mb-2">Bio <i class='bx bx-pencil edit-bio' ></i> </h5>
+                <div class="user-profile-bio">
+                    {!! $user->details->bio ?? 'Not Added' !!}
+                </div>      
+                <button class="btn btn-primary btn-sm mt-4 update-bio-btn d-none" wire:click="updateBio">Update</button>
             </div>
-            <div class="column-box mb-4">
-                <h5 class="title-sm mb-2">Skils</h5>
-                <div class="btn-list">
-                    <span class="btn-batch">Photoshop</span><span class="btn-batch">HTML</span><span class="btn-batch">jQuery</span><span class="btn-batch">Ajax</span>
+            <div class="column-box mb-4" wire:ignore>
+                <h5 class="title-sm mb-2">Skils <i class='bx bx-plus add-skills' ></i></h5>
+                <div class="btn-list skills-list">
+                    @if($user->details->skills)
+                        @foreach(json_decode($user->details->skills) as $skill)
+                            <span class="btn-batch">{{ $skill }}</span>
+                        @endforeach
+                    @else
+                        <span>Not Added</span>
+                    @endif
                 </div>
-            </div>
-            <div class="column-box">
-                <h5 class="title-sm mb-2">Experience</h5>
-                <div class="btn-list">
-                    <span>10 Years as Web Designer</span>
+                @php
+                    $skills = $user->details->skills ?? '[]';
+                    // convert to array
+                    $skills = json_decode($skills);
+                    $skills = implode(',', $skills);
+                    // dd($skills);
+                @endphp
+                <div class="skills-input d-none">
+                    <input name='skills' value='{{ $skills }}' autofocus >
+                    <button class="btn btn-primary " wire:click="updateSkills">Save</button>
                 </div>
             </div>
         </div>
     </div>
     <livewire:components.add-user @saved="$refresh" />
 </div>
+
+@assets
+<script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>
+<script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
+@endassets
+
+
+@script
+<script>
+    $(document).ready(function(){
+
+        // bio
+        $('.edit-bio').click(function(){
+            $(".update-bio-btn").removeClass('d-none');
+            $('.user-profile-bio').summernote({
+                height: 200,
+                toolbar: [
+                    ['style', ['style']],
+                    ['font', ['bold', 'underline', 'clear']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['table', ['table']],
+                    ['insert', ['link', 'picture', 'video']],
+                    ['view', ['fullscreen', 'codeview', 'help']]
+                ],
+                callbacks: {
+                    onChange: function(contents, $editable) {
+                        @this.set('bio', contents);
+                    }
+                }
+            });
+        });
+        $('.update-bio-btn').click(function(){
+            $('.user-profile-bio').summernote('destroy');
+            $(".update-bio-btn").addClass('d-none');
+        });
+
+        // skills
+        var input = document.querySelector('input[name=skills]');
+        new Tagify(input)
+
+        input.addEventListener('change', function(e){
+            let skillsArray = e.target.value;
+
+            skillsArray = JSON.parse(skillsArray);
+            skillsArray = skillsArray.map(function(item){
+                return item.value;
+            });
+
+            skills = JSON.stringify(skillsArray);
+
+            @this.set('skills', skills);
+        });
+
+        $('.add-skills').click(function(){
+            $('.skills-input').removeClass('d-none');
+            $(".skills-list").addClass('d-none');
+            $('.skills-input input').focus();
+        });
+
+        $('.skills-input button').click(function(){
+            $(".skills-list").removeClass('d-none');
+            $('.skills-input').addClass('d-none');
+            let skills = $('.skills-input input').val();
+            skills = JSON.parse(skills);
+            let html = '';
+            skills.forEach(function(skill){
+                html += '<span class="btn-batch">'+skill.value+'</span>';
+            });
+            $('.skills-list').html(html);
+        });
+
+        // DOB
+
+        $(".dob").flatpickr({
+            altFormat: "F j, Y",
+            dateFormat: "Y-m-d",
+            onChange: function(selectedDates, dateStr, instance) {
+                @this.updateDob(dateStr);
+                $(".dob").html(dateStr);
+            }
+        });
+
+
+        
+    });
+</script>
+@endscript
