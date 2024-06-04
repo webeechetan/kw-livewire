@@ -132,8 +132,6 @@
 
             document.addEventListener('client-added', event => {
                 $('#add-client-modal').modal('hide');
-                $('body').removeClass('modal-open');
-                $('.modal-backdrop').remove();
                 $('.client-form-text').html('Add Client');
                 $('.client-form-btn').html('Add Client');
                 $('.old-image').addClass('d-none');

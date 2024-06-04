@@ -15,7 +15,7 @@
         height: calc(100vh - 55px);
         overflow-y: auto;
         .archived_content {
-            .dashboard-head-title-wrap {
+            .dashboard-head-title-wrap, .main-body-header-title, .column-title {
                 color: $danger;
             }
         }
@@ -1667,4 +1667,13 @@
     overflow-x: auto;
     @include custom_scrollbar;
     padding-right: 12px;
+}
+
+/* ----- User Skill ----- */
+.skills-input .tagify__tag:focus div::before, 
+.skills-input .tagify__tag:hover:not([readonly]) div::before {
+    --tag-bg-inset: 0;
+}
+.skills-input .form-control {
+    min-height: inherit;
 }

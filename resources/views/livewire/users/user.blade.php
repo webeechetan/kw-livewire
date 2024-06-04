@@ -13,7 +13,7 @@
                 <div class="user-profile">
                     <div class="user-profile-img"><img src="/storage/images/user_pro.jpg" alt=""></div>
                     <h3 class="main-body-header-title mb-2">{{ $user->name }}</h3>
-                    <div><i class="bx bx-envelope me-1 text-secondary"></i> {{$user->email}}</div>
+                    <div class="d-flex align-items-center justify-content-center mb-2"><i class="bx bx-envelope me-1 text-secondary"></i> {{$user->email}}</div>
                     <div class="row">
                         <div class="col-lg-8 mx-auto">
                             <div class="row align-items-center justify-content-center gap-2">
@@ -34,7 +34,7 @@
                     </div>
                 </div>
                 <hr>
-                <div class="row align-items-center mb-2">
+                <div class="row align-items-center mb-3">
                     <div class="col"><span><i class='bx bx-cake text-warning'></i></span> Date Of Birth</div>
                     <div class="col dob">
                         <i class='bx bx-calendar'></i>
@@ -156,14 +156,16 @@
                 </div>
             </div>
             <div class="column-box mb-4" wire:ignore>
-                <h5 class="title-sm mb-2">Bio <i class='bx bx-pencil edit-bio' ></i> </h5>
+                <h5 class="title-sm mb-2">Bio <a href="javascript:;" class="btn-link"><i class='bx bx-pencil edit-bio' ></i></a></h5>
+                <hr>
                 <div class="user-profile-bio">
                     {!! $user->details->bio ?? 'Not Added' !!}
                 </div>      
-                <button class="btn btn-primary btn-sm mt-4 update-bio-btn d-none" wire:click="updateBio">Update</button>
+                <button class="btn btn-primary mt-2 update-bio-btn d-none" wire:click="updateBio">Update</button>
             </div>
             <div class="column-box mb-4" wire:ignore>
-                <h5 class="title-sm mb-2">Skils <i class='bx bx-plus add-skills' ></i></h5>
+                <h5 class="title-sm mb-2">Skils <a href="javascript:;" class="btn-link"><i class='bx bx-plus add-skills' ></i></a></h5>
+                <hr>
                 <div class="btn-list skills-list">
                     @if($user->details->skills)
                         @foreach(json_decode($user->details->skills) as $skill)
@@ -181,8 +183,8 @@
                     // dd($skills);
                 @endphp
                 <div class="skills-input d-none">
-                    <input name='skills' value='{{ $skills }}' autofocus >
-                    <button class="btn btn-primary " wire:click="updateSkills">Save</button>
+                    <div><input class="form-control" name='skills' value='{{ $skills }}' autofocus ></div>
+                    <button class="btn btn-primary mt-3" wire:click="updateSkills">Save</button>
                 </div>
             </div>
         </div>

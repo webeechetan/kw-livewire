@@ -1427,7 +1427,7 @@ hr.space-sm {
   border-radius: 4px;
   padding: 7px 10px;
   transition: all 0.3s ease;
-  background-color: transparent;
+  background-color: #fff;
   display: inline-block;
   line-height: 100%;
 }
@@ -3084,7 +3084,7 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   height: calc(100vh - 55px);
   overflow-y: auto;
 }
-.main-body-content .archived_content .dashboard-head-title-wrap {
+.main-body-content .archived_content .dashboard-head-title-wrap, .main-body-content .archived_content .main-body-header-title, .main-body-content .archived_content .column-title {
   color: #ff0000;
 }
 @media (max-width: 1440px) {
@@ -4557,6 +4557,16 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
 .activity-recent-scroll::-webkit-scrollbar {
   width: 6px;
   background-color: transparent;
+}
+
+/* ----- User Skill ----- */
+.skills-input .tagify__tag:focus div::before,
+.skills-input .tagify__tag:hover:not([readonly]) div::before {
+  --tag-bg-inset: 0;
+}
+
+.skills-input .form-control {
+  min-height: inherit;
 }
 
 /*# sourceMappingURL=app.css.map */

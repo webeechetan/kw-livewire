@@ -95,16 +95,16 @@
                 <div class="column-box font-500 bg-light mb-2">
                     <div class="row align-items-center">
                         <div class="col"><span><i class='bx bx-layer text-secondary' ></i></span> Created By</div>
-                        {{-- <div class="col text-secondary">{{ $project->createdBy->name }}</div> --}}                        
+                        <div class="col text-secondary">{{ $project->createdBy->name }}</div>                   
                     </div>
                 </div>
-                <div class="column-box mb-2">
+                <div class="column-box font-500 mb-2">
                     <div class="row align-items-center">
                         <div class="col"><span><i class='bx bx-calendar-alt text-primary' ></i></span> Start Date</div>
                         <div class="col text-secondary">{{ \Carbon\Carbon::parse($project->start_date)->format('d M-Y') }}</div>
                     </div>
                 </div>
-                <div class="column-box bg-light mb-2">
+                <div class="column-box font-500 bg-light mb-2">
                     <div class="row align-items-center">
                         <div class="col"><span><i class='bx bx-calendar text-primary' ></i></span> Due Date</div>
                         <div class="col project-due-date">
@@ -116,13 +116,13 @@
                         </div>
                     </div>
                 </div>
-                <div class="column-box mb-2">
+                <div class="column-box font-500 mb-2">
                     <div class="row align-items-center">
                         <div class="col"><span><i class='bx bx-time text-success'></i></span> Duration</div>
                         <div class="col text-secondary">{{ \Carbon\Carbon::parse($project->due_date)->diffInDays($project->start_date)}} Days</div>
                     </div>
                 </div>
-                <div class="column-box bg-light">
+                <div class="column-box font-500 bg-light">
                     <div class="row">
                         <div class="col"><span><i class='bx bx-layer text-primary'></i></span> Attachements</div>
                         <div class="col">
@@ -191,7 +191,7 @@
                         <div class="column-head"><div class="column-title">Teams</div></div>
                         <div class="btn-list mt-3">
                             @foreach($projectTeams as $team)
-                                <a href="javascript:" class="btn-batch btn-batch-profile">{{ $team->name }} </a>
+                                <a href="javascript:" class="btn-batch btn-batch-profile">{{ $team->name ?? 'Not Added' }} </a>
                             @endforeach
                         </div>
                     </div>
@@ -201,18 +201,12 @@
     </div>
     <div class="column-box mt-3">
         <div wire:ignore class="project-description-container">
-            <div class="column-title d-flex align-items-center mb-3">
-                Description 
-                <a href="javascript:" class="ms-2 d-inline-flex edit-description">
-                    <i class='bx bx-pencil text-primary'></i>
-                </a>
-                <button class="btn btn-primary btn-sm update-btn d-none" wire:click="updateDescription('{{ $project->description }}')">
-                    Update
-                </button>
-            </div>
+            <div class="column-title mb-2">Description <a href="javascript:" class="btn-link edit-description"><i class='bx bx-pencil'></i></a></div>
+            <hr>
             <div class="project-description txtarea">
-                {!! $project->description !!}
+                {!! $project->description ?? 'Not Added' !!}
             </div>
+            <button class="btn btn-primary update-btn d-none mt-2" wire:click="updateDescription('{{ $project->description }}')">Update</button>
         </div>
         {{-- <a href="javascript:" class="btn_link btn_link-primary">see more</a> --}}
     </div>
