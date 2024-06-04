@@ -51,7 +51,7 @@
         <div class="col-sm-3">
             <div class="column-box">
                 <label for="" class="font-500"><i class='bx bx-calendar-alt text-success' ></i> Filter By Date</label>
-                <div class="row align-items-center mt-2">
+                <div class="row align-items-center mt-2" wire:ignore>
                     <div class="col mb-4 mb-md-0">
                         <a href="javascript:;" class="btn w-100 btn-sm btn-border-secondary project_start_date"><i class='bx bx-calendar-alt' ></i> Start Date</a>
                     </div>
@@ -63,24 +63,47 @@
             </div>
         </div>
     </div>
+    @php
+        $tasks = $team->tasks;
+        
+        if($byClient != 'all'){
+            $tasks = $tasks->where('client_id', $byClient);
+        }
+
+        if($byProject != 'all'){
+            $tasks = $tasks->where('project_id', $byProject);
+        }
+
+        if($byUser != 'all'){
+            $tasks = \App\Models\Task::whereHas('users', function($query) use($byUser){
+                $query->where('user_id', $byUser);
+            });
+            $tasks = $tasks->get();
+        }
+
+        if($project_start_date != null && $project_due_date != null){
+            $tasks = $tasks->where('due_date', '>=', $project_start_date)->where('due_date', '<=', $project_due_date);
+        }
+
+    @endphp
     <div class="project-tabs mb-3">
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="project-all-tab" data-bs-toggle="tab" data-bs-target="#project-all-tab-pane" type="button" role="tab" aria-controls="project-all-tab-pane" aria-selected="true">All <span class="ms-2">{{ $team->tasks->count() }}</span></button>
+                <button class="nav-link active" id="project-all-tab" data-bs-toggle="tab" data-bs-target="#project-all-tab-pane" type="button" role="tab" aria-controls="project-all-tab-pane" aria-selected="true">All <span class="ms-2">{{ $tasks->count() }}</span></button>
             </li>
             <li class="nav-item" role="presentation">
                 <button class="nav-link" id="project-active-tab" data-bs-toggle="tab" data-bs-target="#project-active-tab-pane" type="button" role="tab" aria-controls="project-active-tab-pane" aria-selected="false" tabindex="-1">Active <span class="ms-2">
-                    {{ $team->projects->where('status','active')->count() }}  {{$activeTasks}} 
+                    {{ $tasks->whereIn('status',['pending','assigned','in_progress','in_review'])->count() }}  
                 </span></button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link" id="project-done-tab" data-bs-toggle="tab" data-bs-target="#project-done-tab-pane" type="button" role="tab" aria-controls="project-done-tab-pane" aria-selected="false" tabindex="-1">Completed <span class="ms-2">{{ $team->tasks->where('status','completed')->count() }} {{$completedTasks}}  </span></button>
+                <button class="nav-link" id="project-done-tab" data-bs-toggle="tab" data-bs-target="#project-done-tab-pane" type="button" role="tab" aria-controls="project-done-tab-pane" aria-selected="false" tabindex="-1">Completed <span class="ms-2">{{ $tasks->where('status','completed')->count() }}  </span></button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link" id="project-overdue-tab" data-bs-toggle="tab" data-bs-target="#project-overdue-tab-pane" type="button" role="tab" aria-controls="project-overdue-tab-pane" aria-selected="false" tabindex="-1">Overdue <span class="ms-2">{{ $team->projects->where('status','overdue')->count() }} {{$overDueTasks}}  </span></button>
+                <button class="nav-link" id="project-overdue-tab" data-bs-toggle="tab" data-bs-target="#project-overdue-tab-pane" type="button" role="tab" aria-controls="project-overdue-tab-pane" aria-selected="false" tabindex="-1">Overdue <span class="ms-2">{{ $tasks->where('status','overdue')->count() }} </span></button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link" id="project-archived-tab" data-bs-toggle="tab" data-bs-target="#project-archived-tab-pane" type="button" role="tab" aria-controls="project-archived-tab-pane" aria-selected="false" tabindex="-1">Archive <span class="ms-2">{{ $team->projects->where('status','archived')->count() }} {{$cancelledTasks}}  </span></button>
+                <button class="nav-link" id="project-archived-tab" data-bs-toggle="tab" data-bs-target="#project-archived-tab-pane" type="button" role="tab" aria-controls="project-archived-tab-pane" aria-selected="false" tabindex="-1">Archive <span class="ms-2">{{ $tasks->where('status','archived')->count() }} </span></button>
             </li>
         </ul>
     </div>
@@ -105,26 +128,6 @@
             </div>
         </div>
        
-        @php
-            $tasks = $team->tasks;
-            if($byClient != 'all'){
-                $tasks = $tasks->where('client_id', $byClient);
-            }
-
-            if($byProject != 'all'){
-                $tasks = $tasks->where('project_id', $byProject);
-            }
-
-            // if($byUser != 'all'){
-            //     $user = User::find($this->byUser);
-            //     if($user){
-            //         $tasksIds = $user->tasks->pluck('id')->toArray();
-            //         $tasks->whereIn('id',$tasksIds);
-            //     }
-            // }
-
-        @endphp
-
         @foreach ($tasks as $task)
             <div class="taskList scrollbar">
                 <div class="taskList_row">
@@ -148,10 +151,13 @@
                         <div class="col text-center">
                             <div class="taskList_col">
                                 <div class="avatarGroup avatarGroup-overlap">
+                                    @foreach($task->users as $user)
                                     <a href="#" class="avatarGroup-avatar">
-                                        <span class="avatar avatar-sm avatar-pink" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{$task->assignedBy->initials}}">{{$task->assignedBy->name}}</span>
-                                    </a>                                
+                                        <span class="avatar avatar-sm avatar-pink" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{$user->initials}}">{{$user->initials}}</span>
+                                    </a>       
+                                    @endforeach                         
                                 </div>
+                                
                             </div>
                         </div>
                     </div>
