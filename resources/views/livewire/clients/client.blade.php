@@ -146,18 +146,39 @@
         </div>
     </div>
     <div class="column-box">
-        <div class="column-title mb-3">Description</div>
-        <div>
-            @if($client->description)
-                {!! $client->description !!}
-            @else
-                <p class="text-muted">No Description Available</p>
-            @endif
+        <div class="column-title mb-3">Description <a href="javascript:;" class="btn-link"><i class='bx bx-pencil edit-des' ></i></a></div>
+        <hr>
+        <div class="user-profile-bio">
+            {!! $client->description ?? 'Not Added' !!}
         </div>
+        <button class="btn btn-primary mt-2 update-des-btn d-none" wire:click="updateClient">Update</button>
     </div>
 </div>
 @push('scripts')
 <script>
-    
+    $('.edit-des').click(function(){
+        $(".update-des-btn").removeClass('d-none');
+        $('.user-profile-bio').summernote({
+            height: 200,
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'underline', 'clear']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['table', ['table']],
+                ['insert', ['link', 'picture', 'video']],
+                ['view', ['fullscreen', 'codeview', 'help']]
+            ],
+            callbacks: {
+                onChange: function(contents, $editable) {
+                    @this.set('bio', contents);
+                }
+            }
+        });
+    });
+    $('.update-des-btn').click(function(){
+        $('.user-profile-bio').summernote('destroy');
+        $(".update-des-btn").addClass('d-none');
+    });
 </script>
 @endpush

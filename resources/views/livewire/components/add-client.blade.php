@@ -117,11 +117,6 @@
     </div>
 </div>
 
-@assets
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-@endassets
-
 @script
     <script>
         $(document).ready(function() {
@@ -137,8 +132,6 @@
 
             document.addEventListener('client-added', event => {
                 $('#add-client-modal').modal('hide');
-                $('body').removeClass('modal-open');
-                $('.modal-backdrop').remove();
                 $('.client-form-text').html('Add Client');
                 $('.client-form-btn').html('Add Client');
                 $('.old-image').addClass('d-none');

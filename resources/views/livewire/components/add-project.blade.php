@@ -92,10 +92,8 @@
     <script>
         $(document).ready(function() {
 
-
             document.addEventListener('project-added', event => {
                 $('#add-project-modal').modal('hide');
-                $('.modal-backdrop').remove();
                 $('.client-form-text').html('Add Client');
                 $('.project-form-text').html('Add Project');
                 $('.project-form-btn').html('Add Project');

@@ -150,7 +150,7 @@
         border-radius: $border_radius_xs;
         padding: $spacing_btn_xs;
         transition: $ease_03;
-        background-color: transparent;
+        background-color: $white;
         display: inline-block;
         line-height: 100%;
 
@@ -205,13 +205,12 @@
             }
         }
         &-archived {
-            border: 1px solid $grey;
-            background-color: $light;
-            color: $text_color;
+            border: 1px solid $danger;
+            color: $danger;
             &:hover, &.active {
-                background-color: $grey;
-                border-color: $text_color;
-                color: $text_color;
+                background-color: $danger;
+                border-color: $danger;
+                color: $white;
             }
         }
 

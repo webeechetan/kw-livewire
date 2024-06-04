@@ -69,7 +69,7 @@
     </div>
 
     <!-- Dashboard Body -->
-    <div class="row">
+    <div class="row mb-2">
         <div class="col-md-6">
             <div class="dashboard_filters d-flex flex-wrap gap-4 align-items-center mb-4">
              
@@ -115,7 +115,7 @@
                     <a href="{{ route('client.profile', $client->id ) }}" class="card_style-open"><i class='bx bx-chevron-right'></i></a>
                     <div class="card_style-head card_style-client-head mb-3">
                         @if($client->image != 'default.png')
-                            <div><img src="{{ asset('storage/'.$client->image) }}" alt="" class="img-fluid" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{ $client->name }}"></div>
+                            <div class="avatar"><img src="{{ asset('storage/'.$client->image) }}" alt="" class="img-fluid" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{ $client->name }}"></div>
                         @else
                             <div class="avatar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{ $client->name }}">{{ $client->initials }}</div>
                         @endif
@@ -181,24 +181,9 @@
             </div>
         @endif
     </div>
-    <hr>
     <!-- Pagination -->
     {{ $clients->links(data: ['scrollTo' => false]) }}
 
     <!-- Client Modal Component -->
     <livewire:components.add-client @saved="$refresh" />
 </div>
-
-@assets
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-@endassets
-
-@script
-<script>
-    $(document).ready(function(){
-        console.log('ready');
-        $('[data-bs-toggle="tooltip"]').tooltip();
-        $('[data-bs-toggle="dropdown"]').dropdown();
-    });
-</script>
-@endscript

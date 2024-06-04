@@ -16,8 +16,8 @@
                             </div>
                         @endif
                         <div>
-                            <h3 class="main-body-header-title mb-2 @if($client->trashed()) archived_content @endif">{{ $client->visible_name }}</h3>
-                            <div class="text-sm">{{ \Carbon\Carbon::parse($client->created_at)->format('d M Y') }}</div>
+                            <h3 class="main-body-header-title mb-2">{{ $client->visible_name }}</h3>
+                            <div class="text-sm">Created by <span class="text-secondary font-500">{{ \Carbon\Carbon::parse($client->created_at)->format('d M Y') }}</span></div>
                         </div>
                     </div>
                 </div>

@@ -1,24 +1,116 @@
 <div class="container">
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a wire:navigate href="{{ route('dashboard') }}"><i class='bx bx-line-chart'></i> Dashboard</a></li>
+            <li class="breadcrumb-item"><a wire:navigate href="{{ route('task.index') }}">All Projects</a></li>
+            <li class="breadcrumb-item active" aria-current="page">List</li>
+        </ol>
+    </nav>
+
     <!-- Dashboard Header -->
-    <div class="main-body-header">
+    <div class="dashboard-head pb-0 mb-4">
         <div class="row align-items-center">
-            <div class="col">
-                <h3 class="main-body-header-title mb-3">All Tasks</h3>
-                <div class="tabNavigationBar-tab border-bottom-0 border_style">
-                <a class="tabNavigationBar-item ps-0 active" wire:navigate href="{{ route('task.list-view') }}"><i class='bx bx-list-ul' ></i> List</a> 
-                <a class="tabNavigationBar-item" wire:navigate href="{{ route('task.index') }}"><i class='bx bx-columns' ></i> Board</a>
-                </div>
+            <div class="col d-flex align-items-center gap-3">
+                <h3 class="main-body-header-title mb-0">All Tasks</h3>
+                <span class="text-light">|</span>
+                @can('Create Task')
+                    <a data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" href="javascript:void(0);" class="btn-border btn-border-primary toggleForm"><i class="bx bx-plus"></i> Add Task</a>
+                @endcan
             </div>
-            <div class="text-end col">
+            <div class="col">
                 <div class="main-body-header-right">
-                    <div class="d-flex gap-2 justify-content-end">
-                        @can('Create Task')
-                            <a href="javascript:void(0);" class="btn-border btn-border-primary toggleForm"><i class='bx bx-plus'></i> Add Task</a>
-                        @endcan
-                        <a class="btn-border btn-border-secondary" href="#"><i class='bx bx-filter' ></i> Filter</a>
+                    <form class="search-box" wire:submit="search" action="">
+                        <input wire:model="query" type="text" class="form-control" placeholder="Search Task">
+                        <button type="submit" class="search-box-icon"><i class='bx bx-search me-1'></i> Search</button>
+                    </form>
+                    <div class="main-body-header-filters">
+                        <div class="cus_dropdown">
+                            <div class="cus_dropdown-icon btn-border btn-border-secondary"><i class='bx bx-filter-alt' ></i> Filter</div>
+                            <div class="cus_dropdown-body cus_dropdown-body-widh_l">
+                                <div class="cus_dropdown-body-wrap">
+                                    <div class="filterSort">
+                                        <h5 class="filterSort-header"><i class='bx bx-sort-down text-primary' ></i> Sort By</h5>
+                                        <h5 class="filterSort-header mt-4"><i class='bx bx-calendar-alt text-primary' ></i> Filter By Date</h5>
+                                        <div class="row align-items-center mt-2">
+                                            <div class="col mb-4 mb-md-0">
+                                                <a href="javascript:;" class="btn w-100 btn-sm btn-border-secondary project_start_date"><i class='bx bx-calendar-alt' ></i> Start Date</a>
+                                            </div>
+                                            <div class="col-auto text-center font-500 mb-4 mb-md-0 px-0">To</div>
+                                            <div class="col">
+                                                <a href="javascript:;" class="btn w-100 btn-sm btn-border-danger project_due_date"><i class='bx bx-calendar-alt' ></i> Due Date</a>
+                                            </div>
+                                        </div>
+                                        <h5 class="filterSort-header mt-4"><i class='bx bx-calendar-alt text-primary' ></i> Filter By Status</h5>
+                                        <ul class="filterSort_btn_group list-none">
+                                            <li class="filterSort_item"><a wire:navigate="" href="#" class="btn-batch active">All</a></li>
+                                            <li class="filterSort_item"><a wire:navigate="" href="#" class="btn-batch">Active</a></li>
+                                            <li class="filterSort_item"><a wire:navigate="" href="#" class="btn-batch">Overdue</a></li>
+                                            <li class="filterSort_item"><a wire:navigate="" href="#" class="btn-batch">Completed</a></li>
+                                            <li class="filterSort_item"><a wire:navigate="" href="#" class="btn-batch">Archived</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+        </div>
+        <hr class="mb-0">
+        <!-- Tabs -->
+        <div class="tabNavigationBar-tab border_style my-2">
+            <a href="{{ route('task.list-view') }}" class="tabNavigationBar-item @if(request()->routeIs('task.list-view')) active @endif" wire:navigate ><i class='bx bx-list-ul'></i> List</a>
+            <a href="{{ route('task.index') }}" class="tabNavigationBar-item @if(request()->routeIs('task.index')) active @endif" wire:navigate><i class='bx bx-columns' ></i> Board</a>
+            @if(auth()->user()->is_manager)
+            <div class="form-check form-switch">
+                <input class="form-check-input task-switch" type="checkbox" role="switch" id="flexSwitchCheckChecked">
+                <label class="form-check-label task-switch-text" for="flexSwitchCheckChecked">
+                    @if($ViewTasksAs == 'manager')
+                    Showing {{ auth()->user()->myTeam->name }} Tasks
+                    @else
+                    Showing My Tasks
+                    @endif
+                </label>
+            </div>
+            @endif
+        </div>
+    </div>
+
+    <div class="btn-list">
+        <a href="javascript:" class="btn-border btn-border-primary active">0 <span>|</span> All</a>
+        <a href="javascript:" class="btn-border btn-border-primary">0 <span>|</span> Assigned</a>
+        <a href="javascript:" class="btn-border btn-border-secondary">0 <span>|</span> Accepted</a>
+        <a href="javascript:" class="btn-border btn-border-warning">0 <span>|</span> In Review</a>
+        <a href="javascript:" class="btn-border btn-border-success">0 <span>|</span> Completed</a>
+        <a href="javascript:" class="btn-border btn-border-danger">0 <span>|</span> Overdue</a>
+    </div>
+
+    <div class="taskList-dashbaord_header">
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="taskList-dashbaord_header_title taskList_col ms-2">Task Name</div>
+            </div>
+            <div class="col text-center">
+                <div class="taskList-dashbaord_header_title taskList_col">Created Date</div>
+            </div>
+            <div class="col text-center">
+                <div class="taskList-dashbaord_header_title taskList_col">Due Date</div>
+            </div>
+            <div class="col text-center">
+                <div class="taskList-dashbaord_header_title taskList_col">Project</div>
+            </div>
+            <div class="col text-center">
+                <div class="taskList-dashbaord_header_title taskList_col">Assignee</div>
+            </div>
+            <div class="col text-center">
+                <div class="taskList-dashbaord_header_title taskList_col">Status</div>
+            </div>
+        </div>
+    </div>
+    <div class="taskList scrollbar">
+        <div>
+           
         </div>
     </div>
 
@@ -319,8 +411,8 @@
                 </div>
                 <div class="col-md-5">
                     <div class="d-flex gap-2 justify-content-end">
-                        <a href="javascript:;" wire:click="store" class="btn-border btn-border-sm btn-border-success"><i class='bx bx-check'></i> Save</a>
-                        <a href="javascript:;" wire:click="toggleForm" class="btn-border btn-border-sm btn-border-primary"><i class='bx bx-x' ></i> Close</a>
+                        <a href="javascript:;" wire:click="store" class="btn-border btn-border-success"><i class='bx bx-check'></i> Save</a>
+                        <a href="javascript:;" wire:click="toggleForm" class="btn-border btn-border-primary"><i class='bx bx-x' ></i> Close</a>
                     </div>
                 </div>
             </div>
@@ -413,9 +505,9 @@
                 </div>
                 <div class="col-md-5">
                     <div class="d-flex gap-2 justify-content-end">
-                        <a href="javascript:;" wire:click="updateTask" class="btn-border btn-border-sm btn-border-success"><i class='bx bx-check'></i> Save</a>
-                        <a href="{{route('task.list-view')}}" wire:navigate class="btn-border btn-border-sm btn-border-primary"><i class='bx bx-x' ></i> Close</a>
-                        <a href="{{ route('task.index') }}" wire:navigate class="btn-border btn-border-sm btn-border-danger"><i class='bx bx-trash' ></i> Delete</a>
+                        <a href="javascript:;" wire:click="updateTask" class="btn-border btn-border-success"><i class='bx bx-check'></i> Save</a>
+                        <a href="{{route('task.list-view')}}" wire:navigate class="btn-border btn-border-primary"><i class='bx bx-x' ></i> Close</a>
+                        <a href="{{ route('task.index') }}" wire:navigate class="btn-border btn-border-danger"><i class='bx bx-trash' ></i> Delete</a>
                     </div>
                 </div>
             </div>

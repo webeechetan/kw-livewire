@@ -1,22 +1,26 @@
 /*---- Main Body Style ----*/
 .main-body {
-    background-color: $dashboard_bg;
+    background-color: $light;
     display: flex;
     flex-wrap: wrap;
     position: relative;
     overflow: hidden;
+    padding-top: 55px;
+    height: 100vh;
     
     /*---- Content Body Style ----*/
     &-content {
-        width: calc(100% - 300px);
+        width: calc(100% - 275px);
         padding: $spacing_sm;
+        height: calc(100vh - 55px);
+        overflow-y: auto;
         .archived_content {
-            .dashboard-head-title-wrap {
-                opacity: 0.6;
+            .dashboard-head-title-wrap, .main-body-header-title, .column-title {
+                color: $danger;
             }
         }
         @media (max-width: 1440px) {
-            width: calc(100% - 200px);
+            width: calc(100% - 230px);
         }
     }
 
@@ -206,6 +210,15 @@
 
         &::-webkit-scrollbar {
             height: 100px;
+        }
+    }
+
+    &-primary {
+        &::-webkit-scrollbar-track {
+            background-color: $brand_light;
+        }
+        &::-webkit-scrollbar-thumb {
+            background-color: $brand;
         }
     }
 }
@@ -1038,7 +1051,7 @@
     }
 
     .panel-heading.note-toolbar {
-        padding: 10px 10px 10px 37px;
+        padding: 10px;
         border-radius: 4px;
     }
 
@@ -1654,4 +1667,13 @@
     overflow-x: auto;
     @include custom_scrollbar;
     padding-right: 12px;
+}
+
+/* ----- User Skill ----- */
+.skills-input .tagify__tag:focus div::before, 
+.skills-input .tagify__tag:hover:not([readonly]) div::before {
+    --tag-bg-inset: 0;
+}
+.skills-input .form-control {
+    min-height: inherit;
 }
