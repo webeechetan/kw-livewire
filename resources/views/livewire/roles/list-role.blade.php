@@ -29,148 +29,40 @@
 
     <div class="row mb-4">
         @if($roles->isNotEmpty())
-        @foreach($roles as $role)
-        <div class="col-md-3 mt-3">
-            <div class=" card_style card_style-roles h-100">
-                <a wire:navigate="" href="{{ route('role.profile',$role->id) }}" class="card_style-open"><i class='bx bx-chevron-right'></i></a>
-                <div class="card_style-roles-head">
-                    <p class="text-muted mb-2">Total 4 users</p>
-                     <h4>
-                        <a wire:navigate="" href="{{ route('role.profile',$role->id) }}">{{$role->name}}</a>
-                    </h4>
-                </div>
-                <div class="card_style-roles-permission">
-                    <div class="card_style-roles-title mt-2"><span><i class='bx bx-universal-access'></i></span> {{ $role->permissions->count() }}  {{ $role->permissions->count() >1 ? 'Permissions' : 'Permission'}}</div>
-                    <div class="mt-2">
-                        <a class="edit-role" wire:click="emitEditRoleEvent({{$role->id}})"> Edit Role</a>
+            @foreach($roles as $role)
+                <div class="col-md-3 mt-3">
+                    <div class=" card_style card_style-roles h-100">
+                        <a wire:navigate="" href="{{ route('role.profile',$role->id) }}" class="card_style-open"><i class='bx bx-chevron-right'></i></a>
+                        <div class="card_style-roles-head">
+                            <p class="text-muted mb-2">Total 
+                                @php
+                                    $users = \App\Models\User::role($role->name)->count()
+                                @endphp
+                                {{$users}}  {{$users > 1 ? 'users' : 'user'}}
+                            </p>
+                            <h4>
+                                <a wire:navigate="" href="{{ route('role.profile',$role->id) }}">{{$role->name}}</a>
+                            </h4>
                         </div>
-                    <!-- <div class="card_style-roles-list justify-content-center"> -->
-                        @foreach($role->permissions as $permission)
-                            <!-- <div class="card_style-roles-items card_style-roles-permissions">{{ $permission->name }}</div> -->
-                        @endforeach
-                    <!-- </div> --> 
-                </div>              
-            </div>
-        </div>
-        @endforeach
+                        <div class="card_style-roles-permission">
+                            <div class="card_style-roles-title mt-2"><span><i class='bx bx-universal-access'></i></span> {{ $role->permissions->count() }}  {{ $role->permissions->count() >1 ? 'Permissions' : 'Permission'}}</div>
+                            <div class="mt-2">
+                                <a class="edit-role" wire:click="emitEditRoleEvent({{$role->id}})"> Edit Role</a>
+                                </div>
+                        </div>              
+                    </div>
+                </div>
+            @endforeach
         @else
-        <div class="col-md-12">
-            {{-- <h4 class="text text-danger">No Roles found.</h4> --}}
-            <h4 class="text text-danger">No Roles found 
-                @if($query) 
-                with {{$query}}
-              @endif
-            </h4>
-        </div>
+            <div class="col-md-12">
+                <h4 class="text text-danger">No Roles found 
+                    @if($query) 
+                    with {{$query}}
+                @endif
+                </h4>
+            </div>
         @endif
     </div>
-    {{-- <div class="row">
-        <div class="col-lg-12 mt-4">
-            <h3 class="main-body-header-title mb-3">Permission</h3>
-        </div>
-        <div class="col-md-12">
-            <div class="column-box">
-                <div class="taskList-dashbaord_header">
-                    <div class="row">
-                        <div class="col">
-                            <div class="taskList-dashbaord_header_title taskList_col">Name</div>
-                        </div>
-                        <div class="col text-center">
-                            <div class="taskList-dashbaord_header_title taskList_col">Assigned To</div>
-                        </div>
-                        <div class="col text-center">
-                            <div class="taskList-dashbaord_header_title taskList_col">Permission Date</div>
-                        </div>
-                        <div class="col text-center">
-                            <div class="taskList-dashbaord_header_title taskList_col">Action</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="taskList scrollbar">
-                    <div class="taskList_row" wire:key="task-row-100">
-                        <div class="row">
-                            <div class="col">
-                              <div class="taskList_col"><span>Management</span></div>
-                            </div>
-                            <div class="col text-center">
-                                <div class="taskList_col"><span class="badge bg-primary">Administrator</span></div>
-                            </div>
-                            <div class="col text-center">
-                                <div class="taskList_col"><span class="text-nowrap">14 Apr 2021, 8:43 PM</span></div>
-                            </div>
-                            <div class="col text-center">
-                                <div class="taskList_col"><span><button class="btn-icon me-2"><i class="bx bx-edit"></i></button><button class="btn-icon"><i class="bx bx-trash"></i></button></span></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="taskList_row" wire:key="task-row-100">
-                        <div class="row">
-                            <div class="col">
-                              <div class="taskList_col"><span>Billing</span></div>
-                            </div>
-                            <div class="col text-center">
-                                <div class="taskList_col"><span><span class="badge bg-primary">Administrator</span> <span class="badge bg-secondary">Finance</span></span></div>
-                            </div>
-                            <div class="col text-center">
-                                <div class="taskList_col"><span class="text-nowrap">11 Apr 2024, 8:43 PM</span></div>
-                            </div>
-                            <div class="col text-center">
-                                <div class="taskList_col"><span><button class="btn-icon me-2"><i class="bx bx-edit"></i></button><button class="btn-icon"><i class="bx bx-trash"></i></button></span></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="taskList_row" wire:key="task-row-100">
-                        <div class="row">
-                            <div class="col">
-                                <div class="taskList_col"><span>Project Planning</span></div>
-                            </div>
-                            <div class="col text-center">
-                                <div class="taskList_col"><span class="text-nowrap"><span class="badge bg-primary">Administrator</span> <span class="badge bg-secondary">Finance</span></span> <span class="badge bg-warning">Support</span></span></div>
-                            </div>
-                            <div class="col text-center">
-                                <div class="taskList_col"><span class="text-nowrap">2 Apr 2023, 4:43 PM</span></div>
-                            </div>
-                            <div class="col text-center">
-                                <div class="taskList_col"><span><button class="btn-icon me-2"><i class="bx bx-edit"></i></button><button class="btn-icon"><i class="bx bx-trash"></i></button></span></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="taskList_row" wire:key="task-row-100">
-                        <div class="row">
-                            <div class="col">
-                                <div class="taskList_col"><span>Manage Email Sequences</span></div>
-                            </div>
-                            <div class="col text-center">
-                               <div class="taskList_col"><span class="text-nowrap"><span class="badge bg-primary">Administrator</span> <span class="badge bg-info">User</span></span> <span class="badge bg-warning">Support</span></span></div>
-                            </div>
-                            <div class="col text-center">
-                                <div class="taskList_col"><span class="text-nowrap">14 Apr 2021, 8:43 PM</span></div>
-                            </div>
-                            <div class="col text-center">
-                                <div class="taskList_col"><span><button class="btn-icon me-2"><i class="bx bx-edit"></i></button><button class="btn-icon"><i class="bx bx-trash"></i></button></span></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="taskList_row" wire:key="task-row-100">
-                        <div class="row">
-                            <div class="col">
-                                <div class="taskList_col"><span>Management</span></div>
-                            </div>
-                            <div class="col text-center">
-                                 <div class="taskList_col"><span class="text-nowrap"><span class="badge bg-primary">Administrator</span> <span class="badge bg-success">Manager</span></span> <span class="badge bg-warning">Support</span></span></div>
-                            </div>
-                            <div class="col text-center">
-                                <div class="taskList_col"><span class="text-nowrap">14 May 2024, 8:43 PM</span></div>
-                            </div>
-                            <div class="col text-center">
-                                <div class="taskList_col"><span><button class="btn-icon me-2"><i class="bx bx-edit"></i></button><button class="btn-icon"><i class="bx bx-trash"></i></button></span></div>
-                            </div>
-                        </div>`
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> --}}
     <livewire:components.add-role  @saved="$refresh" />
 </div>
 

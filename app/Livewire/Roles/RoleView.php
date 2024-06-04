@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Roles;
 
+use App\Models\User;
 use Livewire\Component;
 use Spatie\Permission\Models\Role;
 
@@ -19,7 +20,6 @@ class RoleView extends Component
     public function mount(Role $role)
     {
         $this->role = $role;
-        // $this->role_users = $role->users;
-        // dd($this->role_users);
+        $this->role_users = User::role($role->name)->get();
     }
 }
