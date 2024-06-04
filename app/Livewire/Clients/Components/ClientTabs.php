@@ -8,6 +8,7 @@ use App\Models\Client;
 class ClientTabs extends Component
 {
     public $client;
+    public $currentRoute;
 
     public function render()
     {
@@ -17,6 +18,8 @@ class ClientTabs extends Component
     public function mount(Client $client)
     {
         $this->client = $client;
+        $this->currentRoute = request()->route()->getName();
+
     }
 
     public function changeClientStatus($status){
