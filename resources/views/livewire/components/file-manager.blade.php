@@ -73,10 +73,10 @@
             <div class="col-md-6">
                 <!-- Filters -->
                 <div class="btn-list mb-3">
-                    <a href="#" class="btn-border btn-border-success"><i class='bx bx-data'></i> All {{ count($selected_files) }}</a>
-                    <a href="#" class="btn-border btn-border-primary"><i class='bx bx-file-blank' ></i> Files {{ count($selected_files) }}</a>
-                    <a href="#" class="btn-border btn-border-warning"><i class='bx bx-folder me-1' ></i> Folders {{ count($selected_directories) }}</a>
-                    <a href="#" class="btn-border btn-border-secondary"><i class='bx bx-link-alt' ></i> Links {{ count($selected_links) }}</a>
+                    <a href="#" class="btn-border btn-border-success"><i class='bx bx-data'></i> All {{ $directories_count + $files_count + $links_count }}</a>
+                    <a href="#" class="btn-border btn-border-primary"><i class='bx bx-file-blank' ></i> Files {{ $files_count  }}</a>
+                    <a href="#" class="btn-border btn-border-warning"><i class='bx bx-folder me-1' ></i> Folders {{ $directories_count }}</a>
+                    <a href="#" class="btn-border btn-border-secondary"><i class='bx bx-link-alt' ></i> Links {{ $links_count }}</a>
                 </div>
             </div>
             <div class="col-md-6">
@@ -136,6 +136,7 @@
                 </div>
             @endforeach
         </div>
+        <div class="mt-3">Selected Count: {{ count($selected_files) + count($selected_directories) + count($selected_links) }}</div>
     </div>
 
     <!-- Add New File modal -->
