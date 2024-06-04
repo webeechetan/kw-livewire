@@ -184,8 +184,20 @@
                                         <div class="progress-bar progress-success" style="width: {{$percentage}}%"><span class="progress-bar-text">{{ round($percentage)}}%</span></div>
                                     </div>
                                     <div class="task_progress-btm-date d-flex justify-content-between">
-                                        <div><i class='bx bx-calendar' ></i> {{ \Carbon\Carbon::parse($project->start_date)->format('d M') }}</div>
-                                        <div class="text-danger"><i class='bx bx-calendar' ></i> {{ \Carbon\Carbon::parse($project->due_date)->format('d M') }}</div>
+                                        <div><i class='bx bx-calendar' ></i> 
+                                            @if($project->start_date)
+                                                {{ \Carbon\Carbon::parse($project->start_date)->format('d M') }}
+                                            @else
+                                                No Start Date
+                                            @endif
+                                        </div>
+                                        <div class="text-danger"><i class='bx bx-calendar' ></i> 
+                                            @if($project->due_date)
+                                                {{ \Carbon\Carbon::parse($project->due_date)->format('d M') }}
+                                            @else
+                                                No Due Date
+                                            @endif
+                                        </div>
                                     </div>
                                 </div>
                             </div>

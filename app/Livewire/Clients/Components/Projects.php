@@ -5,6 +5,7 @@ namespace App\Livewire\Clients\Components;
 use Livewire\Component;
 use App\Models\Client;
 use Database\Factories\ClientFactory;
+use Livewire\Attributes\On; 
 
 class Projects extends Component
 {
@@ -18,9 +19,15 @@ class Projects extends Component
     public $overdue_projects;
     public $archived_projects;
 
+    protected $listeners = ['project-added' => 'refresh', 'project-updated' => 'refresh', 'project-deleted' => 'refresh'];
+
     public function render()
     {
         return view('livewire.clients.components.projects');
+    }
+
+    public function refresh(){
+        $this->mount($this->id);
     }
 
     public function mount($id)

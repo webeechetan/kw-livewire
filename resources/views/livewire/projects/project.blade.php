@@ -101,7 +101,13 @@
                 <div class="column-box font-500 mb-2">
                     <div class="row align-items-center">
                         <div class="col"><span><i class='bx bx-calendar-alt text-primary' ></i></span> Start Date</div>
-                        <div class="col text-secondary">{{ \Carbon\Carbon::parse($project->start_date)->format('d M-Y') }}</div>
+                        <div class="col text-secondary">
+                            @if($project->start_date)
+                                {{ \Carbon\Carbon::parse($project->start_date)->format('d M-Y') }}
+                            @else
+                                <span class="text-danger">Not Set</span>
+                            @endif
+                        </div>
                     </div>
                 </div>
                 <div class="column-box font-500 bg-light mb-2">

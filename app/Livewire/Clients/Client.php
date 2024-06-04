@@ -23,6 +23,8 @@ class Client extends Component
     public $overdue_projects;
     public $archived_projects;
 
+    public $description;
+
     public $project = null;
     public $project_name;
     public $project_start_date;
@@ -41,9 +43,11 @@ class Client extends Component
 
     public function mount($id)
     {
+        
         $this->authorize('View Client');
         $this->client_id = $id;
         $this->client = ClientModel::withTrashed()->with('projects')->find($id);
+        $this->description = $this->client->description;
         $this->active_projects = $this->client->projects()->where('status', 'active')->get();
         $this->completed_projects = $this->client->projects()->where('status', 'completed')->get();
         $this->overdue_projects = $this->client->projects()->where('status', 'overdue')->get();
@@ -61,6 +65,12 @@ class Client extends Component
         })->get();
 
         
+    }
+
+    public function updateDescription(){
+        $this->client->description = $this->description;
+        $this->client->save();
+        $this->dispatch('success', 'Client description updated successfully.');
     }
 
 }

@@ -31,35 +31,48 @@
                                         <h5 class="filterSort-header"><i class='bx bx-sort-down text-primary' ></i> Sort By</h5>
                                         <ul class="filterSort_btn_group list-none">
                                             <li class="filterSort_item">
-                                                <a wire:navigate href="{{ route('task.index',['sort'=>'newest','filter'=>$filter, 'byProject'=> $byProject])}}" class="btn-batch @if($sort == 'newest') active @endif " >Newest</a>
+                                                <a wire:click="$set('sort', 'newest')" class="btn-batch @if($sort == 'newest') active @endif ">Newest</a>
                                             </li>
                                             <li class="filterSort_item">
-                                                <a wire:navigate href="{{ route('task.index',['sort'=>'newest','filter'=>$filter, 'byProject'=> $byProject])}}" class="btn-batch @if($sort == 'newest') active @endif " >Oldest</a>
+                                                <a wire:click="$set('sort', 'oldest')" class="btn-batch @if($sort == 'oldest') active @endif " >Oldest</a>
                                             </li>
                                             <li class="filterSort_item">
-                                                <a wire:navigate href="{{ route('task.index',['sort'=>'a_z','filter'=>$filter, 'byProject'=> $byProject])}}" class="btn-batch @if($sort == 'a_z') active @endif"><i class='bx bx-down-arrow-alt' ></i> A To Z</a>
+                                                <a wire:click="$set('sort', 'a_z')" class="btn-batch @if($sort == 'a_z') active @endif"><i class='bx bx-down-arrow-alt' ></i> A To Z</a>
                                             </li>
                                             <li class="filterSort_item">
-                                                <a wire:navigate href="{{ route('task.index',['sort'=>'z_a','filter'=>$filter, 'byProject'=> $byProject])}}" class="btn-batch @if($sort == 'z_a') active @endif"><i class='bx bx-up-arrow-alt' ></i> Z To A</a>
+                                                <a wire:click="$set('sort', 'z_a')" class="btn-batch @if($sort == 'z_a') active @endif"><i class='bx bx-up-arrow-alt' ></i> Z To A</a>
                                             </li>
                                         </ul>
                                         <h5 class="filterSort-header mt-4"><i class='bx bx-calendar-alt text-primary' ></i> Filter By Date</h5>
                                         <div class="row align-items-center mt-2">
-                                            <div class="col mb-4 mb-md-0">
-                                                <a href="javascript:;" class="btn w-100 btn-sm btn-border-secondary project_start_date"><i class='bx bx-calendar-alt' ></i> Start Date</a>
+                                            <div class="col mb-4 mb-md-0" wire:ignore>
+                                                <a href="javascript:;" class="btn w-100 btn-sm btn-border-secondary start_date">
+                                                    @if($startDate)
+                                                        {{ \Carbon\Carbon::parse($startDate)->format('d M Y') }}
+                                                    @else
+                                                        <i class='bx bx-calendar-alt' ></i> Start Date
+                                                    @endif
+                                                </a>
                                             </div>
-                                            <div class="col-auto text-center font-500 mb-4 mb-md-0 px-0">To</div>
-                                            <div class="col">
-                                                <a href="javascript:;" class="btn w-100 btn-sm btn-border-danger project_due_date"><i class='bx bx-calendar-alt' ></i> Due Date</a>
+                                            <div class="col-auto text-center font-500 mb-4 mb-md-0 px-0">
+                                                To
+                                            </div>
+                                            <div class="col" wire:ignore>
+                                                <a href="javascript:;" class="btn w-100 btn-sm btn-border-danger due_date">
+                                                    @if($dueDate)
+                                                        {{ \Carbon\Carbon::parse($dueDate)->format('d M Y') }}
+                                                    @else
+                                                        <i class='bx bx-calendar-alt' ></i> Due Date
+                                                    @endif
+                                                </a>
                                             </div>
                                         </div>
                                         <h5 class="filterSort-header mt-4"><i class='bx bx-calendar-alt text-primary' ></i> Filter By Status</h5>
                                         <ul class="filterSort_btn_group list-none">
-                                            <li class="filterSort_item"><a wire:navigate="" href="#" class="btn-batch active">All</a></li>
-                                            <li class="filterSort_item"><a wire:navigate="" href="#" class="btn-batch">Active</a></li>
-                                            <li class="filterSort_item"><a wire:navigate="" href="#" class="btn-batch">Overdue</a></li>
-                                            <li class="filterSort_item"><a wire:navigate="" href="#" class="btn-batch">Completed</a></li>
-                                            <li class="filterSort_item"><a wire:navigate="" href="#" class="btn-batch">Archived</a></li>
+                                            <li class="filterSort_item"><a wire:click="$set('status', 'all')" class="btn-batch @if($status == 'all') active @endif">All</a></li>
+                                            <li class="filterSort_item"><a wire:click="$set('status', 'pending')" class="btn-batch @if($status == 'pending') active @endif">Active</a></li>
+                                            <li class="filterSort_item"><a wire:click="$set('status', 'overdue')" class="btn-batch @if($status == 'overdue') active @endif">Overdue</a></li>
+                                            <li class="filterSort_item"><a wire:click="$set('status', 'completed')" class="btn-batch @if($status == 'completed') active @endif">Completed</a></li>
                                         </ul>
                                         <h5 class="filterSort-header mt-4"><i class='bx bx-briefcase text-primary' ></i> Filter By Clients</h5>
                                         <select class="dashboard_filters-select w-100" wire:model.live="byClient" id="">
@@ -82,13 +95,13 @@
                                             <option value="{{ $user->id }}">{{ $user->name }}</option>
                                             @endforeach
                                         </select>
-                                        <h5 class="filterSort-header mt-4"><i class='bx bx-user text-primary'></i> Filter By Team</h5>
+                                        {{-- <h5 class="filterSort-header mt-4"><i class='bx bx-user text-primary'></i> Filter By Team</h5>
                                         <select class="dashboard_filters-select mt-2 w-100" wire:model.live="byTeam" id="">
                                             <option value="all">Select Team</option>
                                             @foreach($teams as $team)
                                             <option value="{{ $team->id }}">{{ $team->name }}</option>
                                             @endforeach
-                                        </select>
+                                        </select> --}}
                                     </div>
                                 </div>
                             </div>
@@ -115,6 +128,60 @@
         </div>
         @endif
     </div>
+
+    <!-- Filters Query Params -->
+    @if($this->doesAnyFilterApplied())
+        <div class="col-md-6">
+            <div class="d-flex flex-wrap gap-2 align-items-center justify-content-end mb-2">
+                <span class="pe-2"><i class='bx bx-filter-alt text-secondary'></i> Filter Results:</span>
+                    @if($sort != 'all')
+                        <span class="btn-batch">
+                            @if($sort == 'newest') Newest @endif
+                            @if($sort == 'oldest') Oldest @endif
+                            @if($sort == 'a_z') A to Z @endif
+                            @if($sort == 'z_a') Z to A @endif
+                            <a wire:click="$set('sort','all')" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
+                    @endif
+
+                    @if($status != 'all')
+                        <span class="btn-batch">
+                            @if($status == 'pending') Active @endif
+                            @if($status == 'overdue') Overdue @endif
+                            @if($status == 'completed') Completed @endif
+                            <a wire:click="$set('status','all')" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
+                    @endif
+                
+                    @if($byClient != 'all')
+                        <span class="btn-batch">{{ $clients->find($byClient)->name }} <a wire:click="$set('byClient','all')" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
+                    @endif
+
+                    @if($byProject != 'all')
+                        <span class="btn-batch">{{ $projects->find($byProject)->name }} <a wire:click="$set('byProject','all')" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
+                    @endif
+
+                    @if($byUser != 'all')
+                        <span class="btn-batch">{{ $users->find($byUser)->name }} <a wire:click="$set('byUser','all')" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
+                    @endif
+
+                    @if($startDate)
+                        <span class="btn-batch">{{ \Carbon\Carbon::parse($startDate)->format('d M Y') }} <a wire:click="$set('startDate','')" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
+                    @endif
+
+                    @if($dueDate)
+                        <span class="btn-batch">{{ \Carbon\Carbon::parse($dueDate)->format('d M Y') }} <a wire:click="$set('dueDate','')" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
+                    @endif
+
+                    
+                    
+                    <a href="{{ route('task.index') }}" class="text-danger d-flex align-items-center">Reset <span class="ms-1 d-inline-flex"><i class='bx bx-refresh'></i></span></a>
+                </div>
+
+                
+
+
+        </div>
+    @endif
+
     <!-- Kanban -->
     <div class="kanban_bord">
         <div class="kanban_bord_body_columns" wire:sortable-group="updateTaskOrder">
@@ -251,6 +318,24 @@
         }else{
             // $(".task-switch-text").text('Show My Tasks');
             @this.set('ViewTasksAs', 'user');
+        }
+    });
+
+    $(".start_date").flatpickr({
+        altFormat: "F j, Y",
+        dateFormat: "Y-m-d",
+        onClose: function(selectedDates, dateStr, instance){
+            @this.set('startDate', dateStr);
+            $(".start_date").text(dateStr);
+        }
+    });
+
+    $(".due_date").flatpickr({
+        altFormat: "F j, Y",
+        dateFormat: "Y-m-d",
+        onClose: function(selectedDates, dateStr, instance){
+            @this.set('dueDate', dateStr);
+            $(".due_date").text(dateStr);
         }
     });
     
