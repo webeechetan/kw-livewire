@@ -14,6 +14,7 @@
     </nav>
     <livewire:teams.components.teams-tab :team="$team" @saved="$refresh"/>
     <!--- Dashboard Body --->
+    
     <div class="row mb-4">
         <div class="col-sm-3">
             <div class="column-box">
@@ -77,7 +78,7 @@
         if($byUser != 'all'){
             $tasks = \App\Models\Task::whereHas('users', function($query) use($byUser){
                 $query->where('user_id', $byUser);
-            });
+            }); 
             
             if($byProject != 'all'){
                 $tasks = $tasks->where('project_id', $byProject);
