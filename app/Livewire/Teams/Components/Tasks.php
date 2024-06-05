@@ -35,7 +35,7 @@ class Tasks extends Component
 
     public $users = [];
     public $projects = [];
-    public $clients = [];
+    public $clients = []; 
     public $teams = [];
     public $tasks= [];
 

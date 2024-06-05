@@ -95,7 +95,7 @@
             <div class="cmnt_sec p-4 d-none">
                 <!-- Activity -->
                 <div class="cmnt_item">
-                    <h5 class="cmnt_item_title"><span><i class='bx bx-line-chart text-primary'></i> Activity</span><span class="text-sm"><i class='bx bx-comment-dots text-secondary'></i> 15 Comments</span></h5>
+                    <h5 class="cmnt_item_title"><span><i class='bx bx-line-chart text-primary'></i> Activity</span><span class="text-sm"><i class='bx bx-comment-dots text-secondary'></i> <span class="total-comments">15</span> Comments</span></h5>
                     <div class="cmnt_item-tabs">
                         <div class="nav nav-tabs" id="nav-tab" role="tablist">
                             <button class="nav-link active" id="nav-internal-tab" data-bs-toggle="tab" data-bs-target="#nav-internal" type="button" role="tab" aria-controls="nav-internal" aria-selected="true">Internal Comment <span class="text-sm ms-2"><i class='bx bx-comment-dots text-secondary'></i> <span class="task-comments-count">07</span></span></button>
@@ -387,6 +387,10 @@
             });
 
             document.addEventListener('edit-task', event => {
+
+                $(".comment-rows").html('');
+                $(".client-comment-rows").html('');
+
                 let task = event.detail[0];
                 $(".cmnt_sec").removeClass('d-none');
                 $(".delete-task-btn").removeClass('d-none');
@@ -435,6 +439,8 @@
                 $(".task-comments-count").html(internal_comments_count);
 
                 $(".client-comment-count").html(event.detail[0].comments.length - internal_comments_count);
+
+                $(".total-comments").html(event.detail[0].comments.length);
 
                 event.detail[0].comments.forEach(comment => {
                     let comment_type = comment.type;

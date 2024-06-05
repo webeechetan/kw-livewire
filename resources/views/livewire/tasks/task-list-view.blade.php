@@ -72,7 +72,9 @@
                                         <h5 class="filterSort-header mt-4"><i class='bx bx-calendar-alt text-primary' ></i> Filter By Status</h5>
                                         <ul class="filterSort_btn_group list-none">
                                             <li class="filterSort_item"><a wire:click="$set('status', 'all')" class="btn-batch @if($status == 'all') active @endif">All</a></li>
-                                            <li class="filterSort_item"><a wire:click="$set('status', 'pending')" class="btn-batch @if($status == 'pending') active @endif">Active</a></li>
+                                            <li class="filterSort_item"><a wire:click="$set('status', 'pending')" class="btn-batch @if($status == 'pending') active @endif">Assigned</a></li>
+                                            <li class="filterSort_item"><a wire:click="$set('status', 'in_progress')" class="btn-batch @if($status == 'in_progress') active @endif">Accepted</a></li>
+                                            <li class="filterSort_item"><a wire:click="$set('status', 'in_review')" class="btn-batch @if($status == 'in_review') active @endif">In Review</a></li>
                                             <li class="filterSort_item"><a wire:click="$set('status', 'overdue')" class="btn-batch @if($status == 'overdue') active @endif">Overdue</a></li>
                                             <li class="filterSort_item"><a wire:click="$set('status', 'completed')" class="btn-batch @if($status == 'completed') active @endif">Completed</a></li>
                                         </ul>
@@ -151,6 +153,9 @@
                             @if($status == 'pending') Active @endif
                             @if($status == 'overdue') Overdue @endif
                             @if($status == 'completed') Completed @endif
+                            @if($status == 'in_progress') Accepted @endif
+                            @if($status == 'in_review') In Review @endif
+
                             <a wire:click="$set('status','all')" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
                     @endif
                 
@@ -174,22 +179,22 @@
                         <span class="btn-batch">{{ \Carbon\Carbon::parse($dueDate)->format('d M Y') }} <a wire:click="$set('dueDate','')" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
                     @endif
 
-
-                    
                     <a href="{{ route('task.index') }}" class="text-danger d-flex align-items-center">Reset <span class="ms-1 d-inline-flex"><i class='bx bx-refresh'></i></span></a>
                 </div>
-        </div>
+        </div> 
     @endif
 
     <div class="btn-list">
-        <a href="javascript:" class="btn-border btn-border-primary active">
+        <a wire:click="$set('status', 'all')" class="btn-border btn-border-primary @if($status == 'all') active @endif">
             {{ $tasks['pending']->count() + $tasks['in_progress']->count() + $tasks['in_review']->count() + $tasks['completed']->count() }} 
-            <span>|</span> All</a>
-        <a href="javascript:" class="btn-border btn-border-primary">{{ $tasks['pending']->count() }} <span>|</span> Assigned</a>
-        <a href="javascript:" class="btn-border btn-border-secondary">{{ $tasks['in_progress']->count() }} <span>|</span> Accepted</a>
-        <a href="javascript:" class="btn-border btn-border-warning">{{ $tasks['in_review']->count() }}<span>|</span> In Review</a>
-        <a href="javascript:" class="btn-border btn-border-success">{{ $tasks['completed']->count() }} <span>|</span> Completed</a>
-        <a href="javascript:" class="btn-border btn-border-danger">
+            <span>|</span>
+             All
+        </a>
+        <a wire:click="$set('status', 'pending')" class="btn-border btn-border-primary @if($status == 'pending') active @endif">{{ $tasks['pending']->count() }} <span>|</span> Assigned</a>
+        <a wire:click="$set('status', 'in_progress')" class="btn-border btn-border-secondary @if($status == 'in_progress') active @endif">{{ $tasks['in_progress']->count() }} <span>|</span> Accepted</a>
+        <a wire:click="$set('status', 'in_review')" class="btn-border btn-border-warning @if($status == 'in_review') active @endif">{{ $tasks['in_review']->count() }}<span>|</span> In Review</a>
+        <a wire:click="$set('status', 'completed')" class="btn-border btn-border-success @if($status == 'completed') active @endif">{{ $tasks['completed']->count() }} <span>|</span> Completed</a>
+        <a wire:click="$set('status', 'overdue')" class="btn-border btn-border-danger @if($status == 'comploverdueeted') active @endif">
             @php
                 $overdue = $tasks['pending']->where('due_date', '<', now())->count();
                 $overdue += $tasks['in_progress']->where('due_date', '<', now())->count();
@@ -263,7 +268,10 @@
                             <div class="col text-center">
                                 <div class="taskList_col">
                                     <span class="btn-batch btn-batch-primary">
-                                        {{ $task->status }}
+                                        @if($task->status == 'pending') Assigned @endif
+                                        @if($task->status == 'in_progress') Accepted @endif
+                                        @if($task->status == 'in_review') In Review @endif
+                                        @if($task->status == 'completed') Completed @endif
                                     </span>
                                 </div>
                             </div>

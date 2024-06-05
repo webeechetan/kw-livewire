@@ -77,7 +77,7 @@ class TaskListView extends Component
         return view('livewire.tasks.task-list-view');
     }
 
-   
+     
     public function mount()
     {
             $this->doesAnyFilterApplied();
