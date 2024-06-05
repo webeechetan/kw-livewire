@@ -212,13 +212,3 @@
     <livewire:components.add-project @saved="$refresh" />
     
 </div>
-
-@script
-<script>
-    $(document).ready(function(){
-        console.log('ready');
-        $('[data-bs-toggle="tooltip"]').tooltip();
-        $('[data-bs-toggle="dropdown"]').dropdown();
-    });
-</script>
-@endscript

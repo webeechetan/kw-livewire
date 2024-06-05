@@ -3548,6 +3548,7 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
 .kanban_bord_column_in_review .avatarGroup .avatar {
   background-color: #e7bf1d;
   color: #fff;
+  border-color: #e7bf1d;
 }
 .kanban_bord_column_in_review .kanban_bord_column_title {
   background-color: #e7bf1d;
@@ -4231,7 +4232,7 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   background-color: #fff;
   padding: 15px;
   border-radius: 4px;
-  gap: 15px;
+  gap: 20px;
   width: calc(33% - 12px);
   position: relative;
 }

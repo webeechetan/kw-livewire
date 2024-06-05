@@ -537,6 +537,7 @@
                 .avatarGroup .avatar {
                     background-color: $warning;
                     color: #fff;
+                    border-color: $warning;
                 }
                 .kanban_bord_column_title {
                     background-color: $warning;
@@ -1266,7 +1267,7 @@
     background-color: #fff;
     padding: $spacing_s;
     border-radius: $border_radius_xs;
-    gap: 15px;
+    gap: 20px;
     width: calc(33% - 12px);
     position: relative;
 
