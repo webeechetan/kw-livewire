@@ -2084,7 +2084,7 @@ hr.space-sm {
 .form-check-input {
   border: 1px solid #f83890;
 }
-.form-check-input[type=checkbox] {
+.form-check-input[type=checkbox]:not(.task-switch) {
   border-radius: 3px;
 }
 .form-check-input:checked {
@@ -2094,6 +2094,10 @@ hr.space-sm {
 .form-check-input:focus {
   outline: none;
   box-shadow: none;
+  border-color: #f83890;
+}
+.form-check-input.task-switch:focus {
+  border-color: #f83890;
 }
 .form-field {
   position: relative;
@@ -2198,6 +2202,12 @@ hr.space-sm {
 }
 .form-style::placeholder {
   color: #9c9c9c;
+}
+.form-style + .select2-container--default .select2-selection--single {
+  padding: 10px 15px;
+  background-color: #f6f5f5;
+  color: #191919;
+  height: inherit;
 }
 
 .was-validated .form-control:valid:focus {
@@ -3374,7 +3384,7 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
 
 /* ----- Kanban ----- */
 .kanban_column {
-  height: 60vh;
+  min-height: calc(60vh - 50px);
   padding: 0 15px;
   margin: 15px 0;
   position: relative;
@@ -3383,6 +3393,7 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   border: 1px solid #fff;
   border-radius: 6px;
   background-color: #fff;
+  position: relative;
   /* ----- Task Status ----- */
   /*----- Draging -----*/
 }

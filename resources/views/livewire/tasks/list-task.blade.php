@@ -1,5 +1,4 @@
 <div class="container">
-    <!-- Dashboard Header -->
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a wire:navigate href="{{ route('dashboard') }}"><i class='bx bx-line-chart'></i> Webeesocial</a></li>
@@ -7,13 +6,14 @@
         </ol>
     </nav>
 
-    <div class="dashboard-head">
+    <!-- Dashboard Header -->
+    <div class="dashboard-head pb-0 mb-4">
         <div class="row align-items-center">
             <div class="col d-flex align-items-center gap-3">
                 <h3 class="main-body-header-title mb-0">All Tasks</h3>
                 <span class="text-light">|</span>
                 @can('Create Task')
-                    <a data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" href="javascript:void(0);" class="btn-border btn-border-sm btn-border-primary toggleForm"><i class="bx bx-plus"></i> Add Task</a>
+                    <a data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" href="javascript:void(0);" class="btn-border btn-sm btn-border-primary toggleForm"><i class="bx bx-plus"></i> Add Task</a>
                 @endcan
             </div>
             <div class="col">
@@ -110,75 +110,73 @@
                 </div>
             </div>
         </div>
-    </div>
-    <!-- Tabs -->
-    <div class="tabNavigationBar-tab border_style my-2">
-        <a href="{{ route('task.list-view') }}" class="tabNavigationBar-item @if(request()->routeIs('task.list-view')) active @endif" wire:navigate ><i class='bx bx-list-ul'></i> List</a>
-        <a href="{{ route('task.index') }}" class="tabNavigationBar-item @if(request()->routeIs('task.index')) active @endif" wire:navigate><i class='bx bx-columns' ></i> Board</a>
-        @if(auth()->user()->is_manager)
-        <div class="form-check form-switch">
-            <input class="form-check-input task-switch" type="checkbox" role="switch" id="flexSwitchCheckChecked">
-            <label class="form-check-label task-switch-text" for="flexSwitchCheckChecked">
-                @if($ViewTasksAs == 'manager')
-                Showing {{ auth()->user()->myTeam->name }} Tasks
-                @else
-                Showing My Tasks
+        <hr class="mb-0">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <!-- Tabs -->
+                <div class="tabNavigationBar-tab border_style">
+                    <a href="{{ route('task.list-view') }}" class="tabNavigationBar-item @if(request()->routeIs('task.list-view')) active @endif" wire:navigate ><i class='bx bx-list-ul'></i> List</a>
+                    <a href="{{ route('task.index') }}" class="tabNavigationBar-item @if(request()->routeIs('task.index')) active @endif" wire:navigate><i class='bx bx-columns' ></i> Board</a>
+                </div>
+            </div>
+            <div class="col-md-6 text-end">
+                @if(auth()->user()->is_manager)
+                <div class="form-check form-switch d-inline-block">
+                    <input class="form-check-input task-switch" type="checkbox" role="switch" id="flexSwitchCheckChecked">
+                    <label class="form-check-label task-switch-text" for="flexSwitchCheckChecked">
+                        @if($ViewTasksAs == 'manager')
+                        Showing {{ auth()->user()->myTeam->name }} Tasks
+                        @else
+                        Showing My Tasks
+                        @endif
+                    </label>
+                </div>
                 @endif
-            </label>
+            </div>
         </div>
-        @endif
     </div>
 
     <!-- Filters Query Params -->
     @if($this->doesAnyFilterApplied())
-        <div class="col-md-6">
-            <div class="d-flex flex-wrap gap-2 align-items-center justify-content-end mb-2">
-                <span class="pe-2"><i class='bx bx-filter-alt text-secondary'></i> Filter Results:</span>
-                    @if($sort != 'all')
-                        <span class="btn-batch">
-                            @if($sort == 'newest') Newest @endif
-                            @if($sort == 'oldest') Oldest @endif
-                            @if($sort == 'a_z') A to Z @endif
-                            @if($sort == 'z_a') Z to A @endif
-                            <a wire:click="$set('sort','all')" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
-                    @endif
+        <div class="d-flex flex-wrap gap-2 align-items-center mb-2">
+            <span class="pe-2"><i class='bx bx-filter-alt text-secondary'></i> Filter Results:</span>
+                @if($sort != 'all')
+                    <span class="btn-batch">
+                        @if($sort == 'newest') Newest @endif
+                        @if($sort == 'oldest') Oldest @endif
+                        @if($sort == 'a_z') A to Z @endif
+                        @if($sort == 'z_a') Z to A @endif
+                        <a wire:click="$set('sort','all')" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
+                @endif
 
-                    @if($status != 'all')
-                        <span class="btn-batch">
-                            @if($status == 'pending') Active @endif
-                            @if($status == 'overdue') Overdue @endif
-                            @if($status == 'completed') Completed @endif
-                            <a wire:click="$set('status','all')" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
-                    @endif
-                
-                    @if($byClient != 'all')
-                        <span class="btn-batch">{{ $clients->find($byClient)->name }} <a wire:click="$set('byClient','all')" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
-                    @endif
+                @if($status != 'all')
+                    <span class="btn-batch">
+                        @if($status == 'pending') Active @endif
+                        @if($status == 'overdue') Overdue @endif
+                        @if($status == 'completed') Completed @endif
+                        <a wire:click="$set('status','all')" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
+                @endif
+            
+                @if($byClient != 'all')
+                    <span class="btn-batch">{{ $clients->find($byClient)->name }} <a wire:click="$set('byClient','all')" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
+                @endif
 
-                    @if($byProject != 'all')
-                        <span class="btn-batch">{{ $projects->find($byProject)->name }} <a wire:click="$set('byProject','all')" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
-                    @endif
+                @if($byProject != 'all')
+                    <span class="btn-batch">{{ $projects->find($byProject)->name }} <a wire:click="$set('byProject','all')" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
+                @endif
 
-                    @if($byUser != 'all')
-                        <span class="btn-batch">{{ $users->find($byUser)->name }} <a wire:click="$set('byUser','all')" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
-                    @endif
+                @if($byUser != 'all')
+                    <span class="btn-batch">{{ $users->find($byUser)->name }} <a wire:click="$set('byUser','all')" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
+                @endif
 
-                    @if($startDate)
-                        <span class="btn-batch">{{ \Carbon\Carbon::parse($startDate)->format('d M Y') }} <a wire:click="$set('startDate','')" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
-                    @endif
+                @if($startDate)
+                    <span class="btn-batch">{{ \Carbon\Carbon::parse($startDate)->format('d M Y') }} <a wire:click="$set('startDate','')" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
+                @endif
 
-                    @if($dueDate)
-                        <span class="btn-batch">{{ \Carbon\Carbon::parse($dueDate)->format('d M Y') }} <a wire:click="$set('dueDate','')" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
-                    @endif
-
-                    
-                    
-                    <a href="{{ route('task.index') }}" class="text-danger d-flex align-items-center">Reset <span class="ms-1 d-inline-flex"><i class='bx bx-refresh'></i></span></a>
-                </div>
-
-                
-
-
+                @if($dueDate)
+                    <span class="btn-batch">{{ \Carbon\Carbon::parse($dueDate)->format('d M Y') }} <a wire:click="$set('dueDate','')" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
+                @endif
+            <a href="{{ route('task.index') }}" class="text-danger d-flex align-items-center">Reset <span class="ms-1 d-inline-flex"><i class='bx bx-refresh'></i></span></a>
         </div>
     @endif
 

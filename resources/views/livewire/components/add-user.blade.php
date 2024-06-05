@@ -63,8 +63,8 @@
                                 <div class="col-md-4 mb-4">
                                     <label for="">Team<sup class="text-primary">*</sup></label>
                                 </div>
-                                <div class="col-md-8">
-                                    <select class="teams" name="" id="">
+                                <div class="col-md-8 mb-4">
+                                    <select class="teams form-style" name="" id="">
                                         <option value="">Select Team</option>
                                         @foreach ($teams as $team)
                                             <option value="{{ $team->id }}">{{ $team->name }}</option>
@@ -76,8 +76,8 @@
                                 <div class="col-md-4 mb-4">
                                     <label for="">Role<sup class="text-primary">*</sup></label>
                                 </div>
-                                <div class="col-md-8">
-                                    <select class="roles">
+                                <div class="col-md-8 mb-4">
+                                    <select class="roles form-style">
                                         <option value="">Select Role</option>
                                         @foreach ($roles as $role)
                                             <option value="{{ $role->id }}">{{ $role->name }}</option>
