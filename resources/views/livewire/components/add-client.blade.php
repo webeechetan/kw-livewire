@@ -106,7 +106,7 @@
                         <div class="modal-form-btm">
                             <div class="row">
                                 <div class="col-md-6 ms-auto text-end">
-                                    <button type="submit" class="btn btn-primary client-form-btn">Add Client</button>
+                                    <button wire:loading.attr="disabled" type="submit" class="btn btn-primary client-form-btn">Add Client</button>
                                 </div>
                             </div>
                         </div>
