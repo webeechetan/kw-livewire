@@ -145,13 +145,13 @@
             </div>
         </div>
     </div>
-    <div class="column-box">
+    <div class="column-box" wire:ignore>
         <div class="column-title mb-3">Description <a href="javascript:;" class="btn-link"><i class='bx bx-pencil edit-des' ></i></a></div>
         <hr>
         <div class="user-profile-bio">
             {!! $client->description ?? 'Not Added' !!}
         </div>
-        <button class="btn btn-primary mt-2 update-des-btn d-none" wire:click="updateClient">Update</button>
+        <button class="btn btn-primary mt-2 update-des-btn d-none" wire:click="updateDescription">Update</button>
     </div>
 </div>
 @push('scripts')
@@ -171,7 +171,7 @@
             ],
             callbacks: {
                 onChange: function(contents, $editable) {
-                    @this.set('bio', contents);
+                    @this.set('description', contents);
                 }
             }
         });

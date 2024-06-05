@@ -14,6 +14,7 @@ use App\Notifications\UserMentionNotification;
 use Livewire\WithPagination;
 use App\Helpers\Helper;
 use ProtoneMedia\LaravelCrossEloquentSearch\Search;
+use App\Helpers\Filter;
 
 class ListTask extends Component
 {
@@ -35,9 +36,8 @@ class ListTask extends Component
     // Add task Form
     public $name;
     public $description;
-    public $dueDate;
     public $mentioned_users= [];
-
+    
     
     public $query = '';
     public $sort = 'all';
@@ -45,7 +45,10 @@ class ListTask extends Component
     public $byProject = 'all';
     public $byClient = 'all';
     public $byUser = 'all';
-    public $byTeam = 'all';
+    // public $byTeam = 'all';
+    public $startDate;
+    public $dueDate;
+    public $status = 'all';
  
 
 
@@ -54,7 +57,7 @@ class ListTask extends Component
     public $clients = [];
     public $projects;
     // public $teams;
-    public $project_id;
+    public $project_id; 
     public $user_ids;
 
     public $view_form = false;
@@ -72,60 +75,13 @@ class ListTask extends Component
     public $ViewTasksAs = 'user';
 
     public function render()
-    {
-
-        $tasks = Task::where('name','like','%'.$this->query.'%');
-
-        if($this->sort == 'a_z'){
-            $tasks->orderBy('name');
-        }elseif($this->sort == 'z_a'){
-            $tasks->orderByDesc('name');
-        }elseif($this->sort == 'newest'){
-            $tasks->latest();
-        }
-
-        if($this->byClient != 'all'){
-          
-        }
-
-        if($this->byProject != 'all'){
-            $tasks->whereHas('tasks', function($query){
-                $query->where('project_id', $this->byProject);
-            });   
-        }
-
-        if($this->byUser != 'all'){
-            $user = User::find($this->byUser);
-            if($user){
-                $tasksIds = $user->tasks->pluck('id')->toArray();
-                $tasks->whereIn('id',$tasksIds);
-            }
-        }
-
-        if($this->byTeam != 'all'){
-            $team = Team::find($this->byTeam);
-            if($team){
-                $tasksIds = $team->tasks->pluck('id')->toArray();
-                $tasks->whereIn('id',$tasksIds);
-            }
-        }
-
-       
-       
-        $tasks->orderBy('id','desc');
-
-        $tasks = $tasks->paginate(12);
-
-       
-        return view('livewire.tasks.list-task',[
-            'tasks' => $tasks
-        ]);
-
-       // return view('livewire.tasks.list-task');
+    {  
+        return view('livewire.tasks.list-task');
     }
 
     public function mount()
     {
+            $this->doesAnyFilterApplied();
 
             $this->authorize('View Task');
             
@@ -202,6 +158,11 @@ class ListTask extends Component
 
     }
 
+    public function updatedSort($value)
+    {
+        $this->mount();
+    }
+
     public function updatedViewTasksAs($value)
     {
         $this->mount();
@@ -265,19 +226,55 @@ class ListTask extends Component
         $this->mount();
     }
 
-    protected function applySort($query)
+
+    public function updatedByClient($value)
     {
-        switch ($this->sort) {
-            case 'a_z':
-                return $query->orderBy('name');
-            case 'z_a':
-                return $query->orderByDesc('name');
-            case 'newest':
-                return $query->latest();
-            case 'oldest':
-                return $query->oldest();
-            default:
-                return $query->orderBy('task_order');
+        $this->mount();
+    }
+
+    public function updatedByProject($value)
+    {
+        $this->mount();
+    }
+
+    public function updatedStartDate($value)
+    {
+        $this->mount();
+    }
+
+    public function updatedDueDate($value)
+    {
+        $this->mount();
+    }
+
+    public function updatedByUser($value)
+    {
+        $this->mount();
+    }
+
+    public function updatedStatus($value)
+    {
+        $this->mount();
+    }
+
+    public function applySort($query)
+    {
+        return Filter::filterTasks(
+            $query, 
+            $this->byProject, 
+            $this->byClient, 
+            $this->byUser, 
+            $this->sort, 
+            $this->startDate, 
+            $this->dueDate, 
+            $this->status
+        );
+    }
+
+    public function doesAnyFilterApplied(){
+        if($this->sort != 'all' || $this->byProject != 'all' || $this->byClient != 'all' || $this->byUser != 'all' || $this->startDate || $this->dueDate || $this->status != 'all'){
+            return true;
         }
+        return false;
     }
 }

@@ -15,6 +15,8 @@ class ProjectTabs extends Component
         return view('livewire.projects.components.project-tabs');
     }
 
+
+    // call when project-added event is emitted
     public function mount(Project $project)
     {
         $this->project = $project;

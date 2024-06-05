@@ -51,11 +51,15 @@ class Task extends Model
     }
 
     public function users(){
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(User::class); 
     }
 
     public function project(){
         return $this->belongsTo(Project::class);
+    }
+
+    public function client(){
+        return $this->belongsTo(Client::class);
     }
 
     public function team(){
