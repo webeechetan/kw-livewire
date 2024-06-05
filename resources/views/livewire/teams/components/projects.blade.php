@@ -51,7 +51,7 @@
             @if($start_date)
             {{ $start_date }}, {{ $end_date}}
             @endif
-         </div>
+         </div> 
       </div>
    </div>
 

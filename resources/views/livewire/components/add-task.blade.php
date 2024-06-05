@@ -4,8 +4,8 @@
             <div class="btn-list">
                 <select class="form-select" name="" id="" wire:model="status">
                     <option value="" disabled selected>Select Status</option>
-                    <option value="pending">Pending</option>
-                    <option value="in_progress">In-Progress</option>
+                    <option value="pending">Assigned</option>
+                    <option value="in_progress">Accepted</option>
                     <option value="in_review">In-Review</option>
                     <option value="completed">Completed</option>
                 </select> 
