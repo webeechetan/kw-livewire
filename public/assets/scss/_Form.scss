@@ -43,7 +43,7 @@
         text-align: left;
         &-input {
             border: 1px solid $brand;
-            &[type=checkbox] {
+            &[type=checkbox]:not(.task-switch) {
                 border-radius: $border_radius_checkbox;
             }
             &:checked {
@@ -53,6 +53,12 @@
             &:focus {
                 outline: none;
                 box-shadow: none;
+                border-color: $brand;
+            }
+            &.task-switch {
+                &:focus {
+                    border-color: $brand;
+                }
             }
         }
     }
@@ -166,6 +172,13 @@
 
         &::placeholder {
             color: $text-light;
+        }
+
+        + .select2-container--default .select2-selection--single {
+            padding: 10px 15px;
+            background-color: $light;
+            color: $text_color;
+            height: inherit;
         }
     }
 }

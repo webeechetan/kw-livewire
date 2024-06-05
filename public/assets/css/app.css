@@ -1225,6 +1225,9 @@ hr.space-sm {
   padding: 5px 10px;
   border-color: #eee;
 }
+.dashboard_filters-select:focus {
+  border-color: #eee;
+}
 
 /* ----- Toaster Style ----- */
 #toast-container > div {
@@ -2084,7 +2087,7 @@ hr.space-sm {
 .form-check-input {
   border: 1px solid #f83890;
 }
-.form-check-input[type=checkbox] {
+.form-check-input[type=checkbox]:not(.task-switch) {
   border-radius: 3px;
 }
 .form-check-input:checked {
@@ -2094,6 +2097,10 @@ hr.space-sm {
 .form-check-input:focus {
   outline: none;
   box-shadow: none;
+  border-color: #f83890;
+}
+.form-check-input.task-switch:focus {
+  border-color: #f83890;
 }
 .form-field {
   position: relative;
@@ -2198,6 +2205,12 @@ hr.space-sm {
 }
 .form-style::placeholder {
   color: #9c9c9c;
+}
+.form-style + .select2-container--default .select2-selection--single {
+  padding: 10px 15px;
+  background-color: #f6f5f5;
+  color: #191919;
+  height: inherit;
 }
 
 .was-validated .form-control:valid:focus {
@@ -3374,14 +3387,16 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
 
 /* ----- Kanban ----- */
 .kanban_column {
-  height: 60vh;
+  min-height: calc(60vh - 50px);
   padding: 0 15px;
   margin: 15px 0;
+  position: relative;
 }
 .kanban_column_task {
   border: 1px solid #fff;
   border-radius: 6px;
   background-color: #fff;
+  position: relative;
   /* ----- Task Status ----- */
   /*----- Draging -----*/
 }
@@ -3479,7 +3494,9 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   justify-content: center;
   font-size: 32px;
   color: #ddd;
-  background-color: #eee;
+  background-color: #f6f5f5;
+  position: absolute;
+  width: calc(100% - 30px);
 }
 .kanban_bord_body_columns {
   padding-top: 10px;
@@ -3548,6 +3565,7 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
 .kanban_bord_column_in_review .avatarGroup .avatar {
   background-color: #e7bf1d;
   color: #fff;
+  border-color: #e7bf1d;
 }
 .kanban_bord_column_in_review .kanban_bord_column_title {
   background-color: #e7bf1d;
@@ -4231,7 +4249,7 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   background-color: #fff;
   padding: 15px;
   border-radius: 4px;
-  gap: 15px;
+  gap: 20px;
   width: calc(33% - 12px);
   position: relative;
 }

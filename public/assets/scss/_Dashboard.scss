@@ -337,13 +337,15 @@
 /* ----- Kanban ----- */
 .kanban {
     &_column {
-        height: 60vh;
+        min-height: calc(60vh - 50px);
         padding: 0 15px;
         margin: 15px 0;
+        position: relative;
         &_task {
             border: 1px solid #fff;
             border-radius: 6px;
             background-color: #fff;
+            position: relative;
 
             &:not(:last-child) {
                 margin-bottom: $spacing_sm;
@@ -455,7 +457,9 @@
             @include flex_center;
             font-size: 32px;
             color: $grey_xd;
-            background-color: $grey;
+            background-color: $light;
+            position: absolute;
+            width: calc(100% - 30px)
         }
     }
     &_bord {
@@ -537,6 +541,7 @@
                 .avatarGroup .avatar {
                     background-color: $warning;
                     color: #fff;
+                    border-color: $warning;
                 }
                 .kanban_bord_column_title {
                     background-color: $warning;
@@ -1266,7 +1271,7 @@
     background-color: #fff;
     padding: $spacing_s;
     border-radius: $border_radius_xs;
-    gap: 15px;
+    gap: 20px;
     width: calc(33% - 12px);
     position: relative;
 

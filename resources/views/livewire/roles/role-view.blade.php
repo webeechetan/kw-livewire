@@ -1,24 +1,18 @@
 <div class="container">
-<!-- Dashboard Header -->
+   <!-- Dashboard Header -->
    <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-         <li class="breadcrumb-item">
-            <a wire:navigate href="{{ route('dashboard') }}">
-            <i class='bx bx-line-chart'></i> Dashboard </a>
-         </li>
-         <!-- <li class="breadcrumb-item">
-            <a wire:navigate href="{{ route('team.index') }}">All </a>
-            </li> -->
-         <li class="breadcrumb-item active" aria-current="page">Admin</li>
+         <li class="breadcrumb-item"><a wire:navigate href="{{ route('dashboard') }}"><i class='bx bx-line-chart'></i> Dashboard</a></li>
+         <li class="breadcrumb-item"><a wire:navigate href="{{ route('role.index') }}">All Roles</a></li>
+         <li class="breadcrumb-item active" aria-current="page">{{ $role->name }}</li>
       </ol>
    </nav>
+
+   <!-- Dashboard Head -->
    <div class="dashboard-head mb-4">
       <div class="row align-items-center">
-         <div class="col">
+         <div class="col d-flex align-items-center gap-3">
             <div class="dashboard-head-title-wrap">
-               <div class="client_head_logo">
-                  <img src="" alt="">
-               </div>
                <div>
                   <h3 class="main-body-header-title mb-1">{{$role->name}}</h3>
                </div>
@@ -36,7 +30,7 @@
    </div>
    <!--- Dashboard Body --->
    <div class="row mb-4">
-      <div class="col-lg-4">
+      <div class="col-md-6">
          <div class="column-box states_style-progress h-100">
             <div class="row align-items-center">
                <div class="col-auto">
@@ -60,7 +54,7 @@
             </div>
          </div>
       </div>
-      <div class="col-lg-4">
+      <div class="col-md-6">
          <div class="column-box states_style-active h-100">
             <div class="row align-items-center">
                <div class="col-auto">
@@ -84,7 +78,7 @@
             </div>
          </div>
       </div>
-      <div class="col-lg-4">
+      <!-- <div class="col-lg-4">
          <div class="column-box states_style-success h-100">
             <div class="row align-items-center">
                <div class="col-auto">
@@ -107,16 +101,14 @@
                </div>
             </div>
          </div>
-      </div>
+      </div> -->
    </div>
    <div class="column-box mb-4">
       <div class="row">
-         <div class="col-sm-auto pe-5">
-               <h5 class="column-title mb-0">Permission</h5>
-         </div>
-         <div class="col">
-               <!-- Teams -->
-               <div class="d-flex column-gap-3">
+         <div class="col-12">
+            <h5 class="column-title mb-3">Permission <span class="btn-batch">{{ $role->permissions->count() }}</span></h5>
+            <!-- Teams -->
+            <div class="d-flex flex-wrap gap-3">
                   @foreach($role->permissions as $permission)
                   <div><span class="btn-batch">{{$permission->name}}</span></div>
                   @endforeach
@@ -125,46 +117,44 @@
       </div>
    </div>
    <div class="row mb-4">
-      <div class="col-lg-12">
-         <h5 class="column-title mb-3">User with role {{$role->name}}</h5>
-      </div>
-      <div class="col-md-12">
+      <div class="col-12">
          <div class="column-box">
-               <div class="taskList-dashbaord_header">
-                  <div class="row">
-                     <div class="col-md-4">
-                           <div class="taskList-dashbaord_header_title taskList_col">User</div>
-                     </div>
-                     <div class="col text-center">
-                           <div class="taskList-dashbaord_header_title taskList_col">Team Name</div>
-                     </div>
+            <h5 class="column-title mb-3">User with role {{$role->name}}</h5>
+            <div class="taskList-dashbaord_header">
+               <div class="row">
+                  <div class="col-md-4">
+                        <div class="taskList-dashbaord_header_title taskList_col">User</div>
+                  </div>
+                  <div class="col text-center">
+                        <div class="taskList-dashbaord_header_title taskList_col">Team Name</div>
                   </div>
                </div>
-               <div class="taskList scrollbar">
-                  @foreach($role_users as $user)
-                  <div class="taskList_row" wire:key="task-row-100">
-                     <div class="row">
-                           <div class="col-lg-4">
-                              <div class="card_style-client-head taskList_col me-0">
-                                 <div class="avatar avatar-sm avatar-blue" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{$user->name}}">{{$user->initials}}</div>
-                                 <div>
-                                       <h6 class="mb-0">
-                                          <a href="{{ route('user.profile',$user->id) }}" wire:navigate>{{$user->name}}</a>
-                                       </h6>
-                                 </div>
+            </div>
+            <div class="taskList scrollbar">
+               @foreach($role_users as $user)
+               <div class="taskList_row" wire:key="task-row-100">
+                  <div class="row">
+                        <div class="col-lg-4">
+                           <div class="card_style-client-head taskList_col me-0">
+                              <div class="avatar avatar-sm avatar-blue" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{$user->name}}">{{$user->initials}}</div>
+                              <div>
+                                    <h6 class="mb-0">
+                                       <a href="{{ route('user.profile',$user->id) }}" wire:navigate>{{$user->name}}</a>
+                                    </h6>
                               </div>
                            </div>
-                           <div class="col text-center">
-                              @if($user->mainTeam)
-                              <div class="taskList_col"><span class="btn-batch">{{ $user->mainTeam?->name }}</span></div>
-                              @else
-                              <div class="taskList_col"><span class="btn-batch">No Team</span></div>
-                              @endif
-                           </div>
-                     </div>
+                        </div>
+                        <div class="col text-center">
+                           @if($user->mainTeam)
+                           <div class="taskList_col"><span class="btn-batch">{{ $user->mainTeam?->name }}</span></div>
+                           @else
+                           <div class="taskList_col"><span class="btn-batch">No Team</span></div>
+                           @endif
+                        </div>
                   </div>
-                  @endforeach
                </div>
+               @endforeach
+            </div>
          </div>
       </div>
    </div>

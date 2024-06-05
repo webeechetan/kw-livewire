@@ -13,25 +13,15 @@
                 <div class="user-profile">
                     <div class="user-profile-img"><img src="/storage/images/user_pro.jpg" alt=""></div>
                     <h3 class="main-body-header-title mb-2">{{ $user->name }}</h3>
-                    <div class="d-flex align-items-center justify-content-center mb-2"><i class="bx bx-envelope me-1 text-secondary"></i> {{$user->email}}</div>
-                    <div class="row">
-                        <div class="col-lg-8 mx-auto">
-                            <div class="row align-items-center justify-content-center gap-2">
-                                <div class="col-auto px-0">
-                                    <ul class="social-icons justify-content-center my-2">
-                                        <li><a href="#"><i class='bx bxl-facebook'></i></a></li>
-                                        <li><a href="#"><i class='bx bxl-linkedin' ></i></a></li>
-                                        <li><a href="#"><i class='bx bxl-instagram' ></i></a></li>
-                                        <li><a href="#"><i class='bx bxl-github' ></i></a></li>
-                                        <li><a href="#"><i class='bx bxl-twitter' ></i></a></li>
-                                    </ul> 
-                                </div>
-                                <div class="col-auto">
-                                    <div class="card_style-user-head-position"><i class="bx bx-briefcase text-primary"></i> {{ $user->designation ?? 'Not Added' }}</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <div class="d-flex align-items-center justify-content-center mb-2"><i class="bx bx-envelope me-1 text-secondary"></i> {{ $user->designation ?? 'Not Added' }}</div>
+                    <div class="d-flex align-items-center justify-content-center mb-2"><i class="bx bx-envelope me-1 text-secondary"></i> {{$user->email ?? 'Not Added' }}</div>
+                    <ul class="social-icons justify-content-center my-2">
+                        <li><a href="#"><i class='bx bxl-facebook'></i></a></li>
+                        <li><a href="#"><i class='bx bxl-linkedin' ></i></a></li>
+                        <li><a href="#"><i class='bx bxl-instagram' ></i></a></li>
+                        <li><a href="#"><i class='bx bxl-github' ></i></a></li>
+                        <li><a href="#"><i class='bx bxl-twitter' ></i></a></li>
+                    </ul> 
                 </div>
                 <hr>
                 <div class="row align-items-center mb-3">
