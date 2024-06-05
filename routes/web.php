@@ -108,7 +108,7 @@ Route::group(['middleware' => ['myauth']], function() {
     Route::get('/teams/edit/{id}',EditTeam::class)->name('team.edit');
     Route::get('/team/view/{team}',TeamProfile::class)->name('team.profile');
     Route::get('/team/view/{team?}/projects',TeamProjects::class)->name('team.projects');
-    Route::get('/team/view/{team?}/tasks',TeamTasks::class)->name('team.tasks');
+    Route::get('/team/view/{team?}/tasks/{status?}',TeamTasks::class)->name('team.tasks');
     
 
     Route::get('/users/{sort?}/{filter?}/{byProject?}',ListUser::class)->name('user.index');
