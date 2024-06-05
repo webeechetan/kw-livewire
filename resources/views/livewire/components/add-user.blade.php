@@ -60,7 +60,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-4 mb-4 mb-lg-0">
+                                <div class="col-md-4 mb-4">
                                     <label for="">Team<sup class="text-primary">*</sup></label>
                                 </div>
                                 <div class="col-md-8">
@@ -73,7 +73,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-4 mb-4 mb-lg-0">
+                                <div class="col-md-4 mb-4">
                                     <label for="">Role<sup class="text-primary">*</sup></label>
                                 </div>
                                 <div class="col-md-8">
