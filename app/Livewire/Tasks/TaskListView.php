@@ -8,32 +8,68 @@ use App\Models\User;
 use App\Models\Project;
 use App\Models\Team;
 use App\Models\Comment;
+use App\Models\Client;
 use App\Notifications\NewTaskAssignNotification;
 use App\Notifications\UserMentionNotification;
+use Livewire\WithPagination;
+use App\Helpers\Filter;
 
 
 class TaskListView extends Component
 {
+    use WithPagination;
+
+    public $allTasks;
+    public $activeTasks;
+    public $completedTasks;
+    public $archivedTasks;
+
+    // auth 
+
+    public $auth_user_id;
+
     public $tasks;
 
-    // add task 
-    public $view_form = false;
-
-    // edit task 
-    public $edit_task = false;
-    public $task;
+    // Add task Form
     public $name;
     public $description;
-    public $dueDate;
+    public $mentioned_users= [];
     
-    public $users;
+    
+    public $query = '';
+    public $sort = 'all';
+    public $filter = 'all';
+    public $byProject = 'all';
+    public $byClient = 'all';
+    public $byUser = 'all';
+    // public $byTeam = 'all';
+    public $startDate;
+    public $dueDate;
+    public $status = 'all';
+ 
+
+
+    public $teams = [];
+    public $users = [];
+    public $clients = [];
     public $projects;
-    public $teams;
-    public $project_id;
+    // public $teams;
+    public $project_id; 
     public $user_ids;
+
+    public $view_form = false;
+    public $edit_task = false;
+
+    // edit task 
+
+    public $task;
+ 
+    // comment
+
     public $comment;
     public $comments;
-    public $mentioned_users= [];
+
+    public $ViewTasksAs = 'user';
 
 
     public function render()
@@ -41,169 +77,159 @@ class TaskListView extends Component
         return view('livewire.tasks.task-list-view');
     }
 
+   
     public function mount()
     {
+            $this->doesAnyFilterApplied();
 
-        $this->authorize('View Task');
-        $this->users = User::all();
-        $this->projects = Project::all();
-        $this->teams = Team::all();
-        // Fetch all tasks from the database
-        $this->tasks = [
-            'pending' => Task::where('status', 'pending')->orderBy('task_order')->get(),
-            'in_progress' => Task::where('status', 'in_progress')->orderBy('task_order')->get(),
-            'in_review' => Task::where('status', 'in_review')->orderBy('task_order')->get(),
-            'completed' => Task::where('status', 'completed')->orderBy('task_order')->get(),
-        ];
-    }
-
-    public function toggleForm()
-    {
-        $this->view_form = !$this->view_form;
-        $this->dispatch('task-form-toggled');
-    }
-
-    public function store(){
-        $this->validate([
-            'name' => 'required'
-        ]);
-
-        $task = new Task();
-        $task->org_id = session('org_id');
-        $task->assigned_by = auth()->guard(session('guard'))->user()->id;
-        $task->project_id = $this->project_id;
-        $task->name = $this->name;
-        $task->description = $this->description;
-        $task->due_date = $this->dueDate;
-        $task->status = 'pending';
-        // $task->when_completed_notify = $this->when_completed_notify;
-        // take out mentioned users from description and save them in mentioned_users array
-
-        $mentioned_users = [];
-
-        // remove paragraph tags from description
-
-        $temp_description = str_replace('<p>','',$this->description);
-        $temp_description = str_replace('</p>','',$temp_description);
-
-        $temp_description = strip_tags($temp_description);
-        $temp_description = str_replace('&nbsp;',' ',$temp_description);
-
-        // convert description to array of words
-
-        $description_array = explode(' ',$temp_description);
-
-        // check if any word starts with @
-
-        foreach($description_array as $word){
-            if(substr($word,0,1) == '@'){
-                $user_name = substr($word,1);
-                $user_name = str_replace('_',' ',$user_name);
-                $mentioned_users[] = $user_name;
+            $this->authorize('View Task');
+            
+            $this->auth_user_id = auth()->guard(session('guard'))->user()->id;
+            $this->users = User::all();
+            if($this->byClient != 'all'){
+                $this->projects = Project::where('client_id', $this->byClient)->get();
+            }else{
+                $this->projects = Project::all();
             }
-        }
+            $this->teams = Team::all();
+            $this->clients = Client::all();
+            // Fetch all tasks from the database
+            if($this->ViewTasksAs == 'manager'){
+                $manager_team = auth()->user()->myTeam;
+                $team_users = $manager_team->users()->pluck('users.id')->toArray();
+                $this->tasks = [
+                    'pending' => $this->applySort(
+                        Task::where('status', 'pending')
+                            ->whereHas('users', function($q) use($team_users){
+                                $q->whereIn('user_id', $team_users);
+                            })
+                            ->where('name', 'like', '%' . $this->query . '%')
+                    )->get(),
+                    'in_progress' => $this->applySort(
+                        Task::where('status', 'in_progress')
+                            ->whereHas('users', function($q) use($team_users){
+                                $q->whereIn('user_id', $team_users);
+                            })
+                            ->where('name', 'like', '%' . $this->query . '%')
+                    )->get(),
+                    'in_review' => $this->applySort(
+                        Task::where('status', 'in_review')
+                            ->whereHas('users', function($q) use($team_users){
+                                $q->whereIn('user_id', $team_users);
+                            })
+                            ->where('name', 'like', '%' . $this->query . '%')
+                    )->get(),
+                    'completed' => $this->applySort(
+                        Task::where('status', 'completed')
+                            ->whereHas('users', function($q) use($team_users){
+                                $q->whereIn('user_id', $team_users);
+                            })
+                            ->where('name', 'like', '%' . $this->query . '%')
+                    )->get(),
+                ];
+                // dd($this->tasks);
 
-        // get user ids from mentioned users
-
-        $mentioned_user_ids = User::whereIn('name',$mentioned_users)->pluck('id')->toArray();
-
-        foreach($mentioned_user_ids as $user_id){
-            $user = User::find($user_id);
-            // $user->notify(new UserMentionNotification($task));
-        }
-
-        $task->mentioned_users = implode(',',$mentioned_user_ids);
-
-        $task->save();
-
-        $task->users()->attach($this->user_ids);
-        foreach($this->user_ids as $user_id){
-            $user = User::find($user_id);
-            // $user->notify(new NewTaskAssignNotification($task));
-        }
-        session()->flash('message','Task created successfully');
-        $this->redirect(route('task.list-view'),navigate:true);
-    }
-
-    public function enableEditForm($id){
-        $this->edit_task = true;
-        $this->task = Task::with('comments')->where('id',$id)->first();
-        $this->comments = $this->task->comments;
-        $this->project_id = $this->task->project_id;
-        $this->user_ids = $this->task->users->pluck('id')->toArray();
-        $this->name = $this->task->name;
-        $this->description = $this->task->description;
-        $this->dueDate = $this->task->due_date;
-        $this->dispatch('edit-task-showed');
-    }
-
-    public function updateTask(){
-        $this->validate([
-            'name' => 'required'
-        ]);
-
-        $this->task->project_id = $this->project_id;
-        $this->task->name = $this->name;
-        $this->task->description = $this->description;
-        $this->task->due_date = $this->dueDate;
-        $this->task->save();
-
-        $this->task->users()->sync($this->user_ids);
-        session()->flash('message','Task updated successfully');
-        $this->redirect(route('task.list-view'),navigate:true);
-    }
-
-    public function saveComment(){
-        $this->validate([
-            'comment' => 'required'
-        ]);
-
-        $comment = new Comment();
-        $comment->task_id = $this->task->id;
-        $comment->user_id = auth()->guard(session('guard'))->user()->id;
-        $comment->comment = $this->comment;
-        $comment->created_by = session('guard');
-
-        // take out mentioned users from description and save them in mentioned_users array
-
-        $mentioned_users = [];
-
-        // remove paragraph tags from description
-
-        $temp_comment = str_replace('<p>','',$this->comment);
-        $temp_comment = str_replace('</p>','',$temp_comment);
-        $temp_comment = strip_tags($temp_comment);
-        $temp_comment = str_replace('&nbsp;',' ',$temp_comment);
+            }else{
+                $this->tasks = [
+                    'pending' => $this->applySort(
+                        Task::tasksByUserType()
+                            ->where('status', 'pending')
+                            ->where('name', 'like', '%' . $this->query . '%')
+                    )->get(),
         
-
-        // convert description to array of words
-
-        $comment_array = explode(' ',$temp_comment);
-
-        // check if any word starts with @
-
-        foreach($comment_array as $word){
-            if(substr($word,0,1) == '@'){
-                $user_name = substr($word,1);
-                $user_name = str_replace('_',' ',$user_name);
-                $mentioned_users[] = $user_name;
+                    'in_progress' => $this->applySort(
+                                        Task::tasksByUserType()
+                                            ->where('status', 'in_progress')
+                                            ->where('name', 'like', '%' . $this->query . '%')
+                                    )->get(),
+                    
+                    'in_review' => $this->applySort(
+                                    Task::tasksByUserType()
+                                        ->where('status', 'in_review')
+                                        ->where('name', 'like', '%' . $this->query . '%')
+                                )->get(),
+    
+                    'completed' => $this->applySort(
+                                    Task::tasksByUserType()
+                                    ->where('status', 'completed')
+                                    ->where('name', 'like', '%' . $this->query . '%')
+                                )->get(),
+                    
+                ];
             }
-        }
 
-        // get user ids from mentioned users
-
-        $mentioned_user_ids = User::whereIn('name',$mentioned_users)->pluck('id')->toArray();
-
-        foreach($mentioned_user_ids as $user_id){
-            $user = User::find($user_id);
-            // $user->notify(new UserMentionNotification($this->task , $comment));
-        }
-
-        $comment->mentioned_users = implode(',',$mentioned_user_ids);
-        $comment->save();
-        $this->comments = $this->task->comments;
-        $this->comment = '';
-        $this->dispatch('comment-added');
 
     }
+
+    public function updatedSort($value)
+    {
+        $this->mount();
+    }
+
+    public function updatedViewTasksAs($value)
+    {
+        $this->mount();
+    }
+
+    public function emitEditTaskEvent($id){
+        $this->dispatch('editTask', $id);
+    }
+
+    public function search()
+    {
+        $this->mount();
+    }
+
+
+    public function updatedByClient($value)
+    {
+        $this->mount();
+    }
+
+    public function updatedByProject($value)
+    {
+        $this->mount();
+    }
+
+    public function updatedStartDate($value)
+    {
+        $this->mount();
+    }
+
+    public function updatedDueDate($value)
+    {
+        $this->mount();
+    }
+
+    public function updatedByUser($value)
+    {
+        $this->mount();
+    }
+
+    public function updatedStatus($value)
+    {
+        $this->mount();
+    }
+
+    public function applySort($query)
+    {
+        return Filter::filterTasks(
+            $query, 
+            $this->byProject, 
+            $this->byClient, 
+            $this->byUser, 
+            $this->sort, 
+            $this->startDate, 
+            $this->dueDate, 
+            $this->status
+        );
+    }
+
+    public function doesAnyFilterApplied(){
+        if($this->sort != 'all' || $this->byProject != 'all' || $this->byClient != 'all' || $this->byUser != 'all' || $this->startDate || $this->dueDate || $this->status != 'all'){
+            return true;
+        }
+        return false;
+    }
+
 }

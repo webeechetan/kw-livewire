@@ -147,6 +147,10 @@ class ListProject extends Component
         $this->dispatch('forceDeleteProject', $projectId);
     }
 
+    public function doesAnyFilterApplied(){
+        return $this->byTeam != 'all' || $this->byUser != 'all' || $this->byClient != 'all' || $this->sort != 'all' || $this->filter != 'all';
+    }
+
 
   
 

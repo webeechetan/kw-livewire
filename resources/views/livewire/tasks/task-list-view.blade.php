@@ -31,24 +31,79 @@
                                 <div class="cus_dropdown-body-wrap">
                                     <div class="filterSort">
                                         <h5 class="filterSort-header"><i class='bx bx-sort-down text-primary' ></i> Sort By</h5>
+                                        <ul class="filterSort_btn_group list-none">
+                                            <li class="filterSort_item">
+                                                <a wire:click="$set('sort', 'newest')" class="btn-batch @if($sort == 'newest') active @endif ">Newest</a>
+                                            </li>
+                                            <li class="filterSort_item">
+                                                <a wire:click="$set('sort', 'oldest')" class="btn-batch @if($sort == 'oldest') active @endif " >Oldest</a>
+                                            </li>
+                                            <li class="filterSort_item">
+                                                <a wire:click="$set('sort', 'a_z')" class="btn-batch @if($sort == 'a_z') active @endif"><i class='bx bx-down-arrow-alt' ></i> A To Z</a>
+                                            </li>
+                                            <li class="filterSort_item">
+                                                <a wire:click="$set('sort', 'z_a')" class="btn-batch @if($sort == 'z_a') active @endif"><i class='bx bx-up-arrow-alt' ></i> Z To A</a>
+                                            </li>
+                                        </ul>
                                         <h5 class="filterSort-header mt-4"><i class='bx bx-calendar-alt text-primary' ></i> Filter By Date</h5>
                                         <div class="row align-items-center mt-2">
-                                            <div class="col mb-4 mb-md-0">
-                                                <a href="javascript:;" class="btn w-100 btn-sm btn-border-secondary project_start_date"><i class='bx bx-calendar-alt' ></i> Start Date</a>
+                                            <div class="col mb-4 mb-md-0" wire:ignore>
+                                                <a href="javascript:;" class="btn w-100 btn-sm btn-border-secondary start_date">
+                                                    @if($startDate)
+                                                        {{ \Carbon\Carbon::parse($startDate)->format('d M Y') }}
+                                                    @else
+                                                        <i class='bx bx-calendar-alt' ></i> Start Date
+                                                    @endif
+                                                </a>
                                             </div>
-                                            <div class="col-auto text-center font-500 mb-4 mb-md-0 px-0">To</div>
-                                            <div class="col">
-                                                <a href="javascript:;" class="btn w-100 btn-sm btn-border-danger project_due_date"><i class='bx bx-calendar-alt' ></i> Due Date</a>
+                                            <div class="col-auto text-center font-500 mb-4 mb-md-0 px-0">
+                                                To
                                             </div>
-                                        </div>
+                                            <div class="col" wire:ignore>
+                                                <a href="javascript:;" class="btn w-100 btn-sm btn-border-danger due_date">
+                                                    @if($dueDate)
+                                                        {{ \Carbon\Carbon::parse($dueDate)->format('d M Y') }}
+                                                    @else
+                                                        <i class='bx bx-calendar-alt' ></i> Due Date
+                                                    @endif
+                                                </a>
+                                            </div>
+                                        </div> 
                                         <h5 class="filterSort-header mt-4"><i class='bx bx-calendar-alt text-primary' ></i> Filter By Status</h5>
                                         <ul class="filterSort_btn_group list-none">
-                                            <li class="filterSort_item"><a wire:navigate="" href="#" class="btn-batch active">All</a></li>
-                                            <li class="filterSort_item"><a wire:navigate="" href="#" class="btn-batch">Active</a></li>
-                                            <li class="filterSort_item"><a wire:navigate="" href="#" class="btn-batch">Overdue</a></li>
-                                            <li class="filterSort_item"><a wire:navigate="" href="#" class="btn-batch">Completed</a></li>
-                                            <li class="filterSort_item"><a wire:navigate="" href="#" class="btn-batch">Archived</a></li>
+                                            <li class="filterSort_item"><a wire:click="$set('status', 'all')" class="btn-batch @if($status == 'all') active @endif">All</a></li>
+                                            <li class="filterSort_item"><a wire:click="$set('status', 'pending')" class="btn-batch @if($status == 'pending') active @endif">Active</a></li>
+                                            <li class="filterSort_item"><a wire:click="$set('status', 'overdue')" class="btn-batch @if($status == 'overdue') active @endif">Overdue</a></li>
+                                            <li class="filterSort_item"><a wire:click="$set('status', 'completed')" class="btn-batch @if($status == 'completed') active @endif">Completed</a></li>
                                         </ul>
+                                        <h5 class="filterSort-header mt-4"><i class='bx bx-briefcase text-primary' ></i> Filter By Clients</h5>
+                                        <select class="dashboard_filters-select w-100" wire:model.live="byClient" id="">
+                                            <option value="all">Select Client</option>
+                                            @foreach($clients as $client)
+                                            <option value="{{ $client->id }}">{{ $client->name }}</option>
+                                        @endforeach
+                                        </select>
+                                        <h5 class="filterSort-header mt-4"><i class='bx bx-objects-horizontal-left text-primary'></i> Filter By Projects</h5>
+                                        <select class="dashboard_filters-select w-100" wire:model.live="byProject" id="">
+                                            <option value="all">All</option>
+                                            @foreach($projects as $project)
+                                                <option value="{{ $project->id }}">{{ $project->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        <h5 class="filterSort-header mt-4"><i class='bx bx-user text-primary'></i> Filter By User</h5>
+                                        <select class="dashboard_filters-select mt-2 w-100" wire:model.live="byUser" id="">
+                                            <option value="all">Select User</option>
+                                            @foreach($users as $user)
+                                            <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        {{-- <h5 class="filterSort-header mt-4"><i class='bx bx-user text-primary'></i> Filter By Team</h5>
+                                        <select class="dashboard_filters-select mt-2 w-100" wire:model.live="byTeam" id="">
+                                            <option value="all">Select Team</option>
+                                            @foreach($teams as $team)
+                                            <option value="{{ $team->id }}">{{ $team->name }}</option>
+                                            @endforeach
+                                        </select> --}}
                                     </div>
                                 </div>
                             </div>
@@ -77,13 +132,71 @@
         </div>
     </div>
 
+     <!-- Filters Query Params -->
+     @if($this->doesAnyFilterApplied())
+        <div class="col-md-6">
+            <div class="d-flex flex-wrap gap-2 align-items-center justify-content-end mb-2">
+                <span class="pe-2"><i class='bx bx-filter-alt text-secondary'></i> Filter Results:</span>
+                    @if($sort != 'all')
+                        <span class="btn-batch">
+                            @if($sort == 'newest') Newest @endif
+                            @if($sort == 'oldest') Oldest @endif
+                            @if($sort == 'a_z') A to Z @endif
+                            @if($sort == 'z_a') Z to A @endif
+                            <a wire:click="$set('sort','all')" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
+                    @endif
+
+                    @if($status != 'all')
+                        <span class="btn-batch">
+                            @if($status == 'pending') Active @endif
+                            @if($status == 'overdue') Overdue @endif
+                            @if($status == 'completed') Completed @endif
+                            <a wire:click="$set('status','all')" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
+                    @endif
+                
+                    @if($byClient != 'all')
+                        <span class="btn-batch">{{ $clients->find($byClient)->name }} <a wire:click="$set('byClient','all')" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
+                    @endif
+
+                    @if($byProject != 'all')
+                        <span class="btn-batch">{{ $projects->find($byProject)->name }} <a wire:click="$set('byProject','all')" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
+                    @endif
+
+                    @if($byUser != 'all')
+                        <span class="btn-batch">{{ $users->find($byUser)->name }} <a wire:click="$set('byUser','all')" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
+                    @endif
+
+                    @if($startDate)
+                        <span class="btn-batch">{{ \Carbon\Carbon::parse($startDate)->format('d M Y') }} <a wire:click="$set('startDate','')" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
+                    @endif
+
+                    @if($dueDate)
+                        <span class="btn-batch">{{ \Carbon\Carbon::parse($dueDate)->format('d M Y') }} <a wire:click="$set('dueDate','')" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
+                    @endif
+
+
+                    
+                    <a href="{{ route('task.index') }}" class="text-danger d-flex align-items-center">Reset <span class="ms-1 d-inline-flex"><i class='bx bx-refresh'></i></span></a>
+                </div>
+        </div>
+    @endif
+
     <div class="btn-list">
-        <a href="javascript:" class="btn-border btn-border-primary active">0 <span>|</span> All</a>
-        <a href="javascript:" class="btn-border btn-border-primary">0 <span>|</span> Assigned</a>
-        <a href="javascript:" class="btn-border btn-border-secondary">0 <span>|</span> Accepted</a>
-        <a href="javascript:" class="btn-border btn-border-warning">0 <span>|</span> In Review</a>
-        <a href="javascript:" class="btn-border btn-border-success">0 <span>|</span> Completed</a>
-        <a href="javascript:" class="btn-border btn-border-danger">0 <span>|</span> Overdue</a>
+        <a href="javascript:" class="btn-border btn-border-primary active">
+            {{ $tasks['pending']->count() + $tasks['in_progress']->count() + $tasks['in_review']->count() + $tasks['completed']->count() }} 
+            <span>|</span> All</a>
+        <a href="javascript:" class="btn-border btn-border-primary">{{ $tasks['pending']->count() }} <span>|</span> Assigned</a>
+        <a href="javascript:" class="btn-border btn-border-secondary">{{ $tasks['in_progress']->count() }} <span>|</span> Accepted</a>
+        <a href="javascript:" class="btn-border btn-border-warning">{{ $tasks['in_review']->count() }}<span>|</span> In Review</a>
+        <a href="javascript:" class="btn-border btn-border-success">{{ $tasks['completed']->count() }} <span>|</span> Completed</a>
+        <a href="javascript:" class="btn-border btn-border-danger">
+            @php
+                $overdue = $tasks['pending']->where('due_date', '<', now())->count();
+                $overdue += $tasks['in_progress']->where('due_date', '<', now())->count();
+                $overdue += $tasks['in_review']->where('due_date', '<', now())->count();
+            @endphp
+            {{ $overdue }}
+            <span>|</span> Overdue</a>
     </div>
 
     <div class="taskList-dashbaord_header">
@@ -110,11 +223,58 @@
     </div>
     <div class="taskList scrollbar">
         <div>
-           
+            @php
+                $groups = ['pending','in_progress','in_review','completed'];
+            @endphp
+            @foreach($groups as $group)
+                @foreach($tasks[$group] as $task)
+                    <div class="taskList_row edit-task" data-id="{{ $task->id }}"  wire:key="task-row-{{ $task->id }}">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="taskList_col taskList_col_title">
+                                    <div class="taskList_col_title_open edit-task" data-id="{{ $task->id }}"><i class="bx bx-chevron-right"></i></div>
+                                    <div class="edit-task" data-id="{{ $task->id }}">
+                                        <div>{{ $task->name }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col text-center">
+                                <div class="taskList_col"><span>{{  Carbon\Carbon::parse($task->created_at)->format('d M Y') }}</span></div>
+                            </div>
+                            <div class="col text-center">
+                                <div class="taskList_col"><span class="btn-batch ">{{  Carbon\Carbon::parse($task->due_date)->format('d M Y') }}</span></div>
+                            </div>
+                            <div class="col text-center">
+                                <div class="taskList_col"><span>{{ $task->project->name }}</span></div>
+                            </div>
+                            <div class="col text-center">
+                                <div class="taskList_col">
+                                    <div class="avatarGroup avatarGroup-overlap">
+                                        @foreach($task['users'] as $user)
+                                        <a href="#" class="avatarGroup-avatar">
+                                            <span class="avatar avatar-sm avatar-{{$user->color}}" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ $user->name }}">
+                                                <div class="rounded-circle" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{ $user->name }}">{{ $user->initials }}</div>
+                                            </span>
+                                        </a>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col text-center">
+                                <div class="taskList_col">
+                                    <span class="btn-batch btn-batch-primary">
+                                        {{ $task->status }}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            @endforeach
         </div>
     </div>
 
-    <div class="taskList-dashbaord">
+    {{-- <div class="taskList-dashbaord">
         <div class="taskList-wrap">
             <div class="taskList-dashbaord_tabs">
                 <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
@@ -178,7 +338,7 @@
                                                     @foreach($task['users'] as $user)
                                                     <a href="#" class="avatarGroup-avatar">
                                                         <span class="avatar avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ $user->name }}">
-                                                            {{-- <img alt="avatar" src="{{ env('APP_URL') }}/storage/{{ $user->image }}" class="rounded-circle" /> --}}
+                                                            {{-- <img alt="avatar" src="{{ env('APP_URL') }}/storage/{{ $user->image }}" class="rounded-circle" /> 
                                                             <div class="rounded-circle" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{ $user->name }}">{{ $user->initials }}</div>
                                                         </span>
                                                     </a>
@@ -192,7 +352,7 @@
                                                     @foreach($task['users'] as $user)
                                                     <a href="#" class="avatarGroup-avatar">
                                                         <span class="avatar avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ $user->name }}">
-                                                            {{-- <img alt="avatar" src="{{ env('APP_URL') }}/storage/{{ $user->image }}" class="rounded-circle" /> --}}
+                                                            {{-- <img alt="avatar" src="{{ env('APP_URL') }}/storage/{{ $user->image }}" class="rounded-circle" /> 
                                                             <div class="rounded-circle" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{ $user->name }}">{{ $user->initials }}</div>
                                                         </span>
                                                     </a>
@@ -393,421 +553,49 @@
                 </div>
             </div>
         </div>
-    </div>
-
-    
-    {{-- Add task canvas --}}
-    @if($view_form)
-    <div class="AddCanvas">
-        <!-- Add Task Canvas Header -->
-        <div class="AddTask_head">
-            <div class="row align-items-center">
-                <div class="col-md-7">
-                    <div class="AddTask_title-wrap">
-                        <label class="AddTask_title-lable"><span class="AddTask_title-icon"><i class='bx bx-notepad'></i></span> Task Title</label>
-                        <input class="form-control form-control-typeStyle AddTask_title" wire:model="name" type="text" placeholder="Type your task here...">
-                    </div>
-                    @error('name') <span class="text-danger">{{ $message }}</span> @enderror
-                </div>
-                <div class="col-md-5">
-                    <div class="d-flex gap-2 justify-content-end">
-                        <a href="javascript:;" wire:click="store" class="btn-border btn-border-success"><i class='bx bx-check'></i> Save</a>
-                        <a href="javascript:;" wire:click="toggleForm" class="btn-border btn-border-primary"><i class='bx bx-x' ></i> Close</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Add Task Canvas Body -->
-        <div class="AddTask_body">
-            <div class="AddTask_body_overview">
-                <form  method="POST">
-                    <div class="AddTask_rulesOverview">
-                        <div class="AddTask_rulesOverview_item" wire:ignore>
-                            <div class="AddTask_rulesOverview_item_name">Assigned to</div>
-                            <div class="AddTask_rulesOverview_item_rulesAction">
-                                <select name="" id="" class="form-control users" multiple>
-                                    <option value="" disabled>Select User</option>
-                                    @foreach($users as $user)
-                                        <option data-image="{{ $user->image }}" value="{{ $user->id }}">{{ $user->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-    
-                        <div class="AddTask_rulesOverview_item" wire:ignore>
-                            <div class="AddTask_rulesOverview_item_name">Notify to</div>
-                            <div class="AddTask_rulesOverview_item_rulesAction">
-                                <select name="" id="" class="form-control users" multiple>
-                                    <option value="" disabled>Select User</option>
-                                    @foreach($users as $user)
-                                        <option data-image="{{ $user->image }}" value="{{ $user->id }}">{{ $user->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-    
-                        <div class="AddTask_rulesOverview_item" wire:ignore>
-                            <div class="AddTask_rulesOverview_item_name">Project</div>
-                            <div class="AddTask_rulesOverview_item_rulesAction">
-                                <select  id="project_id" class="form-control">
-                                    <option value="">Select Project</option>
-                                    @foreach($projects as $project)
-                                        <option value="{{ $project->id }}">{{ $project->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-    
-                        <div class="AddTask_rulesOverview_item" wire:ignore>
-                            <div class="AddTask_rulesOverview_item_name">Due Date</div>
-                            <div class="AddTask_rulesOverview_item_rulesAction">
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="rulesAction_group">
-                                            {{-- <input type="date" wire:model="dueDate" class="form-control" > --}}
-                                            <a href="#" class="rulesAction-item-date rulesAction_group-item">
-                                                <div class="icon_rounded"><i class='bx bx-calendar' ></i></div>
-                                                <span class="btn_link add_date_btn">Add Date</span>
-                                            </a>
-                                            {{-- <a href="#" class="icon_rounded rulesAction_group-item"><i class='bx bx-repeat'></i></a>    --}}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-    
-                        <div class="AddTask_rulesOverview_item" wire:ignore>
-                            <div class="AddTask_rulesOverview_item_name">Description</div>
-                            <div class="AddTask_rulesOverview_item_rulesAction">
-                                <textarea name="" id="editor" cols="30" rows="10"></textarea>
-                            </div>
-                        </div>
-    
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    @endif
-
-    {{-- edit task canvas --}}
-    @if($edit_task)
-    <div class="AddCanvas">
-        <!-- edit Task Canvas Header -->
-        <div class="AddTask_head">
-            <div class="row align-items-center">
-                <div class="col-md-7">
-                    <div class="AddTask_title-wrap">
-                        <label class="AddTask_title-lable"><span class="AddTask_title-icon"><i class='bx bx-notepad'></i></span> Task Title</label>
-                        <input class="form-control form-control-typeStyle AddTask_title" wire:model="name" type="text" placeholder="Type your task here...">
-                    </div>
-                    @error('name') <span class="text-danger">{{ $message }}</span> @enderror
-                </div>
-                <div class="col-md-5">
-                    <div class="d-flex gap-2 justify-content-end">
-                        <a href="javascript:;" wire:click="updateTask" class="btn-border btn-border-success"><i class='bx bx-check'></i> Save</a>
-                        <a href="{{route('task.list-view')}}" wire:navigate class="btn-border btn-border-primary"><i class='bx bx-x' ></i> Close</a>
-                        <a href="{{ route('task.index') }}" wire:navigate class="btn-border btn-border-danger"><i class='bx bx-trash' ></i> Delete</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- edit Task Canvas Body -->
-        <div class="AddTask_body">
-            <div class="AddTask_body_overview">
-                <form  method="POST">
-                    <div class="AddTask_rulesOverview">
-                        <div class="AddTask_rulesOverview_item" wire:ignore>
-                            <div class="AddTask_rulesOverview_item_name">Assigned to</div>
-                            <div class="AddTask_rulesOverview_item_rulesAction">
-                                <select name="" id="" class="form-control users" multiple>
-                                    <option value="" disabled>Select User</option>
-                                    @foreach($users as $user)
-                                            @if(in_array($user->id, $user_ids))
-                                                <option data-image="{{ $user->image }}" value="{{ $user->id }}" selected>{{ $user->name }}</option>
-                                            @else
-                                                <option data-image="{{ $user->image }}" value="{{ $user->id }}">{{ $user->name }}</option>
-                                            @endif
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-    
-                        <div class="AddTask_rulesOverview_item" wire:ignore>
-                            <div class="AddTask_rulesOverview_item_name">Notify to</div>
-                            <div class="AddTask_rulesOverview_item_rulesAction">
-                                <select name="" id="" class="form-control users" multiple>
-                                    <option value="" disabled>Select User</option>
-                                    @foreach($users as $user)
-                                        @if(in_array($user->id, $user_ids))
-                                            <option data-image="{{ $user->image }}" value="{{ $user->id }}" selected>{{ $user->name }}</option>
-                                        @else
-                                            <option data-image="{{ $user->image }}" value="{{ $user->id }}">{{ $user->name }}</option>
-                                        @endif
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-    
-                        <div class="AddTask_rulesOverview_item" wire:ignore>
-                            <div class="AddTask_rulesOverview_item_name">Project</div>
-                            <div class="AddTask_rulesOverview_item_rulesAction">
-                                <select  id="project_id" class="form-control">
-                                    <option value="">Select Project</option>
-                                    @foreach($projects as $project)
-                                        <option @if($project_id == $project->id) selected @endif value="{{ $project->id }}">{{ $project->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-    
-                        <div class="AddTask_rulesOverview_item" wire:ignore>
-                            <div class="AddTask_rulesOverview_item_name">Due Date</div>
-                            <div class="AddTask_rulesOverview_item_rulesAction">
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="rulesAction_group">
-                                            {{-- <input type="date" wire:model="dueDate" class="form-control" > --}}
-                                            <a href="#" class="rulesAction-item-date rulesAction_group-item">
-                                                <div class="icon_rounded"><i class='bx bx-calendar' ></i></div>
-                                                <span class="btn_link add_date_btn">{{ $dueDate }}</span>
-                                            </a>
-                                            {{-- <a href="#" class="icon_rounded rulesAction_group-item"><i class='bx bx-repeat'></i></a>    --}}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-    
-                        <div class="AddTask_rulesOverview_item" wire:ignore>
-                            <div class="AddTask_rulesOverview_item_name">Description</div>
-                            <div class="AddTask_rulesOverview_item_rulesAction">
-                                <textarea name="" id="editor" cols="30" rows="10">{{ $description }}</textarea>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-                <h5 class="cmnt_act_title"><i class='bx bx-line-chart text-primary'></i> Activity</h5>
-                <div class="cmnt_act">
-                    @foreach( $comments as $comment)
-                    <div class="cmnt_act_row">
-                        <div class="cmnt_act_user">
-                            <div class="cmnt_act_user_img">
-                                <img class="rounded-circle" src="{{ env('APP_URL') }}/storage/{{ $comment->user->image }}">
-                            </div>
-                            <div class="cmnt_act_user_name-wrap">
-                                <div class="cmnt_act_user_name">{{ $comment->user->name }}</div>
-                                <div class="cmnt_act_date">{{ $comment->created_at->diffForHumans() }}</div>
-                                <div class="cmnt_act_user_text">{!! $comment->comment !!}</div>
-                            </div>
-                        </div>
-                    </div>
-                    @endforeach
-                </div>
-                
-                <div class="AddTask_body_overview">
-                    <div class="AddTask_rulesOverview">
-                        <div class="AddTask_rulesOverview_item" wire:ignore>
-                            <div class="AddTask_rulesOverview_item_name">Comment</div>
-                            <div class="AddTask_rulesOverview_item_rulesAction">
-                                <textarea name="" id="comment_box" cols="30" rows="5"></textarea>
-                            </div>
-                            <div class="AddTask_rulesOverview_item_name mt-3"></div>
-                            <div class="AddTask_rulesOverview_item_rulesAction mt-3">
-                                <button wire:click="saveComment" class="btn btn-primary btn-sm"><i class="bx bx-comment"></i></button>
-                            </div>
-                        </div>
-                        
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    @endif
+    </div> --}}
+    <livewire:components.add-task @saved="$refresh"  />
 </div>
 
-
-@push('scripts')
+@script
     <script>
-        if(typeof users_for_mention === 'undefined'){
-            var users_for_mention = [];
-            var users = @json($users);
-            users.forEach(user => {
-                users_for_mention.push(user.name);
-            });
-        }else{
-            var users_for_mention = users_for_mention;
-            var users = @json($users);
-        }
-
-        $(document).ready(function(){
-            $(".accordion-header").click(function(){
-                // toggle div below one which is clicked
-                $(this).next(".accordion-collapse").toggle(function(){
-                    // add animation when toggling
-                    if($(this).is(":visible")){
-                        $(this).animate({
-                            opacity: "1"
-                        }, "slow");
-                    } else {
-                        $(this).animate({
-                            opacity: "0"
-                        }, "slow");
-                    }
-                });
-            });
+        document.addEventListener('saved', function(){
+            $('#offcanvasRight').offcanvas('hide');
         });
 
-        $(".toggleForm").click(function(){
-            @this.toggleForm();
+        $(".edit-task").click(function(){
+            let taskId = $(this).data('id');
+            @this.emitEditTaskEvent(taskId);
         });
 
-        // File manager button (image icon)
+        $(".start_date").flatpickr({
+            altFormat: "F j, Y",
+            dateFormat: "Y-m-d",
+            onClose: function(selectedDates, dateStr, instance){
+                @this.set('startDate', dateStr);
+                $(".start_date").text(dateStr);
+            }
+        });
 
-        if(typeof FMButton === 'undefined'){
-            var FMButton = function(context) {
-                const ui = $.summernote.ui;
-                const button = ui.button({
-                    contents: '<i class="note-icon-picture"></i> ',
-                    tooltip: 'File Manager',
-                    click: function() {
-                    window.open('/file-manager/summernote', 'fm', 'width=1400,height=800');
-                    }
-                });
-                return button.render();
-            };
-        }else{
-            var FMButton = FMButton;
-        }
+        $(".due_date").flatpickr({
+            altFormat: "F j, Y",
+            dateFormat: "Y-m-d",
+            onClose: function(selectedDates, dateStr, instance){
+                @this.set('dueDate', dateStr);
+                $(".due_date").text(dateStr);
+            }
+        });
 
-        // set file link
-        function fmSetLink(url) {
-            $('#editor').summernote('insertImage', url);
-            $('#comment_box').summernote('insertImage', url);
-        }
-
-        function initPlugins(){
-                $("#editor").summernote({
-                    height: 200,
-                    hint: {
-                        mentions: users_for_mention,
-                        match: /\B@(\w*)$/,
-                        search: function (keyword, callback) {
-                            callback($.grep(this.mentions, function (item) {
-                                return item.indexOf(keyword) == 0;
-                            }));
-                        },
-                        template : function (item) {
-                            return '<img src="{{ env('APP_URL') }}/storage/' + users[users_for_mention.indexOf(item)].image + '" class="img-fluid rounded-circle" style="width: 20px; height: 20px; margin-right: 5px;"/>' + item;
-                        },
-                        content: function (item) {
-                            item = item.replace(/\s/g, '_');
-                            let span = document.createElement('a');
-                            $(span).addClass('mention_user');
-                            $(span).text(' '+'@' + item + ' ');
-                            return span;
-                        }    
-                    },
-                    toolbar: [
-                        ['font', ['bold', 'underline']],
-                        ['para', ['ul', 'ol']],
-                        ['insert', ['link']],
-                        ['fm-button', ['fm']],
-                    ],
-                    callbacks: {
-                        onChange: function(contents, $editable) {
-                            @this.set('description', contents);
-                        }
-                    },
-                    buttons: {
-                        fm: FMButton
-                    }
-                });
-
-                $("#comment_box").summernote({
-                    height: 100,
-                    hint: {
-                        mentions: users_for_mention,
-                        match: /\B@(\w*)$/,
-                        search: function (keyword, callback) {
-                            callback($.grep(this.mentions, function (item) {
-                                return item.indexOf(keyword) == 0;
-                            }));
-                        },
-                        template : function (item) {
-                            return '<img src="{{ env('APP_URL') }}/storage/' + users[users_for_mention.indexOf(item)].image + '" class="img-fluid rounded-circle" style="width: 20px; height: 20px; margin-right: 5px;"/>' + item;
-                        },
-                        content: function (item) {
-                            item = item.replace(/\s/g, '_');
-                            let span = document.createElement('a');
-                            $(span).addClass('mention_user');
-                            $(span).text(' '+'@' + item + ' ');
-                            return span;
-                        }    
-                    },
-                    toolbar: [
-                        ['font', ['bold', 'underline']],
-                        ['para', ['ul', 'ol']],
-                        ['insert', ['link']],
-                        ['fm-button', ['fm']],
-                    ],
-                    callbacks: {
-                        onChange: function(contents, $editable) {
-                            @this.set('comment', contents);
-                        }
-                    },
-                    buttons: {
-                        fm: FMButton
-                    }
-                });
-    
-            document.addEventListener('comment-added', function () {
-                $("#comment_box").summernote("code", "");
-            });
-
-            $('.users').select2({
-                placeholder: 'Select User',
-                templateResult: format,
-                templateSelection: format,
-                escapeMarkup: function(m) {
-                    return m;
-                }
-            });
-    
-            $('.users').on('change', function(e){
-                var users = $('.users');
-                var selected_users = users.val();
-                @this.set('user_ids', selected_users);
-            });
-    
-            $('#project_id').select2({
-                placeholder: 'Select Project',
-            });
-    
-            $('#project_id').on('change', function(e){
-                var project_id = $('#project_id').val();
-                @this.set('project_id', project_id);
-            });
-    
-            function format(state) {
-                if (!state.id) {
-                    return state.text;
-                }
-                var baseUrl = "{{ env('APP_URL') }}/storage";
-                var $state = $(
-                    '<span><img class="select2-selection__choice__display_userImg" src="' + baseUrl + '/' + state.element.attributes[0].value + '" /> ' + state.text + '</span>'
-                );
-                return $state;
-            };
-
-            $('.add_date_btn').flatpickr({
-                dateFormat: "Y-m-d",
-                onChange: function(selectedDates, dateStr, instance) {
-                    $(".add_date_btn").html(dateStr);
-                    @this.set('dueDate', dateStr);
-                },
-            });
-        }
-
+        $(".task-switch").change(function(){
+            if($(this).is(':checked')){
+                // $(".task-switch-text").text('Show Team Tasks');
+                @this.set('ViewTasksAs', 'manager');
+            }else{
+                // $(".task-switch-text").text('Show My Tasks');
+                @this.set('ViewTasksAs', 'user');
+            }
+        });
     </script>
-@endpush
+@endscript
+
+

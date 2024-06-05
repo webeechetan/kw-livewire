@@ -78,6 +78,10 @@
             $tasks = \App\Models\Task::whereHas('users', function($query) use($byUser){
                 $query->where('user_id', $byUser);
             });
+            
+            if($byProject != 'all'){
+                $tasks = $tasks->where('project_id', $byProject);
+            }
             $tasks = $tasks->get();
         }
 

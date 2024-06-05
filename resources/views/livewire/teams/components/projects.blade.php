@@ -16,44 +16,41 @@
    <!--- Dashboard Body --->
    <div class="row mb-4">
       <div class="col-sm-4 @if($filterByUser) opacity-25 @endif">
-         <div class="column-box h-100">
-            <label for="" class="font-500"><i class='bx bx-briefcase-alt-2 text-primary' ></i> Filter By Client  @if($filterByClient) <i class="bx bx-refresh" onclick="window.location.reload()" ></i> @endif</label>
-            <select wire:model.live="filterByClient" class="dashboard_filters-select form-select form-select-sm mt-2 w-100" name="" id="">
-               <option selected >Select Client</option>
-               @foreach($clients as $client)
-               <option value="{{ $client->id }}">{{$client->name}}</option>
-               @endforeach
-            </select>
+         <div class="column-box py-2">
+            <div class="d-flex align-items-center">
+               <label for="" class="font-500"><i class='bx bx-briefcase-alt-2 text-primary' ></i> Filter By Client  @if($filterByClient) <i class="bx bx-refresh" onclick="window.location.reload()" ></i> @endif</label>
+               <select wire:model.live="filterByClient" class="dashboard_filters-select ms-auto w-200" name="" id="">
+                  <option selected >Select Client</option>
+                  @foreach($clients as $client)
+                  <option value="{{ $client->id }}">{{$client->name}}</option>
+                  @endforeach
+               </select>
+            </div>
+            
          </div>
       </div>
       <div class="col-sm-4 @if($filterByClient) opacity-25 @endif">
-         <div class="column-box h-100">
-            <label for="" class="font-500"><i class='bx bx-user text-secondary'></i> Filter By User @if($filterByUser) <i class="bx bx-refresh" onclick="window.location.reload()" ></i> @endif</label>
-            <select wire:model.live="filterByUser" class="dashboard_filters-select form-select form-select-sm mt-2 w-100" name="" id="">
-               <option   selected>Select User</option>
-               @foreach($users as $user)
-                  <option value="{{ $user->id }}">{{$user->name}}</option>
-               @endforeach
-            </select>
+         <div class="column-box py-2">
+            <div class="d-flex align-items-center">
+               <label for="" class="font-500"><i class='bx bx-user text-secondary'></i> Filter By User @if($filterByUser) <i class="bx bx-refresh" onclick="window.location.reload()" ></i> @endif</label>
+               <select wire:model.live="filterByUser" class="dashboard_filters-select ms-auto w-200" name="" id="">
+                  <option   selected>Select User</option>
+                  @foreach($users as $user)
+                     <option value="{{ $user->id }}">{{$user->name}}</option>
+                  @endforeach
+               </select>
+            </div>
          </div>
       </div>
       <div class="col-sm-4">
-         <div class="column-box h-100">
-            <label for="" class="font-500"><i class='bx bx-calendar-alt text-success' ></i> Filter By Date</label>
-            <div class="row align-items-center mt-2">
-               <div class="col mb-4 mb-md-0">
-                  <a href="javascript:;" class="btn w-100 btn-sm btn-border-secondary project_start_date"><i class='bx bx-calendar-alt' ></i> Start Date</a>
-               </div>
-               <div class="col-auto text-center font-500 mb-4 mb-md-0">To</div>
-               <div class="col">
-                  <a href="javascript:;" class="btn w-100 btn-sm btn-border-danger project_due_date"><i class='bx bx-calendar-alt' ></i> Due Date</a>
-               </div>
+         <div class="column-box py-2">
+            <div class="d-flex align-items-center">
+               <label for="" class="font-500"><i class='bx bx-calendar-alt text-success' ></i> Filter By Date</label>
+               <i class="dashboard_filters-select ms-auto w-200 filter-projects-by-date bx bx-calendar"></i>
             </div>
-            <div class="filter-projects-by-date mt-2">Select Date
             @if($start_date)
-            <span>{{ $start_date }}</span><span class="px-2">To</span><span>{{ $end_date}}</span>
+            {{ $start_date }}, {{ $end_date}}
             @endif
-            </div>
          </div>
       </div>
    </div>

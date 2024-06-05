@@ -411,7 +411,7 @@
 
                 console.log(task_users_ids);
 
-                $('.task-users').val([5]).trigger('change');
+                $('.task-users').val(task_users_ids).trigger('change');
 
                 $('.task-notify-users').val(task_notifiers_ids).trigger('change');
 

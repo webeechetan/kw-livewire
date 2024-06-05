@@ -87,7 +87,12 @@ class ListTask extends Component
             
             $this->auth_user_id = auth()->guard(session('guard'))->user()->id;
             $this->users = User::all();
-            $this->projects = Project::all();
+            if($this->byClient != 'all'){
+                $this->projects = Project::where('client_id', $this->byClient)->get();
+            }else{
+                $this->projects = Project::all();
+            }
+            // dd($this->projects);
             $this->teams = Team::all();
             $this->clients = Client::all();
             // Fetch all tasks from the database
@@ -229,6 +234,7 @@ class ListTask extends Component
 
     public function updatedByClient($value)
     {
+        $this->projects = Project::where('client_id', $value)->get();
         $this->mount();
     }
 

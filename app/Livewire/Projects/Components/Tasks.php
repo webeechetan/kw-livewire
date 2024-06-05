@@ -7,7 +7,8 @@ use App\Models\Task;
 use App\Models\Project;
 use App\Models\User;
 use App\Models\Team;
-use Livewire\Attributes\On; 
+use Livewire\Attributes\On;
+use App\Helpers\ProjectTaskFilter;
 
 class Tasks extends Component
 {
@@ -15,67 +16,88 @@ class Tasks extends Component
 
     public $users = [];
     public $teams = [];
+    public $tasks = [];
 
     public $sort = 'all';
     public $filter = 'all';
     public $byUser = 'all';
     public $byTeam = 'all';
+    public $status = 'all';
+
+    public $startDate;
+    public $dueDate;
+
+    public $query = '';
 
     public function render()
     {
-
-      
         return view('livewire.projects.components.tasks');
     }
 
     public function mount(Project $project)
     {
         $this->project = $project;
-
         $this->users = User::all();
         $this->teams = Team::all();
-
-
-        if($this->sort == 'all'){
-            $this->project->tasks = $this->project->tasks;
-        }elseif($this->sort == 'a_z'){
-            $this->project->tasks = $this->project->tasks->sortBy('name');
-        }elseif($this->sort == 'z_a'){
-            $this->project->tasks = $this->project->tasks->sortByDesc('name');
-        }elseif($this->sort == 'newest'){
-            $this->project->tasks = $this->project->tasks->sortByDesc('created_at');
-        }elseif($this->sort == 'oldest'){
-            $this->project->tasks = $this->project->tasks->sortBy('created_at');
-        }
-
-        if($this->byUser != 'all'){
-            $this->project->tasks = $this->project->tasks->filter(function($task){
-                return $task->users->contains('id',$this->byUser);
-            });
-        }
-
-        if($this->byTeam != 'all'){
-            $this->project->tasks = $this->project->tasks->filter(function($task){
-                return $task->teams->contains('id',$this->byTeam);
-            });
-        }
-
-        $this->project->tasks()->paginate(5);
-        
-
+        $this->tasks = $this->applySort($project->tasks());
+        $this->tasks = $this->tasks->where('name', 'like', '%' . $this->query . '%');
+        $this->tasks = $this->tasks->get();
     }
 
-    public function updatedByUser($value){
-        $this->byUser = $value;
-        return $this->redirect(route('project.profile',['id'=>$this->project->id,'sort'=>$this->sort,'filter'=>$this->filter,'byUser'=>$this->byUser,'byTeam'=>$this->byTeam]), navigate: true);
+    public function search(){
+        $this->mount($this->project);
     }
 
-    public function emitEditTaskEvent($id){
+    public function updatedSort($value)
+    {
+        $this->mount($this->project);
+    }
+    public function updatedStartDate($value)
+    {
+        $this->mount($this->project);
+    }
+
+    public function updatedDueDate($value)
+    {
+        $this->mount($this->project);
+    }
+
+    public function updatedByUser($value)
+    {
+        $this->mount($this->project);
+    }
+
+    public function updatedStatus($value)
+    {
+        $this->mount($this->project);
+    }
+
+    public function emitEditTaskEvent($id)
+    {
         $this->dispatch('editTask', $id);
     }
 
-    public function emitDeleteTaskEvent($id){
+    public function emitDeleteTaskEvent($id)
+    {
         $this->dispatch('deleteTask', $id);
     }
 
+    public function applySort($query)
+    {
+        return ProjectTaskFilter::filterTasks(
+            $query, 
+            $this->byUser, 
+            $this->sort, 
+            $this->startDate, 
+            $this->dueDate, 
+            $this->status
+        );
+    }
+
+    public function doesAnyFilterApplied(){
+        if($this->sort != 'all' || $this->byUser != 'all' || $this->startDate || $this->dueDate || $this->status != 'all'){
+            return true;
+        }
+        return false;
+    }
 }

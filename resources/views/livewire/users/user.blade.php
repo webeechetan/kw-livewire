@@ -38,7 +38,7 @@
                     <div class="col"><span><i class='bx bx-cake text-warning'></i></span> Date Of Birth</div>
                     <div class="col dob">
                         <i class='bx bx-calendar'></i>
-                        @if($user->details->dob) {{  $user->details->dob }} @else Not Added  @endif
+                        @if($user->details?->dob) {{  $user->details->dob }} @else Not Added  @endif
                     </div>
                 </div>
                 <div class="row align-items-center mb-2">
@@ -159,7 +159,7 @@
                 <h5 class="title-sm mb-2">Bio <a href="javascript:;" class="btn-link"><i class='bx bx-pencil edit-bio' ></i></a></h5>
                 <hr>
                 <div class="user-profile-bio">
-                    {!! $user->details->bio ?? 'Not Added' !!}
+                    {!! $user->details?->bio ?? 'Not Added' !!}
                 </div>      
                 <button class="btn btn-primary mt-2 update-bio-btn d-none" wire:click="updateBio">Update</button>
             </div>
@@ -167,7 +167,7 @@
                 <h5 class="title-sm mb-2">Skils <a href="javascript:;" class="btn-link"><i class='bx bx-plus add-skills' ></i></a></h5>
                 <hr>
                 <div class="btn-list skills-list">
-                    @if($user->details->skills)
+                    @if($user->details?->skills)
                         @foreach(json_decode($user->details->skills) as $skill)
                             <span class="btn-batch">{{ $skill }}</span>
                         @endforeach
@@ -176,7 +176,7 @@
                     @endif
                 </div>
                 @php
-                    $skills = $user->details->skills ?? '[]';
+                    $skills = $user->details?->skills ?? '[]';
                     // convert to array
                     $skills = json_decode($skills);
                     $skills = implode(',', $skills);
