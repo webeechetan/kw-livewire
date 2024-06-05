@@ -115,73 +115,77 @@
             </div>
         </div>
         <hr class="mb-0">
-        <!-- Tabs -->
-        <div class="tabNavigationBar-tab border_style my-2">
-            <a href="{{ route('task.list-view') }}" class="tabNavigationBar-item @if(request()->routeIs('task.list-view')) active @endif" wire:navigate ><i class='bx bx-list-ul'></i> List</a>
-            <a href="{{ route('task.index') }}" class="tabNavigationBar-item @if(request()->routeIs('task.index')) active @endif" wire:navigate><i class='bx bx-columns' ></i> Board</a>
-            @if(auth()->user()->is_manager)
-            <div class="form-check form-switch">
-                <input class="form-check-input task-switch" type="checkbox" role="switch" id="flexSwitchCheckChecked">
-                <label class="form-check-label task-switch-text" for="flexSwitchCheckChecked">
-                    @if($ViewTasksAs == 'manager')
-                    Showing {{ auth()->user()->myTeam->name }} Tasks
-                    @else
-                    Showing My Tasks
-                    @endif
-                </label>
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <!-- Tabs -->
+                <div class="tabNavigationBar-tab border_style">
+                    <a href="{{ route('task.list-view') }}" class="tabNavigationBar-item @if(request()->routeIs('task.list-view')) active @endif" wire:navigate ><i class='bx bx-list-ul'></i> List</a>
+                    <a href="{{ route('task.index') }}" class="tabNavigationBar-item @if(request()->routeIs('task.index')) active @endif" wire:navigate><i class='bx bx-columns' ></i> Board</a>
+                </div>
             </div>
-            @endif
+            <div class="col-md-6 text-end">
+             @if(auth()->user()->is_manager)
+                <div class="form-check form-switch d-inline-block">
+                    <input class="form-check-input task-switch" type="checkbox" role="switch" id="flexSwitchCheckChecked">
+                    <label class="form-check-label task-switch-text" for="flexSwitchCheckChecked">
+                        @if($ViewTasksAs == 'manager')
+                        Showing {{ auth()->user()->myTeam->name }} Tasks
+                        @else
+                        Showing My Tasks
+                        @endif
+                    </label>
+                </div>
+                @endif
+            </div>
         </div>
     </div>
 
      <!-- Filters Query Params -->
      @if($this->doesAnyFilterApplied())
-        <div class="col-md-6">
-            <div class="d-flex flex-wrap gap-2 align-items-center justify-content-end mb-2">
-                <span class="pe-2"><i class='bx bx-filter-alt text-secondary'></i> Filter Results:</span>
-                    @if($sort != 'all')
-                        <span class="btn-batch">
-                            @if($sort == 'newest') Newest @endif
-                            @if($sort == 'oldest') Oldest @endif
-                            @if($sort == 'a_z') A to Z @endif
-                            @if($sort == 'z_a') Z to A @endif
-                            <a wire:click="$set('sort','all')" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
-                    @endif
+        <div class="d-flex flex-wrap gap-2 align-items-center mb-4">
+            <span class="pe-2"><i class='bx bx-filter-alt text-secondary'></i> Filter Results:</span>
+                @if($sort != 'all')
+                    <span class="btn-batch">
+                        @if($sort == 'newest') Newest @endif
+                        @if($sort == 'oldest') Oldest @endif
+                        @if($sort == 'a_z') A to Z @endif
+                        @if($sort == 'z_a') Z to A @endif
+                        <a wire:click="$set('sort','all')" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
+                @endif
 
-                    @if($status != 'all')
-                        <span class="btn-batch">
-                            @if($status == 'pending') Active @endif
-                            @if($status == 'overdue') Overdue @endif
-                            @if($status == 'completed') Completed @endif
-                            @if($status == 'in_progress') Accepted @endif
-                            @if($status == 'in_review') In Review @endif
+                @if($status != 'all')
+                    <span class="btn-batch">
+                        @if($status == 'pending') Active @endif
+                        @if($status == 'overdue') Overdue @endif
+                        @if($status == 'completed') Completed @endif
+                        @if($status == 'in_progress') Accepted @endif
+                        @if($status == 'in_review') In Review @endif
 
-                            <a wire:click="$set('status','all')" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
-                    @endif
-                
-                    @if($byClient != 'all')
-                        <span class="btn-batch">{{ $clients->find($byClient)->name }} <a wire:click="$set('byClient','all')" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
-                    @endif
+                        <a wire:click="$set('status','all')" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
+                @endif
+            
+                @if($byClient != 'all')
+                    <span class="btn-batch">{{ $clients->find($byClient)->name }} <a wire:click="$set('byClient','all')" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
+                @endif
 
-                    @if($byProject != 'all')
-                        <span class="btn-batch">{{ $projects->find($byProject)->name }} <a wire:click="$set('byProject','all')" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
-                    @endif
+                @if($byProject != 'all')
+                    <span class="btn-batch">{{ $projects->find($byProject)->name }} <a wire:click="$set('byProject','all')" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
+                @endif
 
-                    @if($byUser != 'all')
-                        <span class="btn-batch">{{ $users->find($byUser)->name }} <a wire:click="$set('byUser','all')" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
-                    @endif
+                @if($byUser != 'all')
+                    <span class="btn-batch">{{ $users->find($byUser)->name }} <a wire:click="$set('byUser','all')" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
+                @endif
 
-                    @if($startDate)
-                        <span class="btn-batch">{{ \Carbon\Carbon::parse($startDate)->format('d M Y') }} <a wire:click="$set('startDate','')" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
-                    @endif
+                @if($startDate)
+                    <span class="btn-batch">{{ \Carbon\Carbon::parse($startDate)->format('d M Y') }} <a wire:click="$set('startDate','')" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
+                @endif
 
-                    @if($dueDate)
-                        <span class="btn-batch">{{ \Carbon\Carbon::parse($dueDate)->format('d M Y') }} <a wire:click="$set('dueDate','')" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
-                    @endif
+                @if($dueDate)
+                    <span class="btn-batch">{{ \Carbon\Carbon::parse($dueDate)->format('d M Y') }} <a wire:click="$set('dueDate','')" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
+                @endif
 
-                    <a href="{{ route('task.index') }}" class="text-danger d-flex align-items-center">Reset <span class="ms-1 d-inline-flex"><i class='bx bx-refresh'></i></span></a>
-                </div>
-        </div> 
+            <a href="{{ route('task.index') }}" class="text-danger d-flex align-items-center">Reset <span class="ms-1 d-inline-flex"><i class='bx bx-refresh'></i></span></a>
+        </div>
     @endif
 
     <div class="btn-list">
@@ -204,81 +208,83 @@
             <span>|</span> Overdue</a>
     </div>
 
-    <div class="taskList-dashbaord_header">
-        <div class="row">
-            <div class="col-lg-4">
-                <div class="taskList-dashbaord_header_title taskList_col ms-2">Task Name</div>
-            </div>
-            <div class="col text-center">
-                <div class="taskList-dashbaord_header_title taskList_col">Created Date</div>
-            </div>
-            <div class="col text-center">
-                <div class="taskList-dashbaord_header_title taskList_col">Due Date</div>
-            </div>
-            <div class="col text-center">
-                <div class="taskList-dashbaord_header_title taskList_col">Project</div>
-            </div>
-            <div class="col text-center">
-                <div class="taskList-dashbaord_header_title taskList_col">Assignee</div>
-            </div>
-            <div class="col text-center">
-                <div class="taskList-dashbaord_header_title taskList_col">Status</div>
+    <div class="column-box mt-3">
+        <div class="taskList-dashbaord_header">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="taskList-dashbaord_header_title taskList_col ms-2">Task Name</div>
+                </div>
+                <div class="col text-center">
+                    <div class="taskList-dashbaord_header_title taskList_col">Created Date</div>
+                </div>
+                <div class="col text-center">
+                    <div class="taskList-dashbaord_header_title taskList_col">Due Date</div>
+                </div>
+                <div class="col text-center">
+                    <div class="taskList-dashbaord_header_title taskList_col">Project</div>
+                </div>
+                <div class="col text-center">
+                    <div class="taskList-dashbaord_header_title taskList_col">Assignee</div>
+                </div>
+                <div class="col text-center">
+                    <div class="taskList-dashbaord_header_title taskList_col">Status</div>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="taskList scrollbar">
-        <div>
-            @php
-                $groups = ['pending','in_progress','in_review','completed'];
-            @endphp
-            @foreach($groups as $group)
-                @foreach($tasks[$group] as $task)
-                    <div class="taskList_row edit-task" data-id="{{ $task->id }}"  wire:key="task-row-{{ $task->id }}">
-                        <div class="row">
-                            <div class="col-lg-4">
-                                <div class="taskList_col taskList_col_title">
-                                    <div class="taskList_col_title_open edit-task" data-id="{{ $task->id }}"><i class="bx bx-chevron-right"></i></div>
-                                    <div class="edit-task" data-id="{{ $task->id }}">
-                                        <div>{{ $task->name }}</div>
+        <div class="taskList scrollbar">
+            <div>
+                @php
+                    $groups = ['pending','in_progress','in_review','completed'];
+                @endphp
+                @foreach($groups as $group)
+                    @foreach($tasks[$group] as $task)
+                        <div class="taskList_row edit-task" data-id="{{ $task->id }}"  wire:key="task-row-{{ $task->id }}">
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <div class="taskList_col taskList_col_title">
+                                        <div class="taskList_col_title_open edit-task" data-id="{{ $task->id }}"><i class="bx bx-chevron-right"></i></div>
+                                        <div class="edit-task" data-id="{{ $task->id }}">
+                                            <div>{{ $task->name }}</div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col text-center">
-                                <div class="taskList_col"><span>{{  Carbon\Carbon::parse($task->created_at)->format('d M Y') }}</span></div>
-                            </div>
-                            <div class="col text-center">
-                                <div class="taskList_col"><span class="btn-batch ">{{  Carbon\Carbon::parse($task->due_date)->format('d M Y') }}</span></div>
-                            </div>
-                            <div class="col text-center">
-                                <div class="taskList_col"><span>{{ $task->project->name }}</span></div>
-                            </div>
-                            <div class="col text-center">
-                                <div class="taskList_col">
-                                    <div class="avatarGroup avatarGroup-overlap">
-                                        @foreach($task['users'] as $user)
-                                        <a href="#" class="avatarGroup-avatar">
-                                            <span class="avatar avatar-sm avatar-{{$user->color}}" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ $user->name }}">
-                                                <div class="rounded-circle" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{ $user->name }}">{{ $user->initials }}</div>
-                                            </span>
-                                        </a>
-                                        @endforeach
+                                <div class="col text-center">
+                                    <div class="taskList_col"><span>{{  Carbon\Carbon::parse($task->created_at)->format('d M Y') }}</span></div>
+                                </div>
+                                <div class="col text-center">
+                                    <div class="taskList_col"><span class="btn-batch ">{{  Carbon\Carbon::parse($task->due_date)->format('d M Y') }}</span></div>
+                                </div>
+                                <div class="col text-center">
+                                    <div class="taskList_col"><span>{{ $task->project->name }}</span></div>
+                                </div>
+                                <div class="col text-center">
+                                    <div class="taskList_col">
+                                        <div class="avatarGroup avatarGroup-overlap">
+                                            @foreach($task['users'] as $user)
+                                            <a href="#" class="avatarGroup-avatar">
+                                                <span class="avatar avatar-sm avatar-{{$user->color}}" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ $user->name }}">
+                                                    <div class="rounded-circle" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{ $user->name }}">{{ $user->initials }}</div>
+                                                </span>
+                                            </a>
+                                            @endforeach
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col text-center">
-                                <div class="taskList_col">
-                                    <span class="btn-batch btn-batch-primary">
-                                        @if($task->status == 'pending') Assigned @endif
-                                        @if($task->status == 'in_progress') Accepted @endif
-                                        @if($task->status == 'in_review') In Review @endif
-                                        @if($task->status == 'completed') Completed @endif
-                                    </span>
+                                <div class="col text-center">
+                                    <div class="taskList_col">
+                                        <span class="btn-batch btn-batch-primary">
+                                            @if($task->status == 'pending') Assigned @endif
+                                            @if($task->status == 'in_progress') Accepted @endif
+                                            @if($task->status == 'in_review') In Review @endif
+                                            @if($task->status == 'completed') Completed @endif
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    @endforeach
                 @endforeach
-            @endforeach
+            </div>
         </div>
     </div>
 
