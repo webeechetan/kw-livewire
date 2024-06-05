@@ -588,7 +588,7 @@ hr.space-sm {
                 }
             }
         }
-        
+
         &-title {
             font-weight: 500;
             margin-bottom: 10px;
@@ -1269,6 +1269,10 @@ hr.space-sm {
         border-radius: $border_radius_xs;
         padding: 5px 10px;
         border-color: $grey;
+
+        &:focus {
+            border-color: $grey;
+        }
     }
 }
 

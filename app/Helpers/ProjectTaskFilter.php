@@ -1,21 +1,7 @@
 <?php
 namespace App\Helpers;
 
-class Filter
-{
-    public static function byProject($query, $project_id){
-        if($project_id != 'all'){
-            return $query->where('project_id', $project_id);
-        }
-        return $query;
-    }
-
-    public static function byClient($query, $client_id){
-        if($client_id != 'all'){
-            return $query->where('client_id', $client_id);
-        }
-        return $query;
-    }
+class ProjectTaskFilter{
 
     public static function byUser($query, $user_id){
         if($user_id != 'all'){
@@ -26,9 +12,7 @@ class Filter
         return $query;
     }
 
-    public static function filterTasks($query, $byProject, $byClient, $byUser, $sort, $startDate, $dueDate, $status){
-        $query = self::byProject($query, $byProject);
-        $query = self::byClient($query, $byClient);
+    public static function filterTasks($query, $byUser, $sort, $startDate, $dueDate, $status){
         $query = self::byUser($query, $byUser);
 
         if($startDate){
@@ -58,7 +42,7 @@ class Filter
             case 'oldest':
                 return $query->oldest();
             default:
-                return $query->orderBy('task_order');
+                return $query;
         }
     }
 }

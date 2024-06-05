@@ -1225,6 +1225,9 @@ hr.space-sm {
   padding: 5px 10px;
   border-color: #eee;
 }
+.dashboard_filters-select:focus {
+  border-color: #eee;
+}
 
 /* ----- Toaster Style ----- */
 #toast-container > div {

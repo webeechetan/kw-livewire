@@ -150,7 +150,7 @@
                         </div>
                         <div class="activity-recent mt-3">
                             <div class="activity-recent-scroll custom_scrollbar">
-                                @foreach($project->activities()->paginate(10) as $activity)
+                                @foreach($project->activities()->latest()->paginate(10) as $activity)
                                     <div class="activity row space-last_child_0">
                                         <div class="activity-profile col-auto pe-0">
                                             <a href="javascript:" class="avatar" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="{{ $activity->createdBy->name }}" data-bs-original-title="{{ $activity->createdBy->name }}">{{ $activity->createdBy->initials }}</a>
