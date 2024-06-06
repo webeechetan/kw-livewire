@@ -27,7 +27,7 @@ class AddProject extends Component
     public $project_description;
     public $project_due_date;
     public $project_start_date;
-    public $logo;
+    public $image;
     public $project_users = [];
     
     protected $listeners = ['editProject', 'deleteProject','restoreProject','forceDeleteProject'];
@@ -67,12 +67,9 @@ class AddProject extends Component
 
         $image  = '';
 
-        if (request()->hasFile('image')) {
-            $image = $this->image->store('public/images/projects');
-            // remove public from the path as we need to store only the path in the db
+        if ($this->image) {
+            $image = $this->image->store('images/projects');
             $image = str_replace('public/', '', $image);
-        }else{
-            $image = Helper::createAvatar($this->project_name,'projects');
         }
 
         $project = new Project();
@@ -130,8 +127,8 @@ class AddProject extends Component
 
         $image  = '';
 
-        if (request()->hasFile('image')) {
-            $image = $this->image->store('public/images/projects');
+        if ($this->image) {
+            $image = $this->image->store('images/projects');
             // remove public from the path as we need to store only the path in the db
             $image = str_replace('public/', '', $image);
         }else{

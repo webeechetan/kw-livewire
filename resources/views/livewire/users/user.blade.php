@@ -11,16 +11,23 @@
         <div class="col-lg-4">
             <div class="column-box">
                 <div class="user-profile">
-                    <div class="user-profile-img"><img src="/storage/images/user_pro.jpg" alt=""></div>
+                    <div class="user-profile-img">
+                        @if($user->image)
+                            <img src="{{ env('APP_URL') }}/storage/{{ $user->image }}" alt="">
+                        @else
+                            <img src="{{ asset('') }}storage/images/users/default.jpg"  alt="">
+                        @endif
+                    </div>
+                    <input class="user-image d-none" type="file" wire:model.live="user_image" accept="image/*" >
                     <h3 class="main-body-header-title mb-2">{{ $user->name }}</h3>
                     <div class="d-flex align-items-center justify-content-center mb-2"><i class="bx bx-envelope me-1 text-secondary"></i> {{ $user->designation ?? 'Not Added' }}</div>
                     <div class="d-flex align-items-center justify-content-center mb-2"><i class="bx bx-envelope me-1 text-secondary"></i> {{$user->email ?? 'Not Added' }}</div>
                     <ul class="social-icons justify-content-center my-2">
-                        <li><a href="#"><i class='bx bxl-facebook'></i></a></li>
-                        <li><a href="#"><i class='bx bxl-linkedin' ></i></a></li>
-                        <li><a href="#"><i class='bx bxl-instagram' ></i></a></li>
-                        <li><a href="#"><i class='bx bxl-github' ></i></a></li>
-                        <li><a href="#"><i class='bx bxl-twitter' ></i></a></li>
+                        <li><a href="javascript:" data-bs-toggle="modal" data-link="fb" data-bs-target="#social-links-modal"><i class='bx bxl-facebook'></i></a></li>
+                        <li><a href="javascript:" data-bs-toggle="modal" data-link="linkdin" data-bs-target="#social-links-modal"><i class='bx bxl-linkedin' ></i></a></li>
+                        <li><a href="javascript:" data-bs-toggle="modal" data-link="instagram" data-bs-target="#social-links-modal"><i class='bx bxl-instagram' ></i></a></li>
+                        <li><a href="javascript:" data-bs-toggle="modal" data-link="github" data-bs-target="#social-links-modal"><i class='bx bxl-github' ></i></a></li>
+                        <li><a href="javascript:" data-bs-toggle="modal" data-link="twitter" data-bs-target="#social-links-modal"><i class='bx bxl-twitter' ></i></a></li>
                     </ul> 
                 </div>
                 <hr>
@@ -180,7 +187,27 @@
         </div>
     </div>
     <livewire:components.add-user @saved="$refresh" />
-</div>
+    <!-- Social Links Modal -->
+    <div class="modal fade" id="social-links-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+            ...
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+        </div>
+    </div>
+    </div>
 
 @assets
 <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>
@@ -192,6 +219,10 @@
 @script
 <script>
     $(document).ready(function(){
+
+        $('.user-profile-img').click(function(){
+            $('.user-image').click();
+        });
 
         // bio
         $('.edit-bio').click(function(){

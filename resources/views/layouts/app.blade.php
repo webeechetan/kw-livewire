@@ -191,6 +191,17 @@
           })
         }, 1000);
       });
+
+      $(".image_upload_input").change(function() {
+          if (this.files && this.files[0]) {
+              var reader = new FileReader();
+              reader.onload = function(e) {
+                  $('.image-preview-section').removeClass('d-none');
+                  $('.image-preview-section').html('<img src="'+e.target.result+'" alt="Image Preview" class="img-fluid" style="max-width: 200px;">');
+              }
+              reader.readAsDataURL(this.files[0]);
+          }
+      });
     </script>
   </body>
 </html>

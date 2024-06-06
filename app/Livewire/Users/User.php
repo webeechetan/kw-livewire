@@ -7,15 +7,19 @@ use App\Models\User as UserModel;
 use App\Models\Project;
 use App\Models\Client;
 use App\Models\UserDetail;
+use Livewire\WithFileUploads;
 
 class User extends Component
 {
+    use WithFileUploads;
+
     public $user;
     public $user_clients = [];
     public $user_projects = [];
 
     public $bio;
     public $skills;
+    public $user_image;
 
     public function render()
     {
@@ -98,5 +102,24 @@ class User extends Component
             $user_details->dob = $dob;
             $user_details->save();
         }
+    }
+
+    public function updatedUserImage(){
+        // dd('here');
+        $this->updateImage();
+    }
+
+    public function updateImage(){
+        $this->validate([
+            'user_image' => 'image|max:1024', // 1MB Max
+        ]);
+
+        $user = UserModel::find($this->user->id);
+        $image = $this->user_image->store('images/users');
+        $image = str_replace('public/', '', $image);
+        $user->image = $image;
+        $user->save();
+
+        $this->mount($this->user->id);
     }
 }

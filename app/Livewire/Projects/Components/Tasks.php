@@ -12,6 +12,9 @@ use App\Helpers\ProjectTaskFilter;
 
 class Tasks extends Component
 {
+
+    protected $listeners = ['saved' => 'refresh'];
+
     public $project;
 
     public $users = [];
@@ -42,6 +45,11 @@ class Tasks extends Component
         $this->tasks = $this->applySort($project->tasks());
         $this->tasks = $this->tasks->where('name', 'like', '%' . $this->query . '%');
         $this->tasks = $this->tasks->get();
+    }
+
+    public function refresh()
+    {
+        $this->mount($this->project);
     }
 
     public function search(){

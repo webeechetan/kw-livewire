@@ -3,7 +3,13 @@
         <div class="row align-items-center">
             <div class="col">
                 <div class="dashboard-head-title-wrap">
-                    <div class="avatar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Ac">{{$project->initials}}</div>
+                    @if($project->image)
+                        <div class="avatar avatar-lg">
+                            <img src="{{ asset('storage/'.$project->image) }}" alt="Avatar" class="avatar-img rounded-circle">
+                        </div>
+                    @else
+                        <div class="avatar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Ac">{{$project->initials}}</div>
+                    @endif
                     <div>
                         <h3 class="main-body-header-title mb-2">{{ $project->name }}</h3>
                         <div class="text-sm text-uppercase">{{$project->client->name}}</div>
