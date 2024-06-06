@@ -15,7 +15,7 @@
    <livewire:teams.components.teams-tab :team="$team" @saved="$refresh"/>
    <!--- Dashboard Body --->
    <div class="row mb-4">
-      <div class="col-sm-4 @if($filterByUser) opacity-25 @endif">
+      <div class="col-sm-4">
          <div class="column-box py-2">
             <div class="d-flex align-items-center">
                <label for="" class="font-500"><i class='bx bx-briefcase-alt-2 text-primary' ></i> Filter By Client  @if($filterByClient) <i class="bx bx-refresh" onclick="window.location.reload()" ></i> @endif</label>
@@ -29,7 +29,7 @@
             
          </div>
       </div>
-      <div class="col-sm-4 @if($filterByClient) opacity-25 @endif">
+      <div class="col-sm-4">
          <div class="column-box py-2">
             <div class="d-flex align-items-center">
                <label for="" class="font-500"><i class='bx bx-user text-secondary'></i> Filter By User @if($filterByUser) <i class="bx bx-refresh" onclick="window.location.reload()" ></i> @endif</label>

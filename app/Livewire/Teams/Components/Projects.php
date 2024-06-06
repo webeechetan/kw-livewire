@@ -34,8 +34,7 @@ class Projects extends Component
     }
 
     public function updatedFilterByClient($value){
-        // $this->team->projects = $this->team->projects->filter(function($project) use ($value){
-        //     return $project->client_id == $value;
-        // });
+        $client = Client::find($value);
+        $this->users = $client->users;
     }
 }

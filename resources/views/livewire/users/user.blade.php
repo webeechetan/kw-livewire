@@ -23,11 +23,11 @@
                     <div class="d-flex align-items-center justify-content-center mb-2"><i class="bx bx-envelope me-1 text-secondary"></i> {{ $user->designation ?? 'Not Added' }}</div>
                     <div class="d-flex align-items-center justify-content-center mb-2"><i class="bx bx-envelope me-1 text-secondary"></i> {{$user->email ?? 'Not Added' }}</div>
                     <ul class="social-icons justify-content-center my-2">
-                        <li><a href="javascript:" data-bs-toggle="modal" data-link="fb" data-bs-target="#social-links-modal"><i class='bx bxl-facebook'></i></a></li>
-                        <li><a href="javascript:" data-bs-toggle="modal" data-link="linkdin" data-bs-target="#social-links-modal"><i class='bx bxl-linkedin' ></i></a></li>
-                        <li><a href="javascript:" data-bs-toggle="modal" data-link="instagram" data-bs-target="#social-links-modal"><i class='bx bxl-instagram' ></i></a></li>
-                        <li><a href="javascript:" data-bs-toggle="modal" data-link="github" data-bs-target="#social-links-modal"><i class='bx bxl-github' ></i></a></li>
-                        <li><a href="javascript:" data-bs-toggle="modal" data-link="twitter" data-bs-target="#social-links-modal"><i class='bx bxl-twitter' ></i></a></li>
+                        <li><a class="add-social-link" href="javascript:" data-bs-toggle="modal" data-link="{{ $user->details?->fb }}" data-type="fb" data-bs-target="#social-links-modal"><i class='bx bxl-facebook'></i></a></li>
+                        <li><a class="add-social-link" href="javascript:" data-bs-toggle="modal" data-link="{{ $user->details?->linkdin }}" data-type="linkdin" data-bs-target="#social-links-modal"><i class='bx bxl-linkedin' ></i></a></li>
+                        <li><a class="add-social-link" href="javascript:" data-bs-toggle="modal" data-link="{{ $user->details?->instagram }}" data-type="instagram" data-bs-target="#social-links-modal"><i class='bx bxl-instagram' ></i></a></li>
+                        <li><a class="add-social-link" href="javascript:" data-bs-toggle="modal" data-link="{{ $user->details?->github }}" data-type="github" data-bs-target="#social-links-modal"><i class='bx bxl-github' ></i></a></li>
+                        <li><a class="add-social-link" href="javascript:" data-bs-toggle="modal" data-link="{{ $user->details?->twitter }}" data-type="twitter" data-bs-target="#social-links-modal"><i class='bx bxl-twitter' ></i></a></li>
                     </ul> 
                 </div>
                 <hr>
@@ -192,17 +192,27 @@
         <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
+                <h5 class="modal-title"> Update <span class="link-text"></span> profile</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-            <div class="modal-body">
-            ...
+            <div class="modal-body">    
+                <div class="modal-form-body">
+                    <div class="row">
+                        <div class="col-md-4 mb-4">
+                            <label for="">Link<sup class="text-primary">*</sup></label>
+                        </div>
+                        <div class="col-md-8 mb-4">
+                            <input wire:model="socialLink" type="text" class="form-style" placeholder="">
+                            <div class="print-link d-none">
+                            </div>
+                        </div>
+                    </div>                     
+                </div>
             </div>
             <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-primary btn-sm update-social-link">Update</button>
             </div>
         </div>
         </div>
@@ -218,10 +228,49 @@
 
 @script
 <script>
+
+    document.addEventListener('social-link-added', event => {
+        $("#social-links-modal").modal('hide');
+    });
+
     $(document).ready(function(){
 
         $('.user-profile-img').click(function(){
             $('.user-image').click();
+        });
+
+        // $('.add-social-link').click(function(){
+        //     let type = $(this).data('type');
+        //     $('.link-text').html(type);
+        //     let link = $(this).data('link');
+        //     @this.socialLink = link; 
+        //     if(link){
+        //         let html = `<a href="${link}">${link}</a>`;
+        //         $(".print-link").removeClass('d-none')
+        //         $(".print-link").html(html);
+        //     }
+        // });
+
+        $(document).on('click', '.add-social-link', function(){
+            let type = $(this).data('type');
+            $('.link-text').html(type);
+            let link = $(this).data('link');
+            @this.socialLink = link; 
+            if(link){
+                let html = `<a href="${link}">${link}</a>`;
+                $(".print-link").removeClass('d-none')
+                $(".print-link").html(html);
+            }
+        });
+
+        $(".update-social-link").click(function(e){
+            let linkType = $(".link-text").html();
+            @this.updateSocialLink(linkType);
+            $(".add-social-link").each(function(){
+                if($(this).data('type') == linkType){
+                    $(this).data('link', @this.socialLink);
+                }
+            });
         });
 
         // bio

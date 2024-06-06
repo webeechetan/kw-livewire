@@ -13,6 +13,8 @@ class User extends Component
 {
     use WithFileUploads;
 
+    protected $listeners = ['social-link-added' => 'refresh'];
+
     public $user;
     public $user_clients = [];
     public $user_projects = [];
@@ -20,6 +22,7 @@ class User extends Component
     public $bio;
     public $skills;
     public $user_image;
+    public $socialLink;
 
     public function render()
     {
@@ -36,6 +39,10 @@ class User extends Component
         $this->user_clients = Client::whereIn('id',$this->user_clients->keys())->get();
         $this->user_projects = Project::whereIn('id',$users_task_array->keys())->get();
         
+    }
+
+    public function refresh(){
+        $this->mount($this->user->id);
     }
 
     public function emitEditUserEvent($user_id){
@@ -121,5 +128,20 @@ class User extends Component
         $user->save();
 
         $this->mount($this->user->id);
+    }
+
+    public function updateSocialLink($type){
+        $user_details = UserDetail::where('user_id', $this->user->id)->first();
+        if($user_details){
+            $user_details->$type = $this->socialLink;
+            $user_details->save();
+        }else{
+            $user_details = new UserDetail();
+            $user_details->user_id = $this->user->id;
+            $user_details->$type = $this->socialLink;
+            $user_details->save();
+        }
+        $this->dispatch('social-link-added');
+        $this->dispatch('success', 'Social Link Added');
     }
 }
