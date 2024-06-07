@@ -189,7 +189,15 @@
                             <div class="col text-center">
                                 <div class="taskList_col">
                                     <div class="avatarGroup avatarGroup-overlap">
-                                        @foreach($task->users as $user)
+
+                                        @php
+                                        $plus_more_users = 0;
+                                            if(count($task->users) > 3){
+                                                $plus_more_users = count($task->users) - 3;
+                                            }
+                                        @endphp
+
+                                        @foreach($task->users->take(3) as $user)
                                             @if($user->image)
                                                 <a href="javascript:" wire-key="task-user-{{$user->id}}" class="avatarGroup-avatar">
                                                     <span class="avatar avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ $user->name }}">
@@ -202,6 +210,13 @@
                                                 </a>
                                             @endif
                                         @endforeach
+
+                                        @if($plus_more_users)
+                                        <a href="#" class="avatarGroup-avatar">
+                                            <span class="avatar avatar-sm avatar-more">+{{$plus_more_users}}</span>
+                                        </a>
+                                    @endif    
+
                                     </div>
                                 </div>
                             </div>
