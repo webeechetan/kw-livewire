@@ -50,7 +50,7 @@
                                 <a class="edit-role" wire:click="emitEditRoleEvent({{$role->id}})"> Edit Role</a>
                                 </div>
                         </div>              
-                    </div>
+                    </div> 
                 </div>
             @endforeach
         @else

@@ -66,6 +66,9 @@
       }
       if($filterByUser){
          $projects = \App\Models\User::find($filterByUser)->projects;
+         if($filterByClient){
+            $projects = $projects->where('client_id',$filterByClient);
+         }
       }
    @endphp
    <div class="project-tabs mb-2">

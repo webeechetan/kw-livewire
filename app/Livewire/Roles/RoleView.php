@@ -22,4 +22,8 @@ class RoleView extends Component
         $this->role = $role;
         $this->role_users = User::role($role->name)->get();
     }
+
+    public function emitEditRoleEvent($role_id){
+        $this->dispatch('editRole',$role_id);
+    }
 }

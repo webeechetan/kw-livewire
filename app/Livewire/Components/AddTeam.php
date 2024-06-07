@@ -48,8 +48,14 @@ class AddTeam extends Component
         $team->org_id = session('org_id');
         $team->name = $this->name; 
         $team->manager_id = $this->team_manager; 
+
+        if ($this->image) {
+            $image = $this->image->store('images/teams');
+            $image = str_replace('public/', '', $image);
+        }
+
         if($team->save()){
-            $team->users()->sync($this->team_users);
+            $team->users()->attach($this->team_users);
         }
 
         $this->dispatch('success', 'Team added successfully');
@@ -73,6 +79,13 @@ class AddTeam extends Component
         $team = Team::find($this->team->id);
         $team->name = $this->name; 
         $team->manager_id = $this->team_manager; 
+
+        if ($this->image) {
+            $image = $this->image->store('images/teams');
+            $image = str_replace('public/', '', $image);
+            $team->image = $image;
+        }
+
         if($team->save()){
             $team->users()->sync($this->team_users);
         }

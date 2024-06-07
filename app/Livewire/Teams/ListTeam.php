@@ -16,6 +16,7 @@ class ListTeam extends Component
 {
     use WithPagination;
 
+    protected $listeners = ['team-added' => 'refresh'];
 
     public $allTeams;
        
@@ -35,11 +36,7 @@ class ListTeam extends Component
 
     public function render()
     {
-
-        
         $this->allTeams = Team::count();
-
-
         $teams = Team::where('name', 'like', '%'.$this->query.'%');
 
         if($this->sort == 'newest'){
@@ -69,9 +66,12 @@ class ListTeam extends Component
 
 
     public function mount(){
-
         $this->authorize('View Team');
         $this->users = User::all();
+    }
+
+    public function refresh(){
+        $this->mount();
     }
 
 

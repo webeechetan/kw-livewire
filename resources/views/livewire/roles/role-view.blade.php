@@ -20,9 +20,9 @@
          </div>
          <div class="text-end col">
             <div class="main-body-header-right">
-               @can('Create Role')
-               <a data-bs-toggle="modal" data-bs-target="#add-team-modal" href="javascript:void(0);" class="btn-sm btn-border btn-border-primary">
-               <i class='bx bx-plus'></i> Add Role</a>
+               @can('Edit Role')
+               <a wire:click="emitEditRoleEvent({{$role->id}})" href="javascript:void(0);" class="btn-sm btn-border btn-border-secondary">
+               <i class='bx bx-pencil'></i> Edit Role</a>
                @endcan
             </div>
          </div>
@@ -146,9 +146,9 @@
                         </div>
                         <div class="col text-center">
                            @if($user->mainTeam)
-                           <div class="taskList_col"><span class="btn-batch">{{ $user->mainTeam?->name }}</span></div>
+                              <div class="taskList_col"><span class="btn-batch">{{ $user->mainTeam?->name }}</span></div>
                            @else
-                           <div class="taskList_col"><span class="btn-batch">No Team</span></div>
+                              <div class="taskList_col"><span class="btn-batch">No Team</span></div>
                            @endif
                         </div>
                   </div>
@@ -172,5 +172,26 @@
          </div>
       </div>
    </div> --}}
-
+   <livewire:components.add-role  @saved="$refresh" />
 </div>
+
+@script
+    <script>
+        window.addEventListener('role-added', event => {
+            toastr.success(event.detail.message, 'Success');
+            location.reload();
+        });
+
+        window.addEventListener('edit-role', event => {
+            console.log('edit');
+            $('.role-form-text').text('Edit Role');
+            $('.role-form-btn').text('Update Role');
+            $('#add-role-modal').modal('show');
+        });
+
+        window.addEventListener('role-updated', event => {
+            toastr.success(event.detail.message, 'Success');
+            location.reload();
+        });
+    </script>
+@endscript

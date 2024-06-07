@@ -4,7 +4,13 @@
             <div class="row align-items-center">
                 <div class="col">
                     <div class="dashboard-head-title-wrap">
-                        <div class="avatar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Ac">{{$team->initials}}</div>
+                        @if($team->image)
+                            <div class="avatar avatar-lg">
+                                <img src="{{ asset('storage/'.$team->image) }}" alt="Avatar" class="avatar-img rounded-circle">
+                            </div>
+                        @else
+                            <div class="avatar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{ $team->name }}">{{$team->initials}}</div>
+                        @endif
                         <div>
                             <h3 class="main-body-header-title mb-2">{{ $team->name }}</h3>
                             <div class="row align-items-center">
@@ -16,7 +22,7 @@
                                 <div class="col text-nowrap btn-batch">{{ $team->manager?->name ?? 'Not Added' }}
                                 </div>
                             </div>
-                        </div>
+                        </div> 
                     </div>
                 </div>
                 <div class="text-end col">

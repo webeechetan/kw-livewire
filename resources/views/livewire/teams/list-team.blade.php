@@ -77,126 +77,130 @@
         </div>
         
         @if($teams->isNotEmpty())
-        @foreach($teams as $team)
+            @foreach($teams as $team)
 
-            <div class="col-md-4 mb-4">
-                <div class="card_style card_style-team">
-                    <a href="{{ route('team.profile',$team->id) }}" class="card_style-open"><i class='bx bx-chevron-right'></i></a>
-                    {{-- <div class="card_style-star_active"><span class="text-success"><i class='bx bxs-star' ></i></span></div> --}}
-                    <div class="card_style-list_head">
-                        
-                        <div class="card_style-team-profile-img"><span><div class="avatar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{$team->name}}">{{$team->initials}}</div></span></div>
-                        <div class="card_style-team-profile-content">
-                            <h4 class="mb-2"><a wire:navigate href="{{ route('team.profile',$team->id) }}">{{ $team->name }}</a></h4>
-                            <div class="mb-2">
-                                {{-- <span class="font-500"><i class='bx bx-user text-success' ></i> Manager</span> @if($team->manager)<span class="btn-batch ms-2">{{ $team->manager?->name }}</span> @endif --}}
+                <div class="col-md-4 mb-4">
+                    <div class="card_style card_style-team">
+                        <a href="{{ route('team.profile',$team->id) }}" class="card_style-open"><i class='bx bx-chevron-right'></i></a>
+                        {{-- <div class="card_style-star_active"><span class="text-success"><i class='bx bxs-star' ></i></span></div> --}}
+                        <div class="card_style-list_head">
+                            
+                            @if($team->image)
+                                <div class="avatar"><img src="{{ asset('storage/'.$team->image) }}" alt="" class="img-fluid" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{ $team->name }}"></div>
+                            @else
+                                <div class="avatar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{ $team->name }}">{{ $team->initials }}</div>
+                            @endif
+                            <div class="card_style-team-profile-content">
+                                <h4 class="mb-2"><a wire:navigate href="{{ route('team.profile',$team->id) }}">{{ $team->name }}</a></h4>
+                                <div class="mb-2">
+                                    {{-- <span class="font-500"><i class='bx bx-user text-success' ></i> Manager</span> @if($team->manager)<span class="btn-batch ms-2">{{ $team->manager?->name }}</span> @endif --}}
 
-                                <span class="font-500 me-3"><i class='bx bx-user text-success' ></i> Manager</span> 
-                                    @if($team->manager)
-                                        {{-- <span class="btn-batch ms-2">{{ $team->manager?->name }}</span>--}}
-                                        <a href="javascript:;"class="avatar avatar-orange avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="{{$team->manager?->name}}"> {{ $team->manager?->initials ?? 'NA' }}</a>
-                                        
-                                    @endif
-                            </div>
-                            <div class="row">
-                                <div class="col-auto">
-                                    <div>
-                                        {{ $team->users->count() }}   {{ $team->users->count() >1  ?'Members' : 'Member'}}
+                                    <span class="font-500 me-3"><i class='bx bx-user text-success' ></i> Manager</span> 
+                                        @if($team->manager)
+                                            {{-- <span class="btn-batch ms-2">{{ $team->manager?->name }}</span>--}}
+                                            <a href="javascript:;"class="avatar avatar-orange avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="{{$team->manager?->name}}"> {{ $team->manager?->initials ?? 'NA' }}</a>
+                                            
+                                        @endif
+                                </div>
+                                <div class="row">
+                                    <div class="col-auto">
+                                        <div>
+                                            {{ $team->users->count() }}   {{ $team->users->count() >1  ?'Members' : 'Member'}}
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-auto px-0">
-                                    <span class="text-dark-grey ms-1">|</span>
-                                </div>
-                                <div class="col">
-                                    <div class="avatarGroup avatarGroup-overlap">
-                                        @foreach($team->users as $user)
-                                            @if($user->image)
-                                                <a href="javascript:;" class="avatar avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="{{$user->name}}">
-                                                    <img alt="avatar" src="{{ asset('storage/'.$user->image) }}" class="rounded-circle">
-                                                </a>
-                                            @else
-                                                <a href="javascript:;" class="avatar avatar-{{ $user->color }} avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="{{$user->name}}">{{ $user->initials }}</a>
-                                            @endif
-                                        @endforeach
+                                    <div class="col-auto px-0">
+                                        <span class="text-dark-grey ms-1">|</span>
+                                    </div>
+                                    <div class="col">
+                                        <div class="avatarGroup avatarGroup-overlap">
+                                            @foreach($team->users as $user)
+                                                @if($user->image)
+                                                    <a href="javascript:;" class="avatar avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="{{$user->name}}">
+                                                        <img alt="avatar" src="{{ asset('storage/'.$user->image) }}" class="rounded-circle">
+                                                    </a>
+                                                @else
+                                                    <a href="javascript:;" class="avatar avatar-{{ $user->color }} avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="{{$user->name}}">{{ $user->initials }}</a>
+                                                @endif
+                                            @endforeach
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <hr>
-                    
-                    <div class="card_style-options">
-                        <div class="card_style-options-head">
-                            <span>
-                                <i class='bx bx-layer text-secondary' ></i>
-                            </span> 
-                            {{-- 15 Projects  --}}
-                            @php
-                                $project_text = 'Projects';    
-                            @endphp
-                            @if($team->projects->count() > 1)
+                        <hr>
+                        
+                        <div class="card_style-options">
+                            <div class="card_style-options-head">
+                                <span>
+                                    <i class='bx bx-layer text-secondary' ></i>
+                                </span> 
+                                {{-- 15 Projects  --}}
                                 @php
                                     $project_text = 'Projects';    
                                 @endphp
-                            @else
+                                @if($team->projects->count() > 1)
+                                    @php
+                                        $project_text = 'Projects';    
+                                    @endphp
+                                @else
+                                    @php
+                                        $project_text = 'Project';    
+                                    @endphp
+                                @endif
+                                {{ $team->projects->count() }} {{ $project_text }}
+                                <span class="text-dark-grey ms-1">|</span>
+                                <span href="#" class="text-secondary"> <i class='bx bx-briefcase-alt-2' ></i></span> 
+                                {{-- 5 Clients  --}}
                                 @php
-                                    $project_text = 'Project';    
+                                    $client_text = 'Clients';
                                 @endphp
-                            @endif
-                            {{ $team->projects->count() }} {{ $project_text }}
-                            <span class="text-dark-grey ms-1">|</span>
-                            <span href="#" class="text-secondary"> <i class='bx bx-briefcase-alt-2' ></i></span> 
-                            {{-- 5 Clients  --}}
-                            @php
-                                $client_text = 'Clients';
-                            @endphp
 
-                            @if($team->clients->count() > 1)
-                                @php
-                                    $client_text = 'Clients';    
-                                @endphp
-                            @else
-                                @php
-                                    $client_text = 'Client';    
-                                @endphp
-                            @endif
-                            {{ $team->clients->count() }} {{ $client_text }}        
-                        
-                            <span class="text-dark-grey ms-1">|</span> 
-                            <span href="#"><i class='bx bx-objects-horizontal-left text-primary' ></i></span>
-                            {{-- 60 Tasks --}}
-                            @php
-                                $task_text = 'Tasks';
-                            @endphp
-
-                            @if($team->tasks->count() > 1)
-                                @php
-                                // echo($team->tasks->count());
-                                    $task_text = 'Tasks';    
-                                @endphp
-                            @else
-                                @php
-                                    $task_text = 'Task';    
-                                @endphp
-                            @endif
-                            {{ $team->users->count() }} {{ $task_text }}  
-                        </div>
-                        <div class="card_style-options-head">
+                                @if($team->clients->count() > 1)
+                                    @php
+                                        $client_text = 'Clients';    
+                                    @endphp
+                                @else
+                                    @php
+                                        $client_text = 'Client';    
+                                    @endphp
+                                @endif
+                                {{ $team->clients->count() }} {{ $client_text }}        
                             
+                                <span class="text-dark-grey ms-1">|</span> 
+                                <span href="#"><i class='bx bx-objects-horizontal-left text-primary' ></i></span>
+                                {{-- 60 Tasks --}}
+                                @php
+                                    $task_text = 'Tasks';
+                                @endphp
+
+                                @if($team->tasks->count() > 1)
+                                    @php
+                                    // echo($team->tasks->count());
+                                        $task_text = 'Tasks';    
+                                    @endphp
+                                @else
+                                    @php
+                                        $task_text = 'Task';    
+                                    @endphp
+                                @endif
+                                {{ $team->users->count() }} {{ $task_text }}  
+                            </div>
+                            <div class="card_style-options-head">
+                                
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        @endforeach
+            @endforeach
         @else
-        <div class="col-md-12">               
-            {{-- <h4 class="text text-danger">No Teams found.</h4> --}}
-            <h4 class="text text-danger">No Teams found 
-                @if($query) 
-                    with {{$query}}
-                @endif
-            </h4>
-        </div>
+            <div class="col-md-12">               
+                {{-- <h4 class="text text-danger">No Teams found.</h4> --}}
+                <h4 class="text text-danger">No Teams found 
+                    @if($query) 
+                        with {{$query}}
+                    @endif
+                </h4>
+            </div>
         @endif
         <div class="pagintaions mt-4">
             {{ $teams->links(data: ['scrollTo' => false]) }}

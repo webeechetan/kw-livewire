@@ -95,7 +95,6 @@
         });
 
         document.addEventListener('editTeamEvent', event => {
-            // console.log(event.detail)
             $("#add-team-modal").modal('show');
             let team_users = event.detail[0].users;
             let team_users_array = [];

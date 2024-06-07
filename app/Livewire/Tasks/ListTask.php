@@ -140,10 +140,10 @@ class ListTask extends Component
                     )->get(),
         
                     'in_progress' => $this->applySort(
-                                        Task::tasksByUserType()
-                                            ->where('status', 'in_progress')
-                                            ->where('name', 'like', '%' . $this->query . '%')
-                                    )->get(),
+                        Task::tasksByUserType()
+                            ->where('status', 'in_progress')
+                            ->where('name', 'like', '%' . $this->query . '%')
+                            )->get(),
                     
                     'in_review' => $this->applySort(
                                     Task::tasksByUserType()
@@ -165,6 +165,7 @@ class ListTask extends Component
 
     public function updatedSort($value)
     {
+        // dd($value);
         $this->mount();
     }
 

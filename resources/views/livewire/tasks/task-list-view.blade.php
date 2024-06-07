@@ -150,7 +150,7 @@
         <a wire:click="$set('status', 'in_progress')" class="btn-border btn-border-secondary @if($status == 'in_progress') active @endif">{{ $tasks['in_progress']->count() }} <span>|</span> Accepted</a>
         <a wire:click="$set('status', 'in_review')" class="btn-border btn-border-warning @if($status == 'in_review') active @endif">{{ $tasks['in_review']->count() }} <span>|</span> In Review</a>
         <a wire:click="$set('status', 'completed')" class="btn-border btn-border-success @if($status == 'completed') active @endif">{{ $tasks['completed']->count() }} <span>|</span> Completed</a>
-        <a wire:click="$set('status', 'overdue')" class="btn-border btn-border-danger @if($status == 'comploverdueeted') active @endif">
+        <a wire:click="$set('status', 'overdue')" class="btn-border btn-border-danger @if($status == 'overdue') active @endif">
             @php
                 $overdue = $tasks['pending']->where('due_date', '<', now())->count();
                 $overdue += $tasks['in_progress']->where('due_date', '<', now())->count();
