@@ -72,7 +72,7 @@
             </div>
         </div>
         <div class="col-md-4 text-end">
-            <div class="cus_dropdown">
+            <div class="cus_dropdown" wire:ignore>
                 <div class="cus_dropdown-icon btn-border btn-border-secondary"><i class="bx bx-filter-alt"></i> Filter</div>
                 <div class="cus_dropdown-body cus_dropdown-body-widh_l">
                     <div class="cus_dropdown-body-wrap">

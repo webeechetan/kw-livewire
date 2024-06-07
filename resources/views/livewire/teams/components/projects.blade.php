@@ -14,6 +14,7 @@
    </nav>
    <livewire:teams.components.teams-tab :team="$team" @saved="$refresh"/>
    <!--- Dashboard Body --->
+   
    <!-- Projects -->
    @php
       $projects = $team->projects;
