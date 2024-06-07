@@ -111,7 +111,8 @@
                             <select class="dashboard_filters-select mt-2 w-100" wire:model.live="byUser" name="" id="">
                                 <option value="all">Select User</option>
                                 @foreach($users as $user)
-                                <option value="{{$user->id}}">{{$user->name}}</option>
+                               
+                                <option value="{{$user->id}}">{{$user->name}}  {{$user}}</option>
                             @endforeach
                             </select>
                         </div>
@@ -164,11 +165,24 @@
                         <div class="col text-center">
                             <div class="taskList_col">
                                 <div class="avatarGroup avatarGroup-overlap">
-                                    @foreach($task->users as $user)
+
+                                    @php
+                                    $plus_more_users = 0;
+                                        if(count($task->users) > 3){
+                                            $plus_more_users = count($task->users) - 3;
+                                        }
+                                    @endphp
+
+                                    @foreach($task->users->take(3) as $user)
                                     <a href="#" class="avatarGroup-avatar">
                                         <span class="avatar avatar-sm avatar-pink" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{$user->initials}}">{{$user->initials}}</span>
                                     </a>       
-                                    @endforeach                         
+                                    @endforeach   
+                                    @if($plus_more_users)
+                                <a href="#" class="avatarGroup-avatar">
+                                    <span class="avatar avatar-sm avatar-more">+{{$plus_more_users}}</span>
+                                </a>
+                            @endif                      
                                 </div>
                                 
                             </div>
