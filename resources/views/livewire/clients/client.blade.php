@@ -115,12 +115,19 @@
                 <!-- Teams -->
                 <div class="team-list row">
                     @forelse($client_teams as $team)
-                        <div class="col-auto">
+                        <div class="col-auto mt-3">
                             <div class="team team-style_2 editTeam">
                                 <div class="team-style_2-head_wrap">
                                     <div class="team-avtar">
                                         <span>
-                                            <img src="{{ env('APP_URL') }}/storage/{{ $team->image }}" alt="">
+                                            @if($team->image)
+                                                <img src="{{ env('APP_URL') }}/storage/{{ $team->image }}" alt="">
+                                            @else
+                                                <a href="#" class="avatarGroup-avatar">
+                                                    <span class="avatar avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{ $team->name }}">{{ $team->initials }}</span>
+                                                </a>
+                                            @endif
+
                                         </span>
                                     </div>
                                     <div>

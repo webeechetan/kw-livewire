@@ -37,17 +37,12 @@ class Tasks extends Component
     public $projects = [];
     public $clients = []; 
     public $teams = [];
-    public $tasks= [];
+    public $tasks = [];
 
     public $status = 'all';
 
     public function render()
     {
-        $this->allTasks = Task::count();
-        $this->activeTasks = Task::whereNotIn('status', ['cancelled', 'completed'])->count();
-        $this->completedTasks = Task::where('status', 'completed')->count();
-        $this->overDueTasks = Task::where('due_date', '<', now())->count();
-        $this->cancelledTasks = Task::where('status', 'cancelled')->count();
         return view('livewire.teams.components.tasks');
     }
 

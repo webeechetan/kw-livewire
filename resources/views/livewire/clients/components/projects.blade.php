@@ -91,6 +91,32 @@
             @endcan
         </div>
     </div>
+    <div class="dashboard_filters d-flex flex-wrap gap-4 align-items-center mb-4">
+        <a class="@if($filter == 'all') active @endif" wire:navigate href="{{ route('client.projects',$client->id) }}">All <span class="btn-batch">{{$all_projects->count() }}</span></a>
+        <a class="@if($filter == 'active') active @endif" wire:navigate href="{{ route('client.projects',$client->id) }}">Active <span class="btn-batch">{{$active_projects->count() }}</span></a>
+        <a class="@if($filter == 'overdue') active @endif" wire:navigate href="{{ route('client.projects',$client->id) }}">Overdue <span class="btn-batch">{{$overdue_projects->count() }}</span></a>
+        <a class="@if($filter == 'completed') active @endif" wire:navigate href="{{ route('client.projects',$client->id) }}">Completed <span class="btn-batch">{{$completed_projects->count() }}</span></a>
+        <a class="@if($filter == 'archived') active @endif" wire:navigate href="{{ route('client.projects') }}">Archive <span class="btn-batch">{{$archived_projects->count() }}</span></a>
+    </div>
+
+    <div class="project-list">
+        @if($projects->isNotEmpty())
+            @foreach($projects as $project)
+                <div class="project project-align_left">
+                    <div class="project-icon"><i class='bx bx-layer'></i></div>
+                    <div class="project-content">
+                        <a wire:navigate href="{{ route('project.profile',$project->id) }}" class="project-title">{{ $project->name }}</a>
+                        @if($project->due_date)
+                            <div class="project-selected-date">Due on <span>{{ $project->due_date }}</span></div>
+                        @else
+                            <div class="project-selected-date">Due on <span>No Due Date</span></div>
+                        @endif
+                    </div>
+                </div>
+            @endforeach
+        @endif
+    </div>
+    
     <div class="project-tabs mb-2">
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">

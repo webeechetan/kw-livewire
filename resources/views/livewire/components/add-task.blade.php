@@ -413,6 +413,8 @@
                     task_notifiers_ids.push(user.id);
                 });
 
+                $("#editor").summernote('code', task.description);
+
                 console.log(task_users_ids);
 
                 $('.task-users').val(task_users_ids).trigger('change');
@@ -442,16 +444,22 @@
 
                 $(".total-comments").html(event.detail[0].comments.length);
 
+                console.log(event.detail[0].comments);
+
                 event.detail[0].comments.forEach(comment => {
                     let comment_type = comment.type;
+                    const date = new Date(comment.created_at);
+                    const options = { day: 'numeric', month: 'long', year: 'numeric' };
+                    const formattedDate = date.toLocaleDateString('en-GB', options);
+
                     let comment_html = `<div class="cmnt_item_row">
                         <div class="cmnt_item_user">
                             <div class="cmnt_item_user_img">
-                                <img class="rounded-circle" src="{{ env('APP_URL') }}/storage/images/users/Chetan%20Singh.png">
+                                <img class="rounded-circle" src="{{ env('APP_URL') }}/storage/${comment.user.image}">
                             </div>
                             <div class="cmnt_item_user_name-wrap">
                                 <div class="cmnt_item_user_name">${comment.user.name}</div>
-                                <div class="cmnt_item_date">${comment.created_at}</div>
+                                <div class="cmnt_item_date">${formattedDate}</div>
                                 <div class="cmnt_item_user_text">${comment.comment}</div>
                             </div>
                         </div>
@@ -481,7 +489,7 @@
                 let comment_html = `<div class="cmnt_item_row">
                     <div class="cmnt_item_user">
                         <div class="cmnt_item_user_img">
-                            <img class="rounded-circle" src="{{ env('APP_URL') }}/storage/images/users/Chetan%20Singh.png">
+                            <img class="rounded-circle" src="{{ env('APP_URL') }}/storage/${event.detail[0].user.image}">
                         </div>
                         <div class="cmnt_item_user_name-wrap">
                             <div class="cmnt_item_user_name">${event.detail[0].user.name}</div>

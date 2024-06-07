@@ -42,7 +42,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <button @if($client->trashed()) disabled @endif wire:click="emitEditClient({{$client->id}})" class="btn-sm btn-border btn-border-secondary "><i class='bx bx-pencil'></i> Edit</button>
+                            @if(!$client->trashed())
+                                <button wire:click="emitEditClient({{$client->id}})" class="btn-sm btn-border btn-border-secondary "><i class='bx bx-pencil'></i> Edit</button>
+                            @endif
                         @endcan
                         <!-- Delete -->
                         @can('Delete Client')

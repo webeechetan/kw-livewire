@@ -4,7 +4,7 @@
       <ol class="breadcrumb">
          <li class="breadcrumb-item">
             <a wire:navigate href="{{ route('dashboard') }}">
-            <i class='bx bx-line-chart'></i> Dashboard </a>
+            <i class='bx bx-line-chart'></i> Dashboards </a>
          </li>
          <li class="breadcrumb-item">
             <a wire:navigate href="{{ route('team.index') }}">All Team</a>
@@ -27,13 +27,15 @@
                <div class="col">
                   <div class="row align-items-center g-2">
                      <div class="col-auto">
-                        <h5 class="title-md mb-0">{{$team->projects->count()}}</h5>
+                        {{-- <h5 class="title-md mb-0">{{$team->projects->count()}}</h5> --}}
+                        <h5 class="title-md mb-0">{{$team->clients->count()}}</h5>
                      </div>
                      <div class="col-auto">
                         <span class="font-400 text-grey">|</span>
                      </div>
                      <div class="col-auto">
-                        <div class="states_style-text">{{$team->projects->count() > 1 ? 'Clients' : 'Client'}}</div>
+                        {{-- <div class="states_style-text">{{$team->projects->count() > 1 ? 'Clients' : 'Client'}}</div> --}}
+                        <div class="states_style-text">{{$team->clients->count() > 1 ? 'Clients' : 'Client'}}</div>
                      </div>
                   </div>
                </div>

@@ -12,6 +12,8 @@ class Projects extends Component
     public $id;
     public $client;
     public $projects;
+    public $filter = 'all';
+    public $sort = 'all';
 
     public $all_projects;
     public $active_projects;

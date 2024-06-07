@@ -23,15 +23,17 @@
                     <div class="cus_dropdown">
                         <!-- For Active Class = btn-border-success | For Archived Class = btn-border-archived -->
 
-                        @if(!$project->trashed())
-                        <div class="cus_dropdown-icon btn-border btn-border-success">Active <i class='bx bx-chevron-down' ></i></div>
+                        @if(!$project->trashed() && $project->status != 'completed')
+                            <div class="cus_dropdown-icon btn-border btn-border-success">Active <i class='bx bx-chevron-down' ></i></div>
+                        @elseif($project->status == 'completed')
+                            <div class="cus_dropdown-icon btn-border btn-border-success">Completed <i class='bx bx-chevron-down' ></i></div>
                         @else
-                        <div class="cus_dropdown-icon btn-border btn-border-archived">Archived <i class='bx bx-chevron-down' ></i></div>
+                            <div class="cus_dropdown-icon btn-border btn-border-archived">Archived <i class='bx bx-chevron-down' ></i></div>
                         @endif
                         <div class="cus_dropdown-body cus_dropdown-body-widh_s">
                             <div class="cus_dropdown-body-wrap">
                                 <ul class="cus_dropdown-list">
-                                    <li><a href="javascript:" wire:click="changeProjectStatus('active')" @if(!$project->trashed()) class="active" @endif>Active</a></li>
+                                    <li><a href="javascript:" wire:click="changeProjectStatus('active')" @if(!$project->trashed() && $project->status != 'completed' ) class="active" @endif>Active</a></li>
                                     <li><a href="javascript:" wire:click="changeProjectStatus('completed')" @if($project->status == 'completed') class="active" @endif>Completed</a></li>
                                     <li><a href="javascript:" wire:click="emitDeleteProjectEvent({{$project->id}})" @if($project->trashed()) class="active" @endif>Archived</a></li>
                                 </ul>

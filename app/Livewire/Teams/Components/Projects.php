@@ -5,14 +5,30 @@ namespace App\Livewire\Teams\Components;
 use Livewire\Component;
 use App\Models\{ Team, Project, Task, User, Client };
 
+
 class Projects extends Component
 {  
+
+
+    public $project_start_date = null;
+    public $project_due_date = null;
+
+    public $filter = 'all';
     public $team;
     public $clients;
     public $users;
     public $users_projects = [];
     
+    public $query = '';
+    public $sort = 'all';
+
+    public $byClient = 'all';
+    public $byUser = 'all';
+    public $status = 'all';
+
+    public $project;
  
+    public $projects= [];
 
     // filters
 

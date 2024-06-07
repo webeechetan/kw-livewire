@@ -146,7 +146,7 @@
                                         $plus_more_users = count($client->users) - 7;
                                     }
                                 @endphp
-                                @foreach($client->users as $user)
+                                @foreach($client->users->take(7) as $user)
                                     @if($user->image)
                                         <a href="#" class="avatarGroup-avatar">
                                             <span class="avatar avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{ $user->name }}">
