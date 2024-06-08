@@ -8,6 +8,9 @@ use App\Models\Project;
 class ProjectTabs extends Component
 {
     public $project;
+    public $currentRoute;
+
+    
 
     public function render()
     {
@@ -20,6 +23,7 @@ class ProjectTabs extends Component
     public function mount(Project $project)
     {
         $this->project = $project;
+        $this->currentRoute = request()->route()->getName();
     }
 
     public function emitEditProjectEvent($id){

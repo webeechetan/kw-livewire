@@ -166,6 +166,7 @@
                         @empty
                         <div>No Team Assigned</div>
                     @endforelse
+                    
                 </div>
             </div>
         </div>

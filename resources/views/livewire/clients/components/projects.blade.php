@@ -92,11 +92,11 @@
         </div>
     </div>
     <div class="dashboard_filters d-flex flex-wrap gap-4 align-items-center mb-4">
-        <a class="@if($filter == 'all') active @endif" wire:navigate href="{{ route('client.projects',$client->id) }}">All <span class="btn-batch">{{$all_projects->count() }}</span></a>
-        <a class="@if($filter == 'active') active @endif" wire:navigate href="{{ route('client.projects',$client->id) }}">Active <span class="btn-batch">{{$active_projects->count() }}</span></a>
-        <a class="@if($filter == 'overdue') active @endif" wire:navigate href="{{ route('client.projects',$client->id) }}">Overdue <span class="btn-batch">{{$overdue_projects->count() }}</span></a>
-        <a class="@if($filter == 'completed') active @endif" wire:navigate href="{{ route('client.projects',$client->id) }}">Completed <span class="btn-batch">{{$completed_projects->count() }}</span></a>
-        <a class="@if($filter == 'archived') active @endif" wire:navigate href="{{ route('client.projects') }}">Archive <span class="btn-batch">{{$archived_projects->count() }}</span></a>
+        <a class="@if($filter == 'all') active @endif" wire:navigate href="{{ route('client.projects', ['id' => $id]) }}">All <span class="btn-batch">{{ $projects->count() }}</span></a>
+        <a class="@if($filter == 'active') active @endif" wire:navigate href="{{ route('client.projects', ['id' => $id]) }}">Active <span class="btn-batch">{{ $active_projects->count() }}</span></a>
+        <a class="@if($filter == 'overdue') active @endif" wire:navigate href="{{ route('client.projects',['id'=> $id]) }}">Overdue <span class="btn-batch">{{$overdue_projects->count() }}</span></a>
+        <a class="@if($filter == 'completed') active @endif" wire:navigate href="{{ route('client.projects', ['id' => $id]) }}">Completed <span class="btn-batch">{{ $completed_projects->count() }}</span></a>
+        <a class="@if($filter == 'archived') active @endif" wire:navigate href="{{ route('client.projects', ['id'=>$id]) }}">Archive <span class="btn-batch">{{$archived_projects->count() }}</span></a>
     </div>
 
     <div class="project-list">
@@ -117,7 +117,7 @@
         @endif
     </div>
     
-    <div class="project-tabs mb-2">
+    {{-- <div class="project-tabs mb-2">
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
                 <button class="nav-link active" id="project-all-tab" data-bs-toggle="tab" data-bs-target="#project-all-tab-pane" type="button" role="tab" aria-controls="project-all-tab-pane" aria-selected="true">All <span class="ms-2">{{ $all_projects->count() }}</span></button>
@@ -135,9 +135,9 @@
                 <button class="nav-link" id="project-archived-tab" data-bs-toggle="tab" data-bs-target="#project-archived-tab-pane" type="button" role="tab" aria-controls="project-archived-tab-pane" aria-selected="false">Archive <span class="ms-2">{{$archived_projects->count()}}</span></button>
             </li>
         </ul>
-    </div>
+    </div> --}}
     <div class="tab-content" id="myTabContent">
-        <div class="tab-pane fade active show" id="project-all-tab-pane" role="tabpanel" aria-labelledby="project-all-tab" tabindex="0">
+        {{-- <div class="tab-pane fade active show" id="project-all-tab-pane" role="tabpanel" aria-labelledby="project-all-tab" tabindex="0">
             <div class="project-list">
                 <!-- project-overdue, project-success, project-warning -->
                 @foreach($all_projects as $project)
@@ -154,7 +154,7 @@
                     </div>
                 @endforeach
             </div>
-        </div>
+        </div> --}}
         <div class="tab-pane fade " id="project-active-tab-pane" role="tabpanel" aria-labelledby="project-active-tab" tabindex="0">
             <div class="project-list">
                 <!-- project-overdue, project-success, project-warning -->
