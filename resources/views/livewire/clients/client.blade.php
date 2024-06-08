@@ -153,7 +153,7 @@
                                                 @endphp
 
                                                 <a href="#" class="avatarGroup-avatar">
-                                                    <span class="avatar avatar-sm avatar-{{ $user->color }}" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{ $user->name }}">{{ $user->initials }}</span>
+                                                    <x-avatar :user="$user" />
                                                 </a>
                                                 @endif
                                             @endforeach
