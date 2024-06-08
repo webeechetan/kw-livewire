@@ -133,13 +133,31 @@
                                     <div>
                                         <h4 class="team-style_2-title">{{$team->name}}</h4>
                                         <div class="avatarGroup avatarGroup-overlap">
+                                            @php
+                                                $c_u = $client_users->pluck('id');
+                                                $t_u = $team->users->pluck('id'); 
+                                                $c_u = $c_u->intersect($t_u);
+                                                $plus_more_users = 0;
+                                                $loop_index = 1;
+                                            @endphp
                                             @foreach($team->users as $user)
                                                 @if($client_users->contains($user->id))
+                                                @if($loop_index > 2)
+                                                    @php
+                                                        $plus_more_users++;
+                                                    @endphp
+                                                    @continue;
+                                                @endif
+                                                @php
+                                                    $loop_index++;
+                                                @endphp
+
                                                 <a href="#" class="avatarGroup-avatar">
                                                     <span class="avatar avatar-sm avatar-{{ $user->color }}" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{ $user->name }}">{{ $user->initials }}</span>
                                                 </a>
                                                 @endif
                                             @endforeach
+                                            {{ $plus_more_users }}
                                         </div>
                                     </div>
                                 </div>

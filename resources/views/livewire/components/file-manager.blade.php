@@ -4,7 +4,18 @@
             <h5 class="column-title mb-0">Files & Folders</h5>
         </div>
         <div class="files-options ms-auto">
-            <div class="text-light"><span class="text-success"><i class='bx bx-data' ></i></span> {{ $directories_count + $files_count + $links_count }} Attachments <span class="px-2">|</span><span class="text-primary"><i class='bx bx-file-blank' ></i></span> {{$files_count}} <span class="px-2">|</span> <span class="text-warning"><i class='bx bx-folder' ></i></span> {{ $directories_count }} <span class="px-2">|</span> <span class="text-secondary"><i class='bx bx-link-alt' ></i></span> {{ $links_count }} <span class="px-2">|</span> {{$used_storage_size_in_mb}}MB Used / 100MB</div>
+            <div class="text-light">
+                <span class="text-success"><i class='bx bx-data' ></i></span> 
+                {{ $main_directory_directories_count + $main_directory_files_count + $main_directory_links_count }} Attachments 
+                <span class="px-2">|</span><span class="text-primary"><i class='bx bx-file-blank' ></i></span>
+                {{$main_directory_files_count}} <span class="px-2">|</span> 
+                <span class="text-warning"><i class='bx bx-folder' ></i></span> 
+                {{ $main_directory_directories_count }} 
+                <span class="px-2">|</span> 
+                <span class="text-secondary"><i class='bx bx-link-alt' ></i></span> 
+                {{ $main_directory_links_count }} <span class="px-2">|</span> 
+                {{$main_directory_size}} MB Used / 100MB
+            </div>
         </div>
     </div>
     <div class="files-body">
@@ -54,7 +65,7 @@
                         }
 
                     @endphp
-                    <li class="breadcrumb-item" wire:click="openFolder('{{$path_for_folder_open}}')"><a>{{ $p }}</a></li>
+                    <li class="breadcrumb-item" @if(!$loop->first) wire:click="openFolder('{{$path_for_folder_open}}')" @endif><a>{{ $p }}</a></li>
                 @endforeach
             </ul>
         </nav>
@@ -64,7 +75,7 @@
             <div class="column-head column-head-light d-flex flex-wrap align-items-center">
                 <div>
                     <h5 class="title-sm mb-2">Directory Attachments</h5>
-                    <div><i class='bx bx-data text-primary' ></i> {{ $directories_count + $files_count + $links_count }} Attachments <span class="px-2">|</span> {{$used_storage_size_in_mb}}MB Used / 100MB</div>
+                    <div><i class='bx bx-data text-primary' ></i> {{ $directories_count + $files_count + $links_count }} Attachments <span class="px-2">|</span> {{$used_storage_size_in_mb}} MB Used / 100MB</div>
                 </div>
             </div>
         </div>
@@ -160,12 +171,15 @@
                                 </div>
                                 <div class="col-md-8 mb-4">
                                     <div class="form-file_upload form-file_upload-logo">
-                                        <input type="file" id="formFile" wire:model="new_file" >
+                                        <input class="add-file-input" type="file" id="formFile" wire:model="new_file" >
                                         <div class="form-file_upload-box">
                                             <div class="form-file_upload-box-icon"><i class='bx bx-image'></i></div>
                                             <div class="form-file_upload-box-text">Add File</div>
                                         </div>
                                         <div class="form-file_upload-valText">Allowed *.jpeg, *.jpg, *.png, *.gif max size of 3 Mb</div>
+                                        <div class="add-file-input-responce">
+
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -272,10 +286,11 @@
     </div>
 </div>
 
-@push('scripts')
+@push('scripts') 
 <script>
    document.addEventListener('fileAdded', event => {
         $('#add-new-file').modal('hide');
+        $(".add-file-input-responce").html('');
     })
 
     document.addEventListener('directoryAdded', event => {
@@ -345,6 +360,11 @@
             console.log('double clicked');
             event.preventDefault();
             return false;
+        });
+
+        $(".add-file-input").change(function(){
+            let file_name = $(this).val().split('\\').pop();
+            $(".add-file-input-responce").html(file_name);
         });
 
 

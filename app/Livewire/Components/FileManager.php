@@ -23,7 +23,10 @@ class FileManager extends Component
     public $files_count = 0;
     public $links_count = 0;
     public $directories_count = 0;
-    
+    public $main_directory_files_count = 0;
+    public $main_directory_links_count = 0;
+    public $main_directory_directories_count = 0;
+    public $main_directory_size = 0;
 
     // add new file
     public $new_file_name = '';
@@ -66,8 +69,16 @@ class FileManager extends Component
         }else{
             $this->path = session('org_name').'/'.$this->client->name;
         }
+        $this->getMainDirectoryMediaCount();
+        $this->main_directory_size = $this->getDirectorySize($this->path);
         $this->path_array = explode('/', $this->path);
         $this->getMedia($this->path);
+    }
+
+    public function getMainDirectoryMediaCount(){
+        $this->main_directory_files_count = count(Storage::files($this->path));
+        $this->main_directory_links_count = Link::where('path', $this->path)->count();
+        $this->main_directory_directories_count = count(Storage::directories($this->path));
     }
 
     public function getMedia($path)
@@ -126,7 +137,7 @@ class FileManager extends Component
     public function addNewFile(){
         $this->validate([
             'new_file' => 'required',
-        ]);
+        ]); 
         if($this->new_file_name == ''){
             $this->new_file_name = $this->new_file->getClientOriginalName();
         }else{
@@ -251,7 +262,8 @@ class FileManager extends Component
         foreach ($directories as $directory) {
             $size += $this->getDirectorySize($directory);
         }
-        return round($size/1024,2);
+
+        return round($size/1024/1024, 2);
     }
 
     public function getLinks($path){

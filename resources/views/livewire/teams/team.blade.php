@@ -114,7 +114,7 @@
          <div class="col-auto w-150 pe-5">
             <h5 class="column-title mb-0">Members</h5>
          </div>
-         <div class="col">
+         <div class="col"> 
             <!-- Teams -->
             <div class="avatarGroup">
                @foreach($team->users as  $user)
