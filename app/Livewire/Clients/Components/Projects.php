@@ -4,6 +4,7 @@ namespace App\Livewire\Clients\Components;
 
 use Livewire\Component;
 use App\Models\Client;
+use Carbon\Carbon;
 use Database\Factories\ClientFactory;
 use Livewire\Attributes\On; 
 
@@ -35,14 +36,16 @@ class Projects extends Component
     public function mount($id)
     {
         $this->authorize('View Client');
+
         $this->id = $id;
         $this->client = Client::find($id);
         $this->projects = $this->client->projects;
         $this->all_projects = $this->client->projects;
         $this->active_projects = $this->client->projects()->where('status', 'active')->get();
         $this->completed_projects = $this->client->projects()->where('status', 'completed')->get();
-        $this->overdue_projects = $this->client->projects()->where('status', 'overdue')->get();
-        $this->archived_projects = $this->client->projects()->where('status', 'archived')->get();
+        $this->overdue_projects = $this->client->projects()->where('due_date', '<', Carbon::today())->get();
+        // $this->archived_projects = $this->client->projects()->where('status', 'archived')->get();
+        $this->archived_projects = $this->client->projects()->onlyTrashed()->get();
 
     }
     
