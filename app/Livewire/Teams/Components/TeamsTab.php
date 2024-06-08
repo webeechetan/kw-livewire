@@ -8,9 +8,16 @@ use App\Models\Team;
 class TeamsTab extends Component
 {
     public $team;
+    public $currentRoute;
+
     public function render()
     {
         return view('livewire.teams.components.teams-tab');
+    }
+
+    public function mount()
+    {
+        $this->currentRoute = request()->route()->getName();
     }
 
     public function forceDeleteTeam($id)

@@ -133,13 +133,36 @@
                                     <div>
                                         <h4 class="team-style_2-title">{{$team->name}}</h4>
                                         <div class="avatarGroup avatarGroup-overlap">
+                                          @php
+                                              $c_u = $client_users->count();
+
+                                            //   dd($c_u);
+                                              $t_u = $team->users->count();
+                                            //   dd($t_u);
+                                              $c_u = ($t_u) - ($c_u);
+
+                                          @endphp
+
+                                            @php
+                                                $plus_more_users = 0;
+                                                if(count($c_u) >= 5){
+                                                    $plus_more_users = count($c_u) - 5;
+                                                }
+                                            @endphp 
+
                                             @foreach($team->users as $user)
-                                                @if($client_users->contains($user->id))
-                                                <a href="#" class="avatarGroup-avatar">
-                                                    <span class="avatar avatar-sm avatar-{{ $user->color }}" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{ $user->name }}">{{ $user->initials }}</span>
-                                                </a>
-                                                @endif
+                                                @if($client_users->contains($user->id))           
+                                                    <a href="#" class="avatarGroup-avatar">
+                                                        <span class="avatar avatar-sm avatar-{{ $user->color }}" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{ $user->name }}">{{ $user->initials }}</span>
+                                                    </a>
+                                                    @endif
                                             @endforeach
+                                            @if($plus_more_users)
+                                            <a href="#" class="avatarGroup-avatar">
+                                                <span class="avatar avatar-sm avatar-more">+{{$plus_more_users}}</span>
+                                            </a>
+                                        @endif
+                                           
                                         </div>
                                     </div>
                                 </div>
@@ -148,6 +171,7 @@
                         @empty
                         <div>No Team Assigned</div>
                     @endforelse
+                    
                 </div>
             </div>
         </div>
