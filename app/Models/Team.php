@@ -43,7 +43,7 @@ class Team extends Model
     }
 
     public function getClientsAttribute(){
-        $projects = $this->projects->pluck('id')->toArray();
+        $projects = $this->projects->pluck('id')->toArray(); 
         return Client::whereIn('id', $projects)->get();
     }
 

@@ -147,18 +147,7 @@
                                     }
                                 @endphp
                                 @foreach($client->users->take(7) as $user)
-                                    @if($user->image)
-                                        <a href="#" class="avatarGroup-avatar">
-                                            <span class="avatar avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{ $user->name }}">
-                                                <img alt="avatar" src="{{ asset('storage/'.$user->image) }}" class="rounded-circle">
-                                            </span>
-                                        </a>
-                                    @else
-                                        <a href="#" class="avatarGroup-avatar">
-                                            <span class="avatar avatar-sm avatar-{{$user->color}}" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{ $user->name }}">{{ $user->initials }}</span>
-                                        </a>
-                                    @endif
-                                    
+                                    <x-avatar :user="$user" />
                                 @endforeach
                                 @if($plus_more_users)
                                     <a href="#" class="avatarGroup-avatar">

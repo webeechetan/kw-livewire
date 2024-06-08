@@ -25,9 +25,7 @@ use App\Livewire\Users\ListUser;
 use App\Livewire\Users\User as UserProfile;
 
 // Teams Route
-use App\Livewire\Teams\AddTeam;
 use App\Livewire\Teams\ListTeam;
-use App\Livewire\Teams\EditTeam;
 use App\Livewire\Teams\Team as TeamProfile;
 use App\Livewire\Teams\Components\Projects as TeamProjects;
 use App\Livewire\Teams\Components\Tasks as TeamTasks;
@@ -104,8 +102,6 @@ Route::group(['middleware' => ['myauth']], function() {
     Route::get('/project/view/{project}/file-manager',ProjectFileManager::class)->name('project.file-manager');
     
     Route::get('/teams/{sort?}/{filter?/{byUser?}',ListTeam::class)->name('team.index');
-    Route::get('/teams/add',AddTeam::class)->name('team.add');
-    Route::get('/teams/edit/{id}',EditTeam::class)->name('team.edit');
     Route::get('/team/view/{team}',TeamProfile::class)->name('team.profile');
     Route::get('/team/view/{team?}/projects',TeamProjects::class)->name('team.projects');
     Route::get('/team/view/{team?}/tasks/{status?}',TeamTasks::class)->name('team.tasks');

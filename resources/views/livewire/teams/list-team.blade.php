@@ -13,7 +13,6 @@
                 <span class="text-light">|</span> 
                 @can('Create Team')
                     <a data-bs-toggle="modal" data-bs-target="#add-team-modal" href="javascript:void(0);" class="btn-border btn-border-sm btn-border-primary"><i class="bx bx-plus"></i> Add Team</a>
-                    <!-- <a wire:navigate href="{{ route('team.add') }}" href="javascript:void(0);" class="btn-border btn-border-sm btn-border-primary"><i class="bx bx-plus"></i> Add Team</a> -->
                 @endcan
             </div>
             <div class="text-end col">

@@ -99,10 +99,10 @@
          <div class="col">
             <!-- Teams -->
             <div class="btn-list">
-               @foreach($team->projects as $project)
-               <a class="btn btn-border btn-border-rounded d-flex align-items-center" href="{{route('client.profile',$project->id)}}" wire:navigate="">
-                  <span class="avatar avatar-sm me-2" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{$project->client->name}}">{{$project->client->initials}}</span>
-                  {{$project->client->name}}
+               @foreach($team->clients as $client)
+               <a class="btn btn-border btn-border-rounded d-flex align-items-center" href="{{route('client.profile',$client->id)}}" wire:navigate="">
+                  <span class="avatar avatar-sm me-2" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{$client->name}}">{{$client->initials}}</span>
+                  {{$client->name}}
                </a>
                @endforeach
             </div>
@@ -118,9 +118,7 @@
             <!-- Teams -->
             <div class="avatarGroup">
                @foreach($team->users as  $user)
-               <a class="avatar" href="{{route('user.profile',$user->id)}}" wire:navigate="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{$user->name}}">
-                  {{$user->initials}}                  
-               </a>
+                  <x-avatar :user="$user" />
                @endforeach
             </div>
          </div>
