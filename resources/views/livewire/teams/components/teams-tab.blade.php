@@ -22,7 +22,7 @@
                                 <div class="col text-nowrap btn-batch">{{ $team->manager?->name ?? 'Not Added' }}
                                 </div>
                             </div>
-                        </div> 
+                        </div>  
                     </div>
                 </div>
                 <div class="text-end col">

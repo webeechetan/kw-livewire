@@ -215,64 +215,8 @@
             </div>
          </div>
       </div>
-
-      {{--  <div class="column-box">
-         <div class="taskList-dashbaord_header">
-             <div class="row">
-                 <div class="col-lg-6">
-                     <div class="taskList-dashbaord_header_title taskList_col ms-2">Project Name</div>
-                 </div>
-                 <div class="col text-center">
-                     <div class="taskList-dashbaord_header_title taskList_col">Created Date</div>
-                 </div>
-                 <div class="col text-center">
-                     <div class="taskList-dashbaord_header_title taskList_col">Due On</div>
-                 </div>
-                 <div class="col text-center">
-                     <div class="taskList-dashbaord_header_title taskList_col">Assignee</div>
-                 </div>
-             </div>
-         </div>
-        
-         @foreach ($projects as $project)
-             <div class="taskList scrollbar">
-                 <div class="taskList_row">
-                     <div class="row">
-                         <div class="col-lg-6">
-                             <div class="taskList_col taskList_col_title">
-                                 <div class="edit-task" data-id="100">
-                                    <a href="{{ route('project.profile',$project->id) }}" class="project-title">{{$project->name}}</a>
-                                 </div>
-                             </div>
-                         </div>
-                         <div class="col text-center">
-                             <div class="taskList_col"><span>{{  Carbon\Carbon::parse($project->created_at)->format('d M Y') }}</span></div>
-                         </div>
-                         <div class="col text-center">
-                             <div class="taskList_col"><span>{{  \Carbon\Carbon::parse($project->due_date)->diffForHumans()}}</span></div>
-                         </div>
-                        
-                         <div class="col text-center">
-                             <div class="taskList_col">
-                                 <div class="avatarGroup avatarGroup-overlap">
-                                  @foreach($task->users as $user)
-                                     <a href="#" class="avatarGroup-avatar">
-                                         <span class="avatar avatar-sm avatar-pink" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{$user->initials}}">{{$user->initials}}</span>
-                                     </a>       
-                                     @endforeach                         
-                                 </div>
-                                 
-                             </div>
-                         </div>
-                     </div>
-                 </div>
-             </div>
-         @endforeach
-     </div> --}}
-
-
    </div>
-   
+   <livewire:components.add-team @saved="$refresh" />
 </div>
 
 @script

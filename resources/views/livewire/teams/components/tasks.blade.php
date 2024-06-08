@@ -191,6 +191,7 @@
             </div>
         @endforeach
     </div>
+    <livewire:components.add-team @saved="$refresh" />
 </div>
 
 @script
