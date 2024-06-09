@@ -176,7 +176,6 @@
 
                                 @if($team->tasks->count() > 1)
                                     @php
-                                    // echo($team->tasks->count());
                                         $task_text = 'Tasks';    
                                     @endphp
                                 @else
@@ -184,7 +183,7 @@
                                         $task_text = 'Task';    
                                     @endphp
                                 @endif
-                                {{ $team->users->count() }} {{ $task_text }}  
+                                {{ $team->tasks->count() }} {{ $task_text }}  
                             </div>
                             <div class="card_style-options-head">
                                 

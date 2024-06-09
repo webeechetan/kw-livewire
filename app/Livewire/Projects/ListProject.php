@@ -47,7 +47,13 @@ class ListProject extends Component
         //$this->overdueProjects = Project::where('status', 'overdue')->count();
         $this->overdueProjects = Project::where('due_date', '<', Carbon::today())->count();
         
-        $projects = Project::where('name','like','%'.$this->query.'%');
+        $projects = Project::where('name','like','%'.$this->query.'%')
+                    ->whereHas('client',function($query){
+                        $query->where('deleted_at','IS NOT NULL');
+                    })->orWhereHas('client',function($query){
+                        $query->where('name','like','%'.$this->query.'%')->orWhere('brand_name','like','%'.$this->query.'%');
+                    });
+        // dd($projects->toSql());
 
         if($this->filter == 'active'){
             $projects->where('status','active');
