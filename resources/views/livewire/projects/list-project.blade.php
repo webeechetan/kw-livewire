@@ -94,7 +94,7 @@
                 :users="$users" 
                 :teams="$teams"
                 :clients="$clients"
-                :clearFilters="project.index')"
+                :clearFilters="project.index'
             />
             @endif
         </div>
@@ -200,13 +200,14 @@
                 </div>
             @endforeach
         @else 
-        <div class="col-md-12">
+        <div class="col-md-12 text-center">
+            <img src="{{ asset('assets/images/'.'invite_signup_img.png') }}" width="150" alt="">
             {{-- <h4 class="text text-danger">No Projects found.</h4> --}}
-            <h4 class="text text-danger">No Projects found
+            <h5 class="text text-light mt-3">No Projects found
                 @if($query) 
-                    with {{$query}}
+                    with <span class="text-danger">"{{$query}}"</span>
                 @endif
-            </h4>
+            </h5>
         </div>
         @endif
     </div>
