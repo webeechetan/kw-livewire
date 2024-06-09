@@ -14,7 +14,7 @@
                                     <label for="">Company Name<sup class="text-primary">*</sup></label>
                                 </div>
                                 <div class="col-md-8 mb-4">
-                                    <input wire:model="client_name" type="text" class="form-style" placeholder="Company Name">
+                                    <input wire:model="client_name" type="text" class="form-style" placeholder="Company Name" required>
                                 </div>
                                 <span class="text-danger">@error('client_name') {{ $message }} @enderror</span>
                             </div>
@@ -23,7 +23,7 @@
                                     <label for="">Brand Name<sup class="text-primary">*</sup></label>
                                 </div>
                                 <div class="col-md-8 mb-4">
-                                    <input wire:model="brand_name" type="text" class="form-style" placeholder="Brand Name">
+                                    <input wire:model="brand_name" type="text" class="form-style" placeholder="Brand Name" required>
                                     <div class="form-check mt-2">
                                         <input class="form-check-input" type="checkbox" wire:model="use_brand_name" value="1" id="use_brand_name">
                                         <label class="form-check-label" for="defaultCheck1">Use This as Title</label>

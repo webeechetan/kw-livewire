@@ -32,7 +32,7 @@
                                     <label for="">User Name<sup class="text-primary">*</sup></label>
                                 </div>
                                 <div class="col-md-8 mb-4">
-                                    <input wire:model="name" type="text" class="form-style" placeholder="User Name Here...">
+                                    <input wire:model="name" type="text" class="form-style" placeholder="User Name Here..." required>
                                 </div>
                             </div>
                             <div class="row">
@@ -48,7 +48,7 @@
                                     <label for="">Email<sup class="text-primary">*</sup></label>
                                 </div>
                                 <div class="col-md-8 mb-4">
-                                    <input wire:model="email"  type="email" class="form-style" placeholder="Email Here...">
+                                    <input wire:model="email"  type="email" class="form-style" placeholder="Email Here..." required>
                                 </div>
                             </div>
                             <div class="row password-col">
@@ -56,7 +56,7 @@
                                     <label for="">Password<sup class="text-primary">*</sup></label>
                                 </div>
                                 <div class="col-md-8 mb-4">
-                                    <input wire:model="password"  type="text" class="form-style" placeholder="Password Here..." minlength="6">
+                                    <input wire:model="password"  type="text" class="form-style" placeholder="Password Here..." minlength="6" required>
                                 </div>
                             </div>
                             <div class="row">

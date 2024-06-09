@@ -16,7 +16,7 @@
                                 </div>
                                 <div class="col-md-8 mb-4">
                                     <div class="custom-select">
-                                        <select wire:model.live="client_id" class="form-style">
+                                        <select wire:model.live="client_id" class="form-style" required>
                                             <option value="">Select Client</option>
                                             @foreach ($clients as $client)
                                                 @if($client->id == $client_id)
@@ -35,7 +35,7 @@
                                     <label for="">Project Name<sup class="text-primary">*</sup></label>
                                 </div>
                                 <div class="col-md-8 mb-4">
-                                    <input wire:model="project_name" type="text" class="form-style" placeholder="Project Name">
+                                    <input wire:model="project_name" type="text" class="form-style" placeholder="Project Name" required>
                                 </div>
                             </div>
                             <div class="row">
