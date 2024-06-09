@@ -174,31 +174,39 @@
                             @php
                                 $usersCount = $project->users->count();  
                             @endphp
-                            @foreach($project->members as $user)
-                                @if($loop->index > 10)
-                                    @break
-                                @endif
-                                @if($user->image)
-                                    <a href="javascript:;" class="avatar avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="{{$user->name}}">
-                                        <img alt="avatar" src="{{ asset('storage/'.$user->image) }}" class="rounded-circle">
+                            @if(count($project->members) > 0)
+                                @foreach($project->members as $user)
+                                    @if($loop->index > 10)
+                                        @break
+                                    @endif
+                                    @if($user->image)
+                                        <a href="javascript:;" class="avatar avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="{{$user->name}}">
+                                            <img alt="avatar" src="{{ asset('storage/'.$user->image) }}" class="rounded-circle">
+                                        </a>
+                                    @else
+                                        <a href="javascript:;" class="avatar avatar-sm avatar-{{$user->color}}" data-bs-toggle="tooltip" data-bs-placement="top" title="{{$user->name}}">{{ $user->initials }}</a>
+                                    @endif
+                                @endforeach
+                                @if($usersCount > 10)
+                                    <a href="javascript:" class="avatar avatar-sm" wire-key="project-user-more">
+                                        +{{ $usersCount - 10 }}
                                     </a>
-                                @else
-                                    <a href="javascript:;" class="avatar avatar-sm avatar-{{$user->color}}" data-bs-toggle="tooltip" data-bs-placement="top" title="{{$user->name}}">{{ $user->initials }}</a>
                                 @endif
-                            @endforeach
-                            @if($usersCount > 10)
-                                <a href="javascript:" class="avatar avatar-sm" wire-key="project-user-more">
-                                    +{{ $usersCount - 10 }}
-                                </a>
+                            @else
+                                <span>Not added</span>
                             @endif
                         </div>
                     </div>
                     <div class="column-box">
                         <div class="column-head"><div class="column-title">Teams</div></div>
                         <div class="btn-list mt-3">
-                            @foreach($projectTeams as $team)
-                                <a href="javascript:" class="btn-batch btn-batch-profile">{{ $team->name ?? 'Not Added' }} </a>
-                            @endforeach
+                            @if(count($projectTeams) > 0)
+                                @foreach($projectTeams as $team)
+                                    <a href="javascript:" class="btn-batch btn-batch-profile">{{ $team->name }} </a>
+                                @endforeach
+                            @else
+                                <span>Not added</span>
+                            @endif
                         </div>
                     </div>
                 </div>

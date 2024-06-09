@@ -140,19 +140,23 @@
                         </div>
                         <div class="col">
                             <div class="avatarGroup avatarGroup-overlap">
-                                @php
-                                    $plus_more_users = 0;
-                                    if(count($client->users) > 7){
-                                        $plus_more_users = count($client->users) - 7;
-                                    }
-                                @endphp
-                                @foreach($client->users->take(7) as $user)
-                                    <x-avatar :user="$user" />
-                                @endforeach
-                                @if($plus_more_users)
-                                    <a href="#" class="avatarGroup-avatar">
-                                        <span class="avatar avatar-sm avatar-more">+{{$plus_more_users}}</span>
-                                    </a>
+                                @if(count($client->users) > 0)
+                                    @php
+                                        $plus_more_users = 0;
+                                        if(count($client->users) > 7){
+                                            $plus_more_users = count($client->users) - 7;
+                                        }
+                                    @endphp
+                                    @foreach($client->users->take(7) as $user)
+                                        <x-avatar :user="$user" />
+                                    @endforeach
+                                    @if($plus_more_users)
+                                        <a href="#" class="avatarGroup-avatar">
+                                            <span class="avatar avatar-sm avatar-more">+{{$plus_more_users}}</span>
+                                        </a>
+                                    @endif
+                                @else
+                                <div class="text-light">No User Assigned</div>
                                 @endif
                             </div>
                         </div>
@@ -161,10 +165,11 @@
             </div>
             @endforeach
             @else
-            <div class="col-md-12">
-                <h5 class="text text-danger">No clients found
+            <div class="col-md-12 text-center">
+                <img src="{{ asset('assets/images/'.'invite_signup_img.png') }}" width="150" alt="">
+                <h5 class="text text-light mt-3">No clients found
                     @if($query) 
-                        with {{$query}}
+                        with <span class="text-danger">"{{$query}}"</span>
                     @endif
                 </h5>
             </div>

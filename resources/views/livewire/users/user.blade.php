@@ -20,8 +20,16 @@
                     </div>
                     <input class="user-image d-none" type="file" wire:model.live="user_image" accept="image/*" >
                     <h3 class="main-body-header-title mb-2">{{ $user->name }}</h3>
-                    <div class="d-flex align-items-center justify-content-center mb-2"><i class="bx bx-envelope me-1 text-secondary"></i> {{ $user->designation ?? 'Not Added' }}</div>
-                    <div class="d-flex align-items-center justify-content-center mb-2"><i class="bx bx-envelope me-1 text-secondary"></i> {{$user->email ?? 'Not Added' }}</div>
+                    <div class="d-flex align-items-center justify-content-center mb-2"><i class="bx bx-briefcase text-primary me-1"></i> {{ $user->designation ?? 'Not Added' }}</div>
+                    <div class="d-flex align-items-center justify-content-center mb-2">
+                        <i class='bx bx-sitemap me-1 text-secondary'></i> 
+                        @if(!$user->mainTeam)
+                            Not Added
+                        @else
+                            {{ $user->mainTeam->name }}
+                        @endif
+                    </div>
+                    <div class="d-flex align-items-center justify-content-center mb-3"><i class="bx bx-envelope me-1 text-secondary"></i> {{$user->email ?? 'Not Added' }}</div>
                     <ul class="social-icons justify-content-center my-2">
                         <li><a class="add-social-link" href="javascript:" data-bs-toggle="modal" data-link="{{ $user->details?->fb }}" data-type="fb" data-bs-target="#social-links-modal"><i class='bx bxl-facebook'></i></a></li>
                         <li><a class="add-social-link" href="javascript:" data-bs-toggle="modal" data-link="{{ $user->details?->linkdin }}" data-type="linkdin" data-bs-target="#social-links-modal"><i class='bx bxl-linkedin' ></i></a></li>
@@ -44,29 +52,41 @@
                 </div>
                 <hr>
                 <div>
-                    <div class="title-label"><i class='bx bx-sitemap text-primary' ></i> Assign Teams</div>
+                    <div class="title-label"><i class='bx bx-sitemap text-primary' ></i> {{ $user->teams->count() > 1 ? 'Assigned Teams' : 'Assigned Team'}}</div>
                     <div class="btn-list">
-                        @foreach($user->teams as $team)
-                            <a href="javascript:" class="btn-batch">{{ $team->name ?? 'Not Added' }}</a>
-                        @endforeach
+                        @if(count($user->teams) > 0)
+                            @foreach($user->teams as $team)
+                                <a href="javascript:" class="btn-batch">{{ $team->name }}</a>
+                            @endforeach
+                        @else
+                            <div class="text-light">No Team Assigned</div>
+                        @endif
                     </div>
                 </div>
                 <hr>
                 <div>
-                    <div class="title-label"><i class='bx bx-briefcase text-primary' ></i> Assign Clients</div>
+                    <div class="title-label"><i class='bx bx-briefcase text-primary' ></i> {{ $user_clients->count() > 1 ? 'Assigned Clients' : 'Assigned Client'}}</div>
                     <div class="btn-list">
-                        @foreach($user_clients as $client)
-                            <a wire:navigate href="{{ route('client.profile',$client->id) }}" class="btn-batch">{{ $client->name }}</a>
-                        @endforeach
+                        @if(count($user_clients) > 0)
+                            @foreach($user_clients as $client)
+                                <a wire:navigate href="{{ route('client.profile',$client->id) }}" class="btn-batch">{{ $client->name }}</a>
+                            @endforeach
+                        @else
+                            <div class="text-light">No Client Assigned</div>
+                        @endif
                     </div>
                 </div>
                 <hr>
                 <div>
-                    <div class="title-label"><i class='bx bx-briefcase text-primary' ></i> Projects</div>
+                    <div class="title-label"><i class='bx bx-briefcase text-primary' ></i> {{ $user_projects->count() > 1 ? 'Assigned Projects' : 'Assigned Project'}}</div>
                     <div class="btn-list">
-                        @foreach($user_projects as $project)
-                            <a wire:navigate href="{{ route('project.profile',$project->id) }}" class="btn-batch">{{ $project->name }}</a>
-                        @endforeach
+                        @if(count($user_projects) > 0)
+                            @foreach($user_projects as $project)
+                                <a wire:navigate href="{{ route('project.profile',$project->id) }}" class="btn-batch">{{ $project->name }}</a>
+                            @endforeach
+                        @else
+                            <div class="text-light">No Project Assigned</div>
+                        @endif
                     </div>
                 </div>                             
             </div>
@@ -116,7 +136,13 @@
                         <div class="row">
                             <div class="col">
                                 <h5 class="title-md mb-1">{{ $user->projects->where('status','completed')->count() }}</h5>
-                                <div class="states_style-text">Projects Done</div>
+                                <div class="states_style-text">
+                                    @if($user->projects->where('status','completed')->count() > 0)
+                                        {{ $user->projects->where('status','completed')->count() > 1 ? 'Projects Done' : 'Project Done'}}
+                                    @else
+                                        <div class="text-light">No Project Assigned</div>
+                                    @endif
+                                </div>
                             </div>
                             <div class="col-auto">
                                 <div class="states_style-icon"><i class='bx bx-objects-horizontal-left' ></i></div>
@@ -129,7 +155,13 @@
                         <div class="row">
                             <div class="col">
                                 <h5 class="title-md mb-1">{{ $user->tasks->where('status', 'completed')->count() }}</h5>
-                                <div class="states_style-text">Tasks Done</div>
+                                <div class="states_style-text">
+                                    @if($user->tasks->where('status', 'completed')->count() > 0)
+                                        {{ $user->tasks->where('status', 'completed')->count() > 1 ? 'Tasks Done' : 'Task Done'}}
+                                    @else
+                                        <div class="text-light">No Task Assigned</div>
+                                    @endif 
+                                </div>
                             </div>
                             <div class="col-auto">
                                 <div class="states_style-icon"><i class='bx bx-task' ></i></div>
@@ -143,7 +175,13 @@
                             <div class="col">
                                 <h5 class="title-md mb-1">{{ $user->tasks->where('due_date', '<', now())->where('status', '!=', 'completed')->count() }}
                                 </h5>
-                                <div class="states_style-text">Tasks Overdue</div>
+                                <div class="states_style-text">
+                                    @if($user->tasks->where('due_date', '<', now())->where('status', '!=', 'completed')->count() > 0)
+                                        {{ $user->tasks->where('due_date', '<', now())->where('status', '!=', 'completed')->count() > 1 ? 'Tasks Overdue' : 'Task Overdue'}}
+                                    @else
+                                        <div class="text-light">No Task Overdue</div>
+                                    @endif 
+                                </div>
                             </div>
                             <div class="col-auto">
                                 <div class="states_style-icon"><i class='bx bx-task-x' ></i></div>
@@ -169,7 +207,7 @@
                             <span class="btn-batch">{{ $skill }}</span>
                         @endforeach
                     @else
-                        <span>Not Added</span>
+                        <span class="text-light">Not Added</span>
                     @endif
                 </div>
                 @php
@@ -193,26 +231,15 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title"> Update <span class="link-text"></span> profile</h5>
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">    
                 <div class="modal-form-body">
-                    <div class="row">
-                        <div class="col-md-4 mb-4">
-                            <label for="">Link<sup class="text-primary">*</sup></label>
-                        </div>
-                        <div class="col-md-8 mb-4">
-                            <input wire:model="socialLink" type="text" class="form-style" placeholder="">
-                            <div class="print-link d-none">
-                            </div>
-                        </div>
-                    </div>                     
+                    <label for="">Add Link<sup class="text-primary">*</sup></label>
+                    <input wire:model="socialLink" type="text" class="form-style mt-3" placeholder="">
+                    <button type="button" class="btn btn-primary w-100 mt-3 update-social-link">Update</button>
+                    <div class="print-link mt-3 d-none"></div>        
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary btn-sm update-social-link">Update</button>
             </div>
         </div>
         </div>
@@ -257,7 +284,7 @@
             let link = $(this).data('link');
             @this.socialLink = link; 
             if(link){
-                let html = `<a href="${link}">${link}</a>`;
+                let html = `<a href="${link}" class="btn btn-border-secondary btn-sm w-100">Open Link</a>`;
                 $(".print-link").removeClass('d-none')
                 $(".print-link").html(html);
             }

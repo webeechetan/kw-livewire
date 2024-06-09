@@ -27,7 +27,11 @@
                                 <span class="font-400 text-grey">|</span>
                             </div>
                             <div class="col-auto">
-                                <div class="states_style-text">{{ $client->projects->count() >1 ? 'Projects' : 'Project'}}</div>
+                                @if($client->projects->count() > 0)
+                                    <div class="states_style-text">{{ $client->projects->count() >1 ? 'Projects' : 'Project'}}</div>
+                                @else
+                                    <div class="states_style-text text-light">No Project Assigned</div>
+                                @endif  
                             </div>
                         </div>
                     </div>
@@ -49,7 +53,11 @@
                                 <span class="font-400 text-grey">|</span>
                             </div>
                             <div class="col-auto">
-                                <div class="states_style-text"> {{ $client_teams->count() > 1 ?'Teams Assigned' : 'Team Assigned' }}</div>
+                                @if($client_teams->count() > 0)
+                                    <div class="states_style-text"> {{ $client_teams->count() > 1 ?'Teams Assigned' : 'Team Assigned' }}</div>
+                                @else
+                                    <div class="states_style-text text-light">No Team Assigned</div>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -71,7 +79,11 @@
                                 <span class="font-400 text-grey">|</span>
                             </div>
                             <div class="col-auto">
-                                <div class="states_style-text">{{ $client_users->count() > 1 ? 'Members Assigned' : 'Member Assigned' }}</div>
+                                @if($client_users->count() > 0)
+                                    <div class="states_style-text">{{ $client_users->count() > 1 ? 'Members Assigned' : 'Member Assigned' }}</div>
+                                @else
+                                    <div class="states_style-text text-light">No Member Assigned</div>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -166,7 +178,7 @@
                             </div>
                         </div>
                         @empty
-                        <div>No Team Assigned</div>
+                        <div class="text-light">No Team Assigned</div>
                     @endforelse
                     
                 </div>

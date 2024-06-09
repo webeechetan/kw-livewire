@@ -418,7 +418,6 @@ hr.space-sm {
         position: absolute;
         right: 10px;
         top: 10px;
-        z-index: 999;
         opacity: 0;
         visibility: hidden;
         transform: translateX(5px);
@@ -1334,4 +1333,9 @@ hr.space-sm {
             color: #fff;
         }
     }
+}
+
+/* ----- Upload Logo Image ----- */
+.image-preview-section {
+    margin-top: 15px;
 }

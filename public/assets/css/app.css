@@ -41,6 +41,9 @@
 .text-dark-grey {
   color: #ddd;
 }
+.text-light {
+  color: #9c9c9c;
+}
 
 /*---- Background Colors ----*/
 .bg-primary {
@@ -521,7 +524,6 @@ hr.space-sm {
   position: absolute;
   right: 10px;
   top: 10px;
-  z-index: 999;
   opacity: 0;
   visibility: hidden;
   transform: translateX(5px);
@@ -1286,6 +1288,11 @@ hr.space-sm {
   color: #fff;
 }
 
+/* ----- Upload Logo Image ----- */
+.image-preview-section {
+  margin-top: 15px;
+}
+
 /*---- Buttons Style Start Here ----*/
 .btn {
   padding: 0.5rem 1.4rem;
@@ -1888,6 +1895,7 @@ hr.space-sm {
   left: inherit;
   margin-top: 0;
   padding: 0;
+  z-index: 99;
 }
 .dropdown-menu:before {
   content: "";

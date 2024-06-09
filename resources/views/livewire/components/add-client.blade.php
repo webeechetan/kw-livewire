@@ -69,10 +69,10 @@
                             </div> --}}
 
                             <div class="row">
-                                <div class="col-md-4 mb-4">
+                                <div class="col-md-4">
                                     <label for="">Upload Logo</label>
                                 </div>
-                                <div class="col-md-8 mb-4">
+                                <div class="col-md-8">
                                     <div class="form-file_upload form-file_upload-logo">
                                         <input class="image_upload_input" type="file" id="formFile" wire:model="client_image" accept="image/jpeg, image/jpg, image/png, image/gif">
                                         <div class="form-file_upload-box">
@@ -82,22 +82,22 @@
                                         <div class="form-file_upload-valText">Allowed *.jpeg, *.jpg, *.png, *.gif max size of 3 Mb</div>
                                     </div>
 
-                                    <div class="image-preview-section d-none">
+                                    <div class="image-preview-section mt-3 d-none">
 
                                     </div>
                             
                                     @if ($client_image)
-                                   
-                                        <div class="mt-3">
+                                        <div>
                                             <img src="{{ $client_image }}" alt="Image Preview" class="img-fluid" style="max-width: 200px;">
                                         </div>
                                     @else
-                                        <div class="old-image mt-3">
+                                        <div class="old-image">
                                             <img src="" alt="" class="img-fluid old-image-src">
                                         </div>
                                     @endif
                                 </div>
                             </div>
+                            <hr>
 
 
                             <div class="row">
@@ -166,7 +166,7 @@
                 }
                 $('.old-image').removeClass('d-none');
                 $('.old-image-src').attr('src', '{{ env("APP_URL") }}/storage/'+event.detail[0].image);
-                $('.client-form-text').html('Edit');
+                $('.client-form-text').html('Edit Client');
                 $('.client-form-btn').html('Update');
             })
 

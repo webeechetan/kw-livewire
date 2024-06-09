@@ -123,17 +123,31 @@
                         </div>
                         <div class="card_style-user-profile-content mt-2">
                             <h4><a wire:navigate href="{{ route('user.profile',$user->id) }}">{{ $user->name }}</a></h4>
-                            <div class="d-flex align-items-center justify-content-center"><i class='bx bx-envelope me-1 text-secondary' ></i> {{ $user->email }}</div>
-                            <div class="d-flex align-items-center justify-content-center mt-2"><i class='bx bx-briefcase me-1 text-primary'></i> {{ $user->designation ?? 'Not Added'}} </div>
+                            <div class="d-flex align-items-center justify-content-center">
+                                <i class='bx bx-envelope me-1 text-secondary' ></i> 
+                                @if($user->email)
+                                    {{ $user->email }}
+                                @else
+                                    <div class="text-light">No Email Added</div>
+                                @endif
+                                
+                            </div>
+                            <div class="d-flex align-items-center justify-content-center mt-2">
+                                <i class='bx bx-briefcase me-1 text-primary'></i> 
+                                @if($user->designation)
+                                    {{ $user->designation }} 
+                                @else
+                                    <div class="text-light">No Designation Assigned</div>
+                                @endif
+                            </div>
                             <div class="d-flex align-items-center justify-content-center mt-2">
                                 <i class='bx bx-sitemap me-1 text-secondary'></i> 
                                 @if(!$user->mainTeam)
-                                    Not Added
+                                    <div class="text-light">No Team Assigned</div>
                                 @else
                                    {{ $user->mainTeam->name }}
                                 @endif
                             </div>
-
 
                             @if($user->teams->count() > 0)
                                 <div class="card_style-user-head-team"><span class="btn-batch btn-batch-warning"> {{ $user->teams->count() }}  {{ $user->teams->count() >1 ? 'Teams' : 'Team'}}</span></div>
@@ -149,7 +163,15 @@
                             </div>
                         </div>
                         <div class="card_style-tasks text-center">
-                            <div class="card_style-tasks-title"><span><i class='bx bx-objects-horizontal-left' ></i></span> {{ $user->tasks->count() }}  {{ $user->tasks->count() >1 ? 'Tasks' : 'Task'}}</div>
+                            <div class="card_style-tasks-title">
+                                <span><i class='bx bx-objects-horizontal-left' ></i></span> 
+                                @if($user->tasks->count() > 0)
+                                    {{ $user->tasks->count() }}  
+                                    {{ $user->tasks->count() >1 ? 'Tasks' : 'Task'}}
+                                @else
+                                <span class="text-light">No Task Assigned</span>
+                                @endif
+                            </div>
                             <div class="card_style-tasks-list justify-content-center mt-2">
                                 <div class="card_style-tasks-item card_style-tasks-item-pending"><span><i class='bx bx-objects-horizontal-center' ></i></span>
                                 {{-- {{

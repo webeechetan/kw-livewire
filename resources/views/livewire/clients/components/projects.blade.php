@@ -27,7 +27,11 @@
                                 <span class="font-400 text-grey">|</span>
                             </div>
                             <div class="col-auto">
-                                <div class="states_style-text">Active</div>
+                                @if($active_projects->count() > 0)
+                                    <div class="states_style-text">Active</div>
+                                @else
+                                    <div class="states_style-text text-light">No Active Project</div>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -49,7 +53,11 @@
                                 <span class="font-400 text-grey">|</span>
                             </div>
                             <div class="col-auto">
-                                <div class="states_style-text">Completed</div>
+                                @if($completed_projects->count() > 0)
+                                    <div class="states_style-text">Completed</div>
+                                @else
+                                    <div class="states_style-text text-light">No Completed Project</div>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -71,7 +79,11 @@
                                 <span class="font-400 text-grey">|</span>
                             </div>
                             <div class="col-auto">
-                                <div class="states_style-text">Archive</div>
+                                @if($archived_projects->count() > 0)
+                                    <div class="states_style-text">Archive</div>
+                                @else
+                                    <div class="states_style-text text-light">No Archive Project</div>
+                                @endif
                             </div>
                         </div>
                     </div>
