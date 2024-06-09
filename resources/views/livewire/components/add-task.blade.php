@@ -23,7 +23,7 @@
                 <div class="taskPane-head">
                     <div class="taskPane-heading">
                         <div class="taskPane-heading-label"><i class='bx bx-notepad text-primary'></i> Task Heading</div>
-                        <input class="form-control form-control-typeStyle AddTask_title" wire:model="name" type="text" placeholder="Write a task name">
+                        <input required class="form-control form-control-typeStyle AddTask_title" wire:model="name" type="text" placeholder="Write a task name">
                         {{ $name }}
                     </div>
                     @error('name') <span class="text-danger">{{ $message }}</span> @enderror
@@ -53,8 +53,8 @@
                     <div class="taskPane-item d-flex flex-wrap mb-3">
                         <div class="taskPane-item-left"><div class="taskPane-item-label">Project</div></div>
                         <div class="taskPane-item-right"> 
-                            <select wire:model="project_id" name="" id="" class="task-projects">
-                                <option value="" disabled>Select Project</option>
+                            <select required wire:model="project_id" name="" id="" class="task-projects">
+                                <option value="" >Select Project</option>
                                 @foreach ($projects as $p)
                                     @if($project_id && $project && $project->id == $p->id)
                                         <option value="{{ $p->id }}" selected>{{ $p->name }}</option>
