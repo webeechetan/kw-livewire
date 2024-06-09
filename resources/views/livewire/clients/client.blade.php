@@ -154,22 +154,24 @@
                                             @endphp
                                             @foreach($team->users as $user)
                                                 @if($client_users->contains($user->id))
-                                                @if($loop_index > 2)
+                                                    @if($loop_index > 2)
+                                                        @php
+                                                            $plus_more_users++;
+                                                        @endphp
+                                                        @continue;
+                                                    @endif
                                                     @php
-                                                        $plus_more_users++;
+                                                        $loop_index++;
                                                     @endphp
-                                                    @continue;
-                                                @endif
-                                                @php
-                                                    $loop_index++;
-                                                @endphp
 
-                                                <a href="#" class="avatarGroup-avatar">
-                                                    <x-avatar :user="$user" />
-                                                </a>
+                                                    <a href="#" class="avatarGroup-avatar">
+                                                        <x-avatar :user="$user" />
+                                                    </a>
                                                 @endif
                                             @endforeach
-                                            {{ $plus_more_users }}
+                                            <a href="#" class="avatarGroup-avatar">
+                                                <span class="avatar avatar-sm avatar-more"> +{{ $plus_more_users }}</span>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
