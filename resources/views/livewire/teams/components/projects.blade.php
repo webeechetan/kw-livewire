@@ -114,32 +114,9 @@
 
 
       <div class="tab-content" id="myTabContent">
-         <div class="tab-pane fade active show" id="project-all-tab-pane" role="tabpanel" aria-labelledby="project-all-tab" tabindex="0">
-            <div class="row">
-             
-               @foreach($projects as $project)
-
-               {{-- {{$project}} --}}
-               <div class="col-lg-3">
-                  <div class="project-list">
-                     <div class="project project-align_left w-100">
-                        <div class="project-icon"><i class="bx bx-layer"></i></div>
-                        <div class="project-content">
-                           <a href="{{ route('project.profile',$project->id) }}" class="project-title">{{$project->name}}</a>
-                           <div class="project-selected-date">Due on <span>{{  \Carbon\Carbon::parse($project->due_date)->diffForHumans()}}</span></div>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-               @endforeach
-            </div>
-         </div>
-         <div class="tab-pane fade" id="project-active-tab-pane" role="tabpanel" aria-labelledby="project-active-tab" tabindex="0">
+         <div class="tab-pane active show" id="project-all-tab-pane" role="tabpanel" aria-labelledby="project-all-tab" tabindex="0">
             <div class="row">
                @foreach($projects as $project)
-                  @if($project->status != 'active')
-                     @continue
-                  @endif
                   <div class="col-lg-3">
                      <div class="project-list">
                         <div class="project project-align_left w-100">
@@ -152,66 +129,6 @@
                      </div>
                   </div>
                @endforeach
-            </div>
-         </div>
-         <div class="tab-pane fade" id="project-done-tab-pane" role="tabpanel" aria-labelledby="project-done-tab" tabindex="0">
-            <div class="row">
-               @foreach($projects as $project)
-                  @if($project->status != 'completed')
-                     @continue
-                  @endif
-                  <div class="col-lg-3">
-                     <div class="project-list">
-                        <div class="project project-align_left w-100">
-                           <div class="project-icon"><i class="bx bx-layer"></i></div>
-                           <div class="project-content">
-                              <a href="{{ route('project.profile',$project->id) }}" class="project-title">{{$project->name}}</a>
-                              <div class="project-selected-date">Due on <span>{{  \Carbon\Carbon::parse($project->due_date)->diffForHumans()}}</span></div>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-               @endforeach
-            </div>
-         </div>
-         <div class="tab-pane fade" id="project-overdue-tab-pane" role="tabpanel" aria-labelledby="project-overdue-tab" tabindex="0">
-           <div class="row">
-            @foreach($projects as $project)
-            @if($project->status != 'overdue')
-               @continue
-            @endif
-            <div class="col-lg-3">
-               <div class="project-list">
-                  <div class="project project-align_left w-100">
-                     <div class="project-icon"><i class="bx bx-layer"></i></div>
-                     <div class="project-content">
-                        <a href="{{ route('project.profile',$project->id) }}" class="project-title">{{$project->name}}</a>
-                        <div class="project-selected-date">Due on <span>{{  \Carbon\Carbon::parse($project->due_date)->diffForHumans()}}</span></div>
-                     </div>
-                  </div>
-               </div>
-            </div>
-         @endforeach
-           </div>
-         </div>
-         <div class="tab-pane fade" id="project-archived-tab-pane" role="tabpanel" aria-labelledby="project-archived-tab" tabindex="0">
-            <div class="row">
-               @foreach($projects as $project)
-               @if($project->status != 'archived')
-                  @continue
-               @endif
-               <div class="col-lg-3">
-                  <div class="project-list">
-                     <div class="project project-align_left w-100">
-                        <div class="project-icon"><i class="bx bx-layer"></i></div>
-                        <div class="project-content">
-                           <a href="{{ route('project.profile',$project->id) }}" class="project-title">{{$project->name}}</a>
-                           <div class="project-selected-date">Due on <span>{{  \Carbon\Carbon::parse($project->due_date)->diffForHumans()}}</span></div>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-            @endforeach
             </div>
          </div>
       </div>

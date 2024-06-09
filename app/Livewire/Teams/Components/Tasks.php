@@ -61,4 +61,8 @@ class Tasks extends Component
         $project = Project::find($value);
         $this->users = $project->members;
     }
+
+    public function doesAnyFilterApplied(){
+        return $this->byClient != 'all' || $this->byProject != 'all' || $this->byUser != 'all' || $this->status != 'all' || $this->project_start_date || $this->project_due_date;
+    }
 }

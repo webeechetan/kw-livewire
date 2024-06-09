@@ -133,6 +133,7 @@
             <div class="row align-items-center">
                 <div class="col-lg-6">
                     <div class="btn-list">
+                        <a href="javascript:" wire:click="$set('status', 'all')" class="btn-border btn-border-sm btn-border-primary "><span><i class='bx bx-objects-horizontal-center' ></i></span> {{ $project->tasks->count() }} All</a>
                         <a href="javascript:" wire:click="$set('status', 'pending')" class="btn-border btn-border-sm btn-border-primary "><span><i class='bx bx-objects-horizontal-center' ></i></span> {{ $project->tasks->where('status', 'pending')->where('due_date', '>', now())->count() }} Assigned</a>
                         <a href="javascript:" wire:click="$set('status', 'in_progress')" class="btn-border btn-border-sm btn-border-secondary "><span><i class='bx bx-objects-horizontal-center' ></i></span> {{ $project->tasks->where('status', 'in_progress')->count() }} Accepted</a>
                         <a href="javascript:" wire:click="$set('status', 'in_review')" class="btn-border btn-border-sm btn-border-warning "><span><i class='bx bx-objects-horizontal-center' ></i></span> {{ $project->tasks->where('status', 'in_review')->count() }} In Review</a>

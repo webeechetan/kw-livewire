@@ -59,6 +59,10 @@ class Client extends Model
         }
     }
 
+    public function getOrignalNameAttribute(){
+        return $this->attributes['name'];
+    }
+
     public function createdBy(){
         return $this->belongsTo(User::class,'created_by');
     }

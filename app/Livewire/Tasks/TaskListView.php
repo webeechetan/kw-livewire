@@ -29,6 +29,7 @@ class TaskListView extends Component
     public $auth_user_id;
 
     public $tasks;
+    public $tasks_count = [];
 
     // Add task Form
     public $name;
@@ -82,7 +83,7 @@ class TaskListView extends Component
     {
             $this->doesAnyFilterApplied();
             $this->authorize('View Task');
-            
+            $this->tasks_count = Task::all();
             if(!($this->currentRoute)){
                 $this->currentRoute = request()->route()->getName();
             }
