@@ -148,7 +148,7 @@
                                         }
                                     @endphp
                                     @foreach($client->users->take(7) as $user)
-                                        <x-avatar :user="$user" />
+                                        <x-avatar :user="$user" class="avatar-sm" />
                                     @endforeach
                                     @if($plus_more_users)
                                         <a href="#" class="avatarGroup-avatar">

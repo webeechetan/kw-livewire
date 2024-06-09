@@ -14,13 +14,13 @@
                                     <label for="">Company Name<sup class="text-primary">*</sup></label>
                                 </div>
                                 <div class="col-md-8 mb-4">
-                                    <input wire:model="client_name" type="text" class="form-style" placeholder="Company Name">
+                                    <input wire:model="client_name" type="text" class="form-style" placeholder="Company Name" required>
+                                    <span class="text-danger">@error('client_name') {{ $message }} @enderror</span>
                                 </div>
-                                <span class="text-danger">@error('client_name') {{ $message }} @enderror</span>
                             </div>
                             <div class="row">
                                 <div class="col-md-4 mb-4">
-                                    <label for="">Brand Name<sup class="text-primary">*</sup></label>
+                                    <label for="">Brand Name</label>
                                 </div>
                                 <div class="col-md-8 mb-4">
                                     <input wire:model="brand_name" type="text" class="form-style" placeholder="Brand Name">
@@ -103,7 +103,7 @@
                             <div class="row">
                                 <div class="col-12">
                                     <label for="" class="mb-2">Add Description</label>
-                                    <textarea type="text" wire:model="client_description" class="form-style" placeholder="Add Description" rows="4" cols="30"></textarea>
+                                    <textarea type="text" wire:model="client_description" class="form-style" placeholder="Add Description" rows="2" cols="30"></textarea>
                                 </div>
                             </div>
                         </div>
