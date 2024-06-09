@@ -25,7 +25,7 @@
                         <button type="submit" class="search-box-icon"><i class='bx bx-search me-1'></i> Search</button>
                     </form>
                     <div class="main-body-header-filters">
-                        <div class="cus_dropdown">
+                        <div class="cus_dropdown" wire:ignore.self>
                             <div class="cus_dropdown-icon btn-border btn-border-secondary"><i class='bx bx-filter-alt' ></i> Filter</div>
                             <div class="cus_dropdown-body cus_dropdown-body-widh_l">
                                 <div class="cus_dropdown-body-wrap">
@@ -196,12 +196,15 @@
                     <span class="btn-batch">{{ $users->find($byUser)->name }} <a wire:click="$set('byUser','all')" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
                 @endif
 
-                @if($startDate)
-                    <span class="btn-batch">{{ \Carbon\Carbon::parse($startDate)->format('d M Y') }} <a wire:click="$set('startDate','')" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
-                @endif
-
-                @if($dueDate)
-                    <span class="btn-batch">{{ \Carbon\Carbon::parse($dueDate)->format('d M Y') }} <a wire:click="$set('dueDate','')" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
+                @if($startDate && $dueDate)
+                    <span class="btn-batch">{{ \Carbon\Carbon::parse($startDate)->format('d M Y') }} <a wire:click="$set('startDate','')" class="ms-1"></a> To {{ \Carbon\Carbon::parse($dueDate)->format('d M Y') }} <a wire:click="$set('dueDate','');$set('start_date','');" class="ms-1"><i class='bx bx-x'></i></a></span> 
+                @else
+                    @if($startDate)
+                        <span class="btn-batch">{{ \Carbon\Carbon::parse($startDate)->format('d M Y') }} <a wire:click="$set('startDate','')" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
+                    @endif
+                    @if($dueDate)
+                        <span class="btn-batch">{{ \Carbon\Carbon::parse($dueDate)->format('d M Y') }} <a wire:click="$set('dueDate','')" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
+                    @endif
                 @endif
 
             <a href="{{ route('task.index') }}" class="text-danger d-flex align-items-center">Reset <span class="ms-1 d-inline-flex"><i class='bx bx-refresh'></i></span></a>
@@ -269,11 +272,7 @@
                                             @endphp
 
                                             @foreach($task['users']->take(3) as $user)
-                                            <a href="#" class="avatarGroup-avatar">
-                                                <span class="avatar avatar-sm avatar-{{$user->color}}" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ $user->name }}">
-                                                    <div class="rounded-circle" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{ $user->name }}">{{ $user->initials }}</div>
-                                                </span>
-                                            </a>
+                                                <x-avatar :user="$user" class="avatar-sm" />
                                             @endforeach
 
                                             @if($plus_more_users)

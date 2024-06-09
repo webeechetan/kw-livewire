@@ -29,6 +29,12 @@ class ProjectObserver
             return false;
         }
 
+        // check if image is updated if yes then don't create activity
+        if($project->isDirty('image')){
+            return false;
+        }
+    
+
         $original = $project->getOriginal();
         $updated = $project->getAttributes();
 

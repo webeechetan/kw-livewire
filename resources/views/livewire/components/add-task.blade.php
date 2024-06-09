@@ -33,7 +33,6 @@
                         <div class="taskPane-item-left"><div class="taskPane-item-label">Assigned to</div></div>
                         <div class="taskPane-item-right" wire:ignore>
                             <select  class="task-users" multiple>
-                                <option value="" disabled>Select User</option>
                                 @foreach ($users as $user)
                                     <option data-image="{{ $user->image }}"  value="{{ $user->id }}">{{ $user->name }}</option>
                                 @endforeach 
@@ -44,7 +43,6 @@
                         <div class="taskPane-item-left"><div class="taskPane-item-label">Notify to</div></div>
                         <div class="taskPane-item-right">
                             <select name="" id="" class="task-notify-users" multiple>
-                                <option value="" disabled>Select User</option>
                                 @foreach ($users as $user)
                                     <option data-image="{{ $user->image }}"  value="{{ $user->id }}">{{ $user->name }}</option>
                                 @endforeach 
@@ -61,7 +59,11 @@
                                     @if($project_id && $project && $project->id == $p->id)
                                         <option value="{{ $p->id }}" selected>{{ $p->name }}</option>
                                     @else
-                                        <option value="{{ $p->id }}">{{ $p->name }}</option>
+                                        @if($loop->first)
+                                            <option value="{{ $p->id }}" selected>{{ $p->name }}</option>
+                                        @else
+                                            <option value="{{ $p->id }}">{{ $p->name }}</option>
+                                        @endif
                                     @endif
                                 @endforeach
                             </select>

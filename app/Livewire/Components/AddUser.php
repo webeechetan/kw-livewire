@@ -23,7 +23,7 @@ class AddUser extends Component
     public $password;
     public $designation;
     public $teams = [];
-    public $selectedTeams;
+    public $main_team_id;
     public $role;
 
     public $roles = [];
@@ -64,7 +64,7 @@ class AddUser extends Component
         $user->color = Helper::colors()[rand(0,5)];
         $user->org_id = session('org_id');
         $user->created_by = session('user')->id;
-        $user->main_team_id = $this->selectedTeams;
+        $user->main_team_id = $this->main_team_id;
         $user->save();
         $this->role = (int)$this->role;
         $user->assignRole($this->role);
@@ -80,9 +80,9 @@ class AddUser extends Component
         $this->name = $user->name;
         $this->email = $user->email;
         $this->designation = $user->designation;
-        $this->selectedTeams = $user->teams->pluck('id')->toArray();
+        $this->main_team_id = $user->main_team_id;
         $this->role = $user->roles->first()->id ?? null;
-        $this->dispatch('edit-user',[$this->selectedTeams,$user->roles->pluck('id')->toArray()]);
+        $this->dispatch('edit-user',[$this->main_team_id,$user->roles->pluck('id')->toArray()]);
     }
 
     public function updateUser(){
@@ -95,8 +95,8 @@ class AddUser extends Component
         $user->name = $this->name;
         $user->email = $this->email;
         $user->designation = $this->designation;
+        $user->main_team_id = $this->main_team_id;
         $user->save();
-        $user->main_team_id = $this->selectedTeams;
         $this->role = (int)$this->role;
         setPermissionsTeamId(session('org_id'));
         $user->syncRoles([$this->role]);

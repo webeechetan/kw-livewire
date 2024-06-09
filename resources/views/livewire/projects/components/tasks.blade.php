@@ -30,9 +30,11 @@
 
                                     @if($status != 'all')
                                         <span class="btn-batch">
-                                            @if($status == 'pending') Active @endif
+                                            @if($status == 'pending') Assigned @endif
                                             @if($status == 'overdue') Overdue @endif
                                             @if($status == 'completed') Completed @endif
+                                            @if($status == 'in_progress') In Progress @endif
+                                            @if($status == 'in_review') In Review @endif
                                             <a wire:click="$set('status','all')" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
                                     @endif
                                 
@@ -101,7 +103,9 @@
                                     <h5 class="filterSort-header mt-4"><i class='bx bx-calendar-alt text-primary' ></i> Filter By Status</h5>
                                     <ul class="filterSort_btn_group list-none">
                                         <li class="filterSort_item"><a wire:click="$set('status', 'all')" class="btn-batch @if($status == 'all') active @endif">All</a></li>
-                                        <li class="filterSort_item"><a wire:click="$set('status', 'pending')" class="btn-batch @if($status == 'pending') active @endif">Active</a></li>
+                                        <li class="filterSort_item"><a wire:click="$set('status', 'pending')" class="btn-batch @if($status == 'pending') active @endif">Assigned</a></li>
+                                        <li class="filterSort_item"><a wire:click="$set('status', 'in_progress')" class="btn-batch @if($status == 'in_progress') active @endif">Accepted</a></li>
+                                        <li class="filterSort_item"><a wire:click="$set('status', 'in_review')" class="btn-batch @if($status == 'in_review') active @endif">In Review</a></li>
                                         <li class="filterSort_item"><a wire:click="$set('status', 'overdue')" class="btn-batch @if($status == 'overdue') active @endif">Overdue</a></li>
                                         <li class="filterSort_item"><a wire:click="$set('status', 'completed')" class="btn-batch @if($status == 'completed') active @endif">Completed</a></li>
                                     </ul>
@@ -129,9 +133,11 @@
             <div class="row align-items-center">
                 <div class="col-lg-6">
                     <div class="btn-list">
-                        <a href="javascript:" class="btn-border btn-border-sm btn-border-secondary active"><span><i class='bx bx-objects-horizontal-center' ></i></span> {{ $project->tasks->where('status', 'pending')->where('due_date', '>', now())->count() }} Active</a>
-                        <a href="javascript:" class="btn-border btn-border-sm btn-border-danger"><span><i class='bx bx-objects-horizontal-center' ></i></span> {{ $project->tasks->where('due_date', '<', now())->count() }} Overdue</a>
-                        <a href="javascript:" class="btn-border btn-border-sm btn-border-success"><span><i class='bx bx-objects-horizontal-center' ></i></span> {{ $project->tasks->where('status', 'completed')->count() }} Completed</a>
+                        <a href="javascript:" wire:click="$set('status', 'pending')" class="btn-border btn-border-sm btn-border-primary "><span><i class='bx bx-objects-horizontal-center' ></i></span> {{ $project->tasks->where('status', 'pending')->where('due_date', '>', now())->count() }} Assigned</a>
+                        <a href="javascript:" wire:click="$set('status', 'in_progress')" class="btn-border btn-border-sm btn-border-secondary "><span><i class='bx bx-objects-horizontal-center' ></i></span> {{ $project->tasks->where('status', 'in_progress')->count() }} Accepted</a>
+                        <a href="javascript:" wire:click="$set('status', 'in_review')" class="btn-border btn-border-sm btn-border-warning "><span><i class='bx bx-objects-horizontal-center' ></i></span> {{ $project->tasks->where('status', 'in_review')->count() }} In Review</a>
+                        <a href="javascript:" wire:click="$set('status', 'overdue')" class="btn-border btn-border-sm btn-border-danger"><span><i class='bx bx-objects-horizontal-center' ></i></span> {{ $project->tasks->where('due_date', '<', now())->count() }} Overdue</a>
+                        <a href="javascript:" wire:click="$set('status', 'completed')" class="btn-border btn-border-sm btn-border-success"><span><i class='bx bx-objects-horizontal-center' ></i></span> {{ $project->tasks->where('status', 'completed')->count() }} Completed</a>
                     </div>
                 </div>
                 <div class="col-lg-6 ms-auto text-end">

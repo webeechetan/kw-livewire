@@ -20,7 +20,7 @@ class ListTask extends Component
 {
     use WithPagination;
 
-
+    protected $listeners = ['saved' => 'refresh'];
 
     public $allTasks;
     public $activeTasks;
@@ -86,12 +86,18 @@ class ListTask extends Component
             $this->authorize('View Task');
             
             $this->auth_user_id = auth()->guard(session('guard'))->user()->id;
-            $this->users = User::all();
             if($this->byClient != 'all'){
                 $this->projects = Project::where('client_id', $this->byClient)->get();
             }else{
                 $this->projects = Project::all();
             }
+                    
+            if($this->byProject != 'all'){
+                $this->users = Project::find($this->byProject)->members;
+            }else{
+                $this->users = User::all();
+            }
+
             // dd($this->projects);
             $this->teams = Team::all();
             $this->clients = Client::all();
@@ -161,6 +167,11 @@ class ListTask extends Component
             }
 
 
+    }
+
+    public function refresh()
+    {
+        $this->mount();
     }
 
     public function updatedSort($value)
