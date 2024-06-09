@@ -23,7 +23,7 @@
                         <button type="submit" class="search-box-icon"><i class='bx bx-search me-1'></i> Search</button>
                     </form>
                     <div class="main-body-header-filters">
-                        <div class="cus_dropdown">
+                        <div class="cus_dropdown" wire:ignore.self>
                             <div class="cus_dropdown-icon btn-border btn-border-secondary"><i class='bx bx-filter-alt' ></i> Filter</div>
                             <div class="cus_dropdown-body cus_dropdown-body-widh_l">
                                 <div class="cus_dropdown-body-wrap">  
@@ -62,7 +62,7 @@
                                                     @if($dueDate)
                                                         {{ \Carbon\Carbon::parse($dueDate)->format('d M Y') }}
                                                     @else
-                                                        <i class='bx bx-calendar-alt' ></i> Due Date
+                                                        <i class='bx bx-calendar-alt' ></i> End Date
                                                     @endif
                                                 </a>
                                             </div>
@@ -70,11 +70,11 @@
                                         <h5 class="filterSort-header mt-4"><i class='bx bx-calendar-alt text-primary' ></i> Filter By Status</h5>
                                         <ul class="filterSort_btn_group list-none">
                                             <li class="filterSort_item"><a wire:click="$set('status', 'all')" class="btn-batch @if($status == 'all') active @endif">All</a></li>
-                                            <li class="filterSort_item"><a wire:click="$set('status', 'pending')" class="btn-batch @if($status == 'pending') active @endif">Assigned</a></li>
-                                            <li class="filterSort_item"><a wire:click="$set('status', 'in_progress')" class="btn-batch @if($status == 'in_progress') active @endif">Accepted</a></li>
-                                            <li class="filterSort_item"><a wire:click="$set('status', 'in_review')" class="btn-batch @if($status == 'in_review') active @endif">In Review</a></li>
+                                            {{-- <li class="filterSort_item "><a wire:click="$set('status', 'pending')" class="btn-batch @if($status == 'pending') active @endif">Assigned</a></li> --}}
+                                            {{-- <li class="filterSort_item"><a wire:click="$set('status', 'in_progress')" class="btn-batch @if($status == 'in_progress') active @endif">Accepted</a></li> --}}
+                                            {{-- <li class="filterSort_item"><a wire:click="$set('status', 'in_review')" class="btn-batch @if($status == 'in_review') active @endif">In Review</a></li> --}}
                                             <li class="filterSort_item"><a wire:click="$set('status', 'overdue')" class="btn-batch @if($status == 'overdue') active @endif">Overdue</a></li>
-                                            <li class="filterSort_item"><a wire:click="$set('status', 'completed')" class="btn-batch @if($status == 'completed') active @endif">Completed</a></li>
+                                            {{-- <li class="filterSort_item"><a wire:click="$set('status', 'completed')" class="btn-batch @if($status == 'completed') active @endif">Completed</a></li> --}}
                                         </ul>
                                         <h5 class="filterSort-header mt-4"><i class='bx bx-briefcase text-primary' ></i> Filter By Clients</h5>
                                         <select class="dashboard_filters-select w-100" wire:model.live="byClient" id="">
@@ -117,8 +117,20 @@
             <div class="col-md-6">
                 <!-- Tabs -->
                 <div class="tabNavigationBar-tab border_style">
-                    <a href="{{ route('task.list-view') }}" class="tabNavigationBar-item @if(request()->routeIs('task.list-view')) active @endif" wire:navigate ><i class='bx bx-list-ul'></i> List</a>
-                    <a href="{{ route('task.index') }}" class="tabNavigationBar-item @if(request()->routeIs('task.index')) active @endif" wire:navigate><i class='bx bx-columns' ></i> Board</a>
+                    {{-- <a href="{{ route('task.list-view') }}" class="tabNavigationBar-item @if(request()->routeIs('task.list-view')) active @endif" wire:navigate ><i class='bx bx-list-ul'></i> List</a>
+                    <a href="{{ route('task.index') }}" class="tabNavigationBar-item @if(request()->routeIs('task.index')) active @endif" wire:navigate><i class='bx bx-columns' ></i> Board</a> --}}
+
+                   
+                    {{-- <a  wire:navigate class="tabNavigationBar-item @if($currentRoute == 'task.list-view') active @endif" href="{{ route('task.list-view') }}"> <i class='bx bx-list-ul'></i> {{$currentRoute}} List</a>
+                    <a wire:navigate  class="tabNavigationBar-item @if($currentRoute =='task.index') active @endif" href ="{{route('task.index') }}"><i class='bx bx-columns' ></i> {{$currentRoute}} Board</a> --}}
+                
+                    <a wire:navigate class="tabNavigationBar-item @if($currentRoute == 'task.list-view') active @endif" href="{{ route('task.list-view') }}">
+                        <i class='bx bx-list-ul'></i>List
+                    </a>
+                    <a wire:navigate class="tabNavigationBar-item @if($currentRoute == 'task.index') active @endif" href="{{ route('task.index') }}">
+                        <i class='bx bx-columns'></i>Board
+                    </a>
+                    
                 </div>
             </div>
             <div class="col-md-6 text-end">
@@ -174,21 +186,18 @@
                     <span class="btn-batch">{{ $users->find($byUser)->name }} <a wire:click="$set('byUser','all')" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
                 @endif
 
-                @if($startDate)
-                    <span class="btn-batch">{{ \Carbon\Carbon::parse($startDate)->format('d M Y') }} <a wire:click="$set('startDate','')" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
+                @if($startDate && $dueDate)
+                    <span class="btn-batch">{{ \Carbon\Carbon::parse($startDate)->format('d M Y') }} <a wire:click="$set('startDate','')" class="ms-1"></a> To {{ \Carbon\Carbon::parse($dueDate)->format('d M Y') }} <a wire:click="$set('dueDate','');$set('start_date','');" class="ms-1"><i class='bx bx-x'></i></a></span> 
+                @else
+                    @if($startDate)
+                        <span class="btn-batch">{{ \Carbon\Carbon::parse($startDate)->format('d M Y') }} <a wire:click="$set('startDate','')" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
+                    @endif
+                    @if($dueDate)
+                        <span class="btn-batch">{{ \Carbon\Carbon::parse($dueDate)->format('d M Y') }} <a wire:click="$set('dueDate','')" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
+                    @endif
                 @endif
 
-                @if($dueDate)
-                    <span class="btn-batch">{{ \Carbon\Carbon::parse($dueDate)->format('d M Y') }} <a wire:click="$set('dueDate','')" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
-                @endif
-               
-                @if($startDate)
-                    <span class="btn-batch">{{ \Carbon\Carbon::parse($startDate)->format('d M Y') }} <a wire:click="$set('startDate','')" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
-                @endif
 
-                @if($dueDate)
-                    <span class="btn-batch">{{ \Carbon\Carbon::parse($dueDate)->format('d M Y') }} <a wire:click="$set('dueDate','')" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
-                @endif
             <a href="{{ route('task.index') }}" class="text-danger d-flex align-items-center">Reset <span class="ms-1 d-inline-flex"><i class='bx bx-refresh'></i></span></a>
         </div>
     @endif
@@ -293,9 +302,22 @@
                                         </div>
                                         <div>
                                             <div class="avatarGroup avatarGroup-overlap">
-                                                @foreach($task['users'] as $user)
-                                                <a href="javascript:;" class="avatar avatar-sm avatar-{{$user->color}}" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="{{$user->name}}">{{$user->initials}}</a>
+                                                @php
+                                                    $plus_more_users = 0;
+                                                    if(count($task['users']) > 3){
+                                                        $plus_more_users = count($task['users']) - 3;
+                                                    }
+                                                @endphp
+
+                                                @foreach($task['users']->take(3) as $user)
+                                                    <a href="javascript:;" class="avatar avatar-sm avatar-{{$user->color}}" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="{{$user->name}}">{{$user->initials}}</a>
                                                 @endforeach
+
+                                                @if($plus_more_users)
+                                                    <a href="#" class="avatarGroup-avatar">
+                                                        <span class="avatar avatar-sm avatar-more">+{{$plus_more_users}}</span>
+                                                    </a>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>

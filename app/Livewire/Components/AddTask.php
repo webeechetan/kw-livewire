@@ -50,9 +50,26 @@ class AddTask extends Component
             $this->updateTask();
             return;
         }
+        
+        $validation_error_message = '';
+
+        if(!$this->name){
+            $validation_error_message .= 'Name is required. ';
+        }
+
+        if(!$this->project_id){
+            $validation_error_message .= 'Project is required. ';
+        }
+
+        if(!$this->name || !$this->project_id){
+            $this->dispatch('error',$validation_error_message);
+            return;
+        }
+
         $this->validate([
             'name' => 'required',
         ]);
+
         $task = new Task();
         $task->org_id = session('org_id');
         $task->assigned_by = auth()->guard(session('guard'))->user()->id;
@@ -202,6 +219,8 @@ class AddTask extends Component
     }
 
     public function deleteTask(){
+
+       
         $this->task->delete();
         $this->dispatch('success','Task deleted successfully');
         $this->dispatch('saved','Task deleted successfully');

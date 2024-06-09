@@ -15,12 +15,13 @@ use Livewire\WithPagination;
 use App\Helpers\Helper;
 use ProtoneMedia\LaravelCrossEloquentSearch\Search;
 use App\Helpers\Filter;
+use Livewire\Attributes\Session;
 
 class ListTask extends Component
 {
     use WithPagination;
 
-
+    protected $listeners = ['saved' => 'refresh'];
 
     public $allTasks;
     public $activeTasks;
@@ -40,6 +41,7 @@ class ListTask extends Component
     
     
     public $query = '';
+    
     public $sort = 'all';
     public $filter = 'all';
     public $byProject = 'all';
@@ -72,6 +74,8 @@ class ListTask extends Component
     public $comment;
     public $comments;
 
+    public $currentRoute;
+
     public $ViewTasksAs = 'user';
 
     public function render()
@@ -82,16 +86,24 @@ class ListTask extends Component
     public function mount()
     {
             $this->doesAnyFilterApplied();
-
             $this->authorize('View Task');
-            
+
+            if(!($this->currentRoute)){
+            $this->currentRoute = request()->route()->getName();
+            }
             $this->auth_user_id = auth()->guard(session('guard'))->user()->id;
-            $this->users = User::all();
             if($this->byClient != 'all'){
                 $this->projects = Project::where('client_id', $this->byClient)->get();
             }else{
                 $this->projects = Project::all();
             }
+                    
+            if($this->byProject != 'all'){
+                $this->users = Project::find($this->byProject)->members;
+            }else{
+                $this->users = User::all();
+            }
+
             // dd($this->projects);
             $this->teams = Team::all();
             $this->clients = Client::all();
@@ -161,6 +173,11 @@ class ListTask extends Component
             }
 
 
+    }
+
+    public function refresh()
+    {
+        $this->mount();
     }
 
     public function updatedSort($value)

@@ -34,7 +34,7 @@ class TaskListView extends Component
     public $name;
     public $description;
     public $mentioned_users= [];
-    
+    public $currentRoute;
     
     public $query = '';
     public $sort = 'all';
@@ -81,16 +81,25 @@ class TaskListView extends Component
     public function mount()
     {
             $this->doesAnyFilterApplied();
-
             $this->authorize('View Task');
             
+            if(!($this->currentRoute)){
+                $this->currentRoute = request()->route()->getName();
+            }
+           
             $this->auth_user_id = auth()->guard(session('guard'))->user()->id;
-            $this->users = User::all();
             if($this->byClient != 'all'){
                 $this->projects = Project::where('client_id', $this->byClient)->get();
             }else{
                 $this->projects = Project::all();
             }
+
+            if($this->byProject != 'all'){
+                $this->users = Project::find($this->byProject)->members;
+            }else{
+                $this->users = User::all();
+            }
+
             $this->teams = Team::all();
             $this->clients = Client::all();
             // Fetch all tasks from the database

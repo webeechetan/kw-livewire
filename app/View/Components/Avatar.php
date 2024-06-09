@@ -9,12 +9,14 @@ use Illuminate\View\Component;
 class Avatar extends Component
 {
     public $user;
+    public $class; 
     /**
      * Create a new component instance.
      */
-    public function __construct($user)
+    public function __construct($user, $class = null)
     {
         $this->user = $user;
+        $this->class = $class;
     }
 
     /**

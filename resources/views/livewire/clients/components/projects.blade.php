@@ -21,7 +21,7 @@
                     <div class="col">
                         <div class="row align-items-center g-2">
                             <div class="col-auto">
-                                <h5 class="title-md mb-0">{{ $active_projects->count() }}</h5>
+                                <h5 class="title-md mb-0">{{ $projects->where('status','active')->count() }}</h5>
                             </div>
                             <div class="col-auto">
                                 <span class="font-400 text-grey">|</span>
@@ -47,7 +47,7 @@
                     <div class="col">
                         <div class="row align-items-center g-2">
                             <div class="col-auto">
-                                <h5 class="title-md mb-0">{{ $completed_projects->count() }}</h5>
+                                <h5 class="title-md mb-0">{{ $projects->where('status','completed')->count() }}</h5>
                             </div>
                             <div class="col-auto">
                                 <span class="font-400 text-grey">|</span>
@@ -73,7 +73,7 @@
                     <div class="col">
                         <div class="row align-items-center g-2">
                             <div class="col-auto">
-                                <h5 class="title-md mb-0">{{ $archived_projects->count() }}</h5>
+                                <h5 class="title-md mb-0">{{ $projects->where('deleted_at','NOT NULL')->count() }}</h5>
                             </div>
                             <div class="col-auto">
                                 <span class="font-400 text-grey">|</span>
@@ -104,11 +104,13 @@
         </div>
     </div>
     <div class="dashboard_filters d-flex flex-wrap gap-4 align-items-center mb-4">
-        <a class="@if($filter == 'all') active @endif" wire:navigate href="{{ route('client.projects', ['id' => $id]) }}">All <span class="btn-batch">{{ $projects->count() }}</span></a>
-        <a class="@if($filter == 'active') active @endif" wire:navigate href="{{ route('client.projects', ['id' => $id]) }}">Active <span class="btn-batch">{{ $active_projects->count() }}</span></a>
-        <a class="@if($filter == 'overdue') active @endif" wire:navigate href="{{ route('client.projects',['id'=> $id]) }}">Overdue <span class="btn-batch">{{$overdue_projects->count() }}</span></a>
-        <a class="@if($filter == 'completed') active @endif" wire:navigate href="{{ route('client.projects', ['id' => $id]) }}">Completed <span class="btn-batch">{{ $completed_projects->count() }}</span></a>
-        <a class="@if($filter == 'archived') active @endif" wire:navigate href="{{ route('client.projects', ['id'=>$id]) }}">Archive <span class="btn-batch">{{$archived_projects->count() }}</span></a>
+        <a class="@if($filter == 'all') active @endif" wire:click="$set('filter','all')">All <span class="btn-batch">{{ $projects->count() }}</span></a>
+        <a class="@if($filter == 'active') active @endif" wire:click="$set('filter','active')">Active <span class="btn-batch">{{ $projects->where('status','active')->count() }}</span></a>
+        <a class="@if($filter == 'overdue') active @endif" wire:click="$set('filter','overdue')">Overdue <span class="btn-batch">
+            {{ $projects->where('due_date','<',now())->count() }}
+        </span></a>
+        <a class="@if($filter == 'completed') active @endif" wire:click="$set('filter','completed')">Completed <span class="btn-batch">{{ $projects->where('status','completed')->count() }}</span></a>
+        <a class="@if($filter == 'archived') active @endif" wire:click="$set('filter','archived')">Archive <span class="btn-batch">{{ $projects->where('deleted_at','NOT NULL')->count() }}</span></a>
     </div>
 
     <div class="project-list">
@@ -127,106 +129,6 @@
                 </div>
             @endforeach
         @endif
-    </div>
-    
-    {{-- <div class="project-tabs mb-2">
-        <ul class="nav nav-tabs" id="myTab" role="tablist">
-            <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="project-all-tab" data-bs-toggle="tab" data-bs-target="#project-all-tab-pane" type="button" role="tab" aria-controls="project-all-tab-pane" aria-selected="true">All <span class="ms-2">{{ $all_projects->count() }}</span></button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="project-active-tab" data-bs-toggle="tab" data-bs-target="#project-active-tab-pane" type="button" role="tab" aria-controls="project-active-tab-pane" aria-selected="true">Active <span class="ms-2">{{$active_projects->count()}}</span></button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="project-done-tab" data-bs-toggle="tab" data-bs-target="#project-done-tab-pane" type="button" role="tab" aria-controls="project-done-tab-pane" aria-selected="false">Completed <span class="ms-2">{{$completed_projects->count()}}</span></button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="project-overdue-tab" data-bs-toggle="tab" data-bs-target="#project-overdue-tab-pane" type="button" role="tab" aria-controls="project-overdue-tab-pane" aria-selected="false">Overdue <span class="ms-2">{{$overdue_projects->count()}}</span></button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="project-archived-tab" data-bs-toggle="tab" data-bs-target="#project-archived-tab-pane" type="button" role="tab" aria-controls="project-archived-tab-pane" aria-selected="false">Archive <span class="ms-2">{{$archived_projects->count()}}</span></button>
-            </li>
-        </ul>
-    </div> --}}
-    <div class="tab-content" id="myTabContent">
-        {{-- <div class="tab-pane fade active show" id="project-all-tab-pane" role="tabpanel" aria-labelledby="project-all-tab" tabindex="0">
-            <div class="project-list">
-                <!-- project-overdue, project-success, project-warning -->
-                @foreach($all_projects as $project)
-                    <div class="project project-align_left">
-                        <div class="project-icon"><i class='bx bx-layer'></i></div>
-                        <div class="project-content">
-                            <a wire:navigate href="{{ route('project.profile',$project->id) }}" class="project-title">{{ $project->name }}</a>
-                            @if($project->due_date)
-                                <div class="project-selected-date">Due on <span>{{ $project->due_date }}</span></div>
-                            @else
-                                <div class="project-selected-date">Due on <span>No Due Date</span></div>
-                            @endif
-                        </div>
-                    </div>
-                @endforeach
-            </div>
-        </div> --}}
-        <div class="tab-pane fade " id="project-active-tab-pane" role="tabpanel" aria-labelledby="project-active-tab" tabindex="0">
-            <div class="project-list">
-                <!-- project-overdue, project-success, project-warning -->
-                @foreach($active_projects as $project)
-                    <div class="project project-align_left">
-                        <div class="project-icon"><i class='bx bx-layer'></i></div>
-                        <div class="project-content">
-                            <a wire:navigate href="{{ route('project.profile',$project->id) }}" class="project-title">{{ $project->name }}</a>
-                            @if($project->due_date)
-                                <div class="project-selected-date">Due on <span>{{ $project->due_date }}</span></div>
-                            @else
-                                <div class="project-selected-date">Due on <span>No Due Date</span></div>
-                            @endif
-                        </div>
-                    </div>
-                @endforeach
-            </div>
-        </div>
-        <div class="tab-pane fade" id="project-done-tab-pane" role="tabpanel" aria-labelledby="project-done-tab" tabindex="0">
-            <div class="project-list project-list-completed">
-                @foreach($completed_projects as $project)
-                <div class="project project-align_left">
-                    <div class="project-icon">
-                        <span class="d-inline-flex"><i class='bx bx-list-ul'></i></span>
-                    </div>
-                    <div class="project-content">
-                        <a wire:navigate href="{{ route('project.profile',$project->id) }}" class="project-title">{{ $project->name }}</a>
-                    </div>
-                </div>
-                @endforeach
-            </div>
-        </div>
-        <div class="tab-pane fade" id="project-overdue-tab-pane" role="tabpanel" aria-labelledby="project-overdue-tab" tabindex="0">
-            <div class="project-list project-list-overdue">
-                @foreach($overdue_projects as $project)
-                    <div class="project project-align_left">
-                        <div class="project-icon">
-                            <span class="d-inline-flex"><i class='bx bx-list-ul'></i></span>
-                        </div>
-                        <div class="project-content">
-                            <a wire:navigate href="{{ route('project.profile',$project->id) }}" class="project-title">{{ $project->name }}</a>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
-        </div>
-        <div class="tab-pane fade" id="project-archived-tab-pane" role="tabpanel" aria-labelledby="project-archived-tab" tabindex="0">
-            <div class="project-list project-list-archive">
-                @foreach($archived_projects as $project)
-                <div class="project project-align_left">
-                    <div class="project-icon">
-                        <span class="d-inline-flex"><i class='bx bx-list-ul'></i></span>
-                    </div>
-                    <div class="project-content">
-                        <a wire:navigate href="{{ route('project.profile',$project->id) }}" class="project-title">{{ $project->name }}</a>
-                    </div>
-                </div>
-                @endforeach
-            </div>
-        </div>
     </div>
     <!-- Add Project Modal -->
     <livewire:components.add-project @saved="$refresh" />

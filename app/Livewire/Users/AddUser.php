@@ -37,6 +37,7 @@ class AddUser extends Component
 
     public function store()
     {
+
         $this->validate([
             'name' => 'required|min:3',
             'email' => 'required|email|unique:users,email',
@@ -67,7 +68,7 @@ class AddUser extends Component
 
         try{
             $user->save();
-            $user->teams()->attach($this->team_ids);
+            $user->teams()->attach($this->team_ids); 
             $user->notify(new UserWelcomeNotification($this->password));
         }catch(\Exception $e){
             session()->flash('error','Something went wrong');
