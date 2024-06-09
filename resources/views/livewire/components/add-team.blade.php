@@ -13,7 +13,7 @@
                                 <label for="">Team Name<sup class="text-primary">*</sup></label>
                             </div>
                             <div class="col-md-8 mb-4">
-                                <input wire:model="name" type="text" class="form-style" placeholder="Team Name Here...">
+                                <input wire:model="name" type="text" class="form-style" placeholder="Team Name Here..." required>
                             </div>
                         </div>
                         <div class="row">
@@ -51,7 +51,8 @@
                                 <label for="">Assign Manager<sup class="text-primary">*</sup></label>
                             </div>
                             <div class="col-md-8">
-                                <select wire:model="team_manager" id="" class="form-style team_manager">
+                                <select wire:model="team_manager" id="" class="form-style team_manager" required>
+                                    <option value="">Select Manager</option>
                                     @foreach($users as $user)
                                         <option value="{{ $user->id }}">{{$user->name}}</option>
                                     @endforeach
