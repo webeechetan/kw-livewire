@@ -68,7 +68,7 @@ class AddUser extends Component
 
         try{
             $user->save();
-            $user->teams()->attach($this->team_ids);
+            $user->teams()->attach($this->team_ids); 
             $user->notify(new UserWelcomeNotification($this->password));
         }catch(\Exception $e){
             session()->flash('error','Something went wrong');

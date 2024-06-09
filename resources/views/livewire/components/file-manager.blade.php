@@ -147,7 +147,12 @@
                 </div>
             @endforeach
         </div>
-        <div class="mt-3">Selected Count: {{ count($selected_files) + count($selected_directories) + count($selected_links) }}</div>
+        @php
+            $selected_count = count($selected_files) + count($selected_directories) + count($selected_links);
+        @endphp
+        @if($selected_count > 0)
+            <div class="mt-3">Selected Count: {{ $selected_count }}</div>
+        @endif
     </div>
 
     <!-- Add New File modal -->

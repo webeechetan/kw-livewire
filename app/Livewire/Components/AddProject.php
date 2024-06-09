@@ -150,7 +150,7 @@ class AddProject extends Component
         $this->resetForm();
 
         $this->dispatch('success', 'Project updated successfully.');
-        $this->redirect(route('project.index'),navigate:true);
+        $this->dispatch('project-added');
 
     }
 

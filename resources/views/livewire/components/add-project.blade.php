@@ -128,6 +128,11 @@
 
                 $('.project-users').val(project_users_array).trigger('change');
 
+                $(".image-preview-section").removeClass('d-none');
+
+                $('.image-preview-section').html('<img src="{{ asset('storage') }}/'+event.detail[0].image+'" alt="project image" class="img-fluid">');
+
+
             });
 
             flatpickr('.project_start_date', {

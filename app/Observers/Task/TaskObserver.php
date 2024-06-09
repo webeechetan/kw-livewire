@@ -10,7 +10,10 @@ class TaskObserver
     
     public function updating(Task $task){
         // check for if task status is changed
-        
+        if($task->project_id == null){
+            return;
+        }
+
         if($task->isDirty('status')){
             $oldStatus = $task->getOriginal('status');
             $newStatus = $task->status;
@@ -23,6 +26,9 @@ class TaskObserver
 
     public function created($task)
     {
+        if($task->project_id == null){
+            return;
+        }
         $activity = new Activity();
         $activity->org_id = $task->org_id;
         $activity_text = auth()->guard(session('guard'))->user()->name.' created a task '.$task->name;

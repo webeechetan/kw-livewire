@@ -18,7 +18,7 @@
                                         <div class="single-add-wrap">
                                             <input wire:model="email" type="text" class="form-control" placeholder="Email Here..."> 
                                         </div>
-                                        <button type="submit" class="btn-border btn-border-secondary"><i class='bx bx-send' ></i> Send</button>
+                                        <button  wire:click="inviteUser" type="submit" class="btn-border btn-border-secondary"><i class='bx bx-send' ></i> Send</button>
                                     </div>
                                 </div>
                             </div>
@@ -64,7 +64,7 @@
                                     <label for="">Team<sup class="text-primary">*</sup></label>
                                 </div>
                                 <div class="col-md-8 mb-4">
-                                    <select class="teams form-style" name="" id="">
+                                    <select class="form-style" wire:model="main_team_id" name="" id="">
                                         <option value="">Select Team</option>
                                         @foreach ($teams as $team)
                                             <option value="{{ $team->id }}">{{ $team->name }}</option>
@@ -108,10 +108,6 @@
                 initPlugins();
             }, 2000);
 
-            $(".teams").on('change', function(){
-                @this.set('selectedTeams', $(this).val());
-            });
-
             $(".roles").on('change', function(){
                 @this.set('role', $(this).val());
             });
@@ -122,10 +118,6 @@
         });
 
         function initPlugins(){
-            $(".teams").select2({
-                placeholder: "Select Team",
-                allowClear: true
-            });
             $(".roles").select2({
                 placeholder: "Select Role",
                 allowClear: true
@@ -139,7 +131,6 @@
             $(".invite-user-form").hide();
             $(".password-col").hide();
             $(".divider-or").hide();
-            $(".teams").val(event.detail[0][0]).trigger('change');
             $(".roles").val(@this.role).trigger('change');
         });
 

@@ -16,12 +16,6 @@ class Projects extends Component
     public $filter = 'all';
     public $sort = 'all';
 
-    public $all_projects;
-    public $active_projects;
-    public $completed_projects;
-    public $overdue_projects;
-    public $archived_projects;
-
     protected $listeners = ['project-added' => 'refresh', 'project-updated' => 'refresh', 'project-deleted' => 'refresh'];
 
     public function render()
@@ -39,13 +33,25 @@ class Projects extends Component
         $this->id = $id;
         $this->client = Client::find($id);
         $this->projects = $this->client->projects;
-        $this->all_projects = $this->client->projects;
-        $this->active_projects = $this->client->projects()->where('status', 'active')->get();
-        $this->completed_projects = $this->client->projects()->where('status', 'completed')->get();
-        $this->overdue_projects = $this->client->projects()->where('due_date', '<', Carbon::today())->get();
-        // $this->archived_projects = $this->client->projects()->where('status', 'archived')->get();
-        $this->archived_projects = $this->client->projects()->onlyTrashed()->get();
+    }
 
+    public function updatedFilter()
+    {
+        if($this->filter == 'overdue')
+        {
+            $this->projects = $this->client->projects()->where('due_date', '<', Carbon::now())->get();
+        }else{
+            if($this->filter != 'all'){
+                if($this->filter == 'archived')
+                {
+                    $this->projects = $this->client->projects()->where('deleted_at', '!=', null)->get();
+                }else{
+                    $this->projects = $this->client->projects()->where('status', $this->filter)->get(); 
+                }
+            }else{
+                $this->projects = $this->client->projects;
+            }
+        }
     }
     
     public function emitEditEvent($id)

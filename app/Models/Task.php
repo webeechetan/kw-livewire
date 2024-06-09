@@ -45,6 +45,9 @@ class Task extends Model
     }
 
     public function setProjectIdAttribute($value){
+        if($value == null){
+            return;
+        }
         $client = Project::find($value)->client;
         $this->addClientId($client->id);
         $this->attributes['project_id'] = $value;
