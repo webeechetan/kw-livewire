@@ -18,6 +18,15 @@
    <!-- Projects -->
    @php
       $projects = $team->projects;
+      $projects_for_count = $team->projects;
+
+      if($filter != 'all'){
+         if($filter == 'overdue'){
+            $projects = $projects->where('due_date','<',now());
+         }else{
+            $projects = $projects->where('status',$filter);
+         }
+      }
 
       if($start_date && $end_date){
          $projects = $projects->whereBetween('due_date',[$start_date,$end_date]);
@@ -36,36 +45,19 @@
       }
 
    @endphp
+   
    <div class="project-tabs mb-2">
       <div class="row">
          <div class="col-sm-7">
-            <ul class="nav nav-tabs" id="myTab" role="tablist">
-               <li class="nav-item" role="presentation">
-                  <button class="nav-link active" id="project-all-tab" data-bs-toggle="tab" data-bs-target="#project-all-tab-pane" type="button" role="tab" aria-controls="project-all-tab-pane" aria-selected="true">All <span class="ms-2">{{ $projects->count() }}</span></button>
-               </li>
-               <li class="nav-item" role="presentation">
-                  <button class="nav-link" id="project-active-tab" data-bs-toggle="tab" data-bs-target="#project-active-tab-pane" type="button" role="tab" aria-controls="project-active-tab-pane" aria-selected="false" tabindex="-1">Active <span class="ms-2">
-                   {{ $projects->count() }}   
-                  </span></button>
-               </li>
-               <li class="nav-item" role="presentation">
-                  <button class="nav-link" id="project-done-tab" data-bs-toggle="tab" data-bs-target="#project-done-tab-pane" type="button" role="tab" aria-controls="project-done-tab-pane" aria-selected="false" tabindex="-1">Completed <span class="ms-2">{{ $projects->where('status','completed')->count() }}   </span></button>
-               </li>
-               <li class="nav-item" role="presentation">
-                  <button class="nav-link" id="project-overdue-tab" data-bs-toggle="tab" data-bs-target="#project-overdue-tab-pane" type="button" role="tab" aria-controls="project-overdue-tab-pane" aria-selected="false" tabindex="-1">Overdue <span class="ms-2">{{ $projects->where('status','overdue')->count() }}   </span></button>
-               </li>
-               <li class="nav-item" role="presentation">
-                  <button class="nav-link" id="project-archived-tab" data-bs-toggle="tab" data-bs-target="#project-archived-tab-pane" type="button" role="tab" aria-controls="project-archived-tab-pane" aria-selected="false" tabindex="-1">Archive <span class="ms-2">{{ $projects->where('status','archived')->count() }}   </span></button>
-               </li>
-            </ul>
-
-            {{-- <div class="dashboard_filters d-flex flex-wrap gap-4 align-items-center mb-4">
-               <a class="@if($filter == 'all') active @endif" wire:navigate href="{{ route('team.projects',$team->id) }}">All <span class="btn-batch">{{ $projects->count() }}</span></a>
-               <a class="@if($filter == 'active') active @endif" wire:navigate href="{{ route('team.projects',['team'=>$team->id,'status'=>'active']) }}">Active <span class="btn-batch">{{ $projects->where('status', 'active')->count() }}</span></a>
-               <a class="@if($filter == 'overdue') active @endif" wire:navigate href="{{ route('team.projects',['team'=>$team->id,'sort'=>$sort,'filter'=>'overdue']) }}">Overdue <span class="btn-batch">{{ $projects->where('due_date', '<', now())->count()}}</span></a>
-               <a class="@if($filter == 'completed') active @endif" wire:navigate href="{{ route('team.projects',['team'=>$team->id,'sort'=>$sort,'filter'=>'completed']) }}">Completed <span class="btn-batch">{{ $projects->where('status','completed')->count() }}</span></a>
-               <a class="@if($filter == 'archived') active @endif" wire:navigate href="{{ route('team.projects',['team'=>$team->id,'sort'=>$sort,'filter'=>'archived']) }}">Archive <span class="btn-batch">{{ $projects->where('status', 'archived')->count() }}</span></a>
-           </div>  --}}
+            <div class="dashboard_filters d-flex flex-wrap gap-4 align-items-center mb-4">
+               <a class="@if($filter == 'all') active @endif" wire:click="$set('filter','all')">All <span class="btn-batch">{{ $projects_for_count->count() }}</span></a>
+               <a class="@if($filter == 'active') active @endif" wire:click="$set('filter','active')">Active <span class="btn-batch">{{ $projects_for_count->where('status','active')->count() }}</span></a>
+               <a class="@if($filter == 'overdue') active @endif" wire:click="$set('filter','overdue')">Overdue <span class="btn-batch">
+                   {{ $projects_for_count->where('due_date','<',now())->count() }}
+               </span></a>
+               <a class="@if($filter == 'completed') active @endif" wire:click="$set('filter','completed')">Completed <span class="btn-batch">{{ $projects_for_count->where('status','completed')->count() }}</span></a>
+               <a class="@if($filter == 'archived') active @endif" wire:click="$set('filter','archived')">Archive <span class="btn-batch">{{ $projects_for_count->where('deleted_at','NOT NULL')->count() }}</span></a>
+           </div>
          </div>
 
          {{-- ///sdfsdfgsdfg/ --}}

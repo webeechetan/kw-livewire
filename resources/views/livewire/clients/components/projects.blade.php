@@ -27,7 +27,7 @@
                                 <span class="font-400 text-grey">|</span>
                             </div>
                             <div class="col-auto">
-                                @if($active_projects->count() > 0)
+                                @if($projects->where('status','active')->count() > 0)
                                     <div class="states_style-text">Active</div>
                                 @else
                                     <div class="states_style-text text-light">No Active Project</div>
@@ -53,7 +53,7 @@
                                 <span class="font-400 text-grey">|</span>
                             </div>
                             <div class="col-auto">
-                                @if($completed_projects->count() > 0)
+                                @if($projects->where('status','completed')->count() > 0)
                                     <div class="states_style-text">Completed</div>
                                 @else
                                     <div class="states_style-text text-light">No Completed Project</div>
@@ -79,7 +79,7 @@
                                 <span class="font-400 text-grey">|</span>
                             </div>
                             <div class="col-auto">
-                                @if($archived_projects->count() > 0)
+                                @if($projects->where('deleted_at','NOT NULL')->count() > 0)
                                     <div class="states_style-text">Archive</div>
                                 @else
                                     <div class="states_style-text text-light">No Archive Project</div>

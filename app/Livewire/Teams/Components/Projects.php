@@ -3,6 +3,8 @@
 namespace App\Livewire\Teams\Components;
 
 use Livewire\Component;
+use Carbon\Carbon;
+use Livewire\Attributes\On; 
 use App\Models\{ Team, Project, Task, User, Client };
 
 
@@ -18,7 +20,6 @@ class Projects extends Component
     public $clients;
     public $users;
     public $users_projects = [];
-    
     public $query = '';
     public $sort = 'all';
 
@@ -47,6 +48,7 @@ class Projects extends Component
         $this->team = $team;
         $this->clients = Client::orderBy('name', 'asc')->get();
         $this->users = User::orderBy('name', 'asc')->get();
+        $this->projects = $this->team->projects;
     }
 
     public function updatedFilterByClient($value){

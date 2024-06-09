@@ -14,7 +14,7 @@
                                     <label for="">Company Name<sup class="text-primary">*</sup></label>
                                 </div>
                                 <div class="col-md-8 mb-4">
-                                    <input wire:model="client_name" type="text" class="form-style" placeholder="Company Name">
+                                    <input wire:model="client_name" type="text" class="form-style" placeholder="Company Name" required>
                                 </div>
                                 <span class="text-danger">@error('client_name') {{ $message }} @enderror</span>
                             </div>

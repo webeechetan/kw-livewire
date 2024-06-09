@@ -147,12 +147,7 @@
                 </div>
             @endforeach
         </div>
-        @php
-            $selected_count = count($selected_files) + count($selected_directories) + count($selected_links);
-        @endphp
-        @if($selected_count > 0)
-            <div class="mt-3">Selected Count: {{ $selected_count }}</div>
-        @endif
+        <div class="mt-3">Selected Count: {{ count($selected_files) + count($selected_directories) + count($selected_links) }}</div>
     </div>
 
     <!-- Add New File modal -->
@@ -291,7 +286,7 @@
     </div>
 </div>
 
-@push('scripts') 
+@script
 <script>
    document.addEventListener('fileAdded', event => {
         $('#add-new-file').modal('hide');
@@ -386,4 +381,4 @@
         });
     });
 </script>
-@endpush
+@endscript

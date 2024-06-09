@@ -58,7 +58,7 @@
             <div class="tabNavigationBar-tab border_style">
                 <a wire:navigate class="tabNavigationBar-item @if($currentRoute == 'client.profile') active @endif" href="{{ route('client.profile', $client->id) }}"><i class='bx bx-line-chart'></i> Overview</a>
                 <a wire:navigate class="tabNavigationBar-item @if($currentRoute == 'client.projects')) active @endif" href="{{ route('client.projects', $client->id) }}"><i class='bx bx-layer' ></i> Projects</a>
-                <a wire:navigate class="tabNavigationBar-item @if($currentRoute == 'client.file-manager')) active @endif" href="{{ route('client.file-manager', $client->id ) }}"><i class='bx bx-objects-horizontal-left' ></i> File Manager</a>
+                <a class="tabNavigationBar-item @if($currentRoute == 'client.file-manager')) active @endif" href="{{ route('client.file-manager', $client->id ) }}"><i class='bx bx-objects-horizontal-left' ></i> File Manager</a>
             </div>
         </div>
     </div>
