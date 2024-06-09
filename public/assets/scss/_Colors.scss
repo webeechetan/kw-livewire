@@ -119,6 +119,9 @@ $table_header_color: $secondary;
     &-dark-grey {
         color: $grey_xd;
     }
+    &-light {
+        color: $text_light;
+    }
 }
 
 /*---- Background Colors ----*/
