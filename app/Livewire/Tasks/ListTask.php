@@ -15,6 +15,7 @@ use Livewire\WithPagination;
 use App\Helpers\Helper;
 use ProtoneMedia\LaravelCrossEloquentSearch\Search;
 use App\Helpers\Filter;
+use Livewire\Attributes\Session;
 
 class ListTask extends Component
 {
@@ -40,6 +41,7 @@ class ListTask extends Component
     
     
     public $query = '';
+    
     public $sort = 'all';
     public $filter = 'all';
     public $byProject = 'all';
@@ -72,6 +74,8 @@ class ListTask extends Component
     public $comment;
     public $comments;
 
+    public $currentRoute;
+
     public $ViewTasksAs = 'user';
 
     public function render()
@@ -82,9 +86,11 @@ class ListTask extends Component
     public function mount()
     {
             $this->doesAnyFilterApplied();
-
             $this->authorize('View Task');
-            
+
+            if(!($this->currentRoute)){
+            $this->currentRoute = request()->route()->getName();
+            }
             $this->auth_user_id = auth()->guard(session('guard'))->user()->id;
             if($this->byClient != 'all'){
                 $this->projects = Project::where('client_id', $this->byClient)->get();

@@ -11,6 +11,9 @@ use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Storage;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use App\Notifications\UserWelcomeNotification;
+use App\Notifications\InviteUser;
+use App\Models\Organization;
 
 class AddUser extends Component
 {
@@ -66,6 +69,7 @@ class AddUser extends Component
         $user->created_by = session('user')->id;
         $user->main_team_id = $this->main_team_id;
         $user->save();
+        $user->notify(new UserWelcomeNotification($this->password));
         $this->role = (int)$this->role;
         $user->assignRole($this->role);
         $this->dispatch('saved');
@@ -103,4 +107,23 @@ class AddUser extends Component
         $this->dispatch('saved');
         $this->dispatch('user-updated');
     }
+
+    public function inviteUser(){
+        $this->validate([
+            'email' => 'required|email|unique:users,email'
+        ]);
+
+        $user = new User();
+        $user->org_id = session('org_id');
+        $user->name = $this->email;
+        $user->email = $this->email;
+        $user->password = Hash::make(rand(100000,999999));
+        $user->save();
+        $org = Organization::find(session('org_id'));
+        $user->notify(new InviteUser($org));
+        $this->dispatch('saved');
+        $this->dispatch('user-added');
+    }
+
+
 }

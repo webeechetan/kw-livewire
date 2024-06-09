@@ -117,8 +117,20 @@
             <div class="col-md-6">
                 <!-- Tabs -->
                 <div class="tabNavigationBar-tab border_style">
-                    <a href="{{ route('task.list-view') }}" class="tabNavigationBar-item @if(request()->routeIs('task.list-view')) active @endif" wire:navigate ><i class='bx bx-list-ul'></i> List</a>
-                    <a href="{{ route('task.index') }}" class="tabNavigationBar-item @if(request()->routeIs('task.index')) active @endif" wire:navigate><i class='bx bx-columns' ></i> Board</a>
+                    {{-- <a href="{{ route('task.list-view') }}" class="tabNavigationBar-item @if(request()->routeIs('task.list-view')) active @endif" wire:navigate ><i class='bx bx-list-ul'></i> List</a>
+                    <a href="{{ route('task.index') }}" class="tabNavigationBar-item @if(request()->routeIs('task.index')) active @endif" wire:navigate><i class='bx bx-columns' ></i> Board</a> --}}
+
+                   
+                    {{-- <a  wire:navigate class="tabNavigationBar-item @if($currentRoute == 'task.list-view') active @endif" href="{{ route('task.list-view') }}"> <i class='bx bx-list-ul'></i> {{$currentRoute}} List</a>
+                    <a wire:navigate  class="tabNavigationBar-item @if($currentRoute =='task.index') active @endif" href ="{{route('task.index') }}"><i class='bx bx-columns' ></i> {{$currentRoute}} Board</a> --}}
+                
+                    <a wire:navigate class="tabNavigationBar-item @if($currentRoute == 'task.list-view') active @endif" href="{{ route('task.list-view') }}">
+                        <i class='bx bx-list-ul'></i>List
+                    </a>
+                    <a wire:navigate class="tabNavigationBar-item @if($currentRoute == 'task.index') active @endif" href="{{ route('task.index') }}">
+                        <i class='bx bx-columns'></i>Board
+                    </a>
+                    
                 </div>
             </div>
             <div class="col-md-6 text-end">
@@ -290,9 +302,22 @@
                                         </div>
                                         <div>
                                             <div class="avatarGroup avatarGroup-overlap">
-                                                @foreach($task['users'] as $user)
-                                                <x-avatar :user="$user" class="avatar-sm" />
+                                                @php
+                                                    $plus_more_users = 0;
+                                                    if(count($task['users']) > 3){
+                                                        $plus_more_users = count($task['users']) - 3;
+                                                    }
+                                                @endphp
+
+                                                @foreach($task['users']->take(3) as $user)
+                                                    <a href="javascript:;" class="avatar avatar-sm avatar-{{$user->color}}" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="{{$user->name}}">{{$user->initials}}</a>
                                                 @endforeach
+
+                                                @if($plus_more_users)
+                                                    <a href="#" class="avatarGroup-avatar">
+                                                        <span class="avatar avatar-sm avatar-more">+{{$plus_more_users}}</span>
+                                                    </a>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>

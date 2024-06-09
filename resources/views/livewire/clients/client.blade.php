@@ -175,7 +175,11 @@
         <div class="column-title mb-3">Description <a href="javascript:;" class="btn-link"><i class='bx bx-pencil edit-des' ></i></a></div>
         <hr>
         <div class="user-profile-bio">
-            {!! $client->description ?? 'Not Added' !!}
+            @if($client->description)
+                {!! $client->description !!}
+            @else
+                Not Added
+            @endif
         </div>
         <button class="btn btn-primary mt-2 update-des-btn d-none" wire:click="updateDescription">Update</button>
     </div>

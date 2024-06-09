@@ -18,7 +18,7 @@
                                         <div class="single-add-wrap">
                                             <input wire:model="email" type="text" class="form-control" placeholder="Email Here..."> 
                                         </div>
-                                        <button type="submit" class="btn-border btn-border-secondary"><i class='bx bx-send' ></i> Send</button>
+                                        <button  wire:click="inviteUser" type="submit" class="btn-border btn-border-secondary"><i class='bx bx-send' ></i> Send</button>
                                     </div>
                                 </div>
                             </div>
@@ -56,7 +56,7 @@
                                     <label for="">Password<sup class="text-primary">*</sup></label>
                                 </div>
                                 <div class="col-md-8 mb-4">
-                                    <input wire:model="password"  type="text" class="form-style" placeholder="Password Here...">
+                                    <input wire:model="password"  type="text" class="form-style" placeholder="Password Here..." minlength="6">
                                 </div>
                             </div>
                             <div class="row">
