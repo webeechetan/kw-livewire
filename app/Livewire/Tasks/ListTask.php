@@ -72,6 +72,8 @@ class ListTask extends Component
     public $comment;
     public $comments;
 
+    public $currentRoute;
+
     public $ViewTasksAs = 'user';
 
     public function render()
@@ -82,9 +84,11 @@ class ListTask extends Component
     public function mount()
     {
             $this->doesAnyFilterApplied();
-
             $this->authorize('View Task');
-            
+
+            if(!($this->currentRoute)){
+            $this->currentRoute = request()->route()->getName();
+            }
             $this->auth_user_id = auth()->guard(session('guard'))->user()->id;
             $this->users = User::all();
             if($this->byClient != 'all'){
@@ -162,6 +166,8 @@ class ListTask extends Component
 
 
     }
+
+
 
     public function updatedSort($value)
     {

@@ -37,6 +37,7 @@ class AddUser extends Component
 
     public function store()
     {
+
         $this->validate([
             'name' => 'required|min:3',
             'email' => 'required|email|unique:users,email',
