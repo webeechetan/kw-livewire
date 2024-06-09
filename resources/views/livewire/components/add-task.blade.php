@@ -14,7 +14,8 @@
                 <button type="button" class="btn-icon" data-bs-toggle="modal" data-bs-target="#attached-file-modal"><i class='bx bx-paperclip' style="transform: rotate(60deg);"></i></button>
                 <button type="button" class="btn-icon task-sharable-link d-none"><i class='bx bx-link' ></i></button>
                 <button type="button" class="btn-icon view-task-btn d-none" wire:click="viewFullscree"><i class='bx bx-fullscreen'></i></button>
-                <button type="button" wire:click="deleteTask" class="btn-icon delete-task-btn d-none"><i class='bx bx-trash'></i></button>
+                {{-- <button type="button" wire:click="deleteTask" class="btn-icon delete-task-btn d-none"><i class='bx bx-trash'></i></button> --}}
+                <a href="javascript:" wire:click="deleteTask" wire:confirm="Are you sure you want to delete?" class="btn-icon delete-task-btn d-none"><i class='bx bx-trash'></i></a>
                 <button type="button" class="btn-icon" data-bs-dismiss="offcanvas" aria-label="Close"><i class='bx bx-arrow-to-right'></i></button>
             </div>
         </div>

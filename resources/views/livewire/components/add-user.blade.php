@@ -56,7 +56,7 @@
                                     <label for="">Password<sup class="text-primary">*</sup></label>
                                 </div>
                                 <div class="col-md-8 mb-4">
-                                    <input wire:model="password"  type="text" class="form-style" placeholder="Password Here...">
+                                    <input wire:model="password"  type="text" class="form-style" placeholder="Password Here..." minlength="6">
                                 </div>
                             </div>
                             <div class="row">

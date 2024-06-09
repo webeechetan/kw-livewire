@@ -202,6 +202,8 @@ class AddTask extends Component
     }
 
     public function deleteTask(){
+
+       
         $this->task->delete();
         $this->dispatch('success','Task deleted successfully');
         $this->dispatch('saved','Task deleted successfully');

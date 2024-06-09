@@ -119,8 +119,20 @@
             <div class="col-md-6">
                 <!-- Tabs -->
                 <div class="tabNavigationBar-tab border_style">
-                    <a href="{{ route('task.list-view') }}" class="tabNavigationBar-item @if(request()->routeIs('task.list-view')) active @endif" wire:navigate ><i class='bx bx-list-ul'></i> List</a>
-                    <a href="{{ route('task.index') }}" class="tabNavigationBar-item @if(request()->routeIs('task.index')) active @endif" wire:navigate><i class='bx bx-columns' ></i> Board</a>
+                    {{-- <a href="{{ route('task.list-view') }}" class="tabNavigationBar-item @if(request()->routeIs('task.list-view')) active @endif" wire:navigate ><i class='bx bx-list-ul'></i> List</a>
+                    <a href="{{ route('task.index') }}" class="tabNavigationBar-item @if(request()->routeIs('task.index')) active @endif" wire:navigate><i class='bx bx-columns' ></i> Board</a> --}}
+                    {{-- <a  wire:navigate class="tabNavigationBar-item @if($currentRoute == 'task.list-view') active @endif" href="{{ route('task.list-view') }}"> <i class='bx bx-list-ul'></i> {{$currentRoute}} List</a>
+                   
+                    <a wire:navigate  class="tabNavigationBar-item @if($currentRoute =='task.index') active @endif" href ="{{route('task.index') }}"><i class='bx bx-columns' ></i> {{$currentRoute}} Board</a>
+                 --}}
+
+                 <a wire:navigate class="tabNavigationBar-item @if($currentRoute == 'task.list-view') active @endif" href="{{ route('task.list-view') }}">
+                    <i class='bx bx-list-ul'></i>List
+                </a>
+                <a wire:navigate class="tabNavigationBar-item @if($currentRoute == 'task.index') active @endif" href="{{ route('task.index') }}">
+                    <i class='bx bx-columns'></i>Board
+                </a>
+                
                 </div>
             </div>
             <div class="col-md-6 text-end">
