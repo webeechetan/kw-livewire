@@ -4,6 +4,7 @@ namespace App\Livewire\Teams\Components;
 
 use Livewire\Component;
 use Carbon\Carbon;
+use Livewire\Attributes\On; 
 use App\Models\{ Team, Project, Task, User, Client };
 
 
@@ -47,26 +48,26 @@ class Projects extends Component
         $this->team = $team;
         $this->clients = Client::orderBy('name', 'asc')->get();
         $this->users = User::orderBy('name', 'asc')->get();
+        $this->projects = $this->team->projects;
     }
 
 
     public function updatedFilter()
     {
 
-        dd('hello world');
         if($this->filter == 'overdue')
         {
-            $this->projects = $this->clients->projects()->where('due_date', '<', Carbon::now())->get();
+            $this->projects = $this->team->projects()->where('due_date', '<', Carbon::now())->get();
         }else{
             if($this->filter != 'all'){
                 if($this->filter == 'archived')
                 {
-                    $this->projects = $this->clients->projects()->where('deleted_at', '!=', null)->get();
+                    $this->projects = $this->team->projects()->where('deleted_at', '!=', null)->get();
                 }else{
-                    $this->projects = $this->clients->projects()->where('status', $this->filter)->get(); 
+                    $this->projects = $this->team->projects()->where('status', $this->filter)->get(); 
                 }
             }else{
-                $this->projects = $this->clients->projects;
+                $this->projects = $this->team->projects;
             }
         }
     }
