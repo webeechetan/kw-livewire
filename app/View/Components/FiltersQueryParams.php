@@ -14,6 +14,7 @@ class FiltersQueryParams extends Component
         $byUser,
         $byProject,
         $byClient,
+        $byTeam,
         $startDate, 
         $dueDate, 
         $users, 
@@ -31,6 +32,7 @@ class FiltersQueryParams extends Component
         $byUser = null,
         $byProject = null,
         $byClient = null,
+        $byTeam = null,
         $startDate = null, 
         $dueDate = null, 
         $users = null, 
@@ -45,6 +47,7 @@ class FiltersQueryParams extends Component
         $this->byUser = $byUser;
         $this->byProject = $byProject;
         $this->byClient = $byClient;
+        $this->byTeam = $byTeam;
         $this->startDate = $startDate;
         $this->dueDate = $dueDate;
         $this->users = $users;

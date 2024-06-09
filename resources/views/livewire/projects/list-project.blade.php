@@ -30,7 +30,7 @@
                                     <div class="filterSort">
                                         <h5 class="filterSort-header"><i class='bx bx-sort-down text-primary' ></i> Sort By</h5>
                                         <ul class="filterSort_btn_group list-none">
-                                            <li class="filterSort_item"><a wire:navigate href="{{ route('project.index',['sort'=>'newest','filter'=>$filter,'byUser'=>$byUser, 'byTeam' => $byTeam])}}" class="btn-batch  @if($sort == 'newest') active @endif">Newest</a></li>
+                                            <li class="filterSort_item"><a wire:click="$set('sort','newest')" class="btn-batch  @if($sort == 'newest') active @endif">Newest</a></li>
                                             <li class="filterSort_item"><a wire:navigate href="{{ route('project.index',['sort'=>'oldest','filter'=>$filter,'byUser'=>$byUser, 'byTeam' => $byTeam])}}" class="btn-batch  @if($sort == 'oldest') active @endif">Oldest</a></li>
                                             <li class="filterSort_item"><a wire:navigate href="{{ route('project.index',['sort'=>'a_z','filter'=>$filter,'byUser'=>$byUser, 'byTeam' => $byTeam])}}" class="btn-batch  @if($sort == 'a_z') active @endif"><i class='bx bx-down-arrow-alt' ></i> A To Z</a></li>
                                             <li class="filterSort_item"><a wire:navigate href="{{ route('project.index',['sort'=>'z_a','filter'=>$filter,'byUser'=>$byUser, 'byTeam' => $byTeam])}}" class="btn-batch  @if($sort == 'z_a') active @endif"><i class='bx bx-up-arrow-alt' ></i> Z To A</a></li>
@@ -86,16 +86,17 @@
         </div>
         <div class="col-md-6">
             @if($this->doesAnyFilterApplied())
-            <x-filters-query-params 
-                :sort="$sort" 
-                :status="$filter" 
-                :byUser="$byUser" 
-                :byClient="$byClient"
-                :users="$users" 
-                :teams="$teams"
-                :clients="$clients"
-                :clearFilters="project.index')"
-            />
+                <x-filters-query-params 
+                    :sort="$sort" 
+                    :status="$filter" 
+                    :byUser="$byUser" 
+                    :byTeam="$byTeam"
+                    :byClient="$byClient"
+                    :users="$users" 
+                    :teams="$teams"
+                    :clients="$clients"
+                    :clearFilters="route('project.index')"
+                />
             @endif
         </div>
   

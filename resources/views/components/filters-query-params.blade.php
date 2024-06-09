@@ -12,6 +12,7 @@
 
             @if($status != 'all')
                 <span class="btn-batch">
+                    @if($status == 'active') Active @endif
                     @if($status == 'pending') Assigned @endif
                     @if($status == 'overdue') Overdue @endif
                     @if($status == 'completed') Completed @endif
