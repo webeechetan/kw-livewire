@@ -79,5 +79,10 @@ class ListTeam extends Component
         $this->resetPage();
     }
 
+    public function doesAnyFilterApplied(){
+        return  $this->byUser != 'all'  || $this->sort != 'all' || $this->filter != 'all';
+    }
+
+
 }
 
