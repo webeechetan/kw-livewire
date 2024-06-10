@@ -211,6 +211,11 @@ ul.social-icons li a {
   border: 1px solid #ddd;
   border-radius: 50%;
 }
+ul.social-icons li a:hover, ul.social-icons li a:active {
+  background-color: #191919;
+  border-color: #191919;
+  color: #fff;
+}
 
 .list-group-item {
   background-color: transparent;
@@ -665,6 +670,9 @@ hr.space-sm {
 }
 .card_style-team-profile-content h4 {
   font-size: 22px;
+}
+.card_style-team-profile-content .avatarGroup {
+  min-height: 26px;
 }
 .card_style-loader-wrap {
   width: 100%;

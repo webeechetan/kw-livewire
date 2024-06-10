@@ -105,6 +105,12 @@ ul {
             @include flex_center;
             border: 1px solid $grey_xd;
             border-radius: 50%;
+
+            &:hover, &:active {
+                background-color: $dark;
+                border-color: $dark;
+                color: #fff;
+            }
         }
     }
 }
@@ -602,6 +608,9 @@ hr.space-sm {
         &-profile-content {
             h4 {
                 font-size: 22px;
+            }
+            .avatarGroup {
+                min-height: 26px;
             }
         }
     }

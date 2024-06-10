@@ -15,7 +15,6 @@
                                 </div>
                                 <div class="col-md-8 mb-4">
                                     <input wire:model="client_name" type="text" class="form-style" placeholder="Company Name" required>
-                                    <span class="text-danger">@error('client_name') {{ $message }} @enderror</span>
                                 </div>
                             </div>
                             <div class="row">

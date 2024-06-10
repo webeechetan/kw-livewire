@@ -13,7 +13,7 @@
                                 <label for="">Team Name<sup class="text-primary">*</sup></label>
                             </div>
                             <div class="col-md-8 mb-4">
-                                <input wire:model="name" type="text" class="form-style" placeholder="Team Name Here...">
+                                <input wire:model="name" type="text" class="form-style" placeholder="Team Name Here..." required>
                             </div>
                         </div>
                         <div class="row">
@@ -36,7 +36,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-4 mb-4">
-                                <label for="">Add Users<sup class="text-primary">*</sup></label>
+                                <label for="">Add Users</label>
                             </div>
                             <div class="col-md-8 mb-4">
                                 <select class="form-style team_users" multiple>
@@ -48,10 +48,11 @@
                         </div>   
                         <div class="row">
                             <div class="col-md-4 mb-4 mb-lg-0">
-                                <label for="">Assign Manager<sup class="text-primary">*</sup></label>
+                                <label for="">Assign Manager</label>
                             </div>
                             <div class="col-md-8">
                                 <select wire:model="team_manager" id="" class="form-style team_manager">
+                                    <option value="">Select Manager</option>
                                     @foreach($users as $user)
                                         <option value="{{ $user->id }}">{{$user->name}}</option>
                                     @endforeach
