@@ -18,6 +18,7 @@
                     @if($status == 'completed') Completed @endif
                     @if($status == 'in_progress') In Progress @endif
                     @if($status == 'in_review') In Review @endif
+                    @if($status == 'archived') Archived @endif
                     <a wire:click="$set('status','all')" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
             @endif 
         

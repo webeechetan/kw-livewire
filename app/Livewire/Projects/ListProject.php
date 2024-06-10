@@ -128,11 +128,6 @@ class ListProject extends Component
     //     $this->redirect(route('project.index',['sort'=>$this->sort,'filter'=>$this->filter,'byClient'=>$this->byClient,'byUser'=>$this->byUser]), navigate: true);
     // }
 
-    public function updatedByUser($value){
-        $this->byUser = $value;
-        $this->redirect(route('project.index',['sort'=>$this->sort,'filter'=>$this->filter,'byUser'=>$this->byUser,'byTeam'=>$this->byTeam]), navigate: true);
-    }
-
     public function emitEditEvent($projectId)
     {
         $this->dispatch('editProject', $projectId);
