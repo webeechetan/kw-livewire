@@ -30,22 +30,17 @@
                                     <div class="filterSort">
                                         <h5 class="filterSort-header"><i class='bx bx-sort-down text-primary' ></i> Sort By</h5>
                                         <ul class="filterSort_btn_group list-none">
-                                            <li class="filterSort_item">
-                                                <a wire:navigate href="{{ route('user.index',['sort'=>'newest','filter'=>$filter])}}" class="btn-batch @if($sort == 'newest') active @endif">Newest</a>
-                                            </li>
-                                            <li class="filterSort_item">
-                                                <a wire:navigate href="{{ route('user.index',['sort'=>'a_z','filter'=>$filter])}}" class="btn-batch @if($sort == 'a_z') active @endif"><i class='bx bx-down-arrow-alt' ></i> A To Z</a>
-                                            </li>
-                                            <li class="filterSort_item">
-                                                <a wire:navigate href="{{ route('user.index',['sort'=>'z_a','filter'=>$filter])}}" class="btn-batch @if($sort == 'z_a') active @endif"><i class='bx bx-up-arrow-alt' ></i> Z To A</a>
-                                            </li>
+                                            <li class="filterSort_item"><a wire:click="$set('sort','newest')" class="btn-batch  @if($sort == 'newest') active @endif">Newest</a></li>
+                                            <li class="filterSort_item"><a wire:click="$set('sort','oldest')" class="btn-batch  @if($sort == 'oldest') active @endif">Oldest</a></li>
+                                            <li class="filterSort_item"><a wire:click="$set('sort','a_z')" class="btn-batch  @if($sort == 'a_z') active @endif"> A To Z</a></li>
+                                            <li class="filterSort_item"><a wire:click="$set('sort','z_a')" class="btn-batch  @if($sort == 'z_a') active @endif">Z To A</a></li>
                                         </ul>
                                         <hr>
                                         <h5 class="filterSort-header"><i class='bx bx-briefcase text-primary' ></i> Filter By Status</h5>
                                         <ul class="filterSort_btn_group list-none">
-                                            <li class="filterSort_item"><a wire:navigate href="{{ route('user.index',['sort'=>$sort,'filter'=>'all']) }}" class="btn-batch @if($filter == 'all') active @endif">All</a></li>
-                                            <li class="filterSort_item"><a wire:navigate href="{{ route('user.index',['sort'=>$sort,'filter'=>'active'])}}" class="btn-batch @if($filter == 'active') active @endif">Active</a></li>
-                                            <li class="filterSort_item"><a wire:navigate href="{{ route('user.index',['sort'=>$sort,'filter'=>'archived'])}}" class="btn-batch @if($filter == 'archived') active @endif">Archived</a></li>
+                                            <li class="filterSort_item"><a wire:click="$set('filter','all')" class="btn-batch @if($filter == 'all') active @endif">All</a></li>
+                                            <li class="filterSort_item"><a wire:click="$set('filter','active')" class="btn-batch @if($filter == 'active') active @endif">Active</a></li>
+                                            <li class="filterSort_item"><a wire:click="$set('filter','archived')" class="btn-batch @if($filter == 'archived') active @endif">Archived</a></li>
                                         </ul>
                                         <hr>
                                         <h5 class="filterSort-header"><i class='bx bx-briefcase text-primary' ></i> Filter By Teams</h5>
@@ -77,14 +72,25 @@
     <div class="row">        
         <div class="col-md-6">
             <div class="dashboard_filters d-flex flex-wrap gap-4 align-items-center mb-4">
-                <a class="@if($filter == 'all') active @endif" wire:navigate href="{{ route('user.index',['sort'=>$sort,'filter'=>'all']) }}">All <span class="btn-batch">{{$allUsers}}</span></a>
-                <a class="@if($filter == 'active') active @endif" wire:navigate href="{{ route('user.index',['sort'=>$sort,'filter'=>'active']) }}">Active <span class="btn-batch">{{$activeUsers}}</span></a>
-                <a class="@if($filter == 'archived') active @endif" wire:navigate href="{{ route('user.index',['sort'=>$sort,'filter'=>'archived']) }}">Archive <span class="btn-batch">{{$archivedUsers}}</span></a>
+                <a class="@if($filter == 'all') active @endif" wire:click="$set('filter','all')">All <span class="btn-batch">{{ $allUsers}}</span></a>
+                <a class="@if($filter == 'active') active @endif" wire:click="$set('filter','active')">Active <span class="btn-batch">{{ $activeUsers }}</span></a>
+                <a class="@if($filter == 'archived') active @endif" wire:click="$set('filter','archived')">Archived <span class="btn-batch">{{ $archivedUsers }}</span></a>
             </div>
         </div>
 
         <div class="col-md-6">
-            @if($sort != 'all' || $filter != 'all')
+            @if($this->doesAnyFilterApplied())
+            <x-filters-query-params 
+                :sort="$sort" 
+                :status="$filter" 
+                :byProject="$byProject" 
+                :byTeam="$byTeam"
+                :users="$users" 
+                :teams="$teams"
+                :clearFilters="route('user.index')"
+            />
+        @endif
+            {{-- @if($sort != 'all' || $filter != 'all')
                 <div class="d-flex flex-wrap gap-2 align-items-center justify-content-end">
                     <span class="pe-2"><i class='bx bx-filter-alt text-secondary'></i> Filter Results:</span>
                     @if($sort != 'all')
@@ -105,7 +111,7 @@
                     
                     <a href="{{ route('user.index') }}" class="text-danger d-flex align-items-center">Reset <span class="ms-1 d-inline-flex"><i class='bx bx-refresh'></i></span></a>
                 </div>
-            @endif
+            @endif --}}
         </div>
 
         @if($users->isNotEmpty())

@@ -52,11 +52,11 @@
             <div class="dashboard_filters d-flex flex-wrap gap-4 align-items-center mb-4">
                <a class="@if($filter == 'all') active @endif" wire:click="$set('filter','all')">All <span class="btn-batch">{{ $projects_for_count->count() }}</span></a>
                <a class="@if($filter == 'active') active @endif" wire:click="$set('filter','active')">Active <span class="btn-batch">{{ $projects_for_count->where('status','active')->count() }}</span></a>
-               <a class="@if($filter == 'overdue') active @endif" wire:click="$set('filter','overdue')">Overdue <span class="btn-batch">
-                   {{ $projects_for_count->where('due_date','<',now())->count() }}
-               </span></a>
+               <a class="@if($filter == 'overdue') active @endif" wire:click="$set('filter','overdue')">Overdue <span class="btn-batch">{{ $projects_for_count->where('due_date','<',now())->count() }}</span></a>
                <a class="@if($filter == 'completed') active @endif" wire:click="$set('filter','completed')">Completed <span class="btn-batch">{{ $projects_for_count->where('status','completed')->count() }}</span></a>
                <a class="@if($filter == 'archived') active @endif" wire:click="$set('filter','archived')">Archive <span class="btn-batch">{{ $projects_for_count->where('deleted_at','NOT NULL')->count() }}</span></a>
+
+
            </div>
          </div>
 
@@ -105,6 +105,22 @@
       </div>
 
 
+      @if($this->doesAnyFilterApplied())
+            <x-filters-query-params 
+                :sort="$sort" 
+                :status="$status" 
+                :byUser="$byUser" 
+                :byClient="$byClient"
+                :startDate="$startDate" 
+                :dueDate="$dueDate" 
+                :users="$users" 
+                :clients="$clients"
+                :projects="$projects"
+                :clearFilters="route('team.projects',$team->id)"
+            />
+        @endif
+
+
       <div class="tab-content" id="myTabContent">
          <div class="tab-pane active show" id="project-all-tab-pane" role="tabpanel" aria-labelledby="project-all-tab" tabindex="0">
             <div class="row">
@@ -131,17 +147,6 @@
 @script
 <script>
    $(document).ready(function(){
-      // $('.filter-projects-by-date').flatpickr({
-      //    mode: "range",
-      //    onChange: function(selectedDates, dateStr, instance){
-      //       let date = dateStr.split(' to ');
-      //       let startDate = date[0];
-      //       let endDate = date[1];
-      //       @this.set('start_date',startDate);
-      //       @this.set('end_date',endDate);
-      //    }
-      // }); 
-
       flatpickr('.start_date', {
                 dateFormat: "Y-m-d",
                 onChange: function(selectedDates, dateStr, instance) {

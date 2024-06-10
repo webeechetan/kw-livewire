@@ -106,4 +106,9 @@ class ListClient extends Component
         $this->resetPage();
     }
 
+    public function doesAnyFilterApplied(){
+        return $this->sort != 'all' || $this->filter != 'all';
+    }
+
+
 }

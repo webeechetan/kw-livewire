@@ -52,7 +52,7 @@
 
     <div class="row">
         <div class="col-md-8">
-            <div class="project-tabs mb-3">
+            <div class="project-tabs mb-3">               
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li class="nav-item" role="presentation">
                         <a href="{{ route('team.tasks',$team->id) }}" wire:navigate class="nav-link @if($status=='all') active @endif" id="project-all-tab" data-bs-toggle="tab" data-bs-target="#project-all-tab-pane" type="button" role="tab" aria-controls="project-all-tab-pane" aria-selected="true">All <span class="ms-2">{{ $tasks->count() }}</span></a>
@@ -131,8 +131,9 @@
                 :users="$users" 
                 :teams="$teams"
                 :clients="$clients"
-                :projects="$projects"
-                :clearFilters="route('project.tasks',$project->id)"
+                :projects="$projects" 
+                 :clearFilters="route('team.tasks',$team)"
+                {{-- :clearFilters="route('project.tasks',$project->id)" --}}
             />
         @endif
     </div>
