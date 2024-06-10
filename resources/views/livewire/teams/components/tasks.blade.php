@@ -95,21 +95,21 @@
                             </div> 
                             <h5 class="filterSort-header mt-4"><i class="bx bx-briefcase text-primary"></i> Filter By Clients</h5>
                             <select class="dashboard_filters-select mt-2 w-100" wire:model.live="byClient" id="">
-                                <option value="all" >Select Client</option>
+                                {{-- <option value="all" >Select Client</option> --}}
                                 @foreach($clients as $client)
                                     <option value="{{$client->id}}">{{$client->name}}</option>
                                 @endforeach
                             </select>
                             <h5 class="filterSort-header mt-4"><i class="bx bx-objects-horizontal-left text-primary"></i> Filter By Projects</h5>
                             <select class="dashboard_filters-select mt-2 w-100" wire:model.live="byProject" name="" id="">
-                                <option value="all">Select Project</option>
+                                {{-- <option value="all">Select Project</option> --}}
                                 @foreach($projects as $project)
                                 <option value="{{$project->id}}">{{$project->name}}</option>
                                 @endforeach
                             </select>
                             <h5 class="filterSort-header mt-4"><i class="bx bx-user text-primary"></i> Filter By User</h5>
                             <select class="dashboard_filters-select mt-2 w-100" wire:model.live="byUser" name="" id="">
-                                <option value="all">Select User</option>
+                                {{-- <option value="all">Select User</option> --}}
                                 @foreach($users as $user)
                                     <option value="{{$user->id}}">{{$user->name}}</option>
                                 @endforeach
@@ -190,9 +190,10 @@
                                     @endphp
 
                                     @foreach($task->users->take(3) as $user)
-                                    <a href="#" class="avatarGroup-avatar">
+                                    {{-- <a href="#" class="avatarGroup-avatar">
                                         <span class="avatar avatar-sm avatar-pink" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{$user->initials}}">{{$user->initials}}</span>
-                                    </a>       
+                                    </a>        --}}
+                                    <x-avatar :user="$user" class="avatar-sm" />
                                     @endforeach   
                                     @if($plus_more_users)
                                 <a href="#" class="avatarGroup-avatar">
