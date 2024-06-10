@@ -95,21 +95,21 @@
                             </div> 
                             <h5 class="filterSort-header mt-4"><i class="bx bx-briefcase text-primary"></i> Filter By Clients</h5>
                             <select class="dashboard_filters-select mt-2 w-100" wire:model.live="byClient" id="">
-                                {{-- <option value="all" >Select Client</option> --}}
+                                <option value="all" disabled>Select Client</option>
                                 @foreach($clients as $client)
                                     <option value="{{$client->id}}">{{$client->name}}</option>
                                 @endforeach
                             </select>
                             <h5 class="filterSort-header mt-4"><i class="bx bx-objects-horizontal-left text-primary"></i> Filter By Projects</h5>
                             <select class="dashboard_filters-select mt-2 w-100" wire:model.live="byProject" name="" id="">
-                                {{-- <option value="all">Select Project</option> --}}
+                                <option value="all" disabled>Select Project</option>
                                 @foreach($projects as $project)
                                 <option value="{{$project->id}}">{{$project->name}}</option>
                                 @endforeach
                             </select>
                             <h5 class="filterSort-header mt-4"><i class="bx bx-user text-primary"></i> Filter By User</h5>
                             <select class="dashboard_filters-select mt-2 w-100" wire:model.live="byUser" name="" id="">
-                                {{-- <option value="all">Select User</option> --}}
+                                <option value="all" disabled>Select User</option>
                                 @foreach($users as $user)
                                     <option value="{{$user->id}}">{{$user->name}}</option>
                                 @endforeach
