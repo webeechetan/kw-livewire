@@ -276,7 +276,8 @@
                                                 @endphp
 
                                                 @foreach($task['users']->take(3) as $user)
-                                                    <a href="javascript:;" class="avatar avatar-sm avatar-{{$user->color}}" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="{{$user->name}}">{{$user->initials}}</a>
+                                                    {{-- <a href="javascript:;" class="avatar avatar-sm avatar-{{$user->color}}" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="{{$user->name}}">{{$user->initials}}</a> --}}
+                                                    <x-avatar :user="$user" class="avatar-sm" />
                                                 @endforeach
 
                                                 @if($plus_more_users)

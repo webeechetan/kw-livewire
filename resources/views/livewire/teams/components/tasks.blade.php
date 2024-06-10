@@ -52,7 +52,7 @@
 
     <div class="row">
         <div class="col-md-8">
-            <div class="project-tabs mb-3">
+            <div class="project-tabs mb-3">               
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li class="nav-item" role="presentation">
                         <a href="{{ route('team.tasks',$team->id) }}" wire:navigate class="nav-link @if($status=='all') active @endif" id="project-all-tab" data-bs-toggle="tab" data-bs-target="#project-all-tab-pane" type="button" role="tab" aria-controls="project-all-tab-pane" aria-selected="true">All <span class="ms-2">{{ $tasks->count() }}</span></a>
@@ -95,21 +95,21 @@
                             </div> 
                             <h5 class="filterSort-header mt-4"><i class="bx bx-briefcase text-primary"></i> Filter By Clients</h5>
                             <select class="dashboard_filters-select mt-2 w-100" wire:model.live="byClient" id="">
-                                <option value="all" >Select Client</option>
+                                {{-- <option value="all" >Select Client</option> --}}
                                 @foreach($clients as $client)
                                     <option value="{{$client->id}}">{{$client->name}}</option>
                                 @endforeach
                             </select>
                             <h5 class="filterSort-header mt-4"><i class="bx bx-objects-horizontal-left text-primary"></i> Filter By Projects</h5>
                             <select class="dashboard_filters-select mt-2 w-100" wire:model.live="byProject" name="" id="">
-                                <option value="all">Select Project</option>
+                                {{-- <option value="all">Select Project</option> --}}
                                 @foreach($projects as $project)
                                 <option value="{{$project->id}}">{{$project->name}}</option>
                                 @endforeach
                             </select>
                             <h5 class="filterSort-header mt-4"><i class="bx bx-user text-primary"></i> Filter By User</h5>
                             <select class="dashboard_filters-select mt-2 w-100" wire:model.live="byUser" name="" id="">
-                                <option value="all">Select User</option>
+                                {{-- <option value="all">Select User</option> --}}
                                 @foreach($users as $user)
                                     <option value="{{$user->id}}">{{$user->name}}</option>
                                 @endforeach
@@ -131,8 +131,9 @@
                 :users="$users" 
                 :teams="$teams"
                 :clients="$clients"
-                :projects="$projects"
-                :clearFilters="route('project.tasks',$project->id)"
+                :projects="$projects" 
+                 :clearFilters="route('team.tasks',$team)"
+                {{-- :clearFilters="route('project.tasks',$project->id)" --}}
             />
         @endif
     </div>
@@ -189,9 +190,10 @@
                                     @endphp
 
                                     @foreach($task->users->take(3) as $user)
-                                    <a href="#" class="avatarGroup-avatar">
+                                    {{-- <a href="#" class="avatarGroup-avatar">
                                         <span class="avatar avatar-sm avatar-pink" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{$user->initials}}">{{$user->initials}}</span>
-                                    </a>       
+                                    </a>        --}}
+                                    <x-avatar :user="$user" class="avatar-sm" />
                                     @endforeach   
                                     @if($plus_more_users)
                                 <a href="#" class="avatarGroup-avatar">

@@ -29,6 +29,7 @@ class ListUser extends Component
      public $byUser = 'all'; 
      public $byProject = 'all';
 
+ 
      public $teams = [] ;
      public $projects = [] ;
 
@@ -86,9 +87,6 @@ class ListUser extends Component
             });
         }
 
-     
-
-
         $users->orderBy('created_at', 'desc');
         $users = $users->paginate(9);
 
@@ -97,7 +95,6 @@ class ListUser extends Component
         ]);
         
     }
-
 
     public function mount(){
 
@@ -110,5 +107,11 @@ class ListUser extends Component
     {
         $this->resetPage();
     }  
+
+    public function doesAnyFilterApplied(){
+        return $this->byTeam != 'all' || $this->byProject != 'all' || $this->sort != 'all' || $this->filter != 'all';
+    }
+
+
 
 }

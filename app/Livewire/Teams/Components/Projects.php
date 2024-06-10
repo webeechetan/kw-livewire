@@ -15,6 +15,10 @@ class Projects extends Component
     public $project_start_date = null;
     public $project_due_date = null;
 
+    
+    public $startDate = null; 
+    public $dueDate = null;
+
     public $filter = 'all';
     public $team;
     public $clients;
@@ -54,5 +58,10 @@ class Projects extends Component
     public function updatedFilterByClient($value){
         $client = Client::find($value);
         $this->users = $client->users;
+    }
+
+    public function doesAnyFilterApplied(){
+        // return $this->byClient != 'all' || $this->byUser != 'all' || $this->status != 'all' || $this->startDate || $this->dueDate || $this->filter != 'all';
+        return $this->byClient != 'all' || $this->byUser != 'all' || $this->status != 'all' || $this->project_start_date || $this->project_due_date || $this->filter != 'all';
     }
 }
