@@ -44,6 +44,10 @@
          }
       }
 
+      if($project_start_date != null && $project_due_date != null){
+            $projects = $projects->where('due_date', '>=', $project_start_date)->where('due_date', '<=', $project_due_date);
+        }
+
    @endphp
    
    <div class="project-tabs mb-2">
@@ -55,8 +59,6 @@
                <a class="@if($filter == 'overdue') active @endif" wire:click="$set('filter','overdue')">Overdue <span class="btn-batch">{{ $projects_for_count->where('due_date','<',now())->count() }}</span></a>
                <a class="@if($filter == 'completed') active @endif" wire:click="$set('filter','completed')">Completed <span class="btn-batch">{{ $projects_for_count->where('status','completed')->count() }}</span></a>
                <a class="@if($filter == 'archived') active @endif" wire:click="$set('filter','archived')">Archive <span class="btn-batch">{{ $projects_for_count->where('deleted_at','NOT NULL')->count() }}</span></a>
-
-
            </div>
          </div>
 
@@ -107,10 +109,14 @@
 
       @if($this->doesAnyFilterApplied())
             <x-filters-query-params 
-                :sort="$sort" 
-                :status="$status" 
-                :byUser="$byUser" 
-                :byClient="$byClient"
+                :sort="$sort"
+                :status="$filter" 
+                {{-- :byUser="$byUser" 
+                :byClient="$byClient" --}}
+
+                :filterByUser="$filterByUser" 
+                :filterByClient="$filterByClient"
+                
                 :startDate="$startDate" 
                 :dueDate="$dueDate" 
                 :users="$users" 
