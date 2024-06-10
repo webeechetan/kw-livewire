@@ -147,7 +147,12 @@
                 </div>
             @endforeach
         </div>
-        <div class="mt-3">Selected Count: {{ count($selected_files) + count($selected_directories) + count($selected_links) }}</div>
+        @php
+            $selected_count = count($selected_files) + count($selected_directories) + count($selected_links);
+        @endphp
+        @if($selected_count > 0)
+            <div class="mt-3">Selected Count: {{ $selected_count }}</div>
+        @endif
     </div>
 
     <!-- Add New File modal -->
@@ -364,6 +369,13 @@
 
         $(".add-file-input").change(function(){
             let file_name = $(this).val().split('\\').pop();
+            // if file is image then show preview else show file name
+
+            if(file_name.split('.').pop() == 'jpg' || file_name.split('.').pop() == 'jpeg' || file_name.split('.').pop() == 'png' || file_name.split('.').pop() == 'gif'){
+                $(".add-file-input-responce").html('<img height="120" width="120" src="'+URL.createObjectURL(this.files[0])+'" alt="">');
+                return;
+            }
+
             $(".add-file-input-responce").html(file_name);
         });
 
