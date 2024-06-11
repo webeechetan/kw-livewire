@@ -1105,6 +1105,10 @@ hr.space-sm {
     
             &_text {
                 margin-top: $spacing_s;
+
+                img {
+                    max-width: 100%;
+                }
             }
 
             &-edit {

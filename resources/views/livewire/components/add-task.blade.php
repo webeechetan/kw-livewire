@@ -137,7 +137,12 @@
         </div>
         <div class="offcanvas-footer">
             <div class="taskPane-footer-wrap py-3 px-4">
-                <button type="button" wire:click="saveTask" class="btn-border btn-sm btn-border-primary save-task-button ms-auto"><i class='bx bx-check'></i> Save Task</button>
+                <button type="button" wire:click="saveTask" class="btn-border btn-sm btn-border-primary save-task-button ms-auto"><i class='bx bx-check'></i> 
+                    <span wire:loading wire:target="attachments"> 
+                        <i class='bx bx-loader-alt bx-spin'></i>
+                    </span>
+                    Save Task
+                </button>
             </div>
         </div>
     </div>

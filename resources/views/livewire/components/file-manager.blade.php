@@ -184,8 +184,14 @@
                                         <div class="form-file_upload-valText">Allowed *.jpeg, *.jpg, *.png, *.gif max size of 3 Mb</div>
                                         <div class="add-file-input-responce"></div>
                                     </div>
+                                    <div class="mt-4 d-none upload-progress">
+                                        <div class="progress w-100" role="progressbar" aria-label="Project Progress" aria-valuemin="0" aria-valuemax="100">
+                                            <div class="progress-bar progress-success" ><span class="progress-bar-text">0%</span></div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
+                            
                             <div class="row">
                                 <div class="col-md-4 mb-4">
                                     <label for="">File Name</label>
@@ -195,21 +201,22 @@
                                 </div>
                             </div>
                         </div>
+
+                        
+                        
                         <div class="modal-form-btm">
                             <div class="row">
-                                <div class="col-md-6 ms-auto text-end">
-<<<<<<< HEAD
-                                    <button type="submit" class="btn btn-primary" wire:loading.attr="disabled">Save File</button>
-=======
+                                
+                                <div class="col-md-6 ms-auto text-end mt-4">
                                     <button type="submit" class="btn btn-primary">
                                         <span>
-                                            <span wire:loading wire:target="addNewFile"> 
+                                            <span wire:loading wire:target="new_file"> 
                                                 <i class='bx bx-loader-alt bx-spin'></i>
                                             </span>
                                             Save File 
                                         </span>
                                     </button>
->>>>>>> 362f90a93b42a1b46b5fc898f7cd06255a59fc6b
+                                    
                                 </div>
                             </div>
                         </div>
@@ -315,7 +322,6 @@
         $('#add-new-link').modal('hide');
     })
     
-
     $(document).ready(function(){
 
         // search functionality for files folders and links
@@ -356,23 +362,23 @@
                 return;
             }
             if(filter == 'files'){
-                $(".select_file").fadeIn('slow');
-                $(".select_directory").fadeOut('slow');
-                $(".select_link").fadeOut('slow');
+                $(".select_file").show();
+                $(".select_directory").hide();
+                $(".select_link").hide();
                 return;
             }
 
             if(filter == 'directory'){
-                $(".select_file").fadeOut('slow');
-                $(".select_directory").fadeIn('slow');
-                $(".select_link").fadeOut('slow');
+                $(".select_file").hide();
+                $(".select_directory").show();
+                $(".select_link").hide();
                 return;
             }
 
             if(filter == 'links'){
-                $(".select_file").fadeOut('slow');
-                $(".select_directory").fadeOut('slow');
-                $(".select_link").fadeIn('slow');
+                $(".select_file").hide();
+                $(".select_directory").hide();
+                $(".select_link").show();
                 return;
             }
         });
