@@ -9,10 +9,8 @@
     <li class="dropdown-menu-header">
       <div class="dropdown-header">
         <h5 class="fs-5 mb-0 me-auto">Notification</h5>
-        @if($notifications)
-          <a href="javascript:void(0);void(0)" wire:click="clearAll" class="text-decoration-underline text-danger">Clear All</a>
-        @else
-        Blank
+        @if(count($notifications) > 0)
+          <a href="javascript:void(0);void(0)" wire:click="clearAll" class="text-decoration-underline text-danger">Clear All</a>        
         @endif
       </div>
     </li>

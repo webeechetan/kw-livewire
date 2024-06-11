@@ -148,7 +148,7 @@
             <div class="modal-header">
                 <div>
                     <h5 class="modal-title" id="attachmentModalLabel">Attachements</h5>
-                    <div><i class="bx bx-data text-primary"></i> <span class="task-attachment-count">1</span> Attachments</div>
+                    <div><i class="bx bx-data text-primary"></i> <span class="task-attachment-count">{{ count($attachments) }}</span> Attachments</div>
                 </div>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>

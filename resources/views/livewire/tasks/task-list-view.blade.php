@@ -127,10 +127,10 @@
                  --}}
 
                  <a wire:navigate class="tabNavigationBar-item @if($currentRoute == 'task.list-view') active @endif" href="{{ route('task.list-view') }}">
-                    <i class='bx bx-list-ul'></i>List
+                    <i class='bx bx-list-ul'></i> List
                 </a>
                 <a wire:navigate class="tabNavigationBar-item @if($currentRoute == 'task.index') active @endif" href="{{ route('task.index') }}">
-                    <i class='bx bx-columns'></i>Board
+                    <i class='bx bx-columns'></i> Board
                 </a>
                 
                 </div>
@@ -139,13 +139,7 @@
              @if(auth()->user()->is_manager)
                 <div class="form-check form-switch d-inline-block">
                     <input class="form-check-input task-switch" type="checkbox" role="switch" id="flexSwitchCheckChecked">
-                    <label class="form-check-label task-switch-text" for="flexSwitchCheckChecked">
-                        @if($ViewTasksAs == 'manager')
-                        Showing {{ auth()->user()->myTeam->name }} Tasks
-                        @else
-                        Showing My Tasks
-                        @endif
-                    </label>
+                    <label class="form-check-label task-switch-text" for="flexSwitchCheckChecked">Showing {{ auth()->user()->myTeam->name }} Tasks</label>
                 </div>
                 @endif
             </div>

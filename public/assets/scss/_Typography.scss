@@ -105,6 +105,12 @@ ul {
             @include flex_center;
             border: 1px solid $grey_xd;
             border-radius: 50%;
+
+            &:hover, &:active {
+                background-color: $dark;
+                border-color: $dark;
+                color: #fff;
+            }
         }
     }
 }
@@ -603,6 +609,9 @@ hr.space-sm {
             h4 {
                 font-size: 22px;
             }
+            .avatarGroup {
+                min-height: 26px;
+            }
         }
     }
 
@@ -1029,14 +1038,14 @@ hr.space-sm {
         }
 
         select, textarea {
-            padding: 0;
-            margin: 0;
+            min-height: inherit;
             border: none;
             width: 100%;
 
             &:hover, &:focus {
                 outline: none;
                 box-shadow: none;
+                border: none;
             }
         }
         textarea {
@@ -1096,6 +1105,10 @@ hr.space-sm {
     
             &_text {
                 margin-top: $spacing_s;
+
+                img {
+                    max-width: 100%;
+                }
             }
 
             &-edit {

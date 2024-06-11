@@ -109,14 +109,18 @@
                                     {{-- <span class="font-500"><i class='bx bx-user text-success' ></i> Manager</span> @if($team->manager)<span class="btn-batch ms-2">{{ $team->manager?->name }}</span> @endif --}}
 
                                     <span class="font-500 me-3"><i class='bx bx-user text-success' ></i> Manager</span> 
+                                    @if($team->manager)
                                         @if($team->manager)
                                             {{-- <span class="btn-batch ms-2">{{ $team->manager?->name }}</span>--}}
                                             <a href="javascript:;"class="avatar avatar-orange avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="{{$team->manager?->name}}"> {{ $team->manager?->initials ?? 'NA' }}</a>
                                             
                                         @endif
+                                    @else
+                                        <div class="text-light">No Manager Assigned</div>
+                                    @endif
                                 </div>
-                                <div class="col">
-                                    <div class="avatarGroup avatarGroup-overlap">
+                                <div class="avatarGroup avatarGroup-overlap">
+                                    @if(count($team->users) > 0)
                                         @php
                                             $plus_more_users = 0;
                                             if(count($team->users) > 7){
@@ -135,10 +139,12 @@
 
                                         @if($plus_more_users)
                                         <a href="#" class="avatarGroup-avatar">
-                                            <span class="avatar avatar-sm avatar-more">+{{$plus_more_users}}</span>
-                                        </a>
+                                                <span class="avatar avatar-sm avatar-more">+{{$plus_more_users}}</span>
+                                            </a>
+                                        @endif
+                                    @else
+                                    <div class="text-light">No User Assigned</div>
                                     @endif
-                                    </div>
                                 </div>
                             </div>
                         </div>

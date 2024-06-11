@@ -73,13 +73,13 @@
         <div class="col-md-6">
 
             @if($this->doesAnyFilterApplied())
-            <x-filters-query-params 
-                :sort="$sort" 
-                :status="$filter" 
-                :clients="$clients"
-                :clearFilters="route('client.index')"
-            />
-        @endif
+                <x-filters-query-params 
+                    :sort="$sort" 
+                    :status="$filter" 
+                    :clients="$clients"
+                    :clearFilters="route('client.index')"
+                />
+            @endif
 
 
         {{-- @if($sort != 'all' || $filter != 'all')
@@ -150,7 +150,7 @@
                                         }
                                     @endphp
                                     @foreach($client->users->take(7) as $user)
-                                        <x-avatar :user="$user" />
+                                        <x-avatar :user="$user" class="avatar-sm" />
                                     @endforeach
                                     @if($plus_more_users)
                                         <a href="#" class="avatarGroup-avatar">

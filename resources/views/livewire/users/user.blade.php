@@ -65,7 +65,7 @@
                 </div>
                 <hr>
                 <div>
-                    <div class="title-label"><i class='bx bx-briefcase text-primary' ></i> {{ $user_clients->count() > 1 ? 'Assigned Clients' : 'Assigned Client'}}</div>
+                    <div class="title-label"><i class='bx bx-briefcase-alt-2 text-primary' ></i> {{ $user_clients->count() > 1 ? 'Assigned Clients' : 'Assigned Client'}}</div>
                     <div class="btn-list">
                         @if(count($user_clients) > 0)
                             @foreach($user_clients as $client)
@@ -73,19 +73,6 @@
                             @endforeach
                         @else
                             <div class="text-light">No Client Assigned</div>
-                        @endif
-                    </div>
-                </div>
-                <hr>
-                <div>
-                    <div class="title-label"><i class='bx bx-briefcase text-primary' ></i> {{ $user_projects->count() > 1 ? 'Assigned Projects' : 'Assigned Project'}}</div>
-                    <div class="btn-list">
-                        @if(count($user_projects) > 0)
-                            @foreach($user_projects as $project)
-                                <a wire:navigate href="{{ route('project.profile',$project->id) }}" class="btn-batch">{{ $project->name }}</a>
-                            @endforeach
-                        @else
-                            <div class="text-light">No Project Assigned</div>
                         @endif
                     </div>
                 </div>                             
@@ -132,7 +119,7 @@
             </div>
             <div class="row">
                 <div class="col-lg-4 mb-4">
-                    <div class="column-box states_style-progress">
+                    <div class="column-box states_style-progress h-100">
                         <div class="row">
                             <div class="col">
                                 <h5 class="title-md mb-1">{{ $user->projects->where('status','completed')->count() }}</h5>
@@ -151,7 +138,7 @@
                     </div>
                 </div>
                 <div class="col-lg-4 mb-4">
-                    <div class="column-box states_style-success">
+                    <div class="column-box states_style-success h-100">
                         <div class="row">
                             <div class="col">
                                 <h5 class="title-md mb-1">{{ $user->tasks->where('status', 'completed')->count() }}</h5>
@@ -169,8 +156,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4">
-                    <div class="column-box states_style-danger">
+                <div class="col-lg-4 mb-4">
+                    <div class="column-box states_style-danger h-100">
                         <div class="row">
                             <div class="col">
                                 <h5 class="title-md mb-1">{{ $user->tasks->where('due_date', '<', now())->where('status', '!=', 'completed')->count() }}
@@ -188,6 +175,19 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+            <div class="column-box mb-4">
+                <h5 class="title-sm mb-2"><i class='bx bx-objects-horizontal-left text-primary' ></i> {{ $user_projects->count() > 1 ? 'Assigned Projects' : 'Assigned Project'}}</h5>
+                <hr>
+                <div class="btn-list">
+                    @if(count($user_projects) > 0)
+                        @foreach($user_projects as $project)
+                            <a wire:navigate href="{{ route('project.profile',$project->id) }}" class="btn-batch">{{ $project->name }}</a>
+                        @endforeach
+                    @else
+                        <div class="text-light">No Project Assigned</div>
+                    @endif
                 </div>
             </div>
             <div class="column-box mb-4" wire:ignore>
@@ -288,7 +288,7 @@
             let link = $(this).data('link');
             @this.socialLink = link; 
             if(link){
-                let html = `<a href="${link}" class="btn btn-border-secondary btn-sm w-100">Open Link</a>`;
+                let html = `<a href="${link}" class="btn btn-border-secondary btn-sm w-100" target="_blank">Open Link</a>`;
                 $(".print-link").removeClass('d-none')
                 $(".print-link").html(html);
             }

@@ -1665,6 +1665,16 @@
     }
 
 }
+.add-file-input-responce, .image-preview-section {
+    img {
+        margin-top: 10px;
+        border: 2px dashed $grey_xd;
+        border-radius: $border_radius_xs;
+        text-align: center;
+        padding: 10px;
+        max-width: 100%;
+    }
+}
 
 /* ----- Recent Activity ----- */
 .activity-recent-scroll {

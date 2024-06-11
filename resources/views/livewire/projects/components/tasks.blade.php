@@ -14,19 +14,6 @@
         <div class="column-box h-100">
             <div class="d-flex flex-wrap justify-content-between align-items-center">
                 <div><h4 class="column-title mb-0"><i class='bx bx-objects-horizontal-left text-primary' ></i> {{ $tasks->count() }} Tasks</h4></div>
-                <!-- Filters Query Params -->
-                @if($this->doesAnyFilterApplied()) 
-                    <x-filters-query-params 
-                    :sort="$sort" 
-                    :status="$status" 
-                    :byUser="$byUser" 
-                    :startDate="$startDate" 
-                    :dueDate="$dueDate" 
-                    :users="$users" 
-                    :teams="$teams"
-                    :clearFilters="route('project.tasks',$project->id)"
-                    />
-                @endif
                 <div class="btn-list">
                     <a href="javascript:;" class="btn-sm btn-border btn-border-primary open-add-task-canvas" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><i class='bx bx-plus' ></i> Add Task</a>
                     <div class="cus_dropdown">
@@ -104,7 +91,7 @@
             </div>
             <hr class="space-sm">
             <div class="row align-items-center">
-                <div class="col-lg-6">
+                <div class="col-lg-8">
                     <div class="btn-list">
                         <a href="javascript:" wire:click="$set('status', 'all')" class="btn-border btn-border-sm btn-border-primary "><span><i class='bx bx-objects-horizontal-center' ></i></span> {{ $project->tasks->count() }} All</a>
                         <a href="javascript:" wire:click="$set('status', 'pending')" class="btn-border btn-border-sm btn-border-primary "><span><i class='bx bx-objects-horizontal-center' ></i></span> {{ $project->tasks->where('status', 'pending')->where('due_date', '>', now())->count() }} Assigned</a>
@@ -114,12 +101,27 @@
                         <a href="javascript:" wire:click="$set('status', 'completed')" class="btn-border btn-border-sm btn-border-success"><span><i class='bx bx-objects-horizontal-center' ></i></span> {{ $project->tasks->where('status', 'completed')->count() }} Completed</a>
                     </div>
                 </div>
-                <div class="col-lg-6 ms-auto text-end">
+                <div class="col-lg-4 ms-auto text-end">
                     <form class="search-box search-box-float-style" wire:submit="search">
                         <span class="search-box-float-icon"><i class='bx bx-search'></i></span>
                         <input type="text" wire:model="query" class="form-control" placeholder="Search Task...">
                     </form>
                 </div>
+            </div>
+            <div class="mt-3">
+                <!-- Filters Query Params -->
+                @if($this->doesAnyFilterApplied()) 
+                    <x-filters-query-params 
+                    :sort="$sort" 
+                    :status="$status" 
+                    :byUser="$byUser" 
+                    :startDate="$startDate" 
+                    :dueDate="$dueDate" 
+                    :users="$users" 
+                    :teams="$teams"
+                    :clearFilters="route('project.tasks',$project->id)"
+                    />
+                @endif
             </div>
             <div class="taskList-dashbaord_header">
                 <div class="row">

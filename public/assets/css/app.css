@@ -211,6 +211,11 @@ ul.social-icons li a {
   border: 1px solid #ddd;
   border-radius: 50%;
 }
+ul.social-icons li a:hover, ul.social-icons li a:active {
+  background-color: #191919;
+  border-color: #191919;
+  color: #fff;
+}
 
 .list-group-item {
   background-color: transparent;
@@ -666,6 +671,9 @@ hr.space-sm {
 .card_style-team-profile-content h4 {
   font-size: 22px;
 }
+.card_style-team-profile-content .avatarGroup {
+  min-height: 26px;
+}
 .card_style-loader-wrap {
   width: 100%;
   height: 100%;
@@ -1026,14 +1034,14 @@ hr.space-sm {
   flex: 1;
 }
 .taskPane-item select, .taskPane-item textarea {
-  padding: 0;
-  margin: 0;
+  min-height: inherit;
   border: none;
   width: 100%;
 }
 .taskPane-item select:hover, .taskPane-item select:focus, .taskPane-item textarea:hover, .taskPane-item textarea:focus {
   outline: none;
   box-shadow: none;
+  border: none;
 }
 .taskPane-item textarea {
   border: 1px solid #eee;
@@ -1082,6 +1090,9 @@ hr.space-sm {
 }
 .cmnt_item_user_text {
   margin-top: 15px;
+}
+.cmnt_item_user_text img {
+  max-width: 100%;
 }
 .cmnt_item_user-edit {
   position: absolute;
@@ -4564,6 +4575,15 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
 }
 .files-item-content {
   overflow: hidden;
+}
+
+.add-file-input-responce img, .image-preview-section img {
+  margin-top: 10px;
+  border: 2px dashed #ddd;
+  border-radius: 4px;
+  text-align: center;
+  padding: 10px;
+  max-width: 100%;
 }
 
 /* ----- Recent Activity ----- */
