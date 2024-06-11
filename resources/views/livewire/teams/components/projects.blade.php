@@ -111,12 +111,8 @@
             <x-filters-query-params 
                 :sort="$sort"
                 :status="$filter" 
-                {{-- :byUser="$byUser" 
-                :byClient="$byClient" --}}
-
-                :filterByUser="$filterByUser" 
-                :filterByClient="$filterByClient"
-                
+                :byUser="$filterByUser" 
+                :byClient="$filterByClient"
                 :startDate="$startDate" 
                 :dueDate="$dueDate" 
                 :users="$users" 

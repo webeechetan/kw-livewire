@@ -35,7 +35,7 @@
             @endif
 
             @if($byProject != 'all' && $byProject != null)
-                <span class="btn-batch">{{ $projects->find($byProject)->name }} <a wire:click="$set('byProject','all')" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
+                <span class="btn-batch">{{ $projects->find($byProject)?->name }} <a wire:click="$set('byProject','all')" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
             @endif
 
             @if($startDate)

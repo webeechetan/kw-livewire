@@ -88,7 +88,7 @@ class User extends Component
         $user_details = UserDetail::where('user_id', $this->user->id)->first();
         if($user_details){
             $user_details->skills = $this->skills;
-            $user_details->save();
+            $user_details->save(); 
         }else{
             $user_details = new UserDetail();
             $user_details->user_id = $this->user->id;

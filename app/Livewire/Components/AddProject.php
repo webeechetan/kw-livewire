@@ -141,6 +141,7 @@ class AddProject extends Component
             'start_date' => $this->project_start_date,
             'due_date' => $this->project_due_date,
             'image' => $image,
+            'client_id' => $this->client_id,
         ]);
 
         if(count($this->project_users) > 0){
