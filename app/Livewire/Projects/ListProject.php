@@ -43,23 +43,19 @@ class ListProject extends Component
     public $users;
 
     public function render()
-    {
-        // $this->allProjects = Project::count();
+    {        
+        $projects = Project::where('name','like','%'.$this->query.'%')
+                    ->whereHas('client',function($query){
+                        $query->where('deleted_at','IS NOT NULL');
+                    })->orWhereHas('client',function($query){
+                        $query->where('name','like','%'.$this->query.'%')->orWhere('brand_name','like','%'.$this->query.'%');
+                    });
 
-        $this->activeProjects = Project::where('status', 'active')->count();
-        $this->completedProjects = Project::where('status', 'completed')->count();
-        $this->archivedProjects = Project::onlyTrashed()->count();
-        $this->overdueProjects = Project::where('due_date', '<', Carbon::today())->count();
-        
-        // $projects = Project::where('name','like','%'.$this->query.'%')
-        //             ->whereHas('client',function($query){
-        //                 $query->where('deleted_at','IS NOT NULL');
-        //             })->orWhereHas('client',function($query){
-        //                 $query->where('name','like','%'.$this->query.'%')->orWhere('brand_name','like','%'.$this->query.'%');
-        //             });
-
-        $projects = Project::where('name', 'like','%'.$this->query.'%');
-        // dd($projects->toSql());
+        $this->allProjects =  $projects->count();
+        $this->activeProjects = (clone $projects)->where('status', 'active')->count();
+        $this->completedProjects = (clone $projects)->where('status','completed')->count();
+        $this->archivedProjects = (clone $projects)->onlyTrashed()->count();
+        $this->overdueProjects = (clone $projects)->where('due_date','<', Carbon::today())->count();
 
         if($this->filter == 'active'){
             $projects->where('status','active');
@@ -71,8 +67,6 @@ class ListProject extends Component
             $projects->where('due_date','<', Carbon::today());
         }
 
-        
-        // dd($projects->toSql());
         if($this->sort == 'a_z'){
             $projects->orderBy('name');
         }elseif($this->sort == 'z_a'){
