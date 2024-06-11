@@ -15,7 +15,7 @@
                         @if($user->image)
                             <img src="{{ env('APP_URL') }}/storage/{{ $user->image }}" alt="">
                         @else
-                            <img src="{{ asset('') }}storage/images/users/default.jpg"  alt="">
+                            <span class="avatar avatar-{{$user->color}}">{{ $user->initials }}</span>
                         @endif
                     </div>
                     <input class="user-image d-none" type="file" wire:model.live="user_image" accept="image/*" >

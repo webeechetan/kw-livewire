@@ -123,6 +123,8 @@ class FileManager extends Component
     public function openFolder($path){
         $this->path = $path;
         $this->path_array = explode('/', $this->path);
+        // remove last / from the path
+        $this->path = rtrim($this->path, '/');
         $this->getMedia($this->path);
         $this->getLinks($path);
         $this->selected_files = [];
@@ -131,7 +133,7 @@ class FileManager extends Component
 
     }
 
-    public function goBack(){
+    public function goBack(){ 
         array_pop($this->path_array);
         $this->path = implode('/', $this->path_array);
         $this->getMedia($this->path);
