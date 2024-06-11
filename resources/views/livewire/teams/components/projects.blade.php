@@ -18,6 +18,15 @@
    <!-- Projects -->
    @php
       $projects = $team->projects;
+      $projects_for_count = $team->projects;
+
+      if($filter != 'all'){
+         if($filter == 'overdue'){
+            $projects = $projects->where('due_date','<',now());
+         }else{
+            $projects = $projects->where('status',$filter);
+         }
+      }
 
       if($start_date && $end_date){
          $projects = $projects->whereBetween('due_date',[$start_date,$end_date]);
@@ -35,19 +44,22 @@
          }
       }
 
+      if($project_start_date != null && $project_due_date != null){
+            $projects = $projects->where('due_date', '>=', $project_start_date)->where('due_date', '<=', $project_due_date);
+        }
+
    @endphp
+   
    <div class="project-tabs mb-2">
       <div class="row">
          <div class="col-sm-7">
-            
-
-            <div class="dashboard_filters d-flex flex-wrap gap-4 align-items-center mb-4">             
-               <a class="@if($filter == 'all') active @endif" wire:click="$set('filter','all')">All <span class="btn-batch">{{ $projects->count() }}</span></a>
-               <a class="@if($filter == 'active') active @endif" wire:click="$set('filter','active')">Active <span class="btn-batch">{{ $projects->where('status','active')->count() }}</span></a>
-               <a class="@if($filter == 'overdue') active @endif" wire:click="$set('filter','overdue')">Overdue <span class="btn-batch">{{ $projects->where('due_date','<',now())->count() }}</span></a>
-              <a class="@if($filter == 'completed') active @endif" wire:click="$set('filter','completed')">Completed <span class="btn-batch">{{ $projects->where('status','completed')->count() }}</span></a>
-              <a class="@if($filter == 'archived') active @endif" wire:click="$set('filter','archived')">Archive <span class="btn-batch">{{ $projects->where('deleted_at','NOT NULL')->count() }}</span></a>
-           </div> 
+            <div class="dashboard_filters d-flex flex-wrap gap-4 align-items-center mb-4">
+               <a class="@if($filter == 'all') active @endif" wire:click="$set('filter','all')">All <span class="btn-batch">{{ $projects_for_count->count() }}</span></a>
+               <a class="@if($filter == 'active') active @endif" wire:click="$set('filter','active')">Active <span class="btn-batch">{{ $projects_for_count->where('status','active')->count() }}</span></a>
+               <a class="@if($filter == 'overdue') active @endif" wire:click="$set('filter','overdue')">Overdue <span class="btn-batch">{{ $projects_for_count->where('due_date','<',now())->count() }}</span></a>
+               <a class="@if($filter == 'completed') active @endif" wire:click="$set('filter','completed')">Completed <span class="btn-batch">{{ $projects_for_count->where('status','completed')->count() }}</span></a>
+               <a class="@if($filter == 'archived') active @endif" wire:click="$set('filter','archived')">Archive <span class="btn-batch">{{ $projects_for_count->where('deleted_at','NOT NULL')->count() }}</span></a>
+           </div>
          </div>
 
          {{-- ///sdfsdfgsdfg/ --}}
@@ -75,7 +87,7 @@
                             </div> 
                             <h5 class="filterSort-header mt-4"><i class="bx bx-briefcase text-primary"></i> Filter By Clients</h5>
                             <select class="dashboard_filters-select mt-2 w-100" wire:model.live="filterByClient" id="">
-                                <option value="all" >Select Client</option>
+                                {{-- <option value="all" >Select Client</option> --}}
                                 @foreach($clients as $client)
                                     <option value="{{$client->id}}">{{$client->name}}</option>
                                 @endforeach
@@ -95,33 +107,30 @@
       </div>
 
 
-      <div class="tab-content" id="myTabContent">
-         <div class="tab-pane fade active show" id="project-all-tab-pane" role="tabpanel" aria-labelledby="project-all-tab" tabindex="0">
-            <div class="row">
-             
-               @foreach($projects as $project)
+      @if($this->doesAnyFilterApplied())
+            <x-filters-query-params 
+                :sort="$sort"
+                :status="$filter" 
+                {{-- :byUser="$byUser" 
+                :byClient="$byClient" --}}
 
-               {{-- {{$project}} --}}
-               <div class="col-lg-3">
-                  <div class="project-list">
-                     <div class="project project-align_left w-100">
-                        <div class="project-icon"><i class="bx bx-layer"></i></div>
-                        <div class="project-content">
-                           <a href="{{ route('project.profile',$project->id) }}" class="project-title">{{$project->name}}</a>
-                           <div class="project-selected-date">Due on <span>{{  \Carbon\Carbon::parse($project->due_date)->diffForHumans()}}</span></div>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-               @endforeach
-            </div>
-         </div>
-         <div class="tab-pane fade" id="project-active-tab-pane" role="tabpanel" aria-labelledby="project-active-tab" tabindex="0">
+                :filterByUser="$filterByUser" 
+                :filterByClient="$filterByClient"
+                
+                :startDate="$startDate" 
+                :dueDate="$dueDate" 
+                :users="$users" 
+                :clients="$clients"
+                :projects="$projects"
+                :clearFilters="route('team.projects',$team->id)"
+            />
+        @endif
+
+
+      <div class="tab-content" id="myTabContent">
+         <div class="tab-pane active show" id="project-all-tab-pane" role="tabpanel" aria-labelledby="project-all-tab" tabindex="0">
             <div class="row">
                @foreach($projects as $project)
-                  @if($project->status != 'active')
-                     @continue
-                  @endif
                   <div class="col-lg-3">
                      <div class="project-list">
                         <div class="project project-align_left w-100">
@@ -134,66 +143,6 @@
                      </div>
                   </div>
                @endforeach
-            </div>
-         </div>
-         <div class="tab-pane fade" id="project-done-tab-pane" role="tabpanel" aria-labelledby="project-done-tab" tabindex="0">
-            <div class="row">
-               @foreach($projects as $project)
-                  @if($project->status != 'completed')
-                     @continue
-                  @endif
-                  <div class="col-lg-3">
-                     <div class="project-list">
-                        <div class="project project-align_left w-100">
-                           <div class="project-icon"><i class="bx bx-layer"></i></div>
-                           <div class="project-content">
-                              <a href="{{ route('project.profile',$project->id) }}" class="project-title">{{$project->name}}</a>
-                              <div class="project-selected-date">Due on <span>{{  \Carbon\Carbon::parse($project->due_date)->diffForHumans()}}</span></div>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-               @endforeach
-            </div>
-         </div>
-         <div class="tab-pane fade" id="project-overdue-tab-pane" role="tabpanel" aria-labelledby="project-overdue-tab" tabindex="0">
-           <div class="row">
-            @foreach($projects as $project)
-            @if($project->status != 'overdue')
-               @continue
-            @endif
-            <div class="col-lg-3">
-               <div class="project-list">
-                  <div class="project project-align_left w-100">
-                     <div class="project-icon"><i class="bx bx-layer"></i></div>
-                     <div class="project-content">
-                        <a href="{{ route('project.profile',$project->id) }}" class="project-title">{{$project->name}}</a>
-                        <div class="project-selected-date">Due on <span>{{  \Carbon\Carbon::parse($project->due_date)->diffForHumans()}}</span></div>
-                     </div>
-                  </div>
-               </div>
-            </div>
-         @endforeach
-           </div>
-         </div>
-         <div class="tab-pane fade" id="project-archived-tab-pane" role="tabpanel" aria-labelledby="project-archived-tab" tabindex="0">
-            <div class="row">
-               @foreach($projects as $project)
-               @if($project->status != 'archived')
-                  @continue
-               @endif
-               <div class="col-lg-3">
-                  <div class="project-list">
-                     <div class="project project-align_left w-100">
-                        <div class="project-icon"><i class="bx bx-layer"></i></div>
-                        <div class="project-content">
-                           <a href="{{ route('project.profile',$project->id) }}" class="project-title">{{$project->name}}</a>
-                           <div class="project-selected-date">Due on <span>{{  \Carbon\Carbon::parse($project->due_date)->diffForHumans()}}</span></div>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-            @endforeach
             </div>
          </div>
       </div>
@@ -204,17 +153,6 @@
 @script
 <script>
    $(document).ready(function(){
-      // $('.filter-projects-by-date').flatpickr({
-      //    mode: "range",
-      //    onChange: function(selectedDates, dateStr, instance){
-      //       let date = dateStr.split(' to ');
-      //       let startDate = date[0];
-      //       let endDate = date[1];
-      //       @this.set('start_date',startDate);
-      //       @this.set('end_date',endDate);
-      //    }
-      // }); 
-
       flatpickr('.start_date', {
                 dateFormat: "Y-m-d",
                 onChange: function(selectedDates, dateStr, instance) {

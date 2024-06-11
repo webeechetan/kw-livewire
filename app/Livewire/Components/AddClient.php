@@ -87,7 +87,7 @@ class AddClient extends Component
     public function editClient($id)
     {
         $this->client = Client::find($id);
-        $this->client_name = $this->client->name;
+        $this->client_name = $this->client->orignal_name;
         $this->client_description = $this->client->description;
         $this->client_onboard_date = $this->client->onboard_date;
         $this->brand_name = $this->client->brand_name;

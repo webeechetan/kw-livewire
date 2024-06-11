@@ -127,10 +127,10 @@
                  --}}
 
                  <a wire:navigate class="tabNavigationBar-item @if($currentRoute == 'task.list-view') active @endif" href="{{ route('task.list-view') }}">
-                    <i class='bx bx-list-ul'></i>List
+                    <i class='bx bx-list-ul'></i> List
                 </a>
                 <a wire:navigate class="tabNavigationBar-item @if($currentRoute == 'task.index') active @endif" href="{{ route('task.index') }}">
-                    <i class='bx bx-columns'></i>Board
+                    <i class='bx bx-columns'></i> Board
                 </a>
                 
                 </div>
@@ -139,13 +139,7 @@
              @if(auth()->user()->is_manager)
                 <div class="form-check form-switch d-inline-block">
                     <input class="form-check-input task-switch" type="checkbox" role="switch" id="flexSwitchCheckChecked">
-                    <label class="form-check-label task-switch-text" for="flexSwitchCheckChecked">
-                        @if($ViewTasksAs == 'manager')
-                        Showing {{ auth()->user()->myTeam->name }} Tasks
-                        @else
-                        Showing My Tasks
-                        @endif
-                    </label>
+                    <label class="form-check-label task-switch-text" for="flexSwitchCheckChecked">Showing {{ auth()->user()->myTeam->name }} Tasks</label>
                 </div>
                 @endif
             </div>
@@ -154,19 +148,17 @@
 
     <div class="btn-list">
         <a wire:click="$set('status', 'all')" class="btn-border btn-border-primary @if($status == 'all') active @endif">
-            {{ $tasks['pending']->count() + $tasks['in_progress']->count() + $tasks['in_review']->count() + $tasks['completed']->count() }} 
-            <span>|</span>
+            {{ $tasks_count->count() }} 
+            <span>|</span> 
              All
         </a>
-        <a wire:click="$set('status', 'pending')" class="btn-border btn-border-primary @if($status == 'pending') active @endif">{{ $tasks['pending']->count() }} <span>|</span> Assigned</a>
-        <a wire:click="$set('status', 'in_progress')" class="btn-border btn-border-secondary @if($status == 'in_progress') active @endif">{{ $tasks['in_progress']->count() }} <span>|</span> Accepted</a>
-        <a wire:click="$set('status', 'in_review')" class="btn-border btn-border-warning @if($status == 'in_review') active @endif">{{ $tasks['in_review']->count() }} <span>|</span> In Review</a>
-        <a wire:click="$set('status', 'completed')" class="btn-border btn-border-success @if($status == 'completed') active @endif">{{ $tasks['completed']->count() }} <span>|</span> Completed</a>
+        <a wire:click="$set('status', 'pending')" class="btn-border btn-border-primary @if($status == 'pending') active @endif">{{ $tasks_count->where('status','pending')->count() }} <span>|</span> Assigned</a>
+        <a wire:click="$set('status', 'in_progress')" class="btn-border btn-border-secondary @if($status == 'in_progress') active @endif">{{ $tasks_count->where('status','in_progress')->count() }} <span>|</span> Accepted</a>
+        <a wire:click="$set('status', 'in_review')" class="btn-border btn-border-warning @if($status == 'in_review') active @endif">{{ $tasks_count->where('status','in_review')->count() }} <span>|</span> In Review</a>
+        <a wire:click="$set('status', 'completed')" class="btn-border btn-border-success @if($status == 'completed') active @endif">{{ $tasks_count->where('status','completed')->count() }} <span>|</span> Completed</a>
         <a wire:click="$set('status', 'overdue')" class="btn-border btn-border-danger @if($status == 'overdue') active @endif">
             @php
-                $overdue = $tasks['pending']->where('due_date', '<', now())->count();
-                $overdue += $tasks['in_progress']->where('due_date', '<', now())->count();
-                $overdue += $tasks['in_review']->where('due_date', '<', now())->count();
+                $overdue = $tasks_count->where('due_date', '<', now())->count();
             @endphp
             {{ $overdue }}
             <span>|</span> Overdue</a>
@@ -174,54 +166,21 @@
 
     <!-- Filters Query Params -->
      @if($this->doesAnyFilterApplied())
-        <div class="d-flex flex-wrap gap-2 align-items-center mt-3 mb-2">
-            <span class="pe-2"><i class='bx bx-filter-alt text-secondary'></i> Filter Results:</span>
-                @if($sort != 'all')
-                    <span class="btn-batch">
-                        @if($sort == 'newest') Newest @endif
-                        @if($sort == 'oldest') Oldest @endif
-                        @if($sort == 'a_z') A to Z @endif
-                        @if($sort == 'z_a') Z to A @endif
-                        <a wire:click="$set('sort','all')" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
-                @endif
-
-                @if($status != 'all')
-                    <span class="btn-batch">
-                        @if($status == 'pending') Active @endif
-                        @if($status == 'overdue') Overdue @endif
-                        @if($status == 'completed') Completed @endif
-                        @if($status == 'in_progress') Accepted @endif
-                        @if($status == 'in_review') In Review @endif
-
-                        <a wire:click="$set('status','all')" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
-                @endif
-            
-                @if($byClient != 'all')
-                    <span class="btn-batch">{{ $clients->find($byClient)->name }} <a wire:click="$set('byClient','all')" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
-                @endif
-
-                @if($byProject != 'all')
-                    <span class="btn-batch">{{ $projects->find($byProject)->name }} <a wire:click="$set('byProject','all')" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
-                @endif
-
-                @if($byUser != 'all')
-                    <span class="btn-batch">{{ $users->find($byUser)->name }} <a wire:click="$set('byUser','all')" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
-                @endif
-
-                @if($startDate && $dueDate)
-                    <span class="btn-batch">{{ \Carbon\Carbon::parse($startDate)->format('d M Y') }} <a wire:click="$set('startDate','')" class="ms-1"></a> To {{ \Carbon\Carbon::parse($dueDate)->format('d M Y') }} <a wire:click="$set('dueDate','');$set('start_date','');" class="ms-1"><i class='bx bx-x'></i></a></span> 
-                @else
-                    @if($startDate)
-                        <span class="btn-batch">{{ \Carbon\Carbon::parse($startDate)->format('d M Y') }} <a wire:click="$set('startDate','')" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
-                    @endif
-                    @if($dueDate)
-                        <span class="btn-batch">{{ \Carbon\Carbon::parse($dueDate)->format('d M Y') }} <a wire:click="$set('dueDate','')" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
-                    @endif
-                @endif
-
-            <a href="{{ route('task.index') }}" class="text-danger d-flex align-items-center">Reset <span class="ms-1 d-inline-flex"><i class='bx bx-refresh'></i></span></a>
-        </div>
-    @endif
+        <x-filters-query-params 
+            :sort="$sort" 
+            :status="$status" 
+            :byUser="$byUser" 
+            :byClient="$byClient"
+            :byProject="$byProject"
+            :startDate="$startDate" 
+            :dueDate="$dueDate" 
+            :users="$users" 
+            :teams="$teams"
+            :clients="$clients"
+            :projects="$projects"
+            :clearFilters="route('task.list-view')"
+        />
+     @endif
 
     <div class="column-box mt-3">
         <div class="taskList-dashbaord_header">

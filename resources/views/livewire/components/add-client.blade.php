@@ -22,7 +22,7 @@
                                     <label for="">Brand Name</label>
                                 </div>
                                 <div class="col-md-8 mb-4">
-                                    <input wire:model="brand_name" type="text" class="form-style" placeholder="Brand Name">
+                                    <input wire:model="brand_name" type="text" class="form-style brand_name" placeholder="Brand Name">
                                     <div class="form-check mt-2">
                                         <input class="form-check-input" type="checkbox" wire:model="use_brand_name" value="1" id="use_brand_name">
                                         <label class="form-check-label" for="defaultCheck1">Use This as Title</label>
@@ -123,6 +123,14 @@
 @script
     <script>
         $(document).ready(function() {
+
+            $("#use_brand_name").on('change', function(){
+                if($(this).is(':checked')){
+                    $('.brand_name').attr('required', true);
+                }else{
+                    $('.brand_name').attr('required', false);
+                }
+            });
 
             flatpickr('.client-onboard-date', {
                 enableTime: true,

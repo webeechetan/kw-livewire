@@ -5,16 +5,16 @@
         </div>
         <div class="files-options ms-auto">
             <div class="text-light">
-                <span class="text-success"><i class='bx bx-data' ></i></span> 
+                {{--<span class="text-success"><i class='bx bx-data' ></i></span> 
                 {{ $main_directory_directories_count + $main_directory_files_count + $main_directory_links_count }} Attachments 
                 <span class="px-2">|</span><span class="text-primary"><i class='bx bx-file-blank' ></i></span>
                 {{$main_directory_files_count}} <span class="px-2">|</span> 
                 <span class="text-warning"><i class='bx bx-folder' ></i></span> 
                 {{ $main_directory_directories_count }} 
-                <span class="px-2">|</span> 
+                <span class="px-2">|</span>
                 <span class="text-secondary"><i class='bx bx-link-alt' ></i></span> 
-                {{ $main_directory_links_count }} <span class="px-2">|</span> 
-                {{$main_directory_size}} MB Used / 100MB
+                {{ $main_directory_links_count }} <span class="px-2">|</span>--}}
+                <span class="text-primary"><i class='bx bx-data' ></i></span> {{$main_directory_size}} MB Used / 100MB
             </div>
         </div>
     </div>
@@ -160,16 +160,12 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header d-flex align-items-center justify-content-between gap-20">
-                    <h3 class="modal-title">
-                        <span class="btn-icon btn-icon-primary me-1"><i class='bx bx-file'></i></span> 
-                        Add New File
-                    </h3>
+                    <h3 class="modal-title"><span class="btn-icon btn-icon-primary me-1"><i class='bx bx-file'></i></span> Add New File</h3>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form wire:submit="addNewFile" enctype="multipart/form-data">
                         <div class="modal-form-body">
-                            
                             <div class="row">
                                 <div class="col-md-4 mb-4">
                                     <label for="">Add File</label>
@@ -182,9 +178,7 @@
                                             <div class="form-file_upload-box-text">Add File</div>
                                         </div>
                                         <div class="form-file_upload-valText">Allowed *.jpeg, *.jpg, *.png, *.gif max size of 3 Mb</div>
-                                        <div class="add-file-input-responce">
-
-                                        </div>
+                                        <div class="add-file-input-responce"></div>
                                     </div>
                                 </div>
                             </div>
@@ -200,7 +194,7 @@
                         <div class="modal-form-btm">
                             <div class="row">
                                 <div class="col-md-6 ms-auto text-end">
-                                    <button type="submit" class="btn btn-primary">Save File</button>
+                                    <button type="submit" class="btn btn-primary" wire:loading.attr="disabled">Save File</button>
                                 </div>
                             </div>
                         </div>
@@ -291,7 +285,7 @@
     </div>
 </div>
 
-@push('scripts') 
+@script
 <script>
    document.addEventListener('fileAdded', event => {
         $('#add-new-file').modal('hide');
@@ -369,6 +363,13 @@
 
         $(".add-file-input").change(function(){
             let file_name = $(this).val().split('\\').pop();
+            // if file is image then show preview else show file name
+
+            if(file_name.split('.').pop() == 'jpg' || file_name.split('.').pop() == 'jpeg' || file_name.split('.').pop() == 'png' || file_name.split('.').pop() == 'gif'){
+                $(".add-file-input-responce").html('<img src="'+URL.createObjectURL(this.files[0])+'" alt="">');
+                return;
+            }
+
             $(".add-file-input-responce").html(file_name);
         });
 
@@ -386,4 +387,4 @@
         });
     });
 </script>
-@endpush
+@endscript

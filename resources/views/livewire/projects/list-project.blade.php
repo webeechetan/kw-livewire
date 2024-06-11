@@ -30,18 +30,19 @@
                                     <div class="filterSort">
                                         <h5 class="filterSort-header"><i class='bx bx-sort-down text-primary' ></i> Sort By</h5>
                                         <ul class="filterSort_btn_group list-none">
-                                            <li class="filterSort_item"><a wire:navigate href="{{ route('project.index',['sort'=>'newest','filter'=>$filter,'byUser'=>$byUser, 'byTeam' => $byTeam])}}" class="btn-batch  @if($sort == 'newest') active @endif">Newest</a></li>
-                                            <li class="filterSort_item"><a wire:navigate href="{{ route('project.index',['sort'=>'oldest','filter'=>$filter,'byUser'=>$byUser, 'byTeam' => $byTeam])}}" class="btn-batch  @if($sort == 'oldest') active @endif">Oldest</a></li>
-                                            <li class="filterSort_item"><a wire:navigate href="{{ route('project.index',['sort'=>'a_z','filter'=>$filter,'byUser'=>$byUser, 'byTeam' => $byTeam])}}" class="btn-batch  @if($sort == 'a_z') active @endif"><i class='bx bx-down-arrow-alt' ></i> A To Z</a></li>
-                                            <li class="filterSort_item"><a wire:navigate href="{{ route('project.index',['sort'=>'z_a','filter'=>$filter,'byUser'=>$byUser, 'byTeam' => $byTeam])}}" class="btn-batch  @if($sort == 'z_a') active @endif"><i class='bx bx-up-arrow-alt' ></i> Z To A</a></li>
+                                            <li class="filterSort_item"><a wire:click="$set('sort','newest')" class="btn-batch  @if($sort == 'newest') active @endif">Newest</a></li>
+                                            <li class="filterSort_item"><a wire:click="$set('sort','oldest')" class="btn-batch  @if($sort == 'oldest') active @endif">Oldest</a></li>
+                                            <li class="filterSort_item"><a wire:click="$set('sort','a_z')" class="btn-batch  @if($sort == 'a_z') active @endif"> A To Z</a></li>
+                                            <li class="filterSort_item"><a wire:click="$set('sort','z_a')" class="btn-batch  @if($sort == 'z_a') active @endif">Z To A</a></li>
                                         </ul>
                                         <h5 class="filterSort-header mt-4"><i class='bx bx-briefcase text-primary' ></i> Filter By Status</h5>
                                         <ul class="filterSort_btn_group list-none">
-                                            <li class="filterSort_item"><a wire:navigate href="{{ route('project.index',['sort'=>$sort,'filter'=>'all']) }}" class="btn-batch @if($filter == 'all') active @endif">All</a></li>
-                                            <li class="filterSort_item"><a wire:navigate href="{{ route('project.index',['sort'=>$sort,'filter'=>'active','byUser'=>$byUser, 'byTeam' => $byTeam])}}" class="btn-batch  @if($filter == 'active') active @endif">Active</a></li>
-                                            <li class="filterSort_item"><a wire:navigate href="{{ route('project.index',['sort'=>$sort,'filter'=>'overdue','byUser'=>$byUser, 'byTeam' => $byTeam])}}" class="btn-batch  @if($filter == 'overdue') active @endif">Overdue</a></li>
-                                            <li class="filterSort_item"><a wire:navigate href="{{ route('project.index',['sort'=>$sort,'filter'=>'completed','byUser'=>$byUser, 'byTeam' => $byTeam])}}" class="btn-batch  @if($filter == 'completed') active @endif">Completed</a></li>
-                                            <li class="filterSort_item"><a wire:navigate href="{{ route('project.index',['sort'=>$sort,'filter'=>'archived','byUser'=>$byUser, 'byTeam' => $byTeam])}}" class="btn-batch  @if($filter == 'archived') active @endif">Archived</a></li>
+                                            <li class="filterSort_item"><a wire:click="$set('filter','all')" class="btn-batch @if($filter == 'all') active @endif">All</a></li>
+                                            <li class="filterSort_item"><a wire:click="$set('filter','active')" class="btn-batch @if($filter == 'active') active @endif">Active</a></li>
+                                            <li class="filterSort_item"><a wire:click="$set('filter','overdue')" class="btn-batch @if($filter == 'overdue') active @endif">Overdue</a></li>
+                                            <li class="filterSort_item"><a wire:click="$set('filter','completed')" class="btn-batch @if($filter == 'completed') active @endif">Completed</a></li>
+                                            <li class="filterSort_item"><a wire:click="$set('filter','archived')" class="btn-batch @if($filter == 'archived') active @endif">Archived</a></li>
+                                            
                                         </ul>
                                         <h5 class="filterSort-header mt-4"><i class='bx bx-briefcase text-primary' ></i> Filter By Client</h5>
                                         <select class="dashboard_filters-select w-100" wire:model.live="byClient" name="" id="">
@@ -77,47 +78,27 @@
     <div class="row">
         <div class="col-md-6">
             <div class="dashboard_filters d-flex flex-wrap gap-4 align-items-center mb-4">
-                <a class="@if($filter == 'all') active @endif" wire:navigate href="{{ route('project.index') }}">All <span class="btn-batch">{{$allProjects}}</span></a>
-                <a class="@if($filter == 'active') active @endif" wire:navigate href="{{ route('project.index',['sort'=>$sort,'filter'=>'active']) }}">Active <span class="btn-batch">{{$activeProjects}}</span></a>
-                <a class="@if($filter == 'overdue') active @endif" wire:navigate href="{{ route('project.index',['sort'=>$sort,'filter'=>'overdue']) }}">Overdue <span class="btn-batch">{{$overdueProjects}}</span></a>
-                <a class="@if($filter == 'completed') active @endif" wire:navigate href="{{ route('project.index',['sort'=>$sort,'filter'=>'completed']) }}">Completed <span class="btn-batch">{{$completedProjects}}</span></a>
-                <a class="@if($filter == 'archived') active @endif" wire:navigate href="{{ route('project.index',['sort'=>$sort,'filter'=>'archived']) }}">Archive <span class="btn-batch">{{$archivedProjects}}</span></a>
+
+                <a class="@if($filter == 'all') active @endif" wire:click="$set('filter','all')">All <span class="btn-batch">{{ $projects->count()}}</span></a>
+                <a class="@if($filter == 'active') active @endif" wire:click="$set('filter','active')">Active <span class="btn-batch">{{ $projects->where('status', 'active')->count() }}</span></a>
+                <a class="@if($filter == 'overdue') active @endif" wire:click="$set('filter','overdue')">Overdue <span class="btn-batch">{{ $projects->where('due_date', '<',now())->count() }}</span></a>
+                <a class="@if($filter == 'completed') active @endif" wire:click="$set('filter','completed')">Completed <span class="btn-batch">{{ $projects->where('status','completed')->count() }}</span></a>
+                <a class="@if($filter == 'archived') active @endif" wire:click="$set('filter','archived')">Archived <span class="btn-batch">{{ $projects->where('deleted_at','NOT NULL')->count() }}</span></a>
             </div> 
         </div>
         <div class="col-md-6">
             @if($this->doesAnyFilterApplied())
-                <div class="d-flex flex-wrap gap-2 align-items-center justify-content-end">
-                    <span class="pe-2"><i class='bx bx-filter-alt text-secondary'></i> Filter Results:</span>
-                    @if($sort != 'all')
-                        <span class="btn-batch">
-                            @if($sort == 'newest') Newest @endif
-                            @if($sort == 'oldest') Oldest @endif
-                            @if($sort == 'a_z') A to Z @endif
-                            @if($sort == 'z_a') Z to A @endif
-                            <a href="{{ route('project.index',['sort'=>'all','filter'=>$filter]) }}" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
-                    @endif
-
-                    @if($filter != 'all')
-                        <span class="btn-batch">{{ ucfirst($filter) }} <a href="{{ route('project.index',['sort'=>$sort,'filter'=>'all']) }}" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
-                    @endif
-
-                    @if($byUser != 'all')
-                        <span class="btn-batch">{{ $users->find($byUser)->name }} <a href="{{ route('project.index',['sort'=>$sort,'filter'=>$filter,'byUser'=>'all']) }}" class="ms-1"><i class='bx bx-x'></i></a></span>
-                    @endif
-
-                    @if($byTeam != 'all')
-                        <span class="btn-batch">{{ $teams->find($byTeam)->name }} <a href="{{ route('project.index',['sort'=>$sort,'filter'=>$filter,'byTeam'=>'all']) }}" class="ms-1"><i class='bx bx-x'></i></a></span>
-                    @endif
-
-                    @if($byClient != 'all')
-                        <span class="btn-batch">{{ $clients->find($byClient)->name }} <a href="{{ route('project.index',['sort'=>$sort,'filter'=>$filter,'byClient'=>'all']) }}" class="ms-1"><i class='bx bx-x'></i></a></span>
-                    @endif
-
-
-                    
-
-                    <a href="{{ route('project.index') }}" class="text-danger d-flex align-items-center">Reset <span class="ms-1 d-inline-flex"><i class='bx bx-refresh'></i></span></a>
-                </div>
+                <x-filters-query-params 
+                    :sort="$sort" 
+                    :status="$filter" 
+                    :byUser="$byUser" 
+                    :byTeam="$byTeam"
+                    :byClient="$byClient"
+                    :users="$users" 
+                    :teams="$teams"
+                    :clients="$clients"
+                    :clearFilters="route('project.index')"
+                />
             @endif
         </div>
   
@@ -131,21 +112,25 @@
                             <h4><a href="{{ route('project.profile',$project->id) }}" wire:navigate>{{ $project->name }}</a></h4>
                             <!-- Avatar Group -->
                             <div class="avatarGroup avatarGroup-lg avatarGroup-overlap mt-2">
-                                @php
-                                    $plus_more_users = 0;
-                                    if(count($project->members) > 7){
-                                        $plus_more_users = count($project->members) - 7;
-                                    }
-                                @endphp
+                                @if(count($project->members) > 0)
+                                    @php
+                                        $plus_more_users = 0;
+                                        if(count($project->members) > 7){
+                                            $plus_more_users = count($project->members) - 7;
+                                        }
+                                    @endphp
 
-                                @foreach($project->members->take(7) as $user)
-                                   <x-avatar :user="$user" />
-                                @endforeach
-                                @if($plus_more_users)
-                                <a href="#" class="avatarGroup-avatar">
-                                    <span class="avatar avatar-sm avatar-more">+{{$plus_more_users}}</span>
-                                </a>
-                            @endif
+                                    @foreach($project->members->take(7) as $user)
+                                    <x-avatar :user="$user" class="avatar-sm" />
+                                    @endforeach
+                                    @if($plus_more_users)
+                                        <a href="#" class="avatarGroup-avatar">
+                                            <span class="avatar avatar-sm avatar-more">+{{$plus_more_users}}</span>
+                                        </a>
+                                    @endif
+                                @else
+                                    <div class="text-light">No Users Assigned</div>
+                                @endif
                                 
                             </div>
                         </div>
@@ -222,13 +207,14 @@
                 </div>
             @endforeach
         @else 
-        <div class="col-md-12">
+        <div class="col-md-12 text-center">
+            <img src="{{ asset('assets/images/'.'invite_signup_img.png') }}" width="150" alt="">
             {{-- <h4 class="text text-danger">No Projects found.</h4> --}}
-            <h4 class="text text-danger">No Projects found
+            <h5 class="text text-light mt-3">No Projects found
                 @if($query) 
-                    with {{$query}}
+                    with <span class="text-danger">"{{$query}}"</span>
                 @endif
-            </h4>
+            </h5>
         </div>
         @endif
     </div>

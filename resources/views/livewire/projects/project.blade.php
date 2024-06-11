@@ -202,7 +202,7 @@
                         <div class="btn-list mt-3">
                             @if(count($projectTeams) > 0)
                                 @foreach($projectTeams as $team)
-                                    <a href="javascript:" class="btn-batch btn-batch-profile">{{ $team->name }} </a>
+                                    <a href="javascript:" class="btn-batch">{{ $team->name }} </a>
                                 @endforeach
                             @else
                                 <span>Not added</span>

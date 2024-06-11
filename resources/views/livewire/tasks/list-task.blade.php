@@ -125,10 +125,10 @@
                     <a wire:navigate  class="tabNavigationBar-item @if($currentRoute =='task.index') active @endif" href ="{{route('task.index') }}"><i class='bx bx-columns' ></i> {{$currentRoute}} Board</a> --}}
                 
                     <a wire:navigate class="tabNavigationBar-item @if($currentRoute == 'task.list-view') active @endif" href="{{ route('task.list-view') }}">
-                        <i class='bx bx-list-ul'></i>List
+                        <i class='bx bx-list-ul'></i> List
                     </a>
                     <a wire:navigate class="tabNavigationBar-item @if($currentRoute == 'task.index') active @endif" href="{{ route('task.index') }}">
-                        <i class='bx bx-columns'></i>Board
+                        <i class='bx bx-columns'></i> Board
                     </a>
                     
                 </div>
@@ -137,13 +137,7 @@
                 @if(auth()->user()->is_manager)
                 <div class="form-check form-switch d-inline-block">
                     <input class="form-check-input task-switch" type="checkbox" role="switch" id="flexSwitchCheckChecked">
-                    <label class="form-check-label task-switch-text" for="flexSwitchCheckChecked">
-                        @if($ViewTasksAs == 'manager')
-                        Showing {{ auth()->user()->myTeam->name }} Tasks
-                        @else
-                        Showing My Tasks
-                        @endif
-                    </label>
+                    <label class="form-check-label task-switch-text" for="flexSwitchCheckChecked">Showing {{ auth()->user()->myTeam->name }} Tasks</label>
                 </div>
                 @endif
             </div>
@@ -152,54 +146,20 @@
 
     <!-- Filters Query Params -->
     @if($this->doesAnyFilterApplied())
-        <div class="d-flex flex-wrap gap-2 align-items-center mb-2">
-            <span class="pe-2"><i class='bx bx-filter-alt text-secondary'></i> Filter Results:</span>
-                @if($sort != 'all')
-                    <span class="btn-batch">
-                        @if($sort == 'newest') Newest @endif
-                        @if($sort == 'oldest') Oldest @endif
-                        @if($sort == 'a_z') A to Z @endif
-                        @if($sort == 'z_a') Z to A @endif
-                        <a wire:click="$set('sort','all')" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
-                @endif
-
-                @if($status != 'all')
-                    <span class="btn-batch">
-                        @if($status == 'pending') Active @endif
-                        @if($status == 'overdue') Overdue @endif
-                        @if($status == 'completed') Completed @endif
-                        @if($status == 'in_progress') Accepted @endif
-                        @if($status == 'in_review') In Review @endif
-
-                        <a wire:click="$set('status','all')" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
-                @endif
-            
-                @if($byClient != 'all')
-                    <span class="btn-batch">{{ $clients->find($byClient)->name }} <a wire:click="$set('byClient','all')" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
-                @endif
-
-                @if($byProject != 'all')
-                    <span class="btn-batch">{{ $projects->find($byProject)->name }} <a wire:click="$set('byProject','all')" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
-                @endif
-
-                @if($byUser != 'all')
-                    <span class="btn-batch">{{ $users->find($byUser)->name }} <a wire:click="$set('byUser','all')" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
-                @endif
-
-                @if($startDate && $dueDate)
-                    <span class="btn-batch">{{ \Carbon\Carbon::parse($startDate)->format('d M Y') }} <a wire:click="$set('startDate','')" class="ms-1"></a> To {{ \Carbon\Carbon::parse($dueDate)->format('d M Y') }} <a wire:click="$set('dueDate','');$set('start_date','');" class="ms-1"><i class='bx bx-x'></i></a></span> 
-                @else
-                    @if($startDate)
-                        <span class="btn-batch">{{ \Carbon\Carbon::parse($startDate)->format('d M Y') }} <a wire:click="$set('startDate','')" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
-                    @endif
-                    @if($dueDate)
-                        <span class="btn-batch">{{ \Carbon\Carbon::parse($dueDate)->format('d M Y') }} <a wire:click="$set('dueDate','')" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
-                    @endif
-                @endif
-
-
-            <a href="{{ route('task.index') }}" class="text-danger d-flex align-items-center">Reset <span class="ms-1 d-inline-flex"><i class='bx bx-refresh'></i></span></a>
-        </div>
+        <x-filters-query-params 
+            :sort="$sort" 
+            :status="$status" 
+            :byUser="$byUser" 
+            :byClient="$byClient"
+            :byProject="$byProject"
+            :startDate="$startDate" 
+            :dueDate="$dueDate" 
+            :users="$users" 
+            :teams="$teams"
+            :clients="$clients"
+            :projects="$projects"
+            :clearFilters="route('task.index')"
+        />
     @endif
 
     <!-- Kanban -->
@@ -310,7 +270,8 @@
                                                 @endphp
 
                                                 @foreach($task['users']->take(3) as $user)
-                                                    <a href="javascript:;" class="avatar avatar-sm avatar-{{$user->color}}" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="{{$user->name}}">{{$user->initials}}</a>
+                                                    {{-- <a href="javascript:;" class="avatar avatar-sm avatar-{{$user->color}}" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="{{$user->name}}">{{$user->initials}}</a> --}}
+                                                    <x-avatar :user="$user" class="avatar-sm" />
                                                 @endforeach
 
                                                 @if($plus_more_users)

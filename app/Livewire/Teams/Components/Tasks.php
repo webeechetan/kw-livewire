@@ -16,8 +16,8 @@ class Tasks extends Component
 
     use WithPagination;
 
-    public $project_start_date = null;
-    public $project_due_date = null;
+    public $startDate = null; 
+    public $dueDate = null;
     public $allTasks; 
     public $activeTasks;
     public $completedTasks;
@@ -60,5 +60,9 @@ class Tasks extends Component
     public function updatedByProject($value){
         $project = Project::find($value);
         $this->users = $project->members;
+    }
+
+    public function doesAnyFilterApplied(){
+        return $this->byClient != 'all' || $this->byProject != 'all' || $this->byUser != 'all' || $this->status != 'all' || $this->startDate || $this->dueDate;
     }
 }

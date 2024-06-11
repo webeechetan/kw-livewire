@@ -151,6 +151,7 @@ class FileManager extends Component
             $this->getMedia($this->path);
             $this->dispatch('fileAdded');
             $this->dispatch('success', 'File added successfully');
+            $this->getMainDirectoryMediaCount();
         }catch(\Exception $e){
             session()->flash('error', 'File already exists');
         }
@@ -180,6 +181,7 @@ class FileManager extends Component
         $this->dispatch('linkAdded');
         $this->dispatch('success', 'Link added successfully');
         $this->getMedia($this->path);
+        $this->getMainDirectoryMediaCount();
         $this->link_name = '';
         $this->link_alias = '';
 
@@ -250,6 +252,7 @@ class FileManager extends Component
         $this->getMedia($this->path);
         $this->dispatch('directoryAdded');
         $this->dispatch('success', 'Directory added successfully');
+        $this->getMainDirectoryMediaCount();
     }
 
     public function getDirectorySize($directory_path){

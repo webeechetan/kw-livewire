@@ -4,6 +4,7 @@ namespace App\Livewire\Teams\Components;
 
 use Livewire\Component;
 use Carbon\Carbon;
+use Livewire\Attributes\On; 
 use App\Models\{ Team, Project, Task, User, Client };
 
 
@@ -13,6 +14,10 @@ class Projects extends Component
 
     public $project_start_date = null;
     public $project_due_date = null;
+
+    
+    public $startDate = null; 
+    public $dueDate = null;
 
     public $filter = 'all';
     public $team;
@@ -47,35 +52,16 @@ class Projects extends Component
         $this->team = $team;
         $this->clients = Client::orderBy('name', 'asc')->get();
         $this->users = User::orderBy('name', 'asc')->get();
+        $this->projects = $this->team->projects;
     }
-
-
-    public function updatedFilter()
-    {
-
-        dd('hello world');
-        if($this->filter == 'overdue')
-        {
-            $this->projects = $this->clients->projects()->where('due_date', '<', Carbon::now())->get();
-        }else{
-            if($this->filter != 'all'){
-                if($this->filter == 'archived')
-                {
-                    $this->projects = $this->clients->projects()->where('deleted_at', '!=', null)->get();
-                }else{
-                    $this->projects = $this->clients->projects()->where('status', $this->filter)->get(); 
-                }
-            }else{
-                $this->projects = $this->clients->projects;
-            }
-        }
-    }
-    
-
-  
 
     public function updatedFilterByClient($value){
         $client = Client::find($value);
         $this->users = $client->users;
+    }
+
+    public function doesAnyFilterApplied(){
+        // return $this->byClient != 'all' || $this->byUser != 'all' || $this->status != 'all' || $this->startDate || $this->dueDate || $this->filter != 'all';
+        return $this->byClient != 'all' || $this->byUser != 'all' || $this->status != 'all' || $this->project_start_date || $this->project_due_date || $this->filter != 'all';
     }
 }

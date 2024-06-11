@@ -4574,6 +4574,15 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   overflow: hidden;
 }
 
+.add-file-input-responce img, .image-preview-section img {
+  margin-top: 10px;
+  border: 2px dashed #ddd;
+  border-radius: 4px;
+  text-align: center;
+  padding: 10px;
+  max-width: 100%;
+}
+
 /* ----- Recent Activity ----- */
 .activity-recent-scroll {
   height: 295px;

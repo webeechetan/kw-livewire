@@ -82,6 +82,10 @@ Route::get('/assign-role', function () {
 Route::get('/',Login::class);
 Route::get('/login',Login::class)->name('login');
 Route::get('/register/{org_id?}',Register::class)->name('register');
+Route::get('/logout',function(){
+    Auth::logout();
+    return redirect(route('login'));
+})->name('logout');
 
 Route::get('/forgot-password',ForgotPassword::class)->name('forgot.password')->middleware('throttle:5,1');
 

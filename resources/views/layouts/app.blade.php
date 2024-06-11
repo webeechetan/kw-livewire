@@ -97,7 +97,7 @@
                       </a>
                     </li> -->
                     <li>
-                      <a class="dropdown-item align-items-center text-danger" href="auth-login-cover.html" target="_blank">
+                      <a class="dropdown-item align-items-center text-danger" href="{{route('logout')}}" >
                         <i class="bx bx-power-off me-2"></i>
                         <span class="align-middle">Log Out</span>
                       </a>
