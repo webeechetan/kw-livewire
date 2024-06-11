@@ -16,7 +16,8 @@
     <!--- Dashboard Body --->
     @php
         $tasks = $team->tasks;
-        
+        $tasks_for_count = $team->tasks;
+
         if($byClient != 'all'){
             $tasks = $tasks->where('client_id', $byClient);
         }
@@ -54,7 +55,7 @@
         <div class="col-md-8">
             <div class="project-tabs mb-3">               
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
-                    <li class="nav-item" role="presentation">
+                    {{-- <li class="nav-item" role="presentation">
                         <a href="{{ route('team.tasks',$team->id) }}" wire:navigate class="nav-link @if($status=='all') active @endif" id="project-all-tab" data-bs-toggle="tab" data-bs-target="#project-all-tab-pane" type="button" role="tab" aria-controls="project-all-tab-pane" aria-selected="true">All <span class="ms-2">{{ $tasks->count() }}</span></a>
                     </li>
                     <li class="nav-item" role="presentation">
@@ -67,6 +68,21 @@
                     </li>
                     <li class="nav-item" role="presentation">
                         <a href="{{ route('team.tasks',['team'=>$team->id,'status'=>'overdue']) }}" wire:navigate class="nav-link @if($status=='overdue') active @endif" id="project-overdue-tab" data-bs-toggle="tab" data-bs-target="#project-overdue-tab-pane" type="button" role="tab" aria-controls="project-overdue-tab-pane" aria-selected="false" tabindex="-1">Overdue <span class="ms-2">{{ $tasks->where('due_date', '<', Carbon\Carbon::now())->count() }} </span></a>
+                    </li> --}}
+
+                    <li class="nav-item" role="presentation">
+                        <a href="{{ route('team.tasks',$team->id) }}" wire:navigate class="nav-link @if($status=='all') active @endif" id="project-all-tab" data-bs-toggle="tab" data-bs-target="#project-all-tab-pane" type="button" role="tab" aria-controls="project-all-tab-pane" aria-selected="true">All <span class="ms-2">{{ $tasks_for_count->count() }}</span></a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a href="{{ route('team.tasks',['team'=>$team->id,'status'=>'pending']) }}" wire:navigate class="nav-link @if($status=='pending') active @endif" id="project-active-tab" data-bs-toggle="tab" data-bs-target="#project-active-tab-pane" type="button" role="tab" aria-controls="project-active-tab-pane" aria-selected="false" tabindex="-1">Active <span class="ms-2">
+                            {{ $tasks_for_count->whereIn('status',['pending','assigned','in_progress','in_review'])->count() }}  
+                        </span></a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a href="{{ route('team.tasks',['team'=>$team->id,'status'=>'completed']) }}" wire:navigate class="nav-link @if($status=='completed') active @endif" id="project-done-tab" data-bs-toggle="tab" data-bs-target="#project-done-tab-pane" type="button" role="tab" aria-controls="project-done-tab-pane" aria-selected="false" tabindex="-1">Completed <span class="ms-2">{{ $tasks_for_count->where('status','completed')->count() }}  </span></a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a href="{{ route('team.tasks',['team'=>$team->id,'status'=>'overdue']) }}" wire:navigate class="nav-link @if($status=='overdue') active @endif" id="project-overdue-tab" data-bs-toggle="tab" data-bs-target="#project-overdue-tab-pane" type="button" role="tab" aria-controls="project-overdue-tab-pane" aria-selected="false" tabindex="-1">Overdue <span class="ms-2">{{ $tasks_for_count->where('due_date', '<', Carbon\Carbon::now())->count() }} </span></a>
                     </li>
                 </ul>
             </div>
@@ -158,6 +174,7 @@
             </div>
         </div>
        
+        @if($tasks->isNotEmpty())
         @foreach ($tasks as $task)
             <div class="taskList scrollbar">
                 <div class="taskList_row">
@@ -208,6 +225,12 @@
                 </div>
             </div>
         @endforeach
+        @else
+        <div class="col-md-12 text-center">               
+            <img src="{{ asset('assets/images/'.'invite_signup_img.png') }}" width="150" alt="">
+            <h5 class="text text-light mt-3">No Task found</h5>
+        </div>
+    @endif
     </div>
     <livewire:components.add-team @saved="$refresh" />
 </div>
