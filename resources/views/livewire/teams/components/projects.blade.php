@@ -126,6 +126,8 @@
       <div class="tab-content" id="myTabContent">
          <div class="tab-pane active show" id="project-all-tab-pane" role="tabpanel" aria-labelledby="project-all-tab" tabindex="0">
             <div class="row">
+
+            @if($projects->isNotEmpty())
                @foreach($projects as $project)
                   <div class="col-lg-3">
                      <div class="project-list">
@@ -139,6 +141,12 @@
                      </div>
                   </div>
                @endforeach
+            @else
+            <div class="col-md-12 text-center">               
+               <img src="{{ asset('assets/images/'.'invite_signup_img.png') }}" width="150" alt="">
+               <h5 class="text text-light mt-3">No Project found </h5>
+            </div>
+            @endif
             </div>
          </div>
       </div>
