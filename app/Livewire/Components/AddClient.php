@@ -110,7 +110,7 @@ class AddClient extends Component
         $client->point_of_contact = $this->point_of_contact;
         if($this->client_image){
             $this->validate([
-                'client_image' => 'image|max:1024', // 1MB Max
+                'client_image' => 'image|max:1024', // 1MB Max 
             ]);
 
             $image = $this->client_image->store('images/clients');

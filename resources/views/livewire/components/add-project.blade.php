@@ -79,7 +79,8 @@
                         <div class="modal-form-btm">
                             <div class="row">
                                 <div class="col-md-6 ms-auto text-end">
-                                    <button wire:loading.attr="disabled" type="submit" class="btn btn-primary project-form-btn">Add Project</button>
+                                    
+                                    <button wire:loading.attr="disabled" wire:target="image" type="submit" class="btn btn-primary project-form-btn">Add Project</button>
                                 </div>
                             </div>
                         </div>

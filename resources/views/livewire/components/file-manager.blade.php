@@ -358,23 +358,23 @@
                 return;
             }
             if(filter == 'files'){
-                $(".select_file").fadeIn('slow');
-                $(".select_directory").fadeOut('slow');
-                $(".select_link").fadeOut('slow');
+                $(".select_file").show();
+                $(".select_directory").hide();
+                $(".select_link").hide();
                 return;
             }
 
             if(filter == 'directory'){
-                $(".select_file").fadeOut('slow');
-                $(".select_directory").fadeIn('slow');
-                $(".select_link").fadeOut('slow');
+                $(".select_file").hide();
+                $(".select_directory").show();
+                $(".select_link").hide();
                 return;
             }
 
             if(filter == 'links'){
-                $(".select_file").fadeOut('slow');
-                $(".select_directory").fadeOut('slow');
-                $(".select_link").fadeIn('slow');
+                $(".select_file").hide();
+                $(".select_directory").hide();
+                $(".select_link").show();
                 return;
             }
         });
