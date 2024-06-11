@@ -24,9 +24,14 @@ class ListProject extends Component
     public $archivedProjects;
     public $overdueProjects;
 
+    
+
+    // public $projects= [];
 
     public $teams = [] ;
     public $clients = [] ;
+
+    public $project_all_count =[]; 
 
     public $query = '';
  
@@ -38,22 +43,19 @@ class ListProject extends Component
     public $users;
 
     public function render()
-    {
-        $this->allProjects = Project::count();
-
-        $this->activeProjects = Project::where('status', 'active')->count();
-        $this->completedProjects = Project::where('status', 'completed')->count();
-        $this->archivedProjects = Project::onlyTrashed()->count();
-        //$this->overdueProjects = Project::where('status', 'overdue')->count();
-        $this->overdueProjects = Project::where('due_date', '<', Carbon::today())->count();
-        
+    {        
         $projects = Project::where('name','like','%'.$this->query.'%')
                     ->whereHas('client',function($query){
                         $query->where('deleted_at','IS NOT NULL');
                     })->orWhereHas('client',function($query){
                         $query->where('name','like','%'.$this->query.'%')->orWhere('brand_name','like','%'.$this->query.'%');
                     });
-        // dd($projects->toSql());
+
+        $this->allProjects =  $projects->count();
+        $this->activeProjects = (clone $projects)->where('status', 'active')->count();
+        $this->completedProjects = (clone $projects)->where('status','completed')->count();
+        $this->archivedProjects = (clone $projects)->onlyTrashed()->count();
+        $this->overdueProjects = (clone $projects)->where('due_date','<', Carbon::today())->count();
 
         if($this->filter == 'active'){
             $projects->where('status','active');
@@ -65,8 +67,6 @@ class ListProject extends Component
             $projects->where('due_date','<', Carbon::today());
         }
 
-        
-        // dd($projects->toSql());
         if($this->sort == 'a_z'){
             $projects->orderBy('name');
         }elseif($this->sort == 'z_a'){
@@ -82,8 +82,6 @@ class ListProject extends Component
                 $query->where('client_id',$this->byClient);
             });
         }
-
-      
 
         if($this->byUser != 'all'){
             $user = User::find($this->byUser);
@@ -106,6 +104,7 @@ class ListProject extends Component
         $projects->orderBy('id','desc');
         $projects = $projects->paginate(12);
 
+
         return view('livewire.projects.list-project',[
             'projects' => $projects
         ]);
@@ -113,7 +112,10 @@ class ListProject extends Component
 
     public function mount(){
         
+       
         $this->authorize('View Project');
+
+        $this->project_all_count =  Project::all();
         $this->users = User::all();
         $this->clients = Client::all();
         $this->teams = Team::orderBy('name')->get();
@@ -149,11 +151,14 @@ class ListProject extends Component
     }
 
     public function doesAnyFilterApplied(){
-        return $this->byTeam != 'all' || $this->byUser != 'all' || $this->byClient != 'all' || $this->sort != 'all' || $this->filter != 'all';
+        // return $this->byTeam != 'all' || $this->byUser != 'all' || $this->byClient != 'all' || $this->sort != 'all' || $this->filter != 'all';
+
+        if($this->byTeam != 'all' || $this->byUser != 'all' || $this->byClient != 'all' || $this->sort != 'all' || $this->filter != 'all'){
+            return true;
+        }
+        return false;
     }
 
-
-  
 
     // public function placeholder(){
     //     return view('placeholders.card');

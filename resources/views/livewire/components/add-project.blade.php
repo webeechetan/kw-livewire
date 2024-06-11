@@ -16,7 +16,7 @@
                                 </div>
                                 <div class="col-md-8 mb-4">
                                     <div class="custom-select">
-                                        <select wire:model.live="client_id" class="form-style" required>
+                                        <select class="form-style clients" required>
                                             <option value="">Select Client</option>
                                             @foreach ($clients as $client)
                                                 @if($client->id == $client_id)
@@ -95,6 +95,17 @@
     <script>
         $(document).ready(function() {
 
+            $('.clients').select2({
+                placeholder: "Select Client",
+                allowClear: true,
+                dropdownParent: $('#add-project-modal'),
+
+            });
+
+            $('.clients').on('change', function (e) {
+                @this.set('client_id', e.target.value);
+            });
+
             document.addEventListener('project-added', event => {
                 $('#add-project-modal').modal('hide');
                 $('.client-form-text').html('Add Client');
@@ -120,13 +131,8 @@
                 }else{
                     $('.project_due_date').html('Due Date');
                 }
-                let project_users = event.detail[0].users;
-                let project_users_array = [];
-                project_users.forEach(function (user) {
-                    project_users_array.push(user.id);
-                });
 
-                $('.project-users').val(project_users_array).trigger('change');
+                $('.clients').val(event.detail[0].client_id).trigger('change');
 
                 $(".image-preview-section").removeClass('d-none');
 

@@ -65,7 +65,7 @@
                         }
 
                     @endphp
-                    <li class="breadcrumb-item" @if(!$loop->first) wire:click="openFolder('{{$path_for_folder_open}}')" @endif><a>{{ $p }}</a></li>
+                    <li class="breadcrumb-item  @if($loop->last) active @endif " @if(!$loop->first) wire:click="openFolder('{{$path_for_folder_open}}')" @endif><a>{{ $p }}</a></li>
                 @endforeach
             </ul>
         </nav>
@@ -194,7 +194,18 @@
                         <div class="modal-form-btm">
                             <div class="row">
                                 <div class="col-md-6 ms-auto text-end">
+<<<<<<< HEAD
                                     <button type="submit" class="btn btn-primary" wire:loading.attr="disabled">Save File</button>
+=======
+                                    <button type="submit" class="btn btn-primary">
+                                        <span>
+                                            <span wire:loading wire:target="addNewFile"> 
+                                                <i class='bx bx-loader-alt bx-spin'></i>
+                                            </span>
+                                            Save File 
+                                        </span>
+                                    </button>
+>>>>>>> 362f90a93b42a1b46b5fc898f7cd06255a59fc6b
                                 </div>
                             </div>
                         </div>
@@ -349,6 +360,13 @@
                 @this.selectDirectory(directory_path, 'multipe');
                 return;
             }
+
+            if($(this).hasClass("selected")){
+                $(this).removeClass("selected");
+                @this.selectDirectory(directory_path, '');
+                return;
+            }
+
             @this.selectDirectory(directory_path, 'single');
             $(".select_directory").removeClass("selected");
             $(this).addClass("selected");
@@ -381,6 +399,12 @@
                 @this.selectLink(link_path,'multipe');
                 return;
             }
+            if($(this).hasClass("selected")){
+                $(this).removeClass("selected");
+                @this.selectLink(link_path,'');
+                return;
+            }
+
             @this.selectLink(link_path,'single');
             $(".select_link").removeClass("selected");
             $(this).addClass("selected");
