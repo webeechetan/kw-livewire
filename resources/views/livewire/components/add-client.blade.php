@@ -80,6 +80,11 @@
                                         </div>
                                         <div class="form-file_upload-valText">Allowed *.jpeg, *.jpg, *.png, *.gif max size of 3 Mb</div>
                                     </div>
+                                    <div class="mt-4 d-none upload-progress">
+                                        <div class="progress w-100" role="progressbar" aria-label="Project Progress" aria-valuemin="0" aria-valuemax="100">
+                                            <div class="progress-bar progress-success" ><span class="progress-bar-text">0%</span></div>
+                                        </div>
+                                    </div>
 
                                     <div class="image-preview-section mt-3 d-none">
 
@@ -109,7 +114,12 @@
                         <div class="modal-form-btm">
                             <div class="row">
                                 <div class="col-md-6 ms-auto text-end">
-                                    <button wire:loading.attr="disabled" type="submit" class="btn btn-primary client-form-btn">Add Client</button>
+                                    <button wire:loading.attr="disabled" type="submit" class="btn btn-primary client-form-btn">
+                                        <span wire:loading wire:target="image"> 
+                                            <i class='bx bx-loader-alt bx-spin'></i>
+                                        </span>
+                                        Add Client
+                                    </button>
                                 </div>
                             </div>
                         </div>
