@@ -87,14 +87,14 @@
                             </div> 
                             <h5 class="filterSort-header mt-4"><i class="bx bx-briefcase text-primary"></i> Filter By Clients</h5>
                             <select class="dashboard_filters-select mt-2 w-100" wire:model.live="filterByClient" id="">
-                                {{-- <option value="all" >Select Client</option> --}}
+                                <option value="all" disabled >Select Client</option>
                                 @foreach($clients as $client)
                                     <option value="{{$client->id}}">{{$client->name}}</option>
                                 @endforeach
                             </select>
                             <h5 class="filterSort-header mt-4"><i class="bx bx-user text-primary"></i> Filter By User</h5>
                             <select class="dashboard_filters-select mt-2 w-100" wire:model.live="filterByUser" name="" id="">
-                                <option value="all">Select User</option>
+                                <option value="all" disabled >Select User</option>
                                 @foreach($users as $user)
                                 <option value="{{$user->id}}">{{$user->name}}</option>
                             @endforeach
