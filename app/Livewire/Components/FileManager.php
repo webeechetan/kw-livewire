@@ -8,7 +8,7 @@ use Livewire\WithFileUploads;
 use File;
 use App\Models\Link;
 use OpenGraph;
-
+use stdClass;
 
 class FileManager extends Component
 {
@@ -126,6 +126,9 @@ class FileManager extends Component
         $this->getMedia($this->path);
         $this->getLinks($path);
         $this->selected_files = [];
+        $this->selected_directories = [];
+        $this->selected_links = [];
+
     }
 
     public function goBack(){
@@ -163,20 +166,14 @@ class FileManager extends Component
             'link_name' => 'required'
         ]);
 
-        $og_data = OpenGraph::fetch($this->link_name);
-
         $link = new Link();
         $link->org_id = session('org_id');
         $link->link = $this->link_name;
 
-        if($this->link_alias == '' && isset($og_data['og:title'])){
-            $this->link_alias = $og_data['title'];
-        }else{
-            $link->link_alias = $this->link_alias;
-        }
+        $link->link_alias = $this->link_alias;
             
         $link->path = $this->path;
-        $link->og_data = json_encode($og_data);
+        $link->og_data = '';
         $link->save();
         $this->dispatch('linkAdded');
         $this->dispatch('success', 'Link added successfully');

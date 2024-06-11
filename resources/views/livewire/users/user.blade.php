@@ -211,11 +211,15 @@
                     @endif
                 </div>
                 @php
-                    $skills = $user->details?->skills ?? '[]';
-                    // convert to array
-                    $skills = json_decode($skills);
-                    $skills = implode(',', $skills);
-                    // dd($skills);
+                    if($user->details?->skills == null || $user->details?->skills == '[]' || $user->details?->skills == ''){
+                        $skills = '';
+                    }else{
+                        $skills = $user->details?->skills ?? '[]';
+                        // convert to array
+                        $skills = json_decode($skills);
+                        $skills = implode(',', $skills);
+                        // dd($skills);
+                    }
                 @endphp
                 <div class="skills-input d-none">
                     <div><input class="form-control" name='skills' value='{{ $skills }}' autofocus ></div>
@@ -332,13 +336,19 @@
 
         input.addEventListener('change', function(e){
             let skillsArray = e.target.value;
+            if(skillsArray == ''){
+                @this.set('skills', '');
+                return false;
+            }
 
             skillsArray = JSON.parse(skillsArray);
+
             skillsArray = skillsArray.map(function(item){
                 return item.value;
             });
 
             skills = JSON.stringify(skillsArray);
+            console.log(skills);
 
             @this.set('skills', skills);
         });
@@ -353,6 +363,10 @@
             $(".skills-list").removeClass('d-none');
             $('.skills-input').addClass('d-none');
             let skills = $('.skills-input input').val();
+            if(skills == ''){
+                $('.skills-list').html('<span class="text-light">Not Added</span>');
+                return false;
+            }
             skills = JSON.parse(skills);
             let html = '';
             skills.forEach(function(skill){
