@@ -129,7 +129,6 @@
             $(".modal-title").text("Edit User");
             $(".form-btn").text("Update User");
             $(".invite-user-form").hide();
-            $(".password-col").hide();
             $(".divider-or").hide();
             $(".roles").val(@this.role).trigger('change');
         });
