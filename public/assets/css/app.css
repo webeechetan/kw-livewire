@@ -1091,6 +1091,9 @@ hr.space-sm {
 .cmnt_item_user_text {
   margin-top: 15px;
 }
+.cmnt_item_user_text img {
+  max-width: 100%;
+}
 .cmnt_item_user-edit {
   position: absolute;
   top: 0;
