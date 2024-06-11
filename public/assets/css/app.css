@@ -1034,14 +1034,14 @@ hr.space-sm {
   flex: 1;
 }
 .taskPane-item select, .taskPane-item textarea {
-  padding: 0;
-  margin: 0;
+  min-height: inherit;
   border: none;
   width: 100%;
 }
 .taskPane-item select:hover, .taskPane-item select:focus, .taskPane-item textarea:hover, .taskPane-item textarea:focus {
   outline: none;
   box-shadow: none;
+  border: none;
 }
 .taskPane-item textarea {
   border: 1px solid #eee;

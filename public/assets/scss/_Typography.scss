@@ -1038,14 +1038,14 @@ hr.space-sm {
         }
 
         select, textarea {
-            padding: 0;
-            margin: 0;
+            min-height: inherit;
             border: none;
             width: 100%;
 
             &:hover, &:focus {
                 outline: none;
                 box-shadow: none;
+                border: none;
             }
         }
         textarea {

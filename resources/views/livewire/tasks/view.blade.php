@@ -132,7 +132,7 @@
                                     <a href="javascript:"><span class="btn_link due_date">{{$due_date}}</span></a>
                                 </div>
                             </div>
-                            <div class="taskPane-calenderView"><img src="/storage/images/date.png" class="w-100" alt=""></div>
+                            <div class="taskPane-calenderView due_date">{{$due_date}}</div>
                         </div>
                     </div>
                 </div>
@@ -149,8 +149,8 @@
                     </div>
                     <div class="tab-content" id="nav-tabContent" wire:ignore>
                         <div class="tab-pane fade show active" id="nav-internal" role="tabpanel" aria-labelledby="nav-internal-tab" tabindex="0">
-                            <div class="cmnt_item_row">
-                                @foreach($task->comments->where('type','internal') as $comment)
+                            @foreach($task->comments->where('type','internal') as $comment)
+                                <div class="cmnt_item_row">
                                     <div class="cmnt_item_user">
                                         <div class="cmnt_item_user_img">
                                             <img class="rounded-circle" src="{{ env('APP_URL') }}/storage/images/users/Chetan%20Singh.png">
@@ -165,8 +165,8 @@
                                             <a href="#" class="btn_link"><i class='bx bx-trash' ></i></a>
                                         </div> --}}
                                     </div>
-                                @endforeach
-                            </div>
+                                </div>
+                            @endforeach
                             <div class="cmnt_item_row">
                                 <div class="cmnt_item_user">
                                     <div class="cmnt_item_user_img">
@@ -225,7 +225,6 @@
                 </div>
             </div>
             <div class="taskPane-footer-wrap pt-3 mt-4">
-                <button type="button" class="btn-border btn-border-danger"><i class="bx bx-trash"></i> Delete Task</button>
                 <button type="button" wire:click="saveTask" class="btn-border btn-border-secondary ms-auto"><i class='bx bx-check' ></i> Save Task</button>
             </div>
         </div>   
