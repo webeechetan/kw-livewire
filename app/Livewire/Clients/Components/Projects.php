@@ -16,6 +16,8 @@ class Projects extends Component
     public $filter = 'all';
     public $sort = 'all';
 
+    public $project_no_count;
+
     protected $listeners = ['project-added' => 'refresh', 'project-updated' => 'refresh', 'project-deleted' => 'refresh'];
 
     public function render()
@@ -33,6 +35,7 @@ class Projects extends Component
         $this->id = $id;
         $this->client = Client::find($id);
         $this->projects = $this->client->projects;
+        $this->project_no_count = $this->client->projects;
     }
 
     public function updatedFilter()

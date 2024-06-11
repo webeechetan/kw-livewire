@@ -147,8 +147,8 @@
             </div>
             <div class="taskList scrollbar">
                 <div>
+                @if($tasks->isNotEmpty())
                     @foreach($tasks as $task)
-                  
                     <div class="taskList_row" wire:key="task-row-{{ $task->id }}">
                         <div class="row">
                             <div class="col-lg-4">
@@ -224,6 +224,12 @@
                         </div>
                     </div>
                     @endforeach
+                    @else
+                    <div class="col-md-12 text-center">
+                        <img src="{{ asset('assets/images/'.'invite_signup_img.png') }}" width="150" alt="">
+                        <h5 class="text text-light mt-3">No Tasks found</h5>
+                    </div>
+                @endif
                 </div>
             </div>
         </div>
