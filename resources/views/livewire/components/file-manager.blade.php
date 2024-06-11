@@ -77,6 +77,10 @@
                     <h5 class="title-sm mb-2">Directory Attachments</h5>
                     <div><i class='bx bx-data text-primary' ></i> {{ $directories_count + $files_count + $links_count }} Attachments <span class="px-2">|</span> {{$used_storage_size_in_mb}} MB Used / 100MB</div>
                 </div>
+                <form class="search-box search-box-float-style ms-auto" >
+                    <span class="search-box-float-icon"><i class="bx bx-search"></i></span>
+                    <input id="search" type="text" class="form-control" placeholder="Search">
+                </form>
             </div>
         </div>
 
@@ -84,10 +88,10 @@
             <div class="col-md-6">
                 <!-- Filters -->
                 <div class="btn-list mb-3">
-                    <a href="#" class="btn-border btn-border-success"><i class='bx bx-data'></i> All {{ $directories_count + $files_count + $links_count }}</a>
-                    <a href="#" class="btn-border btn-border-primary"><i class='bx bx-file-blank' ></i> Files {{ $files_count  }}</a>
-                    <a href="#" class="btn-border btn-border-warning"><i class='bx bx-folder me-1' ></i> Folders {{ $directories_count }}</a>
-                    <a href="#" class="btn-border btn-border-secondary"><i class='bx bx-link-alt' ></i> Links {{ $links_count }}</a>
+                    <a href="javascipt:" class="btn-border btn-border-success filter-files" data-filter="all"><i class='bx bx-data'></i> All {{ $directories_count + $files_count + $links_count }}</a>
+                    <a href="javascipt:" class="btn-border btn-border-primary filter-files" data-filter="files"><i class='bx bx-file-blank' ></i> Files {{ $files_count  }}</a>
+                    <a href="javascipt:" class="btn-border btn-border-warning filter-files" data-filter="directory"><i class='bx bx-folder me-1' ></i> Folders {{ $directories_count }}</a>
+                    <a href="javascipt:" class="btn-border btn-border-secondary filter-files" data-filter="links"><i class='bx bx-link-alt' ></i> Links {{ $links_count }}</a>
                 </div>
             </div>
             <div class="col-md-6">
@@ -107,7 +111,7 @@
             @foreach($directories as $directory_name => $directory_data)
                 <div class="files-folder files-item select_directory @if(in_array($directory_data['directory_path'], $selected_directories)) selected @endif" data-directory="{{$directory_data['directory_path']}}" wire:dblclick="openFolder('{{$directory_data['directory_path']}}')">
                     <span class="files-folder-icon"><i class='bx bx-folder'></i></span>
-                    <div class="files-folder-title">{{ $directory_name }}</div>
+                    <div class="files-folder-title files-item-content-title">{{ $directory_name }}</div>
                     <div class="text-light"><span class="text-primary"><i class='bx bx-folder' ></i></span> {{ $directory_data['directories_count'] }} <span class="px-2">|</span> <span class="text-secondary"><i class='bx bx-file-blank' ></i></span> {{ $directory_data['files_count'] }}</div>
                 </div>
             @endforeach
@@ -316,6 +320,65 @@
 
     $(document).ready(function(){
 
+        // search functionality for files folders and links
+
+        $("#search").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $(".files-item").filter(function() {
+                // highlight the matched text with yellow color
+                $(this).find(".files-item-content-title").each(function(){
+                    let title = $(this).text();
+                    let title_lower = title.toLowerCase();
+                    let title_lower_index = title_lower.indexOf(value);
+                    if(title_lower_index > -1){
+                        let title_lower_length = value.length;
+                        let title_lower_substring = title.substring(title_lower_index, title_lower_index + title_lower_length);
+                        let title_lower_replaced = title.replace(title_lower_substring, '<span class="text-secondary">'+title_lower_substring+'</span>');
+                        $(this).html(title_lower_replaced);
+                    }
+                });
+
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+
+            });
+        });
+
+        // filter-files
+
+        $(document).on("click", ".filter-files", function(){
+            $(".filter-files").removeClass("active");
+
+            $(this).addClass("active");
+
+            let filter = $(this).data("filter");
+            if(filter == 'all'){
+                $(".select_file").fadeIn();
+                $(".select_directory").fadeIn();
+                $(".select_link").fadeIn();
+                return;
+            }
+            if(filter == 'files'){
+                $(".select_file").fadeIn('slow');
+                $(".select_directory").fadeOut('slow');
+                $(".select_link").fadeOut('slow');
+                return;
+            }
+
+            if(filter == 'directory'){
+                $(".select_file").fadeOut('slow');
+                $(".select_directory").fadeIn('slow');
+                $(".select_link").fadeOut('slow');
+                return;
+            }
+
+            if(filter == 'links'){
+                $(".select_file").fadeOut('slow');
+                $(".select_directory").fadeOut('slow');
+                $(".select_link").fadeIn('slow');
+                return;
+            }
+        });
+
         // when double click on .open-file class file should open in new tab
 
         $(document).on("dblclick", ".open-file", function(){
@@ -343,7 +406,7 @@
             }
             if($(this).hasClass("selected")){
                 $(this).removeClass("selected");
-                @this.selectFile(file_path,'remove');
+                @this.selectFile(file_path,'');
                 return;
             }
 
