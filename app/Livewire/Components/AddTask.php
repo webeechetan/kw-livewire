@@ -104,6 +104,8 @@ class AddTask extends Component
                 $user->notify(new NewTaskAssignNotification($task));
             }
         }
+
+        $this->attachments = [];
         
         $this->dispatch('saved','Task saved successfully');
     }
@@ -167,7 +169,7 @@ class AddTask extends Component
         $this->comments = $this->task->comments;
         $this->dispatch('comment-added',Comment::with('user')->find($comment->id));
         $this->comment = '';
-
+        
     }
 
     public function editTask($id){
@@ -186,7 +188,7 @@ class AddTask extends Component
         $this->validate([
             'name' => 'required',
         ]);
-        $this->task->name = $this->name;
+        $this->task->name = $this->name; 
         $this->task->description = $this->description;
         $this->task->due_date = $this->due_date;
         $this->task->status = $this->status;

@@ -121,7 +121,7 @@ class AddClient extends Component
         }
         $client->save();
         $this->dispatch('success', 'Client updated successfully');
-        $this->dispatch('client-added');
+        $this->dispatch('client-added', $client);
         $client = null;
         $this->dispatch('saved');
         $this->resetForm();

@@ -74,6 +74,7 @@ class AddUser extends Component
         $user->assignRole($this->role);
         $this->dispatch('saved');
         $this->dispatch('user-added');
+        $this->resetForm();
     }
 
     public function editUser($user_id){
@@ -123,6 +124,16 @@ class AddUser extends Component
         $user->notify(new InviteUser($org));
         $this->dispatch('saved');
         $this->dispatch('user-added');
+    }
+
+    public function resetForm(){
+        $this->name = '';
+        $this->email = '';
+        $this->password = '';
+        $this->designation = '';
+        $this->main_team_id = '';
+        $this->role = '';
+        $this->user = null;
     }
 
 

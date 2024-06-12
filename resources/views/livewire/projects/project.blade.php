@@ -245,6 +245,10 @@
         $(".update-btn").toggleClass("d-none");
     });
 
+    document.addEventListener('project-added', event => {
+        $(".project-description").html(event.detail[0].description);
+    });
+
     $(".edit-description").click(function(){
 
         $(".update-btn").toggleClass("d-none");

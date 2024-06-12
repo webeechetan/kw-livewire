@@ -40,7 +40,7 @@ class Project extends Component
         $this->projectTeams = Team::whereHas('users', function ($query) use ($task_users) {
             $query->whereIn('user_id', $task_users);
         })->get();
-
+ 
     }
 
     public function refresh(){
