@@ -14,6 +14,7 @@
     </nav>
     <livewire:teams.components.teams-tab :team="$team" @saved="$refresh"/>
     <!--- Dashboard Body --->
+
     @php
         $tasks = $team->tasks;
         $tasks_for_count = $team->tasks;
@@ -64,8 +65,6 @@
                         </span></a>
                     </li>
                   --}}
-
-                    
 
                      <li class="nav-item" role="presentation">
                         <a href="{{ route('team.tasks',$team->id) }}" wire:navigate class="nav-link @if($status=='all') active @endif" id="project-all-tab" data-bs-toggle="tab" data-bs-target="#project-all-tab-pane" type="button" role="tab" aria-controls="project-all-tab-pane" aria-selected="true">All <span class="ms-2">{{ $tasks_for_count->count() }}</span></a>
@@ -140,7 +139,9 @@
                 </div>
             </div>
         </div>
-        @if($this->doesAnyFilterApplied())
+    </div>
+    <div class="column-box">
+    @if($this->doesAnyFilterApplied())
             <x-filters-query-params 
                 :sort="$sort" 
                 :status="$status" 
@@ -157,8 +158,6 @@
                 {{-- :clearFilters="route('project.tasks',$project->id)" --}}
             />
         @endif
-    </div>
-    <div class="column-box">
         <div class="taskList-dashbaord_header">
             <div class="row">
                 <div class="col-lg-6">
@@ -235,7 +234,7 @@
             </div>
         @endforeach
         @else
-        <div class="col-md-12 text-center">               
+        <div class="col-md-12 text-center py-4">               
             <img src="{{ asset('assets/images/'.'invite_signup_img.png') }}" width="150" alt="">
             <h5 class="text text-light mt-3">No Task found</h5>
         </div>
