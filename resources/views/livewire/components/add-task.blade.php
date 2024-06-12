@@ -11,7 +11,7 @@
                 </select> 
             </div> 
             <div class="taskPane-dashbaord-head-right">
-                <button type="button" class="btn-icon" data-bs-toggle="modal" data-bs-target="#attached-file-modal"><i class='bx bx-paperclip' style="transform: rotate(60deg);"></i></button>
+                <button type="button" class="btn-icon add-attachments" data-bs-toggle="modal" data-bs-target="#attached-file-modal"><i class='bx bx-paperclip' style="transform: rotate(60deg);"></i></button>
                 <button type="button" class="btn-icon task-sharable-link d-none"><i class='bx bx-link' ></i></button>
                 <button type="button" class="btn-icon view-task-btn d-none" wire:click="viewFullscree"><i class='bx bx-fullscreen'></i></button>
                 {{-- <button type="button" wire:click="deleteTask" class="btn-icon delete-task-btn d-none"><i class='bx bx-trash'></i></button> --}}
@@ -153,7 +153,17 @@
             <div class="modal-header">
                 <div>
                     <h5 class="modal-title" id="attachmentModalLabel">Attachements</h5>
-                    <div><i class="bx bx-data text-primary"></i> <span class="task-attachment-count">{{ count($attachments) }}</span> Attachments</div>
+                    <div>
+                        <i class="bx bx-data text-primary"></i> 
+                        <span class="task-attachment-count">
+                            @if($task)
+                                {{ count($task->attachments) }}
+                            @else
+                                0
+                            @endif
+                        </span> 
+                        Attachments
+                    </div>
                 </div>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
@@ -262,7 +272,7 @@
                         },
                         content: function (item) {
                             item = item.replace(/\s/g, '_');
-                            let span = document.createElement('span');
+                            let span = document.createElement('b');
                             $(span).addClass('mention_user');
                             $(span).text(' '+'@' + item + ' ');
                             return span;
@@ -372,6 +382,7 @@
             $(".task-users").on('change', function (e) {
                 var data = $(".task-users").val();
                 @this.set('task_users', data);
+                // $('body').append('<div class="offcanvas-backdrop fade show"></div>'); 
             });
 
             $('.task-notify-users').select2({
@@ -382,6 +393,7 @@
             $(".task-notify-users").on('change', function (e) {
                 var data = $(".task-notify-users").val();
                 @this.set('task_notifiers', data);
+                // $('body').append('<div class="offcanvas-backdrop fade show"></div>'); 
             });
 
             
@@ -393,6 +405,14 @@
                     @this.set('due_date', dateStr);
                 }
             });
+
+            function createInitials(name){
+                let words = name.split(' ');
+                if(words.length == 1){
+                    return name.substring(0, 2);
+                }
+                return words[0][0] + words[1][0];
+            }
 
             document.addEventListener('edit-task', event => {
 
@@ -437,7 +457,7 @@
                     $('.task-due-date').text('No Due Date');
                 }
                 $(".task-attachment-count").html(event.detail[0].attachments.length);
-      
+                
                 let internal_comments_count = 0;
 
                 event.detail[0].comments.forEach(comment => {
@@ -463,7 +483,11 @@
                     let comment_html = `<div class="cmnt_item_row">
                         <div class="cmnt_item_user">
                             <div class="cmnt_item_user_img">
-                                <img class="rounded-circle" src="{{ env('APP_URL') }}/storage/${comment.user.image}">
+                                ${
+                                    comment.user.image ? `<img class="rounded-circle" src="{{ env('APP_URL') }}/storage/${comment.user.image}">` 
+                                    : 
+                                    `<span class="avatar avatar-sm avatar-yellow" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="${comment.user.name}">${createInitials(comment.user.name)}</span>`
+                                }
                             </div>
                             <div class="cmnt_item_user_name-wrap">
                                 <div class="cmnt_item_user_name">${comment.user.name}</div>
@@ -494,18 +518,26 @@
             // comment-added 
 
             document.addEventListener('comment-added', event => {
+                const date = new Date(event.detail[0].created_at);
+                const options = { day: 'numeric', month: 'long', year: 'numeric' };
+                const formattedDate = date.toLocaleDateString('en-GB', options);
+
+
                 let comment_html = `<div class="cmnt_item_row">
                     <div class="cmnt_item_user">
                         <div class="cmnt_item_user_img">
-                            <img class="rounded-circle" src="{{ env('APP_URL') }}/storage/${event.detail[0].user.image}">
+                            ${
+                                event.detail[0].user.image ? `<img class="rounded-circle" src="{{ env('APP_URL') }}/storage/${event.detail[0].user.image}">` : `<span class="avatar avatar-sm avatar-yellow" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="${event.detail[0].user.name}">${createInitials(event.detail[0].user.name)}</span>`
+                            }
                         </div>
                         <div class="cmnt_item_user_name-wrap">
                             <div class="cmnt_item_user_name">${event.detail[0].user.name}</div>
-                            <div class="cmnt_item_date">${event.detail[0].created_at}</div>
+                            <div class="cmnt_item_date">${formattedDate}</div>
                             <div class="cmnt_item_user_text">${event.detail[0].comment}</div>
                         </div>
                     </div>
                 </div>`;
+                
 
                 if(event.detail[0].type == 'internal'){
                     $(".task-comments-count").html(parseInt($(".task-comments-count").html()) + 1);
@@ -517,7 +549,7 @@
                     $('#internal_comment_box').summernote('code', '');
                 }
 
-
+                $(".total-comments").html(parseInt($(".total-comments").html()) + 1);
 
             });
             

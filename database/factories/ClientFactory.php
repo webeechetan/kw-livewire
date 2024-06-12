@@ -17,11 +17,14 @@ class ClientFactory extends Factory
      *
      * @return array<string, mixed>
      */
+
+    public $clients = ['Acma', 'Birla', 'Cipla', 'Dabur', 'Emami', 'Fevicol', 'Godrej', 'Havells', 'ITC', 'Jindal', 'Kajaria', 'L&T', 'Marico', 'Nestle', 'Oberoi', 'Patanjali', 'Quikr', 'Reliance', 'SBI', 'Tata', 'UltraTech', 'Vedanta', 'Wipro', 'Xiaomi', 'Yamaha', 'Zomato'];
+
     public function definition(): array
     {
         return [
             'org_id' => '1',
-            'name' => $this->faker->name(),
+            'name' => $this->faker->unique()->randomElement($this->clients),
             'description' => $this->faker->text(),
         ];
     }

@@ -7,9 +7,12 @@ use App\Models\Project as ProjectModel;
 use App\Models\User;
 use App\Models\Task;
 use App\Models\Team;
+use PDO;
 
 class Project extends Component
 {
+
+    protected $listeners = ['project-added' => 'refresh'];
 
     public $project;
     public $users;
@@ -38,6 +41,10 @@ class Project extends Component
             $query->whereIn('user_id', $task_users);
         })->get();
 
+    }
+
+    public function refresh(){
+        $this->mount($this->project->id);
     }
 
     public function changeDueDate($date){

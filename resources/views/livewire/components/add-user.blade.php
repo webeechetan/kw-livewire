@@ -40,7 +40,7 @@
                                     <label for="">Designation<sup class="text-primary">*</sup></label>
                                 </div>
                                 <div class="col-md-8 mb-4">
-                                    <input wire:model="designation" type="text" class="form-style" placeholder="Designation Here...">
+                                    <input wire:model="designation" required type="text" class="form-style" placeholder="Designation Here...">
                                 </div>
                             </div>
                             <div class="row">
@@ -56,7 +56,7 @@
                                     <label for="">Password<sup class="text-primary">*</sup></label>
                                 </div>
                                 <div class="col-md-8 mb-4">
-                                    <input wire:model="password"  type="text" class="form-style" placeholder="Password Here..." minlength="6" required>
+                                    <input wire:model="password"  type="text" class="form-style password" placeholder="Password Here..." minlength="6" required>
                                 </div>
                             </div>
                             <div class="row">
@@ -64,7 +64,7 @@
                                     <label for="">Team<sup class="text-primary">*</sup></label>
                                 </div>
                                 <div class="col-md-8 mb-4">
-                                    <select class="form-style" wire:model="main_team_id" name="" id="">
+                                    <select class="form-style" wire:model="main_team_id" required>
                                         <option value="">Select Team</option>
                                         @foreach ($teams as $team)
                                             <option value="{{ $team->id }}">{{ $team->name }}</option>
@@ -77,7 +77,7 @@
                                     <label for="">Role<sup class="text-primary">*</sup></label>
                                 </div>
                                 <div class="col-md-8 mb-4">
-                                    <select class="roles form-style">
+                                    <select class="roles form-style" >
                                         <option value="">Select Role</option>
                                         @foreach ($roles as $role)
                                             <option value="{{ $role->id }}">{{ $role->name }}</option>
@@ -130,6 +130,8 @@
             $(".form-btn").text("Update User");
             $(".invite-user-form").hide();
             $(".divider-or").hide();
+            $(".password").attr('required', false);
+            $(".password-col").hide();
             $(".roles").val(@this.role).trigger('change');
         });
 
