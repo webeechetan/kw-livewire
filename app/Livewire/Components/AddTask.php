@@ -212,6 +212,9 @@ class AddTask extends Component
             }
         }
 
+        $this->attachments = [];
+        $this->task = null; 
+
         $this->dispatch('saved','Task updated successfully');
     }
 

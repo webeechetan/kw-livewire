@@ -243,17 +243,11 @@
 
 @script
     <script>
-
-        // $(".edit-task").click(function(){
-        //     let taskId = $(this).data('id');
-        //     @this.emitEditTaskEvent(taskId);
-        // });
-
         $(document).on('click', '.edit-task', function(){
             let taskId = $(this).data('id');
+            console.log(taskId);
             @this.emitEditTaskEvent(taskId);
-        });
-
+        }); 
 
         document.addEventListener('saved', function(){
             $('#offcanvasRight').offcanvas('hide');
@@ -276,8 +270,6 @@
                 $(".due_date").text(dateStr);
             }
         });
-
-        
     </script>
 @endscript
 

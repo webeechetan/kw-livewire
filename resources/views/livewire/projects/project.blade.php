@@ -226,9 +226,7 @@
     </div>
 
 </div>
-@push('scripts')
-    
-<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+@script
 
 <script>
     flatpickr(".change-due-date", {
@@ -306,4 +304,4 @@
         });
     });    
 </script>
-@endpush
+@endscript
