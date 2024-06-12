@@ -94,7 +94,8 @@
                 <div class="col-lg-8">
                     <div class="btn-list">
                         <a href="javascript:" wire:click="$set('status', 'all')" class="btn-border btn-border-sm btn-border-primary "><span><i class='bx bx-objects-horizontal-center' ></i></span> {{ $project->tasks->count() }} All</a>
-                        <a href="javascript:" wire:click="$set('status', 'pending')" class="btn-border btn-border-sm btn-border-primary "><span><i class='bx bx-objects-horizontal-center' ></i></span> {{ $project->tasks->where('status', 'pending')->where('due_date', '>', now())->count() }} Assigned</a>
+                        <a href="javascript:" wire:click="$set('status', 'pending')" class="btn-border btn-border-sm btn-border-primary "><span><i class='bx bx-objects-horizontal-center' ></i></span> {{ $project->tasks->where('status', 'pending')->count() }} Assigned</a>
+                        {{-- <a href="javascript:" wire:click="$set('status', 'pending')" class="btn-border btn-border-sm btn-border-primary "><span><i class='bx bx-objects-horizontal-center' ></i></span> {{ $project->tasks->where('status', 'pending')->where('due_date', '>', now())->count() }} Assigned</a> --}}
                         <a href="javascript:" wire:click="$set('status', 'in_progress')" class="btn-border btn-border-sm btn-border-secondary "><span><i class='bx bx-objects-horizontal-center' ></i></span> {{ $project->tasks->where('status', 'in_progress')->count() }} Accepted</a>
                         <a href="javascript:" wire:click="$set('status', 'in_review')" class="btn-border btn-border-sm btn-border-warning "><span><i class='bx bx-objects-horizontal-center' ></i></span> {{ $project->tasks->where('status', 'in_review')->count() }} In Review</a>
                         <a href="javascript:" wire:click="$set('status', 'overdue')" class="btn-border btn-border-sm btn-border-danger"><span><i class='bx bx-objects-horizontal-center' ></i></span> {{ $project->tasks->where('due_date', '<', now())->count() }} Overdue</a>
@@ -147,8 +148,8 @@
             </div>
             <div class="taskList scrollbar">
                 <div>
+                @if($tasks->isNotEmpty())
                     @foreach($tasks as $task)
-                  
                     <div class="taskList_row" wire:key="task-row-{{ $task->id }}">
                         <div class="row">
                             <div class="col-lg-4">
@@ -224,6 +225,12 @@
                         </div>
                     </div>
                     @endforeach
+                    @else
+                    <div class="col-md-12 text-center">
+                        <img src="{{ asset('assets/images/'.'invite_signup_img.png') }}" width="150" alt="">
+                        <h5 class="text text-light mt-3">No Tasks found</h5>
+                    </div>
+                @endif
                 </div>
             </div>
         </div>
