@@ -26,7 +26,7 @@ class TeamFactory extends Factory
             'org_id' => '1',
             'name' => $this->faker->unique()->randomElement($this->teams),
             'description' => $this->faker->text(),
-            'image' => 'null'
+            'image' => null
         ];
     }
 }

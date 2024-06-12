@@ -44,28 +44,28 @@ class DatabaseSeeder extends Seeder
         $user->color = $colors[array_rand($colors)];
         $user->saveQuietly();
 
-        Team::factory()
-            ->count(4)
-            ->create();
+        // Team::factory()
+        //     ->count(4)
+        //     ->create();
 
-        Client::withoutEvents(function () {
-            Client::factory()
-                ->count(5)
-                ->create();
-        });
-
-
-        Project::withoutEvents(function () {
-            Project::factory()
-                ->count(10)
-                ->create();
-        });
+        // Client::withoutEvents(function () {
+        //     Client::factory()
+        //         ->count(5)
+        //         ->create();
+        // });
 
 
+        // Project::withoutEvents(function () {
+        //     Project::factory()
+        //         ->count(10)
+        //         ->create();
+        // });
 
-        User::factory()
-            ->count(9)
-            ->create();
+
+
+        // User::factory()
+        //     ->count(9)
+        //     ->create();
 
         // $this->call(OrgSeeder::class);
         $this->call(PermissionSedder::class);

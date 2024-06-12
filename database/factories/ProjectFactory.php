@@ -32,7 +32,7 @@ class ProjectFactory extends Factory
             'client_id' => Client::factory(),
             'name' => $this->faker->unique()->randomElement($this->projects),
             'description' => $this->faker->text(),
-            'image' => 'null'
+            'image' => null
         ];
     }
 }
