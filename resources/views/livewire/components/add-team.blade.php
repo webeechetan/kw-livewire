@@ -51,7 +51,7 @@
                                 <label for="">Assign Manager</label>
                             </div>
                             <div class="col-md-8">
-                                <select wire:model="team_manager" id="" class="form-style team_manager">
+                                <select required wire:model="team_manager" id="" class="form-style team_manager">
                                     <option value="">Select Manager</option>
                                     @foreach($users as $user)
                                         <option value="{{ $user->id }}">{{$user->name}}</option>

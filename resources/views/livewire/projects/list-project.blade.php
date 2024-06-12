@@ -74,7 +74,6 @@
             </div>
         </div>
     </div>
-    
     <div class="row">
         <div class="col-md-6">
             <div class="dashboard_filters d-flex flex-wrap gap-4 align-items-center mb-4">
@@ -108,7 +107,9 @@
                 />
             @endif
         </div>
-  
+    </div>
+    
+    <div class="row">
         @if($projects->isNotEmpty())
             @foreach($projects as $project)
                 <div class="col-md-4 mb-4">

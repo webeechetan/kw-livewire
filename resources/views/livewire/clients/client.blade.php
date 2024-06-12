@@ -200,6 +200,9 @@
 </div>
 @push('scripts')
 <script>
+    document.addEventListener('client-added', event => {
+        $(".user-profile-bio").html(event.detail[0].description);
+    });
     $('.edit-des').click(function(){
         $(".update-des-btn").removeClass('d-none');
         $('.user-profile-bio').summernote({

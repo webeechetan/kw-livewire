@@ -226,9 +226,7 @@
     </div>
 
 </div>
-@push('scripts')
-    
-<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+@script
 
 <script>
     flatpickr(".change-due-date", {
@@ -243,6 +241,10 @@
     $(".update-btn").click(function(){
         $(".project-description").summernote('destroy');
         $(".update-btn").toggleClass("d-none");
+    });
+
+    document.addEventListener('project-added', event => {
+        $(".project-description").html(event.detail[0].description);
     });
 
     $(".edit-description").click(function(){
@@ -302,4 +304,4 @@
         });
     });    
 </script>
-@endpush
+@endscript
