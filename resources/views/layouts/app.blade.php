@@ -202,6 +202,18 @@
               reader.readAsDataURL(this.files[0]);
           }
       });
+
+      document.addEventListener('livewire-upload-progress', event => {
+          $(".upload-progress").removeClass("d-none");
+          let progress = event.detail.progress;
+          $(".progress-bar").width(progress + "%");
+          $(".progress-bar-text").text(progress + "%");
+      });
+
+      document.addEventListener('livewire-upload-finish', event => {
+          $(".upload-progress").addClass("d-none");
+      });
+
     </script>
   </body>
 </html>

@@ -23,13 +23,22 @@
                     <div class="cus_dropdown">
                         <!-- For Active Class = btn-border-success | For Archived Class = btn-border-archived -->
 
-                        @if(!$project->trashed() && $project->status != 'completed')
+                         {{-- @if(!$project->trashed() && $project->status != 'completed')
                             <div class="cus_dropdown-icon btn-border btn-border-success">Active <i class='bx bx-chevron-down' ></i></div>
                         @elseif($project->status == 'completed')
                             <div class="cus_dropdown-icon btn-border btn-border-success">Completed <i class='bx bx-chevron-down' ></i></div>
                         @else
                             <div class="cus_dropdown-icon btn-border btn-border-archived">Archived <i class='bx bx-chevron-down' ></i></div>
-                        @endif
+                        @endif  --}}
+
+                        @if($project->trashed())
+    <div class="cus_dropdown-icon btn-border btn-border-danger">Archived <i class='bx bx-chevron-down'></i></div>
+@elseif($project->status == 'completed')
+    <div class="cus_dropdown-icon btn-border btn-border-success">Completed <i class='bx bx-chevron-down'></i></div>
+@else
+    <div class="cus_dropdown-icon btn-border btn-border-success">Active <i class='bx bx-chevron-down'></i></div>
+@endif
+
                         <div class="cus_dropdown-body cus_dropdown-body-widh_s">
                             <div class="cus_dropdown-body-wrap">
                                 <ul class="cus_dropdown-list">
@@ -51,9 +60,12 @@
         </div>
         <hr class="mb-0">
         <div class="tabNavigationBar-tab border_style">
+           
             <a wire:navigate class="tabNavigationBar-item @if($currentRoute == 'project.profile') active @endif" href="{{ route('project.profile', $project->id) }}"><i class='bx bx-line-chart'></i> Overview</a>
+            @if(!$project->trashed()) 
             <a wire:navigate class="tabNavigationBar-item @if($currentRoute == 'project.tasks') active @endif" href="{{route ('project.tasks', $project->id) }}"><i class='bx bx-layer' ></i> Tasks</a>
             <a wire:navigate class="tabNavigationBar-item @if($currentRoute =='project.file-manager') active @endif" href="{{route('project.file-manager',$project->id)}}"><i class='bx bx-objects-horizontal-left' ></i> File Manager</a>
+            @endif
         </div>
     </div>
     <livewire:components.add-project @saved="$refresh" />

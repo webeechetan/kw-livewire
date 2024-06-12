@@ -230,6 +230,37 @@
                     <button class="btn btn-primary mt-3" wire:click="updateSkills">Save</button>
                 </div>
             </div>
+            @if($user->id == auth()->user()->id)
+            <div class="column-box mb-4">
+                <h5 class="title-sm mb-2">Change Password </h5>
+                <hr>
+                <div>
+                    <div class="btn-list">
+                       <span class="text-light">Current Password</span>
+                    </div>
+                    <div>
+                        <input class="form-control" wire:model="current_password" >
+                        @error('current_password')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+                </div>
+                <div class="mt-2">
+                    <div class="btn-list ">
+                       <span class="text-light">New Password</span>
+                    </div>
+                    <div>
+                        <input class="form-control" wire:model="new_password" >
+                        @error('new_password')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+                </div>
+                <div class="mt-3">
+                    <button class="btn btn-primary btn-sm" wire:click="changePassword">Change Password</button>
+                </div>
+            </div>
+            @endif
         </div>
     </div>
     <livewire:components.add-user @saved="$refresh" />

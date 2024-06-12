@@ -104,13 +104,13 @@
         </div>
     </div>
     <div class="dashboard_filters d-flex flex-wrap gap-4 align-items-center mb-4">
-        <a class="@if($filter == 'all') active @endif" wire:click="$set('filter','all')">All <span class="btn-batch">{{ $projects->count() }}</span></a>
-        <a class="@if($filter == 'active') active @endif" wire:click="$set('filter','active')">Active <span class="btn-batch">{{ $projects->where('status','active')->count() }}</span></a>
+        <a class="@if($filter == 'all') active @endif" wire:click="$set('filter','all')">All <span class="btn-batch">{{ $project_no_count->count() }}</span></a>
+        <a class="@if($filter == 'active') active @endif" wire:click="$set('filter','active')">Active <span class="btn-batch">{{ $project_no_count->where('status','active')->count() }}</span></a>
         <a class="@if($filter == 'overdue') active @endif" wire:click="$set('filter','overdue')">Overdue <span class="btn-batch">
-            {{ $projects->where('due_date','<',now())->count() }}
+            {{ $project_no_count->where('due_date','<',now())->count() }}
         </span></a>
-        <a class="@if($filter == 'completed') active @endif" wire:click="$set('filter','completed')">Completed <span class="btn-batch">{{ $projects->where('status','completed')->count() }}</span></a>
-        <a class="@if($filter == 'archived') active @endif" wire:click="$set('filter','archived')">Archive <span class="btn-batch">{{ $projects->where('deleted_at','NOT NULL')->count() }}</span></a>
+        <a class="@if($filter == 'completed') active @endif" wire:click="$set('filter','completed')">Completed <span class="btn-batch">{{ $project_no_count->where('status','completed')->count() }}</span></a>
+        <a class="@if($filter == 'archived') active @endif" wire:click="$set('filter','archived')">Archive <span class="btn-batch">{{ $project_no_count->where('deleted_at','NOT NULL')->count() }}</span></a>
     </div>
 
     <div class="project-list">
@@ -128,6 +128,11 @@
                     </div>
                 </div>
             @endforeach
+            @else
+            <div class="col-md-12 text-center">
+                <img src="{{ asset('assets/images/'.'invite_signup_img.png') }}" width="150" alt="">
+                <h5 class="text text-light mt-3">No projects Found</h5>
+            </div>
         @endif
     </div>
     <!-- Add Project Modal -->

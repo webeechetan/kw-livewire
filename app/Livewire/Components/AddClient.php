@@ -53,7 +53,7 @@ class AddClient extends Component
 
         if($this->client_image){
             $this->validate([
-                'client_image' => 'image|max:1024', // 1MB Max
+                'client_image' => 'image', // 1MB Max
             ]);
 
             $image = $this->client_image->store('images/clients');
@@ -110,7 +110,7 @@ class AddClient extends Component
         $client->point_of_contact = $this->point_of_contact;
         if($this->client_image){
             $this->validate([
-                'client_image' => 'image|max:1024', // 1MB Max
+                'client_image' => 'image', // 1MB Max 
             ]);
 
             $image = $this->client_image->store('images/clients');
@@ -121,7 +121,7 @@ class AddClient extends Component
         }
         $client->save();
         $this->dispatch('success', 'Client updated successfully');
-        $this->dispatch('client-added');
+        $this->dispatch('client-added', $client);
         $client = null;
         $this->dispatch('saved');
         $this->resetForm();

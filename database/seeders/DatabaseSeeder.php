@@ -45,7 +45,7 @@ class DatabaseSeeder extends Seeder
         $user->saveQuietly();
 
         // Team::factory()
-        //     ->count(100)
+        //     ->count(4)
         //     ->create();
 
         // Client::withoutEvents(function () {
@@ -54,21 +54,18 @@ class DatabaseSeeder extends Seeder
         //         ->create();
         // });
 
-        // Project::factory()
-        //     ->count(100)
-        //     ->create();
 
         // Project::withoutEvents(function () {
         //     Project::factory()
-        //         ->count(5)
+        //         ->count(10)
         //         ->create();
         // });
 
 
 
-        User::factory()
-            ->count(5)
-            ->create();
+        // User::factory()
+        //     ->count(9)
+        //     ->create();
 
         // $this->call(OrgSeeder::class);
         $this->call(PermissionSedder::class);

@@ -96,7 +96,7 @@ class AddProject extends Component
                 }
                 $project->users()->attach(session('user')->id);
                 $this->dispatch('success', 'Project added successfully');
-                $this->dispatch('project-added');
+                $this->dispatch('project-added', $project);
                 $this->dispatch('saved');
                 $this->resetForm();
             }
@@ -144,14 +144,10 @@ class AddProject extends Component
             'client_id' => $this->client_id,
         ]);
 
-        if(count($this->project_users) > 0){
-            $this->project->users()->sync($this->project_users);
-        }
-
+        $this->dispatch('project-added', $this->project);
         $this->resetForm();
 
         $this->dispatch('success', 'Project updated successfully.');
-        $this->dispatch('project-added');
 
     }
 

@@ -157,6 +157,8 @@ class FileManager extends Component
             $this->dispatch('fileAdded');
             $this->dispatch('success', 'File added successfully');
             $this->getMainDirectoryMediaCount();
+            $this->used_storage_size_in_mb = $this->getDirectorySize($this->path);
+            $this->main_directory_size = $this->getDirectorySize($this->path);
         }catch(\Exception $e){
             session()->flash('error', 'File already exists');
         }

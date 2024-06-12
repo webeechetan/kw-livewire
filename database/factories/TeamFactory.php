@@ -12,6 +12,9 @@ use App\Helpers\Helper;
  */
 class TeamFactory extends Factory
 {
+
+    public $teams = ['Tech Team','Media Team','CS Team','HR Team'];
+
     /**
      * Define the model's default state.
      *
@@ -21,9 +24,9 @@ class TeamFactory extends Factory
     {
         return [
             'org_id' => '1',
-            'name' => $this->faker->name(),
+            'name' => $this->faker->unique()->randomElement($this->teams),
             'description' => $this->faker->text(),
-            'image' => Helper::createAvatar($this->faker->name,'teams')
+            'image' => null
         ];
     }
 }
