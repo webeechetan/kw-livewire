@@ -208,7 +208,7 @@
                             <div class="row">
                                 
                                 <div class="col-md-6 ms-auto text-end mt-4">
-                                    <button type="submit" class="btn btn-primary">
+                                    <button type="submit" class="btn btn-primary" wire:loading.attr="disabled" wire:target="new_file">
                                         <span>
                                             <span wire:loading wire:target="new_file"> 
                                                 <i class='bx bx-loader-alt bx-spin'></i>
@@ -321,7 +321,7 @@
     document.addEventListener('linkAdded', event => {
         $('#add-new-link').modal('hide');
     })
-    
+
     $(document).ready(function(){
 
         // search functionality for files folders and links

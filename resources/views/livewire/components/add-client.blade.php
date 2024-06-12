@@ -114,8 +114,8 @@
                         <div class="modal-form-btm">
                             <div class="row">
                                 <div class="col-md-6 ms-auto text-end">
-                                    <button wire:loading.attr="disabled" type="submit" class="btn btn-primary client-form-btn">
-                                        <span wire:loading wire:target="image"> 
+                                    <button wire:loading.attr="disabled" wire:target="client_image" type="submit" class="btn btn-primary client-form-btn">
+                                        <span wire:loading wire:target="client_image"> 
                                             <i class='bx bx-loader-alt bx-spin'></i>
                                         </span>
                                         Add Client

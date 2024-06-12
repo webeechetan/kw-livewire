@@ -15,6 +15,18 @@ class UserFactory extends Factory
 {
     protected static ?string $password;
 
+    public $users = [
+        'Chetan',
+        'ajay',
+        'himanshul.com',
+        'roshan',
+        'vikram',
+        'sharukh',
+        'pradeep',
+        'rahul', 
+        'shubaham',
+    ];
+
     /**
      * Define the model's default state.
      *
@@ -24,7 +36,7 @@ class UserFactory extends Factory
     {
         return [
             'org_id' => '1',
-            'name' => fake()->name(),
+            'name' => $this->faker->unique()->randomElement($this->users),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),

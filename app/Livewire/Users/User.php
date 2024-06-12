@@ -7,6 +7,7 @@ use App\Models\User as UserModel;
 use App\Models\Project;
 use App\Models\Client;
 use App\Models\UserDetail;
+use Illuminate\Support\Facades\Hash;
 use Livewire\WithFileUploads;
 
 class User extends Component
@@ -23,6 +24,9 @@ class User extends Component
     public $skills;
     public $user_image;
     public $socialLink;
+
+    public $current_password;
+    public $new_password;
 
     public function render()
     {
@@ -47,6 +51,23 @@ class User extends Component
 
     public function emitEditUserEvent($user_id){
         $this->dispatch('editUser', $user_id);
+    }
+
+    public function changePassword(){
+        $this->validate([
+            'current_password' => 'required',
+            'new_password' => 'required|min:8',
+        ]);
+
+        if(password_verify($this->current_password, $this->user->password)){
+            $this->user->password = Hash::make($this->new_password);
+            $this->user->save();
+            $this->current_password = '';
+            $this->new_password = '';
+            $this->dispatch('success', 'Password changed successfully.');
+        }else{
+            $this->dispatch('error', 'Current password is incorrect.');
+        }
     }
 
     public function changeUserStatus($status)
