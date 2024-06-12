@@ -141,12 +141,13 @@
                     <div class="column-box states_style-success h-100">
                         <div class="row">
                             <div class="col">
+                                {{-- {{$user->tasks}} --}}
                                 <h5 class="title-md mb-1">{{ $user->tasks->where('status', 'completed')->count() }}</h5>
                                 <div class="states_style-text">
                                     @if($user->tasks->where('status', 'completed')->count() > 0)
                                         {{ $user->tasks->where('status', 'completed')->count() > 1 ? 'Tasks Done' : 'Task Done'}}
                                     @else
-                                        <div class="text-light">No Task Assigned</div>
+                                        <div class="text-light">No Task Complete</div>
                                     @endif 
                                 </div>
                             </div>
