@@ -12,7 +12,7 @@
             <li class="breadcrumb-item active" aria-current="page">Tech Team</li>
         </ol>
     </nav>
-    <livewire:teams.components.teams-tab :team="$team" @saved="$refresh"/>
+    <livewire:teams.components.teams-tab :team="$team" @saved="$refresh"/> 
     <!--- Dashboard Body --->
 
     @php
@@ -54,42 +54,26 @@
 
     <div class="row">
         <div class="col-md-8">
-            <div class="project-tabs mb-3">               
-                <ul class="nav nav-tabs" id="myTab" role="tablist">
-                    {{-- <li class="nav-item" role="presentation">
-                        <a href="{{ route('team.tasks',$team->id) }}" wire:navigate class="nav-link @if($status=='all') active @endif" id="project-all-tab" data-bs-toggle="tab" data-bs-target="#project-all-tab-pane" type="button" role="tab" aria-controls="project-all-tab-pane" aria-selected="true">All <span class="ms-2">{{ $tasks->count() }}</span></a>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <a href="{{ route('team.tasks',['team'=>$team->id,'status'=>'pending']) }}" wire:navigate class="nav-link @if($status=='pending') active @endif" id="project-active-tab" data-bs-toggle="tab" data-bs-target="#project-active-tab-pane" type="button" role="tab" aria-controls="project-active-tab-pane" aria-selected="false" tabindex="-1">Active <span class="ms-2">
-                            {{ $tasks->whereIn('status',['pending','assigned','in_progress','in_review'])->count() }}  
-                        </span></a>
-                    </li>
-                  --}}
-
-                     <li class="nav-item" role="presentation">
-                        <a href="{{ route('team.tasks',$team->id) }}" wire:navigate class="nav-link @if($status=='all') active @endif" id="project-all-tab" data-bs-toggle="tab" data-bs-target="#project-all-tab-pane" type="button" role="tab" aria-controls="project-all-tab-pane" aria-selected="true">All <span class="ms-2">{{ $tasks_for_count->count() }}</span></a>
-                    </li>
-
-                    <li class="nav-item" role="presentation">
-                        <a href="{{ route('team.tasks', ['team' => $team->id, 'status' => 'pending']) }}" wire:navigate class="nav-link @if($status=='pending') active @endif" id="project-all-tab" data-bs-toggle="tab" data-bs-target="#project-all-tab-pane" type="button" role="tab" aria-controls="project-all-tab-pane" aria-selected="true">Assigned <span class="ms-2">{{ $tasks_for_count->where('status', 'pending')->count() }}</span></a>
-                    </li>
-
-                    <li class="nav-item" role="presentation">
-                        <a href="{{ route('team.tasks',['team' => $team->id ,'status'=>'in_progress']) }}" wire:navigate class="nav-link @if($status=='in_progress') active @endif" id="project-all-tab" data-bs-toggle="tab" data-bs-target="#project-all-tab-pane" type="button" role="tab" aria-controls="project-all-tab-pane" aria-selected="true">Accepted <span class="ms-2">{{ $tasks_for_count->where('status','in_progress')->count() }}</span></a>
-                    </li>
-
-                    <li class="nav-item" role="presentation">
-                        <a href="{{ route('team.tasks', ['team' => $team->id, 'status'=>'in_review'])}}" wire:navigate class="nav-link @if($status=='in_review') active @endif" id="project-all-tab" data-bs-toggle="tab" data-bs-target="#project-all-tab-pane" type="button" role="tab" aria-controls="project-all-tab-pane" aria-selected="true">In Review <span class="ms-2">{{ $tasks_for_count->where('status','in_review')->count() }}</span></a>
-                    </li>
-                   
-                    <li class="nav-item" role="presentation">
-                        <a href="{{ route('team.tasks',['team'=>$team->id,'status'=>'overdue']) }}" wire:navigate class="nav-link @if($status=='overdue') active @endif" id="project-overdue-tab" data-bs-toggle="tab" data-bs-target="#project-overdue-tab-pane" type="button" role="tab" aria-controls="project-overdue-tab-pane" aria-selected="false" tabindex="-1">Overdue <span class="ms-2">{{ $tasks_for_count->where('due_date', '<', Carbon\Carbon::now())->count() }} </span></a>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <a href="{{ route('team.tasks',['team' => $team->id, 'status'=>'completed']) }}" wire:navigate class="nav-link @if($status=='completed') active @endif" id="project-all-tab" data-bs-toggle="tab" data-bs-target="#project-all-tab-pane" type="button" role="tab" aria-controls="project-all-tab-pane" aria-selected="true">Completed <span class="ms-2">{{ $tasks_for_count->where('status','completed')->count() }}</span></a>
-                    </li>
-                </ul>
+            <div class="btn-list">
+                <a wire:click="$set('status', 'all')" class="btn-border btn-border-primary @if($status == 'all') active @endif">
+                    {{ $tasks_for_count->count() }} 
+                    <span>|</span> 
+                     All
+                </a>
+                <a wire:click="$set('status', 'pending')" class="btn-border btn-border-primary @if($status == 'pending') active @endif">{{ $tasks_for_count->where('status','pending')->count() }} <span>|</span> Assigned</a>
+                <a wire:click="$set('status', 'in_progress')" class="btn-border btn-border-secondary @if($status == 'in_progress') active @endif">{{ $tasks_for_count->where('status','in_progress')->count() }} <span>|</span> Accepted</a>
+                <a wire:click="$set('status', 'in_review')" class="btn-border btn-border-warning @if($status == 'in_review') active @endif">{{ $tasks_for_count->where('status','in_review')->count() }} <span>|</span> In Review</a>
+                <a wire:click="$set('status', 'completed')" class="btn-border btn-border-success @if($status == 'completed') active @endif">{{ $tasks_for_count->where('status','completed')->count() }} <span>|</span> Completed</a>
+                <a wire:click="$set('status', 'overdue')" class="btn-border btn-border-danger @if($status == 'overdue') active @endif">
+                    @php
+                        $overdue = $tasks_for_count->where('due_date', '<', now())->count();
+                    @endphp
+                    {{ $overdue }}
+                    <span>|</span> Overdue</a>
             </div>
+        
+           
+        
         </div>
         <div class="col-md-4 text-end">
             <div class="cus_dropdown" wire:ignore.self>
@@ -140,6 +124,14 @@
             </div>
         </div>
     </div>
+    <hr class="space-sm">
+    <div class="col-md-12 d-flex justify-content-end">
+        <form class="search-box search-box-float-style" wire:submit.prevent="search">
+            <span class="search-box-float-icon"><i class='bx bx-search'></i></span>
+            <input type="text" wire:model="query" class="form-control" placeholder="Search Task...">
+        </form>
+    </div>
+    
     <div class="column-box">
     @if($this->doesAnyFilterApplied())
             <x-filters-query-params 
