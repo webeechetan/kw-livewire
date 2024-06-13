@@ -209,8 +209,14 @@
             <div>
                 @php
                     $groups = ['pending','in_progress','in_review','completed'];
+                    $hasTasks = false;
                 @endphp
+                
                 @foreach($groups as $group)
+                @if(!empty($tasks[$group]) && count($tasks[$group]) > 0)
+                @php
+                    $hasTasks = true;
+                @endphp
                     @foreach($tasks[$group] as $task)
                         <div class="taskList_row edit-task" data-id="{{ $task->id }}"  wire:key="task-row-{{ $task->id }}">
                             <div class="row">
@@ -272,7 +278,16 @@
                             </div>
                         </div>
                     @endforeach
+                    @endif
                 @endforeach
+
+                @if(!$hasTasks)
+                <div class="col-md-12 text-center">
+                    <img src="{{ asset('assets/images/'.'invite_signup_img.png') }}" width="150" alt="">
+                    <h5 class="text text-light mt-3">No Tasks found</h5>
+                </div>
+                @endif
+               
             </div>
         </div>
     </div>
