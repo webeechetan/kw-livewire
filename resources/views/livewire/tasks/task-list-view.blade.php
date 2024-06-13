@@ -209,8 +209,14 @@
             <div>
                 @php
                     $groups = ['pending','in_progress','in_review','completed'];
+                    $hasTasks = false;
                 @endphp
+                
                 @foreach($groups as $group)
+                @if(!empty($tasks[$group]) && count($tasks[$group]) > 0)
+                @php
+                    $hasTasks = true;
+                @endphp
                     @foreach($tasks[$group] as $task)
                         <div class="taskList_row edit-task" data-id="{{ $task->id }}"  wire:key="task-row-{{ $task->id }}">
                             <div class="row">
@@ -226,7 +232,12 @@
                                     <div class="taskList_col"><span>{{  Carbon\Carbon::parse($task->created_at)->format('d M Y') }}</span></div>
                                 </div>
                                 <div class="col text-center">
-                                    <div class="taskList_col"><span class="btn-batch ">{{  Carbon\Carbon::parse($task->due_date)->format('d M Y') }}</span></div>
+                                    {{-- <div class="taskList_col"><span class="btn-batch ">{{  Carbon\Carbon::parse($task->due_date)->format('d M Y') }}</span></div> --}}
+                                    <div class="taskList_col"><span class="btn-batch "> @if($task->due_date)
+                                        {{ Carbon\Carbon::parse($task->due_date)->format('d M Y') }}
+                                    @else
+                                        No Due Date
+                                    @endif</span></div>
                                 </div>
                                 <div class="col text-center">
                                     <div class="taskList_col"><span>{{ $task->project->name }}</span></div>
@@ -267,7 +278,16 @@
                             </div>
                         </div>
                     @endforeach
+                    @endif
                 @endforeach
+
+                @if(!$hasTasks)
+                <div class="col-md-12 text-center">
+                    <img src="{{ asset('assets/images/'.'invite_signup_img.png') }}" width="150" alt="">
+                    <h5 class="text text-light mt-3">No Tasks found</h5>
+                </div>
+                @endif
+               
             </div>
         </div>
     </div>

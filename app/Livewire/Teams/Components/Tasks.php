@@ -39,6 +39,8 @@ class Tasks extends Component
     public $teams = [];
     public $tasks = [];
 
+    public $tasks_for_count = [];
+
     public $status = 'all';
 
     public function render()
@@ -46,11 +48,18 @@ class Tasks extends Component
         return view('livewire.teams.components.tasks');
     }
 
+
+  
     public function mount(Team $team) {
+
+
+        $this->doesAnyFilterApplied();
         $this->users = User::all();
         $this->projects = Project::all();
         $this->clients = Client::all();
         $this->teams = Team::orderBy('name')->get();
+        $this->tasks = $team->tasks;
+        
     }
 
     public function updatedByClient($value){
@@ -65,6 +74,11 @@ class Tasks extends Component
     public function updatedByUser($value){
         $user = User::find($value);
         $this->projects = $user->projects;
+    }
+
+    public function search()
+    {
+        // $this->resetPage();
     }
 
     public function doesAnyFilterApplied(){

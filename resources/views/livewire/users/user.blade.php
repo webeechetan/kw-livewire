@@ -11,13 +11,17 @@
         <div class="col-lg-4">
             <div class="column-box">
                 <div class="user-profile">
-                    <div class="user-profile-img">
-                        @if($user->image)
+                    @if($user->image)
+                        <div class="user-profile-img">
                             <img src="{{ env('APP_URL') }}/storage/{{ $user->image }}" alt="">
-                        @else
-                            <span class="avatar avatar-{{$user->color}}">{{ $user->initials }}</span>
-                        @endif
-                    </div>
+                            <div class="user-profile-img-edit"><i class='bx bx-pencil'></i></div>
+                        </div>
+                        
+                    @else
+                        <div class="user-profile-img avatar-{{$user->color}}">{{ $user->initials }} <div class="user-profile-img-edit"><i class='bx bx-pencil'></i></div></div>
+                    @endif
+
+                    
                     <input class="user-image d-none" type="file" wire:model.live="user_image" accept="image/*" >
                     <h3 class="main-body-header-title mb-2">{{ $user->name }}</h3>
                     <div class="d-flex align-items-center justify-content-center mb-2"><i class="bx bx-briefcase text-primary me-1"></i> {{ $user->designation ?? 'Not Added' }}</div>
@@ -141,12 +145,13 @@
                     <div class="column-box states_style-success h-100">
                         <div class="row">
                             <div class="col">
+                                {{-- {{$user->tasks}} --}}
                                 <h5 class="title-md mb-1">{{ $user->tasks->where('status', 'completed')->count() }}</h5>
                                 <div class="states_style-text">
                                     @if($user->tasks->where('status', 'completed')->count() > 0)
                                         {{ $user->tasks->where('status', 'completed')->count() > 1 ? 'Tasks Done' : 'Task Done'}}
                                     @else
-                                        <div class="text-light">No Task Assigned</div>
+                                        <div class="text-light">No Task Complete</div>
                                     @endif 
                                 </div>
                             </div>

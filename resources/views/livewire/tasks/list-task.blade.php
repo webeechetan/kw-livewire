@@ -221,17 +221,6 @@
                             @endphp
                             <div class="kanban_column_task {{ $date_class }}" wire:key="task-{{$task['id']}}" wire:sortable-group.item="{{ $task['id'] }}" >
                                 <div class="kanban_column_task-wrap" wire:sortable-group.handle>
-                                    <div class="cus_dropdown cus_dropdown-edit z-0">
-                                        <div class="cus_dropdown-icon"><i class="bx bx-dots-horizontal-rounded"></i></div>
-                                        <div class="cus_dropdown-body cus_dropdown-body-widh_s">
-                                            <div class="cus_dropdown-body-wrap">
-                                                <ul class="cus_dropdown-list">
-                                                    <li><a><span class="text-secondary"><i class="bx bx-pencil"></i></span> Edit</a></li>
-                                                    <li><a href="#"><span class="text-danger"><i class="bx bx-trash"></i></span> Delete</a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
                                     <div class="kanban_column_task_name">
                                         <div class="kanban_column_task_complete_icon d-none">
                                             <i class='bx bx-check' ></i>

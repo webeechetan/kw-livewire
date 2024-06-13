@@ -44,7 +44,7 @@
                                         </ul>
                                         <hr>
                                         <h5 class="filterSort-header"><i class='bx bx-briefcase text-primary' ></i> Filter By Teams</h5>
-                                        <select class="form-control" wire:model.live="byTeam" name="" id="">
+                                        <select class="dashboard_filters-select w-100" wire:model.live="byTeam" name="" id="">
                                             <option value="all">All</option>
                                             @foreach($teams as $team)
                                                 <option value="{{ $team->id}}">{{ $team->name }}</option>
@@ -52,7 +52,7 @@
                                         </select>
                                         <hr>
                                         <h5 class="filterSort-header"><i class='bx bx-objects-horizontal-left text-primary'></i> Filter By Projects</h5>
-                                        <select class="form-control" wire:model.live="byProject" name="" id="">
+                                        <select class="dashboard_filters-select w-100" wire:model.live="byProject" name="" id="">
                                             <option value="all">All</option> 
                                             @foreach($projects as $project)
                                                 <option value="{{ $project->id}}">{{ $project->name }}</option>
