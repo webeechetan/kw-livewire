@@ -211,7 +211,7 @@
                             <div class="col text-center">
                                 <div class="taskList_col"><span class="btn-batch 
                                     @if($task->status == 'pending') btn-batch-primary 
-                                    @elseif ($task->status == 'in_progress') btn-batch-danger 
+                                    @elseif ($task->status == 'in_progress') btn-batch-secondary 
                                     @elseif ($task->status == 'in_review') btn-batch-warning 
                                     @elseif ($task->status == 'completed') btn-batch-success
                                     @endif"
