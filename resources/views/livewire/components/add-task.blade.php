@@ -12,7 +12,7 @@
             </div> 
             <div class="taskPane-dashbaord-head-right">
                 <button type="button" class="btn-icon add-attachments" data-bs-toggle="modal" data-bs-target="#attached-file-modal"><i class='bx bx-paperclip' style="transform: rotate(60deg);"></i></button>
-                <button type="button" class="btn-icon task-sharable-link d-none"><i class='bx bx-link' ></i></button>
+                {{-- <button type="button" class="btn-icon task-sharable-link d-none"><i class='bx bx-share-alt ' ></i></button> --}}
                 <button type="button" class="btn-icon view-task-btn d-none" wire:click="viewFullscree"><i class='bx bx-fullscreen'></i></button>
                 {{-- <button type="button" wire:click="deleteTask" class="btn-icon delete-task-btn d-none"><i class='bx bx-trash'></i></button> --}}
                 <a href="javascript:" wire:click="deleteTask" wire:confirm="Are you sure you want to delete?" class="btn-icon delete-task-btn d-none"><i class='bx bx-trash'></i></a>
@@ -203,16 +203,18 @@
         //     var task = task;
         // }
 
-        $('.task-sharable-link').on('click', function(){
-            var id = task.id;
-            var url = "{{ env('APP_URL') }}/task/"+id;
-            navigator.clipboard.writeText(url).then(function() {
-                console.log('Async: Copying to clipboard was successful!');
-                toastr.success('Task sharbable link copied to clipboard');
-            }, function(err) {
-                console.error('Async: Could not copy text: ', err);
-            });
-        });
+        // $('.task-sharable-link').on('click', function(){
+        //     var id = $wire.task.id;
+
+        //     console.log(id);
+        //     var url = "{{ env('APP_URL') }}/task/"+id;
+        //     navigator.clipboard.writeText(url).then(function() {
+        //         console.log('Async: Copying to clipboard was successful!');
+        //         toastr.success('Task sharbable link copied to clipboard');
+        //     }, function(err) {
+        //         console.error('Async: Could not copy text: ', err);
+        //     });
+        // });
 
         // clear all fields when offcanvas is closed or dismissed 
 

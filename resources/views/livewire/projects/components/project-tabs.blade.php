@@ -21,23 +21,14 @@
                     @can('Edit Project')
                     <!-- Edit -->
                     <div class="cus_dropdown">
-                        <!-- For Active Class = btn-border-success | For Archived Class = btn-border-archived -->
-
-                         {{-- @if(!$project->trashed() && $project->status != 'completed')
-                            <div class="cus_dropdown-icon btn-border btn-border-success">Active <i class='bx bx-chevron-down' ></i></div>
-                        @elseif($project->status == 'completed')
-                            <div class="cus_dropdown-icon btn-border btn-border-success">Completed <i class='bx bx-chevron-down' ></i></div>
-                        @else
-                            <div class="cus_dropdown-icon btn-border btn-border-archived">Archived <i class='bx bx-chevron-down' ></i></div>
-                        @endif  --}}
 
                         @if($project->trashed())
-    <div class="cus_dropdown-icon btn-border btn-border-danger">Archived <i class='bx bx-chevron-down'></i></div>
-@elseif($project->status == 'completed')
-    <div class="cus_dropdown-icon btn-border btn-border-success">Completed <i class='bx bx-chevron-down'></i></div>
-@else
-    <div class="cus_dropdown-icon btn-border btn-border-success">Active <i class='bx bx-chevron-down'></i></div>
-@endif
+                            <div class="cus_dropdown-icon btn-border btn-border-danger">Archived <i class='bx bx-chevron-down'></i></div>
+                        @elseif($project->status == 'completed')
+                            <div class="cus_dropdown-icon btn-border btn-border-success">Completed <i class='bx bx-chevron-down'></i></div>
+                        @else
+                            <div class="cus_dropdown-icon btn-border btn-border-success">Active <i class='bx bx-chevron-down'></i></div>
+                        @endif
 
                         <div class="cus_dropdown-body cus_dropdown-body-widh_s">
                             <div class="cus_dropdown-body-wrap">
@@ -49,7 +40,13 @@
                             </div>
                         </div>
                     </div>
-                    <a href="javascript:" wire:click="emitEditProjectEvent({{ $project->id }})" class="btn-sm btn-border btn-border-secondary"><i class='bx bx-pencil'></i> Edit</a>
+                    <a href="javascript:" wire:click="emitEditProjectEvent({{ $project->id }})" class="btn-sm btn-border btn-border-secondary">
+                        <span wire:loading wire:target="emitEditProjectEvent">
+                            <i class='bx bx-loader-alt bx-spin'></i>
+                        </span>
+                        <i class='bx bx-pencil'></i> 
+                        Edit
+                    </a>
                     @endcan
                     @can('Delete Project')
                     {{-- <a href="javascript:" wire:click.confirm="emitDeleteProjectEvent({{ $project->id }})" class="btn-sm btn-border btn-border-danger"><i class='bx bx-trash'></i> Delete</a> --}}

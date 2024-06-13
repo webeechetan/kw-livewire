@@ -7,12 +7,13 @@ use App\Models\ { Project, Task, User, Attachment, Comment, Client};
 use Livewire\WithFileUploads;
 use App\Notifications\NewTaskAssignNotification;
 use App\Notifications\UserMentionNotification;
+use Livewire\Attributes\Js;
 
 class AddTask extends Component
 {
     use WithFileUploads;
 
-    protected $listeners = ['editTask','deleteTask'];
+    protected $listeners = ['editTask','deleteTask','copy-link'=>'copyLink'];
 
     public $project;
     public $task;

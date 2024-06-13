@@ -111,7 +111,13 @@
                                     </div>
                                 </div>
                             </div>
-                            <a href="javascript:" wire:click="emitEditUserEvent({{ $user->id }})" class="btn-sm btn-border btn-border-secondary"><i class='bx bx-pencil'></i> Edit</a>
+                            <a href="javascript:" wire:click="emitEditUserEvent({{ $user->id }})" class="btn-sm btn-border btn-border-secondary">
+                                <span wire:loading wire:target="emitEditUserEvent">
+                                    <i class='bx bx-loader-alt bx-spin'></i>
+                                 </span>
+                                <i class='bx bx-pencil'></i> 
+                                Edit
+                            </a>
                             @endcan
                             @can('Delete User')
                             <a href="#" class="btn-sm btn-border btn-border-danger" wire:click="forceDeleteUser({{$user->id}})" wire:confirm="Are you sure you want to delete?"><i class='bx bx-trash'></i> Delete</a>

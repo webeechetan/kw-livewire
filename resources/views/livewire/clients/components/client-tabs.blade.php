@@ -42,8 +42,15 @@
                                     </div>
                                 </div>
                             </div>
+                            
                             @if(!$client->trashed())
-                                <button wire:click="emitEditClient({{$client->id}})" class="btn-sm btn-border btn-border-secondary "><i class='bx bx-pencil'></i> Edit</button>
+                                <button wire:click="emitEditClient({{$client->id}})" class="btn-sm btn-border btn-border-secondary ">
+                                    <span wire:loading wire:target="emitEditClient">
+                                        <i class='bx bx-loader-alt bx-spin'></i>
+                                    </span> 
+                                    <i class='bx bx-pencil'></i> 
+                                    Edit
+                                </button>
                             @endif
                         @endcan
                         <!-- Delete -->

@@ -21,8 +21,13 @@
          <div class="text-end col">
             <div class="main-body-header-right">
                @can('Edit Role')
-               <a wire:click="emitEditRoleEvent({{$role->id}})" href="javascript:void(0);" class="btn-sm btn-border btn-border-secondary">
-               <i class='bx bx-pencil'></i> Edit Role</a>
+                  <a wire:click="emitEditRoleEvent({{$role->id}})" href="javascript:void(0);" class="btn-sm btn-border btn-border-secondary">
+                     <span wire:loading wire:target="emitEditRoleEvent">
+                        <i class='bx bx-loader-alt bx-spin'></i>
+                     </span>
+                     <i class='bx bx-pencil'></i> 
+                     Edit Role
+                  </a>
                @endcan
             </div>
          </div>

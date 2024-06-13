@@ -132,7 +132,7 @@
                                     <a href="javascript:"><span class="btn_link due_date">{{$due_date}}</span></a>
                                 </div>
                             </div>
-                            <div class="taskPane-calenderView due_date">{{$due_date}}</div>
+                            {{-- <div class="taskPane-calenderView due_date">{{$due_date}}</div> --}}
                         </div>
                     </div>
                 </div>
@@ -153,7 +153,7 @@
                                 <div class="cmnt_item_row">
                                     <div class="cmnt_item_user">
                                         <div class="cmnt_item_user_img">
-                                            <img class="rounded-circle" src="{{ env('APP_URL') }}/storage/images/users/Chetan%20Singh.png">
+                                            <x-avatar :user="$comment->user" />
                                         </div>
                                         <div class="cmnt_item_user_name-wrap">
                                             <div class="cmnt_item_user_name">{{ $comment->user->name }}</div>
@@ -170,7 +170,7 @@
                             <div class="cmnt_item_row">
                                 <div class="cmnt_item_user">
                                     <div class="cmnt_item_user_img">
-                                        <img class="rounded-circle" src="{{ env('APP_URL') }}/storage/images/users/Chetan%20Singh.png">
+                                        <x-avatar :user="auth()->user()" />
                                     </div>
                                     <div class="cmnt_item_user_name-wrap">
                                         <div class="custComment">
@@ -189,7 +189,7 @@
                                 <div class="cmnt_item_row">
                                     <div class="cmnt_item_user">
                                         <div class="cmnt_item_user_img">
-                                            <img class="rounded-circle" src="{{ env('APP_URL') }}/storage/images/users/Chetan%20Singh.png">
+                                            <x-avatar :user="$comment->user" />
                                         </div>
                                         <div class="cmnt_item_user_name-wrap">
                                             <div class="cmnt_item_user_name">{{ $comment->user->name }}</div>
