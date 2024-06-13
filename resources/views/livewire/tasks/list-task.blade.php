@@ -229,7 +229,7 @@
                                             <i class='bx bx-check' ></i>
                                         </div>
                                         <div class="kanban_column_task_name_text">
-                                            <h4 class="edit-task fs-6" data-id="{{$task['id']}}">{{ $task['name'] }}</h4>
+                                            <h4 wire:click="emitEditTaskEvent({{ $task['id'] }})" class="edit-task fs-6" data-id="{{$task['id']}}">{{ $task['name'] }}</h4>
                                             <div class="kanban_column_task_project_name">
                                                 <span class="text-black">
                                                     @if($task['project'])
@@ -287,11 +287,6 @@
 
 @script
 <script>
-
-    $(document).on('click', '.edit-task', function(){
-        let taskId = $(this).data('id');
-        @this.emitEditTaskEvent(taskId);
-    });
 
     document.addEventListener('saved', function(){
         $('#offcanvasRight').offcanvas('hide');

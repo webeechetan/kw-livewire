@@ -155,7 +155,7 @@
                             <div class="col-lg-4">
                                 <div class="taskList_col taskList_col_title">
                                     <div class="taskList_col_title_open edit-task" data-id="{{ $task->id }}"><i class='bx bx-chevron-right' ></i></div>
-                                    <div class="edit-task" data-id="{{ $task->id }}">
+                                    <div wire:click="emitEditTaskEvent({{ $task->id }})" class="edit-task" data-id="{{ $task->id }}">
                                         <div>{{ $task->name }}</div>
                                     </div>
                                 </div>
@@ -248,11 +248,6 @@
 
 @script
     <script>
-        $(document).on('click', '.edit-task', function(){
-            let taskId = $(this).data('id');
-            console.log(taskId);
-            @this.emitEditTaskEvent(taskId);
-        }); 
 
         document.addEventListener('saved', function(){
             $('#offcanvasRight').offcanvas('hide');
