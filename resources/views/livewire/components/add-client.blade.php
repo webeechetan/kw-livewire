@@ -89,16 +89,6 @@
                                     <div class="image-preview-section mt-3 d-none">
 
                                     </div>
-                            
-                                    @if ($client_image)
-                                        <div>
-                                            <img src="{{ $client_image }}" alt="Image Preview" class="img-fluid" style="max-width: 200px;">
-                                        </div>
-                                    @else
-                                        <div class="old-image">
-                                            <img src="" alt="" class="img-fluid old-image-src">
-                                        </div>
-                                    @endif
                                 </div>
                             </div>
                             <hr>
@@ -181,8 +171,12 @@
                 }else{
                     $('#use_brand_name').prop('checked', false);
                 }
-                $('.old-image').removeClass('d-none');
-                $('.old-image-src').attr('src', '{{ env("APP_URL") }}/storage/'+event.detail[0].image);
+
+                if (event.detail[0].image) {
+                    $(".image-preview-section").removeClass('d-none');
+                    $('.image-preview-section').html('<img src="{{ asset('storage') }}/'+event.detail[0].image+'" alt="project image" class="img-fluid">');
+                }
+
                 $('.client-form-text').html('Edit Client');
                 $('.client-form-btn').html('Update');
             })

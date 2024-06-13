@@ -55,18 +55,6 @@
         <div class="col-md-8">
             <div class="project-tabs mb-3">               
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
-                    {{-- <li class="nav-item" role="presentation">
-                        <a href="{{ route('team.tasks',$team->id) }}" wire:navigate class="nav-link @if($status=='all') active @endif" id="project-all-tab" data-bs-toggle="tab" data-bs-target="#project-all-tab-pane" type="button" role="tab" aria-controls="project-all-tab-pane" aria-selected="true">All <span class="ms-2">{{ $tasks->count() }}</span></a>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <a href="{{ route('team.tasks',['team'=>$team->id,'status'=>'pending']) }}" wire:navigate class="nav-link @if($status=='pending') active @endif" id="project-active-tab" data-bs-toggle="tab" data-bs-target="#project-active-tab-pane" type="button" role="tab" aria-controls="project-active-tab-pane" aria-selected="false" tabindex="-1">Active <span class="ms-2">
-                            {{ $tasks->whereIn('status',['pending','assigned','in_progress','in_review'])->count() }}  
-                        </span></a>
-                    </li>
-                  --}}
-
-                    
-
                      <li class="nav-item" role="presentation">
                         <a href="{{ route('team.tasks',$team->id) }}" wire:navigate class="nav-link @if($status=='all') active @endif" id="project-all-tab" data-bs-toggle="tab" data-bs-target="#project-all-tab-pane" type="button" role="tab" aria-controls="project-all-tab-pane" aria-selected="true">All <span class="ms-2">{{ $tasks_for_count->count() }}</span></a>
                     </li>
@@ -136,7 +124,7 @@
                                 @endforeach
                             </select>
                         </div>
-                    </div>
+                    </div> 
                 </div>
             </div>
         </div>
@@ -153,7 +141,7 @@
                 :teams="$teams"
                 :clients="$clients"
                 :projects="$projects" 
-                 :clearFilters="route('team.tasks',$team)"
+                :clearFilters="route('team.tasks',$team)"
                 {{-- :clearFilters="route('project.tasks',$project->id)" --}}
             />
         @endif

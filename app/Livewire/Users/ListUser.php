@@ -82,9 +82,8 @@ class ListUser extends Component
        
 
         if($this->byProject != 'all'){
-            $users->whereHas('projects', function($query){
-                $query->where('project_id', $this->byProject);
-            });
+            $project_users = Project::find($this->byProject)->members->pluck('id');
+            $users->whereIn('id', $project_users);
         }
 
         $users->orderBy('created_at', 'desc');

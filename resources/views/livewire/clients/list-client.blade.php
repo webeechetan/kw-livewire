@@ -23,7 +23,7 @@
                         <button type="submit" class="search-box-icon"><i class='bx bx-search me-1'></i> Search</button>
                     </form>
                     <div class="main-body-header-filters">
-                        <div class="cus_dropdown">
+                        <div class="cus_dropdown" wire:ignore.self>
                             <div class="cus_dropdown-icon btn-border btn-border-secondary"><i class='bx bx-filter-alt' ></i> Filter</div>
                             <div class="cus_dropdown-body cus_dropdown-body-widh_l">
                                 <div class="cus_dropdown-body-wrap">
@@ -80,27 +80,6 @@
                     :clearFilters="route('client.index')"
                 />
             @endif
-
-
-        {{-- @if($sort != 'all' || $filter != 'all')
-            <div class="d-flex flex-wrap gap-2 align-items-center justify-content-end mb-2">
-                <span class="pe-2"><i class='bx bx-filter-alt text-secondary'></i> Filter Results:</span>
-                @if($sort != 'all')
-                    <span class="btn-batch">
-                        @if($sort == 'newest') Newest @endif
-                        @if($sort == 'oldest') Oldest @endif
-                        @if($sort == 'a_z') A to Z @endif
-                        @if($sort == 'z_a') Z to A @endif
-                        <a wire:navigate href="{{ route('client.index',['sort'=>'all','filter'=>$filter]) }}" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
-                @endif
-
-                @if($filter != 'all')
-                    <span class="btn-batch">{{ ucfirst($filter) }} <a wire:navigate href="{{ route('client.index',['sort'=>$sort,'filter'=>'all']) }}" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
-                @endif
-
-                <a href="{{ route('client.index') }}" class="text-danger d-flex align-items-center">Reset <span class="ms-1 d-inline-flex"><i class='bx bx-refresh'></i></span></a>
-            </div>
-        @endif --}}
         </div>
 
         @if($clients->isNotEmpty())
