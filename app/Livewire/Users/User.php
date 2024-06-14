@@ -8,6 +8,7 @@ use App\Models\Project;
 use App\Models\Client;
 use App\Models\UserDetail;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Livewire\WithFileUploads;
 
 class User extends Component
@@ -132,23 +133,21 @@ class User extends Component
         }
     }
 
-    public function updatedUserImage(){
-        // dd('here');
-        $this->updateImage();
-    }
-
-    public function updateImage(){
-        $this->validate([
-            'user_image' => 'image|max:1024', // 1MB Max
-        ]);
-
+    public function saveCroppedImage($tmpUploadedFileName)
+    {
         $user = UserModel::find($this->user->id);
-        $image = $this->user_image->store('images/users');
-        $image = str_replace('public/', '', $image);
-        $user->image = $image;
-        $user->save();
+        if($tmpUploadedFileName){
+            if($user->image){
+                Storage::disk('public')->delete($user->image);
+            }
+            $this->user_image->storeAs('images/users', $tmpUploadedFileName, 'public');
+            $user->image = 'images/users/'.$tmpUploadedFileName;
+            $user->save();
+            $this->dispatch('success', 'Profile image updated successfully.');
+            $this->refresh();
+        }
 
-        $this->mount($this->user->id);
+
     }
 
     public function updateSocialLink($type){

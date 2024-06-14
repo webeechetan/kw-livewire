@@ -22,7 +22,18 @@
                     @endif
 
                     
-                    <input class="user-image d-none" type="file" wire:model.live="user_image" accept="image/*" >
+                    {{-- <input class="user-image d-none" type="file" wire:model.live="user_image" accept="image/*" > --}}
+                    <input class="user-image d-none" type="file" accept="image/*" >
+                    
+                    <div class="cropper d-none">
+                        <img id="user-image" src="http://localhost:8000/storage/images/users/2ZVItohsec8ZbneoZaSfAAcOH2dqmo-metaY3JvcHBlZC1pbWFnZS5wbmc=-.png" alt="">
+                    </div>
+
+                    <div class="croper-btns d-none">
+                        <button class="btn btn-primary btn-sm save-cropped-image">Crop</button>
+                        <button class="btn btn-danger btn-sm cancel-cropping">Cancel</button>
+                    </div>
+
                     <h3 class="main-body-header-title mb-2">{{ $user->name }}</h3>
                     <div class="d-flex align-items-center justify-content-center mb-2"><i class="bx bx-briefcase text-primary me-1"></i> {{ $user->designation ?? 'Not Added' }}</div>
                     <div class="d-flex align-items-center justify-content-center mb-2">
@@ -268,6 +279,7 @@
                 </div>
             </div>
             @endif
+
         </div>
     </div>
     <livewire:components.add-user @saved="$refresh" />
@@ -296,6 +308,8 @@
 <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>
 <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.css" integrity="sha512-087vysR/jM0N5cp13Vlp+ZF9wx6tKbvJLwPO8Iit6J7R+n7uIMMjg37dEgexOshDmDITHYY5useeSmfD1MYiQA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.js" integrity="sha512-JyCZjCOZoyeQZSd5+YEAcFgz2fowJ1F1hyJOXgtKu4llIa0KneLcidn5bwfutiehUTiOuK87A986BZJMko0eWQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 @endassets
 
 
@@ -312,17 +326,64 @@
             $('.user-image').click();
         });
 
-        // $('.add-social-link').click(function(){
-        //     let type = $(this).data('type');
-        //     $('.link-text').html(type);
-        //     let link = $(this).data('link');
-        //     @this.socialLink = link; 
-        //     if(link){
-        //         let html = `<a href="${link}">${link}</a>`;
-        //         $(".print-link").removeClass('d-none')
-        //         $(".print-link").html(html);
-        //     }
-        // });
+        const image = document.getElementById('user-image');
+
+        const cropper = new Cropper(image, {
+            aspectRatio: 1,
+            viewMode: 1,
+            crop(event) {
+                console.log(event.detail.x);
+                console.log(event.detail.y);
+                console.log(event.detail.width);
+                console.log(event.detail.height);
+                console.log(event.detail.rotate);
+                console.log(event.detail.scaleX);
+                console.log(event.detail.scaleY);
+            },
+        });
+
+        document.querySelector('.user-image').addEventListener('change', (e) => {
+            $(".cropper").removeClass('d-none');
+            $(".croper-btns").removeClass('d-none');
+            const file = e.target.files[0];
+            let reader = new FileReader();
+            reader.onload = function(e){
+                image.src = e.target.result;
+                cropper.replace(e.target.result);
+            }
+            reader.readAsDataURL(file);
+        });
+        
+        // Upload cropped image to server 
+
+        document.querySelector('.save-cropped-image').addEventListener('click', (e) => {
+            cropper.getCroppedCanvas().toBlob((blob) => {
+                console.log('Blob generated:', blob);
+                // Create a FormData object to send the file
+                let formData = new FormData();
+                formData.append('user_image', blob, 'cropped-image.png');
+                
+                let entries = formData.entries();
+                let file = entries.next().value[1];
+                
+                @this.upload('user_image', file, (uploadedFilename) => {
+                    @this.call('saveCroppedImage', uploadedFilename);
+                    $(".cropper").addClass('d-none');
+                    $(".croper-btns").addClass('d-none');
+
+                });
+                
+            });
+        });
+
+        document.querySelector('.cancel-cropping').addEventListener('click', (e) => {
+            $(".cropper").addClass('d-none');
+            $(".croper-btns").addClass('d-none');
+        });
+
+
+
+
 
         $(document).on('click', '.add-social-link', function(){
             let type = $(this).data('type');
