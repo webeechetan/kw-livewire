@@ -50,6 +50,10 @@ use App\Livewire\Roles\RoleView;
 use App\Models\Task;
 use Spatie\Permission\Models\Role;
 
+// OrganizationActivities
+
+use App\Livewire\Activity\ListActivity;
+
 
 
 /*
@@ -63,22 +67,6 @@ use Spatie\Permission\Models\Role;
 |
 */
 
-Route::get('/task-testing',function(){
-    dd(Task::find(110));
-});
-
-Route::get('/assign-role', function () {
-    $user = User::withoutGlobalScope(OrganizationScope::class)->find(2);
-    $role = Role::where('id', 1)->where('guard_name', 'web')->first();
-    setPermissionsTeamId(session('org_id'));
-    if ($role) {
-        $user->org_id = 1; // Set a valid org_id value
-        $user->assignRole($role);
-        return 'Role assigned';
-    } else {
-        return 'Role not found';
-    }
-});
 Route::get('/',Login::class);
 Route::get('/login',Login::class)->name('login');
 Route::get('/register/{org_id?}',Register::class)->name('register');
@@ -91,60 +79,97 @@ Route::get('/forgot-password',ForgotPassword::class)->name('forgot.password')->m
 
 Route::group(['middleware' => ['myauth']], function() {
 
+    /*
+    |--------------------------------------------------------------------------
+    | Dashboard Routes
+    |--------------------------------------------------------------------------
+    */
     Route::get('/dashboard',Dashboard::class)->name('dashboard');
+
+    /*
+    |--------------------------------------------------------------------------
+    | OrganizationActivities Routes
+    |--------------------------------------------------------------------------
+    */
+
+    Route::get('/activities',ListActivity::class)->name('activity.index');
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Client Routes
+    |--------------------------------------------------------------------------
+    */
     
     Route::get('/clients/{sort?}/{filter?}',ListClient::class)->name('client.index');
     Route::get('/client/view/{id}',ClientProfile::class)->name('client.profile');
     Route::get('/client/view/{id?}/projects',ClientProjects::class)->name('client.projects');
     Route::get('/client/view/{id?}/file-manager',ClientFileManager::class)->name('client.file-manager');
 
+    /*
+    |--------------------------------------------------------------------------
+    | Project Routes
+    |--------------------------------------------------------------------------
+    */
+
     Route::get('/projects/{sort?}/{filter?}/{byUser?}/{byTeam?}',ListProject::class)->name('project.index');
     Route::get('/project/view/{id}',Project::class)->name('project.profile');
-    // Route::get('/project/view/{project}/tasks',ProjectTasks::class)->name('project.tasks');
     Route::get('/project/view/{project}/tasks',ProjectTasks::class)->name('project.tasks')->withTrashed();
-
     Route::get('/project/view/{project}/file-manager',ProjectFileManager::class)->name('project.file-manager')->withTrashed();
     
+    /*
+    |--------------------------------------------------------------------------
+    | Teams Routes
+    |--------------------------------------------------------------------------
+    */
+
     Route::get('/teams/{sort?}/{filter?/{byUser?}',ListTeam::class)->name('team.index');
     Route::get('/team/view/{team}',TeamProfile::class)->name('team.profile');
     Route::get('/team/view/{team?}/projects',TeamProjects::class)->name('team.projects');
     Route::get('/team/view/{team?}/tasks/{status?}',TeamTasks::class)->name('team.tasks');
-    
+
+    /*
+    |--------------------------------------------------------------------------
+    | Users Routes
+    |--------------------------------------------------------------------------
+    */
 
     Route::get('/users/{sort?}/{filter?}/{byProject?}',ListUser::class)->name('user.index');
-    // Route::get('/users',ListUser::class)->name('user.index');
     Route::get('/users/add',AddUser::class)->name('user.add');
     Route::get('/user/view/{user_id?}',UserProfile::class)->name('user.profile');
 
-    
+    /*
+    |--------------------------------------------------------------------------
+    | Task Routes
+    |--------------------------------------------------------------------------
+    */
     
     Route::get('/tasks/list-view',TaskListView::class)->name('task.list-view');
     Route::get('/tasks/{sort?}/{filter?}/{byProject?}/{byClient?}',ListTask::class)->name('task.index');
     Route::get('/tasks/add',AddTask::class)->name('task.add');
     Route::get('/task/view/{task}',View::class)->name('task.view');
 
-    // Role and Permission
+    /*
+    |--------------------------------------------------------------------------
+    | Role and permisison Routes
+    |--------------------------------------------------------------------------
+    */
 
     Route::get('/roles',ListRole::class)->name('role.index');
     Route::get('/role/{role}', RoleView::class)->name('role.profile');
 
-    Route::get('/file-manager',FileManager::class)->name('file-manager');
+    /*
+    |--------------------------------------------------------------------------
+    | Logout & others Routes
+    |--------------------------------------------------------------------------
+    */
     
     Route::get('/logout',function(){
         Auth::logout();
         return redirect(route('login'));
     })->name('logout');
+
 });
-
-
-// factory routes
-
-// create 100 clients
-
-Route::get('/create-clients',function(){
-    Client::factory()->count(10000)->create();
-})->name('create-clients');
-
 
 // notification  view testing
 
@@ -168,113 +193,6 @@ Route::get('/new-user-mail',function(){
         'user' => User::withoutGlobalScope(OrganizationScope::class)->first()
     ]);
 });
-
-// create permissions
-
-Route::get('/create-permissions',function(){
-    $permissions = [
-        'create-client',
-        'edit-client',
-        'delete-client',
-        'view-client',
-        'create-project',
-        'edit-project',
-        'delete-project',
-        'view-project',
-        'create-task',
-        'edit-task',
-        'delete-task',
-        'view-task',
-        'create-team',
-        'edit-team',
-        'delete-team',
-        'view-team',
-        'create-user',
-        'edit-user',
-        'delete-user',
-        'view-user',
-        'create-role',
-        'edit-role',
-        'delete-role',
-        'view-role',
-        'create-permission',
-        'edit-permission',
-        'delete-permission',
-        'view-permission',
-        'create-organization',
-        'edit-organization',
-        'delete-organization',
-        'view-organization',
-        'create-project-file',
-        'edit-project-file',
-        'delete-project-file',
-        'view-project-file',
-        'create-client-file',
-        'edit-client-file',
-        'delete-client-file',
-        'view-client-file',
-        'create-task-file',
-        'edit-task-file',
-        'delete-task-file',
-        'view-task-file',
-        'create-team-file',
-        'edit-team-file',
-        'delete-team-file',
-        'view-team-file',
-        'create-user-file',
-        'edit-user-file',
-        'delete-user-file',
-        'view-user-file',
-        'create-role-file',
-        'edit-role-file',
-        'delete-role-file',
-        'view-role-file',
-        'create-permission-file',
-        'edit-permission-file',
-        'delete-permission-file',
-        'view-permission-file',
-        'create-organization-file',
-        'edit-organization-file',
-        'delete-organization-file',
-        'view-organization-file',
-        'create-project-task',
-        'edit-project-task',
-        'delete-project-task',
-        'view-project-task',
-        'create-client-task',
-        'edit-client-task',
-        'delete-client-task',
-        'view-client-task',
-        'create-task-task',
-        'edit-task-task',
-        'delete-task-task',
-        'view-task-task',
-        'create-team-task',
-        'edit-team-task',
-        'delete-team-task',
-        'view-team-task',
-        'create-user-task',
-        'edit-user-task',
-        'delete-user-task',
-        'view-user-task',
-        'create-role-task',
-        'edit-role-task',
-        'delete-role-task',
-        'view-role-task',
-        'create-permission-task',
-        'edit-permission-task',
-        'delete-permission-task',
-        'view-permission-task',
-        'create-organization-task',
-        'edit-organization-task',
-        'delete-organization-task',
-    ];
-
-    foreach($permissions as $permission){
-        \Spatie\Permission\Models\Permission::create(['name' => $permission]);
-    }
-    return 'Permissions created';
-})->name('create-permissions');
 
 
 // New route created for emailer by ajay on 8 april-24
