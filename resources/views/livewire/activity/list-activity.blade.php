@@ -34,7 +34,7 @@
             @foreach($activities as $activity)
             <div class="col-md-4 mb-4" >
                 <div class="card_style card_style-client h-100">
-                    <a href="{{ route('client.profile', $activity->id ) }}" class="card_style-open"><i class='bx bx-chevron-right'></i></a>
+                    <a href="{{ route('activity.profile', $activity->id ) }}" class="card_style-open"><i class='bx bx-chevron-right'></i></a>
                     <div class="card_style-head card_style-client-head mb-3">
                         @if($activity->image)
                             <div class="avatar"><img src="{{ asset('storage/'.$activity->image) }}" alt="" class="img-fluid" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{ $activity->name }}"></div>

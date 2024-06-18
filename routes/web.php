@@ -53,6 +53,7 @@ use Spatie\Permission\Models\Role;
 // OrganizationActivities
 
 use App\Livewire\Activity\ListActivity;
+use App\Livewire\Activity\Activity;
 
 
 
@@ -93,6 +94,7 @@ Route::group(['middleware' => ['myauth']], function() {
     */
 
     Route::get('/activities',ListActivity::class)->name('activity.index');
+    Route::get('/activity/view/{id}',Activity::class)->name('activity.profile');
 
 
     /*
