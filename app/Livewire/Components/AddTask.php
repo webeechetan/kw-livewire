@@ -40,7 +40,11 @@ class AddTask extends Component
     public function mount($project = null){
         $this->project = $project;
         $this->users = User::all();
-        $this->projects = Project::all();
+        // $this->projects = Project::all();
+        $this->projects = Project::whereHas('client',function($query){
+            $query->whereNull('clients.deleted_at');
+        })->get();
+
         if($project){
             $this->project_id = $project->id;
         }

@@ -28,7 +28,7 @@ class ListClient extends Component
     //  filters & sorts
 
     public $sort = 'all';
-    public $filter = 'all';
+    public $status = 'all';
 
 
     public $client_onboard_date;
@@ -63,11 +63,11 @@ class ListClient extends Component
             $clients->orderBy('name','desc');
         }
 
-        if($this->filter == 'active'){
+        if($this->status == 'active'){
             $clients->where('status','active');
-        }elseif($this->filter == 'completed'){
+        }elseif($this->status == 'completed'){
             $clients->where('status','completed');
-        }elseif($this->filter == 'archived'){
+        }elseif($this->status == 'archived'){
             $clients->onlyTrashed();
         }
 
@@ -107,7 +107,7 @@ class ListClient extends Component
     }
 
     public function doesAnyFilterApplied(){
-        return $this->sort != 'all' || $this->filter != 'all';
+        return $this->sort != 'all' || $this->status != 'all';
     }
 
 
