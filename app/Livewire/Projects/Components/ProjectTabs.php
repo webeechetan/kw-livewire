@@ -10,8 +10,6 @@ class ProjectTabs extends Component
     public $project;
     public $currentRoute;
 
-    
-
     public function render()
     {
         $this->authorize('View Project');

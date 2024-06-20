@@ -7,8 +7,8 @@
             <li class="breadcrumb-item active" aria-current="page">{{ $activity->name }}</li>
         </ol>
     </nav>
-    
-    <livewire:Activity.components.activity-tabs :activity="$activity" />
+
+    <livewire:activity.components.activity-tabs :activity="$activity" />
 
       <!-- Dashboard Body -->
       <div class="row">
@@ -216,10 +216,41 @@
             <div class="project-description txtarea">
                 {!! $activity->description ?? 'Not Added' !!}
             </div>
-            <button class="btn btn-primary update-btn d-none mt-2" wire:click="updateDescription('{{ $activity->description }}')">Update</button>
+            <button class="btn btn-primary update-btn d-none mt-2" wire:click="updateDescription">Update</button>
         </div>
         {{-- <a href="javascript:" class="btn_link btn_link-primary">see more</a> --}}
     </div>
 
 
 </div>
+
+@script
+    <script>
+        $(document).ready(function(){
+            $(".update-btn").click(function(){
+                $(".project-description").summernote('destroy');
+                $(".update-btn").toggleClass("d-none");
+            });
+
+            $(".edit-description").click(function(){
+
+                $(".update-btn").toggleClass("d-none");
+
+                $(".project-description").summernote({
+                    height: 200,
+                    toolbar: [
+                        ['font', ['bold', 'underline']],
+                        ['para', ['ul', 'ol']],
+                        ['insert', ['link']],
+                        ['fm-button', ['fm']],
+                    ],
+                    callbacks: {
+                        onChange: function(contents, $editable) {
+                            @this.set('description', contents)
+                        }
+                    },
+                });
+            });
+        });
+    </script>
+@endscript
