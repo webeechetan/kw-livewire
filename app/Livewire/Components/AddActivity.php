@@ -10,6 +10,9 @@ class AddActivity extends Component
 {
     use WithFileUploads;
 
+    protected $listeners = ['editActivity'];
+
+    public $activity;
     public $name;
     public $description;
     public $activity_image;
@@ -23,6 +26,12 @@ class AddActivity extends Component
     }
 
     public function addActivity(){
+
+        if($this->activity){
+            $this->updateActivity();
+            return;
+        }
+
         $this->validate([
             'name' => 'required',
         ]);
@@ -44,6 +53,37 @@ class AddActivity extends Component
         $this->dispatch('activity-added', $activity);
         $this->resetFrom();
 
+    }
+
+    public function editActivity($id){
+        $this->activity = OrganizationActivity::find($id);
+        $this->name = $this->activity->name;
+        $this->description = $this->activity->description;
+        $this->start_date = $this->activity->start_date;
+        $this->end_date = $this->activity->due_date;
+        $this->status = $this->activity->status;
+        $this->dispatch('edit-activity', $this->activity);
+    }
+
+    public function updateActivity(){
+        $this->validate([
+            'name' => 'required',
+        ]);
+
+        $this->activity->name = $this->name;
+        $this->activity->description = $this->description;
+        $this->activity->start_date = $this->start_date;
+        $this->activity->due_date = $this->end_date;
+        $this->activity->status = $this->status;
+        if($this->activity_image){
+            $image = $this->activity_image->store('images/activites');
+            $image = str_replace('public/', '', $image);
+            $this->activity->image = $image;
+        }
+        $this->activity->save();
+        $this->dispatch('success', 'Activity Updated Successfully');
+        $this->dispatch('activity-added', $this->activity);
+        $this->resetFrom();
     }
 
     public function resetFrom(){

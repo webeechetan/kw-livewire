@@ -114,35 +114,48 @@
                 $('.activity_start_date').html('Start Date');
             })
 
-            document.addEventListener('edit-client', event => {
-                $('#add-client-modal').modal('show');
-                if(event.detail[0].onboard_date){
-                    $('.client-onboard-date').html(event.detail[0].onboard_date);
+            document.addEventListener('edit-activity', event => {
+
+                $('#add-activity-modal').modal('show');
+                if(event.detail[0].start_date){
+                    $('.activity_start_date').html(event.detail[0].start_date);
                 }else{
-                    $('.client-onboard-date').html('Select Date');
+                    $('.activity_start_date').html('Start Date');
                 }
-                $('.client-onboard-date').flatpickr({
+                if(event.detail[0].due_date){
+                    $('.activity_end_date').html(event.detail[0].due_date);
+                }else{
+                    $('.activity_end_date').html('End Date');
+                }
+
+                $('.activity_start_date').flatpickr({
                     enableTime: true,
                     dateFormat: "Y-m-d",
-                    defaultDate: event.detail[0].onboard_date,
+                    defaultDate: event.detail[0].start_date,
                     onChange: function(selectedDates, dateStr, instance) {
-                        $(".client-onboard-date").html(dateStr);
-                        @this.set('client_onboard_date', dateStr);
+                        $(".activity_start_date").html(dateStr);
+                        @this.set('start_date', dateStr);
                     },
                 });
-                if(event.detail[0].use_brand_name == 1){
-                    $('#use_brand_name').prop('checked', true);
-                }else{
-                    $('#use_brand_name').prop('checked', false);
-                }
+
+                $('.activity_end_date').flatpickr({
+                    enableTime: true,
+                    dateFormat: "Y-m-d",
+                    defaultDate: event.detail[0].due_date,
+                    onChange: function(selectedDates, dateStr, instance) {
+                        $(".activity_end_date").html(dateStr);
+                        @this.set('end_date', dateStr);
+                    },
+                });
 
                 if (event.detail[0].image) {
                     $(".image-preview-section").removeClass('d-none');
                     $('.image-preview-section').html('<img src="{{ asset('storage') }}/'+event.detail[0].image+'" alt="project image" class="img-fluid">');
                 }
 
-                $('.client-form-text').html('Edit Client');
+                $('.activity-form-text').html('Edit Activity');
                 $('.activity-form-btn').html('Update');
+
             })
 
         });

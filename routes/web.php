@@ -54,6 +54,8 @@ use Spatie\Permission\Models\Role;
 
 use App\Livewire\Activity\ListActivity;
 use App\Livewire\Activity\Activity;
+use App\Livewire\Activity\Components\ActivityTabs;
+use App\Livewire\Activity\Components\Tasks as ActivityTasks;
 
 
 
@@ -92,9 +94,11 @@ Route::group(['middleware' => ['myauth']], function() {
     | OrganizationActivities Routes
     |--------------------------------------------------------------------------
     */
-
+ 
     Route::get('/activities',ListActivity::class)->name('activity.index');
-    Route::get('/activity/view/{id}',Activity::class)->name('activity.profile');
+    Route::get('/activity/view/{organizationActivity}',Activity::class)->name('activity.profile');
+    Route::get('/activity/view/{organizationActivity}/tasks',ActivityTasks::class)->name('activity.tasks')->withTrashed();
+
 
 
     /*
