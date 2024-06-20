@@ -220,7 +220,7 @@
             <div class="project-description txtarea">
                 {!! $project->description ?? 'Not Added' !!}
             </div>
-            <button class="btn btn-primary update-btn d-none mt-2" wire:click="updateDescription('{{ $project->description }}')">Update</button>
+            <button class="btn btn-primary update-btn d-none mt-2" wire:click="updateDescription">Update</button>
         </div>
         {{-- <a href="javascript:" class="btn_link btn_link-primary">see more</a> --}}
     </div>
@@ -261,7 +261,7 @@
             ],
             callbacks: {
                 onChange: function(contents, $editable) {
-                    @this.updateDescription(contents);
+                    @this.set('description', contents)
                 }
             },
         });
