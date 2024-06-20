@@ -10,7 +10,7 @@
     <div class="dashboard-head mb-3">
         <div class="row align-items-center">
             <div class="col d-flex align-items-center gap-3">
-                <h3 class="main-body-header-title mb-0 @if($filter == 'archived') archived_content @endif">All Clients</h3>
+                <h3 class="main-body-header-title mb-0 @if($status == 'archived') archived_content @endif">All Clients</h3>
                 <span class="text-light">|</span>
                 @can('Create Client')
                     <a data-bs-toggle="modal" data-bs-backdrop="false" data-bs-target="#add-client-modal" href="javascript:void(0);" class="btn-border btn-border-sm btn-border-primary"><i class="bx bx-plus"></i> Add Client</a>
@@ -38,18 +38,11 @@
                                         <hr>
                                         <h5 class="filterSort-header"><i class='bx bx-briefcase text-primary' ></i> Filter By Status</h5>
                                         <ul class="filterSort_btn_group list-none">
-                                            <li class="filterSort_item"><a wire:click="$set('filter','all')" class="btn-batch @if($filter == 'all') active @endif">All</a></li>
-                                            <li class="filterSort_item"><a wire:click="$set('filter','active')" class="btn-batch @if($filter == 'active') active @endif">Active</a></li>
-                                            <li class="filterSort_item"><a wire:click="$set('filter','completed')" class="btn-batch @if($filter == 'completed') active @endif">Completed</a></li>
-                                            <li class="filterSort_item"><a wire:click="$set('filter','archived')" class="btn-batch @if($filter == 'archived') active @endif">Archived</a></li>
+                                            <li class="filterSort_item"><a wire:click="$set('status','all')" class="btn-batch @if($status == 'all') active @endif">All</a></li>
+                                            <li class="filterSort_item"><a wire:click="$set('status','active')" class="btn-batch @if($status == 'active') active @endif">Active</a></li>
+                                            <li class="filterSort_item"><a wire:click="$set('status','completed')" class="btn-batch @if($status == 'completed') active @endif">Completed</a></li>
+                                            <li class="filterSort_item"><a wire:click="$set('status','archived')" class="btn-batch @if($status == 'archived') active @endif">Archived</a></li>
                                         </ul>
-                                        {{--<hr>
-                                        <h5 class="filterSort-header"><i class='bx bx-objects-horizontal-left text-primary'></i> Filter By Projects</h5>
-                                        <ul class="filterSort_btn_group list-none">
-                                            <li class="filterSort_item"><a href="#" class="btn-batch">Active</a></li>
-                                            <li class="filterSort_item"><a href="#" class="btn-batch">Completed</a></li>
-                                            <li class="filterSort_item"><a href="#" class="btn-batch">Archive</a></li>
-                                        </ul> --}}
                                     </div>
                                 </div>
                             </div>
@@ -64,10 +57,10 @@
     <div class="row mb-2">
         <div class="col-md-6">
             <div class="dashboard_filters d-flex flex-wrap gap-4 align-items-center mb-4">
-                <a class="@if($filter == 'all') active @endif" wire:click="$set('filter','all')">All <span class="btn-batch">{{ $allClients }}</span></a>
-                <a class="@if($filter == 'active') active @endif" wire:click="$set('filter','active')">Active <span class="btn-batch">{{ $activeClients }}</span></a>
-                <a class="@if($filter == 'completed') active @endif" wire:click="$set('filter','completed')">Completed <span class="btn-batch">{{ $completedClients }}</span></a>
-                <a class="@if($filter == 'archived') active @endif" wire:click="$set('filter','archived')">Archived <span class="btn-batch">{{ $archivedClients }}</span></a>
+                <a class="@if($status == 'all') active @endif" wire:click="$set('status','all')">All <span class="btn-batch">{{ $allClients }}</span></a>
+                <a class="@if($status == 'active') active @endif" wire:click="$set('status','active')">Active <span class="btn-batch">{{ $activeClients }}</span></a>
+                <a class="@if($status == 'completed') active @endif" wire:click="$set('status','completed')">Completed <span class="btn-batch">{{ $completedClients }}</span></a>
+                <a class="@if($status == 'archived') active @endif" wire:click="$set('status','archived')">Archived <span class="btn-batch">{{ $archivedClients }}</span></a>
             </div>
         </div>
         <div class="col-md-6">
@@ -75,7 +68,7 @@
             @if($this->doesAnyFilterApplied())
                 <x-filters-query-params 
                     :sort="$sort" 
-                    :status="$filter" 
+                    :status="$status" 
                     :clients="$clients"
                     :clearFilters="route('client.index')"
                 />
