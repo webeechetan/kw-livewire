@@ -112,7 +112,7 @@
                     :dueDate="$dueDate" 
                     :users="$users" 
                     :teams="$teams"
-                    :clearFilters="route('project.tasks',$activity->id)"
+                    :clearFilters="route('activity.tasks',$activity->id)"
                     />
                 @endif
             </div>
@@ -245,7 +245,23 @@
         });
         
         $(document).ready(function(){
+            $(".start_date").flatpickr({
+                altFormat: "F j, Y",
+                dateFormat: "Y-m-d",
+                onClose: function(selectedDates, dateStr, instance){
+                    @this.set('startDate', dateStr);
+                    $(".start_date").text(dateStr);
+                }
+            });
 
+            $(".due_date").flatpickr({
+                altFormat: "F j, Y",
+                dateFormat: "Y-m-d",
+                onClose: function(selectedDates, dateStr, instance){
+                    @this.set('dueDate', dateStr);
+                    $(".due_date").text(dateStr);
+                }
+            });
         });
     </script>
 @endscript

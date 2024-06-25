@@ -25,7 +25,7 @@ class OrganizationActivityTask extends Model
         return $this->belongsToMany(User::class);
     }
 
-    public function notifiers(){
+    public function notifiers(){ 
         return $this->belongsToMany(User::class, 'organization_activity_task_notify');
     }
 

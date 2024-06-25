@@ -137,32 +137,6 @@
         <div class="col-lg-8">
             <div class="row">
                 <div class="col-lg-6">
-                    <div class="column-box">
-                        <div class="column-head row align-items-center">
-                            <div class="col">
-                                <div class="column-title">Recent Activity</div>
-                            </div>
-                            <div class="col-auto">In this week</div>
-                        </div>
-                        <div class="activity-recent mt-3">
-                            <div class="activity-recent-scroll custom_scrollbar">
-                                {{-- @foreach($activity->activities()->latest()->paginate(10) as $activity)
-                                    <div class="activity row space-last_child_0">
-                                        <div class="activity-profile col-auto pe-0">
-                                            <a href="javascript:" class="avatar" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="{{ $activity->createdBy->name }}" data-bs-original-title="{{ $activity->createdBy->name }}">{{ $activity->createdBy->initials }}</a>
-                                        </div>
-                                        <div class="activity-text col">
-                                            <div class="mb-0 font-500">{{ $activity->createdBy->name }}</div>
-                                            <span class="text-sm">{!! $activity->text !!}</span>
-                                        </div>
-                                        <div class="activity-timeline col-auto text-sm"><span>{{ \Carbon\Carbon::parse($activity->created_at)->diffForHumans() }}</span></div>
-                                    </div>
-                                @endforeach --}}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6">
                     <div class="column-box mb-3">
                         <div class="column-head"><div class="column-title">Assigness</div></div>
                         <!-- Avatar Group -->
@@ -188,18 +162,6 @@
                                         +{{ $usersCount - 10 }}
                                     </a>
                                 @endif
-                            @else
-                                <span>Not added</span>
-                            @endif --}}
-                        </div>
-                    </div>
-                    <div class="column-box">
-                        <div class="column-head"><div class="column-title">Teams</div></div>
-                        <div class="btn-list mt-3">
-                            {{-- @if(count($projectTeams) > 0)
-                                @foreach($projectTeams as $team)
-                                    <a href="javascript:" class="btn-batch">{{ $team->name }} </a>
-                                @endforeach
                             @else
                                 <span>Not added</span>
                             @endif --}}
