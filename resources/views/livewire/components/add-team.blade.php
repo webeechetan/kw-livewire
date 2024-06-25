@@ -48,7 +48,7 @@
                         </div>   
                         <div class="row">
                             <div class="col-md-4 mb-4 mb-lg-0">
-                                <label for="">Assign Manager</label>
+                                <label for="">Assign Manager<sup class="text-primary">*</sup></label>
                             </div>
                             <div class="col-md-8">
                                 <select required wire:model="team_manager" id="" class="form-style team_manager">
