@@ -6,12 +6,14 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use App\Models\OrganizationActivityTask as Task;
+use App\Models\Scopes\OrganizationScope;
 
-class TaskStatusChangeNotification extends Notification implements ShouldQueue
+class ActivityTaskStatusChangeNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    public $task;
+    public $activitytask;
     public $oldStatus;
     public $newStatus;
     public $changedBy;
@@ -19,12 +21,16 @@ class TaskStatusChangeNotification extends Notification implements ShouldQueue
     /**
      * Create a new notification instance.
      */
-    public function __construct($task, $oldStatus, $newStatus, $changedBy)
+    public function __construct($activitytask, $oldStatus, $newStatus, $changedBy)
     {
-        $this->task = $task;
+        $this->activitytask = $activitytask;
         $this->oldStatus = $oldStatus;
         $this->newStatus = $newStatus;
         $this->changedBy = $changedBy;
+
+        //  dd($this->oldStatus);
+        // dd($this->newStatus);
+        // dd($this->changedBy);
     }
 
     /**
@@ -43,8 +49,9 @@ class TaskStatusChangeNotification extends Notification implements ShouldQueue
     public function toMail(object $notifiable): MailMessage
     {
 
+        
         return (new MailMessage)
-            ->view('mails.task-status-change', ['task' => $this->task, 'user' => $notifiable, 'oldStatus' => $this->oldStatus, 'newStatus' => $this->newStatus, 'changedBy' => $this->changedBy]);
+        ->view('mails.activity-task-status-change', ['task' => $this->activitytask, 'user' => $notifiable, 'oldStatus' => $this->oldStatus, 'newStatus' => $this->newStatus, 'changedBy' => $this->changedBy]);
     }
 
     /**

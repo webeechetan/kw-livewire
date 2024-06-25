@@ -4,13 +4,22 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Activity;
+use App\Models\Organization;
+use App\Models\organizationActivity;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Notifications\Notification;
 use App\Models\User;
 use App\Models\Attachment;
 use App\Models\ActivityTaskComment;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
+use App\Observers\Activity\OrganizationActivityTaskObserver;
 
+
+#[ObservedBy(OrganizationActivityTaskObserver::class)]
 class OrganizationActivityTask extends Model
 {
-    use HasFactory;
+    use HasFactory, Notifiable;
 
     public function organizationActivity(){
         return $this->belongsTo(OrganizationActivity::class);
