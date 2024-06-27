@@ -107,6 +107,13 @@
 
             $(".modal-btn").html('Update Team');
             $(".modal-text").html('Edit Team');
+
+
+            if (event.detail[0].image) {
+                $(".image-preview-section").removeClass('d-none');
+                $('.image-preview-section').html('<img src="{{ asset('storage') }}/'+event.detail[0].image+'" alt="project image" class="img-fluid">');
+                }
+
         });
 
         
