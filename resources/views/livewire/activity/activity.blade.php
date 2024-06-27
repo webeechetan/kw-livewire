@@ -99,7 +99,7 @@
                 <div class="column-box font-500 bg-light mb-2">
                     <div class="row align-items-center">
                         <div class="col"><span><i class='bx bx-layer text-secondary' ></i></span> Created By</div>
-                        <div class="col text-secondary">Static Webee</div>                   
+                        <div class="col text-secondary">{{ $activity->createdBy?->name }}</div>                   
                     </div>
                 </div>
                 <div class="column-box font-500 mb-2">
