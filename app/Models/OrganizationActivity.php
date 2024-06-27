@@ -35,4 +35,7 @@ class OrganizationActivity extends Model
     public function tasks(){
         return $this->hasMany(OrganizationActivityTask::class);
     }
+
+
+
 }
