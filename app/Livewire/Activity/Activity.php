@@ -14,6 +14,9 @@ class Activity extends Component
     public $activity;
     public $activityMembers;
     public $description;
+    public $tasks = [];
+    public $users = [];
+    public $user;
 
     public function render()
     {
@@ -23,8 +26,7 @@ class Activity extends Component
     public function mount(OrganizationActivity $organizationActivity)
     {
         $this->activity = $organizationActivity;
-        //  dd($this->activity->countUsers->count());
-        // // // dd($this->activityMembers->count());
+        
 
     }
 
