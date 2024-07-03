@@ -2,7 +2,7 @@
     <!-- Dashboard Header -->
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a wire:navigate href="{{ route('dashboard') }}"><i class='bx bx-line-chart'></i> Webeesocial</a></li>
+            <li class="breadcrumb-item"><a wire:navigate href="{{ route('activity.index') }}"><i class='bx bx-line-chart'></i>Activity</a></li>
             <li class="breadcrumb-item active" aria-current="page">All Activities</li>
         </ol>
     </nav>
@@ -18,8 +18,8 @@
             </div>
             <div class="col">
                 <div class="main-body-header-right">
-                    <form class="search-box" action="">
-                        <input  type="text" class="form-control" placeholder="Search Company">
+                    <form class="search-box" wire:submit="search" action="">
+                        <input wire:model="query"  type="text" class="form-control" placeholder="Search Company">
                         <button type="submit" class="search-box-icon"><i class='bx bx-search me-1'></i> Search</button>
                     </form>
                 </div>

@@ -2,7 +2,7 @@
     <!-- Dashboard Header -->
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a wire:navigate href="{{ route('dashboard') }}"><i class='bx bx-line-chart'></i> Dashboard</a></li>
+            <li class="breadcrumb-item"><a wire:navigate href="{{ route('user.index') }}"><i class='bx bx-line-chart'></i> Users</a></li>
             <li class="breadcrumb-item"><a wire:navigate href="{{ route('user.index') }}">All Users</a></li>
             <li class="breadcrumb-item active" aria-current="page">{{ $user->name }}</li>
         </ol>
