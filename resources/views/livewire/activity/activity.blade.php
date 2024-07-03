@@ -2,8 +2,8 @@
     <!-- Dashboard Header -->
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a wire:navigate href="{{ route('dashboard') }}"><i class='bx bx-line-chart'></i> Dashboard</a></li>
-            <li class="breadcrumb-item"><a wire:navigate href="{{ route('project.index') }}">All Activity</a></li>
+            <li class="breadcrumb-item"><a wire:navigate href="{{ route('activity.index') }}"><i class='bx bx-line-chart'></i> Activity</a></li>
+            <li class="breadcrumb-item"><a wire:navigate href="{{ route('activity.index') }}">All Activity</a></li>
             <li class="breadcrumb-item active" aria-current="page">{{ $activity->name }}</li>
         </ol>
     </nav>
@@ -77,13 +77,7 @@
                     <div class="col">
                         <div class="row align-items-center g-2">
                             <div class="col-auto">
-
-                               
-                                {{-- <h5 class="title-md mb-0">{{$activity->task->users->count()}}</h5> --}}
-                                <h5 class="title-md mb-0">{{$activity->tasks->count()}}</h5>
-
-                                
-
+                                <h5 class="title-md mb-0">{{$activity->tasks->count()}}</h5>                                
                             </div>
                             <div class="col-auto">
                                 <span class="font-400 text-grey">|</span>

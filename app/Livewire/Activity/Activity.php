@@ -26,8 +26,6 @@ class Activity extends Component
     public function mount(OrganizationActivity $organizationActivity)
     {
         $this->activity = $organizationActivity;
-        
-
     }
 
     public function updateDescription(){
