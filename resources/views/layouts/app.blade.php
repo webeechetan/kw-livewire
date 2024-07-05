@@ -118,7 +118,7 @@
                       <a wire:navigate href="{{ route('dashboard') }}" class="@if (request()->routeIs('dashboard')) active @endif"><i class='bx bx-line-chart' ></i> Dashboard</a>
                     </li>
                     <li>
-                      <li><a wire:navigate href="{{ route('activity.index') }}" class="@if (request()->segment(1) == 'activities' || request()->segment(1) == 'activity' ) active @endif"><i class='bx bx-body' ></i> Activities</a></li>
+                      <li><a wire:navigate href="{{ route('activity.index') }}" class="@if (request()->segment(1) == 'activities' || request()->segment(1) == 'activity' ) active @endif"><i class='bx bx-body' ></i> {{ Auth::user()->organizations ? Auth::user()->organizations->name : 'No organization' }}</a></li>
                     </li>
                         @can('View Client')
                             <li><a wire:navigate href="{{ route('client.index') }}" class="@if (request()->segment(1) == 'clients' || request()->segment(1) == 'client' ) active @endif"><i class='bx bx-briefcase-alt-2'></i> Clients</a></li>
