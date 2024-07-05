@@ -2,7 +2,7 @@
     <!-- Dashboard Header -->
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a wire:navigate href="{{ route('activity.index') }}"><i class='bx bx-line-chart'></i>Activity</a></li>
+            <li class="breadcrumb-item"><a wire:navigate href="{{ route('activity.index') }}"><i class='bx bx-line-chart'></i>{{ Auth::user()->organizations ? Auth::user()->organizations->name : 'No organization' }}</a></li>
             <li class="breadcrumb-item active" aria-current="page">All Activities</li>
         </ol>
     </nav>
@@ -30,8 +30,10 @@
     <!-- Dashboard Body -->
     <div class="row mb-2">
         
-
+        @if($activities->isNotEmpty())
+        
             @foreach($activities as $activity)
+           
             <div class="col-md-4 mb-4" >
                 <div class="card_style card_style-client h-100">
                     <a  wire:navigate href="{{ route('activity.profile', $activity->id ) }}" class="card_style-open"><i class='bx bx-chevron-right'></i></a>
@@ -57,13 +59,19 @@
                         </div>
                         <div class="col">
                             <div class="avatarGroup avatarGroup-overlap">
-                               
+                                
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             @endforeach
+        @else
+        <div class="col-md-12 text-center">
+            <img src="{{ asset('assets/images/'.'invite_signup_img.png') }}" width="150" alt="">
+            <h5 class="text text-light mt-3">No Activities found</h5>
+        </div>
+        @endif
         
     </div>
     <!-- Pagination -->

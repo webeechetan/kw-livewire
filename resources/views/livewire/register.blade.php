@@ -30,7 +30,7 @@
                                 <div class="col-md-6">
                                     <div class="form-field mb-3" controlId="signupName">
                                         <div class="form-field-icon"><i class='bx bx-user'></i></div>
-                                        <input type="text" wire:model="name" class="form-control" placeholder="Enter Name"   />
+                                        <input type="text" wire:model="name" class="form-control" placeholder="Organization Name"   />
                                         @error('name') <span class="text-danger">{{ $message }}</span>@enderror
                                     </div>
                                 </div>

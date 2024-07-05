@@ -126,4 +126,11 @@ class User extends Authenticatable
     public function mainTeam(){
         return $this->belongsTo(Team::class,'main_team_id');
     }
+
+
+    //this function to get the loggedin user organization details using auth
+    public function organizations()
+    {
+        return $this->belongsTo(Organization::class, 'org_id');
+    }
 }
