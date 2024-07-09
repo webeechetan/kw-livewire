@@ -59,7 +59,9 @@
                         </div>
                         <div class="col">
                             <div class="avatarGroup avatarGroup-overlap">
-                                
+                                @foreach($activity->users() as $user)
+                                    <x-avatar :user="$user" />
+                                @endforeach
                             </div>
                         </div>
                     </div>

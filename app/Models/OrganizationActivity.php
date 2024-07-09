@@ -36,6 +36,22 @@ class OrganizationActivity extends Model
         return $this->hasMany(OrganizationActivityTask::class);
     }
 
+    public function users(){
+        $tasks = OrganizationActivityTask::where('organization_activity_id',$this->id)->get();
+        $task_users = $tasks->pluck('users')->toArray();
+        $user_ids = [];
+        foreach($task_users as $task_user){
+            foreach($task_user as $user){
+                $user_ids[] = $user['id'];
+            }
+        }
+
+        $user_ids = array_unique($user_ids);
+
+        return User::whereIn('id',$user_ids)->get();
+
+
+    }
 
 
 }

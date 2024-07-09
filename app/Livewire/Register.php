@@ -18,7 +18,7 @@ class Register extends Component
 
     // registration journey properties
     public $companysize;
-    public $step = 2;
+    public $step = 1;
     public $image;
     public $memberemail;
     public $organization;
@@ -130,7 +130,7 @@ class Register extends Component
 
 
         
-        
-        return $this->redirect(route('login'),navigate: true);
+        $this->step = 2;
+        // return $this->redirect(route('login'),navigate: true);
     }
 }
