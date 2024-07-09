@@ -10,6 +10,7 @@
         @endif
 
         @if($status != 'all')
+
             <span class="btn-batch">
                 @if($status == 'active') Active @endif
                 @if($status == 'pending') Assigned @endif

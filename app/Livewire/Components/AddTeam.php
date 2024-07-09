@@ -52,6 +52,7 @@ class AddTeam extends Component
         if ($this->image) {
             $image = $this->image->store('images/teams');
             $image = str_replace('public/', '', $image);
+            $team->image = $image; 
         }
 
         if($team->save()){

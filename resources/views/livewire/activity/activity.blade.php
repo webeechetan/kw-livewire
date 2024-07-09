@@ -2,8 +2,8 @@
     <!-- Dashboard Header -->
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a wire:navigate href="{{ route('dashboard') }}"><i class='bx bx-line-chart'></i> Dashboard</a></li>
-            <li class="breadcrumb-item"><a wire:navigate href="{{ route('project.index') }}">All Activity</a></li>
+            <li class="breadcrumb-item"><a wire:navigate href="{{ route('activity.index') }}"><i class='bx bx-line-chart'></i>{{ Auth::user()->organizations ? Auth::user()->organizations->name : 'No organization' }}</a></li>
+            <li class="breadcrumb-item"><a wire:navigate href="{{ route('activity.index') }}">All Activity</a></li>
             <li class="breadcrumb-item active" aria-current="page">{{ $activity->name }}</li>
         </ol>
     </nav>
@@ -49,8 +49,8 @@
                                     @php
                                         $progress = 0;
                                         
-                                        if($activity->count() > 0){
-                                            $progress = ($activity->where('status', 'completed')->count() / $activity->count()) * 100;
+                                        if($activity->tasks->count() > 0){
+                                            $progress = ($activity->tasks->where('status', 'completed')->count() / $activity->tasks->count()) * 100;
                                         }
                                        
                                     @endphp
@@ -77,13 +77,13 @@
                     <div class="col">
                         <div class="row align-items-center g-2">
                             <div class="col-auto">
-                                <h5 class="title-md mb-0">10</h5>
+                                <h5 class="title-md mb-0">{{$activity->tasks->count()}}</h5>                                
                             </div>
                             <div class="col-auto">
                                 <span class="font-400 text-grey">|</span>
                             </div>
                             <div class="col-auto">
-                                <div class="states_style-text"> Members</div>
+                                <div class="states_style-text">Members</div>
                             </div>
                         </div>
                     </div> 
@@ -134,13 +134,13 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-8">
+        {{-- <div class="col-lg-8">
             <div class="row">
                 <div class="col-lg-6">
                     <div class="column-box mb-3">
-                        <div class="column-head"><div class="column-title">Assigness</div></div>
+                        <div class="column-head"><div class="column-title">Assigness</div></div> --}}
                         <!-- Avatar Group -->
-                        <div class="avatarGroup mt-3">
+                        {{-- <div class="avatarGroup mt-3"> --}}
                             {{-- @php
                                 $usersCount = $project->users->count();  
                             @endphp --}}
@@ -165,12 +165,12 @@
                             @else
                                 <span>Not added</span>
                             @endif --}}
-                        </div>
+                        {{-- </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
     <div class="column-box mt-3">
         <div wire:ignore class="project-description-container">
             <div class="column-title mb-2">Description <a href="javascript:" class="btn-link edit-description"><i class='bx bx-pencil'></i></a></div>

@@ -81,6 +81,7 @@ class TaskListView extends Component
      
     public function mount()
     {
+
             $this->doesAnyFilterApplied();
             $this->authorize('View Task');
             $this->tasks_count = Task::all();
@@ -137,7 +138,6 @@ class TaskListView extends Component
                             ->where('name', 'like', '%' . $this->query . '%')
                     )->get(),
                 ];
-                // dd($this->tasks);
 
             }else{
                 $this->tasks = [
@@ -236,6 +236,7 @@ class TaskListView extends Component
     }
 
     public function doesAnyFilterApplied(){
+
         if($this->sort != 'all' || $this->byProject != 'all' || $this->byClient != 'all' || $this->byUser != 'all' || $this->startDate || $this->dueDate || $this->status != 'all'){
             return true;
         }

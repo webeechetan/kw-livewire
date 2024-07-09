@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('password');
             $table->string('image')->nullable();
             $table->string('color')->default('#000000');
+            $table->string('companysize')->nullable();
+            $table->string('memberemail')->nullable();
             $table->timestamps();
         });
     }

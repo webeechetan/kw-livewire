@@ -2,8 +2,8 @@
 
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a wire:navigate href="{{ route('dashboard') }}"><i class='bx bx-line-chart'></i> Dashboard</a></li>
-            <li class="breadcrumb-item"><a wire:navigate href="{{ route('task.index') }}">All Projects</a></li>
+            <li class="breadcrumb-item"><a wire:navigate href="{{ route('dashboard') }}"><i class='bx bx-line-chart'></i>{{ Auth::user()->organizations ? Auth::user()->organizations->name : 'No organization' }}</a></li>
+            <li class="breadcrumb-item"><a wire:navigate href="{{ route('task.index') }}">All Tasks</a></li>
             <li class="breadcrumb-item active" aria-current="page">List</li>
         </ol>
     </nav>
@@ -158,7 +158,8 @@
         <a wire:click="$set('status', 'completed')" class="btn-border btn-border-success @if($status == 'completed') active @endif">{{ $tasks_count->where('status','completed')->count() }} <span>|</span> Completed</a>
         <a wire:click="$set('status', 'overdue')" class="btn-border btn-border-danger @if($status == 'overdue') active @endif">
             @php
-                $overdue = $tasks_count->where('due_date', '<', now())->count();
+                // $overdue = $tasks_count->where('due_date', '<', now())->count();
+                 $overdue = $tasks_count->where('due_date', '<', now())->where('status', '!=', 'completed')->count();
             @endphp
             {{ $overdue }}
             <span>|</span> Overdue</a>
@@ -166,6 +167,8 @@
 
     <!-- Filters Query Params -->
      @if($this->doesAnyFilterApplied())
+
+     {{$status}}
         <x-filters-query-params 
             :sort="$sort" 
             :status="$status" 
@@ -205,6 +208,8 @@
                 </div>
             </div>
         </div>
+
+       
         <div class="taskList scrollbar">
             <div>
                 @php
@@ -218,6 +223,7 @@
                     $hasTasks = true;
                 @endphp
                     @foreach($tasks[$group] as $task)
+
                         <div class="taskList_row edit-task" data-id="{{ $task->id }}"  wire:key="task-row-{{ $task->id }}">
                             <div class="row">
                                 <div class="col-lg-4">
