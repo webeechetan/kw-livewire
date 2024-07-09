@@ -47,6 +47,9 @@ class Register extends Component
             $user->image = Helper::createAvatar($this->name,'users');
             $user->save();
 
+            setPermissionsTeamId($user->id);
+            $user->assignRole(1);
+
         } catch (\Throwable $th) {
             return $this->alert('error', 'Something went wrong, please try again later');
         }
