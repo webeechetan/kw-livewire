@@ -133,6 +133,9 @@ class Register extends Component
             session()->put('org_name',Organization::find(session('org_id'))->name);
             session()->put('user',User::withoutGlobalScope(OrganizationScope::class)->where('email',$this->email)->first());
 
+            return $this->redirect(route('dashboard'),navigate: true);
+            
+
         } catch (\Throwable $th) {
             dd($th);
             return $this->alert('error', 'Something went wrong, please try again later');

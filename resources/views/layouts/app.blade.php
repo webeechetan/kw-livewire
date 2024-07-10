@@ -126,16 +126,20 @@
                       <li><a wire:navigate href="{{ route('activity.index') }}" class="@if (request()->segment(1) == 'activities' || request()->segment(1) == 'activity' ) active @endif"><i class='bx bx-body' ></i> {{ Auth::user()->organizations ? Auth::user()->organizations->name : 'No organization' }}</a></li>
                     </li>
                         @can('View Client')
-                            <li data-step="1" data-intro='Clcik here to create new client'><a wire:navigate href="{{ route('client.index') }}" class="@if (request()->segment(1) == 'clients' || request()->segment(1) == 'client' ) active @endif"><i class='bx bx-briefcase-alt-2'></i> Clients</a></li>
+                            <li 
+                            data-step="1" 
+                            data-intro='Create your first client' 
+                            data-position='right'
+                            ><a wire:navigate href="{{ route('client.index') }}" class="@if (request()->segment(1) == 'clients' || request()->segment(1) == 'client' ) active @endif"><i class='bx bx-briefcase-alt-2'></i> Clients</a></li>
                         @endcan
                         @can('View Project')
-                            <li data-step="2" data-intro='Clcik here to create new project'><a wire:navigate href="{{ route('project.index') }}" class="@if (request()->segment(1) == 'projects' || request()->segment(1) == 'project' ) active @endif"><i class='bx bx-objects-horizontal-left'></i> Projects</a></li>
+                            <li data-step="2" data-position='right' data-intro='Create your first project'><a wire:navigate href="{{ route('project.index') }}" class="@if (request()->segment(1) == 'projects' || request()->segment(1) == 'project' ) active @endif"><i class='bx bx-objects-horizontal-left'></i> Projects</a></li>
                         @endcan
                         @can('View User')
-                            <li><a wire:navigate href="{{ route('user.index') }}" class="@if (request()->segment(1) == 'users' || request()->segment(1) == 'user' ) active @endif"><i class='bx bx-user'></i> Users</a></li>
+                            <li data-step="3" data-position='right' data-intro='Create your first user'><a wire:navigate href="{{ route('user.index') }}" class="@if (request()->segment(1) == 'users' || request()->segment(1) == 'user' ) active @endif"><i class='bx bx-user'></i> Users</a></li>
                         @endcan
                         @can('View Team')
-                            <li><a wire:navigate href="{{ route('team.index') }}" class="@if (request()->segment(1) == 'teams' || request()->segment(1) == 'team' ) active @endif"><i class='bx bx-sitemap'></i> Teams</a></li>
+                            <li data-step="4" data-position='right' data-intro='Create your first team'><a wire:navigate href="{{ route('team.index') }}" class="@if (request()->segment(1) == 'teams' || request()->segment(1) == 'team' ) active @endif"><i class='bx bx-sitemap'></i> Teams</a></li>
                         @endcan
                         {{-- @can('View Role')
                             <li><a wire:navigate href="{{ route('role.index') }}" class="@if (request()->segment(1) == 'roles' || request()->segment(1) == 'role' ) active @endif"><i class='bx bx-sitemap'></i> Role & Permissions</a></li>
@@ -229,7 +233,11 @@
     @if(session()->has('newly_registered'))
       <script src="https://cdn.jsdelivr.net/npm/intro.js@7.2.0/intro.min.js"></script>
       <script>
-        introJs().start();
+        introJs()
+        .setOptions({
+          showProgress: true,
+        })
+        .start();
       </script>
     @endif
   </body>
