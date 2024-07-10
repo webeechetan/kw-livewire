@@ -25,7 +25,12 @@
     <script src="{{ asset('') }}assets/js/app.js"></script>
 
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"> @livewireStyles @stack('styles')
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"> 
+    @livewireStyles
+    @stack('styles')
+    @if(session()->has('newly_registered'))
+      <link href="https://cdn.jsdelivr.net/npm/intro.js@7.2.0/minified/introjs.min.css" rel="stylesheet">
+    @endif
   </head>
   <body>
 
@@ -121,10 +126,10 @@
                       <li><a wire:navigate href="{{ route('activity.index') }}" class="@if (request()->segment(1) == 'activities' || request()->segment(1) == 'activity' ) active @endif"><i class='bx bx-body' ></i> {{ Auth::user()->organizations ? Auth::user()->organizations->name : 'No organization' }}</a></li>
                     </li>
                         @can('View Client')
-                            <li><a wire:navigate href="{{ route('client.index') }}" class="@if (request()->segment(1) == 'clients' || request()->segment(1) == 'client' ) active @endif"><i class='bx bx-briefcase-alt-2'></i> Clients</a></li>
+                            <li data-step="1" data-intro='Clcik here to create new client'><a wire:navigate href="{{ route('client.index') }}" class="@if (request()->segment(1) == 'clients' || request()->segment(1) == 'client' ) active @endif"><i class='bx bx-briefcase-alt-2'></i> Clients</a></li>
                         @endcan
                         @can('View Project')
-                            <li><a wire:navigate href="{{ route('project.index') }}" class="@if (request()->segment(1) == 'projects' || request()->segment(1) == 'project' ) active @endif"><i class='bx bx-objects-horizontal-left'></i> Projects</a></li>
+                            <li data-step="2" data-intro='Clcik here to create new project'><a wire:navigate href="{{ route('project.index') }}" class="@if (request()->segment(1) == 'projects' || request()->segment(1) == 'project' ) active @endif"><i class='bx bx-objects-horizontal-left'></i> Projects</a></li>
                         @endcan
                         @can('View User')
                             <li><a wire:navigate href="{{ route('user.index') }}" class="@if (request()->segment(1) == 'users' || request()->segment(1) == 'user' ) active @endif"><i class='bx bx-user'></i> Users</a></li>
@@ -220,5 +225,12 @@
       });
 
     </script>
+
+    @if(session()->has('newly_registered'))
+      <script src="https://cdn.jsdelivr.net/npm/intro.js@7.2.0/intro.min.js"></script>
+      <script>
+        introJs().start();
+      </script>
+    @endif
   </body>
 </html>

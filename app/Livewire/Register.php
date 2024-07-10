@@ -11,6 +11,8 @@ use Spatie\Permission\Models\Role;
 use Livewire\WithFileUploads;
 use Spatie\Permission\Models\Permission;
 use App\Helpers\Helper;
+use App\Models\Scopes\OrganizationScope;
+
 
 class Register extends Component
 {
@@ -124,6 +126,12 @@ class Register extends Component
 
             setPermissionsTeamId($organization->id);
             $user->assignRole($admin_id);
+            Auth::login($user);
+            session()->put('newly_registered',true);
+            session()->put('guard','web');
+            session()->put('org_id',User::withoutGlobalScope(OrganizationScope::class)->where('email',$this->email)->first()->org_id);
+            session()->put('org_name',Organization::find(session('org_id'))->name);
+            session()->put('user',User::withoutGlobalScope(OrganizationScope::class)->where('email',$this->email)->first());
 
         } catch (\Throwable $th) {
             dd($th);
@@ -143,16 +151,12 @@ class Register extends Component
             'companysize'=>'required|integer',
         ]);
 
-
         $user = Auth::user();
-        dd($user);
         $organization = Organization::where('id', $user->org_id)->first();
         $organization->companysize = $this->companysize;
-        
         $organization->save();
         $this->dispatch('success', 'Company size added');
-
-        $this->step = 2;
+        $this->step = 3;
 
     }
 
@@ -167,7 +171,7 @@ class Register extends Component
         $organization->memberemail = $this->memberemail;
         $this->dispatch('success', 'Member email  added');
 
-        $this->step = 3;    
+        $this->step = 4;    
     }
 
 

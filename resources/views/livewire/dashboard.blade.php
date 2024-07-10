@@ -13,6 +13,9 @@
                     <div class="col-md">
                         <div class="welcome-box">
                             <h2 class="title">Hi {{ Auth::guard(session('guard'))->user()->name }}, <br /><b>Welcome back</b></h2>
+                            @if(session()->has('newly_registered'))
+                                <p class="text-muted">You have successfully registered. Please check your email to verify your account.</p>
+                            @endif
                             {{-- {{ Auth::user()->roles->pluck('name') }} --}}
                         </div>
                     </div>
