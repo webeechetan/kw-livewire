@@ -6,7 +6,9 @@ use Livewire\Component;
 use App\Models\Organization;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Role;
+use Livewire\WithFileUploads;
 use Spatie\Permission\Models\Permission;
 use App\Helpers\Helper;
 
@@ -133,4 +135,40 @@ class Register extends Component
         $this->step = 2;
         // return $this->redirect(route('login'),navigate: true);
     }
+
+
+    public function registerStepOne(){
+
+        $this->validate([
+            'companysize'=>'required|integer',
+        ]);
+
+
+        $user = Auth::user();
+        dd($user);
+        $organization = Organization::where('id', $user->org_id)->first();
+        $organization->companysize = $this->companysize;
+        
+        $organization->save();
+        $this->dispatch('success', 'Company size added');
+
+        $this->step = 2;
+
+    }
+
+    public function registerStepTwo()
+    {
+        $this->validate([
+            'memberemail'=>'required|email',
+        ]);
+
+        $user = Auth::user();
+        $organization = Organization::where('id', $user->org_id)->first();
+        $organization->memberemail = $this->memberemail;
+        $this->dispatch('success', 'Member email  added');
+
+        $this->step = 3;    
+    }
+
+
 }

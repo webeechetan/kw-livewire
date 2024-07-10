@@ -10,10 +10,12 @@ use Livewire\WithFileUploads;
 
 class RegistrationJourney extends Component
 {
+    use WithFileUploads;
 
     public $companysize;
     public $step = 1;
     public $image;
+    public $logo;
     public $memberemail;
     public $organization;
 
@@ -49,6 +51,7 @@ class RegistrationJourney extends Component
         $user = Auth::user();
         $organization = Organization::where('id', $user->org_id)->first();
         $organization->memberemail = $this->memberemail;
+        $organization->save();
         $this->dispatch('success', 'Member email  added');
 
         $this->step = 3;    
@@ -56,6 +59,18 @@ class RegistrationJourney extends Component
 
     public function dashboard()
     {
+
+        $user = Auth::user();
+        $organization = Organization::where('id', $user->org_id)->first();
+
+        
+            $image = $this->logo->store('images/organizations');
+            $image = str_replace('public/', '', $image);
+            $organization->image = $image;
+            $organization->save();
+        
+            
+       
         return redirect()->route('dashboard');
     }
 }

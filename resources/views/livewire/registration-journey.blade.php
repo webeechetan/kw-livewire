@@ -71,7 +71,7 @@
                        </form>
                        @endif
 
-                       @if($step == 3)
+                       {{-- @if($step == 3)
                        <form wire:submit="dashboard" method="POST">
                         <div class="mb-3" >
                             <div class="form-field">
@@ -97,8 +97,36 @@
                              <a wire:navigate href="{{ route('login') }}" class="text-link">Skip for now</a>
                          </div>
                         </div>
-                    </form>
-                       @endif
+                        </form>
+                       @endif --}}
+
+                       @if($step == 3)
+    <form wire:submit.prevent="dashboard" method="POST" enctype="multipart/form-data">
+        
+        <div class="mb-3">
+            <div class="form-field">
+                <div class="form-field-icon">
+                    <i class='bx bx-upload'></i>
+                </div>
+                {{-- <input type="file" wire:model="logo" class="form-control" /> --}}
+                <input class="form-control" type="file" wire:model="logo" accept="image/jpeg, image/jpg, image/png, image/gif">
+                @error('logo') <span class="text-danger">{{ $message }}</span> @enderror
+            </div>
+        </div>
+        {{-- @if(session()->has('error'))
+            <div class="col text-center">
+                <div class="text-danger">
+                    {{ session('error') }}
+                </div>
+            </div>
+        @endif --}}
+        <div class="mt-2">
+            <div class="col">
+                <button class="w-100 btn btn-primary" type="submit">Submit</button>
+            </div>
+        </div>
+    </form>
+@endif
                    </div>
                </div>
            </div>
