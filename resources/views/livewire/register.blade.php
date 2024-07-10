@@ -8,9 +8,11 @@
                     </div>
                 </div>
                 <div class="col-sm-6 text-md-end">
+                    @if(!in_array($step, [2, 3]))
                     <a wire:navigate href="/login">
                         <button class="btn btn-primary-border btn-smt">Sign In</button>
                     </a>
+                    @endif
                 </div>
             </div>
         </div>
@@ -102,7 +104,7 @@
                         </div>
                         <div class="signin-content-right-btm mt-4">
                             @if($step == 2)
-                            <form wire:submit="registerstepone" method="POST">
+                            <form wire:submit="registerStepOne" method="POST">
                                 <div class="mb-3" >
                                     <div class="form-field">
                                         <input type="number" wire:model="companysize" class="form-control" placeholder="Enter Company Size" required />
@@ -125,7 +127,7 @@
                             </form>
                             @endif
                             @if($step == 3)
-                            <form wire:submit="registersteptwo" method="POST">
+                            <form wire:submit="registerStepTwo" method="POST">
                                 <div class="mb-3" >
                                     <div class="form-field">   
                                      <div class="form-field-icon">
