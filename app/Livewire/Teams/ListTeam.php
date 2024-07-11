@@ -68,6 +68,12 @@ class ListTeam extends Component
     public function mount(){
         $this->authorize('View Team');
         $this->users = User::all();
+
+        $tour = session()->get('tour');
+        if(request()->tour == 'close-team-tour'){
+            $tour['team_tour'] = false;
+            session()->put('tour',$tour);
+        }
     }
 
     public function refresh(){

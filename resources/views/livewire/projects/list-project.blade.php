@@ -13,16 +13,16 @@
                 <h3 class="main-body-header-title mb-0 @if($filter == 'archived') archived_content @endif">All Projects</h3>
                 @can('Create Project')
                     <span class="text-light">|</span>
-                    <a data-bs-toggle="modal" data-bs-target="#add-project-modal" href="javascript:void(0);" class="btn-border btn-border-sm btn-border-primary"><i class="bx bx-plus"></i> Add Project</a>
+                    <a data-step="1" data-intro='Create your first project' data-position='right' data-bs-toggle="modal" data-bs-target="#add-project-modal" href="javascript:void(0);" class="btn-border btn-border-sm btn-border-primary"><i class="bx bx-plus"></i> Add Project</a>
                 @endcan
             </div>
             <div class="col">
                 <div class="main-body-header-right">
-                    <form class="search-box" wire:submit="search" action="">
+                    <form class="search-box" wire:submit="search" action="" data-step="2" data-intro='Search Project' data-position='bottom'>
                         <input wire:model="query" type="text" class="form-control" placeholder="Search Projects...">
                         <button type="submit" class="search-box-icon"><i class='bx bx-search me-1'></i> Search</button>
                     </form>
-                    <div class="main-body-header-filters">
+                    <div class="main-body-header-filters" data-step="3" data-intro='Filter Project' data-position='bottom'>
                         <div class="cus_dropdown" wire:ignore.self>
                             <div class="cus_dropdown-icon btn-border btn-border-secondary"><i class='bx bx-filter-alt' ></i> Filter</div>
                             <div class="cus_dropdown-body cus_dropdown-body-widh_l">
@@ -234,3 +234,29 @@
     <livewire:components.add-project @saved="$refresh" />
     
 </div>
+
+@php
+    $tour = session()->get('tour');
+@endphp
+
+@if($tour['project_tour'])
+    @assets
+        <link href="https://cdn.jsdelivr.net/npm/intro.js@7.2.0/minified/introjs.min.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/intro.js@7.2.0/intro.min.js"></script>
+    @endassets
+@endif
+
+@if($tour['project_tour'])
+    @script
+            <script>
+                introJs()
+                .setOptions({
+                showProgress: true,
+                })
+                .onbeforeexit(function () {
+                    location.href = "{{ route('project.index') }}?tour=close-project-tour";
+                })
+                .start();
+            </script>
+    @endscript
+@endif

@@ -100,6 +100,12 @@ class ListUser extends Component
         $this->authorize('View User');
         $this->teams = Team::orderBy('name')->get();
         $this->projects = Project::orderBy('name')->get();
+
+        $tour = session()->get('tour');
+        if(request()->tour == 'close-user-tour'){
+            $tour['user_tour'] = false;
+            session()->put('tour',$tour);
+        }
     }
 
     public function search()

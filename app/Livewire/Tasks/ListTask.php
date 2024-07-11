@@ -172,6 +172,12 @@ class ListTask extends Component
                 ];
             }
 
+            $tour = session()->get('tour');
+            if(request()->tour == 'close-task-tour'){
+                $tour['task_tour'] = false;
+                session()->put('tour',$tour);
+            }
+
 
     }
 
