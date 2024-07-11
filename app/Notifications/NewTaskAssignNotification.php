@@ -50,8 +50,8 @@ class NewTaskAssignNotification extends Notification implements ShouldQueue
         $notification = new NotificationModel();
         $notification->org_id = $task->org_id;
         $notification->user_id = $notifiable->id;
-        $notification->title = 'You have been assigned a new task '.$task->name;
-        $notification->message = 'You have been assigned a new task '.$task->name;
+        $notification->title = 'You have been assigned a new task '.$task->name. 'by your organization';
+        $notification->message = 'You have been assigned a new task '.$task->name. 'by your organization';
         $notification->save();
 
         return (new MailMessage)
