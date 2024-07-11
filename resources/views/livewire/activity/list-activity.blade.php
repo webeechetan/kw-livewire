@@ -55,13 +55,17 @@
                     <hr class="my-2">
                     <div class="row align-items-center">
                         <div class="col-auto">
-                            <h4 class="text-md mb-0"><i class="bx bx-user text-primary"></i> Users</h4> 
+                            <h4 class="text-md mb-0"><i class="bx bx-user text-primary"></i> {{ count($activity->users()) > 1 ? 'Users' : 'User'}}</h4> 
                         </div>
                         <div class="col">
                             <div class="avatarGroup avatarGroup-overlap">
-                                @foreach($activity->users() as $user)
-                                    <x-avatar :user="$user" />
-                                @endforeach
+                                @if(count($activity->users()) > 0)
+                                    @foreach($activity->users() as $user)
+                                        <x-avatar :user="$user" />
+                                    @endforeach
+                                @else
+                                <div class="text-light">No User Assigned</div>
+                                @endif
                             </div>
                         </div>
                     </div>
