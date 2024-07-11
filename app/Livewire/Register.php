@@ -142,7 +142,7 @@ class Register extends Component
             session()->put('org_name',Organization::find(session('org_id'))->name);
             session()->put('user',User::withoutGlobalScope(OrganizationScope::class)->where('email',$this->email)->first());
             session()->put('tour',$tour);
-            return $this->redirect(route('dashboard'));
+            // return $this->redirect(route('dashboard'));
             
 
         } catch (\Throwable $th) {
