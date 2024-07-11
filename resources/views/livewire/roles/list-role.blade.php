@@ -13,12 +13,12 @@
                 <h3 class="main-body-header-title mb-0">All Roles</h3>
                 <span class="text-light">|</span>
                 @can('Create Role')
-                    <a data-bs-toggle="modal" data-bs-target="#add-role-modal" href="javascript:void(0);" class="btn-border btn-border-sm btn-border-primary"><i class="bx bx-plus"></i> Create Role</a>
+                    <a data-step="1" data-intro='Create roles' data-position='right' data-bs-toggle="modal" data-bs-target="#add-role-modal" href="javascript:void(0);" class="btn-border btn-border-sm btn-border-primary"><i class="bx bx-plus"></i> Create Role</a>
                 @endcan
             </div>
             <div class="col">
                 <div class="main-body-header-right">
-                    <form class="search-box" wire:submit="search" action="">
+                    <form class="search-box" wire:submit="search" action="" data-step="2" data-intro='Search Role' data-position='bottom'>
                         <input wire:model="query" type="text" class="form-control" placeholder="Search Company">
                         <button type="submit" class="search-box-icon"><i class='bx bx-search me-1'></i> Search</button>
                     </form>
@@ -86,3 +86,30 @@
         });
     </script>
 @endscript
+
+
+@php
+    $tour = session()->get('tour');
+@endphp
+
+@if($tour['client_tour'])
+    @assets
+        <link href="https://cdn.jsdelivr.net/npm/intro.js@7.2.0/minified/introjs.min.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/intro.js@7.2.0/intro.min.js"></script>
+    @endassets
+@endif
+
+@if($tour['role_tour'])
+    @script
+            <script>
+                introJs()
+                .setOptions({
+                showProgress: true,
+                })
+                .onbeforeexit(function () {
+                    location.href = "{{ route('role.index') }}?tour=close-role-tour";
+                })
+                .start();
+            </script>
+    @endscript
+@endif

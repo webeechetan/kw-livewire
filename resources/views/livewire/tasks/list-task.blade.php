@@ -13,16 +13,16 @@
                 <h3 class="main-body-header-title mb-0">All Tasks</h3>
                 <span class="text-light">|</span>
                 @can('Create Task')
-                    <a data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" href="javascript:void(0);" class="btn-border btn-sm btn-border-primary toggleForm"><i class="bx bx-plus"></i> Add Task</a>
+                    <a data-step="1" data-intro='Create your first task' data-position='right' data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" href="javascript:void(0);" class="btn-border btn-sm btn-border-primary toggleForm"><i class="bx bx-plus"></i> Add Task</a>
                 @endcan
             </div>
             <div class="col">
                 <div class="main-body-header-right">
-                    <form class="search-box" wire:submit="search" action="">
+                    <form class="search-box" wire:submit="search" action="" data-step="2" data-intro='Search Task' data-position='bottom'>
                         <input wire:model="query" type="text" class="form-control" placeholder="Search Task">
                         <button type="submit" class="search-box-icon"><i class='bx bx-search me-1'></i> Search</button>
                     </form>
-                    <div class="main-body-header-filters">
+                    <div class="main-body-header-filters" data-step="3" data-intro='Filter Task' data-position='bottom'>
                         <div class="cus_dropdown" wire:ignore.self>
                             <div class="cus_dropdown-icon btn-border btn-border-secondary"><i class='bx bx-filter-alt' ></i> Filter</div>
                             <div class="cus_dropdown-body cus_dropdown-body-widh_l">
@@ -322,3 +322,30 @@
     
 </script>
 @endscript
+
+@php
+    $tour = session()->get('tour');
+@endphp
+
+@if($tour['task_tour'])
+    @assets
+        <link href="https://cdn.jsdelivr.net/npm/intro.js@7.2.0/minified/introjs.min.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/intro.js@7.2.0/intro.min.js"></script>
+    @endassets
+@endif
+
+@if($tour['task_tour'])
+    @script
+            <script>
+                introJs()
+                .setOptions({
+                showProgress: true,
+                })
+                .onbeforeexit(function () {
+                    location.href = "{{ route('task.index') }}?tour=close-task-tour";
+                })
+                .start();
+            </script>
+    @endscript
+@endif
+

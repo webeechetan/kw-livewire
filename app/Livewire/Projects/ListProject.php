@@ -119,6 +119,13 @@ class ListProject extends Component
         $this->users = User::all();
         $this->clients = Client::all();
         $this->teams = Team::orderBy('name')->get();
+
+        $tour = session()->get('tour');
+        if(request()->tour == 'close-project-tour'){
+            $tour['project_tour'] = false;
+            session()->put('tour',$tour);
+        }
+
     }
 
     public function search(){
