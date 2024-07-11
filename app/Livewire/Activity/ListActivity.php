@@ -23,24 +23,26 @@ class ListActivity extends Component
     public $status = 'all';
 
     public function render()
-    {
+    {      
         
-        $activities = OrganizationActivity::where('name','like','%'.$this->query.'%');
         return view('livewire.activity.list-activity');
     }
 
     public function mount()
     {
-      
-        // $this->activities = OrganizationActivity::all();
-        $this->activities = OrganizationActivity::where('org_id', Auth::user()->org_id)->get();
 
         
-    
+        $this->activities = OrganizationActivity::where('name','like','%'.$this->query.'%')->where('org_id', Auth::user()->org_id)->get();
+
+        
+        // $this->activities = OrganizationActivity::all();
+        //$this->activities = OrganizationActivity::where('org_id', Auth::user()->org_id)->get();
     }
 
     public function search()
     {
+
+        $this->activities = OrganizationActivity::where('name','like','%'.$this->query.'%')->where('org_id', Auth::user()->org_id)->get();
         $this->resetPage();
     }
 }
