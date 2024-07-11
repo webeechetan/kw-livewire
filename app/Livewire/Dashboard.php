@@ -9,4 +9,12 @@ class Dashboard extends Component
     {
         return view('livewire.dashboard');
     }
+
+    public function mount(){
+        $tour = session()->get('tour');
+        if(request()->tour == 'close-main-tour'){
+            $tour['main_tour'] = false;
+            session()->put('tour',$tour);
+        }
+    }
 }

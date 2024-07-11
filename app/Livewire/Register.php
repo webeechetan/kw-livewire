@@ -126,14 +126,23 @@ class Register extends Component
 
             setPermissionsTeamId($organization->id);
             $user->assignRole($admin_id);
+            $tour = [
+                'main_tour' => 'true',
+                'client_tour' => 'true',
+                'project_tour' => 'true',
+                'team_tour' => 'true',
+                'task_tour' => 'true',
+                'user_tour' => 'true',
+                'role_tour' => 'true',
+            ];
             Auth::login($user);
             session()->put('newly_registered',true);
             session()->put('guard','web');
             session()->put('org_id',User::withoutGlobalScope(OrganizationScope::class)->where('email',$this->email)->first()->org_id);
             session()->put('org_name',Organization::find(session('org_id'))->name);
             session()->put('user',User::withoutGlobalScope(OrganizationScope::class)->where('email',$this->email)->first());
-
-            return $this->redirect(route('dashboard'),navigate: true);
+            session()->put('tour',$tour);
+            return $this->redirect(route('dashboard'));
             
 
         } catch (\Throwable $th) {

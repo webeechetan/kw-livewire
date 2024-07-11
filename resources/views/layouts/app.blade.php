@@ -28,9 +28,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"> 
     @livewireStyles
     @stack('styles')
-    @if(session()->has('newly_registered'))
-      <link href="https://cdn.jsdelivr.net/npm/intro.js@7.2.0/minified/introjs.min.css" rel="stylesheet">
-    @endif
   </head>
   <body>
 
@@ -118,6 +115,9 @@
     <div class="main-body">
         <aside class="sidebar-l">
             <div class="sidebar-l-menu">
+              @php
+                $tour = session()->get('tour');
+              @endphp
                 <ul class="list-none menu-sidebar">
                     <li>
                       <a wire:navigate href="{{ route('dashboard') }}" class="@if (request()->routeIs('dashboard')) active @endif"><i class='bx bx-line-chart' ></i> Dashboard</a>
@@ -127,19 +127,21 @@
                     </li>
                         @can('View Client')
                             <li 
-                            data-step="1" 
-                            data-intro='Create your first client' 
-                            data-position='right'
+                            @if($tour['main_tour'])
+                              data-step="1" 
+                              data-intro='Create your first client' 
+                              data-position='right'
+                            @endif
                             ><a wire:navigate href="{{ route('client.index') }}" class="@if (request()->segment(1) == 'clients' || request()->segment(1) == 'client' ) active @endif"><i class='bx bx-briefcase-alt-2'></i> Clients</a></li>
                         @endcan
                         @can('View Project')
-                            <li data-step="2" data-position='right' data-intro='Create your first project'><a wire:navigate href="{{ route('project.index') }}" class="@if (request()->segment(1) == 'projects' || request()->segment(1) == 'project' ) active @endif"><i class='bx bx-objects-horizontal-left'></i> Projects</a></li>
+                            <li @if($tour['main_tour']) data-step="2" data-position='right' data-intro='Create your first project' @endif><a wire:navigate href="{{ route('project.index') }}" class="@if (request()->segment(1) == 'projects' || request()->segment(1) == 'project' ) active @endif"><i class='bx bx-objects-horizontal-left'></i> Projects</a></li>
                         @endcan
                         @can('View User')
-                            <li data-step="3" data-position='right' data-intro='Create your first user'><a wire:navigate href="{{ route('user.index') }}" class="@if (request()->segment(1) == 'users' || request()->segment(1) == 'user' ) active @endif"><i class='bx bx-user'></i> Users</a></li>
+                            <li @if($tour['main_tour']) data-step="3" data-position='right' data-intro='Create your first user' @endif><a wire:navigate href="{{ route('user.index') }}" class="@if (request()->segment(1) == 'users' || request()->segment(1) == 'user' ) active @endif"><i class='bx bx-user'></i> Users</a></li>
                         @endcan
                         @can('View Team')
-                            <li data-step="4" data-position='right' data-intro='Create your first team'><a wire:navigate href="{{ route('team.index') }}" class="@if (request()->segment(1) == 'teams' || request()->segment(1) == 'team' ) active @endif"><i class='bx bx-sitemap'></i> Teams</a></li>
+                            <li  @if($tour['main_tour']) data-step="4" data-position='right' data-intro='Create your first team' @endif><a wire:navigate href="{{ route('team.index') }}" class="@if (request()->segment(1) == 'teams' || request()->segment(1) == 'team' ) active @endif"><i class='bx bx-sitemap'></i> Teams</a></li>
                         @endcan
                         {{-- @can('View Role')
                             <li><a wire:navigate href="{{ route('role.index') }}" class="@if (request()->segment(1) == 'roles' || request()->segment(1) == 'role' ) active @endif"><i class='bx bx-sitemap'></i> Role & Permissions</a></li>
@@ -229,16 +231,5 @@
       });
 
     </script>
-
-    @if(session()->has('newly_registered'))
-      <script src="https://cdn.jsdelivr.net/npm/intro.js@7.2.0/intro.min.js"></script>
-      <script>
-        introJs()
-        .setOptions({
-          showProgress: true,
-        })
-        .start();
-      </script>
-    @endif
   </body>
 </html>
