@@ -14,8 +14,11 @@ use App\Helpers\Helper;
 use App\Models\Scopes\OrganizationScope;
 
 
+
 class Register extends Component
 {
+    use WithFileUploads;
+
     public $name;
     public $email;
     public $password;
@@ -141,9 +144,7 @@ class Register extends Component
             session()->put('org_id',User::withoutGlobalScope(OrganizationScope::class)->where('email',$this->email)->first()->org_id);
             session()->put('org_name',Organization::find(session('org_id'))->name);
             session()->put('user',User::withoutGlobalScope(OrganizationScope::class)->where('email',$this->email)->first());
-            session()->put('tour',$tour);
-            // return $this->redirect(route('dashboard'));
-            
+            session()->put('tour',$tour);            
 
         } catch (\Throwable $th) {
             dd($th);
@@ -158,18 +159,17 @@ class Register extends Component
 
 
     public function registerStepOne(){
-
-        $this->validate([
-            'companysize'=>'required|integer',
-        ]);
-
+        
         $user = Auth::user();
         $organization = Organization::where('id', $user->org_id)->first();
-        $organization->companysize = $this->companysize;
-        $organization->save();
-        $this->dispatch('success', 'Company size added');
-        $this->step = 3;
-
+        if($this->image){
+            $image = $organization->image = $this->image->store('images/organizations');
+            $image = str_replace('public/', '', $image);
+            $organization->image = $image;
+            $organization->save();
+            $this->dispatch('success', 'Company size added');
+            return $this->redirect(route('dashboard'));
+        }
     }
 
     public function registerStepTwo()

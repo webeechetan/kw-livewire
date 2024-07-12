@@ -100,14 +100,14 @@
                 <div class="col-md-6">
                     <div class="signin-content-right text-center text-md-start space-sec">
                         <div class="signin-content-right-top">
-                            <h6 class="title">Registration Journey</h6>
+                            <h6 class="title">Upload Logo</h6>
                         </div>
                         <div class="signin-content-right-btm mt-4">
-                            <form wire:submit="registerStepOne" method="POST">
+                            <form wire:submit="registerStepOne" method="POST" enctype="multipart/form-data">
                                 <div class="mb-3" >
                                     <div class="form-field">
-                                        <input type="number" wire:model="companysize" class="form-control" placeholder="Enter Company Size" required />
-                                        @error('companysize') <span class="text-danger">{{ $message }}</span>@enderror
+                                        <input type="file" wire:model="image" class="form-control" />
+                                        @error('image') <span class="text-danger">{{ $message }}</span>@enderror
                                     </div>
                                 </div>
                                 @if(session()->has('error'))
@@ -118,10 +118,10 @@
                                     </div>
                                 @endif
                                 <div class="col-12 mb-4">
-                                    <button class="w-100 btn btn-primary" type="submit">Next</button>
+                                    <button class="w-100 btn btn-primary" type="submit">Done</button>
                                 </div>
                                 <div class="col-12 text-center">
-                                    <a wire:navigate href="{{ route('login') }}" class="text-link">Skip for now</a>
+                                    <a wire:navigate href="{{ route('dashboard') }}" class="text-link">Skip for now</a>
                                 </div>
                             </form>
                             @if($step == 3)

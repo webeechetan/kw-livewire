@@ -23,16 +23,20 @@
               <a href="javascript:void(0);" class="avatar avatar-sm avatar-green">Sk</a>
             </div>
             <div class="team-text col">
-              <div class="mb-1 text-sm">{{$notification->title}}</div>
+              <div class="mb-1 text-sm">
+                <a href="{{ $notification->url }}">
+                  {{$notification->title}}
+                </a>
+              </div>
               <span class="text-sm text-muted">{{ \Carbon\Carbon::parse($notification->created_at)->diffForHumans() }}</span>
             </div>
-            <div class="col-auto">
+            {{-- <div class="col-auto">
               <div>
                 <a href="javascript:void(0);void(0)" class="dropdown-notifications-archive">
                   <span class="bx bx-x"></span>
                 </a>
               </div>
-            </div>
+            </div> --}}
           </div>
         </li>
         @empty

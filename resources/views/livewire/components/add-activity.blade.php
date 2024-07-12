@@ -14,7 +14,7 @@
                                     <label for="">Activity Name<sup class="text-primary">*</sup></label>
                                 </div>
                                 <div class="col-md-8 mb-4">
-                                    <input wire:model="name" type="text" class="form-style" placeholder="activity Name" required>
+                                    <input wire:model="name" type="text" class="form-style" placeholder="Activity Name" required>
                                 </div>
                             </div>
                             <div class="row mt-1">

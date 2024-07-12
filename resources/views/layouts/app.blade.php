@@ -44,7 +44,11 @@
               <img src="{{ asset('') }}assets/images/logo-icon.png" alt="Kaykewalk Logo" />
             </span>
             <span>
-              <img src="{{ asset('') }}assets/images/webeesocial-logo.png" alt="Webeesocial Logo" />
+              @if(auth()->user()->organizations->image)
+                <img src="{{ asset('storage/'.auth()->user()->organizations->image) }}" alt="Organization Logo" />
+              @else
+                <img src="{{ asset('') }}assets/images/webeesocial-logo.png" alt="Webeesocial Logo" />
+              @endif
             </span>
           </div>
         </div>
@@ -195,7 +199,7 @@
       });
       $('.cus_dropdown-icon, .filterSort').click(function() {
         event.stopPropagation();
-      });
+      }); 
       $('html').click(function() {
         $('.cus_dropdown').removeClass('open');
       });
