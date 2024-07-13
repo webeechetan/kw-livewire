@@ -152,8 +152,8 @@ class Register extends Component
 
 
         
-        $this->step = 2;
-        // return $this->redirect(route('login'),navigate: true);
+         //$this->step = 2;
+         return $this->redirect(route('login'),navigate: true);
     }
 
 
