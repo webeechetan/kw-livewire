@@ -145,7 +145,8 @@
                 $('#add-client-modal').modal('hide');
                 $('.client-form-text').html('Add Client');
                 $('.client-form-btn').html('Add Client');
-                $('.old-image').addClass('d-none');
+                // $('.old-image').addClass('d-none');
+                $('.image-preview-section').addClass('d-none');
                 $('.old-image-src').attr('src', '');
                 $('.client-onboard-date').html('Select Date'); 
             })

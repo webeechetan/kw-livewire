@@ -77,6 +77,7 @@
     <script>
         document.addEventListener('team-added', event => {
             $("#add-team-modal").modal('hide');
+            $('.image-preview-section').addClass('d-none');
         });
 
         document.addEventListener('team-updated', event => {

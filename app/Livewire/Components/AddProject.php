@@ -177,5 +177,6 @@ class AddProject extends Component
         $this->project_description = '';
         $this->project_start_date = null;
         $this->project = null;
+        $this->image = null;
     }
 }
