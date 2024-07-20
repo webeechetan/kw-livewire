@@ -103,7 +103,8 @@ class ListUser extends Component
 
         $tour = session()->get('tour');
         if(request()->tour == 'close-user-tour'){
-            $tour['user_tour'] = false;
+            // $tour['user_tour'] = false;
+            unset($tour['user_tour']);
             session()->put('tour',$tour);
         }
     }

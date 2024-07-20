@@ -32,7 +32,8 @@ class ListRole extends Component
 
         $tour = session()->get('tour');
         if(request()->tour == 'close-role-tour'){
-            $tour['role_tour'] = false;
+            // $tour['role_tour'] = false;
+            unset($tour['role_tour']);
             session()->put('tour',$tour);
         }
 

@@ -160,14 +160,16 @@
     $tour = session()->get('tour');
 @endphp
 
-@if($tour['client_tour'])
+{{-- @if($tour['client_tour']) --}}
+@if(isset($tour) && $tour != null && isset($tour['client_tour']))
     @assets
         <link href="https://cdn.jsdelivr.net/npm/intro.js@7.2.0/minified/introjs.min.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/intro.js@7.2.0/intro.min.js"></script>
     @endassets
 @endif
 
-@if($tour['client_tour'])
+{{-- @if($tour['client_tour']) --}}
+@if(isset($tour) && $tour != null && isset($tour['client_tour']))
     @script
             <script>
                 introJs()
