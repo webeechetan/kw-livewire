@@ -13,7 +13,8 @@ class Dashboard extends Component
     public function mount(){
         $tour = session()->get('tour');
         if(request()->tour == 'close-main-tour'){
-            $tour['main_tour'] = false;
+            // $tour['main_tour'] = false;
+            unset($tour['main_tour']);
             session()->put('tour',$tour);
         }
     }

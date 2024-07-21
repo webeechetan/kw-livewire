@@ -134,6 +134,7 @@ class Register extends Component
                 'task_tour' => 'true',
                 'user_tour' => 'true',
                 'role_tour' => 'true',
+                'email_tour' => $organization->email,
             ];
             Auth::login($user);
             session()->put('newly_registered',true);
@@ -157,34 +158,34 @@ class Register extends Component
     }
 
 
-    public function registerStepOne(){
+    // public function registerStepOne(){
 
-        $this->validate([
-            'companysize'=>'required|integer',
-        ]);
+    //     $this->validate([
+    //         'companysize'=>'required|integer',
+    //     ]);
 
-        $user = Auth::user();
-        $organization = Organization::where('id', $user->org_id)->first();
-        $organization->companysize = $this->companysize;
-        $organization->save();
-        $this->dispatch('success', 'Company size added');
-        $this->step = 3;
+    //     $user = Auth::user();
+    //     $organization = Organization::where('id', $user->org_id)->first();
+    //     $organization->companysize = $this->companysize;
+    //     $organization->save();
+    //     $this->dispatch('success', 'Company size added');
+    //     $this->step = 3;
 
-    }
+    // }
 
-    public function registerStepTwo()
-    {
-        $this->validate([
-            'memberemail'=>'required|email',
-        ]);
+    // public function registerStepTwo()
+    // {
+    //     $this->validate([
+    //         'memberemail'=>'required|email',
+    //     ]);
 
-        $user = Auth::user();
-        $organization = Organization::where('id', $user->org_id)->first();
-        $organization->memberemail = $this->memberemail;
-        $this->dispatch('success', 'Member email  added');
+    //     $user = Auth::user();
+    //     $organization = Organization::where('id', $user->org_id)->first();
+    //     $organization->memberemail = $this->memberemail;
+    //     $this->dispatch('success', 'Member email  added');
 
-        $this->step = 4;    
-    }
+    //     $this->step = 4;    
+    // }
 
 
 }

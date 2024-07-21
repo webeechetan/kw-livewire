@@ -174,7 +174,8 @@ class ListTask extends Component
 
             $tour = session()->get('tour');
             if(request()->tour == 'close-task-tour'){
-                $tour['task_tour'] = false;
+                // $tour['task_tour'] = false;
+                unset($tour['task_tour']);
                 session()->put('tour',$tour);
             }
 

@@ -31,13 +31,21 @@
 </div>
 @php
     $tour = session()->get('tour');
+
+    // if(isset($tour) && $tour != 'null'){
+    //     dd($tour);
+    // }else{
+    //     dd('not set');
+    // }
+
 @endphp
 
 
 
-@if($tour['main_tour'])
-{{-- @if($tour && isset($tour['main_tour'])) --}}
-{{-- @if($tour !== null && isset($tour['main_tour'])) --}}
+
+{{-- @if($tour['main_tour']) --}}
+@if(isset($tour) && $tour != null && isset($tour['main_tour']))
+
     @assets
         <link href="https://cdn.jsdelivr.net/npm/intro.js@7.2.0/minified/introjs.min.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/intro.js@7.2.0/intro.min.js"></script>
@@ -45,9 +53,9 @@
 @endif
 
 
-@if($tour['main_tour']) 
-{{-- @if($tour && isset($tour['main_tour'])) --}}
-{{-- @if($tour !== null && isset($tour['main_tour'])) --}}
+{{-- @if($tour['main_tour'])  --}}
+@if(isset($tour) && $tour != null && isset($tour['main_tour']))
+
     @script
             <script>
                 introJs() 

@@ -71,7 +71,8 @@ class ListTeam extends Component
 
         $tour = session()->get('tour');
         if(request()->tour == 'close-team-tour'){
-            $tour['team_tour'] = false;
+            // $tour['team_tour'] = false;
+            unset($tour['team_tour']);
             session()->put('tour',$tour);
         }
     }
