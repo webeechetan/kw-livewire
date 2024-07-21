@@ -122,7 +122,8 @@ class ListProject extends Component
 
         $tour = session()->get('tour');
         if(request()->tour == 'close-project-tour'){
-            $tour['project_tour'] = false;
+            // $tour['project_tour'] = false;
+            unset($tour['project_tour']);
             session()->put('tour',$tour);
         }
 

@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('brand_name')->nullable();
             $table->boolean('use_brand_name')->default(false)->nullable();
             $table->longText('description')->nullable();
-            $table->string('image')->nullable()->default('default.png');
+            $table->string('image')->nullable();
             $table->string('status')->default('active')->comment('active, completed');
             $table->date('onboard_date')->nullable();
             $table->longText('point_of_contact')->nullable();

@@ -173,6 +173,15 @@ Route::group(['middleware' => ['myauth']], function() {
     
     Route::get('/logout',function(){
         Auth::logout();
+
+        session()->forget('newly_registered');
+        session()->forget('guard');
+        session()->forget('org_id');
+        session()->forget('org_name');
+        session()->forget('user');
+        session()->forget('tour');
+
+
         return redirect(route('login'));
     })->name('logout');
 

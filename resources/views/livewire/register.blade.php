@@ -317,6 +317,4 @@
         </div>
      </div>
     @endif
-
-
 </div>

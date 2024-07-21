@@ -19,7 +19,7 @@ return new class extends Migration
             $table->longText('description')->nullable();
             $table->date('start_date')->nullable();
             $table->date('due_date')->nullable();
-            $table->string('image')->nullable()->default('default.png');
+            $table->string('image')->nullable();
             $table->string('status')->default('active')->comment('active, completed, overdue, archived');
             $table->unsignedBigInteger('created_by')->nullable();
             $table->softDeletes();

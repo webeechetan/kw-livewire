@@ -62,6 +62,9 @@ class AddTeam extends Component
         $this->dispatch('success', 'Team added successfully');
         $this->dispatch('team-added');
         $this->dispatch('saved');
+        $this->resetForm();
+        $team = null;
+        
     }
 
     public function editTeam($id){
@@ -94,6 +97,15 @@ class AddTeam extends Component
         $this->dispatch('success', 'Team updated successfully');
         $this->dispatch('team-updated');
         $this->dispatch('saved');
+    }
+
+    public function resetForm(){
+        $this->team = null;
+        $this->name = '';
+        $this->team_users = [];
+        $this->team_manager = '';
+        $this->image = null;
+        
     }
 
 }
