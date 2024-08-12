@@ -41,9 +41,15 @@ class AddTask extends Component
         $this->project = $project;
         $this->users = User::all();
         // $this->projects = Project::all();
-        $this->projects = Project::whereHas('client',function($query){
+        // $this->projects = Project::whereHas('client',function($query){
+        //     $query->whereNull('clients.deleted_at');
+        // })->get();
+
+        $this->projects = Project::whereHas('client', function($query) {
             $query->whereNull('clients.deleted_at');
-        })->get();
+        })
+        ->orderBy('projects.name', 'asc')
+        ->get();
 
         if($project){
             $this->project_id = $project->id;
