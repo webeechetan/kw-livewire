@@ -64,7 +64,7 @@
                             <div class="my-3">
                                 <button class="w-100 btn btn-primary btn-smt" type="submit">Sign Up</button>
                             </div>
-                            <p>Or sign up with:</p>
+                            {{-- <p>Or sign up with:</p>
                             <a href="#" class="signin-google-btn w-100">
                                 <svg viewBox="0 0 48 48">
                                     <clipPath id="g">
@@ -78,7 +78,7 @@
                                     </g>
                                 </svg>
                                 <span>google</span>
-                            </a>
+                            </a> --}}
                         </form>
                     </div>
                 </div>
