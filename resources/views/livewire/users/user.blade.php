@@ -25,15 +25,6 @@
                     {{-- <input class="user-image d-none" type="file" wire:model.live="user_image" accept="image/*" > --}}
                     <input class="user-image d-none" type="file" accept="image/*" >
                     
-                    <div class="cropper d-none">
-                        <img id="user-image" src="http://localhost:8000/storage/images/users/2ZVItohsec8ZbneoZaSfAAcOH2dqmo-metaY3JvcHBlZC1pbWFnZS5wbmc=-.png" alt="">
-                    </div>
-
-                    <div class="croper-btns d-none">
-                        <button class="btn btn-primary btn-sm save-cropped-image">Crop</button>
-                        <button class="btn btn-danger btn-sm cancel-cropping">Cancel</button>
-                    </div>
-
                     <h3 class="main-body-header-title mb-2">{{ $user->name }}</h3>
                     <div class="d-flex align-items-center justify-content-center mb-2"><i class="bx bx-briefcase text-primary me-1"></i> {{ $user->designation ?? 'Not Added' }}</div>
                     <div class="d-flex align-items-center justify-content-center mb-2">
@@ -302,7 +293,56 @@
         </div>
         </div>
     </div>
+    <!-- Modal -->
+<div class="modal fade" id="image-crop-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Crop Image</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <div class="cropper d-none">
+                <img id="user-image" src="http://localhost:8000/storage/images/users/2ZVItohsec8ZbneoZaSfAAcOH2dqmo-metaY3JvcHBlZC1pbWFnZS5wbmc=-.png" alt="">
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="croper-btns d-none">
+                <button class="btn btn-primary btn-sm save-cropped-image">Crop</button>
+                <button class="btn btn-danger btn-sm cancel-cropping">Cancel</button>
+            </div>
+        </div>
+      </div>
     </div>
+  </div>
+
+@push('styles')
+<style>
+
+.cropper-crop-box, .cropper-view-box {
+    border-radius: 50%;
+}
+
+.cropper-view-box {
+    box-shadow: 0 0 0 1px #39f;
+    outline: 0;
+}
+
+.cropper-face {
+  background-color:inherit !important;
+}
+
+.cropper-dashed, .cropper-point.point-se, .cropper-point.point-sw, .cropper-point.point-nw,   .cropper-point.point-ne, .cropper-line {
+  display:none !important;
+}
+
+.cropper-view-box {
+  outline:inherit !important;
+}
+</style>    
+@endpush
 
 @assets
 <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>
@@ -330,7 +370,8 @@
 
         const cropper = new Cropper(image, {
             aspectRatio: 1,
-            viewMode: 1,
+            viewMode: 1 / 1,
+            cropBoxResizable: false,
             crop(event) {
                 console.log(event.detail.x);
                 console.log(event.detail.y);
@@ -343,6 +384,8 @@
         });
 
         document.querySelector('.user-image').addEventListener('change', (e) => {
+            $("#image-crop-modal").modal('show');
+
             $(".cropper").removeClass('d-none');
             $(".croper-btns").removeClass('d-none');
             const file = e.target.files[0];
@@ -370,7 +413,7 @@
                     @this.call('saveCroppedImage', uploadedFilename);
                     $(".cropper").addClass('d-none');
                     $(".croper-btns").addClass('d-none');
-
+                    $("#image-crop-modal").modal('hide');
                 });
                 
             });
@@ -379,6 +422,7 @@
         document.querySelector('.cancel-cropping').addEventListener('click', (e) => {
             $(".cropper").addClass('d-none');
             $(".croper-btns").addClass('d-none');
+            $("#image-crop-modal").modal('hide');
         });
 
 
