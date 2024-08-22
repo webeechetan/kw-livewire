@@ -145,13 +145,26 @@
             <span>|</span> 
              All
         </a>
-        <a wire:click="$set('status', 'pending')" class="btn-border btn-border-primary @if($status == 'pending') active @endif">{{ $tasks_count->where('status','pending')->count() }} <span>|</span> Assigned</a>
+
+
+        {{-- <a href="javascript:" wire:click="$set('status', 'pending')" class="btn-border btn-border-sm btn-border-primary "><span><i class='bx bx-objects-horizontal-center' ></i></span> {{ $project->tasks->where('status', 'pending')->count() }} Assigned</a> --}}
+
+        <a  wire:click="$set('status', 'pending')" class="btn-border btn-border-primary @if($status == 'pending') active @endif">{{ $tasks['pending']->count()}} <span>|</span> Assigned</a>
+        <a  wire:click="$set('status', 'in_progress')" class="btn-border btn-border-secondary @if($status == 'in_progress') active @endif">{{ $tasks['in_progress']->count()}} <span>|</span> Accepted</a>
+        <a  wire:click="$set('status', 'in_review')" class="btn-border btn-border-warning @if($status == 'in_review') active @endif">{{  $tasks['in_review']->count() }} <span>|</span> In Review</a>
+        <a  wire:click="$set('status', 'completed')" class="btn-border btn-border-success @if($status == 'completed') active @endif">{{ $tasks['completed']->count() }} <span>|</span> Completed</a>
+       
+
+        {{-- <a wire:click="$set('status', 'pending')" class="btn-border btn-border-primary @if($status == 'pending') active @endif">{{ $tasks_count->where('status','pending')->count() }} <span>|</span> Assigned</a>
         <a wire:click="$set('status', 'in_progress')" class="btn-border btn-border-secondary @if($status == 'in_progress') active @endif">{{ $tasks_count->where('status','in_progress')->count() }} <span>|</span> Accepted</a>
         <a wire:click="$set('status', 'in_review')" class="btn-border btn-border-warning @if($status == 'in_review') active @endif">{{ $tasks_count->where('status','in_review')->count() }} <span>|</span> In Review</a>
-        <a wire:click="$set('status', 'completed')" class="btn-border btn-border-success @if($status == 'completed') active @endif">{{ $tasks_count->where('status','completed')->count() }} <span>|</span> Completed</a>
+        <a wire:click="$set('status', 'completed')" class="btn-border btn-border-success @if($status == 'completed') active @endif">{{ $tasks_count->where('status','completed')->count() }} <span>|</span> Completed</a> --}}
         <a wire:click="$set('status', 'overdue')" class="btn-border btn-border-danger @if($status == 'overdue') active @endif">
             @php
-                 $overdue = $tasks_count->where('due_date', '<', now())->where('status', '!=', 'completed')->count();
+                 $overdue = $tasks['pending']->where('due_date', '<', now())->where('status', '!=', 'completed')->count();
+                 $overdue += $tasks['in_progress']->where('due_date', '<', now())->where('status', '!=', 'completed')->count();
+                 $overdue += $tasks['in_review']->where('due_date', '<', now())->where('status', '!=', 'completed')->count();
+                 $overdue += $tasks['completed']->where('due_date', '<', now())->where('status', '!=', 'completed')->count();
             @endphp
             {{ $overdue }}
             <span>|</span> Overdue</a>
