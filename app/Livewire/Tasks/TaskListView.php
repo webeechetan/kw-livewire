@@ -45,7 +45,7 @@ class TaskListView extends Component
     public $byUser = 'all';
     // public $byTeam = 'all';
     public $startDate;
-    public $dueDate;
+    public $dueDate; 
     public $status = 'all';
  
 

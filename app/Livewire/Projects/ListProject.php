@@ -58,20 +58,12 @@ class ListProject extends Component
             $query->where('name','like','%'.$this->query.'%')->orWhere('brand_name','like','%'.$this->query.'%');
         });
 
-       
-   
         $this->allProjects =  Project::count();
         $this->activeProjects = Project::where('status', 'active')->count();
         $this->completedProjects = Project::where('status','completed')->count();
         $this->archivedProjects = Project::onlyTrashed()->count();
         $this->overdueProjects = Project::where('due_date','<', Carbon::today())->count();
 
-
-        // $this->allProjects =  $projects->count();
-        // $this->activeProjects = (clone $projects)->where('status', 'active')->count();
-        // $this->completedProjects = (clone $projects)->where('status','completed')->count();
-        // $this->archivedProjects = (clone $projects)->onlyTrashed()->count();
-        // $this->overdueProjects = (clone $projects)->where('due_date','<', Carbon::today())->count();
 
         if($this->filter == 'active'){
             $projects->where('status','active');
@@ -175,7 +167,6 @@ class ListProject extends Component
     }
 
     public function doesAnyFilterApplied(){
-        // return $this->byTeam != 'all' || $this->byUser != 'all' || $this->byClient != 'all' || $this->sort != 'all' || $this->filter != 'all';
 
         if($this->byTeam != 'all' || $this->byUser != 'all' || $this->byClient != 'all' || $this->sort != 'all' || $this->filter != 'all'){
             return true;
