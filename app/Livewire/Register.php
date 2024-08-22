@@ -6,6 +6,7 @@ use Livewire\Component;
 use App\Models\Organization;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use App\Models\Client;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Role;
 use Livewire\WithFileUploads;
@@ -60,8 +61,16 @@ class Register extends Component
             $user->email = $this->email;
             $user->password = Hash::make($this->password);
             $user->org_id = $organization->id;
-            $user->image = Helper::createAvatar($this->name,'users');
             $user->save();
+
+            $client = new Client();
+            $client->name = $this->name;
+            $client->org_id = $organization->id;
+            $client->is_main = true;
+            $client->created_by = $user->id;
+            $client->use_brand_name = false;
+            $client->onboard_date = now();
+            $client->save();
 
             $roles = [
                 'Admin' => [

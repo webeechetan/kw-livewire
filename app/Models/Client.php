@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Project;
 use App\Models\Scopes\OrganizationScope;
+use App\Models\Scopes\MainClientScope;
 use App\Models\Team;
 use App\Models\User;
 use App\Models\Organization;
@@ -32,6 +33,7 @@ class Client extends Model
     protected static function booted()
     {
         static::addGlobalScope(new OrganizationScope);
+        static::addGlobalScope(new MainClientScope);
     }
 
     public function getVisibleNameAttribute(){
@@ -77,6 +79,12 @@ class Client extends Model
         }
         return User::whereIn('id', $task_users)->get();
         
+    }
+
+    // scopes
+
+    public function scopeMain($query){
+        return $query->where('is_main', 1);
     }
 
     

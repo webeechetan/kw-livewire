@@ -59,67 +59,67 @@ class PermissionSedder extends Seeder
             }
         }
 
-        // create four default roles and assign permissions to them (Admin,HR,Manager,Employee)
+        // // create four default roles and assign permissions to them (Admin,HR,Manager,Employee)
 
-        $roles = [
-            'Admin' => [
-                'Create Client',
-                'Edit Client',
-                'Delete Client',
-                'View Client',
-                'Create Project',
-                'Edit Project',
-                'Delete Project',
-                'View Project',
-                'Create User',
-                'Edit User',
-                'Delete User',
-                'View User',
-                'Create Team',
-                'Edit Team',
-                'Delete Team',
-                'View Team',
-                'Create Task',
-                'Edit Task',
-                'Delete Task',
-                'View Task',
-                'Create Role',
-                'Edit Role',
-                'Delete Role',
-                'View Role',
-            ],
-            'HR' => [
-                'Create User',
-                'Edit User',
-                'Delete User',
-                'View User',
-            ],
-            'Manager' => [
-                'Create Project',
-                'Edit Project',
-                'Delete Project',
-                'View Project',
-                'Create Team',
-                'Edit Team',
-                'Delete Team',
-                'View Team',
-                'Create Task',
-                'Edit Task',
-                'Delete Task',
-                'View Task',
-            ],
-            'Employee' => [
-                'View Project',
-                'View Team',
-                'View Task',
-            ],
-        ];
+        // $roles = [
+        //     'Admin' => [
+        //         'Create Client',
+        //         'Edit Client',
+        //         'Delete Client',
+        //         'View Client',
+        //         'Create Project',
+        //         'Edit Project',
+        //         'Delete Project',
+        //         'View Project',
+        //         'Create User',
+        //         'Edit User',
+        //         'Delete User',
+        //         'View User',
+        //         'Create Team',
+        //         'Edit Team',
+        //         'Delete Team',
+        //         'View Team',
+        //         'Create Task',
+        //         'Edit Task',
+        //         'Delete Task',
+        //         'View Task',
+        //         'Create Role',
+        //         'Edit Role',
+        //         'Delete Role',
+        //         'View Role',
+        //     ],
+        //     'HR' => [
+        //         'Create User',
+        //         'Edit User',
+        //         'Delete User',
+        //         'View User',
+        //     ],
+        //     'Manager' => [
+        //         'Create Project',
+        //         'Edit Project',
+        //         'Delete Project',
+        //         'View Project',
+        //         'Create Team',
+        //         'Edit Team',
+        //         'Delete Team',
+        //         'View Team',
+        //         'Create Task',
+        //         'Edit Task',
+        //         'Delete Task',
+        //         'View Task',
+        //     ],
+        //     'Employee' => [
+        //         'View Project',
+        //         'View Team',
+        //         'View Task',
+        //     ],
+        // ];
 
 
-        foreach ($roles as $role => $permissions) {
-            $role = Role::create(['name' => $role, 'org_id' => 1]);
-            $role->syncPermissions(Permission::whereIn('name', $permissions)->get());
-        }
+        // foreach ($roles as $role => $permissions) {
+        //     $role = Role::create(['name' => $role, 'org_id' => 1]);
+        //     $role->syncPermissions(Permission::whereIn('name', $permissions)->get());
+        // }
 
 
     }

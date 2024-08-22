@@ -9,8 +9,7 @@ use App\Models\User;
 use App\Helpers\Helper;
 use Livewire\WithFileUploads;
 use App\Models\Client;
-
-
+use App\Models\Scopes\MainClientScope;
 
 class AddProject extends Component
 {
@@ -40,9 +39,9 @@ class AddProject extends Component
     public function mount()
     {
         $this->users = User::orderBy('name')->get();
-        $this->clients = Client::orderBy('name')->get();
+        $this->clients = Client::withoutGlobalScope(MainClientScope::class)->orderBy('name')->get();
         if(request()->routeIs('client.projects')){
-            $this->client = Client::find(request()->id);
+            $this->client = Client::withoutGlobalScope(MainClientScope::class)->find(request()->id);
             $this->client_id = $this->client->id;
         }
     }

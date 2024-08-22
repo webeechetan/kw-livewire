@@ -5,6 +5,8 @@ namespace App\Livewire\Clients\Components;
 use Livewire\Component;
 use App\Models\Client;
 use Illuminate\Contracts\Filesystem\Cloud;
+use Illuminate\Support\Facades\Storage;
+use App\Models\Scopes\MainClientScope;
 
 class FileManager extends Component
 {
@@ -20,6 +22,6 @@ class FileManager extends Component
     {
         $this->authorize('View Client');
         $this->id = $id;
-        $this->client = Client::find($id);
+        $this->client = Client::withoutGlobalScope(MainClientScope::class)->find($id);
     }
 }

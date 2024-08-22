@@ -44,8 +44,8 @@
               <img src="{{ asset('') }}assets/images/logo-icon.png" alt="Kaykewalk Logo" />
             </span>
             <span>
-              @if(auth()->user()->organizations->image)
-                <img src="{{ asset('storage/'.auth()->user()->organizations->image) }}" alt="Organization Logo" />
+              @if(auth()->user()->organization->image)
+                <img src="{{ asset('storage/'.auth()->user()->organization->image) }}" alt="Organization Logo" />
               @else
                 <img src="{{ asset('') }}assets/images/webeesocial-logo.png" alt="Webeesocial Logo" />
               @endif
@@ -127,17 +127,22 @@
                       <a wire:navigate href="{{ route('dashboard') }}" class="@if (request()->routeIs('dashboard')) active @endif"><i class='bx bx-line-chart' ></i> Dashboard</a>
                     </li>
                     <li>
-                      <li><a wire:navigate href="{{ route('activity.index') }}" class="@if (request()->segment(1) == 'activities' || request()->segment(1) == 'activity' ) active @endif"><i class='bx bx-body' ></i> {{ Auth::user()->organizations ? Auth::user()->organizations->name : 'No organization' }}</a></li>
+                      <li>
+                        <a wire:navigate href="{{ route('client.profile',Auth::user()->organization->mainClient->id) }}"  class="@if ( request()->segment(3) == Auth::user()->organization->mainClient->id && (request()->segment(1) == 'clients' || request()->segment(1) == 'client' )) active @endif"><i class='bx bx-body' ></i> 
+                          {{ Auth::user()->organization ? Auth::user()->organization->name : 'No organization' }}
+                        </a>
+                      </li>
                     </li>
                         @can('View Client')
                             <li 
-                            {{-- @if($tour['main_tour']) --}}
                             @if(isset($tour) && $tour != null)
                               data-step="1" 
                               data-intro='Create your first client' 
                               data-position='right'
                             @endif
-                            ><a wire:navigate href="{{ route('client.index') }}" class="@if (request()->segment(1) == 'clients' || request()->segment(1) == 'client' ) active @endif"><i class='bx bx-briefcase-alt-2'></i> Clients</a></li>
+                            >
+                            <a wire:navigate href="{{ route('client.index') }}" 
+                            class="@if ( request()->segment(3) != Auth::user()->organization->mainClient->id && (request()->segment(1) == 'clients' || request()->segment(1) == 'client' )) active @endif"><i class='bx bx-briefcase-alt-2'></i> Clients</a></li>
                         @endcan
                         @can('View Project')
                             <li @if(isset($tour['main_tour'])) data-step="2" data-position='right' data-intro='Create your first project' @endif><a wire:navigate href="{{ route('project.index') }}" class="@if (request()->segment(1) == 'projects' || request()->segment(1) == 'project' ) active @endif"><i class='bx bx-objects-horizontal-left'></i> Projects</a></li>
