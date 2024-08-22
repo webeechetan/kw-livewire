@@ -4,6 +4,7 @@ namespace App\Livewire\Clients\Components;
 
 use Livewire\Component;
 use App\Models\Client;
+use App\Models\Scopes\MainClientScope;
 use Carbon\Carbon;
 use Database\Factories\ClientFactory;
 use Livewire\Attributes\On; 
@@ -33,7 +34,7 @@ class Projects extends Component
     {
         $this->authorize('View Client');
         $this->id = $id;
-        $this->client = Client::find($id);
+        $this->client = Client::withoutGlobalScope(MainClientScope::class)->find($id);
         $this->projects = $this->client->projects;
         $this->project_no_count = $this->client->projects;
     }

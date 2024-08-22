@@ -15,13 +15,15 @@ use App\Models\Comment;
 use App\Models\Attachment;
 use App\Models\User;
 use Spatie\Permission\Traits\HasRoles;
+use App\Models\Scopes\OrganizationScope;
+use App\Models\Scopes\MainClientScope;
 
 class Organization extends Authenticatable
 {
     use HasFactory, Notifiable, HasRoles;
 
     public function clients(){
-        return $this->hasMany(Client::class);
+        return $this->hasMany(Client::class, 'org_id');
     }
 
     public function projects(){
@@ -46,5 +48,11 @@ class Organization extends Authenticatable
 
     public function users(){
         return $this->hasMany(User::class);
+    }
+
+    public function mainClient(){
+        return $this->hasOne(Client::class, 'org_id')
+        ->withoutGlobalScope(MainClientScope::class)
+        ->where('is_main', 1);
     }
 }

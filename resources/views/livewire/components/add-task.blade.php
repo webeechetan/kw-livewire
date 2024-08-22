@@ -137,7 +137,7 @@
         </div>
         <div class="offcanvas-footer">
             <div class="taskPane-footer-wrap py-3 px-4">
-                <button type="button" wire:click="saveTask" class="btn-border btn-sm btn-border-primary save-task-button ms-auto"><i class='bx bx-check'></i> 
+                <button type="button" wire:loading.attr="disabled" wire:click="saveTask" class="btn-border btn-sm btn-border-primary save-task-button ms-auto"><i class='bx bx-check'></i> 
                     <span wire:loading wire:target="attachments"> 
                         <i class='bx bx-loader-alt bx-spin'></i>
                     </span>
@@ -283,7 +283,7 @@
                     toolbar: [
                         ['font', ['bold', 'underline']],
                         ['para', ['ul', 'ol']],
-                        ['insert', ['link']],
+                        ['insert', ['link']], 
                     ],
                     callbacks: {
                         onChange: function(contents, $editable) {

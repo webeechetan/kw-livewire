@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Helpers\Helper;
 use App\Models\Task;
 use Livewire\WithFileUploads;
+use App\Models\Scopes\MainClientScope;
 
 class Client extends Component
 {
@@ -46,7 +47,7 @@ class Client extends Component
         
         $this->authorize('View Client');
         $this->client_id = $id;
-        $this->client = ClientModel::withTrashed()->with('projects')->find($id);
+        $this->client = ClientModel::withoutGlobalScope(MainClientScope::class)->withTrashed()->with('projects')->find($id);
         $this->description = $this->client->description;
         $this->active_projects = $this->client->projects()->where('status', 'active')->get();
         $this->completed_projects = $this->client->projects()->where('status', 'completed')->get();
