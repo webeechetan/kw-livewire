@@ -39,7 +39,7 @@
                                         <ul class="filterSort_btn_group list-none">
                                             <li class="filterSort_item"><a wire:click="$set('filter','all')" class="btn-batch @if($filter == 'all') active @endif">All</a></li>
                                             <li class="filterSort_item"><a wire:click="$set('filter','active')" class="btn-batch @if($filter == 'active') active @endif">Active</a></li>
-                                            <li class="filterSort_item"><a wire:click="$set('filter','overdue')" class="btn-batch @if($filter == 'overdue') active @endif">Overdue</a></li>
+                                            {{-- <li class="filterSort_item"><a wire:click="$set('filter','overdue')" class="btn-batch @if($filter == 'overdue') active @endif">Overdue</a></li> --}}
                                             <li class="filterSort_item"><a wire:click="$set('filter','completed')" class="btn-batch @if($filter == 'completed') active @endif">Completed</a></li>
                                             <li class="filterSort_item"><a wire:click="$set('filter','archived')" class="btn-batch @if($filter == 'archived') active @endif">Archived</a></li>
                                             
@@ -77,13 +77,6 @@
     <div class="row">
         <div class="col-md-6">
             <div class="dashboard_filters d-flex flex-wrap gap-4 align-items-center mb-4">
-             {{-- 
-                <a wire:click="$set('status', 'all')" class="btn-border btn-border-primary @if($status == 'all') active @endif">{{ $tasks_count->count() }} <span>|</span>All</a>
-                <a wire:click="$set('status', 'pending')" class="btn-border btn-border-primary @if($status == 'active') active @endif">{{ $projects->where('status','active')->count() }} <span>|</span> Assigned</a>
-                <a wire:click="$set('status', 'in_progress')" class="btn-border btn-border-secondary @if($status == 'in_progress') active @endif">{{ $projects->where('status','in_progress')->count() }} <span>|</span> Accepted</a>
-                <a wire:click="$set('status', 'in_review')" class="btn-border btn-border-warning @if($status == 'in_review') active @endif">{{ $projects->where('status','in_review')->count() }} <span>|</span> In Review</a>
-                <a wire:click="$set('status', 'completed')" class="btn-border btn-border-success @if($status == 'completed') active @endif">{{ $projects->where('status','completed')->count() }} <span>|</span> Completed</a> --}}
-
                 <a class="@if($filter == 'all') active @endif" wire:click="$set('filter','all')">All <span class="btn-batch">{{ $allProjects}}</span></a>
                 <a class="@if($filter == 'active') active @endif" wire:click="$set('filter','active')">Active <span class="btn-batch">{{ $activeProjects }}</span></a>
                 <a class="@if($filter == 'overdue') active @endif" wire:click="$set('filter','overdue')">Overdue <span class="btn-batch">{{ $overdueProjects}}</span></a>

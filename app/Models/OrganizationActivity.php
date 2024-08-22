@@ -6,10 +6,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use App\Models\OrganizationActivityTask;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 
 class OrganizationActivity extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     public function getInitialsAttribute(){
         $words = explode(' ', $this->name);

@@ -69,7 +69,7 @@
                                                 </a>
                                             </div>
                                         </div> 
-                                        <h5 class="filterSort-header mt-4"><i class='bx bx-calendar-alt text-primary' ></i> Filter By Status</h5>
+                                        <h5 class="filterSort-header mt-4"><i class='bx bx-calendar-alt text-primary' ></i> Filter By Statuss</h5>
                                         <ul class="filterSort_btn_group list-none">
                                             <li class="filterSort_item"><a wire:click="$set('status', 'all')" class="btn-batch @if($status == 'all') active @endif">All</a></li>
                                             <li class="filterSort_item"><a wire:click="$set('status', 'pending')" class="btn-batch @if($status == 'pending') active @endif">Assigned</a></li>
@@ -119,13 +119,6 @@
             <div class="col-md-6">
                 <!-- Tabs -->
                 <div class="tabNavigationBar-tab border_style">
-                    {{-- <a href="{{ route('task.list-view') }}" class="tabNavigationBar-item @if(request()->routeIs('task.list-view')) active @endif" wire:navigate ><i class='bx bx-list-ul'></i> List</a>
-                    <a href="{{ route('task.index') }}" class="tabNavigationBar-item @if(request()->routeIs('task.index')) active @endif" wire:navigate><i class='bx bx-columns' ></i> Board</a> --}}
-                    {{-- <a  wire:navigate class="tabNavigationBar-item @if($currentRoute == 'task.list-view') active @endif" href="{{ route('task.list-view') }}"> <i class='bx bx-list-ul'></i> {{$currentRoute}} List</a>
-                   
-                    <a wire:navigate  class="tabNavigationBar-item @if($currentRoute =='task.index') active @endif" href ="{{route('task.index') }}"><i class='bx bx-columns' ></i> {{$currentRoute}} Board</a>
-                 --}}
-
                  <a wire:navigate class="tabNavigationBar-item @if($currentRoute == 'task.list-view') active @endif" href="{{ route('task.list-view') }}">
                     <i class='bx bx-list-ul'></i> List
                 </a>
@@ -158,7 +151,6 @@
         <a wire:click="$set('status', 'completed')" class="btn-border btn-border-success @if($status == 'completed') active @endif">{{ $tasks_count->where('status','completed')->count() }} <span>|</span> Completed</a>
         <a wire:click="$set('status', 'overdue')" class="btn-border btn-border-danger @if($status == 'overdue') active @endif">
             @php
-                // $overdue = $tasks_count->where('due_date', '<', now())->count();
                  $overdue = $tasks_count->where('due_date', '<', now())->where('status', '!=', 'completed')->count();
             @endphp
             {{ $overdue }}
@@ -168,7 +160,6 @@
     <!-- Filters Query Params -->
      @if($this->doesAnyFilterApplied())
 
-     {{$status}}
         <x-filters-query-params 
             :sort="$sort" 
             :status="$status" 
@@ -224,6 +215,8 @@
                 @endphp
                     @foreach($tasks[$group] as $task)
 
+                  
+
                         <div class="taskList_row edit-task" data-id="{{ $task->id }}"  wire:key="task-row-{{ $task->id }}">
                             <div class="row">
                                 <div class="col-lg-4">
@@ -238,7 +231,6 @@
                                     <div class="taskList_col"><span>{{  Carbon\Carbon::parse($task->created_at)->format('d M Y') }}</span></div>
                                 </div>
                                 <div class="col text-center">
-                                    {{-- <div class="taskList_col"><span class="btn-batch ">{{  Carbon\Carbon::parse($task->due_date)->format('d M Y') }}</span></div> --}}
                                     <div class="taskList_col"><span class="btn-batch "> @if($task->due_date)
                                         {{ Carbon\Carbon::parse($task->due_date)->format('d M Y') }}
                                     @else

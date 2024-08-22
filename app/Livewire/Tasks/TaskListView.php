@@ -223,6 +223,7 @@ class TaskListView extends Component
 
     public function applySort($query)
     {
+    
         return Filter::filterTasks(
             $query, 
             $this->byProject, 
@@ -236,6 +237,8 @@ class TaskListView extends Component
     }
 
     public function doesAnyFilterApplied(){
+
+        // dd($this->sort);
 
         if($this->sort != 'all' || $this->byProject != 'all' || $this->byClient != 'all' || $this->byUser != 'all' || $this->startDate || $this->dueDate || $this->status != 'all'){
             return true;

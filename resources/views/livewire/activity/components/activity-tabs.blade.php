@@ -22,7 +22,7 @@
                     </a>
                     
                     @can('Delete Project')
-                    <a href="javascript:" wire:click="" wire:confirm="Are you sure you want to delete?" class="btn-sm btn-border btn-border-danger"><i class='bx bx-trash'></i> Delete</a>
+                    <a href="javascript:" wire:click="forceDeleteActivity({{ $activity->id}})" wire:confirm="Are you sure you want to delete?" class="btn-sm btn-border btn-border-danger"><i class='bx bx-trash'></i> Delete</a>
                     @endcan
                 </div>
             </div>

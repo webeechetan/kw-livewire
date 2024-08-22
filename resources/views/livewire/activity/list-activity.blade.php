@@ -13,7 +13,7 @@
                 <h3 class="main-body-header-title mb-0">All Activities</h3>
                 <span class="text-light">|</span>
                 @can('Create Client')
-                    <a data-bs-toggle="modal" data-bs-backdrop="false" data-bs-target="#add-activity-modal" href="javascript:void(0);" class="btn-border btn-border-sm btn-border-primary"><i class="bx bx-plus"></i> Add Activities</a>
+                    <a data-bs-toggle="modal" data-bs-backdrop="false" data-bs-target="#add-activity-modal" href="javascript:void(0);" class="btn-border btn-border-sm btn-border-primary"><i class="bx bx-plus"></i> Add Activity</a>
                 @endcan
             </div>
             <div class="col">
