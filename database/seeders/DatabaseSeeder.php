@@ -23,26 +23,26 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $org = new Organization();
-        $org->name = 'Webeesocial';
-        $org->email = 'wbs@gmail.com';
-        $org->password = Hash::make('123456');
-        $org->image = Helper::createAvatar($org->name,'users');
-        $org->save();
-        // create folder for organization
-        $path = public_path('storage/'.$org->name);
-        if(!file_exists($path)){
-            mkdir($path, 0777, true);
-        }
+        // $org = new Organization();
+        // $org->name = 'Webeesocial';
+        // $org->email = 'wbs@gmail.com';
+        // $org->password = Hash::make('123456');
+        // $org->image = Helper::createAvatar($org->name,'users');
+        // $org->save();
+        // // create folder for organization
+        // $path = public_path('storage/'.$org->name);
+        // if(!file_exists($path)){
+        //     mkdir($path, 0777, true);
+        // }
 
-        $user = new User();
-        $user->name = $org->name;
-        $user->email = $org->email;
-        $user->password = Hash::make(123456);
-        $user->org_id = $org->id;
-        $colors = ['orange','purple','green','pink','yellow','blue'];
-        $user->color = $colors[array_rand($colors)];
-        $user->saveQuietly();
+        // $user = new User();
+        // $user->name = $org->name;
+        // $user->email = $org->email;
+        // $user->password = Hash::make(123456);
+        // $user->org_id = $org->id;
+        // $colors = ['orange','purple','green','pink','yellow','blue'];
+        // $user->color = $colors[array_rand($colors)];
+        // $user->saveQuietly();
 
         // Team::factory()
         //     ->count(4)
@@ -71,8 +71,8 @@ class DatabaseSeeder extends Seeder
         $this->call(PermissionSedder::class);
 
         // assign admin role to the user
-        setPermissionsTeamId(1);
-        $user->assignRole(1);
+        // setPermissionsTeamId(1);
+        // $user->assignRole(1);
 
 
 

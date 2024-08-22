@@ -24,6 +24,7 @@ return new class extends Migration
             $table->date('onboard_date')->nullable();
             $table->longText('point_of_contact')->nullable();
             $table->unsignedBigInteger('created_by')->nullable();
+            $table->boolean('is_main')->default(false)->comment('True if this is the main client of the organization');
             $table->softDeletes();
             $table->timestamps();
         });

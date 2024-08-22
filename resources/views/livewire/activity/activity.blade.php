@@ -2,7 +2,7 @@
     <!-- Dashboard Header -->
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a wire:navigate href="{{ route('activity.index') }}"><i class='bx bx-line-chart'></i>{{ Auth::user()->organizations ? Auth::user()->organizations->name : 'No organization' }}</a></li>
+            <li class="breadcrumb-item"><a wire:navigate href="{{ route('activity.index') }}"><i class='bx bx-line-chart'></i>{{ Auth::user()->organization ? Auth::user()->organization->name : 'No organization' }}</a></li>
             <li class="breadcrumb-item"><a wire:navigate href="{{ route('activity.index') }}">All Activity</a></li>
             <li class="breadcrumb-item active" aria-current="page">{{ $activity->name }}</li>
         </ol>

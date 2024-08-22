@@ -11,6 +11,7 @@ use App\Models\Team;
 use App\Models\UserDetail;
 use App\Models\Project;
 use App\Models\Notification;
+use App\Models\Client;
 use App\Models\Scopes\OrganizationScope;
 use App\Models\Organization;
 use Spatie\Permission\Traits\HasRoles;
@@ -127,12 +128,5 @@ class User extends Authenticatable
 
     public function mainTeam(){
         return $this->belongsTo(Team::class,'main_team_id');
-    }
-
-
-    //this function to get the loggedin user organization details using auth
-    public function organizations()
-    {
-        return $this->belongsTo(Organization::class, 'org_id');
     }
 }

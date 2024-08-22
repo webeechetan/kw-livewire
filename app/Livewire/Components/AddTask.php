@@ -20,7 +20,7 @@ class AddTask extends Component
     public $name;
     public $description;
     public $due_date;
-    public $projects = [];
+    public $projects = []; 
     public $users = [];
     public $task_users;
     public $task_notifiers;
