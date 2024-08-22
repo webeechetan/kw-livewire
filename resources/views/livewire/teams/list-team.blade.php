@@ -96,8 +96,9 @@
                                     @if($team->manager)
                                         @if($team->manager)
                                             {{-- <span class="btn-batch ms-2">{{ $team->manager?->name }}</span>--}}
-                                            <a href="javascript:;"class="avatar avatar-orange avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="{{$team->manager?->name}}"> {{ $team->manager?->initials ?? 'NA' }}</a>
-                                            
+                                            <a href="javascript:;"class="avatar avatar-orange avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="{{$team->manager?->name}}"> 
+                                                {{ $team->manager?->initials ?? 'NA' }}
+                                            </a>
                                         @endif
                                     @else
                                         <div class="text-light">No Manager Assigned</div>

@@ -148,7 +148,7 @@
 
     <div class="btn-list">
         <a wire:click="$set('status', 'all')" class="btn-border btn-border-primary @if($status == 'all') active @endif">
-            {{ $tasks_count->count() }} 
+            {{ $tasks['pending']->count() + $tasks['in_progress']->count() + $tasks['in_review']->count() + $tasks['completed']->count() }} 
             <span>|</span> 
              All
         </a>

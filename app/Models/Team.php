@@ -53,24 +53,14 @@ class Team extends Model
     }
 
     public function getInitialsAttribute(){
-        // Split the name into words
-        $words = explode(' ', $this->name);
-        
-        // Handle the case where the name is empty or just whitespace
-        if (empty($this->name)) {
-            return '';
+        $name = $this->name;
+        $name = explode(' ', $name);
+        if(count($name) == 1){
+            return strtoupper(substr($name[0], 0, 2));
+        }else{
+            return strtoupper(substr($name[0], 0, 1).substr($name[1], 0, 1));
         }
         
-        // Handle the case where the name is a single word
-        if (count($words) == 1) {
-            return substr($this->name, 0, 2);
-        }
-        
-        // Handle the case where the name has at least two words
-        $firstInitial = !empty($words[0]) ? $words[0][0] : '';
-        $secondInitial = !empty($words[1]) ? $words[1][0] : '';
-        
-        return $firstInitial . $secondInitial;
     }
     
 

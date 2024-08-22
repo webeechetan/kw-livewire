@@ -58,10 +58,6 @@ class ListProject extends Component
             $query->where('name','like','%'.$this->query.'%')->orWhere('brand_name','like','%'.$this->query.'%');
         });
 
-       
-   
-
-
         $this->allProjects =  $projects->count();
         $this->activeProjects = (clone $projects)->where('status', 'active')->count();
         $this->completedProjects = (clone $projects)->where('status','completed')->count();

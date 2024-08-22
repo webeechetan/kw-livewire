@@ -11,7 +11,7 @@ use Livewire\Attributes\On;
 use App\Helpers\ProjectTaskFilter;
 
 class Tasks extends Component
-{
+{ 
 
     protected $listeners = ['saved' => 'refresh'];
 
@@ -20,6 +20,7 @@ class Tasks extends Component
     public $users = [];
     public $teams = [];
     public $tasks = [];
+    public $totalTasks = 0;
 
     public $sort = 'all';
     public $filter = 'all';
@@ -31,6 +32,8 @@ class Tasks extends Component
     public $dueDate;
 
     public $query = '';
+
+    public $perPage = 10;
 
     public function render()
     {
@@ -44,7 +47,16 @@ class Tasks extends Component
         $this->teams = Team::all();
         $this->tasks = $this->applySort($project->tasks());
         $this->tasks = $this->tasks->where('name', 'like', '%' . $this->query . '%');
-        $this->tasks = $this->tasks->get();
+        $this->totalTasks = $this->tasks->count();
+        $this->tasks = $this->tasks->take($this->perPage)->get();
+    }
+
+    public function loadMore(){
+        $this->perPage += 10;
+        $tasks = $this->applySort($this->project->tasks());
+        $tasks = $tasks->where('name', 'like', '%' . $this->query . '%');
+        $this->tasks = $tasks->take($this->perPage)->get();
+
     }
 
     public function refresh()

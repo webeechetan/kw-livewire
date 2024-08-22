@@ -153,7 +153,7 @@
                                 @foreach($project->activities()->latest()->paginate(10) as $activity)
                                     <div class="activity row space-last_child_0">
                                         <div class="activity-profile col-auto pe-0">
-                                            <a href="javascript:" class="avatar" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="{{ $activity->createdBy->name }}" data-bs-original-title="{{ $activity->createdBy->name }}">{{ $activity->createdBy->initials }}</a>
+                                            <x-avatar :user="$activity->createdBy" />
                                         </div>
                                         <div class="activity-text col">
                                             <div class="mb-0 font-500">{{ $activity->createdBy->name }}</div>
