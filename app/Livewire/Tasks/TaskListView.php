@@ -20,9 +20,11 @@ class TaskListView extends Component
     use WithPagination;
 
     public $allTasks;
-    public $activeTasks;
+    public $pendingTasks;
+    public $inProgressTasks;
+    public $inReviewTasks;
     public $completedTasks;
-    public $archivedTasks;
+    public $overdueTasks;
 
     // auth 
 
@@ -81,6 +83,13 @@ class TaskListView extends Component
      
     public function mount()
     {
+
+            $this->allTasks = Task::tasksByUserType()->count();
+            $this->pendingTasks = Task::tasksByUserType()->where('status', 'pending')->count();
+            $this->inProgressTasks = Task::tasksByUserType()->where('status', 'in_progress')->count();
+            $this->inReviewTasks = Task::tasksByUserType()->where('status', 'in_review')->count();
+            $this->completedTasks = Task::tasksByUserType()->where('status', 'completed')->count();
+            $this->overdueTasks = Task::tasksByUserType()->where('due_date', '<', now())->where('status', '!=', 'completed')->count();
 
             $this->doesAnyFilterApplied();
             $this->authorize('View Task');
