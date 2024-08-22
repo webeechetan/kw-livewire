@@ -41,7 +41,9 @@ class Filter
 
         if($status != 'all'){
             if($status == 'overdue'){
-                $query->whereDate('due_date', '<', now());
+                // $query->whereDate('due_date', '<', now());
+                $query->whereDate('due_date', '<', now())
+                    ->where('status', '!=', 'completed');
             }else{
                 $query->where('status', $status);
             }
