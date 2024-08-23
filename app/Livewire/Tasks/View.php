@@ -86,7 +86,7 @@ class View extends Component
             }
         } 
 
-        session()->flash('message', 'Task updated successfully');
+        $this->dispatch('success','Task updated successfully');
     }
 
     public function saveComment($type = 'internal'){

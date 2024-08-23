@@ -20,9 +20,11 @@ class TaskListView extends Component
     use WithPagination;
 
     public $allTasks;
-    public $activeTasks;
+    public $pendingTasks;
+    public $inProgressTasks;
+    public $inReviewTasks;
     public $completedTasks;
-    public $archivedTasks;
+    public $overdueTasks;
 
     // auth 
 
@@ -45,7 +47,7 @@ class TaskListView extends Component
     public $byUser = 'all';
     // public $byTeam = 'all';
     public $startDate;
-    public $dueDate;
+    public $dueDate; 
     public $status = 'all';
  
 
@@ -81,6 +83,14 @@ class TaskListView extends Component
      
     public function mount()
     {
+
+            $this->allTasks = Task::tasksByUserType()->count();
+            $this->pendingTasks = Task::tasksByUserType()->where('status', 'pending')->count();
+            $this->inProgressTasks = Task::tasksByUserType()->where('status', 'in_progress')->count();
+            $this->inReviewTasks = Task::tasksByUserType()->where('status', 'in_review')->count();
+            $this->completedTasks = Task::tasksByUserType()->where('status', 'completed')->count();
+            $this->overdueTasks = Task::tasksByUserType()->where('due_date', '<', now())->where('status', '!=', 'completed')->count();
+
             $this->doesAnyFilterApplied();
             $this->authorize('View Task');
             $this->tasks_count = Task::all();
@@ -137,7 +147,6 @@ class TaskListView extends Component
                             ->where('name', 'like', '%' . $this->query . '%')
                     )->get(),
                 ];
-                // dd($this->tasks);
 
             }else{
                 $this->tasks = [
@@ -223,6 +232,7 @@ class TaskListView extends Component
 
     public function applySort($query)
     {
+    
         return Filter::filterTasks(
             $query, 
             $this->byProject, 
@@ -236,6 +246,9 @@ class TaskListView extends Component
     }
 
     public function doesAnyFilterApplied(){
+
+        // dd($this->sort);
+
         if($this->sort != 'all' || $this->byProject != 'all' || $this->byClient != 'all' || $this->byUser != 'all' || $this->startDate || $this->dueDate || $this->status != 'all'){
             return true;
         }

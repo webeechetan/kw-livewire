@@ -27,6 +27,16 @@ class ActivityTabs extends Component
         $this->dispatch('editActivity', $activity);
     }
 
+    public function forceDeleteActivity($id)
+    {
+
+        $org_activity = OrganizationActivity::withTrashed()->find($id);
+        $org_activity->forceDelete();
+        $this->dispatch('success', 'Activity deleted successfully.');
+        $this->redirect(route('activity.index'),navigate:true);
+    }
+
+
     public function refresh(){
         $this->activity = OrganizationActivity::find($this->activity->id);
     }

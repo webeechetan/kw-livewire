@@ -29,6 +29,14 @@ class ListRole extends Component
     public function mount(){
         $this->authorize('View Role');
         $this->roles = Role::where('org_id',session('org_id'))->get();
+
+        $tour = session()->get('tour');
+        if(request()->tour == 'close-role-tour'){
+            // $tour['role_tour'] = false;
+            unset($tour['role_tour']);
+            session()->put('tour',$tour);
+        }
+
     }
 
     public function emitEditRoleEvent($role_id){

@@ -3,8 +3,8 @@
    <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
          <li class="breadcrumb-item">
-            <a wire:navigate href="{{ route('dashboard') }}">
-            <i class='bx bx-line-chart'></i> Dashboards </a>
+            <a wire:navigate href="{{ route('team.index') }}">
+            <i class='bx bx-line-chart'></i>{{ Auth::user()->organization ? Auth::user()->organization->name : 'No organization' }}</a>
          </li>
          <li class="breadcrumb-item">
             <a wire:navigate href="{{ route('team.index') }}">All Team</a>

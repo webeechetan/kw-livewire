@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Livewire\Login;
 use App\Livewire\Register;
 use App\Livewire\ForgotPassword;
+use App\Livewire\RegistrationJourney;
 use App\Livewire\Dashboard;
 
 use App\Livewire\Clients\AddClient;
@@ -172,6 +173,15 @@ Route::group(['middleware' => ['myauth']], function() {
     
     Route::get('/logout',function(){
         Auth::logout();
+
+        session()->forget('newly_registered');
+        session()->forget('guard');
+        session()->forget('org_id');
+        session()->forget('org_name');
+        session()->forget('user');
+        session()->forget('tour');
+
+
         return redirect(route('login'));
     })->name('logout');
 
@@ -254,5 +264,9 @@ Route::get('/create-password',function(){
 
 
 
+////////Registration Journey////////////////////////////////
+
+Route::get('/register-journey',RegistrationJourney::class)->name('register.journey');
+                               
 
 

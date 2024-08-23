@@ -2,7 +2,7 @@
     <!-- Dashboard Header -->
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a wire:navigate href="{{ route('dashboard') }}"><i class='bx bx-line-chart'></i> Webeesocial</a></li>
+            <li class="breadcrumb-item"><a wire:navigate href="{{ route('client.index') }}"><i class='bx bx-line-chart'></i> {{ Auth::user()->organization ? Auth::user()->organization->name : 'No organization' }}</a></li>
             <li class="breadcrumb-item active" aria-current="page">All Clients</li>
         </ol>
     </nav>
@@ -13,16 +13,16 @@
                 <h3 class="main-body-header-title mb-0 @if($status == 'archived') archived_content @endif">All Clients</h3>
                 <span class="text-light">|</span>
                 @can('Create Client')
-                    <a data-bs-toggle="modal" data-bs-backdrop="false" data-bs-target="#add-client-modal" href="javascript:void(0);" class="btn-border btn-border-sm btn-border-primary"><i class="bx bx-plus"></i> Add Client</a>
+                    <a data-step="1" data-intro='Create your first client' data-position='right' data-bs-toggle="modal" data-bs-backdrop="false" data-bs-target="#add-client-modal" href="javascript:void(0);" class="btn-border btn-border-sm btn-border-primary"><i class="bx bx-plus"></i> Add Client</a>
                 @endcan
             </div>
             <div class="col">
                 <div class="main-body-header-right">
-                    <form class="search-box" wire:submit="search" action="">
-                        <input wire:model="query" type="text" class="form-control" placeholder="Search Company">
+                    <form class="search-box" wire:submit="search" action="" data-step="2" data-intro='Search Client' data-position='bottom'>
+                        <input wire:model="query" type="text" class="form-control" placeholder="Search Client">
                         <button type="submit" class="search-box-icon"><i class='bx bx-search me-1'></i> Search</button>
                     </form>
-                    <div class="main-body-header-filters">
+                    <div class="main-body-header-filters" data-step="3" data-intro='Filter Client' data-position='bottom'>
                         <div class="cus_dropdown" wire:ignore.self>
                             <div class="cus_dropdown-icon btn-border btn-border-secondary"><i class='bx bx-filter-alt' ></i> Filter</div>
                             <div class="cus_dropdown-body cus_dropdown-body-widh_l">
@@ -88,7 +88,7 @@
                     </div>
                     <a href="{{ route('client.profile', $client->id ) }}" class="card_style-open"><i class='bx bx-chevron-right'></i></a>
                     <div class="card_style-head card_style-client-head mb-3">
-                        @if($client->image != 'default.png')
+                        @if($client->image)
                             <div class="avatar"><img src="{{ asset('storage/'.$client->image) }}" alt="" class="img-fluid" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{ $client->name }}"></div>
                         @else
                             <div class="avatar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{ $client->name }}">{{ $client->initials }}</div>
@@ -155,3 +155,31 @@
     <!-- Client Modal Component -->
     <livewire:components.add-client @saved="$refresh" />
 </div>
+
+@php
+    $tour = session()->get('tour');
+@endphp
+
+{{-- @if($tour['client_tour']) --}}
+@if(isset($tour) && $tour != null && isset($tour['client_tour']))
+    @assets
+        <link href="https://cdn.jsdelivr.net/npm/intro.js@7.2.0/minified/introjs.min.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/intro.js@7.2.0/intro.min.js"></script>
+    @endassets
+@endif
+
+{{-- @if($tour['client_tour']) --}}
+@if(isset($tour) && $tour != null && isset($tour['client_tour']))
+    @script
+            <script>
+                introJs()
+                .setOptions({
+                showProgress: true,
+                })
+                .onbeforeexit(function () {
+                    location.href = "{{ route('client.index') }}?tour=close-client-tour";
+                })
+                .start();
+            </script>
+    @endscript
+@endif

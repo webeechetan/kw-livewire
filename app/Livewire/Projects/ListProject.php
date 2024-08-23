@@ -44,18 +44,26 @@ class ListProject extends Component
 
     public function render()
     {        
-        $projects = Project::where('name','like','%'.$this->query.'%')
-                    ->whereHas('client',function($query){
-                        $query->where('deleted_at','IS NOT NULL');
-                    })->orWhereHas('client',function($query){
-                        $query->where('name','like','%'.$this->query.'%')->orWhere('brand_name','like','%'.$this->query.'%');
-                    });
+        // $projects = Project::where('name','like','%'.$this->query.'%')
+        //             ->whereHas('client',function($query){
+        //                 $query->where('deleted_at','IS NOT NULL');
+        //             })->orWhereHas('client',function($query){
+        //                 $query->where('name','like','%'.$this->query.'%')->orWhere('brand_name','like','%'.$this->query.'%');
+        //             });
 
-        $this->allProjects =  $projects->count();
-        $this->activeProjects = (clone $projects)->where('status', 'active')->count();
-        $this->completedProjects = (clone $projects)->where('status','completed')->count();
-        $this->archivedProjects = (clone $projects)->onlyTrashed()->count();
-        $this->overdueProjects = (clone $projects)->where('due_date','<', Carbon::today())->count();
+        $projects = Project::where('name','like','%'.$this->query.'%')
+        ->orwhereHas('client',function($query){
+            $query->where('deleted_at','IS NOT NULL');
+        })->orWhereHas('client',function($query){
+            $query->where('name','like','%'.$this->query.'%')->orWhere('brand_name','like','%'.$this->query.'%');
+        });
+
+        $this->allProjects =  Project::count();
+        $this->activeProjects = Project::where('status', 'active')->count();
+        $this->completedProjects = Project::where('status','completed')->count();
+        $this->archivedProjects = Project::onlyTrashed()->count();
+        $this->overdueProjects = Project::where('due_date','<', Carbon::today())->count();
+
 
         if($this->filter == 'active'){
             $projects->where('status','active');
@@ -119,6 +127,14 @@ class ListProject extends Component
         $this->users = User::all();
         $this->clients = Client::all();
         $this->teams = Team::orderBy('name')->get();
+
+        $tour = session()->get('tour');
+        if(request()->tour == 'close-project-tour'){
+            // $tour['project_tour'] = false;
+            unset($tour['project_tour']);
+            session()->put('tour',$tour);
+        }
+
     }
 
     public function search(){
@@ -151,7 +167,6 @@ class ListProject extends Component
     }
 
     public function doesAnyFilterApplied(){
-        // return $this->byTeam != 'all' || $this->byUser != 'all' || $this->byClient != 'all' || $this->sort != 'all' || $this->filter != 'all';
 
         if($this->byTeam != 'all' || $this->byUser != 'all' || $this->byClient != 'all' || $this->sort != 'all' || $this->filter != 'all'){
             return true;

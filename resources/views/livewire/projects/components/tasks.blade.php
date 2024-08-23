@@ -2,18 +2,18 @@
 
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a wire:navigate href="{{ route('dashboard') }}"><i class='bx bx-line-chart'></i> Dashboard</a></li>
+            <li class="breadcrumb-item"><a wire:navigate href="{{ route('dashboard') }}"><i class='bx bx-line-chart'></i>{{ Auth::user()->organization ? Auth::user()->organization->name : 'No organization' }}</a></li>
             <li class="breadcrumb-item"><a wire:navigate href="{{ route('project.index') }}">All Projects</a></li>
             <li class="breadcrumb-item active" aria-current="page">{{ $project->name }}</li>
         </ol>
     </nav>
-
+ 
     <livewire:projects.components.project-tabs :project="$project" />
 
     <div class="col-md-12">
         <div class="column-box h-100">
             <div class="d-flex flex-wrap justify-content-between align-items-center">
-                <div><h4 class="column-title mb-0"><i class='bx bx-objects-horizontal-left text-primary' ></i> {{ $tasks->count() }} Tasks</h4></div>
+                <div><h4 class="column-title mb-0"><i class='bx bx-objects-horizontal-left text-primary' ></i> {{ $project->tasks->count() }} Tasks</h4></div>
                 <div class="btn-list">
                     <a href="javascript:;" class="btn-sm btn-border btn-border-primary open-add-task-canvas" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><i class='bx bx-plus' ></i> Add Task</a>
                     <div class="cus_dropdown">
@@ -235,7 +235,13 @@
                         <img src="{{ asset('assets/images/'.'invite_signup_img.png') }}" width="150" alt="">
                         <h5 class="text text-light mt-3">No Tasks found</h5>
                     </div>
-                @endif
+                    @endif
+                    {{-- load more tasks --}}
+                    @if($tasks->count() < $totalTasks)
+                    <div class="col-md-12 text-center mt-3">
+                        <a href="javascript:" wire:click="loadMore" class="btn btn-sm btn-border btn-border-primary">Load More</a>
+                    </div>
+                    @endif
                 </div>
             </div>
         </div>
@@ -248,7 +254,7 @@
 
 @script
     <script>
-
+        
         document.addEventListener('saved', function(){
             $('#offcanvasRight').offcanvas('hide');
         });
@@ -270,6 +276,7 @@
                 $(".due_date").text(dateStr);
             }
         });
+
     </script>
 @endscript
 

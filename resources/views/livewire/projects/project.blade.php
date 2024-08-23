@@ -2,7 +2,7 @@
     <!-- Dashboard Header -->
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a wire:navigate href="{{ route('dashboard') }}"><i class='bx bx-line-chart'></i> Dashboard</a></li>
+            <li class="breadcrumb-item"><a wire:navigate href="{{ route('project.index') }}"><i class='bx bx-line-chart'></i>{{ Auth::user()->organization ? Auth::user()->organization->name : 'No organization' }}</a></li>
             <li class="breadcrumb-item"><a wire:navigate href="{{ route('project.index') }}">All Projects</a></li>
             <li class="breadcrumb-item active" aria-current="page">{{ $project->name }}</li>
         </ol>
@@ -153,7 +153,7 @@
                                 @foreach($project->activities()->latest()->paginate(10) as $activity)
                                     <div class="activity row space-last_child_0">
                                         <div class="activity-profile col-auto pe-0">
-                                            <a href="javascript:" class="avatar" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="{{ $activity->createdBy->name }}" data-bs-original-title="{{ $activity->createdBy->name }}">{{ $activity->createdBy->initials }}</a>
+                                            <x-avatar :user="$activity->createdBy" />
                                         </div>
                                         <div class="activity-text col">
                                             <div class="mb-0 font-500">{{ $activity->createdBy->name }}</div>
@@ -220,7 +220,7 @@
             <div class="project-description txtarea">
                 {!! $project->description ?? 'Not Added' !!}
             </div>
-            <button class="btn btn-primary update-btn d-none mt-2" wire:click="updateDescription('{{ $project->description }}')">Update</button>
+            <button class="btn btn-primary update-btn d-none mt-2" wire:click="updateDescription">Update</button>
         </div>
         {{-- <a href="javascript:" class="btn_link btn_link-primary">see more</a> --}}
     </div>
@@ -261,7 +261,7 @@
             ],
             callbacks: {
                 onChange: function(contents, $editable) {
-                    @this.updateDescription(contents);
+                    @this.set('description', contents)
                 }
             },
         });

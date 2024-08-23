@@ -2,7 +2,7 @@
     <!-- Dashboard Header -->
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="#"><i class='bx bx-line-chart'></i> Dashboard</a></li>
+            <li class="breadcrumb-item"><a wire:navigate href="{{ route('team.index')}}"><i class='bx bx-line-chart'></i>{{ Auth::user()->organization ? Auth::user()->organization->name : 'No organization' }}</a></li>
             <li class="breadcrumb-item active" aria-current="page">All Teams</li>
         </ol>
     </nav>
@@ -12,16 +12,16 @@
                 <h3 class="main-body-header-title mb-0">All Teams</h3>
                 <span class="text-light">|</span> 
                 @can('Create Team')
-                    <a data-bs-toggle="modal" data-bs-target="#add-team-modal" href="javascript:void(0);" class="btn-border btn-border-sm btn-border-primary"><i class="bx bx-plus"></i> Add Team</a>
+                    <a data-step="1" data-intro='Create your first team' data-position='right' data-bs-toggle="modal" data-bs-target="#add-team-modal" href="javascript:void(0);" class="btn-border btn-border-sm btn-border-primary"><i class="bx bx-plus"></i> Add Team</a>
                 @endcan
             </div>
             <div class="text-end col">
                 <div class="main-body-header-right">
-                    <form class="search-box" wire:submit="search" action="">
+                    <form class="search-box" wire:submit="search" action="" data-step="2" data-intro='Search team' data-position='right'>
                         <input wire:model="query" type="text" class="form-control" placeholder="Search Teams...">
                         <button type="submit" class="search-box-icon"><i class='bx bx-search me-1'></i> Search</button>
                     </form>
-                    <div class="main-body-header-filters">
+                    <div class="main-body-header-filters" data-step="3" data-intro='Filter team' data-position='bottom'>
                         <div class="cus_dropdown" wire:ignore.self>
                             <div class="cus_dropdown-icon btn-border btn-border-secondary"><i class='bx bx-filter-alt' ></i> Filter</div>
                             <div class="cus_dropdown-body cus_dropdown-body-widh_l">
@@ -96,8 +96,9 @@
                                     @if($team->manager)
                                         @if($team->manager)
                                             {{-- <span class="btn-batch ms-2">{{ $team->manager?->name }}</span>--}}
-                                            <a href="javascript:;"class="avatar avatar-orange avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="{{$team->manager?->name}}"> {{ $team->manager?->initials ?? 'NA' }}</a>
-                                            
+                                            <a href="javascript:;"class="avatar avatar-orange avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="{{$team->manager?->name}}"> 
+                                                {{ $team->manager?->initials ?? 'NA' }}
+                                            </a>
                                         @endif
                                     @else
                                         <div class="text-light">No Manager Assigned</div>
@@ -219,13 +220,31 @@
 
 
 
+@php
+    $tour = session()->get('tour');
+@endphp
 
+{{-- @if($tour['team_tour']) --}}
+@if(isset($tour) && $tour != null && isset($tour['team_tour']))
+    @assets
+        <link href="https://cdn.jsdelivr.net/npm/intro.js@7.2.0/minified/introjs.min.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/intro.js@7.2.0/intro.min.js"></script>
+    @endassets
+@endif
 
+{{-- @if($tour['team_tour']) --}}
+@if(isset($tour) && $tour != null && isset($tour['team_tour']))
+    @script
+            <script>
+                introJs()
+                .setOptions({
+                showProgress: true,
+                })
+                .onbeforeexit(function () {
+                    location.href = "{{ route('team.index') }}?tour=close-team-tour";
+                })
+                .start();
+            </script>
+    @endscript
+@endif
 
-
-
-{{-- 
-
-<a href="javascript:;" class="avatar avatar-{{ $user->color }} avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="{{$user->name}}">{{ $user->initials }}</a>
-
-<span class="font-500"><i class='bx bx-user text-success' ></i> Manager</span> @if($team->manager)<span class="btn-batch ms-2">{{ $team->manager?->name }}</span> @endif  --}}

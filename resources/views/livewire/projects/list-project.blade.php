@@ -2,7 +2,7 @@
     <!-- Dashboard Header -->
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a wire:navigate href="{{ route('dashboard') }}"><i class='bx bx-line-chart'></i> Dashboard</a></li>
+            <li class="breadcrumb-item"><a wire:navigate href="{{ route('project.index') }}"><i class='bx bx-line-chart'></i>{{ Auth::user()->organization ? Auth::user()->organization->name : 'No organization' }}</a></li>
             <li class="breadcrumb-item active" aria-current="page">All Projects</li>
         </ol>
     </nav>
@@ -13,16 +13,16 @@
                 <h3 class="main-body-header-title mb-0 @if($filter == 'archived') archived_content @endif">All Projects</h3>
                 @can('Create Project')
                     <span class="text-light">|</span>
-                    <a data-bs-toggle="modal" data-bs-target="#add-project-modal" href="javascript:void(0);" class="btn-border btn-border-sm btn-border-primary"><i class="bx bx-plus"></i> Add Project</a>
+                    <a data-step="1" data-intro='Create your first project' data-position='right' data-bs-toggle="modal" data-bs-target="#add-project-modal" href="javascript:void(0);" class="btn-border btn-border-sm btn-border-primary"><i class="bx bx-plus"></i> Add Project</a>
                 @endcan
             </div>
             <div class="col">
                 <div class="main-body-header-right">
-                    <form class="search-box" wire:submit="search" action="">
+                    <form class="search-box" wire:submit="search" action="" data-step="2" data-intro='Search Project' data-position='bottom'>
                         <input wire:model="query" type="text" class="form-control" placeholder="Search Projects...">
                         <button type="submit" class="search-box-icon"><i class='bx bx-search me-1'></i> Search</button>
                     </form>
-                    <div class="main-body-header-filters">
+                    <div class="main-body-header-filters" data-step="3" data-intro='Filter Project' data-position='bottom'>
                         <div class="cus_dropdown" wire:ignore.self>
                             <div class="cus_dropdown-icon btn-border btn-border-secondary"><i class='bx bx-filter-alt' ></i> Filter</div>
                             <div class="cus_dropdown-body cus_dropdown-body-widh_l">
@@ -39,7 +39,7 @@
                                         <ul class="filterSort_btn_group list-none">
                                             <li class="filterSort_item"><a wire:click="$set('filter','all')" class="btn-batch @if($filter == 'all') active @endif">All</a></li>
                                             <li class="filterSort_item"><a wire:click="$set('filter','active')" class="btn-batch @if($filter == 'active') active @endif">Active</a></li>
-                                            <li class="filterSort_item"><a wire:click="$set('filter','overdue')" class="btn-batch @if($filter == 'overdue') active @endif">Overdue</a></li>
+                                            {{-- <li class="filterSort_item"><a wire:click="$set('filter','overdue')" class="btn-batch @if($filter == 'overdue') active @endif">Overdue</a></li> --}}
                                             <li class="filterSort_item"><a wire:click="$set('filter','completed')" class="btn-batch @if($filter == 'completed') active @endif">Completed</a></li>
                                             <li class="filterSort_item"><a wire:click="$set('filter','archived')" class="btn-batch @if($filter == 'archived') active @endif">Archived</a></li>
                                             
@@ -77,13 +77,6 @@
     <div class="row">
         <div class="col-md-6">
             <div class="dashboard_filters d-flex flex-wrap gap-4 align-items-center mb-4">
-             {{-- 
-                <a wire:click="$set('status', 'all')" class="btn-border btn-border-primary @if($status == 'all') active @endif">{{ $tasks_count->count() }} <span>|</span>All</a>
-                <a wire:click="$set('status', 'pending')" class="btn-border btn-border-primary @if($status == 'active') active @endif">{{ $projects->where('status','active')->count() }} <span>|</span> Assigned</a>
-                <a wire:click="$set('status', 'in_progress')" class="btn-border btn-border-secondary @if($status == 'in_progress') active @endif">{{ $projects->where('status','in_progress')->count() }} <span>|</span> Accepted</a>
-                <a wire:click="$set('status', 'in_review')" class="btn-border btn-border-warning @if($status == 'in_review') active @endif">{{ $projects->where('status','in_review')->count() }} <span>|</span> In Review</a>
-                <a wire:click="$set('status', 'completed')" class="btn-border btn-border-success @if($status == 'completed') active @endif">{{ $projects->where('status','completed')->count() }} <span>|</span> Completed</a> --}}
-
                 <a class="@if($filter == 'all') active @endif" wire:click="$set('filter','all')">All <span class="btn-batch">{{ $allProjects}}</span></a>
                 <a class="@if($filter == 'active') active @endif" wire:click="$set('filter','active')">Active <span class="btn-batch">{{ $activeProjects }}</span></a>
                 <a class="@if($filter == 'overdue') active @endif" wire:click="$set('filter','overdue')">Overdue <span class="btn-batch">{{ $overdueProjects}}</span></a>
@@ -234,3 +227,31 @@
     <livewire:components.add-project @saved="$refresh" />
     
 </div>
+
+@php
+    $tour = session()->get('tour');
+@endphp
+
+{{-- @if($tour['project_tour']) --}}
+@if(isset($tour) && $tour != null && isset($tour['project_tour']))
+    @assets
+        <link href="https://cdn.jsdelivr.net/npm/intro.js@7.2.0/minified/introjs.min.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/intro.js@7.2.0/intro.min.js"></script>
+    @endassets
+@endif
+
+{{-- @if($tour['project_tour']) --}}
+@if(isset($tour) && $tour != null && isset($tour['project_tour']))
+    @script
+            <script>
+                introJs()
+                .setOptions({
+                showProgress: true,
+                })
+                .onbeforeexit(function () {
+                    location.href = "{{ route('project.index') }}?tour=close-project-tour";
+                })
+                .start();
+            </script>
+    @endscript
+@endif

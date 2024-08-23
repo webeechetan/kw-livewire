@@ -41,6 +41,12 @@ class ListClient extends Component
     public function mount()
     {
         $this->authorize('View Client');
+        $tour = session()->get('tour');
+        if(request()->tour == 'close-client-tour'){
+            // $tour['client_tour'] = false;
+            unset($tour['client_tour']);
+            session()->put('tour',$tour);
+        }
     }
 
     public function render()

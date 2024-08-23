@@ -11,6 +11,11 @@ function addBorder(){
         $(tables[i]).attr('border', '1');
         console.log('table', tables[i]);
     }
-}
+} 
+
 
 setTimeout(addBorder, 5000);
+
+$(document).ready(function(){
+    
+});

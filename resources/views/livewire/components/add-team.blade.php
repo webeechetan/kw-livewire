@@ -48,7 +48,7 @@
                         </div>   
                         <div class="row">
                             <div class="col-md-4 mb-4 mb-lg-0">
-                                <label for="">Assign Manager</label>
+                                <label for="">Assign Manager<sup class="text-primary">*</sup></label>
                             </div>
                             <div class="col-md-8">
                                 <select required wire:model="team_manager" id="" class="form-style team_manager">
@@ -77,6 +77,7 @@
     <script>
         document.addEventListener('team-added', event => {
             $("#add-team-modal").modal('hide');
+            $('.image-preview-section').addClass('d-none');
         });
 
         document.addEventListener('team-updated', event => {
@@ -107,6 +108,13 @@
 
             $(".modal-btn").html('Update Team');
             $(".modal-text").html('Edit Team');
+
+
+            if (event.detail[0].image) {
+                $(".image-preview-section").removeClass('d-none');
+                $('.image-preview-section').html('<img src="{{ asset('storage') }}/'+event.detail[0].image+'" alt="project image" class="img-fluid">');
+                }
+
         });
 
         

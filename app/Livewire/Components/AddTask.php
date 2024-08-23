@@ -20,7 +20,7 @@ class AddTask extends Component
     public $name;
     public $description;
     public $due_date;
-    public $projects = [];
+    public $projects = []; 
     public $users = [];
     public $task_users;
     public $task_notifiers;
@@ -41,9 +41,15 @@ class AddTask extends Component
         $this->project = $project;
         $this->users = User::all();
         // $this->projects = Project::all();
-        $this->projects = Project::whereHas('client',function($query){
+        // $this->projects = Project::whereHas('client',function($query){
+        //     $query->whereNull('clients.deleted_at');
+        // })->get();
+
+        $this->projects = Project::whereHas('client', function($query) {
             $query->whereNull('clients.deleted_at');
-        })->get();
+        })
+        ->orderBy('projects.name', 'asc')
+        ->get();
 
         if($project){
             $this->project_id = $project->id;
@@ -111,7 +117,7 @@ class AddTask extends Component
         }
 
         $this->attachments = [];
-        
+        $this->dispatch('success', 'Task added successfully');
         $this->dispatch('saved','Task saved successfully');
     }
 
@@ -220,6 +226,7 @@ class AddTask extends Component
         $this->attachments = [];
         $this->task = null; 
 
+        $this->dispatch('success', 'Task updated successfully');
         $this->dispatch('saved','Task updated successfully');
     }
 

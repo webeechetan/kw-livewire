@@ -5,7 +5,7 @@ namespace App\Livewire\Components;
 use Livewire\Component;
 use App\Models\ { Project, OrganizationActivityTask as Task, User, Attachment, ActivityTaskComment as Comment, Client};
 use Livewire\WithFileUploads;
-use App\Notifications\NewTaskAssignNotification;
+use App\Notifications\NewActivityTaskAssignNotification;
 use App\Notifications\UserMentionNotification;
 use Livewire\Attributes\Js;
 
@@ -59,8 +59,6 @@ class AddOrganizationActivity extends Component
             $this->dispatch('error',$validation_error_message);
         }
 
-
-
         $this->validate([
             'name' => 'required',
         ]);
@@ -75,7 +73,7 @@ class AddOrganizationActivity extends Component
         $task->status = $this->status;
         $task->save();
         $task->users()->sync($this->task_users);
-        // $task->notifiers()->sync($this->task_notifiers);
+        $task->notifiers()->sync($this->task_notifiers);
          // attach files to task from $this->attachments
         if($this->attachments){
             foreach($this->attachments as $attachment){
@@ -97,12 +95,12 @@ class AddOrganizationActivity extends Component
             }
         }
  
-        // if($this->task_users){
-        //     foreach($this->task_users as $user_id){
-        //         $user = User::find($user_id);
-        //         $user->notify(new NewTaskAssignNotification($task));
-        //     }
-        // }
+        if($this->task_users){
+            foreach($this->task_users as $user_id){
+                $user = User::find($user_id);
+                $user->notify(new NewActivityTaskAssignNotification($task));
+            }
+        }
 
         $this->attachments = [];
         

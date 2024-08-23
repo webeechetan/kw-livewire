@@ -72,6 +72,7 @@ class AddUser extends Component
         $user->notify(new UserWelcomeNotification($this->password));
         $this->role = (int)$this->role;
         $user->assignRole($this->role);
+        $this->dispatch('success', 'User added successfully');
         $this->dispatch('saved');
         $this->dispatch('user-added');
         $this->resetForm();
@@ -105,6 +106,7 @@ class AddUser extends Component
         $this->role = (int)$this->role;
         setPermissionsTeamId(session('org_id'));
         $user->syncRoles([$this->role]);
+        $this->dispatch('success', 'User updated successfully');
         $this->dispatch('saved');
         $this->dispatch('user-updated');
     }

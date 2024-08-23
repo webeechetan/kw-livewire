@@ -11,7 +11,7 @@
                 <div class="signin-content-right text-center text-md-start space-sec">
                     <div class="signin-content-right-top">
                         <h2 class="title mb-4">Sign In to your account</h2>
-                        <a href="#" class="signin-google-btn w-100">
+                        {{-- <a href="#" class="signin-google-btn w-100">
                             <svg viewBox="0 0 48 48">
                                 <clipPath id="g">
                                     <path d="M44.5 20H24v8.5h11.8C34.7 33.9 30.1 37 24 37c-7.2 0-13-5.8-13-13s5.8-13 13-13c3.1 0 5.9 1.1 8.1 2.9l6.4-6.4C34.6 4.1 29.6 2 24 2 11.8 2 2 11.8 2 24s9.8 22 22 22c11 0 21-8 21-22 0-1.3-.2-2.7-.5-4z"/>
@@ -24,7 +24,7 @@
                                 </g>
                             </svg>
                             <span>google</span>
-                        </a>
+                        </a> --}}
                         <p>or sign in with your E-mail</p>
                     </div>
                     <div class="signin-content-right-btm mt-4">

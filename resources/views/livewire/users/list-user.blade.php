@@ -2,7 +2,7 @@
     <!-- Dashboard Header -->
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="#"><i class='bx bx-line-chart'></i> Dashboard</a></li>
+            <li class="breadcrumb-item"><a wire:navigate href="{{ route('user.index')}}"><i class='bx bx-line-chart'></i>{{ Auth::user()->organization ? Auth::user()->organization->name : 'No organization' }}</a></li>
             <li class="breadcrumb-item active" aria-current="page">All Users</li>
         </ol>
     </nav>
@@ -12,17 +12,17 @@
                 <h3 class="main-body-header-title mb-0 @if($filter == 'archived') archived_content @endif">All Users</h3>
                 <span class="text-light">|</span>
                 @can('Create User')
-                <a data-bs-toggle="modal" data-bs-target="#add-user-modal" href="javascript:void(0);" class="btn-border btn-border-sm btn-border-primary"><i class="bx bx-plus"></i> Add User</a>
+                <a data-step="1" data-intro='Create your first user' data-position='right' data-bs-toggle="modal" data-bs-target="#add-user-modal" href="javascript:void(0);" class="btn-border btn-border-sm btn-border-primary"><i class="bx bx-plus"></i> Add User</a>
                 @endcan
                 <!-- <a wire:navigate href="{{ route('user.add') }}" href="javascript:void(0);" class="btn-border btn-border-sm btn-border-primary"><i class="bx bx-plus"></i> Add User</a> -->
             </div>
             <div class="text-end col">
                 <div class="main-body-header-right">
-                    <form class="search-box" wire:submit="search" action="">
+                    <form class="search-box" wire:submit="search" action="" data-step="2" data-intro='Search User' data-position='bottom'>
                         <input wire:model="query" type="text" class="form-control" placeholder="Search Users...">
                         <button type="submit" class="search-box-icon"><i class='bx bx-search me-1'></i> Search</button>
                     </form>
-                    <div class="main-body-header-filters">
+                    <div class="main-body-header-filters" data-step="3" data-intro='Filter User' data-position='bottom'>
                         <div class="cus_dropdown" wire:ignore.self>
                             <div class="cus_dropdown-icon btn-border btn-border-secondary"><i class='bx bx-filter-alt' ></i> Filter</div>
                             <div class="cus_dropdown-body cus_dropdown-body-widh_l">
@@ -200,3 +200,31 @@
     <livewire:components.add-user  @saved="$refresh" />
     
 </div>
+
+@php
+    $tour = session()->get('tour');
+@endphp
+
+{{-- @if($tour['user_tour']) --}}
+@if(isset($tour) && $tour != null && isset($tour['user_tour']))
+    @assets
+        <link href="https://cdn.jsdelivr.net/npm/intro.js@7.2.0/minified/introjs.min.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/intro.js@7.2.0/intro.min.js"></script>
+    @endassets
+@endif
+
+{{-- @if($tour['user_tour']) --}}
+@if(isset($tour) && $tour != null && isset($tour['user_tour']))
+    @script
+            <script>
+                introJs()
+                .setOptions({
+                showProgress: true,
+                })
+                .onbeforeexit(function () {
+                    location.href = "{{ route('user.index') }}?tour=close-user-tour";
+                })
+                .start();
+            </script>
+    @endscript
+@endif

@@ -8,13 +8,16 @@
                     </div>
                 </div>
                 <div class="col-sm-6 text-md-end">
+                    @if(!in_array($step, [2, 3]))
                     <a wire:navigate href="/login">
                         <button class="btn btn-primary-border btn-smt">Sign In</button>
                     </a>
+                    @endif
                 </div>
             </div>
         </div>
     </div> 
+    @if($step == 1)
     <div class="signup-content">
         <div class="container">
             <div class="row">
@@ -30,7 +33,7 @@
                                 <div class="col-md-6">
                                     <div class="form-field mb-3" controlId="signupName">
                                         <div class="form-field-icon"><i class='bx bx-user'></i></div>
-                                        <input type="text" wire:model="name" class="form-control" placeholder="Enter Name"   />
+                                        <input type="text" wire:model="name" class="form-control" placeholder="Organization Name"   />
                                         @error('name') <span class="text-danger">{{ $message }}</span>@enderror
                                     </div>
                                 </div>
@@ -61,7 +64,7 @@
                             <div class="my-3">
                                 <button class="w-100 btn btn-primary btn-smt" type="submit">Sign Up</button>
                             </div>
-                            <p>Or sign up with:</p>
+                            {{-- <p>Or sign up with:</p>
                             <a href="#" class="signin-google-btn w-100">
                                 <svg viewBox="0 0 48 48">
                                     <clipPath id="g">
@@ -75,11 +78,243 @@
                                     </g>
                                 </svg>
                                 <span>google</span>
-                            </a>
+                            </a> --}}
                         </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    @endif
+
+    @if($step == 2)
+    <div class="signin-content">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-md-6 text-center px-0">
+                    <div class="signin-content-left bg-md-secondary">
+                        <img class="img-fluid d-none d-md-block" src="./assets/images/logo-verticle-white.png" alt="Kaykewalk White Logo" />
+                        <img class="img-fluid d-md-none" src="./assets/images/logo.png" alt="Kaykewalk Logo" />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="signin-content-right text-center text-md-start space-sec">
+                        <div class="signin-content-right-top">
+                            <h6 class="title">Upload Logo</h6>
+                        </div>
+                        <div class="signin-content-right-btm mt-4">
+                            <form wire:submit="registerStepOne" method="POST" enctype="multipart/form-data">
+                                <div class="mb-3" >
+                                    <div class="form-field">
+                                        <input type="file" wire:model="image" class="form-control" />
+                                        @error('image') <span class="text-danger">{{ $message }}</span>@enderror
+                                    </div>
+                                </div>
+                                @if(session()->has('error'))
+                                    <div class="col text-center">
+                                        <div class="text-danger">
+                                            {{ session('error') }}
+                                        </div>
+                                    </div>
+                                @endif
+                                <div class="col-12 mb-4">
+                                    <button class="w-100 btn btn-primary" type="submit">Done</button>
+                                </div>
+                                <div class="col-12 text-center">
+                                    <a wire:navigate href="{{ route('dashboard') }}" class="text-link">Skip for now</a>
+                                </div>
+                            </form>
+                            @if($step == 3)
+                            <form wire:submit="registerStepTwo" method="POST">
+                                <div class="mb-3" >
+                                    <div class="form-field">   
+                                     <div class="form-field-icon">
+                                         <i class='bx bx-envelope'></i>
+                                     </div>                   
+                                     <input type="email" wire:model="memberemail" class="form-control" placeholder="Enter Member Email" required />
+                                        @error('memberemail') <span class="text-danger">{{ $message }}</span>@enderror
+                                    </div>
+                                </div>
+                                @if(session()->has('error'))
+                                    <div class="col text-center">
+                                        <div class="text-danger">
+                                            {{ session('error') }}
+                                        </div>
+                                    </div>
+                                @endif
+                                <div class="mt-2">
+                                    <div class="col">
+                                        <button class="w-100 btn btn-primary" type="submit">Submit</button>
+                                    </div>
+                                    <div class="col-12 text-center">
+                                     <a wire:navigate href="{{ route('login') }}" class="text-link">Skip for now</a>
+                                 </div>
+                                </div>
+                            </form>
+                            @endif
+
+                            @if($step == 4)
+                            <form wire:submit="dashboard" method="POST">
+                             <div class="mb-3" >
+                                 <div class="form-field">
+                                     <div class="form-field-icon">
+                                         <i class='bx bx-envelope'></i>
+                                     </div>
+                                     <input type="text" wire:model="question3" class="form-control" placeholder="Enter question 3" required />
+                                     @error('question3') <span class="text-danger">{{ $message }}</span>@enderror
+                                 </div>
+                             </div>
+                             @if(session()->has('error'))
+                                 <div class="col text-center">
+                                     <div class="text-danger">
+                                         {{ session('error') }}
+                                     </div>
+                                 </div>
+                             @endif
+                             <div class="mt-2">
+                                 <div class="col">
+                                     <button class="w-100 btn btn-primary" type="submit">Submit</button>
+                                 </div>
+                                 <div class="col-12 text-center">
+                                  <a wire:navigate href="{{ route('login') }}" class="text-link">Skip for now</a>
+                              </div>
+                             </div>
+                            </form>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+     </div>
+    @endif
+
+    @if($step == 3)
+    <div class="signin-content">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-md-6 text-center px-0">
+                    <div class="signin-content-left bg-md-secondary">
+                        <img class="img-fluid d-none d-md-block" src="./assets/images/logo-verticle-white.png" alt="Kaykewalk White Logo" />
+                        <img class="img-fluid d-md-none" src="./assets/images/logo.png" alt="Kaykewalk Logo" />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="signin-content-right text-center text-md-start space-sec">
+                        <div class="signin-content-right-top">
+                            <h6 class="title">Registration Journey</h6>
+                        </div>
+                        <div class="signin-content-right-btm mt-4">
+                            <form wire:submit="registerStepTwo" method="POST">
+                                <div class="mb-3" >
+                                    <div class="form-field">   
+                                     <div class="form-field-icon">
+                                         <i class='bx bx-envelope'></i>
+                                     </div>                   
+                                     <input type="email" wire:model="memberemail" class="form-control" placeholder="Enter Member Email" required />
+                                        @error('memberemail') <span class="text-danger">{{ $message }}</span>@enderror
+                                    </div>
+                                </div>
+                                @if(session()->has('error'))
+                                    <div class="col text-center">
+                                        <div class="text-danger">
+                                            {{ session('error') }}
+                                        </div>
+                                    </div>
+                                @endif
+                                <div class="mt-2">
+                                    <div class="col">
+                                        <button class="w-100 btn btn-primary" type="submit">Submit</button>
+                                    </div>
+                                    <div class="col-12 text-center">
+                                     <a wire:navigate href="{{ route('login') }}" class="text-link">Skip for now</a>
+                                 </div>
+                                </div>
+                            </form>
+
+                            @if($step == 4)
+                            <form wire:submit="dashboard" method="POST">
+                             <div class="mb-3" >
+                                 <div class="form-field">
+                                     <div class="form-field-icon">
+                                         <i class='bx bx-envelope'></i>
+                                     </div>
+                                     <input type="text" wire:model="question3" class="form-control" placeholder="Enter question 3" required />
+                                     @error('question3') <span class="text-danger">{{ $message }}</span>@enderror
+                                 </div>
+                             </div>
+                             @if(session()->has('error'))
+                                 <div class="col text-center">
+                                     <div class="text-danger">
+                                         {{ session('error') }}
+                                     </div>
+                                 </div>
+                             @endif
+                             <div class="mt-2">
+                                 <div class="col">
+                                     <button class="w-100 btn btn-primary" type="submit">Submit</button>
+                                 </div>
+                                 <div class="col-12 text-center">
+                                  <a wire:navigate href="{{ route('login') }}" class="text-link">Skip for now</a>
+                              </div>
+                             </div>
+                            </form>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+     </div>
+    @endif
+
+    @if($step == 4)
+    <div class="signin-content">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-md-6 text-center px-0">
+                    <div class="signin-content-left bg-md-secondary">
+                        <img class="img-fluid d-none d-md-block" src="./assets/images/logo-verticle-white.png" alt="Kaykewalk White Logo" />
+                        <img class="img-fluid d-md-none" src="./assets/images/logo.png" alt="Kaykewalk Logo" />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="signin-content-right text-center text-md-start space-sec">
+                        <div class="signin-content-right-top">
+                            <h6 class="title">Registration Journey</h6>
+                        </div>
+                        <div class="signin-content-right-btm mt-4">
+                            <form wire:submit="dashboard" method="POST">
+                             <div class="mb-3" >
+                                 <div class="form-field">
+                                     <div class="form-field-icon">
+                                         <i class='bx bx-envelope'></i>
+                                     </div>
+                                     <input type="text" wire:model="question3" class="form-control" placeholder="Enter question 3" required />
+                                     @error('question3') <span class="text-danger">{{ $message }}</span>@enderror
+                                 </div>
+                             </div>
+                             @if(session()->has('error'))
+                                 <div class="col text-center">
+                                     <div class="text-danger">
+                                         {{ session('error') }}
+                                     </div>
+                                 </div>
+                             @endif
+                             <div class="mt-2">
+                                 <div class="col">
+                                     <button class="w-100 btn btn-primary" type="submit">Submit</button>
+                                 </div>
+                                 <div class="col-12 text-center">
+                                  <a wire:navigate href="{{ route('login') }}" class="text-link">Skip for now</a>
+                              </div>
+                             </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+     </div>
+    @endif
 </div>

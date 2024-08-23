@@ -11,6 +11,7 @@ use App\Models\Team;
 use App\Models\UserDetail;
 use App\Models\Project;
 use App\Models\Notification;
+use App\Models\Client;
 use App\Models\Scopes\OrganizationScope;
 use App\Models\Organization;
 use Spatie\Permission\Traits\HasRoles;
@@ -84,7 +85,7 @@ class User extends Authenticatable
     // }
 
     public function organization(){
-        return $this->belongsTo(Organization::class);
+        return $this->belongsTo(Organization::class, 'org_id');
     }
 
     public function getProjectsAttribute(){
@@ -99,12 +100,14 @@ class User extends Authenticatable
     }
 
     public function getInitialsAttribute(){
-        // only take first 2 words and get their first letter if the name is in one word then take first 2 letters
-        $words = explode(' ', $this->name);
-        if(count($words) == 1){
-            return substr($this->name, 0, 2);
+        $name = $this->name;
+        $name = explode(' ', $name);
+        if(count($name) == 1){
+            return strtoupper(substr($name[0], 0, 2));
+        }else{
+            return strtoupper(substr($name[0], 0, 1).substr($name[1], 0, 1));
         }
-        return $words[0][0].$words[1][0];
+        
     }
 
     public function notifications(){

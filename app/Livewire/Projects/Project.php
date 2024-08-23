@@ -20,6 +20,7 @@ class Project extends Component
     public $projectTasks;
     public $projectUsers;
     public $projectTeams = [];
+    public $description;
 
     public function render()
     {
@@ -54,8 +55,8 @@ class Project extends Component
         $this->redirect(route('project.profile',['id'=>$this->project->id]), navigate: true);
     }
 
-    public function updateDescription($description){
-        $this->project->description = $description;
+    public function updateDescription(){
+        $this->project->description = $this->description;
         $this->project->save();
     }
 

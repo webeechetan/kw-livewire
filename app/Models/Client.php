@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Project;
 use App\Models\Scopes\OrganizationScope;
+use App\Models\Scopes\MainClientScope;
 use App\Models\Team;
 use App\Models\User;
 use App\Models\Organization;
@@ -32,6 +33,7 @@ class Client extends Model
     protected static function booted()
     {
         static::addGlobalScope(new OrganizationScope);
+        static::addGlobalScope(new MainClientScope);
     }
 
     public function getVisibleNameAttribute(){
@@ -42,12 +44,13 @@ class Client extends Model
     }
 
     public function getInitialsAttribute(){
-        // only take first 2 words and get their first letter if the name is in one word then take first 2 letters
-        $words = explode(' ', $this->name);
-        if(count($words) == 1){
-            return substr($this->name, 0, 2);
+        $name = $this->name;
+        $name = explode(' ', $name);
+        if(count($name) == 1){
+            return strtoupper(substr($name[0], 0, 2));
+        }else{
+            return strtoupper(substr($name[0], 0, 1).substr($name[1], 0, 1));
         }
-        return $words[0][0].$words[1][0];
         
     }
 
@@ -76,6 +79,12 @@ class Client extends Model
         }
         return User::whereIn('id', $task_users)->get();
         
+    }
+
+    // scopes
+
+    public function scopeMain($query){
+        return $query->where('is_main', 1);
     }
 
     

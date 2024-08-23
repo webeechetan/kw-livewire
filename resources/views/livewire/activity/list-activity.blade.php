@@ -2,7 +2,7 @@
     <!-- Dashboard Header -->
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a wire:navigate href="{{ route('dashboard') }}"><i class='bx bx-line-chart'></i> Webeesocial</a></li>
+            <li class="breadcrumb-item"><a wire:navigate href="{{ route('activity.index') }}"><i class='bx bx-line-chart'></i>{{ Auth::user()->organization ? Auth::user()->organization->name : 'No organization' }}</a></li>
             <li class="breadcrumb-item active" aria-current="page">All Activities</li>
         </ol>
     </nav>
@@ -13,13 +13,13 @@
                 <h3 class="main-body-header-title mb-0">All Activities</h3>
                 <span class="text-light">|</span>
                 @can('Create Client')
-                    <a data-bs-toggle="modal" data-bs-backdrop="false" data-bs-target="#add-activity-modal" href="javascript:void(0);" class="btn-border btn-border-sm btn-border-primary"><i class="bx bx-plus"></i> Add Activities</a>
+                    <a data-bs-toggle="modal" data-bs-backdrop="false" data-bs-target="#add-activity-modal" href="javascript:void(0);" class="btn-border btn-border-sm btn-border-primary"><i class="bx bx-plus"></i> Add Activity</a>
                 @endcan
             </div>
             <div class="col">
                 <div class="main-body-header-right">
-                    <form class="search-box" action="">
-                        <input  type="text" class="form-control" placeholder="Search Company">
+                    <form class="search-box" wire:submit="search" action="">
+                        <input wire:model="query"  type="text" class="form-control" placeholder="Search Company">
                         <button type="submit" class="search-box-icon"><i class='bx bx-search me-1'></i> Search</button>
                     </form>
                 </div>
@@ -30,8 +30,10 @@
     <!-- Dashboard Body -->
     <div class="row mb-2">
         
-
+        @if($activities->isNotEmpty())
+        
             @foreach($activities as $activity)
+           
             <div class="col-md-4 mb-4" >
                 <div class="card_style card_style-client h-100">
                     <a  wire:navigate href="{{ route('activity.profile', $activity->id ) }}" class="card_style-open"><i class='bx bx-chevron-right'></i></a>
@@ -53,17 +55,29 @@
                     <hr class="my-2">
                     <div class="row align-items-center">
                         <div class="col-auto">
-                            <h4 class="text-md mb-0"><i class="bx bx-user text-primary"></i> Users</h4> 
+                            <h4 class="text-md mb-0"><i class="bx bx-user text-primary"></i> {{ count($activity->users()) > 1 ? 'Users' : 'User'}}</h4> 
                         </div>
                         <div class="col">
                             <div class="avatarGroup avatarGroup-overlap">
-                               
+                                @if(count($activity->users()) > 0)
+                                    @foreach($activity->users() as $user)
+                                        <x-avatar :user="$user" />
+                                    @endforeach
+                                @else
+                                <div class="text-light">No User Assigned</div>
+                                @endif
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             @endforeach
+        @else
+        <div class="col-md-12 text-center">
+            <img src="{{ asset('assets/images/'.'invite_signup_img.png') }}" width="150" alt="">
+            <h5 class="text text-light mt-3">No Activities found</h5>
+        </div>
+        @endif
         
     </div>
     <!-- Pagination -->
