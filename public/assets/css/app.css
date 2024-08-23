@@ -3234,6 +3234,7 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   color: #fff;
   font-size: 14px;
   transition: all 0.3s ease;
+  overflow: hidden;
 }
 .avatar:hover, .avatar:focus {
   color: #fff;
@@ -3299,6 +3300,11 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   font-size: 13px;
   width: inherit;
   height: inherit;
+}
+.avatar-xl {
+  width: 60px;
+  height: 60px;
+  font-size: 24px;
 }
 
 .avatarGroup {

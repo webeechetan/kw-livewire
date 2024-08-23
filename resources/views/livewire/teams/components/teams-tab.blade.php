@@ -5,7 +5,7 @@
                 <div class="col">
                     <div class="dashboard-head-title-wrap">
                         @if($team->image)
-                            <div class="avatar avatar-lg">
+                            <div class="avatar">
                                 <img src="{{ asset('storage/'.$team->image) }}" alt="Avatar" class="avatar-img rounded-circle">
                             </div>
                         @else

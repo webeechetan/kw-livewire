@@ -99,6 +99,7 @@
     color: #fff;
     font-size: 14px;
     transition: $ease_03;
+    overflow: hidden;
 
     &:hover, &:focus {
         color: #fff;
@@ -170,6 +171,12 @@
             width: inherit;
             height: inherit;
         }
+    }
+
+    &-xl {
+        width: 60px;
+        height: 60px;
+        font-size: 24px;
     }
 }
 
