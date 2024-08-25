@@ -61,6 +61,7 @@ use App\Models\Organization;
 use Illuminate\Support\Facades\Session;
 use PHPUnit\TextUI\Help;
 use App\Helpers\Helper;
+use Livewire\Livewire;
 
 /*
 |--------------------------------------------------------------------------
@@ -85,6 +86,11 @@ Route::get('/logout',function(){
 Route::get('/forgot-password',ForgotPassword::class)->name('forgot.password')->middleware('throttle:5,1');
 
 $org_name = request()->segment(1);
+
+Livewire::setUpdateRoute(function ($handle) use ($org_name) {
+    return Route::post($org_name . '/livewire/update', $handle)
+        ->middleware(['myauth']); 
+});
 
 Route::group(
     [
