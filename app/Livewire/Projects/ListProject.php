@@ -44,19 +44,28 @@ class ListProject extends Component
 
     public function render()
     {        
-        // $projects = Project::where('name','like','%'.$this->query.'%')
+        // $projects = Project::Where('name','like','%'.$this->query.'%')
         //             ->whereHas('client',function($query){
         //                 $query->where('deleted_at','IS NOT NULL');
         //             })->orWhereHas('client',function($query){
         //                 $query->where('name','like','%'.$this->query.'%')->orWhere('brand_name','like','%'.$this->query.'%');
         //             });
 
-        $projects = Project::where('name','like','%'.$this->query.'%')
-        ->orwhereHas('client',function($query){
-            $query->where('deleted_at','IS NOT NULL');
-        })->orWhereHas('client',function($query){
-            $query->where('name','like','%'.$this->query.'%')->orWhere('brand_name','like','%'.$this->query.'%');
+        // $projects = Project::where('name','like','%'.$this->query.'%')
+        // ->orwhereHas('client',function($query){
+        //     $query->where('deleted_at','IS NOT NULL');
+        // })->orWhereHas('client',function($query){
+        //     $query->where('name','like','%'.$this->query.'%')->orWhere('brand_name','like','%'.$this->query.'%');
+        // });
+
+        $projects = Project::where(function ($query) {
+            $query->where('name', 'like', '%'.$this->query.'%')
+                  ->orWhereHas('client', function ($query) {
+                      $query->where('name', 'like', '%'.$this->query.'%')
+                            ->orWhere('brand_name', 'like', '%'.$this->query.'%');
+                  });
         });
+
 
         $this->allProjects =  Project::count();
         $this->activeProjects = Project::where('status', 'active')->count();
