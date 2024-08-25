@@ -21,7 +21,8 @@
                     </div>
                     <div class="col-md-auto text-end">
                         <div class="welcome-box-img">
-                            <img src="./assets/images/welcome-img.png" alt="Kaykewalk Welcome" />
+                            {{-- <img src="./assets/images/welcome-img.png" alt="Kaykewalk Welcome" /> --}}
+                            <img src="{{ asset('assets/images/welcome-img.png') }}" alt="Kaykewalk Welcome" />
                         </div>
                     </div>
                 </div>
