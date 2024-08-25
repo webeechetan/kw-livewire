@@ -64,7 +64,7 @@
                 showProgress: true,
                 })
                 .onbeforeexit(function () {
-                    location.href = "{{ route('dashboard' , session('org_id')) }}?tour=close-main-tour";
+                    location.href = "{{ route('dashboard') }}?tour=close-main-tour";
                 })
                 .start();
             </script>

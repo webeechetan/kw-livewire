@@ -88,8 +88,15 @@ Route::get('/forgot-password',ForgotPassword::class)->name('forgot.password')->m
 $org_name = request()->segment(1);
 
 Livewire::setUpdateRoute(function ($handle) use ($org_name) {
+    
+    if($org_name == 'login' || $org_name == 'register' || $org_name == 'forgot-password'){
+        return Route::post('livewire/update', $handle)
+            ->middleware(['myauth']);
+    }
+
     return Route::post($org_name . '/livewire/update', $handle)
         ->middleware(['myauth']); 
+
 });
 
 Route::group(

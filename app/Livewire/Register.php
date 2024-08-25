@@ -178,7 +178,6 @@ class Register extends Component
             $organization->image = $image;
             $organization->save();
             $this->dispatch('success', 'Company size added');
-            dd(session('org_name'));
             return $this->redirect(session('org_name') .'/dashboard');
         }
     }
