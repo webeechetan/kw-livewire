@@ -121,7 +121,7 @@
                                     <button class="w-100 btn btn-primary" type="submit">Done</button>
                                 </div>
                                 <div class="col-12 text-center">
-                                    <a wire:navigate href="{{ route('dashboard') }}" class="text-link">Skip for now</a>
+                                    <a wire:navigate href="{{ env('APP_URL') }}/{{session('org_name')}}/dashboard" class="text-link">Skip for now</a>
                                 </div>
                             </form>
                             @if($step == 3)
