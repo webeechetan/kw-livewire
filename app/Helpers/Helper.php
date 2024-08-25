@@ -32,5 +32,9 @@ class Helper
     public static function colors(){
         return ['orange','purple','green','pink','yellow','blue'];
     }
+
+    public static function getOrgName(){
+        return session('org_name');
+    }
 }
 ?>

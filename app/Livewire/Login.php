@@ -57,7 +57,7 @@ class Login extends Component
                 session()->put('org_id',User::withoutGlobalScope(OrganizationScope::class)->where('email',$this->email)->first()->org_id);
                 session()->put('org_name',Organization::find(session('org_id'))->name);
                 session()->put('user',User::withoutGlobalScope(OrganizationScope::class)->where('email',$this->email)->first());
-                return $this->redirect(route('dashboard'),navigate: true);
+                return $this->redirect(session('org_name') .'/dashboard',navigate: true);
             }else{
                 session()->flash('error','Invalid email or password');
             }
