@@ -68,13 +68,37 @@ class ListProject extends Component
         });
 
         $projects = $projects->whereNotIn('client_id', [Auth::user()->organization->mainClient->id]);
+        $projects = $projects->whereHas('client', function ($query) {
+            $query->where('clients.deleted_at','=', null);
+        });
 
 
-        $this->allProjects =  Project::count();
-        $this->activeProjects = Project::where('status', 'active')->count();
-        $this->completedProjects = Project::where('status','completed')->count();
-        $this->archivedProjects = Project::onlyTrashed()->count();
-        $this->overdueProjects = Project::where('due_date','<', Carbon::today())->count();
+        $this->allProjects =  Project::whereNotIn('client_id', [Auth::user()->organization->mainClient->id])
+        ->whereHas('client', function ($query) {
+            $query->where('clients.deleted_at','=', null);
+        })->count();
+        
+        $this->activeProjects = Project::whereNotIn('client_id', [Auth::user()->organization->mainClient->id])
+        ->whereHas('client', function ($query) {
+            $query->where('clients.deleted_at','=', null);
+        })->where('status','active')->count();
+
+        $this->completedProjects = Project::whereNotIn('client_id', [Auth::user()->organization->mainClient->id])
+        ->whereHas('client', function ($query) {
+            $query->where('clients.deleted_at','=', null);
+        })->where('status','completed')->count();
+        
+        $this->archivedProjects = Project::whereNotIn('client_id', [Auth::user()->organization->mainClient->id])
+        ->whereHas('client', function ($query) {
+            $query->where('clients.deleted_at','=', null);
+        })->onlyTrashed()->count();
+
+
+        $this->overdueProjects = Project::whereNotIn('client_id', [Auth::user()->organization->mainClient->id])
+        ->whereHas('client', function ($query) {
+            $query->where('clients.deleted_at','=', null);
+        })->where('due_date','<', Carbon::today())->count();
+
 
 
         if($this->filter == 'active'){
