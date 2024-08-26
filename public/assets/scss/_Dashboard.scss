@@ -77,7 +77,7 @@
     &-img {
         margin-top: -40px;
         img {
-            max-width: 225px;
+            max-width: 185px;
         }
         @media (max-width: 1440px) {
             margin-top: -35px;
@@ -99,6 +99,7 @@
     color: #fff;
     font-size: 14px;
     transition: $ease_03;
+    overflow: hidden;
 
     &:hover, &:focus {
         color: #fff;
@@ -170,6 +171,12 @@
             width: inherit;
             height: inherit;
         }
+    }
+
+    &-xl {
+        width: 60px;
+        height: 60px;
+        font-size: 24px;
     }
 }
 
@@ -863,34 +870,49 @@
 }
 
 /* ----- Task Status Tabs ----- */
-.taskList-dashbaord_tabs {
-    .nav-pills  {
-        gap: $spacing_sm;
-        .nav-link {
-            border: 1px solid $grey_xd;
-            background-color: $grey;
-            color: $text_color;
-            &.active {
-                background-color: $brand;
-                border-color: $brand;
-                color: $white;
-                &#task_list_tab {
-                    &_progress-tab {
-                        border-color: $yellow;
-                        background-color: $yellow;
-                        color: $text-color;
-                    }
-                    &_review-tab {
-                        border-color: $secondary;
-                        background-color: $secondary;
-                        color: $white;
-                    }
-                    &_complete-tab {
-                        border-color: $success;
-                        background-color: $success;
-                        color: $white;
-                    }
+.nav-pills  {
+    gap: $spacing_sm;
+    .nav-link {
+        border: 1px solid $grey_xd;
+        background-color: $grey;
+        color: $text_color;
+        padding: 10px 30px;
+        border-radius: 30px;
+        &.active {
+            background-color: $brand;
+            border-color: $brand;
+            color: $white;
+            &#task_list_tab {
+                &_progress-tab {
+                    border-color: $yellow;
+                    background-color: $yellow;
+                    color: $text-color;
                 }
+                &_review-tab {
+                    border-color: $secondary;
+                    background-color: $secondary;
+                    color: $white;
+                }
+                &_complete-tab {
+                    border-color: $success;
+                    background-color: $success;
+                    color: $white;
+                }
+            }
+        }
+    }
+
+    &-sm {
+        .nav-link {
+            padding: 4px 15px;
+            font-size: 12px;
+            letter-spacing: 0.5px;
+            font-weight: 500;
+            text-transform: uppercase;
+
+            .btn-batch {
+                font-size: 10px;
+                font-weight: 600;
             }
         }
     }

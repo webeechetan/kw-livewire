@@ -67,7 +67,6 @@ class DatabaseSeeder extends Seeder
         //     ->count(9)
         //     ->create();
 
-        // $this->call(OrgSeeder::class);
         $this->call(PermissionSedder::class);
 
         // assign admin role to the user

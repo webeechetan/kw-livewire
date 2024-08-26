@@ -101,9 +101,9 @@
                     <div class="card_style-user-head">
                         <div class="card_style-user-profile-img">
                             @if($user->image)
-                                <img src="{{ env('APP_URL') }}/storage/{{ $user->image }}" alt="{{ $user->name }}">
+                                <span class="avatar avatar-xl"><img src="{{ env('APP_URL') }}/storage/{{ $user->image }}" alt="{{ $user->name }}"></span>
                             @else
-                                <span class="avatar avatar-{{$user->color}}">{{ $user->initials }}</span>
+                                <span class="avatar avatar-xl avatar-{{$user->color}}">{{ $user->initials }}</span>
                             @endif
                         </div>
                         <div class="card_style-user-profile-content mt-2">

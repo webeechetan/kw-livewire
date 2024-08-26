@@ -109,6 +109,11 @@ body {
   padding: 0;
   overflow-x: hidden;
 }
+@media (max-width: 1400px) {
+  body {
+    font-size: 14px;
+  }
+}
 
 hr {
   opacity: 1;
@@ -337,6 +342,15 @@ ul.social-icons li a:hover, ul.social-icons li a:active {
   font-weight: 400;
 }
 
+@media (max-width: 1400px) {
+  .h3, h3 {
+    font-size: 2.2rem;
+  }
+
+  .h4, h4 {
+    font-size: 1.7rem;
+  }
+}
 /*---- Section Space ----*/
 .space-sec {
   padding-top: 70px;
@@ -1393,6 +1407,17 @@ hr.space-sm {
   background-color: #f7d306;
   border: 1px solid #f7d306;
 }
+.btn-success {
+  color: #fff;
+  background-color: #48914d;
+  border: 1px solid #48914d;
+  border-radius: 4px;
+}
+.btn-success:hover, .btn-success:focus, .btn-success:active {
+  color: #fff;
+  background-color: #191919;
+  border: 1px solid #191919;
+}
 .btn-icon {
   width: 30px;
   height: 30px;
@@ -1646,6 +1671,11 @@ hr.space-sm {
 .btn-sm {
   padding: 7px 10px;
   font-size: 14px;
+  transition: all 0.3s ease;
+}
+.btn-xs {
+  padding: 2px 12px;
+  font-size: 13px;
   transition: all 0.3s ease;
 }
 .btn-list {
@@ -2329,6 +2359,9 @@ input:-webkit-autofill, input:-webkit-autofill:focus {
 }
 .progress-success {
   background-color: #48914d;
+}
+.progress-secondary {
+  background-color: #7407ff;
 }
 
 /*---- Progress Style End Here ----*/
@@ -3212,7 +3245,7 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   margin-top: -40px;
 }
 .welcome-box-img img {
-  max-width: 225px;
+  max-width: 185px;
 }
 @media (max-width: 1440px) {
   .welcome-box-img {
@@ -3234,6 +3267,7 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   color: #fff;
   font-size: 14px;
   transition: all 0.3s ease;
+  overflow: hidden;
 }
 .avatar:hover, .avatar:focus {
   color: #fff;
@@ -3299,6 +3333,11 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   font-size: 13px;
   width: inherit;
   height: inherit;
+}
+.avatar-xl {
+  width: 60px;
+  height: 60px;
+  font-size: 24px;
 }
 
 .avatarGroup {
@@ -3910,33 +3949,46 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
 }
 
 /* ----- Task Status Tabs ----- */
-.taskList-dashbaord_tabs .nav-pills {
+.nav-pills {
   gap: 20px;
 }
-.taskList-dashbaord_tabs .nav-pills .nav-link {
+.nav-pills .nav-link {
   border: 1px solid #ddd;
   background-color: #eee;
   color: #191919;
+  padding: 10px 30px;
+  border-radius: 30px;
 }
-.taskList-dashbaord_tabs .nav-pills .nav-link.active {
+.nav-pills .nav-link.active {
   background-color: #f83890;
   border-color: #f83890;
   color: #fff;
 }
-.taskList-dashbaord_tabs .nav-pills .nav-link.active#task_list_tab_progress-tab {
+.nav-pills .nav-link.active#task_list_tab_progress-tab {
   border-color: #f7d306;
   background-color: #f7d306;
   color: #191919;
 }
-.taskList-dashbaord_tabs .nav-pills .nav-link.active#task_list_tab_review-tab {
+.nav-pills .nav-link.active#task_list_tab_review-tab {
   border-color: #7407ff;
   background-color: #7407ff;
   color: #fff;
 }
-.taskList-dashbaord_tabs .nav-pills .nav-link.active#task_list_tab_complete-tab {
+.nav-pills .nav-link.active#task_list_tab_complete-tab {
   border-color: #48914d;
   background-color: #48914d;
   color: #fff;
+}
+.nav-pills-sm .nav-link {
+  padding: 4px 15px;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+.nav-pills-sm .nav-link .btn-batch {
+  font-size: 10px;
+  font-weight: 600;
 }
 
 /* ----- Task List View ----- */
