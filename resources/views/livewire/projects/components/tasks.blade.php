@@ -98,7 +98,8 @@
                         {{-- <a href="javascript:" wire:click="$set('status', 'pending')" class="btn-border btn-border-sm btn-border-primary "><span><i class='bx bx-objects-horizontal-center' ></i></span> {{ $project->tasks->where('status', 'pending')->where('due_date', '>', now())->count() }} Assigned</a> --}}
                         <a href="javascript:" wire:click="$set('status', 'in_progress')" class="btn-border btn-border-sm btn-border-secondary "><span><i class='bx bx-objects-horizontal-center' ></i></span> {{ $project->tasks->where('status', 'in_progress')->count() }} Accepted</a>
                         <a href="javascript:" wire:click="$set('status', 'in_review')" class="btn-border btn-border-sm btn-border-warning "><span><i class='bx bx-objects-horizontal-center' ></i></span> {{ $project->tasks->where('status', 'in_review')->count() }} In Review</a>
-                        <a href="javascript:" wire:click="$set('status', 'overdue')" class="btn-border btn-border-sm btn-border-danger"><span><i class='bx bx-objects-horizontal-center' ></i></span> {{ $project->tasks->where('due_date', '<', now())->count() }} Overdue</a>
+                        <a href="javascript:" wire:click="$set('status', 'overdue')" class="btn-border btn-border-sm btn-border-danger"><span><i class='bx bx-objects-horizontal-center'></i></span> {{ $project->tasks->where('due_date', '<', now())->where('status', '!=', 'completed')->count() }} Overdue</a>
+                        
                         <a href="javascript:" wire:click="$set('status', 'completed')" class="btn-border btn-border-sm btn-border-success"><span><i class='bx bx-objects-horizontal-center' ></i></span> {{ $project->tasks->where('status', 'completed')->count() }} Completed</a>
                     </div>
                 </div>
