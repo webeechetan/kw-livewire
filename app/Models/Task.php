@@ -16,6 +16,7 @@ use App\Models\Attachment;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use App\Observers\Task\TaskObserver;
+use App\Models\Scopes\MainClientScope;
 
 #[ObservedBy(TaskObserver::class)]
 class Task extends Model
@@ -42,13 +43,15 @@ class Task extends Model
     public function addClientId($clientId){
         $this->client_id = $clientId;
         return $this;
-    }
+    } 
 
     public function setProjectIdAttribute($value){
         if($value == null){
             return;
         }
-        $client = Project::find($value)->client;
+        $project = Project::find($value);
+        $client = Client::withoutGlobalScope(MainClientScope::class)->find($project->client_id);
+        
         $this->addClientId($client->id);
         $this->attributes['project_id'] = $value;
     }

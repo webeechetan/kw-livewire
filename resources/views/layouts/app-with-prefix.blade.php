@@ -68,7 +68,7 @@
 
                 <!-- Roles & Permission -->
                 <li class="nav-item">
-                  <a class="nav-link" wire:navigate href="{{ route('role.index') }}" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip" data-bs-title="Roles & Permission"><i class='bx bx-slider-alt'></i></a>
+                  <a class="nav-link" wire:navigate href="{{ route('role.index',['organization'=>session('org_name')]) }}" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip" data-bs-title="Roles & Permission"><i class='bx bx-slider-alt'></i></a>
                 </li>
                 
                 <!-- Login -->
@@ -91,7 +91,7 @@
                     </div>
                    </li>
                     <li>
-                      <a class="dropdown-item align-items-center" wire:navigate href="{{ route('user.profile',$user->id) }}">
+                      <a class="dropdown-item align-items-center" wire:navigate href="{{ route('user.profile',['user_id' => $user->id , 'organization'=>session('org_name')]) }}">
                         <i class="bx bx-user me-2"></i>
                         <span class="align-middle">My Profile</span>
                       </a>
@@ -103,7 +103,7 @@
                       </a>
                     </li> -->
                     <li>
-                      <a class="dropdown-item align-items-center text-danger" href="{{route('logout')}}" >
+                      <a class="dropdown-item align-items-center text-danger" href="{{route('logout',['organization'=>session('org_name')])}}" >
                         <i class="bx bx-power-off me-2"></i>
                         <span class="align-middle">Log Out</span>
                       </a>
@@ -124,11 +124,11 @@
               @endphp
                 <ul class="list-none menu-sidebar">
                     <li>
-                      <a wire:navigate href="{{ route('dashboard') }}" class="@if (request()->routeIs('dashboard')) active @endif"><i class='bx bx-line-chart' ></i> Dashboard</a>
+                      <a wire:navigate href="{{ route('dashboard',['organization'=>session('org_name')]) }}" class="@if (request()->routeIs('dashboard')) active @endif"><i class='bx bx-line-chart' ></i> Dashboard</a>
                     </li>
                     <li>
                       <li>
-                        <a wire:navigate href="{{ route('client.profile',Auth::user()->organization->mainClient->id) }}"  class="@if ( request()->segment(4) == Auth::user()->organization->mainClient->id && (request()->segment(2) == 'clients' || request()->segment(2) == 'client' )) active @endif"><i class='bx bx-body' ></i> 
+                        <a wire:navigate href="{{ route('client.profile',['organization'=>session('org_name'),'id' => Auth::user()->organization->mainClient->id]) }}"  class="@if ( request()->segment(3) == Auth::user()->organization->mainClient->id && (request()->segment(1) == 'clients' || request()->segment(1) == 'client' )) active @endif"><i class='bx bx-body' ></i> 
                           {{ Auth::user()->organization ? Auth::user()->organization->name : 'No organization' }}
                         </a>
                       </li>
@@ -141,23 +141,27 @@
                               data-position='right'
                             @endif
                             >
-                            <a wire:navigate href="{{ route('client.index') }}" 
-                            class="@if ( request()->segment(4) != Auth::user()->organization->mainClient->id && (request()->segment(2) == 'clients' || request()->segment(2) == 'client' )) active @endif"><i class='bx bx-briefcase-alt-2'></i> Clients</a></li>
+                            <a wire:navigate href="{{ route('client.index',['organization'=>session('org_name')]) }}" 
+                            class="@if ( request()->segment(3) != Auth::user()->organization->mainClient->id && (request()->segment(1) == 'clients' || request()->segment(1) == 'client' )) active @endif"><i class='bx bx-briefcase-alt-2'></i> Clients</a></li>
                         @endcan
                         @can('View Project')
-                            <li @if(isset($tour['main_tour'])) data-step="2" data-position='right' data-intro='Create your first project' @endif><a wire:navigate href="{{ route('project.index') }}" class="@if (request()->segment(2) == 'projects' || request()->segment(2) == 'project' ) active @endif"><i class='bx bx-objects-horizontal-left'></i> Projects</a></li>
-                            
+                            <li @if(isset($tour['main_tour'])) data-step="2" data-position='right' data-intro='Create your first project' @endif><a wire:navigate href="{{ route('project.index',['organization'=>session('org_name')]) }}" class="@if (request()->segment(1) == 'projects' || request()->segment(1) == 'project' ) active @endif"><i class='bx bx-objects-horizontal-left'></i> Projects</a></li>
+                            {{-- <li @if(isset($tour) && $tour != null && isset($tour['main_tour'])) data-step="2" data-position='right' data-intro='Create your first project' @endif><a wire:navigate href="{{ route('project.index') }}" class="@if (request()->segment(1) == 'projects' || request()->segment(1) == 'project' ) active @endif"><i class='bx bx-objects-horizontal-left'></i> Projects</a></li> --}}
                         @endcan
                         @can('View User')
-                            <li @if(isset($tour['main_tour'])) data-step="3" data-position='right' data-intro='Create your first user' @endif><a wire:navigate href="{{ route('user.index') }}" class="@if (request()->segment(2) == 'users' || request()->segment(2) == 'user' ) active @endif"><i class='bx bx-user'></i> Users</a></li>
-                           
+                            <li @if(isset($tour['main_tour'])) data-step="3" data-position='right' data-intro='Create your first user' @endif><a wire:navigate href="{{ route('user.index',['organization'=>session('org_name')]) }}" class="@if (request()->segment(1) == 'users' || request()->segment(1) == 'user' ) active @endif"><i class='bx bx-user'></i> Users</a></li>
+                            {{-- <li @if(isset($tour) && $tour != null && isset($tour['main_tour'])) data-step="3" data-position='right' data-intro='Create your first user' @endif><a wire:navigate href="{{ route('user.index') }}" class="@if (request()->segment(1) == 'users' || request()->segment(1) == 'user' ) active @endif"><i class='bx bx-user'></i> Users</a></li> --}}
                         @endcan
                         @can('View Team')
-                            <li  @if(isset($tour['main_tour'])) data-step="4" data-position='right' data-intro='Create your first team' @endif><a wire:navigate href="{{ route('team.index') }}" class="@if (request()->segment(2) == 'teams' || request()->segment(2) == 'team' ) active @endif"><i class='bx bx-sitemap'></i> Teams</a></li>
-                           
-                        @endcan                      
+                            <li  @if(isset($tour['main_tour'])) data-step="4" data-position='right' data-intro='Create your first team' @endif><a wire:navigate href="{{ route('team.index',['organization'=>session('org_name')]) }}" class="@if (request()->segment(1) == 'teams' || request()->segment(1) == 'team' ) active @endif"><i class='bx bx-sitemap'></i> Teams</a></li>
+                            {{-- <li  @if(isset($tour) && $tour != null && isset($tour['main_tour'])) data-step="4" data-position='right' data-intro='Create your first team' @endif><a wire:navigate href="{{ route('team.index') }}" class="@if (request()->segment(1) == 'teams' || request()->segment(1) == 'team' ) active @endif"><i class='bx bx-sitemap'></i> Teams</a></li> --}}
+                        @endcan
+                        {{-- @can('View Role')
+                            <li><a wire:navigate href="{{ route('role.index') }}" class="@if (request()->segment(1) == 'roles' || request()->segment(1) == 'role' ) active @endif"><i class='bx bx-sitemap'></i> Role & Permissions</a></li>
+                        @endcan --}}
                         @can('View Task')
-                          <li @if(isset($tour['main_tour'])) data-step="5" data-position='right' data-intro='Create your first task' @endif><a wire:navigate href="{{ route('task.index') }}" class="@if (request()->segment(2)== 'tasks' || request()->segment(2) == 'task') active @endif"><i class='bx bx-task' ></i> Tasks</a></li>
+                        <li @if(isset($tour['main_tour'])) data-step="5" data-position='right' data-intro='Create your first task' @endif><a wire:navigate href="{{ route('task.index',['organization'=>session('org_name')]) }}" class="@if (request()->segment(1)== 'tasks' || request()->segment(1) == 'task') active @endif"><i class='bx bx-task' ></i> Tasks</a></li>
+                            {{-- <li><a wire:navigate href="{{ route('task.index') }}" class="@if (request()->routeIs('task.index') || request()->routeIs('task.list-view') || request()->routeIs('task.add')) active @endif"><i class='bx bx-task' ></i> Tasks</a></li> --}}
                         @endcan
                 </ul>
             </div>
@@ -167,11 +171,7 @@
             </div>
         </aside>
       <div class="main-body-content scrollbar scrollbar-primary">
-        <div class="text-center">
-            <h5>
-                403 | Unauthorized
-            </h5>
-        </div>
+        {{ $slot }}
         <p class="alert alert-warning" wire:offline> Whoops, your device has lost connection. The web page you are viewing is offline. </p>
       </div>
     </div>

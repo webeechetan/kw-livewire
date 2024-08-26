@@ -2,7 +2,7 @@
     <!-- Dashboard Header -->
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a wire:navigate href="{{ route('dashboard') }}"><i class='bx bx-line-chart'></i> {{ Auth::user()->organization ? Auth::user()->organization->name : 'No organization' }}</a></li>
+            <li class="breadcrumb-item"><a wire:navigate href="{{ route('dashboard', session('org_id') ) }}"><i class='bx bx-line-chart'></i> {{ Auth::user()->organization ? Auth::user()->organization->name : 'No organization' }}</a></li>
             <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
         </ol>
     </nav>
@@ -22,7 +22,8 @@
                     </div>
                     <div class="col-md-5 text-end">
                         <div class="welcome-box-img">
-                            <img src="./assets/images/welcome-img.png" alt="Kaykewalk Welcome" />
+                            {{-- <img src="./assets/images/welcome-img.png" alt="Kaykewalk Welcome" /> --}}
+                            <img src="{{ asset('assets/images/welcome-img.png') }}" alt="Kaykewalk Welcome" />
                         </div>
                     </div>
                 </div>

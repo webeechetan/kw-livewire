@@ -305,7 +305,7 @@
         </div>
         <div class="modal-body">
             <div class="cropper d-none">
-                <img id="user-image" src="http://localhost:8000/storage/images/users/2ZVItohsec8ZbneoZaSfAAcOH2dqmo-metaY3JvcHBlZC1pbWFnZS5wbmc=-.png" alt="">
+                <img id="user-image" src="{{ asset('') }}img/avatars/1.png" alt="">
             </div>
         </div>
         <div class="modal-footer">

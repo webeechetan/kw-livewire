@@ -239,7 +239,8 @@
                                     <div class="taskList_col"><span>{{  Carbon\Carbon::parse($task->created_at)->format('d M Y') }}</span></div>
                                 </div>
                                 <div class="col text-center">
-                                    <div class="taskList_col"><span class="btn-batch "> @if($task->due_date)
+                                    <div class="taskList_col"><span class="btn-batch 
+                                        @if ($task->due_date < \Carbon\Carbon::now())  btn-batch btn-batch-danger @endif"> @if($task->due_date)
                                         {{ Carbon\Carbon::parse($task->due_date)->format('d M Y') }}
                                     @else
                                         No Due Date
@@ -273,7 +274,16 @@
                                 </div>
                                 <div class="col text-center">
                                     <div class="taskList_col">
-                                        <span class="btn-batch btn-batch-primary">
+                                        {{-- <span class="btn-batch btn-batch-primary"> --}}
+
+                                            <span class="btn-batch 
+                                            @if($task->status == 'pending') btn-batch-primary 
+                                            @elseif ($task->status == 'in_progress') btn-batch-secondary
+                                            @elseif( $task->status == 'in_review') btn-batch-warning
+                                            @elseif( $task->status == 'completed') btn-batch-success
+                                            @endif" 
+                                            >
+
                                             @if($task->status == 'pending') Assigned @endif
                                             @if($task->status == 'in_progress') Accepted @endif
                                             @if($task->status == 'in_review') In Review @endif

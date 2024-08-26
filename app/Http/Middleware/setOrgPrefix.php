@@ -5,8 +5,9 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\Session;
 
-class AuthMiddleWare
+class setOrgPrefix
 {
     /**
      * Handle an incoming request.
@@ -15,9 +16,14 @@ class AuthMiddleWare
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (auth()->guard('orginizations')->check() || auth()->guard('web')->check()) {
-            return $next($request);
+        $org = $request->user()->organization;
+
+        if ($org) {
+            $request->route()->forgetParameter('organization');
+            $request->route()->setParameter('organization', $org);
+            session('org_name', $org->name);
         }
-        return redirect()->route('login');
+    
+        return $next($request);
     }
 }

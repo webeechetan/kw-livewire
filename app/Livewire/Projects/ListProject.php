@@ -10,6 +10,7 @@ use App\Models\Team;
 use App\Models\User;
 use App\Models\Client;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Lazy;
 use ProtoneMedia\LaravelCrossEloquentSearch\Search;
 
@@ -44,25 +45,60 @@ class ListProject extends Component
 
     public function render()
     {        
-        // $projects = Project::where('name','like','%'.$this->query.'%')
+        // $projects = Project::Where('name','like','%'.$this->query.'%')
         //             ->whereHas('client',function($query){
         //                 $query->where('deleted_at','IS NOT NULL');
         //             })->orWhereHas('client',function($query){
         //                 $query->where('name','like','%'.$this->query.'%')->orWhere('brand_name','like','%'.$this->query.'%');
         //             });
 
-        $projects = Project::where('name','like','%'.$this->query.'%')
-        ->orwhereHas('client',function($query){
-            $query->where('deleted_at','IS NOT NULL');
-        })->orWhereHas('client',function($query){
-            $query->where('name','like','%'.$this->query.'%')->orWhere('brand_name','like','%'.$this->query.'%');
+        // $projects = Project::where('name','like','%'.$this->query.'%')
+        // ->orwhereHas('client',function($query){
+        //     $query->where('deleted_at','IS NOT NULL');
+        // })->orWhereHas('client',function($query){
+        //     $query->where('name','like','%'.$this->query.'%')->orWhere('brand_name','like','%'.$this->query.'%');
+        // });
+
+        $projects = Project::where(function ($query) {
+            $query->where('name', 'like', '%'.$this->query.'%')
+                  ->orWhereHas('client', function ($query) {
+                      $query->where('name', 'like', '%'.$this->query.'%')
+                            ->orWhere('brand_name', 'like', '%'.$this->query.'%');
+                  });
         });
 
-        $this->allProjects =  Project::count();
-        $this->activeProjects = Project::where('status', 'active')->count();
-        $this->completedProjects = Project::where('status','completed')->count();
-        $this->archivedProjects = Project::onlyTrashed()->count();
-        $this->overdueProjects = Project::where('due_date','<', Carbon::today())->count();
+        $projects = $projects->whereNotIn('client_id', [Auth::user()->organization->mainClient->id]);
+        $projects = $projects->whereHas('client', function ($query) {
+            $query->where('clients.deleted_at','=', null);
+        });
+
+
+        $this->allProjects =  Project::whereNotIn('client_id', [Auth::user()->organization->mainClient->id])
+        ->whereHas('client', function ($query) {
+            $query->where('clients.deleted_at','=', null);
+        })->count();
+        
+        $this->activeProjects = Project::whereNotIn('client_id', [Auth::user()->organization->mainClient->id])
+        ->whereHas('client', function ($query) {
+            $query->where('clients.deleted_at','=', null);
+        })->where('status','active')->count();
+
+        $this->completedProjects = Project::whereNotIn('client_id', [Auth::user()->organization->mainClient->id])
+        ->whereHas('client', function ($query) {
+            $query->where('clients.deleted_at','=', null);
+        })->where('status','completed')->count();
+        
+        $this->archivedProjects = Project::whereNotIn('client_id', [Auth::user()->organization->mainClient->id])
+        ->whereHas('client', function ($query) {
+            $query->where('clients.deleted_at','=', null);
+        })->onlyTrashed()->count();
+
+
+        $this->overdueProjects = Project::whereNotIn('client_id', [Auth::user()->organization->mainClient->id])
+        ->whereHas('client', function ($query) {
+            $query->where('clients.deleted_at','=', null);
+        })->where('due_date','<', Carbon::today())->count();
+
 
 
         if($this->filter == 'active'){

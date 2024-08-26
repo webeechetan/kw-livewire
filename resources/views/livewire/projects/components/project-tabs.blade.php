@@ -12,7 +12,7 @@
                     @endif
                     <div>
                         <h3 class="main-body-header-title mb-2">{{ $project->name }}</h3>
-                        <div class="text-sm text-uppercase">{{$project->client->name}}</div>
+                        <div class="text-sm text-uppercase"> {{ $project->client->name ?? session('org_name') }}</div>
                     </div>
                 </div>
             </div>

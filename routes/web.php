@@ -57,8 +57,11 @@ use App\Livewire\Activity\ListActivity;
 use App\Livewire\Activity\Activity;
 use App\Livewire\Activity\Components\ActivityTabs;
 use App\Livewire\Activity\Components\Tasks as ActivityTasks;
-
-
+use App\Models\Organization;
+use Illuminate\Support\Facades\Session;
+use PHPUnit\TextUI\Help;
+use App\Helpers\Helper;
+use Livewire\Livewire;
 
 /*
 |--------------------------------------------------------------------------
@@ -71,6 +74,7 @@ use App\Livewire\Activity\Components\Tasks as ActivityTasks;
 |
 */
 
+
 Route::get('/',Login::class);
 Route::get('/login',Login::class)->name('login');
 Route::get('/register/{org_id?}',Register::class)->name('register');
@@ -81,7 +85,27 @@ Route::get('/logout',function(){
 
 Route::get('/forgot-password',ForgotPassword::class)->name('forgot.password')->middleware('throttle:5,1');
 
-Route::group(['middleware' => ['myauth']], function() {
+$org_name = request()->segment(1);
+
+Livewire::setUpdateRoute(function ($handle) use ($org_name) {
+    
+    if($org_name == 'login' || $org_name == 'register' || $org_name == 'forgot-password'){
+        return Route::post('livewire/update', $handle)
+            ->middleware(['myauth']);
+    }
+
+    return Route::post($org_name . '/livewire/update', $handle)
+        ->middleware(['myauth']); 
+
+});
+
+Route::group(
+    [
+        'middleware' => ['myauth'],
+        'prefix' => $org_name,
+    ], function() {
+
+    
 
     /*
     |--------------------------------------------------------------------------

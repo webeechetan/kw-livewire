@@ -12,6 +12,7 @@ use App\Models\Activity;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use App\Observers\Project\ProjectObserver;
+use App\Models\Scopes\MainClientScope;
 
 #[ObservedBy(ProjectObserver::class)]
 class Project extends Model
@@ -24,17 +25,35 @@ class Project extends Model
         $this->attributes['name'] = ucwords($value);
     }
 
+    // public function getInitialsAttribute(){
+    //     $words = explode(' ', $this->name);
+    //     if(count($words) == 1){
+    //         return substr($this->name, 0, 2);
+    //     }
+    //     return $words[0][0].$words[1][0];
+        
+    // }
+
     public function getInitialsAttribute(){
         $words = explode(' ', $this->name);
-        if(count($words) == 1){
+        
+        if (empty($this->name)) {
+            return '';
+        }
+        
+        if (count($words) == 1) {
             return substr($this->name, 0, 2);
         }
-        return $words[0][0].$words[1][0];
         
+        $firstInitial = !empty($words[0]) ? $words[0][0] : '';
+        $secondInitial = !empty($words[1]) ? $words[1][0] : '';
+        
+        return $firstInitial . $secondInitial;
     }
 
+
     public function client(){
-        return $this->belongsTo(Client::class);
+        return $this->belongsTo(Client::class)->withoutGlobalScope(MainClientScope::class);
     }
 
     public function users(){
