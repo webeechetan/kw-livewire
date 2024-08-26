@@ -36,8 +36,6 @@ class User extends Component
 
     public function mount($user_id)
     {
-
-        $this->authorize('View User');
         $this->user = UserModel::where('id' , $user_id)->withTrashed()->first();
         $users_task_array = $this->user->tasks->groupBy('project_id');
         $this->user_clients = Project::whereIn('id',$users_task_array->keys())->get()->groupBy('client_id');
