@@ -6,6 +6,10 @@ body {
     margin: 0;
     padding: 0;
     overflow-x: hidden;
+
+    @media (max-width: 1400px) {
+        font-size: 14px;
+    }
 }
 
 hr {
@@ -219,6 +223,15 @@ ul {
     }
     &-400 {
         font-weight: 400;
+    }
+}
+
+@media (max-width: 1400px) {
+    .h3, h3 {
+        font-size: 2.2rem;
+    }
+    .h4, h4 {
+        font-size: 1.7rem;
     }
 }
 

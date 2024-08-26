@@ -48,6 +48,18 @@
         }
     }
 
+    &-success {
+        color: $white;
+        background-color: $success;
+        border: 1px solid $success;
+        border-radius: $border_radius_xs;
+        &:hover, &:focus, &:active {
+            color: $white;
+            background-color: $dark;
+            border: 1px solid $dark;
+        }
+    }
+
     /* ----- Icon ----- */
     &-icon {
         width: 30px;
@@ -334,6 +346,12 @@
     &-sm {
         padding: $spacing_btn_xs;
         font-size: 14px;
+        transition: $ease_03;
+    }
+
+    &-xs {
+        padding: 2px 12px;
+        font-size: 13px;
         transition: $ease_03;
     }
 
