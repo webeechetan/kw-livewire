@@ -11,6 +11,7 @@ use App\Helpers\Helper;
 use App\Models\Task;
 use Livewire\WithFileUploads;
 use App\Models\Scopes\MainClientScope;
+use Illuminate\Support\Facades\Auth;
 
 class Client extends Component
 {
@@ -44,8 +45,11 @@ class Client extends Component
 
     public function mount($id)
     {
-        
-        $this->authorize('View Client');
+        $main_client_id = Auth::user()->organization->mainClient->id;
+        if($main_client_id != $id){
+            $this->authorize('View Client');
+        }
+
         $this->client_id = $id;
         $this->client = ClientModel::withoutGlobalScope(MainClientScope::class)->withTrashed()->with('projects')->find($id);
         $this->description = $this->client->description;

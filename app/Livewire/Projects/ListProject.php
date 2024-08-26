@@ -10,6 +10,7 @@ use App\Models\Team;
 use App\Models\User;
 use App\Models\Client;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Lazy;
 use ProtoneMedia\LaravelCrossEloquentSearch\Search;
 
@@ -65,6 +66,8 @@ class ListProject extends Component
                             ->orWhere('brand_name', 'like', '%'.$this->query.'%');
                   });
         });
+
+        $projects = $projects->whereNotIn('client_id', [Auth::user()->organization->mainClient->id]);
 
 
         $this->allProjects =  Project::count();

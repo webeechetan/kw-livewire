@@ -12,6 +12,7 @@ use App\Models\Activity;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use App\Observers\Project\ProjectObserver;
+use App\Models\Scopes\MainClientScope;
 
 #[ObservedBy(ProjectObserver::class)]
 class Project extends Model
@@ -34,7 +35,7 @@ class Project extends Model
     }
 
     public function client(){
-        return $this->belongsTo(Client::class);
+        return $this->belongsTo(Client::class)->withoutGlobalScope(MainClientScope::class);
     }
 
     public function users(){

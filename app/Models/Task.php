@@ -51,6 +51,7 @@ class Task extends Model
         }
         $project = Project::find($value);
         $client = Client::withoutGlobalScope(MainClientScope::class)->find($project->client_id);
+        
         $this->addClientId($client->id);
         $this->attributes['project_id'] = $value;
     }
