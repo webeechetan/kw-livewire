@@ -25,14 +25,32 @@ class Project extends Model
         $this->attributes['name'] = ucwords($value);
     }
 
+    // public function getInitialsAttribute(){
+    //     $words = explode(' ', $this->name);
+    //     if(count($words) == 1){
+    //         return substr($this->name, 0, 2);
+    //     }
+    //     return $words[0][0].$words[1][0];
+        
+    // }
+
     public function getInitialsAttribute(){
         $words = explode(' ', $this->name);
-        if(count($words) == 1){
+        
+        if (empty($this->name)) {
+            return '';
+        }
+        
+        if (count($words) == 1) {
             return substr($this->name, 0, 2);
         }
-        return $words[0][0].$words[1][0];
         
+        $firstInitial = !empty($words[0]) ? $words[0][0] : '';
+        $secondInitial = !empty($words[1]) ? $words[1][0] : '';
+        
+        return $firstInitial . $secondInitial;
     }
+
 
     public function client(){
         return $this->belongsTo(Client::class)->withoutGlobalScope(MainClientScope::class);
