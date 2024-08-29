@@ -247,45 +247,72 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-8 mt-3">
+            <div class="box-item h-100">
+                <h4>Calendar</h4>
+                <hr>
+                <div id="calendar"></div>
+            </div>
+        </div>
     </div>
 </div>
 @php
     $tour = session()->get('tour');
-
-    // if(isset($tour) && $tour != 'null'){
-    //     dd($tour);
-    // }else{
-    //     dd('not set');
-    // }
-
+    $events = [];
+    foreach($users_tasks as $task){
+        $color = '';
+        if($task->status == 'completed'){
+            $color = 'green';
+        }else{
+            if($task->due_date < now()){
+                $color = 'red';
+            }else{
+                $color = 'green';
+            }
+        }
+        $events[] = [
+            'title' => $task->name,
+            'start' => $task->due_date,
+            'url' => route('task.view', $task->id),
+            'backgroundColor' => $color,
+        ];
+    }
+    
 @endphp
 
-
-
-
-{{-- @if($tour['main_tour']) --}}
-@if(isset($tour) && $tour != null && isset($tour['main_tour']))
-
-    @assets
+@assets
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
+    @if(isset($tour) && $tour != null && isset($tour['main_tour']))
         <link href="https://cdn.jsdelivr.net/npm/intro.js@7.2.0/minified/introjs.min.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/intro.js@7.2.0/intro.min.js"></script>
-    @endassets
-@endif
+    @endif
+@endassets
+
+@script
+    <script>
+        $(document).ready(function(){
+            var events = @json($events);
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'dayGridMonth',
+            events: events,
+            });
+            calendar.render();
+        });
+    </script>
+    @if(isset($tour) && $tour != null && isset($tour['main_tour']))
+        <script>
+            introJs() 
+            .setOptions({
+            showProgress: true,
+            })
+            .onbeforeexit(function () {
+                location.href = "{{ route('dashboard') }}?tour=close-main-tour";
+            })
+            .start();
+        </script>
+    @endif
+@endscript
 
 
-{{-- @if($tour['main_tour'])  --}}
-@if(isset($tour) && $tour != null && isset($tour['main_tour']))
 
-    @script
-            <script>
-                introJs() 
-                .setOptions({
-                showProgress: true,
-                })
-                .onbeforeexit(function () {
-                    location.href = "{{ route('dashboard') }}?tour=close-main-tour";
-                })
-                .start();
-            </script>
-    @endscript
-@endif
