@@ -152,7 +152,9 @@ class Register extends Component
             session()->put('newly_registered',true);
             session()->put('guard','web');
             session()->put('org_id',User::withoutGlobalScope(OrganizationScope::class)->where('email',$this->email)->first()->org_id);
-            session()->put('org_name',Organization::find(session('org_id'))->name);
+            $org_name = Organization::find(session('org_id'))->name;
+            $org_name = str_replace(' ','-',$org_name);
+            session()->put('org_name',$org_name);
             session()->put('user',User::withoutGlobalScope(OrganizationScope::class)->where('email',$this->email)->first());
             session()->put('tour',$tour);            
 
