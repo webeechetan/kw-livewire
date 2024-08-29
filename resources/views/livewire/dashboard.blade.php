@@ -34,12 +34,14 @@
                 <div class="row">
                     <div class="col-md-6">
                         <h4>Task Overview</h4>
-                        <h6>On Progress <b><span class="text-success">70%</span></b></h6>
+                        <h6>On Progress <b><span class="text-success">
+                            {{ round($users_tasks->where('status','completed')->count() > 0 ? ($users_tasks->where('status','completed')->count() / $users_tasks->count()) * 100 : 0)}}%
+                        </span></b></h6>
                         <div class="row mt-5">
                             <div class="col-auto"><img src="./assets/images/dashboard_chart_small.png" alt=""></div>
                             <div class="col">
-                                <h5 class="mb-0"><b>246</b></h5>
-                                <div>Total Projects</div>
+                                <h5 class="mb-0"><b>{{ $users_tasks->count()}}</b></h5>
+                                <div>Total Tasks</div>
                             </div>
                         </div>
                     </div>
@@ -52,7 +54,7 @@
                                         <div class="text-success"><i class='bx bxs-circle'></i></div>
                                     </div>
                                     <div class="col ps-md-2">
-                                        <h6><b>167</b></h6>
+                                        <h6><b>{{ $users_tasks->where('status','in_progress')->count()}}</b></h6>
                                         <div>On Going</div>
                                     </div>
                                 </div>
@@ -63,7 +65,7 @@
                                         <div class="text-warning"><i class='bx bxs-circle'></i></div>
                                     </div>
                                     <div class="col ps-md-2">
-                                        <h6><b>28</b></h6>
+                                        <h6><b>{{ $users_tasks->where('status','pending')->count()}}</b></h6>
                                         <div>Unfinished</div>
                                     </div>
                                 </div>
@@ -77,53 +79,39 @@
             <div class="box-item h-100">
                 <h4>Important Projects</h4>
                 <hr>
+                @foreach($mostImportantProjects as $project)
                 <div>
                     <div class="row mb-3">
                         <div class="col-auto pe-md-1">
                             <img src="./assets/images/project_img1.png" alt="" width="60">
                         </div>
                         <div class="col">
-                            <h5 class="mb-1">Big Wind</h5>
-                            <div>Global Acma</div>
+                            <h5 class="mb-1">{{ $project->name }}</h5>
+                            <div>{{ $project->client->name}}</div>
                         </div>
                     </div>
                     <div class="d-flex gap-2 mt-4">
-                        <a href="#" class="btn btn-success rounded-pill btn-xs text-uppercase">SEO</a>
-                        <a href="#" class="btn btn-secondary rounded-pill btn-xs text-uppercase">Website</a>
-                        <a href="#" class="btn btn-primary rounded-pill btn-xs text-uppercase">Social Media</a>
+                        @if($project->teams)
+                            @foreach($project->teams as $team)
+                                <a href="#" class="btn btn-success rounded-pill btn-xs text-uppercase">{{$team->name}}</a>
+                            @endforeach
+                        @endif
                     </div>
+                    @php
+                        $taskDone = $project->tasks->where('status', 'completed')->count();
+                        $totalTask = $project->tasks->count();
+                        $percentage = ($taskDone / $totalTask) * 100;
+                    @endphp
                     <div class="progress mt-4">
-                        <div class="progress-bar progress-secondary" role="progressbar" aria-label="Task Done" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="progress-bar progress-secondary" role="progressbar" aria-label="Task Done" style="width: {{$percentage}}%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                     <div class="row mt-2">
-                        <div class="col"><b>12</b> <span>Task Done</span></div>
-                        <div class="col text-end text-danger"><i class="bx bx-calendar"></i> <span>24 Aug, 2024</span></div>
+                        <div class="col"><b>{{ $taskDone }}</b> <span>Task Done</span></div>
+                        <div class="col text-end text-danger"><i class="bx bx-calendar"></i> <span>{{ $project->due_date ?? 'No Due Date' }}</span></div>
                     </div>
                 </div>
                 <hr class="my-4">
-                <div>
-                    <div class="row mb-3">
-                        <div class="col-auto pe-md-1">
-                            <img src="./assets/images/project_img2.png" alt="" width="60">
-                        </div>
-                        <div class="col">
-                            <h5 class="mb-1">Circle Hunt</h5>
-                            <div>Haldiraam</div>
-                        </div>
-                    </div>
-                    <div class="d-flex gap-2 mt-4">
-                        <a href="#" class="btn btn-success rounded-pill btn-xs text-uppercase">SEO</a>
-                        <a href="#" class="btn btn-secondary rounded-pill btn-xs text-uppercase">Website</a>
-                        <a href="#" class="btn btn-primary rounded-pill btn-xs text-uppercase">Social Media</a>
-                    </div>
-                    <div class="progress mt-4">
-                        <div class="progress-bar progress-secondary" role="progressbar" aria-label="Task Done" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                    <div class="row mt-2">
-                        <div class="col"><b>12</b> <span>Task Done</span></div>
-                        <div class="col text-end text-danger"><i class="bx bx-calendar"></i> <span>24 Aug, 2024</span></div>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
         <div class="col-md-8">
@@ -145,7 +133,7 @@
                                 </div>
                             </div>
                             <div class="col-md-auto">
-                                <h6 class="mb-0 text-secondary"><b>50</b></h6>
+                                <h6 class="mb-0 text-secondary"><b>{{$active_projects}}</b></h6>
                             </div>
                         </div>
                         <hr>
@@ -161,7 +149,7 @@
                                 </div>
                             </div>
                             <div class="col-md-auto">
-                                <h6 class="mb-0 text-danger"><b>150</b></h6>
+                                <h6 class="mb-0 text-danger"><b>{{  $users_tasks->where('due_date', '<', now())->count();}}</b></h6>
                             </div>
                         </div>
                         <hr>
@@ -177,7 +165,7 @@
                                 </div>
                             </div>
                             <div class="col-md-auto">
-                                <h6 class="mb-0 text-warning"><b>150</b></h6>
+                                <h6 class="mb-0 text-warning"><b>{{  $users_tasks->where('status', 'in_progress')->count();}}</b></h6>
                             </div>
                         </div>
                         <hr>
@@ -193,7 +181,7 @@
                                 </div>
                             </div>
                             <div class="col-md-auto">
-                                <h6 class="mb-0 text-success"><b>154</b></h6>
+                                <h6 class="mb-0 text-success"><b>{{  $users_tasks->where('status','completed')->count();}}</b></h6>
                             </div>
                         </div>
                     </div>
@@ -204,14 +192,15 @@
                         <hr>
                         <ul class="nav nav-pills nav-pills-sm mb-3" id="pills-tab" role="tablist">
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link active" id="pills-upcoming-tab" data-bs-toggle="pill" data-bs-target="#pills-upcoming" type="button" role="tab" aria-controls="pills-upcoming" aria-selected="true">Upcoming <span class="btn-batch">12</span></button>
+                                <button class="nav-link active" id="pills-upcoming-tab" data-bs-toggle="pill" data-bs-target="#pills-upcoming" type="button" role="tab" aria-controls="pills-upcoming" aria-selected="true">Upcoming <span class="btn-batch">{{ $users_tasks->where('due_date', '>', now())->count();}}</span></button>
                             </li>
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="pills-overdue-tab" data-bs-toggle="pill" data-bs-target="#pills-overdue" type="button" role="tab" aria-controls="pills-overdue" aria-selected="false">Overdue <span class="btn-batch">12</span></button>
+                                <button class="nav-link" id="pills-overdue-tab" data-bs-toggle="pill" data-bs-target="#pills-overdue" type="button" role="tab" aria-controls="pills-overdue" aria-selected="false">Overdue <span class="btn-batch">{{  $users_tasks->where('due_date', '<', now())->count();}}</span></button>
                             </li>
                         </ul>
                         <div class="tab-content" id="pills-tabContent">
                             <div class="tab-pane fade show active" id="pills-upcoming" role="tabpanel" aria-labelledby="pills-upcoming-tab" tabindex="0">
+                                @foreach($users_tasks->where('due_date', '>', now())->take(10) as $task)
                                 <div class="taskList scrollbar">
                                     <div style="height: 307px;">
                                         <div class="taskList_row edit-task" data-id="1" wire:key="task-row-1">
@@ -220,215 +209,38 @@
                                                     <div class="taskList_col taskList_col_title">
                                                         <div class="taskList_col_title_open edit-task" data-id="1"><i class="bx bx-chevron-right"></i></div>
                                                         <div class="edit-task" data-id="1">
-                                                            <div>add tsoi client smile</div>
+                                                            <div>{{$task->name}}</div>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-auto">
-                                                    <div class="taskList_col"><span class="btn-batch ">31 Aug</span></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="taskList_row edit-task" data-id="1" wire:key="task-row-1">
-                                            <div class="row">
-                                                <div class="col">
-                                                    <div class="taskList_col taskList_col_title">
-                                                        <div class="taskList_col_title_open edit-task" data-id="1"><i class="bx bx-chevron-right"></i></div>
-                                                        <div class="edit-task" data-id="1">
-                                                            <div>Add T&D in the policy page and add background color</div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-auto">
-                                                    <div class="taskList_col"><span class="btn-batch">31 Aug</span></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="taskList_row edit-task" data-id="1" wire:key="task-row-1">
-                                            <div class="row">
-                                                <div class="col">
-                                                    <div class="taskList_col taskList_col_title">
-                                                        <div class="taskList_col_title_open edit-task" data-id="1"><i class="bx bx-chevron-right"></i></div>
-                                                        <div class="edit-task" data-id="1">
-                                                            <div>add tsoi client smile</div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-auto">
-                                                    <div class="taskList_col"><span class="btn-batch"> 31 Aug</span></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="taskList_row edit-task" data-id="1" wire:key="task-row-1">
-                                            <div class="row">
-                                                <div class="col">
-                                                    <div class="taskList_col taskList_col_title">
-                                                        <div class="taskList_col_title_open edit-task" data-id="1"><i class="bx bx-chevron-right"></i></div>
-                                                        <div class="edit-task" data-id="1">
-                                                            <div>add tsoi client smile</div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-auto">
-                                                    <div class="taskList_col"><span class="btn-batch"> 31 Aug</span></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="taskList_row edit-task" data-id="1" wire:key="task-row-1">
-                                            <div class="row">
-                                                <div class="col">
-                                                    <div class="taskList_col taskList_col_title">
-                                                        <div class="taskList_col_title_open edit-task" data-id="1"><i class="bx bx-chevron-right"></i></div>
-                                                        <div class="edit-task" data-id="1">
-                                                            <div>add tsoi client smile</div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-auto">
-                                                    <div class="taskList_col"><span class="btn-batch"> 31 Aug</span></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="taskList_row edit-task" data-id="1" wire:key="task-row-1">
-                                            <div class="row">
-                                                <div class="col">
-                                                    <div class="taskList_col taskList_col_title">
-                                                        <div class="taskList_col_title_open edit-task" data-id="1"><i class="bx bx-chevron-right"></i></div>
-                                                        <div class="edit-task" data-id="1">
-                                                            <div>add tsoi client smile</div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-auto">
-                                                    <div class="taskList_col"><span class="btn-batch"> 31 Aug</span></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="taskList_row edit-task" data-id="1" wire:key="task-row-1">
-                                            <div class="row">
-                                                <div class="col">
-                                                    <div class="taskList_col taskList_col_title">
-                                                        <div class="taskList_col_title_open edit-task" data-id="1"><i class="bx bx-chevron-right"></i></div>
-                                                        <div class="edit-task" data-id="1">
-                                                            <div>add tsoi client smile</div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-auto">
-                                                    <div class="taskList_col"><span class="btn-batch"> 31 Aug</span></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="taskList_row edit-task" data-id="1" wire:key="task-row-1">
-                                            <div class="row">
-                                                <div class="col">
-                                                    <div class="taskList_col taskList_col_title">
-                                                        <div class="taskList_col_title_open edit-task" data-id="1"><i class="bx bx-chevron-right"></i></div>
-                                                        <div class="edit-task" data-id="1">
-                                                            <div>add tsoi client smile</div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-auto">
-                                                    <div class="taskList_col"><span class="btn-batch"> 31 Aug</span></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="taskList_row edit-task" data-id="1" wire:key="task-row-1">
-                                            <div class="row">
-                                                <div class="col">
-                                                    <div class="taskList_col taskList_col_title">
-                                                        <div class="taskList_col_title_open edit-task" data-id="1"><i class="bx bx-chevron-right"></i></div>
-                                                        <div class="edit-task" data-id="1">
-                                                            <div>add tsoi client smile</div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-auto">
-                                                    <div class="taskList_col"><span class="btn-batch"> 31 Aug</span></div>
+                                                    <div class="taskList_col"><span class="btn-batch ">{{ Carbon\Carbon::parse($task->due_date)->format('d M') }}</span></div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="text-center mt-2"><a href="#" class="btn-link">See More</a></div>
+                                @endforeach
+                                <div class="text-center mt-2"><a href="{{ route('task.index') }}" wire:navigate class="btn-link">See More</a></div>
                             </div>
                             <div class="tab-pane fade" id="pills-overdue" role="tabpanel" aria-labelledby="pills-overdue-tab" tabindex="0">
+                                @foreach($users_tasks->where('due_date', '<', now())->take(10) as $task)
                                 <div class="taskList_row edit-task" data-id="1" wire:key="task-row-1">
                                     <div class="row">
                                         <div class="col">
                                             <div class="taskList_col taskList_col_title">
                                                 <div class="taskList_col_title_open edit-task" data-id="1"><i class="bx bx-chevron-right"></i></div>
                                                 <div class="edit-task" data-id="1">
-                                                    <div>add tsoi client smile</div>
+                                                    <div>{{ $task->name }}</div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-auto">
-                                            <div class="taskList_col"><span class="btn-batch ">31 Aug</span></div>
+                                            <div class="taskList_col"><span class="btn-batch ">{{ Carbon\Carbon::parse($task->due_date)->format('d M') }}</span></div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="taskList_row edit-task" data-id="1" wire:key="task-row-1">
-                                    <div class="row">
-                                        <div class="col">
-                                            <div class="taskList_col taskList_col_title">
-                                                <div class="taskList_col_title_open edit-task" data-id="1"><i class="bx bx-chevron-right"></i></div>
-                                                <div class="edit-task" data-id="1">
-                                                    <div>add tsoi client smile</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <div class="taskList_col"><span class="btn-batch">31 Aug</span></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="taskList_row edit-task" data-id="1" wire:key="task-row-1">
-                                    <div class="row">
-                                        <div class="col">
-                                            <div class="taskList_col taskList_col_title">
-                                                <div class="taskList_col_title_open edit-task" data-id="1"><i class="bx bx-chevron-right"></i></div>
-                                                <div class="edit-task" data-id="1">
-                                                    <div>add tsoi client smile</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <div class="taskList_col"><span class="btn-batch"> 31 Aug</span></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="taskList_row edit-task" data-id="1" wire:key="task-row-1">
-                                    <div class="row">
-                                        <div class="col">
-                                            <div class="taskList_col taskList_col_title">
-                                                <div class="taskList_col_title_open edit-task" data-id="1"><i class="bx bx-chevron-right"></i></div>
-                                                <div class="edit-task" data-id="1">
-                                                    <div>add tsoi client smile</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <div class="taskList_col"><span class="btn-batch"> 31 Aug</span></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="taskList_row edit-task" data-id="1" wire:key="task-row-1">
-                                    <div class="row">
-                                        <div class="col">
-                                            <div class="taskList_col taskList_col_title">
-                                                <div class="taskList_col_title_open edit-task" data-id="1"><i class="bx bx-chevron-right"></i></div>
-                                                <div class="edit-task" data-id="1">
-                                                    <div>add tsoi client smile</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <div class="taskList_col"><span class="btn-batch"> 31 Aug</span></div>
-                                        </div>
-                                    </div>
-                                </div>
+                                @endforeach
                             </div>
                         </div>
                     </div>

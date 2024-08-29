@@ -72,6 +72,16 @@ class Project extends Model
         return User::whereIn('id',$user_ids)->get();
     }
 
+    public function getTeamsAttribute(){
+        $users = $this->members->pluck('id');
+        $users = array_unique($users->toArray());
+        return Team::whereHas('users',function($query) use($users){
+            $query->whereIn('user_id',$users);
+        })->get();
+        
+       
+    }
+
     public function tasks(){
         return $this->hasMany(Task::class);
     }
