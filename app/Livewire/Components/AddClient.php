@@ -36,9 +36,10 @@ class AddClient extends Component
             $this->updateClient();
             return;
         }
+
         
         $this->validate([
-            'client_name' => 'required|unique:clients,name',
+            'client_name' => 'required|unique:clients,name,NULL,id,org_id,'.session('org_id'),
         ]);
         
         $client = new Client();

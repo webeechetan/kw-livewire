@@ -100,7 +100,12 @@
                     @php
                         $taskDone = $project->tasks->where('status', 'completed')->count();
                         $totalTask = $project->tasks->count();
-                        $percentage = ($taskDone / $totalTask) * 100;
+                    
+                        if ($totalTask > 0) {
+                            $percentage = ($taskDone / $totalTask) * 100;
+                        } else {
+                            $percentage = 0; 
+                        }
                     @endphp
                     <div class="progress mt-4">
                         <div class="progress-bar progress-secondary" role="progressbar" aria-label="Task Done" style="width: {{$percentage}}%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
