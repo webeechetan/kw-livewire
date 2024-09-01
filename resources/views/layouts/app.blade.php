@@ -181,6 +181,7 @@
 
     @livewireScripts 
     <script src="https://unpkg.com/@nextapps-be/livewire-sortablejs@0.4.0/dist/livewire-sortable.js"></script>
+    
     @stack('scripts') 
     @if (session()->has('success')) 
     <script>

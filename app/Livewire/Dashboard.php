@@ -5,6 +5,7 @@ namespace App\Livewire;
 use Livewire\Component;
 use App\Models\Project;
 use App\Models\Task;
+use App\Models\Comment;
 use Illuminate\Support\Facades\Auth;
 
 class Dashboard extends Component
@@ -13,6 +14,7 @@ class Dashboard extends Component
     public $mostImportantProjects = [];
     public $users_tasks = [];
     public $active_projects = [];
+    public $recent_comments = [];
 
     public function render()
     {
@@ -20,6 +22,7 @@ class Dashboard extends Component
     }
 
     public function mount(){
+        $this->getRecentComments();
         $this->mostImportantProjects = $this->getMostImportantProjects();
         $this->users_tasks = Task::tasksByUserType()->get();
         $this->active_projects = Auth::user()->projects->where('status','!=','completed')->count();
@@ -47,6 +50,13 @@ class Dashboard extends Component
 
         return $mostImportantProjects;
        
+    }
+
+    public function getRecentComments(){
+        // get 5 recent comments of the user tasks
+
+       
+
     }
 
 }
