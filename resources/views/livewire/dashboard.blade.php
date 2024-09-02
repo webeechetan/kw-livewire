@@ -168,7 +168,7 @@
                                 </div>
                             </div>
                             <div class="col-md-auto">
-                                <h6 class="mb-0 text-danger"><b>{{ $users_tasks->where('due_date', '<', now())->
+                                <h6 class="mb-0 text-danger"><b>{{ $users_tasks->where('due_date', '<', now())->where('status','!=','completed')->
                                             count();}}</b></h6>
                             </div>
                         </div>
@@ -218,13 +218,13 @@
                                     data-bs-target="#pills-upcoming" type="button" role="tab"
                                     aria-controls="pills-upcoming" aria-selected="true">Upcoming <span
                                         class="btn-batch">{{ $users_tasks->where('due_date', '>',
-                                        now())->count();}}</span></button>
+                                        now())->where('status','!=','completed')->count();}}</span></button>
                             </li>
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link" id="pills-overdue-tab" data-bs-toggle="pill"
                                     data-bs-target="#pills-overdue" type="button" role="tab"
                                     aria-controls="pills-overdue" aria-selected="false">Overdue <span
-                                        class="btn-batch">{{ $users_tasks->where('due_date', '<', now())->
+                                        class="btn-batch">{{ $users_tasks->where('due_date', '<', now())->where('status','!=','completed')->
                                             count();}}</span></button>
                             </li>
                         </ul>
@@ -260,7 +260,7 @@
                             </div>
                             <div class="tab-pane fade" id="pills-overdue" role="tabpanel"
                                 aria-labelledby="pills-overdue-tab" tabindex="0">
-                                @foreach($users_tasks->where('due_date', '<', now())->take(10) as $task)
+                                @foreach($users_tasks->where('due_date', '<', now())->where('status','!=','completed')->take(10) as $task)
                                     <div class="taskList_row edit-task" data-id="1" wire:key="task-row-1">
                                         <div class="row">
                                             <div class="col">
@@ -297,36 +297,39 @@
             <div class="box-item h-100">
                 <h4>Recent Comments</h4>
                 <hr>
-
-                <div class="comment-box">
-                    <div class="comment-box_img">
-                        <img src="{{ asset('') }}assets/images/comment_img1.png" alt="">
-                    </div>
-                    <div class="comment-box_content">
-                        <h6>John Doe</h6>
-                        <p>Hey, I have completed the task. Please check it out.</p>
-                        <div class="text-muted
-                        ">2 hours ago</div>
+                @foreach($recent_comments as $comment)
+                <div class="cmnt_item_row">
+                    <div class="cmnt_item_user">
+                        <div class="cmnt_item_user_img">
+                            <x-avatar :user="$comment->user" />
+                        </div>
+                        <div class="cmnt_item_user_name-wrap">
+                            <div class="cmnt_item_user_name">{{ $comment->user->name }}</div>
+                            <div class="cmnt_item_date">{{ \Carbon\Carbon::parse($comment->created_at)->diffForHumans() }}</div>
+                            <div class="cmnt_item_user_text">{!! $comment->comment !!}</div>
+                        </div>
                     </div>
                 </div>
-
+                @endforeach
             </div>
         </div>
     </div>
 </div>
 @php
-$tour = session()->get('tour');
-$events = [];
-foreach($users_tasks as $task){
-$color = '';
-if($task->status == 'completed'){
-$color = 'green';
-}else{
-if($task->due_date < now()){ $color='red' ; }else{ $color='green' ; } } $events[]=[ 'title'=> $task->name,
-    'start' => $task->due_date,
-    'url' => route('task.view', $task->id),
-    'backgroundColor' => $color,
-    ];
+    $tour = session()->get('tour');
+    $events = [];
+    foreach($users_tasks as $task){
+        $color = '';
+        if($task->status == 'completed'){
+            $color = 'green';
+        }else{
+            if($task->due_date < now()){ $color='red' ; }else{ $color='green' ; } 
+        } 
+        $events[]=[ 'title'=> $task->name,
+            'start' => $task->due_date,
+            'url' => route('task.view', $task->id),
+            'backgroundColor' => $color,
+            ];
     }
 
     @endphp
@@ -504,7 +507,7 @@ if($task->due_date < now()){ $color='red' ; }else{ $color='green' ; } } $events[
                     },
                     data: [
                         {value: {{$active_projects}}, name: 'Active Projects'},
-                        {value: {{$users_tasks->where('due_date', '<', now())->count()}}, name: 'Overdue Tasks'},
+                        {value: {{$users_tasks->where('due_date', '<', now())->where('status','!=','completed')->count()}}, name: 'Overdue Tasks'},
                         {value: {{$users_tasks->where('status','in_progress')->count()}}, name: 'Active Tasks'},
                         {value: {{$users_tasks->where('status','completed')->count()}}, name: 'Completed Tasks'}
 

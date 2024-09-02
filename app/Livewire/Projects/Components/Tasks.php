@@ -35,7 +35,7 @@ class Tasks extends Component
 
     public $perPage = 10;
 
-    public function render()
+    public function render() 
     {
         return view('livewire.projects.components.tasks');
     }
@@ -55,7 +55,9 @@ class Tasks extends Component
         $this->perPage += 10;
         $tasks = $this->applySort($this->project->tasks());
         $tasks = $tasks->where('name', 'like', '%' . $this->query . '%');
-        $this->tasks = $tasks->take($this->perPage)->get();
+        // new 10 tasks
+        $tasks = $tasks->skip($this->perPage - 10)->limit(10)->get();
+        $this->tasks = $this->tasks->merge($tasks);
 
     }
 

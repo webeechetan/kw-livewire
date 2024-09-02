@@ -22,7 +22,6 @@ class Dashboard extends Component
     }
 
     public function mount(){
-        $this->getRecentComments();
         $this->mostImportantProjects = $this->getMostImportantProjects();
         $this->users_tasks = Task::tasksByUserType()->get();
         $this->active_projects = Auth::user()->projects->where('status','!=','completed')->count();
@@ -32,6 +31,7 @@ class Dashboard extends Component
             unset($tour['main_tour']);
             session()->put('tour',$tour);
         }
+        $this->getRecentComments();
     }
 
     // nearest due date and more pending tasks are most important projects
@@ -54,9 +54,9 @@ class Dashboard extends Component
 
     public function getRecentComments(){
         // get 5 recent comments of the user tasks
-
-       
-
+        $task_ids = [];
+        $task_ids = $this->users_tasks->pluck('id')->toArray();
+        $this->recent_comments = Comment::whereIn('task_id',$task_ids)->orderBy('created_at','desc')->limit(5)->get();
     }
 
 }
