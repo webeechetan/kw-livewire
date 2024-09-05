@@ -15,6 +15,7 @@ class FileManager extends Component
     use WithFileUploads;
 
     public $client = null;
+    public $project = null;
     public $files = [];
     public $directories = [];
     public $links = [];
@@ -56,6 +57,8 @@ class FileManager extends Component
     public $used_storage_size_in_mb = 0;
 
 
+
+
     public function render()
     {
         return view('livewire.components.file-manager');
@@ -65,6 +68,7 @@ class FileManager extends Component
     {
         $this->client = $client;
         if($project){
+            $this->project = $project;
             $this->path = session('org_name').'/'.$this->client->name.'/'.$project->name;
         }else{
             $this->path = session('org_name').'/'.$this->client->name;
@@ -150,6 +154,7 @@ class FileManager extends Component
         }
 
         try{
+
             Storage::putFileAs($this->path, $this->new_file, $this->new_file_name);
             $this->new_file_name = '';
             $this->new_file = null;
@@ -160,6 +165,7 @@ class FileManager extends Component
             $this->used_storage_size_in_mb = $this->getDirectorySize($this->path);
             $this->main_directory_size = $this->getDirectorySize($this->path);
         }catch(\Exception $e){
+            dd($e);
             session()->flash('error', 'File already exists');
         }
 

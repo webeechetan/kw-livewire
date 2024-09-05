@@ -87,9 +87,9 @@
                                             <table class="emailer-text-wrap mxauto" width="100%" cellcellspacing="0" cellpadding="">
                                                 <tr>
                                                     <td>
-                                                        <p> <b>{{ $assignedBy->name }}</b> assigned you a task {{ Str::limit($task->name, 20, '...') }} in <b>{{ $project->name }}</b> </p>
+                                                        <p> <b>{{ $assignedBy->name }}</b> assigned you a task {{ Str::limit($task->name, 50, '...') }} in <b>{{ $project->name }}</b> </p>
                                                         {{-- <p>  assigned you a task {{ Str::limit($task->name, 15, '...') }} in </p> --}}
-                                                        <a href="{{ route('task.view',$task->id) }}"  class="btn-primary" style="margin-top: 30px;">View Task</a>
+                                                        <a href="{{ $taskUrl }}"  class="btn-primary" style="margin-top: 30px;">View Task</a>
                                                     </td>
                                                 </tr>
                                             </table>

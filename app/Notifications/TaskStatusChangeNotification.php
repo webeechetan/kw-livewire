@@ -15,16 +15,18 @@ class TaskStatusChangeNotification extends Notification implements ShouldQueue
     public $oldStatus;
     public $newStatus;
     public $changedBy;
+    public $taskUrl;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct($task, $oldStatus, $newStatus, $changedBy)
+    public function __construct($task, $oldStatus, $newStatus, $changedBy, $taskUrl)
     {
         $this->task = $task;
         $this->oldStatus = $oldStatus;
         $this->newStatus = $newStatus;
         $this->changedBy = $changedBy;
+        $this->taskUrl = $taskUrl;
     }
 
     /**
@@ -42,34 +44,18 @@ class TaskStatusChangeNotification extends Notification implements ShouldQueue
      */
     public function toMail(object $notifiable): MailMessage
     {
-        if($this->oldStatus == 'completed'){
-            $this->oldStatus = 'Completed';
-        }else if($this->oldStatus == 'in_progress'){
-            $this->oldStatus = 'In Progress';
-        }else if($this->oldStatus == 'in_review'){
-            $this->oldStatus = 'In Review';
-        }else if($this->oldStatus == 'pending'){
-            $this->oldStatus = 'Pending';
-        }else{
-            $this->oldStatus = 'Not Started';
-        }
-
-        if($this->newStatus == 'completed'){
-            $this->newStatus = 'Completed';
-        }else if($this->newStatus == 'in_progress'){
-            $this->newStatus = 'In Progress';
-        }else if($this->newStatus == 'in_review'){
-            $this->newStatus = 'In Review';
-        }else if($this->newStatus == 'pending'){
-            $this->newStatus = 'Pending';
-        }else{
-            $this->newStatus = 'Not Started';
-        }
-
-
-
+        
         return (new MailMessage)
-            ->view('mails.task-status-change', ['task' => $this->task, 'user' => $notifiable, 'oldStatus' => $this->oldStatus, 'newStatus' => $this->newStatus, 'changedBy' => $this->changedBy]);
+            ->view('mails.task-status-change', 
+            [
+                'task' => $this->task, 
+                'user' => $notifiable, 
+                'oldStatus' => $this->oldStatus, 
+                'newStatus' => $this->newStatus, 
+                'changedBy' => $this->changedBy,
+                'taskUrl' => $this->taskUrl
+            ]
+        );
     }
 
     /**

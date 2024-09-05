@@ -13,14 +13,16 @@ class NewCommentNotification extends Notification implements ShouldQueue
 
     public $comment;
     public $task;
-
+    public $taskUrl;
+ 
     /**
      * Create a new notification instance.
      */
-    public function __construct($comment, $task)
+    public function __construct($comment, $task, $taskUrl)
     {
         $this->comment = $comment;
         $this->task = $task;
+        $this->taskUrl = $taskUrl;
     }
 
     /**
@@ -39,7 +41,14 @@ class NewCommentNotification extends Notification implements ShouldQueue
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->view('mails.comment-notification-mail', ['task' => $this->task, 'user' => $notifiable, 'comment' => $this->comment]);
+            ->view('mails.comment-notification-mail', 
+            [
+                'task' => $this->task, 
+                'user' => $notifiable, 
+                'comment' => $this->comment,
+                'taskUrl' => $this->taskUrl
+                ]
+        );
     }
 
     /**

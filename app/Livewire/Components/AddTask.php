@@ -3,7 +3,7 @@
 namespace App\Livewire\Components;
 
 use Livewire\Component;
-use App\Models\ { Project, Task, User, Attachment, Comment, Client};
+use App\Models\ { Project, Task, User, Attachment, Comment, Client, Notification};
 use Livewire\WithFileUploads;
 use App\Notifications\NewTaskAssignNotification;
 use App\Notifications\UserMentionNotification;
@@ -108,11 +108,18 @@ class AddTask extends Component
                 $at->save();
             }
         }
- 
+        $taskUrl = env('APP_URL').'/'.session('org_name').'/task/view/'.$task->id;
         if($this->task_users){
             foreach($this->task_users as $user_id){
                 $user = User::find($user_id);
-                $user->notify(new NewTaskAssignNotification($task));
+                $user->notify(new NewTaskAssignNotification($task,$taskUrl));
+                $notification = new Notification();
+                $notification->user_id = $user->id;
+                $notification->org_id = $task->org_id;
+                $notification->title = 'You have been assigned a new task '.$task->name;
+                $notification->message = 'You have been assigned a new task '.$task->name;
+                $notification->url = route('task.view', ['task' => $task->id]);
+                $notification->save();
             }
         }
 
