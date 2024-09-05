@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('org_id');
             $table->foreign('org_id')->references('id')->on('organizations')->onDelete('cascade');
-            $table->string('name')->unique();
+            $table->string('name');
             $table->string('brand_name')->nullable();
             $table->boolean('use_brand_name')->default(false)->nullable();
             $table->longText('description')->nullable();

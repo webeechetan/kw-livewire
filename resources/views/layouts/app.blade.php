@@ -129,7 +129,7 @@
                     <li>
                       <li>
                         <a wire:navigate href="{{ route('client.profile',Auth::user()->organization->mainClient->id) }}"  class="@if ( request()->segment(4) == Auth::user()->organization->mainClient->id && (request()->segment(2) == 'clients' || request()->segment(2) == 'client' )) active @endif"><i class='bx bx-body' ></i> 
-                          {{ Auth::user()->organization ? Auth::user()->organization->name : 'No organization' }}
+                          {{ ucfirst(Auth::user()->organization ? Auth::user()->organization->name : 'No organization') }}
                         </a>
                       </li>
                     </li>
@@ -181,6 +181,7 @@
 
     @livewireScripts 
     <script src="https://unpkg.com/@nextapps-be/livewire-sortablejs@0.4.0/dist/livewire-sortable.js"></script>
+    
     @stack('scripts') 
     @if (session()->has('success')) 
     <script>

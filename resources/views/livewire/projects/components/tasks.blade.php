@@ -154,7 +154,10 @@
                     <div class="taskList_row" wire:key="task-row-{{ $task->id }}">
                         <div class="row">
                             <div class="col-lg-4">
-                                <div class="taskList_col taskList_col_title">
+                                <div class="taskList_col taskList_col_title" >
+                                    <div wire:loading wire:target="emitEditTaskEvent({{ $task['id'] }})" class="card_style-loader">
+                                        <div class="card_style-loader-wrap"><i class='bx bx-pencil text-primary me-2' ></i> Loading ...</div>
+                                    </div>
                                     <div class="taskList_col_title_open edit-task" data-id="{{ $task->id }}"><i class='bx bx-chevron-right' ></i></div>
                                     <div wire:click="emitEditTaskEvent({{ $task->id }})" class="edit-task" data-id="{{ $task->id }}">
                                         <div>{{ $task->name }}</div>
@@ -238,8 +241,15 @@
                     @endif
                     {{-- load more tasks --}}
                     @if($tasks->count() < $totalTasks)
-                    <div class="col-md-12 text-center mt-3">
-                        <a href="javascript:" wire:click="loadMore" class="btn btn-sm btn-border btn-border-primary">Load More</a>
+                    <div class="col-md-12 text-center mt-3 ">
+                        <a href="javascript:" wire:click="loadMore" class="btn btn-sm btn-border btn-border-primary">
+                            Load More
+                            <div wire:loading wire:target="loadMore">  
+                                <div class="spinner-border spinner-border-sm text-primary" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                            </div>
+                        </a>
                     </div>
                     @endif
                 </div>
