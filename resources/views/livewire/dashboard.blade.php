@@ -14,7 +14,7 @@
                 <div class="row align-items-center">
                     <div class="col-md-7">
                         <div class="welcome-box">
-                            <h4 class="mb-1"><span class="fw-normal">Hi {{ Auth::guard(session('guard'))->user()->name
+                             <h4 class="mb-1"><span class="fw-normal">Hi {{ Auth::guard(session('guard'))->user()->name
                                     }}</span>,</h4>
                             <h3><b>Welcome back</b></h3>
                             {{-- @if(session()->has('newly_registered'))
@@ -287,9 +287,8 @@
             </div>
         </div>
         <div class="col-md-8 mt-3">
-            <div class="box-item h-100">
-                <h4>Calendar</h4>
-                <hr>
+            <div class="box-item h-100 calendar-title">
+                <!-- <h4>Calendar</h4> -->
                 <div id="calendar"></div>
             </div>
         </div>
