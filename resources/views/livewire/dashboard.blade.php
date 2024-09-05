@@ -94,7 +94,7 @@
                 <div>
                     <div class="row mb-3">
                         <div class="col-auto pe-md-1">
-                            <img src="{{ asset('') }}assets/images/project_img1.png" alt="" width="60">
+                            <x-avatar :user="$project" />
                         </div>
                         <div class="col">
                             <h5 class="mb-1">{{ $project->name }}</h5>
@@ -385,10 +385,6 @@
                             width: 18,
                             itemStyle: {
                                 color: 'rgb(220 53 69)',
-                                shadowColor: 'rgba(0,138,255,0.45)',
-                                shadowBlur: 10,
-                                shadowOffsetX: 2,
-                                shadowOffsetY: 2,
                             },
                         },
                         pointer: {
@@ -486,11 +482,6 @@
                     type: 'pie',
                     radius: ['40%', '70%'],
                     avoidLabelOverlap: false,
-                    itemStyle: {
-                        borderRadius: 10,
-                        borderColor: '#fff',
-                        borderWidth: 2
-                    },
                     label: {
                         show: false,
                         position: 'center'

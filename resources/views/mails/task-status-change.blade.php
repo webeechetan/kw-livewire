@@ -88,12 +88,12 @@
                                                 <tr>
                                                     <td>
                                                         @if($newStatus=='completed')
-                                                            <p>{{ $changedBy->name }} marked <strong>{{ Str::limit($task->name, 15, '...') }}</strong> as Complete.</p>
+                                                            <p>{{ $changedBy->name }} marked <strong>{{ Str::limit($task->name, 50, '...') }}</strong> as Complete.</p>
                                                         @else
-                                                            <p>{{ $changedBy->name }} Changed the status of <strong>{{ Str::limit($task->name, 15, '...') }}</strong> from <strong>{{ $oldStatus}}</strong> to <strong>{{ $newStatus }}</strong></p>
+                                                            <p>{{ $changedBy->name }} Changed the status of <strong>{{ Str::limit($task->name, 50, '...') }}</strong> from <strong>{{ $oldStatus}}</strong> to <strong>{{ $newStatus }}</strong></p>
                                                         @endif
                                                         {{-- <p>  assigned you a task {{ Str::limit($task->name, 15, '...') }} in </p> --}}
-                                                        <a href="{{ route('task.view',$task->id) }}"  class="btn-primary" style="margin-top: 30px;">View Task</a>
+                                                        <a href="{{ $taskUrl }}"  class="btn-primary" style="margin-top: 30px;">View Task</a>
                                                     </td>
                                                 </tr>
                                             </table>

@@ -59,7 +59,7 @@ class Login extends Component
                 $org_name = str_replace(' ','-',$org_name);
                 session()->put('org_name',$org_name);
                 session()->put('user',User::withoutGlobalScope(OrganizationScope::class)->where('email',$this->email)->first());
-                return $this->redirect(session('org_name') .'/dashboard',navigate: true);
+                return $this->redirect(session('org_name') .'/dashboard');
             }else{
                 session()->flash('error','Invalid email or password');
             }

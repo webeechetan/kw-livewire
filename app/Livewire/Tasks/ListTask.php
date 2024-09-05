@@ -26,7 +26,7 @@ class ListTask extends Component
     public $allTasks;
     public $activeTasks;
     public $completedTasks;
-    public $archivedTasks;
+    public $archivedTasks; 
 
     // auth 
 
