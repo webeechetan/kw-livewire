@@ -4786,3 +4786,14 @@ button.fc-today-button.fc-button.fc-button-primary {
   height: 1px;
   background-color: #f6f5f5;
 }
+
+.fc-event-past {
+  background: transparent !important;
+  border: none;
+}
+.fc-event-future .fc-event-title.fc-sticky {
+  color: #f83890;
+}
+.fc .fc-button-primary:focus {
+  box-shadow: unset;
+}
