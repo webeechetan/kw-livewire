@@ -82,8 +82,17 @@
                                                 <tr>
                                                     <td>
                                                         <h2 style="margin-top: 0; margin-bottom: 30px;">Hi there {{ $user->name }}!</h2>
-                                                        <p>{{ $org->name }} has invited you to join the team on Kaykewalk. Please Sign up via the link below and join the huddle.</p>
-                                                        <a href="#" class="btn-primary" style="margin-top: 30px;">Sign Up Now</a>
+                                                        <p>
+                                                            {{ $org->name }} has invited you to join the team on Kaykewalk. Please Sign in via password below and join the huddle.
+                                                        </p>
+                                                        <p>
+                                                            <strong>Email:</strong> {{ $user->email }}<br>
+                                                            <strong>Password:</strong> {{ $password }}
+                                                        </p>
+                                                        <p>
+                                                            This is a system generated password. We recommend you to change it after you login.
+                                                        </p>
+                                                        <a href="{{ env('APP_URL') }}" class="btn-primary" style="margin-top: 30px;">Sign In Now</a>
                                                     </td>
                                                 </tr>
                                             </table>

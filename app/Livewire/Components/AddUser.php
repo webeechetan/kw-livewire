@@ -118,12 +118,17 @@ class AddUser extends Component
 
         $user = new User();
         $user->org_id = session('org_id');
-        $user->name = $this->email;
+        $user->name = strtok($this->email, '@');
         $user->email = $this->email;
-        $user->password = Hash::make(rand(100000,999999));
+        $user->created_by = session('user')->id;
+        // generate random password which contains one uppercase, one lowercase, one number and one special character
+        $password = substr(str_shuffle('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()'),0,8);
+        
+        
+        $user->password = Hash::make($password);
         $user->save();
         $org = Organization::find(session('org_id'));
-        $user->notify(new InviteUser($org));
+        $user->notify(new InviteUser($org,$password));
         $this->dispatch('saved');
         $this->dispatch('user-added');
     }
