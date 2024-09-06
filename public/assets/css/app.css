@@ -4828,3 +4828,7 @@ div#user-progress-pie-chart {
   overflow-y: auto;
   overflow-x: hidden;
 }
+/* Footer Sidebar */
+.copyright{
+  font-size: 12px;
+}
