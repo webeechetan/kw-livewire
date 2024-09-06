@@ -25,7 +25,7 @@
                     <div class="col-md-6">
                         <div class="text-center">
                             <div id="progress-chart-gauge" style="width: 100%;height: 250px;">
-
+    
                             </div>
                         </div>
                         <div class="row mt-4">

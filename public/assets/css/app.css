@@ -4760,7 +4760,10 @@ a.fc-col-header-cell-cushion {
   height: 40px;
 }
 button.fc-today-button.fc-button.fc-button-primary {
-  background: #f7d306;
+  text-transform: capitalize;
+}
+button.fc-today-button.fc-button.fc-button-primary {
+  background: #ffd700;
   border: none;
   opacity: 1;
 }
@@ -4796,4 +4799,32 @@ button.fc-today-button.fc-button.fc-button-primary {
 }
 .fc .fc-button-primary:focus {
   box-shadow: unset;
+}
+.fc-day-sun .fc-col-header-cell-cushion, .fc-day-mon .fc-col-header-cell-cushion, .fc-day-tue .fc-col-header-cell-cushion {
+  color: #f83890;
+}
+/* Pie Chart CSS */
+div#progress-chart-gauge {
+  clip-path: inset(0 0 0 0);
+}
+div#progress-chart-gauge {
+  margin-top: -25px;
+}
+.task-details {
+  position: relative;
+  top: -115px;
+}
+.h-custom{
+  height: 225px;
+}
+
+/* user chart */
+div#user-progress-pie-chart {
+  height: 215px !important;
+  margin-top: -30px;
+}
+.overflow-y{
+  max-height: 378px;
+  overflow-y: auto;
+  overflow-x: hidden;
 }

@@ -14,7 +14,7 @@
                 <div class="row align-items-center">
                     <div class="col-md-7">
                         <div class="welcome-box">
-                             <h4 class="mb-1"><span class="fw-normal">Hi {{ Auth::guard(session('guard'))->user()->name
+                            <h4 class="mb-1"><span class="fw-normal">Hi {{ Auth::guard(session('guard'))->user()->name
                                     }}</span>,</h4>
                             <h3><b>Welcome back</b></h3>
                             {{-- @if(session()->has('newly_registered'))
@@ -34,7 +34,7 @@
             </div>
         </div>
         <div class="col-md-6">
-            <div class="box-item h-100">
+            <div class="box-item h-custom">
                 <div class="row">
                     <div class="col-md-6">
                         <h4>Task Overview</h4>
@@ -58,7 +58,7 @@
 
                             </div>
                         </div>
-                        <div class="row mt-4">
+                        <div class="row mt-4 task-details">
                             <div class="col-md-6">
                                 <div class="row">
                                     <div class="col-md-auto pe-md-0">
@@ -90,47 +90,49 @@
             <div class="box-item h-100">
                 <h4>Important Projects</h4>
                 <hr>
-                @foreach($mostImportantProjects as $project)
-                <div>
-                    <div class="row mb-3">
-                        <div class="col-auto pe-md-1">
-                            <x-avatar :user="$project" />
+                <div class="overflow-y scrollbar scrollbar-primary">
+                    @foreach($mostImportantProjects as $project)
+                    <div>
+                        <div class="row mb-3">
+                            <div class="col-auto pe-md-1">
+                                <x-avatar :user="$project" />
+                            </div>
+                            <div class="col">
+                                <h5 class="mb-1">{{ $project->name }}</h5>
+                                <div>{{ $project->client->name}}</div>
+                            </div>
                         </div>
-                        <div class="col">
-                            <h5 class="mb-1">{{ $project->name }}</h5>
-                            <div>{{ $project->client->name}}</div>
+                        <div class="d-flex gap-2 mt-4">
+                            @if($project->teams)
+                            @foreach($project->teams as $team)
+                            <a href="#" class="btn btn-success rounded-pill btn-xs text-uppercase">{{$team->name}}</a>
+                            @endforeach
+                            @endif
                         </div>
-                    </div>
-                    <div class="d-flex gap-2 mt-4">
-                        @if($project->teams)
-                        @foreach($project->teams as $team)
-                        <a href="#" class="btn btn-success rounded-pill btn-xs text-uppercase">{{$team->name}}</a>
-                        @endforeach
-                        @endif
-                    </div>
-                    @php
-                    $taskDone = $project->tasks->where('status', 'completed')->count();
-                    $totalTask = $project->tasks->count();
+                        @php
+                        $taskDone = $project->tasks->where('status', 'completed')->count();
+                        $totalTask = $project->tasks->count();
 
-                    if ($totalTask > 0) {
-                    $percentage = ($taskDone / $totalTask) * 100;
-                    } else {
-                    $percentage = 0;
-                    }
-                    @endphp
-                    <div class="progress mt-4">
-                        <div class="progress-bar progress-secondary" role="progressbar" aria-label="Task Done"
-                            style="width: {{$percentage}}%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                        if ($totalTask > 0) {
+                        $percentage = ($taskDone / $totalTask) * 100;
+                        } else {
+                        $percentage = 0;
+                        }
+                        @endphp
+                        <div class="progress mt-4">
+                            <div class="progress-bar progress-secondary" role="progressbar" aria-label="Task Done"
+                                style="width: {{$percentage}}%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col"><b>{{ $taskDone }}</b> <span>Task Done</span></div>
+                            <div class="col text-end text-danger px-4"><i class="bx bx-calendar"></i> <span>{{ $project->due_date
+                                ?? 'No Due Date' }}</span></div>
                         </div>
                     </div>
-                    <div class="row mt-2">
-                        <div class="col"><b>{{ $taskDone }}</b> <span>Task Done</span></div>
-                        <div class="col text-end text-danger"><i class="bx bx-calendar"></i> <span>{{ $project->due_date
-                                ?? 'No Due Date' }}</span></div>
-                    </div>
+                    <!-- <hr class="my-4"> -->
+                    @endforeach
                 </div>
-                <hr class="my-4">
-                @endforeach
             </div>
         </div>
         <div class="col-md-8">
@@ -140,7 +142,7 @@
                         <h4>Your Progress</h4>
                         <hr>
                         <div class="text-center" id="user-progress-pie-chart" style="width: 100%;height: 250px;"></div>
-                        <div class="row mt-4">
+                        <div class="row">
                             <div class="col">
                                 <div class="row align-items-center">
                                     <div class="col-md-auto pe-md-0">
@@ -229,7 +231,7 @@
                             </li>
                         </ul>
                         <div class="tab-content" id="pills-tabContent">
-                            <div class="tab-pane fade show active" id="pills-upcoming" role="tabpanel"
+                            <div class="tab-pane fade show active overflow-y scrollbar scrollbar-primary" id="pills-upcoming" role="tabpanel"
                                 aria-labelledby="pills-upcoming-tab" tabindex="0">
                                 @foreach($users_tasks->where('due_date', '>', now())->take(10) as $task)
                                 <div class="taskList scrollbar">
@@ -258,7 +260,7 @@
                                 <div class="text-center mt-2"><a href="{{ route('task.index') }}" wire:navigate
                                         class="btn-link">See More</a></div>
                             </div>
-                            <div class="tab-pane fade" id="pills-overdue" role="tabpanel"
+                            <div class="tab-pane fade overflow-y scrollbar scrollbar-primary" id="pills-overdue" role="tabpanel"
                                 aria-labelledby="pills-overdue-tab" tabindex="0">
                                 @foreach($users_tasks->where('due_date', '<', now())->where('status','!=','completed')->take(10) as $task)
                                     <div class="taskList_row edit-task" data-id="1" wire:key="task-row-1">
@@ -412,29 +414,30 @@
                             show: false
                         },
                         detail: {
-                            backgroundColor: '#fff',
-                            borderColor: '#999',
-                            borderWidth: 2,
-                            width: '60%',
-                            lineHeight: 15,
-                            height: 15,
-                            borderRadius: 8,
-                            offsetCenter: [0, '45%'],
-                            valueAnimation: true,
-                            formatter: function (value) {
-                                return '{value|' + value.toFixed(0) + '}{unit|%}';
-                            },
-                            rich: {
-                                value: {
-                                    fontSize: 15,
-                                    fontWeight: 'bolder',
-                                    color: '#777'
-                                },
-                                unit: {
-                                    fontSize: 15,
-                                    color: '#999',
-                                }
-                            }
+                            // backgroundColor: '#fff',
+                            // borderColor: '#999',
+                            // borderWidth: 2,
+                            // width: '60%',
+                            // lineHeight: 15,
+                            // height: 15,
+                            // borderRadius: 8,
+                            // offsetCenter: [0, '45%'],
+                            // valueAnimation: true,
+                            // formatter: function (value) {
+                            //     return '{value|' + value.toFixed(0) + '}{unit|%}';
+                            // },
+                            // rich: {
+                            //     value: {
+                            //         fontSize: 15,
+                            //         fontWeight: 'bolder',
+                            //         color: '#777'
+                            //     },
+                            //     unit: {
+                            //         fontSize: 15,
+                            //         color: '#999',
+                            //     }
+                            // }
+                            show:false
                         },
                         data: [
                             {
