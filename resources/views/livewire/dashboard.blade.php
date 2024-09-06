@@ -16,7 +16,7 @@
                         <div class="welcome-box">
                             <h4 class="mb-1"><span class="fw-normal">Hi {{ Auth::guard(session('guard'))->user()->name
                                     }}</span>,</h4>
-                            <h3><b>Welcome back</b></h3>
+                            <h3><b>Welcome back!</b></h3>
                             {{-- @if(session()->has('newly_registered'))
                             <p class="text-muted">You have successfully registered. Please check your email to verify
                                 your account.</p>
@@ -37,7 +37,7 @@
             <div class="box-item h-custom">
                 <div class="row">
                     <div class="col-md-6">
-                        <h4>Task Overview</h4>
+                        <h4>Tasks Overview</h4>
                         <h6>In Progress <b><span class="text-success">
                                     {{ round($users_tasks->where('status','completed')->count() > 0 ?
                                     ($users_tasks->where('status','completed')->count() / $users_tasks->count()) * 100 :
