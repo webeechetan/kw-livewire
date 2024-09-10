@@ -31,7 +31,7 @@ class Dashboard extends Component
             unset($tour['main_tour']);
             session()->put('tour',$tour);
         }
-        $this->getRecentComments();
+        $this->getRecentComments(); 
     }
 
     // nearest due date and more pending tasks are most important projects

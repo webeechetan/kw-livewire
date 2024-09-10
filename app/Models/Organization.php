@@ -22,6 +22,8 @@ class Organization extends Authenticatable
 {
     use HasFactory, Notifiable, HasRoles;
 
+    protected $hidden = ['password'];
+
     public function clients(){
         return $this->hasMany(Client::class, 'org_id');
     }

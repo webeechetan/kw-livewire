@@ -98,14 +98,18 @@
                                 <x-avatar :user="$project" />
                             </div>
                             <div class="col">
-                                <h5 class="mb-1">{{ $project->name }}</h5>
+                                <h5 class="mb-1">
+                                    <a href="{{ route('project.profile', $project->id) }}" wire:navigate>
+                                    {{ $project->name }}
+                                    </a>
+                                </h5>
                                 <div>{{ $project->client->name}}</div>
                             </div>
                         </div>
                         <div class="d-flex gap-2 mt-4">
                             @if($project->teams)
                             @foreach($project->teams as $team)
-                            <a href="#" class="btn btn-success rounded-pill btn-xs text-uppercase">{{$team->name}}</a>
+                            <a href="{{ route('team.profile', $team->id) }}" wire:navigate class="btn btn-success rounded-pill btn-xs text-uppercase">{{$team->name}}</a>
                             @endforeach
                             @endif
                         </div>
@@ -236,15 +240,16 @@
                                 @foreach($users_tasks->where('due_date', '>', now())->take(10) as $task)
                                 <div class="taskList scrollbar">
                                     <div style="height: 307px;">
-                                        <div class="taskList_row edit-task" data-id="1" wire:key="task-row-1">
+                                        <div class="taskList_row">
                                             <div class="row">
                                                 <div class="col">
                                                     <div class="taskList_col taskList_col_title">
-                                                        <div class="taskList_col_title_open edit-task" data-id="1"><i
-                                                                class="bx bx-chevron-right"></i></div>
-                                                        <div class="edit-task" data-id="1">
-                                                            <div>{{$task->name}}</div>
+                                                        <div class="taskList_col_title_open" ><i
+                                                                class="bx bx-chevron-right"></i>
                                                         </div>
+                                                        <a href="{{ route('task.view', $task->id) }}">
+                                                            <div>{{$task->name}}</div>
+                                                        </a>
                                                     </div>
                                                 </div>
                                                 <div class="col-auto">
@@ -263,15 +268,16 @@
                             <div class="tab-pane fade overflow-y scrollbar scrollbar-primary" id="pills-overdue" role="tabpanel"
                                 aria-labelledby="pills-overdue-tab" tabindex="0">
                                 @foreach($users_tasks->where('due_date', '<', now())->where('status','!=','completed')->take(10) as $task)
-                                    <div class="taskList_row edit-task" data-id="1" wire:key="task-row-1">
+                                    <div class="taskList_row " >
                                         <div class="row">
                                             <div class="col">
                                                 <div class="taskList_col taskList_col_title">
-                                                    <div class="taskList_col_title_open edit-task" data-id="1"><i
-                                                            class="bx bx-chevron-right"></i></div>
-                                                    <div class="edit-task" data-id="1">
-                                                        <div>{{ $task->name }}</div>
+                                                    <div class="taskList_col_title_open">
+                                                        <i class="bx bx-chevron-right"></i>
                                                     </div>
+                                                    <a href="{{ route('task.view', $task->id) }}">
+                                                        <div>{{$task->name}}</div>
+                                                    </a>
                                                 </div>
                                             </div>
                                             <div class="col-auto">
@@ -305,8 +311,15 @@
                             <x-avatar :user="$comment->user" />
                         </div>
                         <div class="cmnt_item_user_name-wrap">
-                            <div class="cmnt_item_user_name">{{ $comment->user->name }}</div>
+                            <div class="cmnt_item_user_name">
+                                <a href="{{ route('user.profile', $comment->user->id) }}">{{ $comment->user->name }}</a>
+                            </div>
                             <div class="cmnt_item_date">{{ \Carbon\Carbon::parse($comment->created_at)->diffForHumans() }}</div>
+                            <div>
+                                <a href="{{ route('task.view', $comment->task_id) }}" class="cmnt_item_task"> <b>On:</b>
+                                    {{ $comment->task->name }}
+                                </a>
+                            </div>
                             <div class="cmnt_item_user_text">{!! $comment->comment !!}</div>
                         </div>
                     </div>

@@ -168,11 +168,21 @@
                                 <div class="taskList_col"><span>{{ \Carbon\Carbon::parse($task->created_at)->format('d M Y') }}</span></div>
                             </div>
                             <div class="col text-center">
-                                <div class="taskList_col"><span class="btn-batch @if ($task->due_date < \Carbon\Carbon::now())  btn-batch btn-batch-danger @endif"> @if($task->due_date)
-                                    {{ Carbon\Carbon::parse($task->due_date)->format('d M Y') }}
-                                @else
-                                    No Due Date
-                                @endif</span></div>
+                                <div class="taskList_col">
+                                    <span class="btn-batch ]
+                                    @if ($task->status == 'completed') 
+                                        btn-batch-success
+                                    @elseif ($task->due_date < \Carbon\Carbon::now())  
+                                        btn-batch btn-batch-danger 
+                                    @endif
+                                    "> 
+                                        @if($task->due_date)
+                                            {{ Carbon\Carbon::parse($task->due_date)->format('d M Y') }}
+                                        @else
+                                            No Due Date
+                                        @endif
+                                    </span>
+                                </div>
                             </div>
                             <div class="col text-center">
                                 <div class="taskList_col"><span>{{ $project->name }}</span></div>
@@ -217,8 +227,8 @@
                                     @elseif ($task->status == 'in_progress') btn-batch-secondary 
                                     @elseif ($task->status == 'in_review') btn-batch-warning 
                                     @elseif ($task->status == 'completed') btn-batch-success
-                                    @endif"
-                                >
+                                    @endif
+                                    ">
                                     @if($task->status == 'pending')
                                         Assigned
                                     @elseif($task->status == 'in_progress')

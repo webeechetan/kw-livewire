@@ -96,12 +96,15 @@
                         <span class="align-middle">My Profile</span>
                       </a>
                     </li>
-                    <!-- <li>
-                      <a class="dropdown-item align-items-center" href="#">
+                    {{-- check role is admin --}}
+                    @role('Admin')
+                    <li>
+                      <a class="dropdown-item align-items-center" wire:navigate href="{{ route('organization.profile') }}">
                         <i class="bx bx-cog me-2"></i>
                         <span class="align-middle">Settings</span>
                       </a>
-                    </li> -->
+                    </li> 
+                    @endrole
                     <li>
                       <a class="dropdown-item align-items-center text-danger" href="{{route('logout')}}" >
                         <i class="bx bx-power-off me-2"></i>
