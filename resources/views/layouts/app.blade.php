@@ -61,7 +61,9 @@
             <div class="collapse navbar-collapse justify-content-end" id="responsive-navbar-nav">
               <ul class="navbar-nav align-items-center">  
                 <li class="nav-item">
-                  <a class="nav-link" wire:navigate href="{{ route('task.index') }}" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip" data-bs-title="My Tasks"><i class='bx bx-task'></i></a>
+                  <a class="nav-link" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight">
+                    <img src="{{ asset('') }}img/create-task-icon.png" alt="Task Icon" class="text-primary" height="20" width="20" />
+                  </a>
                 </li>              
                 <!-- Message -->
                 <!-- <livewire:messages.message /> -->
@@ -177,6 +179,7 @@
         <p class="alert alert-warning" wire:offline> Whoops, your device has lost connection. The web page you are viewing is offline. </p>
       </div>
     </div>
+    <livewire:components.add-task @saved="$refresh"  />
     {{-- <livewire:components.voice-control /> --}}
     
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
