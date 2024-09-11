@@ -196,26 +196,6 @@
 @push('scripts')
     <script>
 
-        // cpoy sharable link
-        // if(typeof task === 'undefined'){
-        //     var task = null;
-        // }else{
-        //     var task = task;
-        // }
-
-        // $('.task-sharable-link').on('click', function(){
-        //     var id = $wire.task.id;
-
-        //     console.log(id);
-        //     var url = "{{ env('APP_URL') }}/task/"+id;
-        //     navigator.clipboard.writeText(url).then(function() {
-        //         console.log('Async: Copying to clipboard was successful!');
-        //         toastr.success('Task sharbable link copied to clipboard');
-        //     }, function(err) {
-        //         console.error('Async: Could not copy text: ', err);
-        //     });
-        // });
-
         // clear all fields when offcanvas is closed or dismissed 
 
         $(".bx-arrow-to-right").click(function(){

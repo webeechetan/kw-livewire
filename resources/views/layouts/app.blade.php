@@ -59,7 +59,10 @@
               <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse justify-content-end" id="responsive-navbar-nav">
-              <ul class="navbar-nav align-items-center">                
+              <ul class="navbar-nav align-items-center">  
+                <li class="nav-item">
+                  <a class="nav-link" wire:navigate href="{{ route('task.index') }}" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip" data-bs-title="My Tasks"><i class='bx bx-task'></i></a>
+                </li>              
                 <!-- Message -->
                 <!-- <livewire:messages.message /> -->
                 
@@ -160,7 +163,7 @@
                            
                         @endcan                      
                         @can('View Task')
-                          <li @if(isset($tour['main_tour'])) data-step="5" data-position='right' data-intro='Create your first task' @endif><a wire:navigate href="{{ route('task.index') }}" class="@if (request()->segment(2)== 'tasks' || request()->segment(2) == 'task') active @endif"><i class='bx bx-task' ></i> Tasks</a></li>
+                          <li @if(isset($tour['main_tour'])) data-step="5" data-position='right' data-intro='Create your first task' @endif><a wire:navigate href="{{ route('task.index') }}" class="@if (request()->segment(2)== 'tasks' || request()->segment(2) == 'task') active @endif"><i class='bx bx-task' ></i> My Tasks</a></li>
                         @endcan
                 </ul>
             </div>

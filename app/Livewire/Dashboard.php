@@ -6,6 +6,7 @@ use Livewire\Component;
 use App\Models\Project;
 use App\Models\Task;
 use App\Models\Comment;
+use App\Models\Pin;
 use Illuminate\Support\Facades\Auth;
 
 class Dashboard extends Component
@@ -15,6 +16,7 @@ class Dashboard extends Component
     public $users_tasks = [];
     public $active_projects = [];
     public $recent_comments = [];
+    public $myPins = [];
 
     public function render()
     {
@@ -31,7 +33,8 @@ class Dashboard extends Component
             unset($tour['main_tour']);
             session()->put('tour',$tour);
         }
-        $this->getRecentComments(); 
+        $this->getRecentComments();
+        $this->myPins = Pin::where('user_id',Auth::id())->get(); 
     }
 
     // nearest due date and more pending tasks are most important projects
