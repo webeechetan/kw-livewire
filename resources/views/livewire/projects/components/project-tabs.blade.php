@@ -18,6 +18,7 @@
             </div>
             <div class="text-end col">
                 <div class="main-body-header-right">
+                    <livewire:components.pin-button pinnable_type="App\Models\Project"  :pinnable_id="$project->id" />
                     @can('Edit Project')
                     <!-- Edit -->
                     <div class="cus_dropdown">

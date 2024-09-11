@@ -282,7 +282,7 @@
 
             $('.task-sharable-link').on('click', function(){
                 var id = $(this).data('id');
-                var url = "{{ env('APP_URL') }}/task/"+id;
+                var url = "{{ env('APP_URL') }}" + "/{{ session('org_name') }}" + "/task/view/" + id;
                 navigator.clipboard.writeText(url).then(function() {
                     console.log('Async: Copying to clipboard was successful!');
                     toastr.success('Task sharbable link copied to clipboard');

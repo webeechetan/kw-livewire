@@ -38,7 +38,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <h4>Tasks Overview</h4>
-                        <h6>In Progress <b><span class="text-success">
+                        <h6>Completed  <b><span class="text-success">
                                     {{ round($users_tasks->where('status','completed')->count() > 0 ?
                                     ($users_tasks->where('status','completed')->count() / $users_tasks->count()) * 100 :
                                     0)}}%
@@ -86,6 +86,9 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <div class="row">
         <div class="col-md-4 mt-4">
             <div class="box-item h-100">
                 <h4>Important Projects</h4>
@@ -328,6 +331,58 @@
             </div>
         </div>
     </div>
+
+    {{-- pins --}}
+    @if($myPins->count() > 0)
+        <div class="row mt-4">
+            <div class="col">
+                <h4>Pinned Projects</h4>
+            </div>
+        </div>
+        <div class="row">
+            @foreach($myPins as $pin)
+                @php
+                    $project = $pin->pinnable;
+                @endphp
+                <div class="col-md-4 mt-4">
+                    <div class="card_style h-100">
+                        <a href="{{ route('project.profile', $pin->pinnable_id) }}" class="card_style-open">
+                            <i class="bx bx-chevron-right"></i>
+                        </a>
+                        <div class="card_style-project-head">
+                            <div class="card_style-project-head-client"><span><i class="bx bx-briefcase-alt-2"></i></span> {{ $pin->pinnable->client?->name }}</div>
+                            <h4>
+                                <a href="{{ route('project.profile', $pin->pinnable_id) }}" wire:navigate>{{ $pin->pinnable->name }}</a>
+                            </h4>
+                            <livewire:components.pin-button pinnable_type="App\Models\Project"  :pinnable_id="$project->id" />
+                        </div>
+                        <div class="card_style-project-body mt-3">
+                            <div class="task_progress mt-3">
+                                <div class="task_progress-btm">
+                                    <div class="task_progress-btm-date d-flex justify-content-between">
+                                        <div><i class='bx bx-calendar' ></i> 
+                                            @if($project->start_date)
+                                                {{ \Carbon\Carbon::parse($project->start_date)->format('d M') }}
+                                            @else
+                                                No Start Date
+                                            @endif
+                                        </div>
+                                        <div class="text-danger"><i class='bx bx-calendar' ></i> 
+                                            @if($project->due_date)
+                                                {{ \Carbon\Carbon::parse($project->due_date)->format('d M') }}
+                                            @else
+                                                No Due Date
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    @endif
 </div>
 @php
     $tour = session()->get('tour');
