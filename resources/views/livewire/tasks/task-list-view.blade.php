@@ -308,7 +308,7 @@
         </div>
     </div>
 
-    <livewire:components.add-task @saved="$refresh"  />
+    {{-- <livewire:components.add-task @saved="$refresh"  /> --}}
 </div>
 
 @script

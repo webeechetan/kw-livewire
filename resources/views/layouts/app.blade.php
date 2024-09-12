@@ -179,7 +179,9 @@
         <p class="alert alert-warning" wire:offline> Whoops, your device has lost connection. The web page you are viewing is offline. </p>
       </div>
     </div>
-    <livewire:components.add-task @saved="$refresh"  />
+    @if(!request()->routeIs('project.tasks'))
+      <livewire:components.add-task @saved="$refresh"  />
+    @endif
     {{-- <livewire:components.voice-control /> --}}
     
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
