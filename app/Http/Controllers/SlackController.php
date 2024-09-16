@@ -60,8 +60,26 @@ class SlackController extends Controller
 
         $channels = $response->json()['channels'];
 
-        dd($channels);
+        return view('select-slack-channel', compact('channels'));
+    }
 
-        return view('admin.select-slack-channel', compact('channels'));
+    public function saveChannel(Request $request)
+    {
+        $org = Organization::find(session('org_id'));
+        $org->slack_channel_id = $request->input('channel_id');
+        $org->save();
+
+        return redirect()->back()->with('success', 'Slack channel updated successfully.');
+    }
+
+    public function sendMessage()
+    {
+        $org = Organization::find(session('org_id'));
+        $response = Http::withToken($org->slack_access_token)->post('https://slack.com/api/chat.postMessage', [
+            'channel' => $org->slack_channel_id,
+            'text' => 'Hello from Kaykewalk!',
+        ]);
+
+        return redirect()->back()->with('success', 'Message sent successfully.');
     }
 }

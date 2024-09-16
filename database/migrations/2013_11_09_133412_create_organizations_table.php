@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('color')->default('#000000');
             $table->text('slack_access_token')->nullable();
             $table->string('slack_team_id')->nullable();
+            $table->string('slack_channel_id')->nullable();
             $table->timestamps();
         });
     }

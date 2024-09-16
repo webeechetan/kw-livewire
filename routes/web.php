@@ -85,6 +85,10 @@ Route::get('/get-slack-o-auth-token', [SlackController::class, 'handleSlackCallb
 
 Route::get('/admin/slack/channels', [SlackController::class, 'listChannels'])->name('admin.slack.channels');
 
+Route::post('/admin/slack/save-channel', [SlackController::class, 'saveChannel'])->name('admin.slack.save-channel');
+
+Route::get('/slack/send-message', [SlackController::class, 'sendMessage'])->name('admin.slack.send-message');
+
 
 Route::get('/',Login::class);
 Route::get('/login',Login::class)->name('login');
