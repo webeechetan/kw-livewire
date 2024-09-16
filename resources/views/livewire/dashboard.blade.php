@@ -350,7 +350,7 @@
                             <i class="bx bx-chevron-right"></i>
                         </a>
                         <div class="card_style-project-head">
-                            <div class="card_style-project-head-client"><span><i class="bx bx-briefcase-alt-2"></i></span> {{ $pin->pinnable->client?->name }}</div>
+                            <div class="card_style-project-head-client"><span><i class="bx bx-briefcase-alt-2"></i></span> {{ $pin->pinnable?->client?->name }}</div>
                             <h4>
                                 <a href="{{ route('project.profile', $pin->pinnable_id) }}" wire:navigate>{{ $pin->pinnable->name }}</a>
                             </h4>
