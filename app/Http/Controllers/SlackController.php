@@ -69,17 +69,21 @@ class SlackController extends Controller
         $org->slack_channel_id = $request->input('channel_id');
         $org->save();
 
-        return redirect()->back()->with('success', 'Slack channel updated successfully.');
+        return redirect()->route('organization.profile')->with('success', 'Slack integration has been successfully set up.');
     }
 
     public function sendMessage()
     {
         $org = Organization::find(session('org_id'));
-        $response = Http::withToken($org->slack_access_token)->post('https://slack.com/api/chat.postMessage', [
-            'channel' => $org->slack_channel_id,
-            'text' => 'Hello from Kaykewalk!',
-        ]);
+        $slackAccessToken = $org->slack_access_token;
+        $slackChannelId = $org->slack_channel_id;
 
-        return redirect()->back()->with('success', 'Message sent successfully.');
+        $message = "Task has been completed.";
+
+        // Send the message to Slack
+        Http::withToken($slackAccessToken)->post('https://slack.com/api/chat.postMessage', [
+            'channel' => $slackChannelId,
+            'text' => $message,
+        ]);
     }
 }

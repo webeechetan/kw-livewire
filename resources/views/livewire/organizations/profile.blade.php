@@ -32,7 +32,11 @@
                     </div>
                     <div class="col">
                         <div class="main-body-header-right">
-                            <a href="{{ route('admin.slack.connect') }}" class="btn btn-primary">Connect Slack</a>
+                            @if(Auth::user()->organization->slack_access_token)
+                                <a href="" class="btn btn-success">Connected with Slack</a>
+                            @else
+                                <a href="{{ route('admin.slack.connect') }}" class="btn btn-primary">Connect Slack</a>
+                            @endif
                         </div>
                     </div>
                 </div>                    

@@ -211,6 +211,7 @@ Route::group(
     */
 
     Route::get('/organization/profile',OrganizationProfile::class)->name('organization.profile');
+    // Route::get('/organization/slack/channels',OrganizationProfile::class)->name('organization.slack');
 
 
     /*

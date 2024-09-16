@@ -106,7 +106,7 @@
                                     {{ $project->name }}
                                     </a>
                                 </h5>
-                                <div>{{ $project->client->name}}</div>
+                                <div>{{ $project->client?->name}}</div>
                             </div>
                         </div>
                         <div class="d-flex gap-2 mt-4">
