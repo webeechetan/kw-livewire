@@ -64,6 +64,7 @@ use App\Helpers\Helper;
 use Livewire\Livewire;
 
 use App\Livewire\Organizations\Profile as OrganizationProfile;
+use App\Http\Controllers\SlackController;
 
 /*
 |--------------------------------------------------------------------------
@@ -75,6 +76,14 @@ use App\Livewire\Organizations\Profile as OrganizationProfile;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+// https://localhost:8000/
+
+Route::get('/admin/slack/connect', [SlackController::class, 'redirectToSlack'])->name('admin.slack.connect');
+
+Route::get('/get-slack-o-auth-token', [SlackController::class, 'handleSlackCallback'])->name('admin.slack.callback');
+
+Route::get('/admin/slack/channels', [SlackController::class, 'listChannels'])->name('admin.slack.channels');
 
 
 Route::get('/',Login::class);

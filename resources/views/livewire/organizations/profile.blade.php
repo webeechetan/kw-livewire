@@ -32,7 +32,7 @@
                     </div>
                     <div class="col">
                         <div class="main-body-header-right">
-                           
+                            <a href="{{ route('admin.slack.connect') }}" class="btn btn-primary">Connect Slack</a>
                         </div>
                     </div>
                 </div>                    
