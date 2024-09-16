@@ -206,7 +206,7 @@
                             <div class="cmnt_item_row">
                                 <div class="cmnt_item_user">
                                     <div class="cmnt_item_user_img">
-                                        <img class="rounded-circle" src="{{ env('APP_URL') }}/storage/images/users/Chetan%20Singh.png">
+                                        <x-avatar :user="auth()->user()" />
                                     </div>
                                     <div class="cmnt_item_user_name-wrap">
                                         <div class="custComment">
@@ -305,11 +305,10 @@
                             return '<span class="mention_user" data-id=" ' + users[users_for_mention.indexOf(item)].id + ' ">' + item + '</span>';
                         },
                         content: function (item) {
-                            item = item.replace(/\s/g, '_');
-                            let span = document.createElement('span');
-                            $(span).addClass('mention_user');
-                            $(span).text(' '+'@' + item + ' ');
-                            return span;
+                            let a = document.createElement('a');
+                            a.href =  "{{ env('APP_URL') }}/" + "{{ session('org_name') }}" +'/user/view/' + users[users_for_mention.indexOf(item)].id;
+                            a.innerText = '@' + item;
+                            return a;
                         },    
                     },
                     toolbar: [
@@ -340,11 +339,10 @@
                             return '<span class="mention_user" data-id=" ' + users[users_for_mention.indexOf(item)].id + ' ">' + item + '</span>';
                         },
                         content: function (item) {
-                            item = item.replace(/\s/g, '_');
-                            let span = document.createElement('span');
-                            $(span).addClass('mention_user');
-                            $(span).text(' '+'@' + item + ' ');
-                            return span;
+                            let a = document.createElement('a');
+                            a.href =  "{{ env('APP_URL') }}/" + "{{ session('org_name') }}" +'/user/view/' + users[users_for_mention.indexOf(item)].id;
+                            a.innerText = '@' + item;
+                            return a;
                         },    
                     },
                     toolbar: [
@@ -375,11 +373,10 @@
                             return '<span class="mention_user" data-id=" ' + users[users_for_mention.indexOf(item)].id + ' ">' + item + '</span>';
                         },
                         content: function (item) {
-                            item = item.replace(/\s/g, '_');
-                            let span = document.createElement('span');
-                            $(span).addClass('mention_user');
-                            $(span).text(' '+'@' + item + ' ');
-                            return span;
+                            let a = document.createElement('a');
+                            a.href =  "{{ env('APP_URL') }}/" + "{{ session('org_name') }}" +'/user/view/' + users[users_for_mention.indexOf(item)].id;
+                            a.innerText = '@' + item;
+                            return a;
                         },    
                     },
                 toolbar: [

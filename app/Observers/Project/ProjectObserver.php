@@ -34,6 +34,9 @@ class ProjectObserver
             return false;
         }
     
+        if($project->isDirty('client_id')){
+            return false;
+        }
 
         $original = $project->getOriginal();
         $updated = $project->getAttributes();

@@ -56,6 +56,16 @@ class TaskObserver
                 $notification->url = route('task.view', ['task' => $task->id]);
                 $notification->save();
             }
+
+            $activity = new Activity();
+            $activity->org_id = $task->org_id;
+            $activity_text = auth()->guard(session('guard'))->user()->name.' changed the status of task '.$task->name .' from '.$oldStatus.' to '.$newStatus;
+            $activity->text = $activity_text;
+            $activity->activityable_id = $task->project_id;
+            $activity->activityable_type = 'App\Models\Project';
+            $activity->created_by = auth()->guard(session('guard'))->user()->id;
+            $activity->save();
+            
         }
     }
 

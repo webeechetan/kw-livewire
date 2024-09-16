@@ -259,14 +259,15 @@
                             }));
                         },
                         template : function (item) {
-                            return '<span class="mention_user" data-id=" ' + users[users_for_mention.indexOf(item)].id + ' ">' + item + '</span>';
+                            return '<span class="mention_users_list" data-id=" ' + users[users_for_mention.indexOf(item)].id + ' ">' + item + '</span>';
                         },
                         content: function (item) {
-                            item = item.replace(/\s/g, '_');
-                            let span = document.createElement('b');
-                            $(span).addClass('mention_user');
-                            $(span).text(' '+'@' + item + ' ');
-                            return span;
+                            let a = document.createElement('a');
+                            a.href =  "{{ env('APP_URL') }}/" + "{{ session('org_name') }}" +'/user/view/' + users[users_for_mention.indexOf(item)].id;
+                            a.innerText = '@' + item;
+                            a.dataset.id = users[users_for_mention.indexOf(item)].id;
+                            return a;
+                            
                         },    
                     },
                     toolbar: [
@@ -295,11 +296,11 @@
                             return '<span class="mention_user" data-id=" ' + users[users_for_mention.indexOf(item)].id + ' ">' + item + '</span>';
                         },
                         content: function (item) {
-                            item = item.replace(/\s/g, '_');
-                            let span = document.createElement('span');
-                            $(span).addClass('mention_user');
-                            $(span).text(' '+'@' + item + ' ');
-                            return span;
+                            let a = document.createElement('a');
+                            a.href =  "{{ env('APP_URL') }}/" + "{{ session('org_name') }}" +'/user/view/' + users[users_for_mention.indexOf(item)].id;
+                            a.innerText = '@' + item;
+                            a.dataset.id = users[users_for_mention.indexOf(item)].id;
+                            return a;
                         },    
                     },
                     toolbar: [
@@ -328,11 +329,11 @@
                             return '<span class="mention_user" data-id=" ' + users[users_for_mention.indexOf(item)].id + ' ">' + item + '</span>';
                         },
                         content: function (item) {
-                            item = item.replace(/\s/g, '_');
-                            let span = document.createElement('span');
-                            $(span).addClass('mention_user');
-                            $(span).text(' '+'@' + item + ' ');
-                            return span;
+                            let a = document.createElement('a');
+                            a.href =  "{{ env('APP_URL') }}/" + "{{ session('org_name') }}" +'/user/view/' + users[users_for_mention.indexOf(item)].id;
+                            a.innerText = '@' + item;
+                            a.dataset.id = users[users_for_mention.indexOf(item)].id;
+                            return a;
                         },    
                     },
                     toolbar: [
