@@ -220,7 +220,7 @@
                                 
                             @endphp
                             <div wire:loading.class="opacity-25" class="kanban_column_task {{ $date_class }}" wire:key="task-{{$task['id']}}" wire:sortable-group.item="{{ $task['id'] }}" >
-                                <div wire:loading.delay.longest wire:target="emitEditTaskEvent({{ $task['id'] }})" class="card_style-loader">
+                                <div wire:loading wire:target="emitEditTaskEvent({{ $task['id'] }})" class="card_style-loader">
                                     <div class="card_style-loader-wrap"><i class='bx bx-pencil text-primary me-2' ></i> Loading ...</div>
                                 </div> 
                                 <div class="kanban_column_task-wrap" wire:sortable-group.handle>

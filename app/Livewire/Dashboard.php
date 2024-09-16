@@ -40,7 +40,11 @@ class Dashboard extends Component
     // nearest due date and more pending tasks are most important projects
 
     public function getMostImportantProjects(){
-        $projects = Project::where('status','!=','completed')->orderBy('due_date','asc')->limit(10)->get();
+        if(Auth::user()->hasRole('Admin')){
+            $projects = Project::where('status','!=','completed')->orderBy('due_date','asc')->limit(10)->get();
+        }else{
+            $projects = Auth::user()->projects->where('status','!=','completed')->sortBy('due_date')->take(10);
+        }
         
         $mostImportantProjects = [];
 

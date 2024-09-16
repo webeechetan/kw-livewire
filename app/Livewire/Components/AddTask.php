@@ -126,6 +126,7 @@ class AddTask extends Component
         $this->attachments = [];
         $this->dispatch('success', 'Task added successfully');
         $this->dispatch('saved','Task saved successfully');
+        $this->dispatch('task-added',$task);
     }
 
     public function saveComment($type = 'internal'){

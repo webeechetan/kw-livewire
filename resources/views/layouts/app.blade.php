@@ -84,7 +84,7 @@
                   <ul class="dropdown-menu dropdown-menu-end dropdown-account" data-bs-popper="static">
                    <li>
                     <div class="d-flex p-3">
-                      <div class="avatar avatar-{{$user->color}}">{{$user->initials}}</div>
+                      <x-avatar :user="$user" />
                       <div class="flex-grow-1 ps-2">
                           <span class="fw-medium d-block">{{$user->name}}</span>
                           <span class="text-muted">

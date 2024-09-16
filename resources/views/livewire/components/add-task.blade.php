@@ -202,7 +202,7 @@
             location.reload();
         });
 
-        $('#offcanvasRight').on('hidden.bs.offcanvas', function () {
+        function resetTaskCanvas(){
             $(".taskPane").trigger('reset');
             $(".task-users").val(null).trigger('change');
             $(".task-notify-users").val(null).trigger('change');
@@ -223,6 +223,15 @@
             $('.taskPane-heading-label').html('Add Task');
             $('.save-task-button').html('Save Task');
             @this.set('task', null);
+        }
+
+        $('#offcanvasRight').on('hidden.bs.offcanvas', function () {
+            resetTaskCanvas();
+        });
+
+        document.addEventListener('task-added', event => {
+            $('#offcanvasRight').offcanvas('hide');
+            resetTaskCanvas();
         });
 
 
@@ -498,8 +507,10 @@
             });
 
             // comment-added 
+            if (!window.hasAddedCommentListener) {
 
             document.addEventListener('comment-added', event => {
+
                 const date = new Date(event.detail[0].created_at);
                 const options = { day: 'numeric', month: 'long', year: 'numeric' };
                 const formattedDate = date.toLocaleDateString('en-GB', options);
@@ -533,7 +544,11 @@
 
                 $(".total-comments").html(parseInt($(".total-comments").html()) + 1);
 
+
             });
+                // Mark that the listener is added
+                window.hasAddedCommentListener = true;
+            }
             
 
     </script>
