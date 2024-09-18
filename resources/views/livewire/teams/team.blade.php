@@ -118,7 +118,7 @@
             <!-- Teams -->
             <div class="avatarGroup">
                @foreach($team->users as  $user)
-                  <x-avatar :user="$user" />
+                  <x-avatar :user="$user" /> 
                @endforeach
             </div>
          </div>

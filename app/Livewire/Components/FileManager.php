@@ -7,8 +7,6 @@ use Illuminate\Support\Facades\Storage;
 use Livewire\WithFileUploads;
 use File;
 use App\Models\Link;
-use OpenGraph;
-use stdClass;
 
 class FileManager extends Component
 {
@@ -85,8 +83,7 @@ class FileManager extends Component
         $this->main_directory_directories_count = count(Storage::directories($this->path));
     }
 
-    public function getMedia($path)
-    {
+    public function getMedia($path){
         $this->files = [];
         $this->directories = [];
 
