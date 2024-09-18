@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Storage;
 use Livewire\WithFileUploads;
 use File;
 use App\Models\Link;
+use Illuminate\Support\Facades\Validator;
 
 class FileManager extends Component
 {
@@ -141,9 +142,22 @@ class FileManager extends Component
     }
 
     public function addNewFile(){
-        $this->validate([
-            'new_file' => 'required',
-        ]); 
+        $rules = [
+            'new_file' => 'required|max:51200',
+        ];
+
+        $messages = [
+            'new_file.required' => 'Please select a file to upload',
+            'new_file.max' => 'File size should not exceed 50MB',
+        ];
+
+        $res = Validator::make(['new_file' => $this->new_file], $rules, $messages);
+
+        if($res->fails()){
+            $this->dispatch('error', $res->errors()->first());
+            return;
+        }
+
         if($this->new_file_name == ''){
             $this->new_file_name = $this->new_file->getClientOriginalName();
         }else{

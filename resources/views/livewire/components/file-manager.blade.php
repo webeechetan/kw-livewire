@@ -181,7 +181,8 @@
                                             <div class="form-file_upload-box-icon"><i class='bx bx-image'></i></div>
                                             <div class="form-file_upload-box-text">Add File</div>
                                         </div>
-                                        <div class="form-file_upload-valText">Allowed *.jpeg, *.jpg, *.png, *.gif max size of 3 Mb</div>
+                                        <div class="form-file_upload-valText">Allowed *.jpeg, *.jpg, *.png, *.gif max size of 50 Mb</div>
+                                        @error('new_file') <span class="text-danger">{{ $message }}</span> @enderror
                                         <div class="add-file-input-responce"></div>
                                     </div>
                                     <div class="mt-4 d-none upload-progress">
