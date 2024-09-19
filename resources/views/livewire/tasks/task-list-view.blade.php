@@ -222,7 +222,9 @@
                     $hasTasks = true;
                 @endphp
                     @foreach($tasks[$group] as $task)
-
+                    @if(!$task->project)
+                        @continue
+                    @endif
                   
 
                         <div class="taskList_row edit-task" data-id="{{ $task->id }}"  wire:key="task-row-{{ $task->id }}">
