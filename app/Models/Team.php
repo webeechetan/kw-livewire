@@ -9,6 +9,7 @@ use App\Models\Task;
 use App\Models\Project;
 use App\Models\Client;
 use App\Models\Scopes\OrganizationScope;
+use App\Models\Scopes\MainClientScope;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 use PDO;
@@ -44,7 +45,9 @@ class Team extends Model
 
     public function getClientsAttribute(){
         $projects = $this->projects->pluck('id')->toArray(); 
-        return Client::whereIn('id', $projects)->get();
+        $projects = array_unique($projects);
+        return Client::withoutGlobalScope(MainClientScope::class)->whereIn('id', $projects)->get();
+
     }
 
     public function getTasksAttribute(){

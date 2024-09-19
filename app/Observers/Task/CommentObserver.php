@@ -15,6 +15,9 @@ class CommentObserver
         $users = $task->users;
         $taskUrl = env('APP_URL').'/'.session('org_name').'/task/view/'.$task->id;
         $users->each(function($user) use ($comment, $task, $taskUrl){
+            if($user->id == auth()->guard(session('guard'))->user()->id){
+                return;
+            }
             $user->notify(new NewCommentNotification($comment,$task,$taskUrl));
             $notification = new Notification();
             $notification->user_id = $user->id;

@@ -7,6 +7,7 @@ use App\Models\ { Project, Task, User, Attachment, Comment, Client, Notification
 use Livewire\WithFileUploads;
 use App\Notifications\NewTaskAssignNotification;
 use App\Notifications\UserMentionNotification;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Js;
 
 class AddTask extends Component
@@ -111,6 +112,9 @@ class AddTask extends Component
         $taskUrl = env('APP_URL').'/'.session('org_name').'/task/view/'.$task->id;
         if($this->task_users){
             foreach($this->task_users as $user_id){
+                if($user_id == Auth::user()->id){
+                    continue;
+                }
                 $user = User::find($user_id);
                 $user->notify(new NewTaskAssignNotification($task,$taskUrl));
                 $notification = new Notification();
@@ -171,6 +175,7 @@ class AddTask extends Component
         $this->task_notifiers = $this->task->notifiers->pluck('id')->toArray();
         $this->comments = $this->task->comments;
         $this->status = $this->task->status;
+        $this->project_id = $this->task->project_id;
         $this->dispatch('edit-task',$this->task);
     }
 
@@ -178,10 +183,26 @@ class AddTask extends Component
         $this->validate([
             'name' => 'required',
         ]);
+        $validation_error_message = '';
+
+        if(!$this->name){
+            $validation_error_message .= 'Name is required. ';
+        }
+
+        if(!$this->project_id){
+            $validation_error_message .= 'Project is required. ';
+        }
+
+        if(!$this->name || !$this->project_id){
+            $this->dispatch('error',$validation_error_message);
+            return;
+        }
+
         $this->task->name = $this->name; 
         $this->task->description = $this->description;
         $this->task->due_date = $this->due_date;
         $this->task->status = $this->status;
+        $this->task->project_id = $this->project_id;
         $this->task->save();
         $this->task->users()->sync($this->task_users);
         $this->task->notifiers()->sync($this->task_notifiers);

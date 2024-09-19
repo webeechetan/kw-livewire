@@ -148,7 +148,7 @@
                                         {{ $project->tasks->where('status', 'pending')->where('due_date', '>', now())->count() }} Active
                                     </div>
                                     <div class="card_style-tasks-item card_style-tasks-item-overdue"><span><i class='bx bx-objects-horizontal-center' ></i></span> 
-                                        {{ $project->tasks->where('due_date', '<', now())->count() }} Overdue
+                                        {{ $project->tasks->where('due_date', '<', now())->where('status','!=','completed')->count() }} Overdue
                                     </div>
                                     <div class="card_style-tasks-item card_style-tasks-item-done"><span><i class='bx bx-objects-horizontal-center' ></i></span>
                                         {{ $project->tasks->where('status', 'completed')->count() }} Completed

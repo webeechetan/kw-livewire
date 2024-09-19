@@ -137,9 +137,6 @@
                         <div class="taskList-dashbaord_header_title taskList_col">Due Date</div>
                     </div>
                     <div class="col text-center">
-                        <div class="taskList-dashbaord_header_title taskList_col">Project</div>
-                    </div>
-                    <div class="col text-center">
                         <div class="taskList-dashbaord_header_title taskList_col">Assignee</div>
                     </div>
                     <div class="col text-center">
@@ -183,9 +180,6 @@
                                         @endif
                                     </span>
                                 </div>
-                            </div>
-                            <div class="col text-center">
-                                <div class="taskList_col"><span>{{ $project->name }}</span></div>
                             </div>
                             <div class="col text-center">
                                 <div class="taskList_col">

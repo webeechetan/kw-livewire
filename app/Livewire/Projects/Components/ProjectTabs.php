@@ -10,6 +10,8 @@ class ProjectTabs extends Component
     public $project;
     public $currentRoute;
 
+    protected $listeners = ['project-added' => 'refresh'];
+
     public function render()
     {
         $this->authorize('View Project');

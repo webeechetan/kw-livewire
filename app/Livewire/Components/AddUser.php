@@ -123,10 +123,10 @@ class AddUser extends Component
         $user->created_by = session('user')->id;
         // generate random password which contains one uppercase, one lowercase, one number and one special character
         $password = substr(str_shuffle('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()'),0,8);
-        
-        
         $user->password = Hash::make($password);
         $user->save();
+        $role = Role::where('org_id',session('org_id'))->where('name','Employee')->first();
+        $user->assignRole($role->id);
         $org = Organization::find(session('org_id'));
         $user->notify(new InviteUser($org,$password));
         $this->dispatch('saved');

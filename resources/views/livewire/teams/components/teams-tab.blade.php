@@ -27,6 +27,7 @@
                 </div>
                 <div class="text-end col">
                     <div class="main-body-header-right">
+                        @can('Edit Team')
                         <a href="#" class="btn-sm btn-border btn-border-success" wire:click="dispatchEditEvent({{$team->id}})" >
                             <span wire:loading wire:target="dispatchEditEvent">
                                 <i class='bx bx-loader-alt bx-spin'></i>
@@ -34,8 +35,9 @@
                             <i class='bx bx-pencil'></i>
                              Edit
                         </a>
+                        @endcan
                         <!-- Delete -->
-                        @can('Delete Client')
+                        @can('Delete Team')
                             <a href="#" class="btn-sm btn-border btn-border-danger" wire:click="forceDeleteTeam({{$team->id}})" wire:confirm="Are you sure you want to delete?"><i class='bx bx-trash'></i> Delete</a>
                         @endcan 
                     </div>

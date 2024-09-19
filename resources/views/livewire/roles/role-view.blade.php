@@ -191,6 +191,8 @@
             console.log('edit');
             $('.role-form-text').text('Edit Role');
             $('.role-form-btn').text('Update Role');
+            // dasable the input field
+            $('.role-name-input').attr('disabled', true);
             $('#add-role-modal').modal('show');
         });
 

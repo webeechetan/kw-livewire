@@ -160,7 +160,7 @@
                                 @php
                                     $client_text = 'Clients';
                                 @endphp
-
+ 
                                 @if($team->clients->count() > 1)
                                     @php
                                         $client_text = 'Clients';    

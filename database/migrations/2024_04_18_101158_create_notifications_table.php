@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreign('org_id')->references('id')->on('organizations')->onDelete('cascade');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->string('title');
+            $table->text('title');
             $table->text('message');
             $table->boolean('is_read')->default(false);
             $table->string('url')->nullable();
