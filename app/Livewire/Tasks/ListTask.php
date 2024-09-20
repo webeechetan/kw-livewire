@@ -185,7 +185,14 @@ class ListTask extends Component
                         )->take($this->perPage)->get(),
 
                 ];
-                $this->totalTasks = Task::tasksByUserType()->count();
+                if($this->doesAnyFilterApplied()){
+                    $this->totalTasks = $this->applySort(
+                        Task::tasksByUserType()
+                            ->where('name', 'like', '%' . $this->query . '%')
+                    )->count();
+                }else{
+                    $this->totalTasks = Task::tasksByUserType()->count();
+                }
             }
 
             
