@@ -361,7 +361,8 @@
 
             
 
-            setInterval(() => {
+            setTimeout(() => {
+                console.log('init plugins');
                 initPlugins();
             }, 1000);
 

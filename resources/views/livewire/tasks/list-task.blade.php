@@ -163,7 +163,7 @@
     @endif
 
     <!-- Kanban -->
-    <div class="kanban_bord">
+    <div class="kanban_bord" >
         <div class="kanban_bord_body_columns" wire:sortable-group="updateTaskOrder">
             @php
                 $groups = ['pending','in_progress','in_review','completed'];
@@ -276,17 +276,39 @@
                                     </div>
                                 </div>
                             </div>
-                        @endforeach
+                            @endforeach
+                            <div class="text-center">
+                                <a href="javascript:;" class="" wire:click="loadMore">
+                                    <i class="bx bx-down-arrow-alt"></i>
+                                    <span wire:loading wire:target="loadMore" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                </a>
+                            </div>
+                        </div>
                     </div>
-                </div>
             @endforeach
+            
         </div>
     </div>
-    {{-- <livewire:components.add-task @saved="$refresh"  /> --}}
 </div>
 
 @script
 <script>
+
+   
+    // trigger @this.loadMore() when scroll to bottom
+
+    // setTimeout(function(){
+    //     console.log('timeout');
+    //     window.addEventListener('scroll', function(){
+    //         console.log('scroll to bottom');
+    //         if(window.scrollY + window.innerHeight >= document.body.scrollHeight){
+    //             @this.loadMore();
+    //         }
+    //         console.log(window.scrollY + window.innerHeight, document.body.scrollHeight);
+    //     }, {passive: true});
+
+    // }, 3000);
+
 
     document.addEventListener('saved', function(){
         $('#offcanvasRight').offcanvas('hide');

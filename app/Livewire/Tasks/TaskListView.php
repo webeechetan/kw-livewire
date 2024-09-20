@@ -90,7 +90,7 @@ class TaskListView extends Component
             $this->inReviewTasks = Task::tasksByUserType()->where('status', 'in_review')->count();
             $this->completedTasks = Task::tasksByUserType()->where('status', 'completed')->count();
             $this->overdueTasks = Task::tasksByUserType()->where('due_date', '<', now())->where('status', '!=', 'completed')->count();
-
+            // dd($this->overdueTasks);
             $this->doesAnyFilterApplied();
             $this->authorize('View Task');
             $this->tasks_count = Task::all();
