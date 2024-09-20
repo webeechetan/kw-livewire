@@ -167,6 +167,8 @@
         <div class="kanban_bord_body_columns" wire:sortable-group="updateTaskOrder">
             @php
                 $groups = ['pending','in_progress','in_review','completed'];
+                $task_count = 0;
+                $task_count = count($tasks['pending']) + count($tasks['in_progress']) + count($tasks['in_review']) + count($tasks['completed']);
             @endphp
             @foreach($groups as $group)
                 @php
@@ -208,6 +210,7 @@
                         @if(!count($tasks[$group]))
                         <div class="kanban_column_empty"><i class='bx bx-add-to-queue'></i></div>
                         @endif
+                       
                         @foreach($tasks[$group] as $task)
                             @php
                                 $date_class = '';
@@ -217,7 +220,6 @@
                                 if($task['due_date'] == date('Y-m-d')){
                                     $date_class = 'kanban_column_task_warning';
                                 }
-                                
                             @endphp
                             <div wire:loading.class="opacity-25" class="kanban_column_task {{ $date_class }}" wire:key="task-{{$task['id']}}" wire:sortable-group.item="{{ $task['id'] }}" >
                                 <div wire:loading wire:target="emitEditTaskEvent({{ $task['id'] }})" class="card_style-loader">
@@ -277,12 +279,14 @@
                                 </div>
                             </div>
                             @endforeach
-                            <div class="text-center">
-                                <a href="javascript:;" class="" wire:click="loadMore">
-                                    <i class="bx bx-down-arrow-alt"></i>
-                                    <span wire:loading wire:target="loadMore" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                                </a>
-                            </div>
+                            @if($totalTasks > 0 && $task_count < $totalTasks)
+                                <div class="text-center">
+                                    <a href="javascript:;" class="" wire:click="loadMore">
+                                        <i class="bx bx-down-arrow-alt"></i>
+                                        <span wire:loading wire:target="loadMore" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                    </a>
+                                </div>
+                            @endif
                         </div>
                     </div>
             @endforeach

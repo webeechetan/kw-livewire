@@ -27,7 +27,10 @@ class ListTask extends Component
     public $activeTasks;
     public $completedTasks;
     public $archivedTasks; 
-    public $perPage = 12;
+    public $perPage = 4;
+    public $userTotalTasks;
+    public $managerTotalTasks;
+    public $totalTasks;
 
     // auth 
 
@@ -86,19 +89,8 @@ class ListTask extends Component
 
     public function loadMore(){
 
-        $this->perPage += 10;
-        $new_tasks = Task::tasksByUserType()->where('status','pending')->orderBy('task_order')->limit($this->perPage, 10)->get();
-        $this->tasks['pending'] = $this->tasks['pending']->merge($new_tasks);
-
-        $new_tasks = Task::tasksByUserType()->where('status','in_progress')->orderBy('task_order')->limit($this->perPage, 10)->get();
-        $this->tasks['in_progress'] = $this->tasks['in_progress']->merge($new_tasks);
-
-        $new_tasks = Task::tasksByUserType()->where('status','in_review')->orderBy('task_order')->limit($this->perPage, 10)->get();
-        $this->tasks['in_review'] = $this->tasks['in_review']->merge($new_tasks);
-
-        $new_tasks = Task::tasksByUserType()->where('status','completed')->orderBy('task_order')->limit($this->perPage, 10)->get();
-        $this->tasks['completed'] = $this->tasks['completed']->merge($new_tasks);
-
+        $this->perPage += 4;
+        $this->mount();
     }
 
     public function mount()
@@ -129,6 +121,7 @@ class ListTask extends Component
             if($this->ViewTasksAs == 'manager'){
                 $manager_team = auth()->user()->myTeam;
                 $team_users = $manager_team->users()->pluck('users.id')->toArray();
+                
                 $this->tasks = [
                     'pending' => $this->applySort(
                         Task::where('status', 'pending')
@@ -136,31 +129,33 @@ class ListTask extends Component
                                 $q->whereIn('user_id', $team_users);
                             })
                             ->where('name', 'like', '%' . $this->query . '%')
-                    )->get(),
+                    )->take($this->perPage)->get(),
                     'in_progress' => $this->applySort(
                         Task::where('status', 'in_progress')
                             ->whereHas('users', function($q) use($team_users){
                                 $q->whereIn('user_id', $team_users);
                             })
                             ->where('name', 'like', '%' . $this->query . '%')
-                    )->get(),
+                    )->take($this->perPage)->get(),
                     'in_review' => $this->applySort(
                         Task::where('status', 'in_review')
                             ->whereHas('users', function($q) use($team_users){
                                 $q->whereIn('user_id', $team_users);
                             })
                             ->where('name', 'like', '%' . $this->query . '%')
-                    )->get(),
+                    )->take($this->perPage)->get(),
                     'completed' => $this->applySort(
                         Task::where('status', 'completed')
                             ->whereHas('users', function($q) use($team_users){
                                 $q->whereIn('user_id', $team_users);
                             })
                             ->where('name', 'like', '%' . $this->query . '%')
-                    )->get(),
+                    )->take($this->perPage)->get(),
                 ];
                 // dd($this->tasks);
-
+                $this->totalTasks = Task::whereHas('users', function($q) use($team_users){
+                    $q->whereIn('user_id', $team_users);
+                })->count();
             }else{
                 $this->tasks = [
                     'pending' => $this->applySort(
@@ -190,7 +185,10 @@ class ListTask extends Component
                         )->take($this->perPage)->get(),
 
                 ];
+                $this->totalTasks = Task::tasksByUserType()->count();
             }
+
+            
 
             $tour = session()->get('tour');
             if(request()->tour == 'close-task-tour'){
@@ -198,6 +196,7 @@ class ListTask extends Component
                 unset($tour['task_tour']);
                 session()->put('tour',$tour);
             }
+            
 
 
     }
