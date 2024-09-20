@@ -27,7 +27,7 @@ class ListTask extends Component
     public $activeTasks;
     public $completedTasks;
     public $archivedTasks; 
-    public $perPage = 4;
+    public $perPage = 15;
     public $userTotalTasks;
     public $managerTotalTasks;
     public $totalTasks;
@@ -89,7 +89,7 @@ class ListTask extends Component
 
     public function loadMore(){
 
-        $this->perPage += 4;
+        $this->perPage += 5;
         $this->mount();
     }
 

@@ -17,7 +17,7 @@ class Tasks extends Component
     use WithPagination;
  
     public $totalTasks = 0;
-    public $perPage = 3;
+    public $perPage = 15;
     public $startDate = null; 
     public $dueDate = null;
     public $allTasks; 
@@ -90,6 +90,6 @@ class Tasks extends Component
     }
 
     public function loadMore(){
-        $this->perPage += 3;
+        $this->perPage += 10;
     }
 }
