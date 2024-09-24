@@ -99,18 +99,18 @@
                                     {{ Str::limit($client->visible_name, 20, '...') }}
                                 </a>
                             </h4>
-                            <div class="btn-withIcon"><i class='bx bx-layer text-secondary' ></i> {{ $client->projects->count() }}  {{ $client->projects->count() >1 ? 'Projects' : 'Project' }}</div>
+                            <div class="btn-withIcon"><i class='bx bx-layer text-secondary' ></i> {{ $client->projects->count() }} {{ pluralOrSingular($client->projects->count(),'Project') }}</div>
                         </div>
                     </div>
                     <div class="d-flex flex-wrap">
-                        <h4 class="text-md mb-0">Active <span class="btn-batch-bg btn-batch-bg-secondary ms-2">{{count($activeProjects)}} {{count($activeProjects) >1 ? 'Projects' : 'Project'}}</span></h4>
+                        <h4 class="text-md mb-0">Active <span class="btn-batch-bg btn-batch-bg-secondary ms-2">{{count($activeProjects)}} {{ pluralOrSingular(count($activeProjects),'Project') }}</span></h4>
                         <span class="px-2 text-grey">|</span>
-                        <h4 class="text-md mb-0">Completed <span class="btn-batch-bg btn-batch-bg-success ms-2">{{count($completedProjects)}} {{count($completedProjects) >1 ? 'Projects' : 'Project'}}</span></h4>
+                        <h4 class="text-md mb-0">Completed <span class="btn-batch-bg btn-batch-bg-success ms-2">{{count($completedProjects)}} {{ pluralOrSingular(count($completedProjects) ,'Project') }}</span></h4>
                     </div>
                     <hr class="my-2">
                     <div class="row align-items-center">
                         <div class="col-auto">
-                            <h4 class="text-md mb-0"><i class="bx bx-user text-primary"></i> {{ count($client->users) > 1 ? 'Users' : 'User' }}</h4> 
+                            <h4 class="text-md mb-0"><i class="bx bx-user text-primary"></i> {{ pluralOrSingular(count($client->users),'User') }}</h4> 
                         </div>
                         <div class="col">
                             <div class="avatarGroup avatarGroup-overlap">
@@ -130,7 +130,7 @@
                                         </a>
                                     @endif
                                 @else
-                                <div class="text-light">No User Assigned</div>
+                                <div class="text-light">No Users Assigned</div>
                                 @endif
                             </div>
                         </div>

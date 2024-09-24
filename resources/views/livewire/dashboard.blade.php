@@ -17,11 +17,6 @@
                             <h4 class="mb-1"><span class="fw-normal">Hi {{ Auth::guard(session('guard'))->user()->name
                                     }}</span>,</h4>
                             <h3><b>Welcome back!</b></h3>
-                            {{-- @if(session()->has('newly_registered'))
-                            <p class="text-muted">You have successfully registered. Please check your email to verify
-                                your account.</p>
-                            @endif --}}
-                            {{-- {{ Auth::user()->roles->pluck('name') }} --}}
                         </div>
                     </div>
                     <div class="col-md-5 text-end">
@@ -48,7 +43,7 @@
                                     alt=""></div>
                             <div class="col">
                                 <h5 class="mb-0"><b>{{ $users_tasks->count()}}</b></h5>
-                                <div>Total Tasks</div>
+                                <div>Total {{ pluralOrSingular($users_tasks->count(),'Task') }}</div>
                             </div>
                         </div>
                     </div>
@@ -132,7 +127,7 @@
                             </div>
                         </div>
                         <div class="row mt-2">
-                            <div class="col"><b>{{ $taskDone }}</b> <span>Task Done</span></div>
+                            <div class="col"><b>{{ $taskDone }}</b> <span>{{ pluralOrSingular($taskDone,'Task') }} Done</span></div>
                             <div class="col text-end text-danger px-4"><i class="bx bx-calendar"></i> <span>{{ $project->due_date
                                 ?? 'No Due Date' }}</span></div>
                         </div>

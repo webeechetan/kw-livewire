@@ -263,8 +263,14 @@
     </div>
 </div>
 
-@push('scripts')
+@script
     <script>
+
+        // detect if user came on this page from a browser back button
+        window.addEventListener('popstate', function(event) {
+            location.reload();
+        });
+
         $(document).ready(function(){
 
             if(typeof users_for_mention === 'undefined'){
@@ -434,4 +440,4 @@
             });
         });
     </script>
-@endpush
+@endscript
