@@ -2,9 +2,7 @@
     <!-- Dashboard Header -->
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a wire:navigate href="{{ route('dashboard', session('org_id') ) }}"><i
-                        class='bx bx-line-chart'></i> {{ Auth::user()->organization ? Auth::user()->organization->name :
-                    'No organization' }}</a></li>
+            <li class="breadcrumb-item"><a wire:navigate href="{{ route('dashboard', session('org_id') ) }}"><i class='bx bx-line-chart'></i> {{ Auth::user()->organization ? Auth::user()->organization->name : 'No organization' }}</a></li>
             <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
         </ol>
     </nav>
@@ -14,8 +12,7 @@
                 <div class="row align-items-center">
                     <div class="col-md-7">
                         <div class="welcome-box">
-                            <h4 class="mb-1"><span class="fw-normal">Hi {{ Auth::guard(session('guard'))->user()->name
-                                    }}</span>,</h4>
+                            <h4 class="mb-1"><span class="fw-normal">Hi {{ Auth::guard(session('guard'))->user()->name }}</span>,</h4>
                             <h3><b>Welcome back</b></h3>
                             {{-- @if(session()->has('newly_registered'))
                             <p class="text-muted">You have successfully registered. Please check your email to verify
@@ -119,14 +116,12 @@
                     }
                     @endphp
                     <div class="progress mt-4">
-                        <div class="progress-bar progress-secondary" role="progressbar" aria-label="Task Done"
-                            style="width: {{$percentage}}%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                        <div class="progress-bar progress-secondary" role="progressbar" aria-label="Task Done" style="width: {{$percentage}}%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
                         </div>
                     </div>
                     <div class="row mt-2">
                         <div class="col"><b>{{ $taskDone }}</b> <span>Task Done</span></div>
-                        <div class="col text-end text-danger"><i class="bx bx-calendar"></i> <span>{{ $project->due_date
-                                ?? 'No Due Date' }}</span></div>
+                        <div class="col text-end text-danger"><i class="bx bx-calendar"></i> <span>{{ $project->due_date ?? 'No Due Date' }}</span></div>
                     </div>
                 </div>
                 <hr class="my-4">
@@ -168,8 +163,7 @@
                                 </div>
                             </div>
                             <div class="col-md-auto">
-                                <h6 class="mb-0 text-danger"><b>{{ $users_tasks->where('due_date', '<', now())->where('status','!=','completed')->
-                                            count();}}</b></h6>
+                                <h6 class="mb-0 text-danger"><b>{{ $users_tasks->where('due_date', '<', now())->where('status','!=','completed')-> count();}}</b></h6>
                             </div>
                         </div>
                         <hr>
@@ -185,8 +179,7 @@
                                 </div>
                             </div>
                             <div class="col-md-auto">
-                                <h6 class="mb-0 text-warning"><b>{{ $users_tasks->where('status',
-                                        'in_progress')->count();}}</b></h6>
+                                <h6 class="mb-0 text-warning"><b>{{ $users_tasks->where('status', 'in_progress')->count();}}</b></h6>
                             </div>
                         </div>
                         <hr>
