@@ -46,11 +46,13 @@ class ProjectObserver
                 continue;
             }
             if($original[$key] != $value){
-                if($original[$key] == null){
-                    $activity_text .= $key.' null to <b>'.$value .'</b> </br>';
-                    continue;
+                $keysValue = ['start_date' => 'Start Date', 'end_date' => 'End Date'];
+
+                if(array_key_exists($key, $keysValue)){
+                    $activity_text .= $keysValue[$key].' from <b>'.$original[$key].'</b> to <b>'.$value .'</b> </br>';
+                }else{
+                    $activity_text .= $key.' to <b>'.$value .'</b> </br>';
                 }
-                $activity_text .= $key.' from <b>'.$original[$key].'</b> to <b>'.$value .'</b> </br>';
             }
         }
 

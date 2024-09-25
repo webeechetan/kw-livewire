@@ -22,9 +22,9 @@ class TaskObserver
             if($oldStatus == 'completed'){
                 $oldStatus = 'Completed';
             }else if($oldStatus == 'in_progress'){
-                $oldStatus = 'In Progress';
+                $oldStatus = 'In-Progress';
             }else if($oldStatus == 'in_review'){
-                $oldStatus = 'In Review';
+                $oldStatus = 'In-Review';
             }else if($oldStatus == 'pending'){
                 $oldStatus = 'Pending';
             }else{
@@ -34,9 +34,9 @@ class TaskObserver
             if($newStatus == 'completed'){
                 $newStatus = 'Completed';
             }else if($newStatus == 'in_progress'){
-                $newStatus = 'In Progress';
+                $newStatus = 'In-Progress';
             }else if($newStatus == 'in_review'){
-                $newStatus = 'In Review';
+                $newStatus = 'In-Review';
             }else if($newStatus == 'pending'){
                 $newStatus = 'Pending';
             }else{
@@ -76,7 +76,7 @@ class TaskObserver
 
             $activity = new Activity();
             $activity->org_id = $task->org_id;
-            $activity_text = auth()->guard(session('guard'))->user()->name.' changed the status of task '.$task->name .' from '.$oldStatus.' to '.$newStatus;
+            $activity_text = 'Changed the status of task <b>'.$task->name .'</b> from <b>'.$oldStatus.'</b> to <b>'.$newStatus. '</b>';
             $activity->text = $activity_text;
             $activity->activityable_id = $task->project_id;
             $activity->activityable_type = 'App\Models\Project';

@@ -45,7 +45,7 @@ class CommentObserver
 
         $activity = new Activity();
         $activity->org_id = $task->org_id;
-        $activity_text = auth()->guard(session('guard'))->user()->name.' commented on task '.$task->name;
+        $activity_text ='Commented on task <b>'.$task->name.'</b>';
         $activity->text = $activity_text;
         $activity->activityable_id = $task->project_id;
         $activity->activityable_type = 'App\Models\Project';

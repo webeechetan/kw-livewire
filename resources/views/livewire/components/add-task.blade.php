@@ -11,6 +11,7 @@
                 </select> 
             </div> 
             <div class="taskPane-dashbaord-head-right">
+                <span class="btn-batch btn-batch-danger d-none read-only-btn">Read Only</span>
                 <button type="button" class="btn-icon add-attachments" data-bs-toggle="modal" data-bs-target="#attached-file-modal"><i class='bx bx-paperclip' style="transform: rotate(60deg);"></i></button>
                 {{-- <button type="button" class="btn-icon task-sharable-link d-none"><i class='bx bx-share-alt ' ></i></button> --}}
                 <button type="button" class="btn-icon view-task-btn d-none" wire:click="viewFullscree"><i class='bx bx-fullscreen'></i></button>
@@ -362,7 +363,6 @@
             
 
             setTimeout(() => {
-                console.log('init plugins');
                 initPlugins();
             }, 1000);
 
@@ -407,6 +407,16 @@
                 return words[0][0] + words[1][0];
             }
 
+            document.addEventListener('read-only', event => {
+                console.log(event.detail);
+                if(event.detail[0] == true){
+                    $(".read-only-btn").removeClass('d-none');
+                }else{
+                    $(".read-only-btn").addClass('d-none');
+                }
+            });
+
+
             document.addEventListener('edit-task', event => {
 
                 $(".comment-rows").html('');
@@ -436,8 +446,6 @@
 
                 $("#editor").summernote('code', task.description);
 
-                console.log(task_users_ids);
-
                 $('.task-users').val(task_users_ids).trigger('change');
 
                 $('.task-notify-users').val(task_notifiers_ids).trigger('change');
@@ -464,8 +472,6 @@
                 $(".client-comment-count").html(event.detail[0].comments.length - internal_comments_count);
 
                 $(".total-comments").html(event.detail[0].comments.length);
-
-                console.log(event.detail[0].comments);
 
                 event.detail[0].comments.forEach(comment => {
                     let comment_type = comment.type;
