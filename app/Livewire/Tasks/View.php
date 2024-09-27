@@ -27,7 +27,7 @@ class View extends Component
 
     public function render()
     {
-        return view('livewire.tasks.view');
+        return view('livewire.tasks.view')->title($this->task->name);
     }
 
     public function mount(Task $task)
