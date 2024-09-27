@@ -450,21 +450,17 @@
                 }
             });
         });
-
+ 
         // bio
         $('.edit-bio').click(function(){
             $(".update-bio-btn").removeClass('d-none');
             $('.user-profile-bio').summernote({
                 height: 200,
                 toolbar: [
-                    ['style', ['style']],
-                    ['font', ['bold', 'underline', 'clear']],
-                    ['color', ['color']],
-                    ['para', ['ul', 'ol', 'paragraph']],
-                    ['table', ['table']],
-                    ['insert', ['link', 'picture', 'video']],
-                    ['view', ['fullscreen', 'codeview', 'help']]
-                ],
+                        ['font', ['bold', 'underline']],
+                        ['para', ['ul', 'ol']],
+                        ['insert', ['link']],
+                    ],
                 callbacks: {
                     onChange: function(contents, $editable) {
                         @this.set('bio', contents);

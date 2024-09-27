@@ -17,7 +17,7 @@
                 <button type="button" class="btn-icon view-task-btn d-none" wire:click="viewFullscree"><i class='bx bx-fullscreen'></i></button>
                 {{-- <button type="button" wire:click="deleteTask" class="btn-icon delete-task-btn d-none"><i class='bx bx-trash'></i></button> --}}
                 <a href="javascript:" wire:click="deleteTask" wire:confirm="Are you sure you want to delete?" class="btn-icon delete-task-btn d-none"><i class='bx bx-trash'></i></a>
-                <button type="button" class="btn-icon" data-bs-dismiss="offcanvas" aria-label="Close"><i class='bx bx-arrow-to-right'></i></button>
+                <button type="button" class="btn-icon" data-bs-dismiss="offcanvas" aria-label="Close"><i class='bx bx-window-close'></i></button>
             </div>
         </div>
         <div class="offcanvas-body scrollbar">
@@ -256,7 +256,7 @@
                         match: /\B@(\w*)$/,
                         search: function (keyword, callback) {
                             callback($.grep(this.mentions, function (item) {
-                                return item.indexOf(keyword) == 0;
+                                return item.toLowerCase().indexOf(keyword.toLowerCase()) == 0;
                             }));
                         },
                         template : function (item) {
@@ -290,7 +290,7 @@
                         match: /\B@(\w*)$/,
                         search: function (keyword, callback) {
                             callback($.grep(this.mentions, function (item) {
-                                return item.indexOf(keyword) == 0;
+                                return item.toLowerCase().indexOf(keyword.toLowerCase()) == 0;
                             }));
                         },
                         template : function (item) {
@@ -323,7 +323,7 @@
                         match: /\B@(\w*)$/,
                         search: function (keyword, callback) {
                             callback($.grep(this.mentions, function (item) {
-                                return item.indexOf(keyword) == 0;
+                                return item.toLowerCase().indexOf(keyword.toLowerCase()) == 0;
                             }));
                         },
                         template : function (item) {

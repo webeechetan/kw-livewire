@@ -34,7 +34,7 @@ class AddTeam extends Component
     }
 
     public function addTeam(){
-        $this->authorize('Add Team');
+        $this->authorize('Create Team');
         if($this->team){
             $this->updateTeam();
             return;

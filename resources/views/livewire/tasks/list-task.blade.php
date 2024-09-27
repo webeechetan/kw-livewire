@@ -134,9 +134,22 @@
                 </div>
             </div>
             <div class="col-md-6 text-end">
-                @if(auth()->user()->is_manager)
                 <div class="form-check form-switch d-inline-block">
-                    <input class="form-check-input task-switch" type="checkbox" role="switch" id="flexSwitchCheckChecked">
+                    <input class="form-check-input assigned-by-me-task-task-switch"
+                    @if($ViewTasksAs == 'manager')
+                        disabled
+                    @endif
+                     type="checkbox" role="switch" id="">
+                    <label class="form-check-label assigned-by-me-task-switch-text" for="">Assigned By Me</label>
+                </div> 
+                @if(auth()->user()->is_manager)
+                |
+                <div class="form-check form-switch d-inline-block">
+                    <input class="form-check-input task-switch" 
+                    @if($assignedByMe)
+                        disabled
+                    @endif
+                     type="checkbox" role="switch" id="flexSwitchCheckChecked">
                     <label class="form-check-label task-switch-text" for="flexSwitchCheckChecked">Showing {{ auth()->user()->myTeam->name }} Tasks</label>
                 </div>
                 @endif
@@ -325,6 +338,14 @@
         }else{
             // $(".task-switch-text").text('Show My Tasks');
             @this.set('ViewTasksAs', 'user');
+        }
+    });
+
+    $(".assigned-by-me-task-task-switch").change(function(){
+        if($(this).is(':checked')){
+            @this.set('assignedByMe', true);
+        }else{
+            @this.set('assignedByMe', false);
         }
     });
 

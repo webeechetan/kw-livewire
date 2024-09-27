@@ -101,13 +101,14 @@ Livewire::setUpdateRoute(function ($handle) use ($org_name) {
 
 });
 
+Route::get($org_name.'/task/view/{task}',View::class)->name('task.view')->middleware('myauth');
+
+
 Route::group(
     [
         'middleware' => ['myauth'],
         'prefix' => $org_name,
     ], function() {
-
-    
 
     /*
     |--------------------------------------------------------------------------
@@ -180,7 +181,6 @@ Route::group(
     Route::get('/tasks/list-view',TaskListView::class)->name('task.list-view');
     Route::get('/tasks/{sort?}/{filter?}/{byProject?}/{byClient?}',ListTask::class)->name('task.index');
     Route::get('/tasks/add',AddTask::class)->name('task.add');
-    Route::get('/task/view/{task}',View::class)->name('task.view');
 
     /*
     |--------------------------------------------------------------------------

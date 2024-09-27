@@ -90,15 +90,20 @@ class Task extends Model
 
     // scopes 
 
-    public function scopeTasksByUserType($query){
-        // return $query;
+    public function scopeTasksByUserType($query,$assignedByMe = false){
         if(session('guard') == 'web'){
-            return $query->whereHas('users', function($q){
-                $q->where('user_id', auth()->user()->id);
-            })->orWhereHas('assignedBy',function($q){
-                $q->where('assigned_by', auth()->user()->id);
-            });
-
+            if($assignedByMe){
+                return $query->whereHas('users', function($q){
+                        $q->where('user_id', auth()->user()->id);
+                        })->orWhereHas('assignedBy',function($q){
+                            $q->where('assigned_by', auth()->user()->id);
+                        });
+            }else{
+                return $query->whereHas('users', function($q){
+                    $q->where('user_id', auth()->user()->id);
+                });
+            }
+            
         }
     }
 
