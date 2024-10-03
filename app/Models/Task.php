@@ -93,9 +93,7 @@ class Task extends Model
     public function scopeTasksByUserType($query,$assignedByMe = false){
         if(session('guard') == 'web'){
             if($assignedByMe){
-                return $query->whereHas('users', function($q){
-                        $q->where('user_id', auth()->user()->id);
-                        })->orWhereHas('assignedBy',function($q){
+                return $query->whereHas('assignedBy',function($q){
                             $q->where('assigned_by', auth()->user()->id);
                         });
             }else{

@@ -166,7 +166,7 @@ class ListTask extends Component
                 $this->tasks = [
                     'pending' => $this->applySort(
                         Task::tasksByUserType($this->assignedByMe)
-                            ->where('status', 'pending')
+                            ->where('status', 'pending') 
                             ->where('name', 'like', '%' . $this->query . '%')
                         )->take($this->perPage)->get(),
         
@@ -272,10 +272,10 @@ class ListTask extends Component
         }
 
         $this->tasks = [
-            'pending' => Task::tasksByUserType($this->assignedByMe)->where('status','pending')->orderBy('task_order')->limit($this->perPage)->get(),
-            'in_progress' => Task::tasksByUserType($this->assignedByMe)->where('status','in_progress')->orderBy('task_order')->limit($this->perPage)->get(),
-            'in_review' => Task::tasksByUserType($this->assignedByMe)->where('status','in_review')->orderBy('task_order')->limit($this->perPage)->get(),
-            'completed' => Task::tasksByUserType($this->assignedByMe)->where('status','completed')->orderBy('task_order')->limit($this->perPage)->get(),
+            'pending' => $this->applySort(Task::tasksByUserType($this->assignedByMe)->where('status','pending')->orderBy('task_order'))->limit($this->perPage)->get(),
+            'in_progress' => $this->applySort(Task::tasksByUserType($this->assignedByMe)->where('status','in_progress')->orderBy('task_order'))->limit($this->perPage)->get(),
+            'in_review' => $this->applySort(Task::tasksByUserType($this->assignedByMe)->where('status','in_review')->orderBy('task_order'))->limit($this->perPage)->get(),
+            'completed' => $this->applySort(Task::tasksByUserType($this->assignedByMe)->where('status','completed')->orderBy('task_order'))->limit($this->perPage)->get(),
         ];
     }
 

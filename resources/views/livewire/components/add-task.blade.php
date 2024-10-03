@@ -199,7 +199,7 @@
 
         // clear all fields when offcanvas is closed or dismissed 
 
-        $(".bx-arrow-to-right").click(function(){
+        $(".bx-window-close").click(function(){
             location.reload();
         });
 
@@ -408,15 +408,32 @@
             }
 
             document.addEventListener('read-only', event => {
+                let form_items = 
                 console.log(event.detail);
                 if(event.detail[0] == true){
-                    $(".read-only-btn").removeClass('d-none');
+                    toggleFormItems(true);
                 }else{
-                    $(".read-only-btn").addClass('d-none');
+                    toggleFormItems(false);
                 }
             });
 
 
+            function toggleFormItems(prop){
+                let form_items = $(".taskPane").find('input, select, textarea');
+
+                form_items.each(function(){
+                    $(this).attr('disabled',prop);
+                });
+                if(prop == true){
+                    $(".read-only-btn").removeClass('d-none');
+                }else{
+                    $(".read-only-btn").addClass('d-none');
+                }
+
+                $(".save-task-button").attr('disabled',prop);
+            }
+
+            
             document.addEventListener('edit-task', event => {
 
                 $(".comment-rows").html('');

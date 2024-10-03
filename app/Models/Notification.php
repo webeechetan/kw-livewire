@@ -33,4 +33,9 @@ class Notification extends Model
             $notification->delete();
         }
     }
+
+    public function actionBy()
+    {
+        return $this->belongsTo(User::class, 'action_by');
+    }
 }

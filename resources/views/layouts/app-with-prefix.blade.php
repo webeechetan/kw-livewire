@@ -129,7 +129,7 @@
                     <li>
                       <li>
                         <a wire:navigate href="{{ route('client.profile',['organization'=>session('org_name'),'id' => Auth::user()->organization->mainClient->id]) }}"  class="@if ( request()->segment(3) == Auth::user()->organization->mainClient->id && (request()->segment(1) == 'clients' || request()->segment(1) == 'client' )) active @endif"><i class='bx bx-body' ></i> 
-                          {{ Auth::user()->organization ? Auth::user()->organization->name : 'No organization' }}
+                          {{ ucfirst(Auth::user()->organization->name) }}
                         </a>
                       </li>
                     </li>

@@ -5,6 +5,7 @@ use App\Models\Task;
 use App\Notifications\TaskStatusChangeNotification;
 use App\Models\Activity;
 use App\Models\Notification;
+use Illuminate\Support\Facades\Auth;
 
 class TaskObserver
 {
@@ -54,6 +55,8 @@ class TaskObserver
                 $notification = new Notification();
                 $notification->user_id = $user->id;
                 $notification->org_id = $task->org_id;
+                $notification->action_by = Auth::user()->id;
+
                 $notification->title = $changedBy->name.' changed the status of task '.$task->name .' from '.$oldStatus.' to '.$newStatus;
                 $notification->message = $changedBy->name.' changed the status of task '.$task->name .' from '.$oldStatus.' to '.$newStatus;
                 $notification->url = route('task.view', ['task' => $task->id]);
@@ -66,6 +69,7 @@ class TaskObserver
                 }
                 $notifier->notify(new TaskStatusChangeNotification($task, $oldStatus, $newStatus, $changedBy, $taskUrl));
                 $notification = new Notification();
+                $notification->action_by = Auth::user()->id;
                 $notification->user_id = $notifier->id;
                 $notification->org_id = $task->org_id;
                 $notification->title = $changedBy->name.' changed the status of task '.$task->name .' from '.$oldStatus.' to '.$newStatus;
@@ -94,7 +98,7 @@ class TaskObserver
         }
         $activity = new Activity();
         $activity->org_id = $task->org_id;
-        $activity_text = auth()->guard(session('guard'))->user()->name.' created a task '.$task->name;
+        $activity_text = 'Created a task '.$task->name;
         $activity->text = $activity_text;
         $activity->activityable_id = $task->project_id;
         $activity->activityable_type = 'App\Models\Project';

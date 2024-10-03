@@ -3,7 +3,7 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a wire:navigate href="{{ route('dashboard') }}"><i class='bx bx-line-chart'></i>{{ Auth::user()->organization ? Auth::user()->organization->name : 'No organization' }}</a></li>
-            <li class="breadcrumb-item active" aria-current="page">{{Auth::user()->organization->name}}</li>
+            <li class="breadcrumb-item active" aria-current="page">{{ucfirst(Auth::user()->organization->name)}}</li>
         </ol>
     </nav>
     <div class="row ">
@@ -12,7 +12,7 @@
                 <div class="user-profile">
                     <img class="org-image" src="{{ env('APP_URL') }}/storage/{{ Auth::user()->organization->image }}" alt="User Image">
                     <input class="org-image-input d-none" type="file" wire:model="image" accept="image/*" >
-                    <h3 class="main-body-header-title mb-2">{{Auth::user()->organization->name}}</h3>
+                    <h3 class="main-body-header-title mb-2">{{ucfirst(Auth::user()->organization->name)}}</h3>
                     <div wire:loading >
                         Updating Image...
                     </div>

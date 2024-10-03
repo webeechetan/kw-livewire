@@ -23,7 +23,11 @@
         <li class="border-bottom d-grid dropdown-item">
           <div class="d-flex justify-content-between cursor-pointer">
             <div class="col-auto pe-2">
-              <x-avatar :user="$notification->user" />
+              @if($notification->actionBy)
+                <x-avatar :user="$notification->actionBy" />
+              @else
+                <x-avatar :user="$notification->user" />
+              @endif
             </div>
             <div class="team-text col">
               <div class="mb-1 text-sm">

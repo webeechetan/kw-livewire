@@ -4,7 +4,7 @@
       <ol class="breadcrumb">
          <li class="breadcrumb-item">
             <a wire:navigate href="{{ route('dashboard') }}">
-            <i class='bx bx-line-chart'></i>{{ Auth::user()->organization ? Auth::user()->organization->name : 'No organization' }}</a>
+            <i class='bx bx-line-chart'></i>{{ ucfirst(Auth::user()->organization->name) }}</a>
          </li>
          <li class="breadcrumb-item">
             <a wire:navigate href="{{ route('team.index') }}">All Team</a>
@@ -135,7 +135,13 @@
                            <div class="project-icon"><i class="bx bx-layer"></i></div>
                            <div class="project-content">
                               <a href="{{ route('project.profile',$project->id) }}" class="project-title">{{$project->name}}</a>
-                              <div class="project-selected-date">Due on <span>{{  \Carbon\Carbon::parse($project->due_date)->diffForHumans()}}</span></div>
+                              <div class="project-selected-date">Due on <span>
+                                 @if($project->due_date)
+                                    {{  \Carbon\Carbon::parse($project->due_date)->diffForHumans()}}
+                                 @else
+                                    No Due Date
+                                 @endif
+                              </span></div>
                            </div>
                         </div>
                      </div>

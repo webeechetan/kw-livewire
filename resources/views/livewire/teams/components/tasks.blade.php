@@ -4,7 +4,7 @@
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
                 <a wire:navigate href="{{ route('dashboard') }}">
-                <i class='bx bx-line-chart'></i>{{ Auth::user()->organization ? Auth::user()->organization->name : 'No organization' }}</a>
+                <i class='bx bx-line-chart'></i>{{ ucfirst(Auth::user()->organization->name) }}</a>
             </li> 
             <li class="breadcrumb-item">
                 <a wire:navigate href="{{ route('team.index') }}">All Team</a>
@@ -26,7 +26,7 @@
 
         if($status != 'all'){
             if($status == 'overdue'){
-                $tasks = $tasks->where('due_date', '<', Carbon\Carbon::now());
+                $tasks = $tasks->where('due_date', '<', Carbon\Carbon::now())->where('status', '!=', 'completed');
             }else{
                 $tasks = $tasks->where('status', $status);
             }
@@ -73,7 +73,7 @@
                 <a wire:click="$set('status', 'completed')" class="btn-border btn-border-success @if($status == 'completed') active @endif">{{ $tasks_for_count->where('status','completed')->count() }} <span>|</span> Completed</a>
                 <a wire:click="$set('status', 'overdue')" class="btn-border btn-border-danger @if($status == 'overdue') active @endif">
                     @php
-                        $overdue = $tasks_for_count->where('due_date', '<', now())->count();
+                        $overdue = $tasks_for_count->where('due_date', '<', now())->where('status', '!=', 'completed')->count();
                     @endphp
                     {{ $overdue }}
                     <span>|</span> Overdue</a>

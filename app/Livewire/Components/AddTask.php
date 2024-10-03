@@ -120,6 +120,7 @@ class AddTask extends Component
                 $notification = new Notification();
                 $notification->user_id = $user->id;
                 $notification->org_id = $task->org_id;
+                $notification->action_by = Auth::user()->id;
                 $notification->title = 'You have been assigned a new task '.$task->name;
                 $notification->message = 'You have been assigned a new task '.$task->name;
                 $notification->url = route('task.view', ['task' => $task->id]);

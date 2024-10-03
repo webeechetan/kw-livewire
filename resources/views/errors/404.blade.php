@@ -31,7 +31,7 @@
 
     <!--- Title --->
 
-    <title>{{ $task->name }}</title>
+    <title>@if($task){{ $task->name }}@else Requested route not found  @endif</title>
 
 </head>
 <body>
