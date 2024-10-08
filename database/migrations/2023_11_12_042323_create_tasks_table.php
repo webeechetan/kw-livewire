@@ -30,6 +30,7 @@ return new class extends Migration
             $table->string('created_by')->default('web')->comment('web','orginizations');
             $table->softDeletes();
             $table->string('mentioned_users')->nullable();
+            $table->boolean('email_notification')->default(false);
             $table->timestamps();
         });
     }

@@ -55,8 +55,8 @@
                     <div class="taskPane-item d-flex flex-wrap mb-3">
                         <div class="taskPane-item-left"><div class="taskPane-item-label">Project</div></div>
                         <div class="taskPane-item-right"> 
-                            <select required wire:model="project_id" name="" id="" class="task-projects">
-                                <option value="" >Select Project</option>
+                            <select required  class="task-projects">
+                                <option value="" selected disabled>Select Project</option>
                                 @foreach ($projects as $p)
                                     @if($project_id && $project && $project->id == $p->id)
                                         <option value="{{ $p->id }}" selected>{{ $p->name }}</option>
@@ -85,6 +85,12 @@
                         <div class="taskPane-item-label mb-2">Description</div>
                         <div>
                             <textarea wire:model="description" id="editor" cols="30" rows="4" placeholder="Type Description"></textarea>
+                        </div>
+                    </div>
+                    <div class="taskPane-item d-flex flex-wrap mb-3">
+                        <div class="taskPane-item-left"><div class="taskPane-item-label">Email Notification</div></div>
+                        <div class="taskPane-item-right">
+                           <input class="email_notification" type="checkbox" wire:model="email_notification">
                         </div>
                     </div>
                     <div class="taskPane-item mb-2">
@@ -190,9 +196,8 @@
         </div>
         </div>
     </div>
-
+    
 </div>
-
 
 @push('scripts')
     <script>
@@ -223,6 +228,8 @@
             $(".attached_files").addClass('d-none');
             $('.taskPane-heading-label').html('Add Task');
             $('.save-task-button').html('Save Task');
+            $(".email_notification").prop('checked', false);
+
             @this.set('task', null);
         }
 
@@ -347,9 +354,7 @@
                             @this.set('comment', contents);
                         }
                     }
-                });
-
-                
+                });  
             }
 
             $('.add-attachments').on('click', function(){
@@ -372,10 +377,20 @@
                 allowClear: true,
             });
 
+            $(".task-projects").select2({
+                dropdownParent: $('#offcanvasRight'),
+                placeholder: "Select Project",
+                allowClear: true,
+            });
+
+            $(".task-projects").on('change', function (e) {
+                var data = $(".task-projects").val();
+                @this.set('project_id', data);
+            });
+
             $(".task-users").on('change', function (e) {
                 var data = $(".task-users").val();
                 @this.set('task_users', data);
-                // $('body').append('<div class="offcanvas-backdrop fade show"></div>'); 
             });
 
             $('.task-notify-users').select2({
@@ -386,7 +401,6 @@
             $(".task-notify-users").on('change', function (e) {
                 var data = $(".task-notify-users").val();
                 @this.set('task_notifiers', data);
-                // $('body').append('<div class="offcanvas-backdrop fade show"></div>'); 
             });
 
             
@@ -468,6 +482,12 @@
                 $('.task-notify-users').val(task_notifiers_ids).trigger('change');
 
                 $('.task-projects').val(event.detail[0].project_id).trigger('change');
+
+                if(event.detail[0].email_notification){
+                    $(".email_notification").prop('checked', true);
+                }else{
+                    $(".email_notification").prop('checked', false);
+                }
 
                 if(event.detail[0].due_date){
                     $('.task-due-date').text(event.detail[0].due_date);
@@ -566,7 +586,7 @@
                     $('.client-comment-rows').append(comment_html);
                     $('#internal_comment_box').summernote('code', '');
                 }
-
+ 
                 $(".total-comments").html(parseInt($(".total-comments").html()) + 1);
 
 

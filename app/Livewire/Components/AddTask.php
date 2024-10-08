@@ -27,6 +27,7 @@ class AddTask extends Component
     public $task_notifiers;
     public $project_id;
     public $status = 'pending'; 
+    public $email_notification;
 
     public $attachments = [];
     public $comment;
@@ -58,6 +59,7 @@ class AddTask extends Component
     }
 
     public function saveTask(){
+        // dd($this->email_notification);
         if($this->task){
             $this->updateTask();
             return;
@@ -90,6 +92,13 @@ class AddTask extends Component
         $task->due_date = $this->due_date;
         $task->project_id = $this->project_id;
         $task->status = $this->status;
+        if($this->email_notification == true){
+            $task->email_notification = $this->email_notification;
+        }
+        if($this->email_notification == false || $this->email_notification == 'on'){
+            $task->email_notification = 0;
+        }
+
         $task->save();
         $task->users()->sync($this->task_users);
         $task->notifiers()->sync($this->task_notifiers);
@@ -116,7 +125,9 @@ class AddTask extends Component
                     continue;
                 }
                 $user = User::find($user_id);
-                $user->notify(new NewTaskAssignNotification($task,$taskUrl));
+                if($this->email_notification){
+                    $user->notify(new NewTaskAssignNotification($task,$taskUrl));
+                }
                 $notification = new Notification();
                 $notification->user_id = $user->id;
                 $notification->org_id = $task->org_id;
@@ -175,6 +186,7 @@ class AddTask extends Component
         $this->task_users = $this->task->users->pluck('id')->toArray();
         $this->task_notifiers = $this->task->notifiers->pluck('id')->toArray();
         $this->comments = $this->task->comments;
+        $this->email_notification = $this->task->email_notification;
         $this->status = $this->task->status;
         $this->project_id = $this->task->project_id;
         $this->dispatch('edit-task',$this->task);
@@ -212,6 +224,7 @@ class AddTask extends Component
         $this->task->due_date = $this->due_date;
         $this->task->status = $this->status;
         $this->task->project_id = $this->project_id;
+        $this->task->email_notification = $this->email_notification;
         $this->task->save();
         $this->task->users()->sync($this->task_users);
         $this->task->notifiers()->sync($this->task_notifiers);

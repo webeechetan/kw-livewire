@@ -47,36 +47,41 @@ class TaskObserver
 
             $changedBy = auth()->guard(session('guard'))->user();
             $taskUrl = env('APP_URL').'/'. session('org_name').'/task/view/'.$task->id;
-            foreach($task->users as $user){
-                if($user->id == $changedBy->id){
-                    continue;
-                }
-                $user->notify(new TaskStatusChangeNotification($task, $oldStatus, $newStatus, $changedBy, $taskUrl));
-                $notification = new Notification();
-                $notification->user_id = $user->id;
-                $notification->org_id = $task->org_id;
-                $notification->action_by = Auth::user()->id;
+            if($task->email_notification){
 
-                $notification->title = $changedBy->name.' changed the status of task '.$task->name .' from '.$oldStatus.' to '.$newStatus;
-                $notification->message = $changedBy->name.' changed the status of task '.$task->name .' from '.$oldStatus.' to '.$newStatus;
-                $notification->url = route('task.view', ['task' => $task->id]);
-                $notification->save();
+                foreach($task->users as $user){
+                    if($user->id == $changedBy->id){
+                        continue;
+                    }
+                    $user->notify(new TaskStatusChangeNotification($task, $oldStatus, $newStatus, $changedBy, $taskUrl));
+                    $notification = new Notification();
+                    $notification->user_id = $user->id;
+                    $notification->org_id = $task->org_id;
+                    $notification->action_by = Auth::user()->id;
+
+                    $notification->title = $changedBy->name.' changed the status of task '.$task->name .' from '.$oldStatus.' to '.$newStatus;
+                    $notification->message = $changedBy->name.' changed the status of task '.$task->name .' from '.$oldStatus.' to '.$newStatus;
+                    $notification->url = route('task.view', ['task' => $task->id]);
+                    $notification->save();
+                }
+
+                foreach($task->notifiers as $notifier){
+                    if($notifier->id == $changedBy->id){
+                        continue;
+                    }
+                    $notifier->notify(new TaskStatusChangeNotification($task, $oldStatus, $newStatus, $changedBy, $taskUrl));
+                    $notification = new Notification();
+                    $notification->action_by = Auth::user()->id;
+                    $notification->user_id = $notifier->id;
+                    $notification->org_id = $task->org_id;
+                    $notification->title = $changedBy->name.' changed the status of task '.$task->name .' from '.$oldStatus.' to '.$newStatus;
+                    $notification->message = $changedBy->name.' changed the status of task '.$task->name .' from '.$oldStatus.' to '.$newStatus;
+                    $notification->url = route('task.view', ['task' => $task->id]);
+                    $notification->save();
+                }
             }
 
-            foreach($task->notifiers as $notifier){
-                if($notifier->id == $changedBy->id){
-                    continue;
-                }
-                $notifier->notify(new TaskStatusChangeNotification($task, $oldStatus, $newStatus, $changedBy, $taskUrl));
-                $notification = new Notification();
-                $notification->action_by = Auth::user()->id;
-                $notification->user_id = $notifier->id;
-                $notification->org_id = $task->org_id;
-                $notification->title = $changedBy->name.' changed the status of task '.$task->name .' from '.$oldStatus.' to '.$newStatus;
-                $notification->message = $changedBy->name.' changed the status of task '.$task->name .' from '.$oldStatus.' to '.$newStatus;
-                $notification->url = route('task.view', ['task' => $task->id]);
-                $notification->save();
-            }
+
 
             $activity = new Activity();
             $activity->org_id = $task->org_id;

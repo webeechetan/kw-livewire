@@ -63,6 +63,8 @@ class Login extends Component
             }else{
                 session()->flash('error','Invalid email or password');
             }
+        }else{
+            session()->flash('error','Invalid email or password');
         }
 
         // if($res){
