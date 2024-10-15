@@ -28,7 +28,8 @@ class Task extends Model
         'assigned_by',
         'name',
         'description',
-        'due_date'
+        'due_date',
+        'project_id',
     ];
 
     protected static function booted()

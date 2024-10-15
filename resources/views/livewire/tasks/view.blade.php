@@ -417,6 +417,16 @@
                 @this.set('selectedNotifiers', data);
             });
 
+            $('.task-projects').select2({
+                placeholder: 'Select Project',
+                allowClear: true
+            });
+
+            $(".task-projects").on('change', function (e) {
+                var data = $(".task-projects").val();
+                @this.set('project_id', data);
+            });
+
             flatpickr(".due_date", {
                 dateFormat: "Y-m-d",
                 onChange: function(selectedDates, dateStr, instance) {

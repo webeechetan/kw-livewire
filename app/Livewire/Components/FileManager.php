@@ -8,6 +8,7 @@ use Livewire\WithFileUploads;
 use File;
 use App\Models\Link;
 use Illuminate\Support\Facades\Validator;
+use App\Models\Activity;
 
 class FileManager extends Component
 {
@@ -175,6 +176,17 @@ class FileManager extends Component
             $this->getMainDirectoryMediaCount();
             $this->used_storage_size_in_mb = $this->getDirectorySize($this->path);
             $this->main_directory_size = $this->getDirectorySize($this->path);
+            if($this->project){
+                $activity = new Activity();
+                $activity->org_id = session('org_id');
+                $activity_text = 'Added a file '.$this->new_file_name.' to project <b>'.$this->project->name.'</b>';
+                $activity->text = $activity_text;
+                $activity->activityable_id = $this->project->id;
+                $activity->activityable_type = 'App\Models\Project';
+                $activity->created_by = auth()->guard(session('guard'))->user()->id;
+                $activity->save();
+            }
+            
         }catch(\Exception $e){
             dd($e);
             session()->flash('error', 'File already exists');
@@ -249,6 +261,16 @@ class FileManager extends Component
     public function deleteSelected(){
         foreach ($this->selected_files as $file_name) {
             Storage::delete($file_name);
+            if($this->project){
+                $activity = new Activity();
+                $activity->org_id = session('org_id');
+                $activity_text = 'Deleted a file from project <b>'.$this->project->name.'</b>';
+                $activity->text = $activity_text;
+                $activity->activityable_id = $this->project->id;
+                $activity->activityable_type = 'App\Models\Project';
+                $activity->created_by = auth()->guard(session('guard'))->user()->id;
+                $activity->save();
+            }
         }
         foreach ($this->selected_directories as $directory_name) {
             Storage::deleteDirectory($directory_name);
