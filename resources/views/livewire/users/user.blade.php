@@ -7,7 +7,7 @@
             <li class="breadcrumb-item active" aria-current="page">{{ $user->name }}</li>
         </ol>
     </nav>
-    <div class="row @if($user->trashed()) archived_content @endif">
+    <div class="row @if($user->trashed()) archived_content @endif"> 
         <div class="col-lg-4">
             <div class="column-box">
                 <div class="user-profile">
@@ -305,7 +305,7 @@
         </div>
         <div class="modal-body">
             <div class="cropper d-none">
-                <img id="user-image" src="{{ asset('') }}img/avatars/1.png" alt="">
+                <img id="user-image" src="{{ asset('') }}img/avatars/1.png" alt="" height="300" width="300">
             </div>
         </div>
         <div class="modal-footer">

@@ -317,7 +317,7 @@ class FileManager extends Component
         // check file name and create path according to file name
         $extension = pathinfo($name, PATHINFO_EXTENSION);
         if ($extension == 'jpg' || $extension == 'jpeg' || $extension == 'png' || $extension == 'gif') {
-            return asset('').'assets/images/icons/image.svg';
+            return Storage::url($this->path.'/'.$name);
         } elseif ($extension == 'txt') {
             return asset('').'assets/images/icons/txt.svg';
         } elseif ($extension == 'pdf') {
