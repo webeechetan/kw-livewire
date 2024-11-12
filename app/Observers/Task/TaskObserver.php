@@ -6,6 +6,8 @@ use App\Notifications\TaskStatusChangeNotification;
 use App\Models\Activity;
 use App\Models\Notification;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
+use App\Notifications\TaskUpdateNotification;
 
 class TaskObserver
 {
@@ -90,9 +92,47 @@ class TaskObserver
             $activity->activityable_id = $task->project_id;
             $activity->activityable_type = 'App\Models\Project';
             $activity->created_by = auth()->guard(session('guard'))->user()->id;
-            $activity->save();
+            $activity->save(); 
             
         }
+
+        $changedValues = $task->getDirty();
+        $fields_to_ignore = ['updated_at','created_at','id','org_id','assigned_by','project_id','status','email_notification','task_order','description'];
+        $fields_to_translate = ['name' => 'Name', 'due_date' => 'Due Date', 'email_notification' => 'Email Notification'];
+        if(count($changedValues) > 0){
+            foreach($changedValues as $key => $value){
+                if(in_array($key, $fields_to_ignore)){
+                    continue;
+                }
+                $activity = new Activity();
+                $activity->org_id = $task->org_id;
+                $activity_text = 'Changed the <b>'.$fields_to_translate[$key].'</b> of task <b>'.$task->name .'</b> from <b>'.$task->getOriginal($key).'</b> to <b>'.$value. '</b>';
+                $activity->text = $activity_text;
+                $activity->activityable_id = $task->project_id;
+                $activity->activityable_type = 'App\Models\Project';
+                $activity->created_by = auth()->guard(session('guard'))->user()->id;
+                $activity->save(); 
+
+                $users = array_merge([$task->assigned_by],$task->users->pluck('id')->toArray(),$task->notifiers->pluck('id')->toArray());
+                $users = array_unique($users);
+                $taskUrl = env('APP_URL').'/'. session('org_name').'/task/view/'.$task->id;
+                foreach($users as $user_id){
+                    if($user_id == Auth::user()->id){
+                        continue;
+                    }
+                    $user = User::find($user_id);
+                    $notification = new Notification();
+                    $notification->user_id = $user->id;
+                    $notification->org_id = $task->org_id;
+                    $notification->action_by = Auth::user()->id;
+                    $notification->title = Auth::user()->name.' updated the '.$fields_to_translate[$key].' of task '.$task->name;
+                    $notification->message = Auth::user()->name.' updated the '.$fields_to_translate[$key].' of task '.$task->name;
+                    $notification->url = $taskUrl;
+                    $notification->save();
+                }
+            }
+        }
+
     }
 
     public function created(Task $task)

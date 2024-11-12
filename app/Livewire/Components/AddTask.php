@@ -119,8 +119,10 @@ class AddTask extends Component
             }
         }
         $taskUrl = env('APP_URL').'/'.session('org_name').'/task/view/'.$task->id;
+        $users = array_merge([$task->assigned_by],$this->task_users,$this->task_notifiers);
+        $users = array_unique($users);
         if($this->task_users){
-            foreach($this->task_users as $user_id){
+            foreach($users as $user_id){
                 if($user_id == Auth::user()->id){
                     continue;
                 }
@@ -132,8 +134,8 @@ class AddTask extends Component
                 $notification->user_id = $user->id;
                 $notification->org_id = $task->org_id;
                 $notification->action_by = Auth::user()->id;
-                $notification->title = 'You have been assigned a new task '.$task->name;
-                $notification->message = 'You have been assigned a new task '.$task->name;
+                $notification->title = Auth::user()->name.' assigned you a new task '.$task->name;
+                $notification->message = Auth::user()->name.' assigned you a new task '.$task->name;
                 $notification->url = route('task.view', ['task' => $task->id]);
                 $notification->save();
             }
