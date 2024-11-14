@@ -26,6 +26,7 @@
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"> 
+
     @livewireStyles
     @stack('styles')
   </head>
@@ -210,6 +211,7 @@
         toastr.remove();
         toastr.success(event.detail)
       })
+
       $('.cus_dropdown-icon').click(function() {
         $(this).parent('.cus_dropdown').toggleClass('open');
       });

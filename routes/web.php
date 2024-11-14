@@ -77,6 +77,10 @@ use App\Livewire\Organizations\Profile as OrganizationProfile;
 */
 
 
+Route::get('/test-pusher',function(){
+    event(new \App\Events\NotificationEvent(1,1,1));
+});
+
 Route::get('/',Login::class);
 Route::get('/login',Login::class)->name('login');
 Route::get('/register/{org_id?}',Register::class)->name('register');

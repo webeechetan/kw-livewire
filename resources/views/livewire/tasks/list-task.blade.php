@@ -310,23 +310,17 @@
 
 @script
 <script>
-
+    $(document).ready(function() {
+        var pusher = new Pusher('d7930b1b0598bf366431', {
+          cluster: 'ap2'
+        });
+        
+        var channel = pusher.subscribe('notification-channel-'+{{ auth()->user()->id }});
+        channel.bind('notification-event-'+{{ auth()->user()->id }}, function(data) {
+            @this.refresh();
+        });
+    });
    
-    // trigger @this.loadMore() when scroll to bottom
-
-    // setTimeout(function(){
-    //     console.log('timeout');
-    //     window.addEventListener('scroll', function(){
-    //         console.log('scroll to bottom');
-    //         if(window.scrollY + window.innerHeight >= document.body.scrollHeight){
-    //             @this.loadMore();
-    //         }
-    //         console.log(window.scrollY + window.innerHeight, document.body.scrollHeight);
-    //     }, {passive: true});
-
-    // }, 3000);
-
-
     document.addEventListener('saved', function(){
         $('#offcanvasRight').offcanvas('hide');
     });

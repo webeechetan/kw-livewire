@@ -93,6 +93,13 @@
                            <input class="email_notification" type="checkbox" wire:model="email_notification">
                         </div>
                     </div>
+                    {{-- Add voice note --}}
+                    <div class="taskPane-item d-flex flex-wrap mb-3">
+                        <div class="taskPane-item-left"><div class="taskPane-item-label">Add Voice Note</div></div>
+                        <div class="taskPane-item-right">
+                           <input class="email_notification" type="checkbox" wire:model="email_notification">
+                        </div>
+                    </div>
                     <div class="taskPane-item mb-2">
                         <div class="taskPane-item-label mb-2"><a href="#"><i class="bx bx-paperclip text-secondary add-attachments" style="transform: rotate(60deg);"></i></a> <span class="task-attachment-count"> {{ count($attachments) }}</span> Attachements</div>
                         <input class="d-none attachments" type="file" wire:model="attachments" multiple id="formFile" />
