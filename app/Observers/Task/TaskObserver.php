@@ -7,7 +7,7 @@ use App\Models\Activity;
 use App\Models\Notification;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
-use App\Notifications\TaskUpdateNotification;
+use App\Events\NotificationEvent;
 
 class TaskObserver
 {
@@ -49,9 +49,12 @@ class TaskObserver
 
             $changedBy = auth()->guard(session('guard'))->user();
             $taskUrl = env('APP_URL').'/'. session('org_name').'/task/view/'.$task->id;
+            $users = array_merge([$task->assigned_by],$task->users->pluck('id')->toArray(),$task->notifiers->pluck('id')->toArray());
+            $users = array_unique($users);
             if($task->email_notification){
 
-                foreach($task->users as $user){
+                foreach($users as $user){
+                    $user = User::find($user);
                     if($user->id == $changedBy->id){
                         continue;
                     }
@@ -65,22 +68,10 @@ class TaskObserver
                     $notification->message = $changedBy->name.' changed the status of task '.$task->name .' from '.$oldStatus.' to '.$newStatus;
                     $notification->url = route('task.view', ['task' => $task->id]);
                     $notification->save();
+                    event(new NotificationEvent($user, Auth::user(), $notification));
                 }
 
-                foreach($task->notifiers as $notifier){
-                    if($notifier->id == $changedBy->id){
-                        continue;
-                    }
-                    $notifier->notify(new TaskStatusChangeNotification($task, $oldStatus, $newStatus, $changedBy, $taskUrl));
-                    $notification = new Notification();
-                    $notification->action_by = Auth::user()->id;
-                    $notification->user_id = $notifier->id;
-                    $notification->org_id = $task->org_id;
-                    $notification->title = $changedBy->name.' changed the status of task '.$task->name .' from '.$oldStatus.' to '.$newStatus;
-                    $notification->message = $changedBy->name.' changed the status of task '.$task->name .' from '.$oldStatus.' to '.$newStatus;
-                    $notification->url = route('task.view', ['task' => $task->id]);
-                    $notification->save();
-                }
+                
             }
 
 
@@ -129,9 +120,11 @@ class TaskObserver
                     $notification->message = Auth::user()->name.' updated the '.$fields_to_translate[$key].' of task '.$task->name;
                     $notification->url = $taskUrl;
                     $notification->save();
+                    event(new NotificationEvent($user, Auth::user(), $notification));
                 }
             }
         }
+
 
     }
 

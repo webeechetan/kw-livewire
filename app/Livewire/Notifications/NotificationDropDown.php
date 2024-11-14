@@ -31,4 +31,9 @@ class NotificationDropDown extends Component
         Notification::clearAll(auth()->user()->id);
         return $this->redirect(route('dashboard'),navigate:true);
     }
+
+    public function refreshNotifications()
+    {
+        $this->mount();
+    }
 }
