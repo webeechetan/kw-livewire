@@ -2,12 +2,12 @@
     <!-- Dashboard Header -->
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a wire:navigate href="{{ route('user.index') }}"><i class='bx bx-line-chart'></i>{{ Auth::user()->organization ? Auth::user()->organization->name : 'No organization' }}</a></li>
+            <li class="breadcrumb-item"><a wire:navigate href="{{ route('user.index') }}"><i class='bx bx-line-chart'></i>{{ ucfirst(Auth::user()->organization->name) }}</a></li>
             <li class="breadcrumb-item"><a wire:navigate href="{{ route('user.index') }}">All Users</a></li>
             <li class="breadcrumb-item active" aria-current="page">{{ $user->name }}</li>
         </ol>
     </nav>
-    <div class="row @if($user->trashed()) archived_content @endif">
+    <div class="row @if($user->trashed()) archived_content @endif"> 
         <div class="col-lg-4">
             <div class="column-box">
                 <div class="user-profile">
@@ -305,7 +305,7 @@
         </div>
         <div class="modal-body">
             <div class="cropper d-none">
-                <img id="user-image" src="{{ asset('') }}img/avatars/1.png" alt="">
+                <img id="user-image" src="{{ asset('') }}img/avatars/1.png" alt="" height="300" width="300">
             </div>
         </div>
         <div class="modal-footer">
@@ -450,21 +450,17 @@
                 }
             });
         });
-
+ 
         // bio
         $('.edit-bio').click(function(){
             $(".update-bio-btn").removeClass('d-none');
             $('.user-profile-bio').summernote({
                 height: 200,
                 toolbar: [
-                    ['style', ['style']],
-                    ['font', ['bold', 'underline', 'clear']],
-                    ['color', ['color']],
-                    ['para', ['ul', 'ol', 'paragraph']],
-                    ['table', ['table']],
-                    ['insert', ['link', 'picture', 'video']],
-                    ['view', ['fullscreen', 'codeview', 'help']]
-                ],
+                        ['font', ['bold', 'underline']],
+                        ['para', ['ul', 'ol']],
+                        ['insert', ['link']],
+                    ],
                 callbacks: {
                     onChange: function(contents, $editable) {
                         @this.set('bio', contents);

@@ -58,7 +58,7 @@
                             
                             @if(session()->has('success'))
                                 <div class="col mb-4 text-center">
-                                    <div class="text-success">
+                                    <div class="text-success"> 
                                         {{ session('success') }}
                                     </div>
                                 </div>

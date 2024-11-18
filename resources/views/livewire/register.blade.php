@@ -2,11 +2,7 @@
     <div class="header-signup d-flex align-items-center">
         <div class="container">
             <div class="row justify-content-md-center">
-                <div class="col-sm-6">
-                    <div class="logo">
-                        <img src="{{ asset('') }}assets/images/logo.png" alt="Kaykewalk Logo" />
-                    </div>
-                </div>
+                
                 <div class="col-sm-6 text-md-end">
                     @if(!in_array($step, [2, 3]))
                     <a wire:navigate href="/login">

@@ -121,7 +121,7 @@
                     <div class="files-size">{{ $file_data['size'] }} KB</div>
                     
                     <div class="files-item-icon">
-                        @if($this->createThumbnailFromFileName($file_name))
+                        @if($this->createThumbnailFromFileName($file_name)) 
                             <span><img src="{{ $this->createThumbnailFromFileName($file_name) }}" alt=""></span>
                         @else
                             <span><i class='bx bx-file'></i></span>

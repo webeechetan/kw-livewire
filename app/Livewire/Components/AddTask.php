@@ -3,7 +3,7 @@
 namespace App\Livewire\Components;
 
 use Livewire\Component;
-use App\Models\ { Project, Task, User, Attachment, Comment, Client, Notification};
+use App\Models\ { Project, Task, User, Attachment, Comment, Client, Notification, VoiceNote};
 use Livewire\WithFileUploads;
 use App\Notifications\NewTaskAssignNotification;
 use App\Notifications\UserMentionNotification;
@@ -27,10 +27,13 @@ class AddTask extends Component
     public $task_notifiers;
     public $project_id;
     public $status = 'pending'; 
+    public $email_notification;
+    public $voice_note;
 
     public $attachments = [];
     public $comment;
     public $comments = [];
+
 
 
     public function render()
@@ -58,6 +61,7 @@ class AddTask extends Component
     }
 
     public function saveTask(){
+        // dd($this->email_notification);
         if($this->task){
             $this->updateTask();
             return;
@@ -90,9 +94,17 @@ class AddTask extends Component
         $task->due_date = $this->due_date;
         $task->project_id = $this->project_id;
         $task->status = $this->status;
+        if($this->email_notification == true){
+            $task->email_notification = $this->email_notification;
+        }
+        if($this->email_notification == false || $this->email_notification == 'on'){
+            $task->email_notification = 0;
+        }
+
         $task->save();
         $task->users()->sync($this->task_users);
         $task->notifiers()->sync($this->task_notifiers);
+        $this->saveVoiceNoteToTask($task->id);
          // attach files to task from $this->attachments
         if($this->attachments){
             foreach($this->attachments as $attachment){
@@ -110,18 +122,23 @@ class AddTask extends Component
             }
         }
         $taskUrl = env('APP_URL').'/'.session('org_name').'/task/view/'.$task->id;
+        $users = array_merge([$task->assigned_by],$this->task_users,$this->task_notifiers);
+        $users = array_unique($users);
         if($this->task_users){
-            foreach($this->task_users as $user_id){
+            foreach($users as $user_id){
                 if($user_id == Auth::user()->id){
                     continue;
                 }
                 $user = User::find($user_id);
-                $user->notify(new NewTaskAssignNotification($task,$taskUrl));
+                if($this->email_notification){
+                    $user->notify(new NewTaskAssignNotification($task,$taskUrl));
+                }
                 $notification = new Notification();
                 $notification->user_id = $user->id;
                 $notification->org_id = $task->org_id;
-                $notification->title = 'You have been assigned a new task '.$task->name;
-                $notification->message = 'You have been assigned a new task '.$task->name;
+                $notification->action_by = Auth::user()->id;
+                $notification->title = Auth::user()->name.' assigned you a new task '.$task->name;
+                $notification->message = Auth::user()->name.' assigned you a new task '.$task->name;
                 $notification->url = route('task.view', ['task' => $task->id]);
                 $notification->save();
             }
@@ -167,16 +184,25 @@ class AddTask extends Component
     }
 
     public function editTask($id){
-        $this->task = Task::with('users','notifiers','attachments','comments.user')->find($id);
+        $this->task = Task::with('users','notifiers','attachments','comments.user','voiceNotes.user')->find($id);
         $this->name = $this->task->name;
         $this->description = $this->task->description;
         $this->due_date = $this->task->due_date;
         $this->task_users = $this->task->users->pluck('id')->toArray();
         $this->task_notifiers = $this->task->notifiers->pluck('id')->toArray();
         $this->comments = $this->task->comments;
+        $this->email_notification = $this->task->email_notification;
         $this->status = $this->task->status;
         $this->project_id = $this->task->project_id;
         $this->dispatch('edit-task',$this->task);
+        // user ids of who created a task and who are assigned to a task and who are notifiers of a task
+        $user_ids_who_can_edit_task = array_merge([$this->task->assigned_by],$this->task->users->pluck('id')->toArray(),$this->task->notifiers->pluck('id')->toArray());
+        $user_ids_who_can_edit_task = array_unique($user_ids_who_can_edit_task);
+        if(!in_array(Auth::user()->id,$user_ids_who_can_edit_task)){
+            $this->dispatch('read-only',true);
+        }else{
+            $this->dispatch('read-only',false);
+        }
     }
 
     public function updateTask(){
@@ -203,6 +229,7 @@ class AddTask extends Component
         $this->task->due_date = $this->due_date;
         $this->task->status = $this->status;
         $this->task->project_id = $this->project_id;
+        $this->task->email_notification = $this->email_notification;
         $this->task->save();
         $this->task->users()->sync($this->task_users);
         $this->task->notifiers()->sync($this->task_notifiers);
@@ -222,6 +249,8 @@ class AddTask extends Component
                 $at->save();
             }
         }
+
+        $this->saveVoiceNoteToTask($this->task->id);
 
         $this->attachments = [];
         $this->task = null; 
@@ -245,6 +274,30 @@ class AddTask extends Component
 
     public function viewFullscree(){
         $this->redirect(route('task.view',$this->task->id));
+    }
+
+    public function saveVoiceNoteToTask($task_id){
+        $this->validate([
+            'voice_note' => 'required'
+        ]);
+        $audio_data = $this->voice_note;
+        $base64Audio = str_replace('data:audio/wav;base64,', '', $audio_data);
+        $audio_binary = base64_decode($base64Audio);
+        $audio_name = 'audio_'.time().'.wav';
+        $path = 'storage/voice_notes/'.$audio_name;
+        if (!file_exists(dirname($path))) {
+            mkdir(dirname($path), 0755, true);
+        }
+        file_put_contents($path, $audio_binary); 
+        
+        $voiceNote = new VoiceNote();
+        $voiceNote->org_id = session('org_id');
+        $voiceNote->user_id = Auth::user()->id;
+        $voiceNote->voice_noteable_id = $task_id;
+        $voiceNote->voice_noteable_type = 'App\Models\Task';
+        $voiceNote->path = $path;
+        $voiceNote->save();
+
     }
     
 }

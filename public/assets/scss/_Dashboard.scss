@@ -100,10 +100,12 @@
     font-size: 14px;
     transition: $ease_03;
     overflow: hidden;
+    cursor: pointer;
 
     &:hover, &:focus {
         color: #fff;
         z-index: 9;
+        transform: translateY(-2px);
     }
 
     img {
@@ -360,9 +362,9 @@
             &-wrap {
                 padding: $spacing_xs $spacing_s;
                 position: relative;
+                cursor: pointer;
             }
             &_name {
-                cursor: pointer;
                 
                 &_text {
                     font-size: 13px;
@@ -411,7 +413,7 @@
             }
             &_project_name {
                 margin-top: $spacing_xs;
-                font-size: 13px;
+                font-size: 10px;
                 @include flex_align_center;
                 gap: $spacing_s;
                 color: $text-light;
@@ -730,7 +732,7 @@
                 padding: 7px 15px;
                 font-size: 13px;
                 &--selected {
-                    background: $white;
+                    display: none;
                 }
                 &--highlighted.select2-results__option--selectable {
                     background: $light;

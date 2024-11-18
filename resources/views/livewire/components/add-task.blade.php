@@ -11,12 +11,13 @@
                 </select> 
             </div> 
             <div class="taskPane-dashbaord-head-right">
+                <span class="btn-batch btn-batch-danger d-none read-only-btn">Read Only</span>
                 <button type="button" class="btn-icon add-attachments" data-bs-toggle="modal" data-bs-target="#attached-file-modal"><i class='bx bx-paperclip' style="transform: rotate(60deg);"></i></button>
                 {{-- <button type="button" class="btn-icon task-sharable-link d-none"><i class='bx bx-share-alt ' ></i></button> --}}
                 <button type="button" class="btn-icon view-task-btn d-none" wire:click="viewFullscree"><i class='bx bx-fullscreen'></i></button>
                 {{-- <button type="button" wire:click="deleteTask" class="btn-icon delete-task-btn d-none"><i class='bx bx-trash'></i></button> --}}
                 <a href="javascript:" wire:click="deleteTask" wire:confirm="Are you sure you want to delete?" class="btn-icon delete-task-btn d-none"><i class='bx bx-trash'></i></a>
-                <button type="button" class="btn-icon" data-bs-dismiss="offcanvas" aria-label="Close"><i class='bx bx-arrow-to-right'></i></button>
+                <button type="button" class="btn-icon" data-bs-dismiss="offcanvas" aria-label="Close"><i class='bx bx-window-close'></i></button>
             </div>
         </div>
         <div class="offcanvas-body scrollbar">
@@ -54,8 +55,8 @@
                     <div class="taskPane-item d-flex flex-wrap mb-3">
                         <div class="taskPane-item-left"><div class="taskPane-item-label">Project</div></div>
                         <div class="taskPane-item-right"> 
-                            <select required wire:model="project_id" name="" id="" class="task-projects">
-                                <option value="" >Select Project</option>
+                            <select required  class="task-projects">
+                                <option value="" selected disabled>Select Project</option>
                                 @foreach ($projects as $p)
                                     @if($project_id && $project && $project->id == $p->id)
                                         <option value="{{ $p->id }}" selected>{{ $p->name }}</option>
@@ -84,6 +85,25 @@
                         <div class="taskPane-item-label mb-2">Description</div>
                         <div>
                             <textarea wire:model="description" id="editor" cols="30" rows="4" placeholder="Type Description"></textarea>
+                        </div>
+                    </div>
+                    <div class="taskPane-item d-flex flex-wrap mb-3">
+                        <div class="taskPane-item-left"><div class="taskPane-item-label">Email Notification</div></div>
+                        <div class="taskPane-item-right">
+                           <input class="email_notification" type="checkbox" wire:model="email_notification">
+                        </div>
+                    </div>
+                    <div class="taskPane-item d-flex flex-wrap mb-3 voice-notes-list d-none">
+                    </div> 
+
+                    {{-- Add voice note --}}
+                    <div class="taskPane-item d-flex flex-wrap mb-3">
+                        <div class="taskPane-item-left"><div class="taskPane-item-label">Add Voice Note</div></div>
+                        <div class="taskPane-item-right">
+                            <div class="voice_note">
+                                <span class="btn btn-sm btn-primary" id="recordButton">Start</span>
+                                <span class="btn btn-sm btn-primary" id="stopButton">Stop</span>
+                            </div>
                         </div>
                     </div>
                     <div class="taskPane-item mb-2">
@@ -189,16 +209,81 @@
         </div>
         </div>
     </div>
-
+    
 </div>
 
+@assets
+<script src="{{env('APP_URL')}}/js/recorder.js"></script>
+@endassets
 
 @push('scripts')
     <script>
 
+
+        
+    URL = window.URL || window.webkitURL;
+
+    var gumStream; 
+    var rec; 
+    var input; 
+    var AudioContext = window.AudioContext || window.webkitAudioContext;
+    var audioContext;
+
+    var recordButton = document.getElementById("recordButton");
+    var stopButton = document.getElementById("stopButton");
+
+    recordButton.addEventListener("click", startRecording);
+    stopButton.addEventListener("click", stopRecording);
+
+    function startRecording() {
+        console.log("recordButton clicked");
+        var constraints = { audio: true, video: false };
+        recordButton.disabled = true;
+        navigator.mediaDevices
+            .getUserMedia(constraints)
+            .then(function (stream) {
+                console.log(
+                    "getUserMedia() success, stream created, initializing Recorder.js ..."
+                );
+                audioContext = new AudioContext();
+                gumStream = stream;
+                input = audioContext.createMediaStreamSource(stream);
+                rec = new Recorder(input, { numChannels: 1 });
+                rec.record();
+                console.log("Recording started");
+            })
+            .catch(function (err) {
+                recordButton.disabled = false;
+            });
+    }
+
+
+
+    function stopRecording() {
+        console.log("stopButton clicked");
+        recordButton.disabled = false;
+        rec.stop();
+        gumStream.getAudioTracks()[0].stop();
+        rec.exportWAV(createDownloadLink);
+    }
+
+    function createDownloadLink(blob) {
+        // save the audio file to server
+        var reader = new FileReader();
+        reader.readAsDataURL(blob);
+        reader.onloadend = function () {
+            var base64data = reader.result;
+            @this.set('voice_note', base64data);
+        };
+
+        rec.clear();
+
+        
+    }
+
         // clear all fields when offcanvas is closed or dismissed 
 
-        $(".bx-arrow-to-right").click(function(){
+        $(".bx-window-close").click(function(){
             location.reload();
         });
 
@@ -222,6 +307,8 @@
             $(".attached_files").addClass('d-none');
             $('.taskPane-heading-label').html('Add Task');
             $('.save-task-button').html('Save Task');
+            $(".email_notification").prop('checked', false);
+
             @this.set('task', null);
         }
 
@@ -255,7 +342,7 @@
                         match: /\B@(\w*)$/,
                         search: function (keyword, callback) {
                             callback($.grep(this.mentions, function (item) {
-                                return item.indexOf(keyword) == 0;
+                                return item.toLowerCase().indexOf(keyword.toLowerCase()) == 0;
                             }));
                         },
                         template : function (item) {
@@ -289,7 +376,7 @@
                         match: /\B@(\w*)$/,
                         search: function (keyword, callback) {
                             callback($.grep(this.mentions, function (item) {
-                                return item.indexOf(keyword) == 0;
+                                return item.toLowerCase().indexOf(keyword.toLowerCase()) == 0;
                             }));
                         },
                         template : function (item) {
@@ -322,7 +409,7 @@
                         match: /\B@(\w*)$/,
                         search: function (keyword, callback) {
                             callback($.grep(this.mentions, function (item) {
-                                return item.indexOf(keyword) == 0;
+                                return item.toLowerCase().indexOf(keyword.toLowerCase()) == 0;
                             }));
                         },
                         template : function (item) {
@@ -346,9 +433,7 @@
                             @this.set('comment', contents);
                         }
                     }
-                });
-
-                
+                });  
             }
 
             $('.add-attachments').on('click', function(){
@@ -362,7 +447,6 @@
             
 
             setTimeout(() => {
-                console.log('init plugins');
                 initPlugins();
             }, 1000);
 
@@ -372,10 +456,20 @@
                 allowClear: true,
             });
 
+            $(".task-projects").select2({
+                dropdownParent: $('#offcanvasRight'),
+                placeholder: "Select Project",
+                allowClear: true,
+            });
+
+            $(".task-projects").on('change', function (e) {
+                var data = $(".task-projects").val();
+                @this.set('project_id', data);
+            });
+
             $(".task-users").on('change', function (e) {
                 var data = $(".task-users").val();
                 @this.set('task_users', data);
-                // $('body').append('<div class="offcanvas-backdrop fade show"></div>'); 
             });
 
             $('.task-notify-users').select2({
@@ -386,7 +480,6 @@
             $(".task-notify-users").on('change', function (e) {
                 var data = $(".task-notify-users").val();
                 @this.set('task_notifiers', data);
-                // $('body').append('<div class="offcanvas-backdrop fade show"></div>'); 
             });
 
             
@@ -407,6 +500,33 @@
                 return words[0][0] + words[1][0];
             }
 
+            document.addEventListener('read-only', event => {
+                let form_items = 
+                console.log(event.detail);
+                if(event.detail[0] == true){
+                    toggleFormItems(true);
+                }else{
+                    toggleFormItems(false);
+                }
+            });
+
+
+            function toggleFormItems(prop){
+                let form_items = $(".taskPane").find('input, select, textarea');
+
+                form_items.each(function(){
+                    $(this).attr('disabled',prop);
+                });
+                if(prop == true){
+                    $(".read-only-btn").removeClass('d-none');
+                }else{
+                    $(".read-only-btn").addClass('d-none');
+                }
+
+                $(".save-task-button").attr('disabled',prop);
+            }
+
+            
             document.addEventListener('edit-task', event => {
 
                 $(".comment-rows").html('');
@@ -422,7 +542,6 @@
                 $('.save-task-button').html('Update Task');
                 let task_users = event.detail[0].users;
                 let task_notifiers = event.detail[0].notifiers;
-
                 let task_users_ids = [];
                 let task_notifiers_ids = [];
 
@@ -436,13 +555,17 @@
 
                 $("#editor").summernote('code', task.description);
 
-                console.log(task_users_ids);
-
                 $('.task-users').val(task_users_ids).trigger('change');
 
                 $('.task-notify-users').val(task_notifiers_ids).trigger('change');
 
                 $('.task-projects').val(event.detail[0].project_id).trigger('change');
+
+                if(event.detail[0].email_notification){
+                    $(".email_notification").prop('checked', true);
+                }else{
+                    $(".email_notification").prop('checked', false);
+                }
 
                 if(event.detail[0].due_date){
                     $('.task-due-date').text(event.detail[0].due_date);
@@ -459,13 +582,50 @@
                     }
                 });
 
+                // render voice notes
+
+                let voice_notes = event.detail[0].voice_notes
+
+                $(".voice-notes-list").html('');
+
+                voice_notes.forEach(voice_note => {
+                    let date = new Date(voice_note.created_at);
+                    let options = { day: 'numeric', month: 'long', year: 'numeric' };
+                    let formattedDate = date.toLocaleDateString('en-GB', options);
+
+                    let voice_note_html = `<div class="voice-notes-item">
+                        <div class="voice-notes-item-user">
+                            <div class="voice-notes-item-user-img">
+                                ${
+                                    voice_note.user.image ? `<img class="rounded-circle" src="{{ env('APP_URL') }}/storage/${voice_note.user.image}">` 
+                                    : 
+                                    `<span class="avatar avatar-sm avatar-yellow" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="${voice_note.user.name}">${createInitials(voice_note.user.name)}</span>`
+                                }
+                            </div>
+                            <div class="voice-notes-item-user-name-wrap">
+                                <div class="voice-notes-item-user-name">${voice_note.user.name}</div>
+                                <div class="voice-notes-item-date">${formattedDate}</div>
+                            </div>
+                        </div>
+                        <div class="voice-notes-item-audio">
+                            <audio controls>
+                                <source src="{{ env('APP_URL') }}/${voice_note.path}" type="audio/wav">
+                            </audio>
+                        </div>
+                    </div>`;
+
+                    $(".voice-notes-list").append(voice_note_html);
+                });
+
+                $(".voice-notes-list").removeClass('d-none');
+
+
+
                 $(".task-comments-count").html(internal_comments_count);
 
                 $(".client-comment-count").html(event.detail[0].comments.length - internal_comments_count);
 
                 $(".total-comments").html(event.detail[0].comments.length);
-
-                console.log(event.detail[0].comments);
 
                 event.detail[0].comments.forEach(comment => {
                     let comment_type = comment.type;
@@ -543,7 +703,7 @@
                     $('.client-comment-rows').append(comment_html);
                     $('#internal_comment_box').summernote('code', '');
                 }
-
+ 
                 $(".total-comments").html(parseInt($(".total-comments").html()) + 1);
 
 

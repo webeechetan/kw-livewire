@@ -13,6 +13,7 @@ use App\Models\Scopes\OrganizationScope;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Notifications\Notification;
 use App\Models\Attachment;
+use App\Models\VoiceNote;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use App\Observers\Task\TaskObserver;
@@ -28,7 +29,8 @@ class Task extends Model
         'assigned_by',
         'name',
         'description',
-        'due_date'
+        'due_date',
+        'project_id',
     ];
 
     protected static function booted()
@@ -88,17 +90,24 @@ class Task extends Model
         return $this->morphMany(Attachment::class, 'attachable');
     }
 
+    public function voiceNotes(){
+        return $this->morphMany(VoiceNote::class, 'voice_noteable');
+    }
+
     // scopes 
 
-    public function scopeTasksByUserType($query){
-        // return $query;
+    public function scopeTasksByUserType($query,$assignedByMe = false){
         if(session('guard') == 'web'){
-            return $query->whereHas('users', function($q){
-                $q->where('user_id', auth()->user()->id);
-            })->orWhereHas('assignedBy',function($q){
-                $q->where('assigned_by', auth()->user()->id);
-            });
-
+            if($assignedByMe){
+                return $query->whereHas('assignedBy',function($q){
+                            $q->where('assigned_by', auth()->user()->id);
+                        });
+            }else{
+                return $query->whereHas('users', function($q){
+                    $q->where('user_id', auth()->user()->id);
+                });
+            }
+            
         }
     }
 

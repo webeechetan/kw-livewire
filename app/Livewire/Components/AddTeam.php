@@ -38,7 +38,7 @@ class AddTeam extends Component
         if($this->team){
             $this->updateTeam();
             return;
-        }
+        } 
 
         $this->validate([
             'name' => "required"
@@ -47,7 +47,9 @@ class AddTeam extends Component
         $team = new Team();
         $team->org_id = session('org_id');
         $team->name = $this->name; 
-        $team->manager_id = $this->team_manager; 
+        if($this->team_manager){
+            $team->manager_id = $this->team_manager; 
+        }
 
         if ($this->image) {
             $image = $this->image->store('images/teams');

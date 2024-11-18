@@ -77,6 +77,8 @@
     <script>
         document.addEventListener('team-added', event => {
             $("#add-team-modal").modal('hide');
+            $('.image_upload_input').val('');
+            $('.team_users').val('').trigger('change');
             $('.image-preview-section').addClass('d-none');
         });
 

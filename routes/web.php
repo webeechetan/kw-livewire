@@ -77,6 +77,10 @@ use App\Livewire\Organizations\Profile as OrganizationProfile;
 */
 
 
+Route::get('/test-pusher',function(){
+    event(new \App\Events\NotificationEvent(1,1,1));
+});
+
 Route::get('/',Login::class);
 Route::get('/login',Login::class)->name('login');
 Route::get('/register/{org_id?}',Register::class)->name('register');
@@ -101,13 +105,14 @@ Livewire::setUpdateRoute(function ($handle) use ($org_name) {
 
 });
 
+Route::get($org_name.'/task/view/{task}',View::class)->name('task.view')->middleware('myauth');
+
+
 Route::group(
     [
         'middleware' => ['myauth'],
         'prefix' => $org_name,
     ], function() {
-
-    
 
     /*
     |--------------------------------------------------------------------------
@@ -180,7 +185,6 @@ Route::group(
     Route::get('/tasks/list-view',TaskListView::class)->name('task.list-view');
     Route::get('/tasks/{sort?}/{filter?}/{byProject?}/{byClient?}',ListTask::class)->name('task.index');
     Route::get('/tasks/add',AddTask::class)->name('task.add');
-    Route::get('/task/view/{task}',View::class)->name('task.view');
 
     /*
     |--------------------------------------------------------------------------

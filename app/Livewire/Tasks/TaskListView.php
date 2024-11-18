@@ -73,6 +73,7 @@ class TaskListView extends Component
     public $comments;
 
     public $ViewTasksAs = 'user';
+    public $assignedByMe = false;
 
 
     public function render()
@@ -80,16 +81,16 @@ class TaskListView extends Component
         return view('livewire.tasks.task-list-view');
     }
 
-     
+      
     public function mount()
     {
 
-            $this->allTasks = Task::tasksByUserType()->count();
-            $this->pendingTasks = Task::tasksByUserType()->where('status', 'pending')->count();
-            $this->inProgressTasks = Task::tasksByUserType()->where('status', 'in_progress')->count();
-            $this->inReviewTasks = Task::tasksByUserType()->where('status', 'in_review')->count();
-            $this->completedTasks = Task::tasksByUserType()->where('status', 'completed')->count();
-            $this->overdueTasks = Task::tasksByUserType()->where('due_date', '<', now())->where('status', '!=', 'completed')->count();
+            $this->allTasks = Task::tasksByUserType($this->assignedByMe)->count();
+            $this->pendingTasks = Task::tasksByUserType($this->assignedByMe)->where('status', 'pending')->count();
+            $this->inProgressTasks = Task::tasksByUserType($this->assignedByMe)->where('status', 'in_progress')->count();
+            $this->inReviewTasks = Task::tasksByUserType($this->assignedByMe)->where('status', 'in_review')->count();
+            $this->completedTasks = Task::tasksByUserType($this->assignedByMe)->where('status', 'completed')->count();
+            $this->overdueTasks = Task::tasksByUserType($this->assignedByMe)->where('due_date', '<', now())->where('status', '!=', 'completed')->count();
             // dd($this->overdueTasks);
             $this->doesAnyFilterApplied();
             $this->authorize('View Task');
@@ -151,25 +152,25 @@ class TaskListView extends Component
             }else{
                 $this->tasks = [
                     'pending' => $this->applySort(
-                        Task::tasksByUserType()
+                        Task::tasksByUserType($this->assignedByMe)
                             ->where('status', 'pending')
                             ->where('name', 'like', '%' . $this->query . '%')
                     )->get(),
         
                     'in_progress' => $this->applySort(
-                                        Task::tasksByUserType()
+                                        Task::tasksByUserType($this->assignedByMe)
                                             ->where('status', 'in_progress')
                                             ->where('name', 'like', '%' . $this->query . '%')
                                     )->get(),
                     
                     'in_review' => $this->applySort(
-                                    Task::tasksByUserType()
+                                    Task::tasksByUserType($this->assignedByMe)
                                         ->where('status', 'in_review')
                                         ->where('name', 'like', '%' . $this->query . '%')
                                 )->get(),
     
                     'completed' => $this->applySort(
-                                    Task::tasksByUserType()
+                                    Task::tasksByUserType($this->assignedByMe)
                                     ->where('status', 'completed')
                                     ->where('name', 'like', '%' . $this->query . '%')
                                 )->get(),
@@ -178,6 +179,11 @@ class TaskListView extends Component
             }
 
 
+    }
+
+    public function updatedAssignedByMe($value)
+    {
+        $this->mount();
     }
 
     public function updatedSort($value)

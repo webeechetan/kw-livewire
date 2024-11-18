@@ -26,6 +26,7 @@
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"> 
+
     @livewireStyles
     @stack('styles')
   </head>
@@ -137,7 +138,7 @@
                     <li>
                       <li>
                         <a wire:navigate href="{{ route('client.profile',Auth::user()->organization->mainClient->id) }}"  class="@if ( request()->segment(4) == Auth::user()->organization->mainClient->id && (request()->segment(2) == 'clients' || request()->segment(2) == 'client' )) active @endif"><i class='bx bx-body' ></i> 
-                          {{ ucfirst(Auth::user()->organization ? Auth::user()->organization->name : 'No organization') }}
+                          {{ ucfirst(Auth::user()->organization->name) }}
                         </a>
                       </li>
                     </li>
@@ -156,14 +157,12 @@
                             <li @if(isset($tour['main_tour'])) data-step="2" data-position='right' data-intro='Create your first project' @endif><a wire:navigate href="{{ route('project.index') }}" class="@if (request()->segment(2) == 'projects' || request()->segment(2) == 'project' ) active @endif"><i class='bx bx-objects-horizontal-left'></i> Projects</a></li>
                             
                         @endcan
-                        @can('View User')
-                            <li @if(isset($tour['main_tour'])) data-step="3" data-position='right' data-intro='Create your first user' @endif><a wire:navigate href="{{ route('user.index') }}" class="@if (request()->segment(2) == 'users' || request()->segment(2) == 'user' ) active @endif"><i class='bx bx-user'></i> Users</a></li>
-                           
-                        @endcan
                         @can('View Team')
                             <li  @if(isset($tour['main_tour'])) data-step="4" data-position='right' data-intro='Create your first team' @endif><a wire:navigate href="{{ route('team.index') }}" class="@if (request()->segment(2) == 'teams' || request()->segment(2) == 'team' ) active @endif"><i class='bx bx-sitemap'></i> Teams</a></li>
-                           
                         @endcan                      
+                        @can('View User')
+                            <li @if(isset($tour['main_tour'])) data-step="3" data-position='right' data-intro='Create your first user' @endif><a wire:navigate href="{{ route('user.index') }}" class="@if (request()->segment(2) == 'users' || request()->segment(2) == 'user' ) active @endif"><i class='bx bx-user'></i> Users</a></li>
+                        @endcan
                         @can('View Task')
                           <li @if(isset($tour['main_tour'])) data-step="5" data-position='right' data-intro='Create your first task' @endif><a wire:navigate href="{{ route('task.index') }}" class="@if (request()->segment(2)== 'tasks' || request()->segment(2) == 'task') active @endif"><i class='bx bx-task' ></i> My Tasks</a></li>
                         @endcan
@@ -212,6 +211,7 @@
         toastr.remove();
         toastr.success(event.detail)
       })
+
       $('.cus_dropdown-icon').click(function() {
         $(this).parent('.cus_dropdown').toggleClass('open');
       });

@@ -7,6 +7,7 @@ use App\Models\Notification;
 use App\Notifications\Task\NewCommentNotification;
 use App\Models\User;
 use App\Models\Activity;
+use Illuminate\Support\Facades\Auth;
 
 class CommentObserver
 {
@@ -21,6 +22,7 @@ class CommentObserver
             $user->notify(new NewCommentNotification($comment,$task,$taskUrl));
             $notification = new Notification();
             $notification->user_id = $user->id;
+            $notification->action_by = Auth::user()->id;
             $notification->org_id = $task->org_id;
             $notification->title = 'You have a new comment on task '.$task->name;
             $notification->message = 'You have a new comment on task '.$task->name;
@@ -34,6 +36,7 @@ class CommentObserver
             if($user){
                 $notification = new Notification();
                 $notification->user_id = $user->id;
+                $notification->action_by = Auth::user()->id;
                 $notification->org_id = $task->org_id;
                 $notification->title = 'You have been mentioned in a comment on task '.$task->name;
                 $notification->message = 'You have been mentioned in a comment on task '.$task->name;
@@ -45,7 +48,7 @@ class CommentObserver
 
         $activity = new Activity();
         $activity->org_id = $task->org_id;
-        $activity_text = auth()->guard(session('guard'))->user()->name.' commented on task '.$task->name;
+        $activity_text ='Commented on task <b>'.$task->name.'</b>';
         $activity->text = $activity_text;
         $activity->activityable_id = $task->project_id;
         $activity->activityable_type = 'App\Models\Project';

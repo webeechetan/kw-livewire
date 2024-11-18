@@ -304,7 +304,7 @@
                         match: /\B@(\w*)$/,
                         search: function (keyword, callback) {
                             callback($.grep(this.mentions, function (item) {
-                                return item.indexOf(keyword) == 0;
+                                return item.toLowerCase().indexOf(keyword.toLowerCase()) == 0;
                             }));
                         },
                         template : function (item) {
@@ -338,7 +338,7 @@
                         match: /\B@(\w*)$/,
                         search: function (keyword, callback) {
                             callback($.grep(this.mentions, function (item) {
-                                return item.indexOf(keyword) == 0;
+                                return item.toLowerCase().indexOf(keyword.toLowerCase()) == 0;
                             }));
                         },
                         template : function (item) {
@@ -372,7 +372,7 @@
                         match: /\B@(\w*)$/,
                         search: function (keyword, callback) {
                             callback($.grep(this.mentions, function (item) {
-                                return item.indexOf(keyword) == 0;
+                                return item.toLowerCase().indexOf(keyword.toLowerCase()) == 0;
                             }));
                         },
                         template : function (item) {
@@ -385,14 +385,11 @@
                             return a;
                         },    
                     },
-                toolbar: [
-                    ['style', ['style']],
-                    ['font', ['bold', 'underline', 'clear']],
-                    ['color', ['color']],
-                    ['para', ['ul', 'ol', 'paragraph']],
-                    ['table', ['table']],
-                    ['insert', ['link']],
-                ],
+                    toolbar: [
+                        ['font', ['bold', 'underline']],
+                        ['para', ['ul', 'ol']],
+                        ['insert', ['link']],
+                    ],
                 callbacks: {
                         onChange: function(contents, $editable) {
                             @this.set('description', contents);
@@ -418,6 +415,16 @@
             $(".task-notify-users").on('change', function (e) {
                 var data = $(".task-notify-users").val();
                 @this.set('selectedNotifiers', data);
+            });
+
+            $('.task-projects').select2({
+                placeholder: 'Select Project',
+                allowClear: true
+            });
+
+            $(".task-projects").on('change', function (e) {
+                var data = $(".task-projects").val();
+                @this.set('project_id', data);
             });
 
             flatpickr(".due_date", {

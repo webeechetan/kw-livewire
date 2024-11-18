@@ -125,6 +125,7 @@
                 $('.project-users').val(null).trigger('change');
                 $('.project_start_date').html('Start Date');
                 $('.project_due_date').html('Due Date');
+                $(".clients").val('').trigger('change');
 
             });
 

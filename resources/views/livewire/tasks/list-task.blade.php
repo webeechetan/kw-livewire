@@ -1,7 +1,7 @@
 <div class="container">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a wire:navigate href="{{ route('task.index') }}"><i class='bx bx-line-chart'></i>{{ Auth::user()->organization ? Auth::user()->organization->name : 'No organization' }}</a></li>
+            <li class="breadcrumb-item"><a wire:navigate href="{{ route('task.index') }}"><i class='bx bx-line-chart'></i>{{ucfirst(Auth::user()->organization->name)}}</a></li>
             <li class="breadcrumb-item active" aria-current="page">My Tasks</li>
         </ol>
     </nav>
@@ -134,9 +134,22 @@
                 </div>
             </div>
             <div class="col-md-6 text-end">
-                @if(auth()->user()->is_manager)
                 <div class="form-check form-switch d-inline-block">
-                    <input class="form-check-input task-switch" type="checkbox" role="switch" id="flexSwitchCheckChecked">
+                    <input class="form-check-input assigned-by-me-task-task-switch"
+                    @if($ViewTasksAs == 'manager')
+                        disabled
+                    @endif
+                     type="checkbox" role="switch" id="">
+                    <label class="form-check-label assigned-by-me-task-switch-text" for="">Assigned By Me</label>
+                </div> 
+                @if(auth()->user()->is_manager)
+                |
+                <div class="form-check form-switch d-inline-block">
+                    <input class="form-check-input task-switch" 
+                    @if($assignedByMe)
+                        disabled
+                    @endif
+                     type="checkbox" role="switch" id="flexSwitchCheckChecked">
                     <label class="form-check-label task-switch-text" for="flexSwitchCheckChecked">Showing {{ auth()->user()->myTeam->name }} Tasks</label>
                 </div>
                 @endif
@@ -226,53 +239,55 @@
                                     <div class="card_style-loader-wrap"><i class='bx bx-pencil text-primary me-2' ></i> Loading ...</div>
                                 </div> 
                                 <div class="kanban_column_task-wrap" wire:sortable-group.handle>
-                                    <div class="kanban_column_task_name">
-                                        <div class="kanban_column_task_complete_icon d-none">
-                                            <i class='bx bx-check' ></i>
-                                        </div>
-                                        <div class="kanban_column_task_name_text">
-                                            <h4 wire:click="emitEditTaskEvent({{ $task['id'] }})" class="edit-task fs-6" data-id="{{$task['id']}}">{{ $task['name'] }}</h4>
-                                            <div class="kanban_column_task_project_name">
-                                                <span class="text-black">
-                                                    @if($task['project'])
-                                                    <i class='bx bx-file-blank' ></i>  {{ $task['project']['name'] }} 
-                                                    @endif
-                                                </span>
-                                                <span class="text-black">
-                                                    @if(count($task['comments']) > 0)
-                                                    <i class='bx bx-chat' ></i>  {{ count($task['comments'])  }}
-                                                    @endif
-                                                </span>
+                                    <div wire:click="emitEditTaskEvent({{ $task['id'] }})" data-id="{{$task['id']}}">
+                                        <div class="kanban_column_task_name">
+                                            <div class="kanban_column_task_complete_icon d-none">
+                                                <i class='bx bx-check' ></i>
+                                            </div>
+                                            <div class="kanban_column_task_name_text">
+                                                <div class="edit-task">{{ $task['name'] }}</div>
+                                                <div class="kanban_column_task_project_name">
+                                                    <span class="text-black">
+                                                        @if($task['project'])
+                                                        <i class='bx bx-file-blank' ></i>  {{ $task['project']['name'] }} 
+                                                        @endif
+                                                    </span>
+                                                    <span class="text-black">
+                                                        @if(count($task['comments']) > 0)
+                                                        <i class='bx bx-chat' ></i>  {{ count($task['comments'])  }}
+                                                        @endif
+                                                    </span>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <hr class="my-2">
-                                    <div class="kanban_column_task_bot mt-0 pt-0 border-top-0">
-                                        <div class="kanban_column_task_actions">
-                                            <a href="#" class="kanban_column_task_date task">
-                                                <span class="btn-icon-task-action"><i class='bx bx-calendar-alt' ></i></span>
-                                                <span class="">{{  \Carbon\Carbon::parse($task['due_date'])->format('d M Y') }}</span>
-                                            </a>
-                                        </div>
-                                        <div>
-                                            <div class="avatarGroup avatarGroup-overlap">
-                                                @php
-                                                    $plus_more_users = 0;
-                                                    if(count($task['users']) > 3){
-                                                        $plus_more_users = count($task['users']) - 3;
-                                                    }
-                                                @endphp
+                                        <hr class="my-1">
+                                        <div class="kanban_column_task_bot mt-0 pt-0 border-top-0">
+                                            <div class="kanban_column_task_actions">
+                                                <a href="#" class="kanban_column_task_date task">
+                                                    <span class="btn-icon-task-action"><i class='bx bx-calendar-alt' ></i></span>
+                                                    <span class="">{{  \Carbon\Carbon::parse($task['due_date'])->format('d M Y') }}</span>
+                                                </a>
+                                            </div>
+                                            <div>
+                                                <div class="avatarGroup avatarGroup-overlap">
+                                                    @php
+                                                        $plus_more_users = 0;
+                                                        if(count($task['users']) > 3){
+                                                            $plus_more_users = count($task['users']) - 3;
+                                                        }
+                                                    @endphp
 
-                                                @foreach($task['users']->take(3) as $user)
-                                                    {{-- <a href="javascript:;" class="avatar avatar-sm avatar-{{$user->color}}" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="{{$user->name}}">{{$user->initials}}</a> --}}
-                                                    <x-avatar :user="$user" class="avatar-sm" />
-                                                @endforeach
+                                                    @foreach($task['users']->take(3) as $user)
+                                                        {{-- <a href="javascript:;" class="avatar avatar-sm avatar-{{$user->color}}" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="{{$user->name}}">{{$user->initials}}</a> --}}
+                                                        <x-avatar :user="$user" class="avatar-sm" />
+                                                    @endforeach
 
-                                                @if($plus_more_users)
-                                                    <a href="#" class="avatarGroup-avatar">
-                                                        <span class="avatar avatar-sm avatar-more">+{{$plus_more_users}}</span>
-                                                    </a>
-                                                @endif
+                                                    @if($plus_more_users)
+                                                        <a href="#" class="avatarGroup-avatar">
+                                                            <span class="avatar avatar-sm avatar-more">+{{$plus_more_users}}</span>
+                                                        </a>
+                                                    @endif
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -297,23 +312,17 @@
 
 @script
 <script>
-
+    $(document).ready(function() {
+        var pusher = new Pusher('d7930b1b0598bf366431', {
+          cluster: 'ap2'
+        });
+        
+        var channel = pusher.subscribe('notification-channel-'+{{ auth()->user()->id }});
+        channel.bind('notification-event-'+{{ auth()->user()->id }}, function(data) {
+            @this.refresh();
+        });
+    });
    
-    // trigger @this.loadMore() when scroll to bottom
-
-    // setTimeout(function(){
-    //     console.log('timeout');
-    //     window.addEventListener('scroll', function(){
-    //         console.log('scroll to bottom');
-    //         if(window.scrollY + window.innerHeight >= document.body.scrollHeight){
-    //             @this.loadMore();
-    //         }
-    //         console.log(window.scrollY + window.innerHeight, document.body.scrollHeight);
-    //     }, {passive: true});
-
-    // }, 3000);
-
-
     document.addEventListener('saved', function(){
         $('#offcanvasRight').offcanvas('hide');
     });
@@ -325,6 +334,14 @@
         }else{
             // $(".task-switch-text").text('Show My Tasks');
             @this.set('ViewTasksAs', 'user');
+        }
+    });
+
+    $(".assigned-by-me-task-task-switch").change(function(){
+        if($(this).is(':checked')){
+            @this.set('assignedByMe', true);
+        }else{
+            @this.set('assignedByMe', false);
         }
     });
 
