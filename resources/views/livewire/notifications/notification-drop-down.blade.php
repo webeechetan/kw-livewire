@@ -68,7 +68,6 @@
 @script
   <script>
     $(document).ready(function() {
-      Pusher.logToConsole = true;
 
       var pusher = new Pusher('d7930b1b0598bf366431', {
           cluster: 'ap2'

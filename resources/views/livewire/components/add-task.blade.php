@@ -93,11 +93,17 @@
                            <input class="email_notification" type="checkbox" wire:model="email_notification">
                         </div>
                     </div>
+                    <div class="taskPane-item d-flex flex-wrap mb-3 voice-notes-list d-none">
+                    </div> 
+
                     {{-- Add voice note --}}
                     <div class="taskPane-item d-flex flex-wrap mb-3">
                         <div class="taskPane-item-left"><div class="taskPane-item-label">Add Voice Note</div></div>
                         <div class="taskPane-item-right">
-                           <input class="email_notification" type="checkbox" wire:model="email_notification">
+                            <div class="voice_note">
+                                <span class="btn btn-sm btn-primary" id="recordButton">Start</span>
+                                <span class="btn btn-sm btn-primary" id="stopButton">Stop</span>
+                            </div>
                         </div>
                     </div>
                     <div class="taskPane-item mb-2">
@@ -206,8 +212,74 @@
     
 </div>
 
+@assets
+<script src="{{env('APP_URL')}}/js/recorder.js"></script>
+@endassets
+
 @push('scripts')
     <script>
+
+
+        
+    URL = window.URL || window.webkitURL;
+
+    var gumStream; 
+    var rec; 
+    var input; 
+    var AudioContext = window.AudioContext || window.webkitAudioContext;
+    var audioContext;
+
+    var recordButton = document.getElementById("recordButton");
+    var stopButton = document.getElementById("stopButton");
+
+    recordButton.addEventListener("click", startRecording);
+    stopButton.addEventListener("click", stopRecording);
+
+    function startRecording() {
+        console.log("recordButton clicked");
+        var constraints = { audio: true, video: false };
+        recordButton.disabled = true;
+        navigator.mediaDevices
+            .getUserMedia(constraints)
+            .then(function (stream) {
+                console.log(
+                    "getUserMedia() success, stream created, initializing Recorder.js ..."
+                );
+                audioContext = new AudioContext();
+                gumStream = stream;
+                input = audioContext.createMediaStreamSource(stream);
+                rec = new Recorder(input, { numChannels: 1 });
+                rec.record();
+                console.log("Recording started");
+            })
+            .catch(function (err) {
+                recordButton.disabled = false;
+            });
+    }
+
+
+
+    function stopRecording() {
+        console.log("stopButton clicked");
+        recordButton.disabled = false;
+        rec.stop();
+        gumStream.getAudioTracks()[0].stop();
+        rec.exportWAV(createDownloadLink);
+    }
+
+    function createDownloadLink(blob) {
+        // save the audio file to server
+        var reader = new FileReader();
+        reader.readAsDataURL(blob);
+        reader.onloadend = function () {
+            var base64data = reader.result;
+            @this.set('voice_note', base64data);
+        };
+
+        rec.clear();
+
+        
+    }
 
         // clear all fields when offcanvas is closed or dismissed 
 
@@ -470,7 +542,6 @@
                 $('.save-task-button').html('Update Task');
                 let task_users = event.detail[0].users;
                 let task_notifiers = event.detail[0].notifiers;
-
                 let task_users_ids = [];
                 let task_notifiers_ids = [];
 
@@ -510,6 +581,45 @@
                         internal_comments_count++;
                     }
                 });
+
+                // render voice notes
+
+                let voice_notes = event.detail[0].voice_notes
+
+                $(".voice-notes-list").html('');
+
+                voice_notes.forEach(voice_note => {
+                    let date = new Date(voice_note.created_at);
+                    let options = { day: 'numeric', month: 'long', year: 'numeric' };
+                    let formattedDate = date.toLocaleDateString('en-GB', options);
+
+                    let voice_note_html = `<div class="voice-notes-item">
+                        <div class="voice-notes-item-user">
+                            <div class="voice-notes-item-user-img">
+                                ${
+                                    voice_note.user.image ? `<img class="rounded-circle" src="{{ env('APP_URL') }}/storage/${voice_note.user.image}">` 
+                                    : 
+                                    `<span class="avatar avatar-sm avatar-yellow" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="${voice_note.user.name}">${createInitials(voice_note.user.name)}</span>`
+                                }
+                            </div>
+                            <div class="voice-notes-item-user-name-wrap">
+                                <div class="voice-notes-item-user-name">${voice_note.user.name}</div>
+                                <div class="voice-notes-item-date">${formattedDate}</div>
+                            </div>
+                        </div>
+                        <div class="voice-notes-item-audio">
+                            <audio controls>
+                                <source src="{{ env('APP_URL') }}/${voice_note.path}" type="audio/wav">
+                            </audio>
+                        </div>
+                    </div>`;
+
+                    $(".voice-notes-list").append(voice_note_html);
+                });
+
+                $(".voice-notes-list").removeClass('d-none');
+
+
 
                 $(".task-comments-count").html(internal_comments_count);
 
