@@ -2,7 +2,7 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a wire:navigate href="{{ route('task.index') }}"><i class='bx bx-line-chart'></i>{{ucfirst(Auth::user()->organization->name)}}</a></li>
-            <li class="breadcrumb-item active" aria-current="page">My Tasks</li>
+            <li class="breadcrumb-item active" aria-current="page">Task</li>
         </ol>
     </nav>
 
@@ -10,7 +10,7 @@
     <div class="dashboard-head pb-0 mb-4">
         <div class="row align-items-center">
             <div class="col d-flex align-items-center gap-3">
-                <h3 class="main-body-header-title mb-0">My Tasks</h3>
+                <h3 class="main-body-header-title mb-0">Task</h3>
                 <span class="text-light">|</span>
                 @can('Create Task')
                     <a data-step="1" data-intro='Create your first task' data-position='right' data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" href="javascript:void(0);" class="btn-border btn-sm btn-border-primary toggleForm"><i class="bx bx-plus"></i> Add Task</a>
