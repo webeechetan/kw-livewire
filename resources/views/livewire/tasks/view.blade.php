@@ -206,7 +206,7 @@
                             <div class="cmnt_item_row">
                                 <div class="cmnt_item_user">
                                     <div class="cmnt_item_user_img">
-                                        <img class="rounded-circle" src="{{ env('APP_URL') }}/storage/images/users/Chetan%20Singh.png">
+                                        <x-avatar :user="auth()->user()" />
                                     </div>
                                     <div class="cmnt_item_user_name-wrap">
                                         <div class="custComment">
@@ -263,8 +263,14 @@
     </div>
 </div>
 
-@push('scripts')
+@script
     <script>
+
+        // detect if user came on this page from a browser back button
+        window.addEventListener('popstate', function(event) {
+            location.reload();
+        });
+
         $(document).ready(function(){
 
             if(typeof users_for_mention === 'undefined'){
@@ -282,7 +288,7 @@
 
             $('.task-sharable-link').on('click', function(){
                 var id = $(this).data('id');
-                var url = "{{ env('APP_URL') }}/task/"+id;
+                var url = "{{ env('APP_URL') }}" + "/{{ session('org_name') }}" + "/task/view/" + id;
                 navigator.clipboard.writeText(url).then(function() {
                     console.log('Async: Copying to clipboard was successful!');
                     toastr.success('Task sharbable link copied to clipboard');
@@ -305,11 +311,10 @@
                             return '<span class="mention_user" data-id=" ' + users[users_for_mention.indexOf(item)].id + ' ">' + item + '</span>';
                         },
                         content: function (item) {
-                            item = item.replace(/\s/g, '_');
-                            let span = document.createElement('span');
-                            $(span).addClass('mention_user');
-                            $(span).text(' '+'@' + item + ' ');
-                            return span;
+                            let a = document.createElement('a');
+                            a.href =  "{{ env('APP_URL') }}/" + "{{ session('org_name') }}" +'/user/view/' + users[users_for_mention.indexOf(item)].id;
+                            a.innerText = '@' + item;
+                            return a;
                         },    
                     },
                     toolbar: [
@@ -340,11 +345,10 @@
                             return '<span class="mention_user" data-id=" ' + users[users_for_mention.indexOf(item)].id + ' ">' + item + '</span>';
                         },
                         content: function (item) {
-                            item = item.replace(/\s/g, '_');
-                            let span = document.createElement('span');
-                            $(span).addClass('mention_user');
-                            $(span).text(' '+'@' + item + ' ');
-                            return span;
+                            let a = document.createElement('a');
+                            a.href =  "{{ env('APP_URL') }}/" + "{{ session('org_name') }}" +'/user/view/' + users[users_for_mention.indexOf(item)].id;
+                            a.innerText = '@' + item;
+                            return a;
                         },    
                     },
                     toolbar: [
@@ -375,11 +379,10 @@
                             return '<span class="mention_user" data-id=" ' + users[users_for_mention.indexOf(item)].id + ' ">' + item + '</span>';
                         },
                         content: function (item) {
-                            item = item.replace(/\s/g, '_');
-                            let span = document.createElement('span');
-                            $(span).addClass('mention_user');
-                            $(span).text(' '+'@' + item + ' ');
-                            return span;
+                            let a = document.createElement('a');
+                            a.href =  "{{ env('APP_URL') }}/" + "{{ session('org_name') }}" +'/user/view/' + users[users_for_mention.indexOf(item)].id;
+                            a.innerText = '@' + item;
+                            return a;
                         },    
                     },
                 toolbar: [
@@ -437,4 +440,4 @@
             });
         });
     </script>
-@endpush
+@endscript

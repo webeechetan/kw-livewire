@@ -22,7 +22,7 @@ class TeamsTab extends Component
 
     public function forceDeleteTeam($id)
     {
-
+        $this->authorize('Delete Team');
         $team = Team::withTrashed()->find($id);
         $team->forceDelete();
         $this->dispatch('success', 'Team deleted successfully.');

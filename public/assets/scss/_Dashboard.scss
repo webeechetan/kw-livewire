@@ -344,7 +344,7 @@
 /* ----- Kanban ----- */
 .kanban {
     &_column {
-        min-height: calc(60vh - 50px);
+        height: calc(100vh - 360px);
         padding: 0 15px;
         margin: 15px 0;
         position: relative;
@@ -573,10 +573,6 @@
                     &_date {
                         color: $success;
                     }
-                }
-                .avatarGroup .avatar {
-                    background-color: $success;
-                    color: #fff;
                 }
                 .kanban_bord_column_title {
                     background-color: $success;
@@ -1059,6 +1055,29 @@
 
 .note-modal {
     z-index: 99999;
+    .modal-header {
+        flex-direction: row-reverse;
+        .modal-title {
+            text-transform: inherit;
+        }
+    }
+    .modal-body {
+        padding: 20px;
+    }
+    .modal-footer .note-btn-primary {
+        background-color: $brand;
+        border-color: $brand;
+        padding: 0.5rem 1.4rem;
+        &:hover {
+            border-radius: 4px;
+        }
+    }
+    label:not(.form-check-label) {
+        font-weight: 400;
+        input[type="checkbox"] {
+            margin-right: 5px;
+        }
+    }
 }
 
 /* ----- Comment Area ----- */

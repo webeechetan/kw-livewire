@@ -4,6 +4,7 @@ namespace App\Livewire\Clients\Components;
 
 use Livewire\Component;
 use App\Models\Client;
+use App\Models\Pin;
 
 class ClientTabs extends Component
 {
@@ -42,6 +43,35 @@ class ClientTabs extends Component
 
     public function forceDeleteClient($id)
     {
+        // delete all related data
+        $projects = $this->client->projects;
+        foreach ($projects as $project) {
+            $tasks = $project->tasks;
+            $activities = $project->activities;
+            foreach ($activities as $activity) {
+                $activity->delete();
+            }
+            foreach ($tasks as $task) {
+                $attachments = $task->attachments;
+                foreach ($attachments as $attachment) {
+                    $attachment->delete();
+                }
+                $comments = $task->comments;
+                foreach ($comments as $comment) {
+                    $comment->delete();
+                }
+
+                $task->delete();
+            }
+            $pins = Pin::where('pinnable_id', $project->id)->where('pinnable_type', 'App\Models\Project')->get();
+            foreach ($pins as $pin) {
+                $pin->delete();
+            }
+            $project->delete();
+        }
+
+
+
         $client = Client::withTrashed()->find($id);
         $client->forceDelete();
         $this->dispatch('success', 'Client deleted successfully.');

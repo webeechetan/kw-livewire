@@ -101,45 +101,17 @@ class View extends Component
         $comment->comment = $this->comment;
         $comment->created_by = session('guard');
 
-        // take out mentioned users from description and save them in mentioned_users array
-
         $mentioned_users = [];
 
-        // remove paragraph tags from description
-
-        $temp_comment = str_replace('<p>','',$this->comment);
-        $temp_comment = str_replace('</p>','',$temp_comment);
-        $temp_comment = strip_tags($temp_comment);
-
-
-        // convert description to array of words
-
-        $comment_array = explode(' ',$temp_comment);
-
-        // check if any word starts with @
-
-        foreach($comment_array as $word){
-            if(substr($word,0,1) == '@'){
-                $user_name = substr($word,1);
-                $user_name = str_replace('_',' ',$user_name);
-                $mentioned_users[] = $user_name;
-            }
-        }
+        preg_match_all('/data-id="(\d+)"/', $this->comment, $matches);
+        $mentioned_users = $matches[1]; 
 
         $mentioned_users = array_unique($mentioned_users);
 
-        $mentioned_users = array_map('trim',$mentioned_users);
-
-        $mentioned_users = array_filter($mentioned_users);
-
-        // get user ids from mentioned users
-
-        $mentioned_user_ids = User::whereIn('name',$mentioned_users)->pluck('id')->toArray();
-
-        $comment->mentioned_users = implode(',',$mentioned_user_ids);
+        $comment->mentioned_users = implode(',',$mentioned_users);
         $comment->type = $type;
         $comment->save();
-        foreach($mentioned_user_ids as $user_id){
+        foreach($mentioned_users as $user_id){
             $user = User::find($user_id);
             if($user){
                 $user->notify(new UserMentionNotification($this->task , $comment));

@@ -1,16 +1,19 @@
 <li class="nav-item navbar-dropdown dropdown" wire:click="markAllAsRead" wire:ignore>
-  <a href="#" class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);void(0);" data-bs-toggle="dropdown"
+  <a href="#" class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0)" data-bs-toggle="dropdown"
     data-bs-auto-close="outside" aria-expanded="true">
     <i class='bx bx-bell'></i>
-    {{-- <span class="badge bg-danger rounded-pill badge-notifications">@if($unreadNotifications->count()) {{
-      $unreadNotifications->count() }} @endif</span> --}}
   </a>
+  @if($unreadNotifications->count()) 
+    <span class="badge bg-danger rounded-pill badge-notifications">
+      {{ $unreadNotifications->count() }} 
+    </span>
+  @endif
   <ul class="dropdown-menu dropdown-menu-end py-0" data-bs-popper="static">
     <li class="dropdown-menu-header">
       <div class="dropdown-header">
         <h5 class="fs-5 mb-0 me-auto">Notification</h5>
         @if(count($notifications) > 0)
-          <a href="javascript:void(0);void(0)" wire:click="clearAll" class="text-decoration-underline text-danger">Clear All</a>        
+          <a href="javascript:void(0);" wire:click="clearAll" class="text-decoration-underline text-danger">Clear All</a>        
         @endif
       </div>
     </li>
@@ -20,12 +23,15 @@
         <li class="border-bottom d-grid dropdown-item">
           <div class="d-flex justify-content-between cursor-pointer">
             <div class="col-auto pe-2">
-              <a href="javascript:void(0);" class="avatar avatar-sm avatar-green">Sk</a>
+              <x-avatar :user="$notification->user" />
             </div>
             <div class="team-text col">
               <div class="mb-1 text-sm">
                 <a href="{{ $notification->url }}">
-                  {{$notification->title}}
+                  {{
+                    Str::limit($notification->title, 50, '...')
+                    
+                  }}
                 </a>
               </div>
               <span class="text-sm text-muted">{{ \Carbon\Carbon::parse($notification->created_at)->diffForHumans() }}</span>

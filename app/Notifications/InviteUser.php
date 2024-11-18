@@ -12,13 +12,14 @@ class InviteUser extends Notification implements ShouldQueue
     use Queueable;
 
     public $org;
-
+    public $password;
     /**
      * Create a new notification instance.
      */
-    public function __construct($org)
+    public function __construct($org, $password)
     {
         $this->org = $org;
+        $this->password = $password;
     }
 
     /**
@@ -41,6 +42,7 @@ class InviteUser extends Notification implements ShouldQueue
             [
                 'user' => $notifiable,
                 'org' => $this->org,
+                'password' => $this->password,
             ]
         );
     }

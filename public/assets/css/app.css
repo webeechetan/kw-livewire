@@ -857,6 +857,9 @@ hr.space-sm {
 }
 
 /* ------ Modal ------ */
+.modal-backdrop {
+  z-index: 999;
+}
 .modal-backdrop.show {
   opacity: 0.2;
 }
@@ -3480,7 +3483,7 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
 
 /* ----- Kanban ----- */
 .kanban_column {
-  min-height: calc(60vh - 50px);
+  height: calc(100vh - 360px);
   padding: 0 15px;
   margin: 15px 0;
   position: relative;
@@ -3677,10 +3680,6 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
 }
 .kanban_bord_column_completed .kanban_column_task_date {
   color: #48914d;
-}
-.kanban_bord_column_completed .avatarGroup .avatar {
-  background-color: #48914d;
-  color: #fff;
 }
 .kanban_bord_column_completed .kanban_bord_column_title {
   background-color: #48914d;
@@ -4139,6 +4138,29 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
 
 .note-modal {
   z-index: 99999;
+}
+.note-modal .modal-header {
+  flex-direction: row-reverse;
+}
+.note-modal .modal-header .modal-title {
+  text-transform: inherit;
+}
+.note-modal .modal-body {
+  padding: 20px;
+}
+.note-modal .modal-footer .note-btn-primary {
+  background-color: #f83890;
+  border-color: #f83890;
+  padding: 0.5rem 1.4rem;
+}
+.note-modal .modal-footer .note-btn-primary:hover {
+  border-radius: 4px;
+}
+.note-modal label:not(.form-check-label) {
+  font-weight: 400;
+}
+.note-modal label:not(.form-check-label) input[type=checkbox] {
+  margin-right: 5px;
 }
 
 /* ----- Comment Area ----- */

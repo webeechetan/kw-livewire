@@ -212,7 +212,7 @@
                 <button class="btn btn-primary mt-2 update-bio-btn d-none" wire:click="updateBio">Update</button>
             </div>
             <div class="column-box mb-4" wire:ignore>
-                <h5 class="title-sm mb-2">Skils <a href="javascript:;" class="btn-link"><i class='bx bx-plus add-skills' ></i></a></h5>
+                <h5 class="title-sm mb-2">Skills <a href="javascript:;" class="btn-link"><i class='bx bx-plus add-skills' ></i></a></h5>
                 <hr>
                 <div class="btn-list skills-list">
                     @if($user->details?->skills)

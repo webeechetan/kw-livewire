@@ -48,10 +48,10 @@
                         </div>   
                         <div class="row">
                             <div class="col-md-4 mb-4 mb-lg-0">
-                                <label for="">Assign Manager<sup class="text-primary">*</sup></label>
+                                <label for="">Assign Manager</label>
                             </div>
                             <div class="col-md-8">
-                                <select required wire:model="team_manager" id="" class="form-style team_manager">
+                                <select wire:model="team_manager" id="" class="form-style team_manager">
                                     <option value="">Select Manager</option>
                                     @foreach($users as $user)
                                         <option value="{{ $user->id }}">{{$user->name}}</option>

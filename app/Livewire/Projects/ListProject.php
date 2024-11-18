@@ -9,6 +9,7 @@ use App\Models\Project;
 use App\Models\Team;
 use App\Models\User;
 use App\Models\Client;
+use App\Models\Pin;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Lazy;
@@ -24,8 +25,7 @@ class ListProject extends Component
     public $completedProjects;
     public $archivedProjects;
     public $overdueProjects;
-
-    
+    public $pinnedProjects = [];
 
     // public $projects= [];
 
@@ -44,20 +44,8 @@ class ListProject extends Component
     public $users;
 
     public function render()
-    {        
-        // $projects = Project::Where('name','like','%'.$this->query.'%')
-        //             ->whereHas('client',function($query){
-        //                 $query->where('deleted_at','IS NOT NULL');
-        //             })->orWhereHas('client',function($query){
-        //                 $query->where('name','like','%'.$this->query.'%')->orWhere('brand_name','like','%'.$this->query.'%');
-        //             });
-
-        // $projects = Project::where('name','like','%'.$this->query.'%')
-        // ->orwhereHas('client',function($query){
-        //     $query->where('deleted_at','IS NOT NULL');
-        // })->orWhereHas('client',function($query){
-        //     $query->where('name','like','%'.$this->query.'%')->orWhere('brand_name','like','%'.$this->query.'%');
-        // });
+    {   
+        $this->pinnedProjects = Pin::where('user_id', Auth::user()->id)->where('pinnable_type', 'App\Models\Project')->pluck('pinnable_id')->toArray();
 
         $projects = Project::where(function ($query) {
             $query->where('name', 'like', '%'.$this->query.'%')
@@ -146,6 +134,7 @@ class ListProject extends Component
 
 
         $projects->orderBy('id','desc');
+
         $projects = $projects->paginate(12);
 
 

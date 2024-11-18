@@ -19,13 +19,15 @@ class NewTaskAssignNotification extends Notification implements ShouldQueue
     use Queueable;
 
     public $task;
+    public $taskUrl;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct($task)
+    public function __construct($task, $taskUrl)
     {
         $this->task = $task;
+        $this->taskUrl = $taskUrl;
         $this->task->load('assignedBy');
     }
 
@@ -47,16 +49,17 @@ class NewTaskAssignNotification extends Notification implements ShouldQueue
         $task = Task::withoutGlobalScope(OrganizationScope::class)->where('id',$this->task->id)->first();
         $assignedBy = User::withoutGlobalScope(OrganizationScope::class)->where('id',$this->task->assigned_by)->first();
         $project = Project::withoutGlobalScope(OrganizationScope::class)->where('id',$this->task->project_id)->first();
-        $notification = new NotificationModel();
-        $notification->org_id = $task->org_id;
-        $notification->user_id = $notifiable->id;
-        $notification->title = 'You have been assigned a new task '.$task->name;
-        $notification->message = 'You have been assigned a new task '.$task->name;
-        $notification->url = route('task.view', ['task' => $task->id]);
-        $notification->save();
 
         return (new MailMessage)
-            ->view('mails.task-assigned-notification-mail', ['task' => $task, 'user' => $notifiable,'assignedBy' => $assignedBy,'project' => $project]);
+            ->view('mails.task-assigned-notification-mail', 
+            [
+                'task' => $task, 
+                'user' => $notifiable,
+                'assignedBy' => $assignedBy,
+                'project' => $project,
+                'taskUrl' => $this->taskUrl
+            ]
+        );
 
         
     }

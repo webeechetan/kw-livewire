@@ -3,10 +3,11 @@
 namespace App\Livewire\Components;
 
 use Livewire\Component;
-use App\Models\ { Project, Task, User, Attachment, Comment, Client};
+use App\Models\ { Project, Task, User, Attachment, Comment, Client, Notification};
 use Livewire\WithFileUploads;
 use App\Notifications\NewTaskAssignNotification;
 use App\Notifications\UserMentionNotification;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Js;
 
 class AddTask extends Component
@@ -39,7 +40,7 @@ class AddTask extends Component
 
     public function mount($project = null){
         $this->project = $project;
-        $this->users = User::all();
+        $this->users = User::orderBy('name','asc')->get();
         // $this->projects = Project::all();
         // $this->projects = Project::whereHas('client',function($query){
         //     $query->whereNull('clients.deleted_at');
@@ -108,17 +109,28 @@ class AddTask extends Component
                 $at->save();
             }
         }
- 
+        $taskUrl = env('APP_URL').'/'.session('org_name').'/task/view/'.$task->id;
         if($this->task_users){
             foreach($this->task_users as $user_id){
+                if($user_id == Auth::user()->id){
+                    continue;
+                }
                 $user = User::find($user_id);
-                $user->notify(new NewTaskAssignNotification($task));
+                $user->notify(new NewTaskAssignNotification($task,$taskUrl));
+                $notification = new Notification();
+                $notification->user_id = $user->id;
+                $notification->org_id = $task->org_id;
+                $notification->title = 'You have been assigned a new task '.$task->name;
+                $notification->message = 'You have been assigned a new task '.$task->name;
+                $notification->url = route('task.view', ['task' => $task->id]);
+                $notification->save();
             }
         }
 
         $this->attachments = [];
         $this->dispatch('success', 'Task added successfully');
         $this->dispatch('saved','Task saved successfully');
+        $this->dispatch('task-added',$task);
     }
 
     public function saveComment($type = 'internal'){
@@ -132,46 +144,17 @@ class AddTask extends Component
         $comment->user_id = auth()->guard(session('guard'))->user()->id;
         $comment->comment = $this->comment;
         $comment->created_by = session('guard');
-
-        // take out mentioned users from description and save them in mentioned_users array
-
         $mentioned_users = [];
 
-        // remove paragraph tags from description
-
-        $temp_comment = str_replace('<p>','',$this->comment);
-        $temp_comment = str_replace('</p>','',$temp_comment);
-        $temp_comment = strip_tags($temp_comment);
-
-
-        // convert description to array of words
-
-        $comment_array = explode(' ',$temp_comment);
-
-        // check if any word starts with @
-
-        foreach($comment_array as $word){
-            if(substr($word,0,1) == '@'){
-                $user_name = substr($word,1);
-                $user_name = str_replace('_',' ',$user_name);
-                $mentioned_users[] = $user_name;
-            }
-        }
+        preg_match_all('/data-id="(\d+)"/', $this->comment, $matches);
+        $mentioned_users = $matches[1]; 
 
         $mentioned_users = array_unique($mentioned_users);
 
-        $mentioned_users = array_map('trim',$mentioned_users);
-
-        $mentioned_users = array_filter($mentioned_users);
-
-        // get user ids from mentioned users
-
-        $mentioned_user_ids = User::whereIn('name',$mentioned_users)->pluck('id')->toArray();
-
-        $comment->mentioned_users = implode(',',$mentioned_user_ids);
+        $comment->mentioned_users = implode(',',$mentioned_users);
         $comment->type = $type;
         $comment->save();
-        foreach($mentioned_user_ids as $user_id){
+        foreach($mentioned_users as $user_id){
             $user = User::find($user_id);
             if($user){
                 $user->notify(new UserMentionNotification($this->task , $comment));
@@ -192,6 +175,7 @@ class AddTask extends Component
         $this->task_notifiers = $this->task->notifiers->pluck('id')->toArray();
         $this->comments = $this->task->comments;
         $this->status = $this->task->status;
+        $this->project_id = $this->task->project_id;
         $this->dispatch('edit-task',$this->task);
     }
 
@@ -199,10 +183,26 @@ class AddTask extends Component
         $this->validate([
             'name' => 'required',
         ]);
+        $validation_error_message = '';
+
+        if(!$this->name){
+            $validation_error_message .= 'Name is required. ';
+        }
+
+        if(!$this->project_id){
+            $validation_error_message .= 'Project is required. ';
+        }
+
+        if(!$this->name || !$this->project_id){
+            $this->dispatch('error',$validation_error_message);
+            return;
+        }
+
         $this->task->name = $this->name; 
         $this->task->description = $this->description;
         $this->task->due_date = $this->due_date;
         $this->task->status = $this->status;
+        $this->task->project_id = $this->project_id;
         $this->task->save();
         $this->task->users()->sync($this->task_users);
         $this->task->notifiers()->sync($this->task_notifiers);

@@ -63,6 +63,8 @@ use PHPUnit\TextUI\Help;
 use App\Helpers\Helper;
 use Livewire\Livewire;
 
+use App\Livewire\Organizations\Profile as OrganizationProfile;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -191,6 +193,15 @@ Route::group(
 
     /*
     |--------------------------------------------------------------------------
+    | Organization Routes
+    |--------------------------------------------------------------------------
+    */
+
+    Route::get('/organization/profile',OrganizationProfile::class)->name('organization.profile');
+
+
+    /*
+    |--------------------------------------------------------------------------
     | Logout & others Routes
     |--------------------------------------------------------------------------
     */
@@ -204,8 +215,6 @@ Route::group(
         session()->forget('org_name');
         session()->forget('user');
         session()->forget('tour');
-
-
         return redirect(route('login'));
     })->name('logout');
 

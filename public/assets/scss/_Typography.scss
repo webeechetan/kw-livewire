@@ -830,8 +830,11 @@ hr.space-sm {
 
 /* ------ Modal ------ */
 .modal {
-    &-backdrop.show {
-        opacity: 0.2;
+    &-backdrop {
+        z-index: 999;
+        &.show {
+            opacity: 0.2;
+        }
     }
     &-content {
         border: none;

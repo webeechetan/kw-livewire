@@ -34,7 +34,7 @@ class AddTeam extends Component
     }
 
     public function addTeam(){
-
+        $this->authorize('Create Team');
         if($this->team){
             $this->updateTeam();
             return;
@@ -68,6 +68,7 @@ class AddTeam extends Component
     }
 
     public function editTeam($id){
+        $this->authorize('Edit Team');
         $this->team = Team::find($id);
         $this->name = $this->team->name;
         $this->team_manager = $this->team->manager_id;
@@ -76,6 +77,7 @@ class AddTeam extends Component
     }
 
     public function updateTeam(){
+        $this->authorize('Edit Team');
         $this->validate([
             'name' => "required"
         ]);

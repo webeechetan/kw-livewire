@@ -14,7 +14,7 @@
                                     <label for="">Role Name<sup class="text-primary">*</sup></label>
                                 </div>
                                 <div class="col-md-7 mb-4">
-                                    <input wire:model="role_name" type="text" class="form-style" placeholder="Role Name">
+                                    <input wire:model="role_name" type="text" class="form-style role-name-input" placeholder="Role Name">
                                 </div>
                                 <span class="text-danger">@error('role_name') {{ $message }} @enderror</span>
                             </div>

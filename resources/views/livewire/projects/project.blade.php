@@ -27,7 +27,7 @@
                                 <span class="font-400 text-grey">|</span>
                             </div>
                             <div class="col-auto">
-                                <div class="states_style-text">{{ $projectTasks->count() > 1 ? 'Active Tasks' : 'Active Task' }}</div>
+                                <div class="states_style-text">Active {{ pluralOrSingular($projectTasks->count() ,'Task') }}</div>
                             </div>
                         </div>
                     </div>
@@ -80,7 +80,7 @@
                                 <span class="font-400 text-grey">|</span>
                             </div>
                             <div class="col-auto">
-                                <div class="states_style-text"> {{$projectUsers->count()> 1 ? 'Members' : 'Member'}}</div>
+                                <div class="states_style-text"> {{ pluralOrSingular($projectUsers->count(),'Member') }}</div>
                             </div>
                         </div>
                     </div> 
@@ -168,7 +168,7 @@
                 </div>
                 <div class="col-lg-6">
                     <div class="column-box mb-3">
-                        <div class="column-head"><div class="column-title">Assigness</div></div>
+                        <div class="column-head"><div class="column-title">Assignees</div></div>
                         <!-- Avatar Group -->
                         <div class="avatarGroup mt-3">
                             @php

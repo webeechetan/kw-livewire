@@ -6,6 +6,8 @@ use Livewire\Component;
 use App\Models\Client;
 use App\Helpers\Helper;
 use Livewire\WithFileUploads;
+use App\Models\Scopes\OrganizationScope;
+use App\Models\Scopes\MainClientScope;
 
 class AddClient extends Component
 {
@@ -86,7 +88,7 @@ class AddClient extends Component
 
     public function editClient($id)
     {
-        $this->client = Client::find($id);
+        $this->client = Client::withoutGlobalScope(MainClientScope::class)->find($id);
         $this->client_name = $this->client->orignal_name;
         $this->client_description = $this->client->description;
         $this->client_onboard_date = $this->client->onboard_date;
@@ -101,7 +103,7 @@ class AddClient extends Component
         $this->validate([
             'client_name' => 'required',
         ]);
-        $client = Client::find($this->client->id);
+        $client = Client::withoutGlobalScope(MainClientScope::class)->find($this->client->id);
         $client->name = $this->client_name;
         $client->onboard_date = $this->client_onboard_date;
         $client->description = $this->client_description;

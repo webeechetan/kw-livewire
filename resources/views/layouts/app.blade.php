@@ -59,7 +59,12 @@
               <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse justify-content-end" id="responsive-navbar-nav">
-              <ul class="navbar-nav align-items-center">                
+              <ul class="navbar-nav align-items-center">  
+                <li class="nav-item">
+                  <a class="nav-link" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight">
+                    <img src="{{ asset('') }}img/create-task-icon.png" alt="Task Icon" class="text-primary" height="20" width="20" />
+                  </a>
+                </li>              
                 <!-- Message -->
                 <!-- <livewire:messages.message /> -->
                 
@@ -79,7 +84,7 @@
                   <ul class="dropdown-menu dropdown-menu-end dropdown-account" data-bs-popper="static">
                    <li>
                     <div class="d-flex p-3">
-                      <div class="avatar avatar-{{$user->color}}">{{$user->initials}}</div>
+                      <x-avatar :user="$user" />
                       <div class="flex-grow-1 ps-2">
                           <span class="fw-medium d-block">{{$user->name}}</span>
                           <span class="text-muted">
@@ -96,12 +101,15 @@
                         <span class="align-middle">My Profile</span>
                       </a>
                     </li>
-                    <!-- <li>
-                      <a class="dropdown-item align-items-center" href="#">
+                    {{-- check role is admin --}}
+                    @role('Admin')
+                    <li>
+                      <a class="dropdown-item align-items-center" wire:navigate href="{{ route('organization.profile') }}">
                         <i class="bx bx-cog me-2"></i>
                         <span class="align-middle">Settings</span>
                       </a>
-                    </li> -->
+                    </li> 
+                    @endrole
                     <li>
                       <a class="dropdown-item align-items-center text-danger" href="{{route('logout')}}" >
                         <i class="bx bx-power-off me-2"></i>
@@ -157,13 +165,13 @@
                            
                         @endcan                      
                         @can('View Task')
-                          <li @if(isset($tour['main_tour'])) data-step="5" data-position='right' data-intro='Create your first task' @endif><a wire:navigate href="{{ route('task.index') }}" class="@if (request()->segment(2)== 'tasks' || request()->segment(2) == 'task') active @endif"><i class='bx bx-task' ></i> Tasks</a></li>
+                          <li @if(isset($tour['main_tour'])) data-step="5" data-position='right' data-intro='Create your first task' @endif><a wire:navigate href="{{ route('task.index') }}" class="@if (request()->segment(2)== 'tasks' || request()->segment(2) == 'task') active @endif"><i class='bx bx-task' ></i> My Tasks</a></li>
                         @endcan
                 </ul>
             </div>
             <div class="sidebar-l-btm">
                 <img src="{{ asset('') }}assets/images/logo.png" width="150" alt="Kaykewalk Profile" />
-                <p class="mb-0 mt-3">Copyright © 2024, Kaykewalk, All Rights Reserved.</p>
+                <p class="mb-0 mt-3 copyright">Copyright © 2024, Kaykewalk, All Rights Reserved.</p>
             </div>
         </aside>
       <div class="main-body-content scrollbar scrollbar-primary">
@@ -171,6 +179,9 @@
         <p class="alert alert-warning" wire:offline> Whoops, your device has lost connection. The web page you are viewing is offline. </p>
       </div>
     </div>
+    @if(!request()->routeIs('project.tasks'))
+      <livewire:components.add-task @saved="$refresh"  />
+    @endif
     {{-- <livewire:components.voice-control /> --}}
     
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>

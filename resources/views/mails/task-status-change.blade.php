@@ -28,11 +28,13 @@
         }
         .emailer-wrap {
             margin: 0 auto;
-            background: #fff;
+            background: #fffdf2;
+            border: 1px solid #ddd;
+            border-radius: 10px;
         }
         .emailer-text-wrap {
             margin: 0 auto;
-            padding: 50px 50px 70px;
+            padding: 0 40px 40px;
         }
         .emailer-text-wrap h2 {
             font-size: 26px;
@@ -42,17 +44,14 @@
             line-height: 26px;
         }
         .btn-primary {
-            background: #F9398F;
-            color: #fff;
-            min-width: 200px;
+            background: #F9398F !important;
+            color: #fff !important;
             border-radius: 4px;
-            padding: 15px 0;
-            display: inline-block;
+            padding: 10px 30px;
+            display: block;
             text-decoration: none;
-            font-weight: 600;
-            font-size: 18px;
+            font-size: 16px;
             text-align: center;
-            text-transform: uppercase;
         }
         .list-unstyled{
             padding-left: 15px;
@@ -84,16 +83,16 @@
                                 <table width="100%" cellspacing="0" cellpadding="">
                                     <tr>
                                         <td>
-                                            <table class="emailer-text-wrap mxauto" width="100%" cellcellspacing="0" cellpadding="">
+                                            <table class="emailer-text-wrap mxauto textCenter" width="100%" cellcellspacing="0" cellpadding="">
                                                 <tr>
                                                     <td>
                                                         @if($newStatus=='completed')
-                                                            <p>{{ $changedBy->name }} marked <strong>{{ Str::limit($task->name, 15, '...') }}</strong> as Complete.</p>
+                                                            <p>{{ $changedBy->name }} marked <strong>{{ Str::limit($task->name, 50, '...') }}</strong> as Complete.</p>
                                                         @else
-                                                            <p>{{ $changedBy->name }} Changed the status of <strong>{{ Str::limit($task->name, 15, '...') }}</strong> from <strong>{{ $oldStatus}}</strong> to <strong>{{ $newStatus }}</strong></p>
+                                                            <p>{{ $changedBy->name }} Changed the status of <strong>{{ Str::limit($task->name, 50, '...') }}</strong> from <strong>{{ $oldStatus}}</strong> to <strong>{{ $newStatus }}</strong></p>
                                                         @endif
                                                         {{-- <p>  assigned you a task {{ Str::limit($task->name, 15, '...') }} in </p> --}}
-                                                        <a href="{{ route('task.view',$task->id) }}"  class="btn-primary" style="margin-top: 30px;">View Task</a>
+                                                        <a href="{{ $taskUrl }}"  class="btn-primary" style="margin-top: 30px;">View Task</a>
                                                     </td>
                                                 </tr>
                                             </table>

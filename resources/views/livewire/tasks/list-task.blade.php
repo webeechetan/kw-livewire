@@ -2,7 +2,7 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a wire:navigate href="{{ route('task.index') }}"><i class='bx bx-line-chart'></i>{{ Auth::user()->organization ? Auth::user()->organization->name : 'No organization' }}</a></li>
-            <li class="breadcrumb-item active" aria-current="page">All Tasks</li>
+            <li class="breadcrumb-item active" aria-current="page">My Tasks</li>
         </ol>
     </nav>
 
@@ -10,13 +10,13 @@
     <div class="dashboard-head pb-0 mb-4">
         <div class="row align-items-center">
             <div class="col d-flex align-items-center gap-3">
-                <h3 class="main-body-header-title mb-0">All Tasks</h3>
+                <h3 class="main-body-header-title mb-0">My Tasks</h3>
                 <span class="text-light">|</span>
                 @can('Create Task')
                     <a data-step="1" data-intro='Create your first task' data-position='right' data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" href="javascript:void(0);" class="btn-border btn-sm btn-border-primary toggleForm"><i class="bx bx-plus"></i> Add Task</a>
                 @endcan
             </div>
-            <div class="col">
+            <div class="col-auto">
                 <div class="main-body-header-right">
                     <form class="search-box" wire:submit="search" action="" data-step="2" data-intro='Search Task' data-position='bottom'>
                         <input wire:model="query" type="text" class="form-control" placeholder="Search Task">
@@ -163,10 +163,12 @@
     @endif
 
     <!-- Kanban -->
-    <div class="kanban_bord">
+    <div class="kanban_bord" >
         <div class="kanban_bord_body_columns" wire:sortable-group="updateTaskOrder">
             @php
                 $groups = ['pending','in_progress','in_review','completed'];
+                $task_count = 0;
+                $task_count = count($tasks['pending']) + count($tasks['in_progress']) + count($tasks['in_review']) + count($tasks['completed']);
             @endphp
             @foreach($groups as $group)
                 @php
@@ -208,6 +210,7 @@
                         @if(!count($tasks[$group]))
                         <div class="kanban_column_empty"><i class='bx bx-add-to-queue'></i></div>
                         @endif
+                       
                         @foreach($tasks[$group] as $task)
                             @php
                                 $date_class = '';
@@ -217,10 +220,9 @@
                                 if($task['due_date'] == date('Y-m-d')){
                                     $date_class = 'kanban_column_task_warning';
                                 }
-                                
                             @endphp
                             <div wire:loading.class="opacity-25" class="kanban_column_task {{ $date_class }}" wire:key="task-{{$task['id']}}" wire:sortable-group.item="{{ $task['id'] }}" >
-                                <div wire:loading.delay.longest wire:target="emitEditTaskEvent({{ $task['id'] }})" class="card_style-loader">
+                                <div wire:loading wire:target="emitEditTaskEvent({{ $task['id'] }})" class="card_style-loader">
                                     <div class="card_style-loader-wrap"><i class='bx bx-pencil text-primary me-2' ></i> Loading ...</div>
                                 </div> 
                                 <div class="kanban_column_task-wrap" wire:sortable-group.handle>
@@ -276,17 +278,41 @@
                                     </div>
                                 </div>
                             </div>
-                        @endforeach
+                            @endforeach
+                            @if($totalTasks > 0 && $task_count < $totalTasks)
+                                <div class="text-center">
+                                    <a href="javascript:;" class="" wire:click="loadMore">
+                                        <i class="bx bx-down-arrow-alt"></i>
+                                        <span wire:loading wire:target="loadMore" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                    </a>
+                                </div>
+                            @endif
+                        </div>
                     </div>
-                </div>
             @endforeach
+            
         </div>
     </div>
-    <livewire:components.add-task @saved="$refresh"  />
 </div>
 
 @script
 <script>
+
+   
+    // trigger @this.loadMore() when scroll to bottom
+
+    // setTimeout(function(){
+    //     console.log('timeout');
+    //     window.addEventListener('scroll', function(){
+    //         console.log('scroll to bottom');
+    //         if(window.scrollY + window.innerHeight >= document.body.scrollHeight){
+    //             @this.loadMore();
+    //         }
+    //         console.log(window.scrollY + window.innerHeight, document.body.scrollHeight);
+    //     }, {passive: true});
+
+    // }, 3000);
+
 
     document.addEventListener('saved', function(){
         $('#offcanvasRight').offcanvas('hide');

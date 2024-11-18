@@ -28,11 +28,13 @@
         }
         .emailer-wrap {
             margin: 0 auto;
-            background: #fff;
+            background: #fffdf2;
+            border: 1px solid #ddd;
+            border-radius: 10px;
         }
         .emailer-text-wrap {
             margin: 0 auto;
-            padding: 50px 50px 70px;
+            padding: 0 40px 40px;
         }
         .emailer-text-wrap h2 {
             font-size: 26px;
@@ -42,17 +44,14 @@
             line-height: 26px;
         }
         .btn-primary {
-            background: #F9398F;
-            color: #fff;
-            min-width: 200px;
+            background: #F9398F !important;
+            color: #fff !important;
             border-radius: 4px;
-            padding: 15px 0;
-            display: inline-block;
+            padding: 10px 30px;
+            display: block;
             text-decoration: none;
-            font-weight: 600;
-            font-size: 18px;
+            font-size: 16px;
             text-align: center;
-            text-transform: uppercase;
         }
         .list-unstyled{
             padding-left: 15px;
@@ -87,9 +86,9 @@
                                             <table class="emailer-text-wrap mxauto" width="100%" cellcellspacing="0" cellpadding="">
                                                 <tr>
                                                     <td>
-                                                        <p> <b>{{ $assignedBy->name }}</b> assigned you a task {{ Str::limit($task->name, 20, '...') }} in <b>{{ $project->name }}</b> </p>
+                                                        <p> <b>{{ $assignedBy->name }}</b> assigned you a task {{ Str::limit($task->name, 50, '...') }} in <b>{{ $project->name }}</b> </p>
                                                         {{-- <p>  assigned you a task {{ Str::limit($task->name, 15, '...') }} in </p> --}}
-                                                        <a href="{{ route('task.view',$task->id) }}"  class="btn-primary" style="margin-top: 30px;">View Task</a>
+                                                        <a href="{{ $taskUrl }}"  class="btn-primary" style="margin-top: 30px;">View Task</a>
                                                     </td>
                                                 </tr>
                                             </table>

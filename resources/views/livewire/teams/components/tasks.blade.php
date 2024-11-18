@@ -16,7 +16,8 @@
     <!--- Dashboard Body --->
 
     @php
-        $tasks = $team->tasks;
+        
+        $tasks = $team->tasks->take($perPage);
         $tasks_for_count = $team->tasks;
 
         if($byClient != 'all'){
@@ -212,16 +213,13 @@
                                     @endphp
 
                                     @foreach($task->users->take(3) as $user)
-                                    {{-- <a href="#" class="avatarGroup-avatar">
-                                        <span class="avatar avatar-sm avatar-pink" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{$user->initials}}">{{$user->initials}}</span>
-                                    </a>        --}}
                                     <x-avatar :user="$user" class="avatar-sm" />
                                     @endforeach   
                                     @if($plus_more_users)
-                                <a href="#" class="avatarGroup-avatar">
-                                    <span class="avatar avatar-sm avatar-more">+{{$plus_more_users}}</span>
-                                </a>
-                            @endif                      
+                                        <a href="#" class="avatarGroup-avatar">
+                                            <span class="avatar avatar-sm avatar-more">+{{$plus_more_users}}</span>
+                                        </a>
+                                    @endif                      
                                 </div>
                                 
                             </div>
@@ -230,12 +228,26 @@
                 </div>
             </div>
         @endforeach
+         
         @else
-        <div class="col-md-12 text-center py-4">               
-            <img src="{{ asset('assets/images/'.'invite_signup_img.png') }}" width="150" alt="">
-            <h5 class="text text-light mt-3">No Task found</h5>
+            <div class="col-md-12 text-center py-4">               
+                <img src="{{ asset('assets/images/'.'invite_signup_img.png') }}" width="150" alt="">
+                <h5 class="text text-light mt-3">No Task found</h5>
+            </div>
+        @endif
+        {{-- load more tasks --}}
+        @if($tasks->count() < $totalTasks)
+        <div class="col-md-12 text-center mt-3 ">
+            <a href="javascript:" wire:click="loadMore" class="btn btn-sm btn-border btn-border-primary">
+                Load More
+                <div wire:loading wire:target="loadMore">  
+                    <div class="spinner-border spinner-border-sm text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            </a>
         </div>
-    @endif
+        @endif
     </div>
     <livewire:components.add-team @saved="$refresh" />
 </div>

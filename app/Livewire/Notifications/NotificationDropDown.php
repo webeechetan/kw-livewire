@@ -29,6 +29,6 @@ class NotificationDropDown extends Component
     public function clearAll()
     {
         Notification::clearAll(auth()->user()->id);
-        return redirect()->back();
+        return $this->redirect(route('dashboard'),navigate:true);
     }
 }

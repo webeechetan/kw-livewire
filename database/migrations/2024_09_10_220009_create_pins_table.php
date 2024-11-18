@@ -11,16 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('notifications', function (Blueprint $table) {
+        Schema::create('pins', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('org_id');
             $table->foreign('org_id')->references('id')->on('organizations')->onDelete('cascade');
+            $table->string('pinnable_type');
+            $table->unsignedBigInteger('pinnable_id');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->text('title');
-            $table->text('message');
-            $table->boolean('is_read')->default(false);
-            $table->string('url')->nullable();
             $table->timestamps();
         });
     }
@@ -30,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('notifications');
+        Schema::dropIfExists('pins');
     }
 };

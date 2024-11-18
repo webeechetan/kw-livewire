@@ -15,7 +15,9 @@ class Tasks extends Component
 {
 
     use WithPagination;
-
+ 
+    public $totalTasks = 0;
+    public $perPage = 15;
     public $startDate = null; 
     public $dueDate = null;
     public $allTasks; 
@@ -48,7 +50,6 @@ class Tasks extends Component
         return view('livewire.teams.components.tasks');
     }
 
-
   
     public function mount(Team $team) {
 
@@ -58,8 +59,11 @@ class Tasks extends Component
         $this->projects = Project::all();
         $this->clients = Client::all();
         $this->teams = Team::orderBy('name')->get();
-        $this->tasks = $team->tasks;
-        
+        $this->totalTasks = count($team->tasks);
+        // $this->tasks = $team->tasks;
+        // get $perPage tasks from the team $team->tasks is a array of tasks
+        // $this->tasks = $team->tasks->take($this->perPage);
+        // dd($this->tasks);
     }
 
     public function updatedByClient($value){
@@ -83,5 +87,9 @@ class Tasks extends Component
 
     public function doesAnyFilterApplied(){
         return $this->byClient != 'all' || $this->byProject != 'all' || $this->byUser != 'all' || $this->status != 'all' || $this->startDate || $this->dueDate;
+    }
+
+    public function loadMore(){
+        $this->perPage += 10;
     }
 }

@@ -196,33 +196,13 @@
 @push('scripts')
     <script>
 
-        // cpoy sharable link
-        // if(typeof task === 'undefined'){
-        //     var task = null;
-        // }else{
-        //     var task = task;
-        // }
-
-        // $('.task-sharable-link').on('click', function(){
-        //     var id = $wire.task.id;
-
-        //     console.log(id);
-        //     var url = "{{ env('APP_URL') }}/task/"+id;
-        //     navigator.clipboard.writeText(url).then(function() {
-        //         console.log('Async: Copying to clipboard was successful!');
-        //         toastr.success('Task sharbable link copied to clipboard');
-        //     }, function(err) {
-        //         console.error('Async: Could not copy text: ', err);
-        //     });
-        // });
-
         // clear all fields when offcanvas is closed or dismissed 
 
         $(".bx-arrow-to-right").click(function(){
             location.reload();
         });
 
-        $('#offcanvasRight').on('hidden.bs.offcanvas', function () {
+        function resetTaskCanvas(){
             $(".taskPane").trigger('reset');
             $(".task-users").val(null).trigger('change');
             $(".task-notify-users").val(null).trigger('change');
@@ -243,6 +223,15 @@
             $('.taskPane-heading-label').html('Add Task');
             $('.save-task-button').html('Save Task');
             @this.set('task', null);
+        }
+
+        $('#offcanvasRight').on('hidden.bs.offcanvas', function () {
+            resetTaskCanvas();
+        });
+
+        document.addEventListener('task-added', event => {
+            $('#offcanvasRight').offcanvas('hide');
+            resetTaskCanvas();
         });
 
 
@@ -270,14 +259,15 @@
                             }));
                         },
                         template : function (item) {
-                            return '<span class="mention_user" data-id=" ' + users[users_for_mention.indexOf(item)].id + ' ">' + item + '</span>';
+                            return '<span class="mention_users_list" data-id=" ' + users[users_for_mention.indexOf(item)].id + ' ">' + item + '</span>';
                         },
                         content: function (item) {
-                            item = item.replace(/\s/g, '_');
-                            let span = document.createElement('b');
-                            $(span).addClass('mention_user');
-                            $(span).text(' '+'@' + item + ' ');
-                            return span;
+                            let a = document.createElement('a');
+                            a.href =  "{{ env('APP_URL') }}/" + "{{ session('org_name') }}" +'/user/view/' + users[users_for_mention.indexOf(item)].id;
+                            a.innerText = '@' + item;
+                            a.dataset.id = users[users_for_mention.indexOf(item)].id;
+                            return a;
+                            
                         },    
                     },
                     toolbar: [
@@ -306,11 +296,11 @@
                             return '<span class="mention_user" data-id=" ' + users[users_for_mention.indexOf(item)].id + ' ">' + item + '</span>';
                         },
                         content: function (item) {
-                            item = item.replace(/\s/g, '_');
-                            let span = document.createElement('span');
-                            $(span).addClass('mention_user');
-                            $(span).text(' '+'@' + item + ' ');
-                            return span;
+                            let a = document.createElement('a');
+                            a.href =  "{{ env('APP_URL') }}/" + "{{ session('org_name') }}" +'/user/view/' + users[users_for_mention.indexOf(item)].id;
+                            a.innerText = '@' + item;
+                            a.dataset.id = users[users_for_mention.indexOf(item)].id;
+                            return a;
                         },    
                     },
                     toolbar: [
@@ -339,11 +329,11 @@
                             return '<span class="mention_user" data-id=" ' + users[users_for_mention.indexOf(item)].id + ' ">' + item + '</span>';
                         },
                         content: function (item) {
-                            item = item.replace(/\s/g, '_');
-                            let span = document.createElement('span');
-                            $(span).addClass('mention_user');
-                            $(span).text(' '+'@' + item + ' ');
-                            return span;
+                            let a = document.createElement('a');
+                            a.href =  "{{ env('APP_URL') }}/" + "{{ session('org_name') }}" +'/user/view/' + users[users_for_mention.indexOf(item)].id;
+                            a.innerText = '@' + item;
+                            a.dataset.id = users[users_for_mention.indexOf(item)].id;
+                            return a;
                         },    
                     },
                     toolbar: [
@@ -371,7 +361,8 @@
 
             
 
-            setInterval(() => {
+            setTimeout(() => {
+                console.log('init plugins');
                 initPlugins();
             }, 1000);
 
@@ -518,8 +509,10 @@
             });
 
             // comment-added 
+            if (!window.hasAddedCommentListener) {
 
             document.addEventListener('comment-added', event => {
+
                 const date = new Date(event.detail[0].created_at);
                 const options = { day: 'numeric', month: 'long', year: 'numeric' };
                 const formattedDate = date.toLocaleDateString('en-GB', options);
@@ -553,7 +546,11 @@
 
                 $(".total-comments").html(parseInt($(".total-comments").html()) + 1);
 
+
             });
+                // Mark that the listener is added
+                window.hasAddedCommentListener = true;
+            }
             
 
     </script>
