@@ -164,7 +164,7 @@
                             <li @if(isset($tour['main_tour'])) data-step="3" data-position='right' data-intro='Create your first user' @endif><a wire:navigate href="{{ route('user.index') }}" class="@if (request()->segment(2) == 'users' || request()->segment(2) == 'user' ) active @endif"><i class='bx bx-user'></i> Users</a></li>
                         @endcan
                         @can('View Task')
-                          <li @if(isset($tour['main_tour'])) data-step="5" data-position='right' data-intro='Create your first task' @endif><a wire:navigate href="{{ route('task.index') }}" class="@if (request()->segment(2)== 'tasks' || request()->segment(2) == 'task') active @endif"><i class='bx bx-task' ></i>Task</a></li>
+                          <li @if(isset($tour['main_tour'])) data-step="5" data-position='right' data-intro='Create your first task' @endif><a wire:navigate href="{{ route('task.index') }}" class="@if (request()->segment(2)== 'tasks' || request()->segment(2) == 'task') active @endif"><i class='bx bx-task' ></i>Tasks</a></li>
                         @endcan
                 </ul>
             </div>

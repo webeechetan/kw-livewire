@@ -35,6 +35,8 @@ use App\Livewire\Tasks\AddTask;
 use App\Livewire\Tasks\ListTask;
 use App\Livewire\Tasks\TaskListView;
 use App\Livewire\Tasks\View;
+use App\Livewire\Tasks\Projects as TaskProjects;
+use App\Livewire\Tasks\Teams as TaskTeams;
 use App\Livewire\FileManager;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -76,10 +78,6 @@ use App\Livewire\Organizations\Profile as OrganizationProfile;
 |
 */
 
-
-Route::get('/test-pusher',function(){
-    event(new \App\Events\NotificationEvent(1,1,1));
-});
 
 Route::get('/',Login::class);
 Route::get('/login',Login::class)->name('login');
@@ -182,9 +180,12 @@ Route::group(
     |--------------------------------------------------------------------------
     */
     
+    Route::get('/tasks/projects',TaskProjects::class)->name('task.projects');
+    Route::get('/tasks/teams',TaskTeams::class)->name('task.teams');
     Route::get('/tasks/list-view',TaskListView::class)->name('task.list-view');
     Route::get('/tasks/{sort?}/{filter?}/{byProject?}/{byClient?}',ListTask::class)->name('task.index');
     Route::get('/tasks/add',AddTask::class)->name('task.add');
+
 
     /*
     |--------------------------------------------------------------------------
