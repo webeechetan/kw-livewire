@@ -2,8 +2,7 @@
     <!-- Dashboard Header -->
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a wire:navigate href="{{ route('dashboard', session('org_id') ) }}"><i
-                        class='bx bx-line-chart'></i> {{ ucfirst(Auth::user()->organization->name)  }}</a></li>
+            <li class="breadcrumb-item"><a wire:navigate href="{{ route('dashboard', session('org_id') ) }}"><i class='bx bx-line-chart'></i> {{ ucfirst(Auth::user()->organization->name)  }}</a></li>
             <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
         </ol>
     </nav>
@@ -13,7 +12,8 @@
                 <div class="row align-items-center">
                     <div class="col-md-7">
                         <div class="welcome-box">
-                            <h4 class="mb-1"><span class="fw-normal">Hi {{ Auth::guard(session('guard'))->user()->name }}</span>,</h4>
+                            <h4 class="mb-1"><span class="fw-normal">Hi {{ Auth::guard(session('guard'))->user()->name
+                                    }}</span>,</h4>
                             <h3><b>Welcome back!</b></h3>
                         </div>
                     </div>
@@ -27,7 +27,7 @@
             </div>
         </div>
         <div class="col-md-6">
-            <div class="box-item h-custom">
+            <div class="box-item" style="height: 225px;">
                 <div class="row">
                     <div class="col-md-6">
                         <h4>Tasks Overview</h4>
@@ -47,7 +47,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="text-center">
-                            <div id="progress-chart-gauge" style="width: 100%;height: 250px;">
+                            <div id="progress-chart-gauge" style="width: 100%;height: 250px; margin-top: -15px;">
 
                             </div>
                         </div>
@@ -170,7 +170,8 @@
                                 </div>
                             </div>
                             <div class="col-md-auto">
-                                <h6 class="mb-0 text-danger"><b>{{ $users_tasks->where('due_date', '<', now())->where('status','!=','completed')-> count();}}</b></h6>
+                                <h6 class="mb-0 text-danger"><b>{{ $users_tasks->where('due_date', '<', now())->where('status','!=','completed')->
+                                            count();}}</b></h6>
                             </div>
                         </div>
                         <hr>
@@ -186,7 +187,8 @@
                                 </div>
                             </div>
                             <div class="col-md-auto">
-                                <h6 class="mb-0 text-warning"><b>{{ $users_tasks->where('status', 'in_progress')->count();}}</b></h6>
+                                <h6 class="mb-0 text-warning"><b>{{ $users_tasks->where('status',
+                                        'in_progress')->count();}}</b></h6>
                             </div>
                         </div>
                         <hr>
