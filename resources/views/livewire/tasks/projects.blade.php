@@ -125,21 +125,14 @@
                     <a wire:navigate class="tabNavigationBar-item @if($currentRoute == 'task.index') active @endif" href="{{ route('task.index') }}">
                         <i class='bx bx-columns'></i> Board
                     </a>
-    
+
                     <a wire:navigate class="tabNavigationBar-item @if($currentRoute == 'task.projects') active @endif" href="{{ route('task.projects') }}">
                         <i class='bx bx-objects-horizontal-left'></i> Projects 
                     </a>
-    
+
                     <a wire:navigate class="tabNavigationBar-item @if($currentRoute == 'task.teams') active @endif" href="{{ route('task.teams') }}">
                         <i class='bx bx-sitemap'></i> Teams 
                     </a>
-                    {{-- <span>
-                        <select name="" id="">
-                            <option value="">Team A</option>
-                            <option value="">Team B</option>
-                            <option value="">Team C</option>
-                        </select>
-                    </span> --}}
                 
                 </div>
             </div>
@@ -191,6 +184,15 @@
         <a wire:click="$set('status', 'overdue')" class="btn-border btn-border-danger @if($status == 'overdue') active @endif">
            {{ $overdueTasks }}
             <span>|</span> Overdue</a>
+        <span>
+
+            <select class="dashboard_filters-select w-100" wire:model.live="byProject" id="">
+                <option value="all">All</option>
+                @foreach($projects as $project)
+                    <option value="{{ $project->id }}">{{ $project->name }}</option>
+                @endforeach
+            </select>
+        </span>
     </div>
 
     <!-- Filters Query Params -->
