@@ -119,11 +119,8 @@
             <div class="col-md-6">
                 <!-- Tabs -->
                 <div class="tabNavigationBar-tab border_style">
-                    <a wire:navigate class="tabNavigationBar-item @if($currentRoute == 'task.list-view') active @endif" href="{{ route('task.list-view') }}">
-                        <i class='bx bx-list-ul'></i> List
-                    </a>
                     <a wire:navigate class="tabNavigationBar-item @if($currentRoute == 'task.index') active @endif" href="{{ route('task.index') }}">
-                        <i class='bx bx-columns'></i> Board
+                        <i class='bx bx-columns'></i> My Tasks
                     </a>
 
                     <a wire:navigate class="tabNavigationBar-item @if($currentRoute == 'task.projects') active @endif" href="{{ route('task.projects') }}">
@@ -137,25 +134,12 @@
                 </div>
             </div>
             <div class="col-md-6 text-end">
-                <div class="form-check form-switch d-inline-block">
-                    <input class="form-check-input assigned-by-me-task-task-switch"
-                    @if($ViewTasksAs == 'manager')
-                        disabled
-                    @endif
-                     type="checkbox" role="switch" id="">
-                    <label class="form-check-label assigned-by-me-task-switch-text" for="">Assigned By Me</label>
-                </div> 
-                @if(auth()->user()->is_manager)
-                |
-                <div class="form-check form-switch d-inline-block">
-                    <input class="form-check-input task-switch" 
-                    @if($assignedByMe)
-                        disabled
-                    @endif
-                     type="checkbox" role="switch" id="flexSwitchCheckChecked">
-                    <label class="form-check-label task-switch-text" for="flexSwitchCheckChecked">Showing {{ auth()->user()->myTeam->name }} Tasks</label>
-                </div>
-                @endif
+                <select class="dashboard_filters-select" wire:model.live="byProject" id="">
+                    <option value="all">All</option>
+                    @foreach($projects as $project)
+                        <option value="{{ $project->id }}">{{ $project->name }}</option>
+                    @endforeach
+                </select>   
             </div>
         </div>
     </div>
@@ -171,6 +155,8 @@
 
         {{-- <a href="javascript:" wire:click="$set('status', 'pending')" class="btn-border btn-border-sm btn-border-primary "><span><i class='bx bx-objects-horizontal-center' ></i></span> {{ $project->tasks->where('status', 'pending')->count() }} Assigned</a> --}}
 
+        <a  wire:click="$set('status', 'completed')" class="btn-border btn-border-warning @if($status == 'completed') active @endif">{{ $completedTasks }} <span>|</span> Today</a>
+        <a  wire:click="$set('status', 'completed')" class="btn-border btn-border-success @if($status == 'completed') active @endif">{{ $completedTasks }} <span>|</span> Upcoming</a>
         <a  wire:click="$set('status', 'pending')" class="btn-border btn-border-primary @if($status == 'pending') active @endif">{{ $pendingTasks}} <span>|</span> Assigned</a>
         <a  wire:click="$set('status', 'in_progress')" class="btn-border btn-border-secondary @if($status == 'in_progress') active @endif">{{ $inProgressTasks}} <span>|</span> Accepted</a>
         <a  wire:click="$set('status', 'in_review')" class="btn-border btn-border-warning @if($status == 'in_review') active @endif">{{  $inReviewTasks }} <span>|</span> In Review</a>
@@ -184,15 +170,6 @@
         <a wire:click="$set('status', 'overdue')" class="btn-border btn-border-danger @if($status == 'overdue') active @endif">
            {{ $overdueTasks }}
             <span>|</span> Overdue</a>
-        <span>
-
-            <select class="dashboard_filters-select w-100" wire:model.live="byProject" id="">
-                <option value="all">All</option>
-                @foreach($projects as $project)
-                    <option value="{{ $project->id }}">{{ $project->name }}</option>
-                @endforeach
-            </select>
-        </span>
     </div>
 
     <!-- Filters Query Params -->

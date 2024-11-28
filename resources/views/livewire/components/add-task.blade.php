@@ -101,8 +101,8 @@
                         <div class="taskPane-item-left"><div class="taskPane-item-label">Add Voice Note</div></div>
                         <div class="taskPane-item-right">
                             <div class="voice_note">
-                                <span class="btn btn-sm btn-primary" id="recordButton">Start</span>
-                                <span class="btn btn-sm btn-primary" id="stopButton">Stop</span>
+                                <span id="recordButton"><i class='bx bxs-microphone' ></i></span>
+                                <span id="stopButton"><i class='bx bx-stop-circle' ></i></span>
                             </div>
                         </div>
                     </div>
@@ -594,7 +594,7 @@
                     let formattedDate = date.toLocaleDateString('en-GB', options);
 
                     let voice_note_html = `<div class="voice-notes-item">
-                        <div class="voice-notes-item-user">
+                        <div class="voice-notes-item-user d-flex gap-2 mb-2">
                             <div class="voice-notes-item-user-img">
                                 ${
                                     voice_note.user.image ? `<img class="rounded-circle" src="{{ env('APP_URL') }}/storage/${voice_note.user.image}">` 
@@ -603,8 +603,8 @@
                                 }
                             </div>
                             <div class="voice-notes-item-user-name-wrap">
-                                <div class="voice-notes-item-user-name">${voice_note.user.name}</div>
-                                <div class="voice-notes-item-date">${formattedDate}</div>
+                                <div class="voice-notes-item-user-name text-sm">${voice_note.user.name}</div>
+                                <div class="voice-notes-item-date text-xs">${formattedDate}</div>
                             </div>
                         </div>
                         <div class="voice-notes-item-audio">

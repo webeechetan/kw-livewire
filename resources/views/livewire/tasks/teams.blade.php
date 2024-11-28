@@ -119,43 +119,33 @@
             <div class="col-md-6">
                 <!-- Tabs -->
                 <div class="tabNavigationBar-tab border_style">
-                 <a wire:navigate class="tabNavigationBar-item @if($currentRoute == 'task.list-view') active @endif" href="{{ route('task.list-view') }}">
-                    <i class='bx bx-list-ul'></i> List
-                </a>
-                <a wire:navigate class="tabNavigationBar-item @if($currentRoute == 'task.index') active @endif" href="{{ route('task.index') }}">
-                    <i class='bx bx-columns'></i> Board
-                </a>
+                    <a wire:navigate class="tabNavigationBar-item @if($currentRoute == 'task.index') active @endif" href="{{ route('task.index') }}">
+                        <i class='bx bx-columns'></i> My Tasks
+                    </a>
 
-                <a wire:navigate class="tabNavigationBar-item @if($currentRoute == 'task.projects') active @endif" href="{{ route('task.projects') }}">
-                    <i class='bx bx-objects-horizontal-left'></i> Projects 
-                </a>
+                    <a wire:navigate class="tabNavigationBar-item @if($currentRoute == 'task.projects') active @endif" href="{{ route('task.projects') }}">
+                        <i class='bx bx-objects-horizontal-left'></i> Projects 
+                    </a>
 
-                <a wire:navigate class="tabNavigationBar-item @if($currentRoute == 'task.teams') active @endif" href="{{ route('task.teams') }}">
-                    <i class='bx bx-sitemap'></i> Teams 
-                </a>
+                    <a wire:navigate class="tabNavigationBar-item @if($currentRoute == 'task.teams') active @endif" href="{{ route('task.teams') }}">
+                        <i class='bx bx-sitemap'></i> Teams 
+                    </a>
                 
                 </div>
             </div>
             <div class="col-md-6 text-end">
-                <div class="form-check form-switch d-inline-block">
-                    <input class="form-check-input assigned-by-me-task-task-switch"
-                    @if($ViewTasksAs == 'manager')
-                        disabled
-                    @endif
-                     type="checkbox" role="switch" id="">
-                    <label class="form-check-label assigned-by-me-task-switch-text" for="">Assigned By Me</label>
-                </div> 
-                @if(auth()->user()->is_manager)
-                |
-                <div class="form-check form-switch d-inline-block">
-                    <input class="form-check-input task-switch" 
-                    @if($assignedByMe)
-                        disabled
-                    @endif
-                     type="checkbox" role="switch" id="flexSwitchCheckChecked">
-                    <label class="form-check-label task-switch-text" for="flexSwitchCheckChecked">Showing {{ auth()->user()->myTeam->name }} Tasks</label>
-                </div>
-                @endif
+                <select class="dashboard_filters-select" wire:model.live="byProject" id="">
+                    <option value="all">All</option>
+                    @foreach($projects as $project)
+                        <option value="{{ $project->id }}">{{ $project->name }}</option>
+                    @endforeach
+                </select>
+                <select class="dashboard_filters-select" wire:model.live="byProject" id="">
+                    <option value="all">All</option>
+                    @foreach($projects as $project)
+                        <option value="{{ $project->id }}">{{ $project->name }}</option>
+                    @endforeach
+                </select>
             </div>
         </div>
     </div>
@@ -183,36 +173,9 @@
         <a wire:click="$set('status', 'completed')" class="btn-border btn-border-success @if($status == 'completed') active @endif">{{ $tasks_count->where('status','completed')->count() }} <span>|</span> Completed</a> --}}
         <a wire:click="$set('status', 'overdue')" class="btn-border btn-border-danger @if($status == 'overdue') active @endif">
            {{ $overdueTasks }}
-            <span>|</span> Overdue</a>
-        <span>
-
-            <select class="dashboard_filters-select w-100" wire:model.live="byProject" id="">
-                <option value="all">All</option>
-                @foreach($projects as $project)
-                    <option value="{{ $project->id }}">{{ $project->name }}</option>
-                @endforeach
-            </select>
-        </span>
+            <span>|</span> Overdue
+        </a>
     </div>
-
-    <!-- Filters Query Params -->
-     @if($this->doesAnyFilterApplied())
-
-        <x-filters-query-params 
-            :sort="$sort" 
-            :status="$status" 
-            :byUser="$byUser" 
-            :byClient="$byClient"
-            :byProject="$byProject"
-            :startDate="$startDate" 
-            :dueDate="$dueDate" 
-            :users="$users" 
-            :teams="$teams"
-            :clients="$clients"
-            :projects="$projects"
-            :clearFilters="route('task.list-view')"
-        />
-     @endif
 
     <div class="column-box mt-3">
         <div class="taskList-dashbaord_header">

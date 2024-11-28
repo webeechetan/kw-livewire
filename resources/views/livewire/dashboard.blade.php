@@ -88,21 +88,21 @@
                 <hr>
                 <div class="overflow-y scrollbar scrollbar-primary">
                     @foreach($mostImportantProjects as $project)
-                    <div>
+                    <div class="border-bottom-list spacing-between-20">
                         <div class="row mb-3">
                             <div class="col-auto pe-md-1">
-                                <x-avatar :user="$project" />
+                                <x-avatar class="avatar-sm" :user="$project" />
                             </div>
                             <div class="col">
-                                <h5 class="mb-1">
+                                <div class="mb-1 text-lg">
                                     <a href="{{ route('project.profile', $project->id) }}" wire:navigate>
                                     {{ $project->name }}
                                     </a>
-                                </h5>
-                                <div>{{ $project->client->name}}</div>
+                                </div>
+                                <div class="text-sm text-light">{{ $project->client->name}}</div>
                             </div>
                         </div>
-                        <div class="d-flex gap-2 mt-4">
+                        <div class="d-flex flex-wrap gap-2 mt-4">
                             @if($project->teams)
                             @foreach($project->teams as $team)
                             <a href="{{ route('team.profile', $team->id) }}" wire:navigate class="btn btn-success rounded-pill btn-xs text-uppercase">{{$team->name}}</a>
@@ -126,11 +126,10 @@
                         </div>
                         <div class="row mt-2">
                             <div class="col"><b>{{ $taskDone }}</b> <span>{{ pluralOrSingular($taskDone,'Task') }} Done</span></div>
-                            <div class="col text-end text-danger px-4"><i class="bx bx-calendar"></i> <span>{{ $project->due_date
+                            <div class="col-auto text-end text-danger px-4"><i class="bx bx-calendar"></i> <span>{{ $project->due_date
                                 ?? 'No Due Date' }}</span></div>
                         </div>
                     </div>
-                    <!-- <hr class="my-4"> -->
                     @endforeach
                 </div>
             </div>
