@@ -123,21 +123,24 @@
                         <i class='bx bx-columns'></i> My Tasks
                     </a>
 
+                    @can('View Project')
                     <a wire:navigate class="tabNavigationBar-item @if($currentRoute == 'task.projects') active @endif" href="{{ route('task.projects') }}">
                         <i class='bx bx-objects-horizontal-left'></i> Projects 
                     </a>
-
+                    @endcan
+                    @can('View Team')
                     <a wire:navigate class="tabNavigationBar-item @if($currentRoute == 'task.teams') active @endif" href="{{ route('task.teams') }}">
                         <i class='bx bx-sitemap'></i> Teams 
                     </a>
+                    @endcan
                 
                 </div>
-            </div>
+            </div> 
             <div class="col-md-6 text-end">
-                <select class="dashboard_filters-select" wire:model.live="byProject" id="">
+                <select class="dashboard_filters-select" wire:model.live="byTeam" id="">
                     <option value="all">All</option>
-                    @foreach($projects as $project)
-                        <option value="{{ $project->id }}">{{ $project->name }}</option>
+                    @foreach($teams as $team)
+                        <option value="{{ $team->id }}">{{ $team->name }}</option>
                     @endforeach
                 </select>
                 <select class="dashboard_filters-select" wire:model.live="byProject" id="">
@@ -146,6 +149,7 @@
                         <option value="{{ $project->id }}">{{ $project->name }}</option>
                     @endforeach
                 </select>
+                
             </div>
         </div>
     </div>
@@ -335,7 +339,7 @@
             }
         });
 
-        $(".task-switch").change(function(){
+        $(".task-switch").change(function(){ 
             if($(this).is(':checked')){
                 @this.set('ViewTasksAs', 'manager');
             }else{

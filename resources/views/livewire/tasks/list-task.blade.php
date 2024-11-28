@@ -127,14 +127,16 @@
                     <a wire:navigate class="tabNavigationBar-item @if($currentRoute == 'task.index') active @endif" href="{{ route('task.index') }}">
                         <i class='bx bx-columns'></i> My Tasks
                     </a>
-
+                    @can('View Project')
                     <a wire:navigate class="tabNavigationBar-item @if($currentRoute == 'task.projects') active @endif" href="{{ route('task.projects') }}">
                         <i class='bx bx-objects-horizontal-left'></i> Projects 
                     </a>
-
+                    @endcan
+                    @can('View Team')
                     <a wire:navigate class="tabNavigationBar-item @if($currentRoute == 'task.teams') active @endif" href="{{ route('task.teams') }}">
                         <i class='bx bx-sitemap'></i> Teams 
                     </a>
+                    @endcan
                     
                 </div>
             </div>
@@ -144,6 +146,9 @@
                         <input class="form-check-input assigned-by-me-task-task-switch"
                         @if($ViewTasksAs == 'manager')
                             disabled
+                        @endif
+                        @if($assignedByMe)
+                            checked
                         @endif
                         type="checkbox" role="switch" id="">
                         <label class="form-check-label assigned-by-me-task-switch-text" for="">Assigned By Me</label>

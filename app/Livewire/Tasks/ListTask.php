@@ -17,6 +17,7 @@ use ProtoneMedia\LaravelCrossEloquentSearch\Search;
 use App\Helpers\Filter;
 use Livewire\Attributes\Session;
 
+
 class ListTask extends Component
 {
     use WithPagination;
@@ -79,8 +80,9 @@ class ListTask extends Component
     public $comments;
 
     public $currentRoute;
-
     public $ViewTasksAs = 'user';
+    
+    #[Session] 
     public $assignedByMe = false;
 
     public function render()
@@ -201,16 +203,12 @@ class ListTask extends Component
                 }
             }
 
-            
-
             $tour = session()->get('tour');
             if(request()->tour == 'close-task-tour'){
                 // $tour['task_tour'] = false;
                 unset($tour['task_tour']);
                 session()->put('tour',$tour);
             }
-            
-
 
     }
 

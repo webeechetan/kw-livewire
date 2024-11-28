@@ -45,7 +45,7 @@ class Teams extends Component
     public $byProject = 'all';
     public $byClient = 'all';
     public $byUser = 'all';
-    // public $byTeam = 'all';
+    public $byTeam = 'all';
     public $startDate;
     public $dueDate; 
     public $status = 'all';
@@ -214,6 +214,11 @@ class Teams extends Component
     public function updatedByProject($value)
     {
         $this->mount();
+    }
+
+    public function updatedByTeam($value)
+    {
+        $this->projects = Team::find($this->byTeam)->projects;
     }
 
     public function updatedStartDate($value)

@@ -123,20 +123,16 @@
                         <i class='bx bx-columns'></i> My Tasks
                     </a>
     
+                    @can('View Project')
                     <a wire:navigate class="tabNavigationBar-item @if($currentRoute == 'task.projects') active @endif" href="{{ route('task.projects') }}">
                         <i class='bx bx-objects-horizontal-left'></i> Projects 
                     </a>
-    
+                    @endcan
+                    @can('View Team')
                     <a wire:navigate class="tabNavigationBar-item @if($currentRoute == 'task.teams') active @endif" href="{{ route('task.teams') }}">
                         <i class='bx bx-sitemap'></i> Teams 
                     </a>
-                    {{-- <span>
-                        <select name="" id="">
-                            <option value="">Team A</option>
-                            <option value="">Team B</option>
-                            <option value="">Team C</option>
-                        </select>
-                    </span> --}}
+                    @endcan
                 
                 </div>
             </div>

@@ -101,8 +101,11 @@
                         <div class="taskPane-item-left"><div class="taskPane-item-label">Add Voice Note</div></div>
                         <div class="taskPane-item-right">
                             <div class="voice_note">
-                                <span id="recordButton"><i class='bx bxs-microphone' ></i></span>
-                                <span id="stopButton"><i class='bx bx-stop-circle' ></i></span>
+                                <span id="recordButton" class="" title="Start"><i class='bx bxs-microphone' ></i></span>
+                                <span id="stopButton" class="d-none" title="Stop"><i class='bx bx-stop-circle bx-tada bx-flip-vertical' ></i></span>
+                            </div>
+                            <div class="voice-note-preview">
+
                             </div>
                         </div>
                     </div>
@@ -236,6 +239,7 @@
     stopButton.addEventListener("click", stopRecording);
 
     function startRecording() {
+        $("#stopButton").removeClass('d-none');
         console.log("recordButton clicked");
         var constraints = { audio: true, video: false };
         recordButton.disabled = true;
@@ -261,10 +265,12 @@
 
     function stopRecording() {
         console.log("stopButton clicked");
+        $("#stopButton").addClass('d-none');
         recordButton.disabled = false;
         rec.stop();
         gumStream.getAudioTracks()[0].stop();
         rec.exportWAV(createDownloadLink);
+
     }
 
     function createDownloadLink(blob) {
@@ -275,6 +281,14 @@
             var base64data = reader.result;
             @this.set('voice_note', base64data);
         };
+        $(".voice-note-preview").html('');
+        var url = URL.createObjectURL(blob);
+        var au = document.createElement("audio");
+        au.controls = true;
+        au.src = url;
+        $(".voice-note-preview").append(au);
+        console.log("Recording stopped");
+
 
         rec.clear();
 
