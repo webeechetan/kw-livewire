@@ -66,6 +66,7 @@ use App\Helpers\Helper;
 use Livewire\Livewire;
 
 use App\Livewire\Organizations\Profile as OrganizationProfile;
+use App\Livewire\Tasks\MarkedToMeTasks;
 
 /*
 |--------------------------------------------------------------------------
@@ -183,6 +184,7 @@ Route::group(
     Route::get('/tasks/projects',TaskProjects::class)->name('task.projects');
     Route::get('/tasks/teams',TaskTeams::class)->name('task.teams');
     Route::get('/tasks/list-view',TaskListView::class)->name('task.list-view');
+    Route::get('/tasks/marked-to-me',MarkedToMeTasks::class)->name('task.marked-to-me');
     Route::get('/tasks/{sort?}/{filter?}/{byProject?}/{byClient?}',ListTask::class)->name('task.index');
     Route::get('/tasks/add',AddTask::class)->name('task.add');
 

@@ -143,6 +143,10 @@
                         @endif 
                     </a>
                     @endcan
+
+                    <a wire:navigate class="tabNavigationBar-item @if($currentRoute == 'task.marked-to-me') active @endif" href="{{ route('task.marked-to-me') }}">
+                        <i class='bx bx-columns'></i> Marked To Me
+                    </a>
                 
                 </div>
             </div>
