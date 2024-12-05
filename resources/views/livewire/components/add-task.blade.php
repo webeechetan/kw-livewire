@@ -685,43 +685,43 @@
             // comment-added 
             if (!window.hasAddedCommentListener) {
 
-            document.addEventListener('comment-added', event => {
+                document.addEventListener('comment-added', event => {
 
-                const date = new Date(event.detail[0].created_at);
-                const options = { day: 'numeric', month: 'long', year: 'numeric' };
-                const formattedDate = date.toLocaleDateString('en-GB', options);
+                    const date = new Date(event.detail[0].created_at);
+                    const options = { day: 'numeric', month: 'long', year: 'numeric' };
+                    const formattedDate = date.toLocaleDateString('en-GB', options);
 
 
-                let comment_html = `<div class="cmnt_item_row">
-                    <div class="cmnt_item_user">
-                        <div class="cmnt_item_user_img">
-                            ${
-                                event.detail[0].user.image ? `<img class="rounded-circle" src="{{ env('APP_URL') }}/storage/${event.detail[0].user.image}">` : `<span class="avatar avatar-sm avatar-yellow" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="${event.detail[0].user.name}">${createInitials(event.detail[0].user.name)}</span>`
-                            }
+                    let comment_html = `<div class="cmnt_item_row">
+                        <div class="cmnt_item_user">
+                            <div class="cmnt_item_user_img">
+                                ${
+                                    event.detail[0].user.image ? `<img class="rounded-circle" src="{{ env('APP_URL') }}/storage/${event.detail[0].user.image}">` : `<span class="avatar avatar-sm avatar-yellow" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="${event.detail[0].user.name}">${createInitials(event.detail[0].user.name)}</span>`
+                                }
+                            </div>
+                            <div class="cmnt_item_user_name-wrap">
+                                <div class="cmnt_item_user_name">${event.detail[0].user.name}</div>
+                                <div class="cmnt_item_date">${formattedDate}</div>
+                                <div class="cmnt_item_user_text">${event.detail[0].comment}</div>
+                            </div>
                         </div>
-                        <div class="cmnt_item_user_name-wrap">
-                            <div class="cmnt_item_user_name">${event.detail[0].user.name}</div>
-                            <div class="cmnt_item_date">${formattedDate}</div>
-                            <div class="cmnt_item_user_text">${event.detail[0].comment}</div>
-                        </div>
-                    </div>
-                </div>`;
-                
+                    </div>`;
+                    
 
-                if(event.detail[0].type == 'internal'){
-                    $(".task-comments-count").html(parseInt($(".task-comments-count").html()) + 1);
-                    $('.comment-rows').append(comment_html);
-                    $('#comment_box').summernote('code', '');
-                }else{
-                    $(".client-comment-count").html(parseInt($(".client-comment-count").html()) + 1);
-                    $('.client-comment-rows').append(comment_html);
-                    $('#internal_comment_box').summernote('code', '');
-                }
- 
-                $(".total-comments").html(parseInt($(".total-comments").html()) + 1);
+                    if(event.detail[0].type == 'internal'){
+                        $(".task-comments-count").html(parseInt($(".task-comments-count").html()) + 1);
+                        $('.comment-rows').append(comment_html);
+                        $('#comment_box').summernote('code', '');
+                    }else{
+                        $(".client-comment-count").html(parseInt($(".client-comment-count").html()) + 1);
+                        $('.client-comment-rows').append(comment_html);
+                        $('#internal_comment_box').summernote('code', '');
+                    }
+    
+                    $(".total-comments").html(parseInt($(".total-comments").html()) + 1);
 
 
-            });
+                });
                 // Mark that the listener is added
                 window.hasAddedCommentListener = true;
             }

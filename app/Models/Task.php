@@ -103,9 +103,13 @@ class Task extends Model
                             $q->where('assigned_by', auth()->user()->id);
                         });
             }else{
-                return $query->whereHas('users', function($q){
-                    $q->where('user_id', auth()->user()->id);
-                });
+                if(auth()->user()->hasRole('Admin')){
+                    return $query;
+                }else{
+                    return $query->whereHas('users', function($q){
+                        $q->where('user_id', auth()->user()->id);
+                    });
+                }
             }
             
         }

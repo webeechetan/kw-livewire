@@ -24,7 +24,7 @@ class AddTask extends Component
     public $projects = []; 
     public $users = [];
     public $task_users;
-    public $task_notifiers;
+    public $task_notifiers = [];
     public $project_id;
     public $status = 'pending'; 
     public $email_notification;
@@ -104,7 +104,7 @@ class AddTask extends Component
         $task->save();
         $task->users()->sync($this->task_users);
         $task->notifiers()->sync($this->task_notifiers);
-        $this->saveVoiceNoteToTask($task->id);
+        
          // attach files to task from $this->attachments
         if($this->attachments){
             foreach($this->attachments as $attachment){
@@ -145,9 +145,9 @@ class AddTask extends Component
         }
 
         $this->attachments = [];
-        $this->dispatch('success', 'Task added successfully');
-        $this->dispatch('saved','Task saved successfully');
         $this->dispatch('task-added',$task);
+        $this->dispatch('saved','Task saved successfully');
+        $this->saveVoiceNoteToTask($task->id);
     }
 
     public function saveComment($type = 'internal'){
@@ -250,6 +250,7 @@ class AddTask extends Component
             }
         }
 
+        $this->dispatch('task-added',$this->task);
         $this->saveVoiceNoteToTask($this->task->id);
 
         $this->attachments = [];
@@ -297,7 +298,6 @@ class AddTask extends Component
         $voiceNote->voice_noteable_type = 'App\Models\Task';
         $voiceNote->path = $path;
         $voiceNote->save();
-
     }
     
 }

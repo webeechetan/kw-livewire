@@ -122,15 +122,25 @@
                     <a wire:navigate class="tabNavigationBar-item @if($currentRoute == 'task.index') active @endif" href="{{ route('task.index') }}">
                         <i class='bx bx-columns'></i> My Tasks
                     </a>
-
                     @can('View Project')
                     <a wire:navigate class="tabNavigationBar-item @if($currentRoute == 'task.projects') active @endif" href="{{ route('task.projects') }}">
-                        <i class='bx bx-objects-horizontal-left'></i> Projects 
+                        <i class='bx bx-objects-horizontal-left'></i> 
+                        @if(auth()->user()->hasRole('Admin'))
+                            Projects
+                        @else
+                            My Projects
+                        @endif
                     </a>
                     @endcan
                     @can('View Team')
+
                     <a wire:navigate class="tabNavigationBar-item @if($currentRoute == 'task.teams') active @endif" href="{{ route('task.teams') }}">
-                        <i class='bx bx-sitemap'></i> Teams 
+                        <i class='bx bx-sitemap'></i> 
+                        @if(auth()->user()->hasRole('Admin'))
+                            Teams
+                        @else
+                            My Teams
+                        @endif 
                     </a>
                     @endcan
                 
