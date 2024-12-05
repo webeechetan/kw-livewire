@@ -80,7 +80,7 @@
                 <!-- Login -->
                 <li class="nav-item navbar-dropdown dropdown">
                   <a href="#" class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="true">
-                    <span class="avatar avatar-sm avatar-{{$user->color}}">{{$user->initials}}</span>
+                    <x-avatar :user="$user" />
                   </a>
                   <ul class="dropdown-menu dropdown-menu-end dropdown-account" data-bs-popper="static">
                    <li>

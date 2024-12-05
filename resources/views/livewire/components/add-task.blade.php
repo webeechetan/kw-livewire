@@ -611,7 +611,7 @@
                         <div class="voice-notes-item-user d-flex gap-2 mb-2">
                             <div class="voice-notes-item-user-img">
                                 ${
-                                    voice_note.user.image ? `<img class="rounded-circle" src="{{ env('APP_URL') }}/storage/${voice_note.user.image}">` 
+                                    voice_note.user.image ? `<img class="avatar avatar-sm rounded-circle" src="{{ env('APP_URL') }}/storage/${voice_note.user.image}">` 
                                     : 
                                     `<span class="avatar avatar-sm avatar-yellow" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="${voice_note.user.name}">${createInitials(voice_note.user.name)}</span>`
                                 }

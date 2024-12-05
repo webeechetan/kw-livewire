@@ -1050,6 +1050,9 @@ hr.space-sm {
 .taskPane-heading input.form-control::placeholder {
   color: #9c9c9c;
 }
+.taskPane-heading input.form-control[disabled] {
+  background: transparent;
+}
 .taskPane-body {
   margin-top: 30px;
 }
@@ -3292,7 +3295,6 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
 .avatar:hover, .avatar:focus {
   color: #fff;
   z-index: 9;
-  transform: translateY(-2px);
 }
 .avatar img {
   width: 100%;
@@ -3368,6 +3370,9 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
 .avatarGroup-overlap .avatar:not(.avatar-more, .avatar:first-child) {
   margin-left: -10px;
   border: 1px solid #fff;
+}
+.avatarGroup .avatar:hover, .avatarGroup .avatar:focus {
+  transform: translateY(-2px);
 }
 
 /*---- Scrollbar ----*/
