@@ -145,23 +145,12 @@
                     @endcan
 
                     <a wire:navigate class="tabNavigationBar-item @if($currentRoute == 'task.marked-to-me') active @endif" href="{{ route('task.marked-to-me') }}">
-                        <i class='bx bx-columns'></i> Marked To Me
+                        <i class='bx bx-user'></i> Marked To Me
                     </a>
                 
                 </div>
             </div>
-            <div class="col-md-6 text-end">
-                <div class="d-inlineflex flex-wrap align-items-center">
-                    
-                    <a wire:navigate class="ms-4" href="{{ route('task.index') }}">
-                        <i class='bx bx-columns'></i>
-                    </a>
-                    <span class="text-light mx-2">|</span>
-                    <a wire:navigate class="text-primary" href="{{ route('task.list-view') }}">
-                        <i class='bx bx-list-ul'></i>
-                    </a>
-                </div>
-            </div>
+            
         </div>
     </div>
 
