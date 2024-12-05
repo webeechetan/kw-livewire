@@ -151,12 +151,16 @@
                 </div>
             </div>
             <div class="col-md-6 text-end">
-                <select class="dashboard_filters-select" wire:model.live="byProject" id="">
-                    <option value="all">All</option>
-                    @foreach($projects as $project)
-                        <option value="{{ $project->id }}">{{ $project->name }}</option>
-                    @endforeach
-                </select>   
+                <div class="d-inlineflex flex-wrap align-items-center">
+                    
+                    <a wire:navigate class="ms-4" href="{{ route('task.index') }}">
+                        <i class='bx bx-columns'></i>
+                    </a>
+                    <span class="text-light mx-2">|</span>
+                    <a wire:navigate class="text-primary" href="{{ route('task.list-view') }}">
+                        <i class='bx bx-list-ul'></i>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
@@ -172,8 +176,6 @@
 
         {{-- <a href="javascript:" wire:click="$set('status', 'pending')" class="btn-border btn-border-sm btn-border-primary "><span><i class='bx bx-objects-horizontal-center' ></i></span> {{ $project->tasks->where('status', 'pending')->count() }} Assigned</a> --}}
 
-        <a  wire:click="$set('status', 'completed')" class="btn-border btn-border-warning @if($status == 'completed') active @endif">{{ $completedTasks }} <span>|</span> Today</a>
-        <a  wire:click="$set('status', 'completed')" class="btn-border btn-border-success @if($status == 'completed') active @endif">{{ $completedTasks }} <span>|</span> Upcoming</a>
         <a  wire:click="$set('status', 'pending')" class="btn-border btn-border-primary @if($status == 'pending') active @endif">{{ $pendingTasks}} <span>|</span> Assigned</a>
         <a  wire:click="$set('status', 'in_progress')" class="btn-border btn-border-secondary @if($status == 'in_progress') active @endif">{{ $inProgressTasks}} <span>|</span> Accepted</a>
         <a  wire:click="$set('status', 'in_review')" class="btn-border btn-border-warning @if($status == 'in_review') active @endif">{{  $inReviewTasks }} <span>|</span> In Review</a>
@@ -215,9 +217,6 @@
                     <div class="taskList-dashbaord_header_title taskList_col ms-2">Task Name</div>
                 </div>
                 <div class="col text-center">
-                    <div class="taskList-dashbaord_header_title taskList_col">Created Date</div>
-                </div>
-                <div class="col text-center">
                     <div class="taskList-dashbaord_header_title taskList_col">Due Date</div>
                 </div>
                 <div class="col text-center">
@@ -225,6 +224,9 @@
                 </div>
                 <div class="col text-center">
                     <div class="taskList-dashbaord_header_title taskList_col">Assignee</div>
+                </div>
+                <div class="col text-center">
+                    <div class="taskList-dashbaord_header_title taskList_col">Notifiers</div>
                 </div>
                 <div class="col text-center">
                     <div class="taskList-dashbaord_header_title taskList_col">Status</div>
@@ -262,9 +264,6 @@
                                     </div>
                                 </div>
                                 <div class="col text-center">
-                                    <div class="taskList_col"><span>{{  Carbon\Carbon::parse($task->created_at)->format('d M Y') }}</span></div>
-                                </div>
-                                <div class="col text-center">
                                     <div class="taskList_col"><span class="btn-batch 
                                         @if ($task->due_date < \Carbon\Carbon::now())  btn-batch btn-batch-danger @endif"> @if($task->due_date)
                                         {{ Carbon\Carbon::parse($task->due_date)->format('d M Y') }}
@@ -295,6 +294,29 @@
                                                 <span class="avatar avatar-sm avatar-more">+{{$plus_more_users}}</span>
                                             </a>
                                         @endif       
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col text-center">
+                                    <div class="taskList_col">
+                                        <div class="avatarGroup avatarGroup-overlap">
+
+                                            @php
+                                                $plus_more_users = 0;
+                                                if(count($task['notifiers']) > 3){
+                                                    $plus_more_users = count($task['notifiers']) - 3;
+                                                }
+                                            @endphp
+
+                                            @foreach($task['notifiers']->take(3) as $user)
+                                                <x-avatar :user="$user" class="avatar-sm" />
+                                            @endforeach
+
+                                            @if($plus_more_users)
+                                                <a href="#" class="avatarGroup-avatar">
+                                                    <span class="avatar avatar-sm avatar-more">+{{$plus_more_users}}</span>
+                                                </a>
+                                            @endif       
                                         </div>
                                     </div>
                                 </div>
@@ -363,22 +385,6 @@
             onClose: function(selectedDates, dateStr, instance){
                 @this.set('dueDate', dateStr);
                 $(".due_date").text(dateStr);
-            }
-        });
-
-        $(".task-switch").change(function(){
-            if($(this).is(':checked')){
-                @this.set('ViewTasksAs', 'manager');
-            }else{
-                @this.set('ViewTasksAs', 'user');
-            }
-        });
-
-        $(".assigned-by-me-task-task-switch").change(function(){
-            if($(this).is(':checked')){
-                @this.set('assignedByMe', true);
-            }else{
-                @this.set('assignedByMe', false);
             }
         });
     </script>
