@@ -54,12 +54,13 @@ b, strong {
     text-transform: uppercase;
     &-notifications{
         position: absolute;
-        top: 0;
-        right: auto;
+        top: -10px;
+        right: -8px;
         width: 20px;
         height: 20px;
         line-height: 10px;
         padding: 5px;
+        font-size: 10px;
     }
 }
 

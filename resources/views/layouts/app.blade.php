@@ -62,8 +62,8 @@
             <div class="collapse navbar-collapse justify-content-end" id="responsive-navbar-nav">
               <ul class="navbar-nav align-items-center">  
                 <li class="nav-item">
-                  <a class="nav-link" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight">
-                    <img src="{{ asset('') }}img/create-task-icon.png" alt="Task Icon" class="text-primary" height="20" width="20" />
+                  <a class="nav-link" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" data-bs-toggle="tooltip" data-bs-title="Add Task">
+                    <i class="bx bx-task"></i>
                   </a>
                 </li>              
                 <!-- Message -->
