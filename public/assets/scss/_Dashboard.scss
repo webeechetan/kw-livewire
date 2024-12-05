@@ -117,7 +117,6 @@
     &:focus {
         color: #fff;
         z-index: 9;
-        transform: translateY(-2px);
     }
 
     img {
@@ -211,6 +210,12 @@
             border: 1px solid #fff;
         }
 
+    }
+
+    .avatar {
+        &:hover, &:focus {
+            transform: translateY(-2px);
+        }
     }
 }
 

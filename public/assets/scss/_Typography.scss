@@ -1053,6 +1053,10 @@ hr.space-sm {
             &::placeholder {
                 color: $text_light;
             }
+
+            &[disabled] {
+                background: transparent;
+            }
         }
     }
     &-body {
