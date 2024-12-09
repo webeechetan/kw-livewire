@@ -95,18 +95,19 @@
                     </div>
                     <div class="taskPane-item d-flex flex-wrap mb-3 voice-notes-list d-none">
                     </div> 
-
+                    <hr>
                     {{-- Add voice note --}}
                     <div class="my-4">
                         <div class="voice_note-wrap d-flex align-items-center justify-content-between gap-4">
-                            <div class="font-500 text-secondary">Add Voice Note</div>
+                            <div class="font-500 text-secondary">Add Voice Note <span class="text-xs">| 00:30</span></div>
                             <div class="voice_note voice_note-icon">
                                 <span id="recordButton" class="text-secondary d-flex" title="Start"><i class='bx bxs-microphone' ></i></span>
                                 <span id="stopButton" class="d-none d-flex" title="Stop"><i class='bx bx-stop-circle bx-tada bx-flip-vertical' ></i></span>
                             </div>
                         </div>
-                        <div class="voice-note-preview"></div>
+                        <div class="voice_note-preview"></div>
                     </div>
+                    <hr>
                     <div class="taskPane-item mb-2">
                         <div class="taskPane-item-label mb-2"><a href="#"><i class="bx bx-paperclip text-secondary add-attachments" style="transform: rotate(60deg);"></i></a> <span class="task-attachment-count"> {{ count($attachments) }}</span> Attachements</div>
                         <input class="d-none attachments" type="file" wire:model="attachments" multiple id="formFile" />
@@ -279,12 +280,12 @@
             var base64data = reader.result;
             @this.set('voice_note', base64data);
         };
-        $(".voice-note-preview").html('');
+        $(".voice_note-preview").html('');
         var url = URL.createObjectURL(blob);
         var au = document.createElement("audio");
         au.controls = true;
         au.src = url;
-        $(".voice-note-preview").append(au);
+        $(".voice_note-preview").append(au);
         console.log("Recording stopped");
 
 
