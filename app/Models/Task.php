@@ -117,6 +117,12 @@ class Task extends Model
         }
     }
 
+    public function scopeTasksByAdminType($query){
+        return $query->whereHas('users', function($q){
+            $q->where('user_id', auth()->user()->id);
+        });
+    }
+
     // public function scopeManagerTeamsTasks($query){
     //     return $query->whereHas('team', function($q){
     //         $q->where('manager_id', auth()->user()->id);

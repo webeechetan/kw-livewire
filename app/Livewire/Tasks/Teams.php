@@ -114,69 +114,29 @@ class Teams extends Component
 
             $this->teams = Team::all();
             $this->clients = Client::all();
-            // Fetch all tasks from the database
-            if($this->ViewTasksAs == 'manager'){
-                $manager_team = auth()->user()->myTeam;
-                $team_users = $manager_team->users()->pluck('users.id')->toArray();
-                $this->tasks = [
-                    'pending' => $this->applySort(
-                        Task::where('status', 'pending')
-                            ->whereHas('users', function($q) use($team_users){
-                                $q->whereIn('user_id', $team_users);
-                            })
-                            ->where('name', 'like', '%' . $this->query . '%')
-                    )->get(),
-                    'in_progress' => $this->applySort(
-                        Task::where('status', 'in_progress')
-                            ->whereHas('users', function($q) use($team_users){
-                                $q->whereIn('user_id', $team_users);
-                            })
-                            ->where('name', 'like', '%' . $this->query . '%')
-                    )->get(),
-                    'in_review' => $this->applySort(
-                        Task::where('status', 'in_review')
-                            ->whereHas('users', function($q) use($team_users){
-                                $q->whereIn('user_id', $team_users);
-                            })
-                            ->where('name', 'like', '%' . $this->query . '%')
-                    )->get(),
-                    'completed' => $this->applySort(
-                        Task::where('status', 'completed')
-                            ->whereHas('users', function($q) use($team_users){
-                                $q->whereIn('user_id', $team_users);
-                            })
-                            ->where('name', 'like', '%' . $this->query . '%')
-                    )->get(),
-                ];
-
-            }else{
-                $this->tasks = [
-                    'pending' => $this->applySort(
-                        Task::tasksByUserType($this->assignedByMe)
-                            ->where('status', 'pending')
-                            ->where('name', 'like', '%' . $this->query . '%')
-                    )->get(),
-        
-                    'in_progress' => $this->applySort(
-                                        Task::tasksByUserType($this->assignedByMe)
-                                            ->where('status', 'in_progress')
-                                            ->where('name', 'like', '%' . $this->query . '%')
-                                    )->get(),
-                    
-                    'in_review' => $this->applySort(
-                                    Task::tasksByUserType($this->assignedByMe)
-                                        ->where('status', 'in_review')
+           
+            $this->tasks = [
+                'pending' => $this->applySort(
+                    Task::where('status', 'pending')
+                        ->where('name', 'like', '%' . $this->query . '%')
+                )->get(),
+    
+                'in_progress' => $this->applySort(
+                                    Task::where('status', 'in_progress')
                                         ->where('name', 'like', '%' . $this->query . '%')
                                 )->get(),
-    
-                    'completed' => $this->applySort(
-                                    Task::tasksByUserType($this->assignedByMe)
-                                    ->where('status', 'completed')
+                
+                'in_review' => $this->applySort(
+                                Task::where('status', 'in_review')
                                     ->where('name', 'like', '%' . $this->query . '%')
-                                )->get(),
-                    
-                ];
-            }
+                            )->get(),
+
+                'completed' => $this->applySort(
+                                Task::where('status', 'completed')
+                                ->where('name', 'like', '%' . $this->query . '%')
+                            )->get(),
+                
+            ];
 
 
     }
