@@ -1173,6 +1173,9 @@
 /* ----- Summer Note Editor ----- */
 .note-editable {
     min-height: 200px;
+    background-color: $light;
+    margin-top: 5px;
+    border-radius: 20px;
 }
 
 .note-editor.note-airframe .note-editing-area .note-editable,
@@ -1202,6 +1205,7 @@
 .note-editor .note-toolbar,
 .note-popover .popover-content {
     padding: 7px;
+    border-radius: 10px;
 }
 
 .note-editor.note-airframe,
@@ -1211,6 +1215,7 @@
 
 .note-toolbar {
     border-color: transparent;
+    background-color: $light;
 }
 
 .note-editor.note-airframe .note-statusbar,
@@ -1970,6 +1975,27 @@
 
 /* ----- Voice Note -----*/
 .voice_note {
+    &-wrap {
+        background-color: $secondary_light;
+        max-width: 275px;
+        padding: 5px 10px 5px 15px;
+        margin: 15px 0;
+        border-radius: $border_radius_sm;
+    }
+    &-icon {
+        width: 30px;
+        height: 30px;
+        background: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 7px;
+    }
+    &-preview {
+        audio {
+            height: 36px;
+        }
+    }
     i {
         font-size: 22px;
         cursor: pointer;
