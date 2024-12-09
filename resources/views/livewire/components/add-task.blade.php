@@ -87,7 +87,7 @@
                             <textarea wire:model="description" id="editor" cols="30" rows="4" placeholder="Type Description"></textarea>
                         </div>
                     </div>
-                    <div class="taskPane-item d-flex flex-wrap mb-3">
+                    <div class="taskPane-item d-flex flex-wrap">
                         <div class="taskPane-item-left"><div class="taskPane-item-label">Email Notification</div></div>
                         <div class="taskPane-item-right">
                            <input class="email_notification" type="checkbox" wire:model="email_notification">
@@ -97,17 +97,15 @@
                     </div> 
 
                     {{-- Add voice note --}}
-                    <div class="taskPane-item d-flex flex-wrap mb-3">
-                        <div class="taskPane-item-left"><div class="taskPane-item-label">Add Voice Note</div></div>
-                        <div class="taskPane-item-right">
-                            <div class="voice_note">
-                                <span id="recordButton" class="" title="Start"><i class='bx bxs-microphone' ></i></span>
-                                <span id="stopButton" class="d-none" title="Stop"><i class='bx bx-stop-circle bx-tada bx-flip-vertical' ></i></span>
-                            </div>
-                            <div class="voice-note-preview">
-
+                    <div class="my-4">
+                        <div class="voice_note-wrap d-flex align-items-center justify-content-between gap-4">
+                            <div class="font-500 text-secondary">Add Voice Note</div>
+                            <div class="voice_note voice_note-icon">
+                                <span id="recordButton" class="text-secondary d-flex" title="Start"><i class='bx bxs-microphone' ></i></span>
+                                <span id="stopButton" class="d-none d-flex" title="Stop"><i class='bx bx-stop-circle bx-tada bx-flip-vertical' ></i></span>
                             </div>
                         </div>
+                        <div class="voice-note-preview"></div>
                     </div>
                     <div class="taskPane-item mb-2">
                         <div class="taskPane-item-label mb-2"><a href="#"><i class="bx bx-paperclip text-secondary add-attachments" style="transform: rotate(60deg);"></i></a> <span class="task-attachment-count"> {{ count($attachments) }}</span> Attachements</div>
