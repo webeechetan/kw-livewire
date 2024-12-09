@@ -167,27 +167,27 @@ class ListTask extends Component
             }else{
                 $this->tasks = [
                     'pending' => $this->applySort(
-                        Task::tasksByUserType($this->assignedByMe)
+                        Task::tasksByUserType($this->assignedByMe,true)
                             ->where('status', 'pending') 
                             ->where('name', 'like', '%' . $this->query . '%')
                         )->take($this->perPage)->get(),
         
                     'in_progress' => $this->applySort(
-                        Task::tasksByUserType($this->assignedByMe)
+                        Task::tasksByUserType($this->assignedByMe,true)
                             ->where('status', 'in_progress')
                             ->where('name', 'like', '%' . $this->query . '%')
                         )->take($this->perPage)->get(),
 
                     
                     'in_review' => $this->applySort(
-                        Task::tasksByUserType($this->assignedByMe)
+                        Task::tasksByUserType($this->assignedByMe,true)
                             ->where('status', 'in_review')
                             ->where('name', 'like', '%' . $this->query . '%')
                         )->take($this->perPage)->get(),
 
     
                     'completed' => $this->applySort(
-                        Task::tasksByUserType($this->assignedByMe)
+                        Task::tasksByUserType($this->assignedByMe,true)
                             ->where('status', 'completed')
                             ->where('name', 'like', '%' . $this->query . '%')
                         )->take($this->perPage)->get(),
@@ -195,11 +195,11 @@ class ListTask extends Component
                 ];
                 if($this->doesAnyFilterApplied()){
                     $this->totalTasks = $this->applySort(
-                        Task::tasksByUserType($this->assignedByMe)
+                        Task::tasksByUserType($this->assignedByMe,true)
                             ->where('name', 'like', '%' . $this->query . '%')
                     )->count();
                 }else{
-                    $this->totalTasks = Task::tasksByUserType($this->assignedByMe)->count();
+                    $this->totalTasks = Task::tasksByUserType($this->assignedByMe,true)->count();
                 }
             }
 
