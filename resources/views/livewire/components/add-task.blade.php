@@ -66,12 +66,12 @@
                                 <option value="" selected disabled>Select Project</option>
                                 @foreach ($projects as $p)
                                     @if($project_id && $project && $project->id == $p->id)
-                                        <option value="{{ $p->id }}" selected>{{ $p->name }} [{{$p->client->initials }}]</option>
+                                        <option value="{{ $p->id }}" data-client="{{$p->client->name}}" selected>{{ $p->name }} [{{$p->client->initials }}]</option>
                                     @else
                                         @if($loop->first)
-                                            <option value="{{ $p->id }}" >{{ $p->name }} [{{$p->client->initials }}]</option>
+                                            <option value="{{ $p->id }}" data-client="{{$p->client->name}}">{{ $p->name }} [{{$p->client->initials }}]</option>
                                         @else
-                                            <option value="{{ $p->id }}">{{ $p->name }} [{{$p->client->initials }}]</option>
+                                            <option value="{{ $p->id }}" data-client="{{$p->client->name}}">{{ $p->name }} [{{$p->client->initials }}]</option>
                                         @endif
                                     @endif
                                 @endforeach
@@ -572,7 +572,21 @@
                 dropdownParent: $('#offcanvasRight'),
                 placeholder: "Select Project",
                 allowClear: true,
+                templateResult: taskProjectsFormatter,
             });
+
+            function taskProjectsFormatter (project) {
+                if (!project.id) {
+                    return project.text;
+                }
+
+                let client = project.element.getAttribute('data-client');
+
+                var $project = $(
+                    '<div> <span class="task-project-client">'+ client +'</span> ' + project.text + '</div>'
+                );
+                return $project;
+            };
 
             $(".task-projects").on('change', function (e) {
                 var data = $(".task-projects").val();
