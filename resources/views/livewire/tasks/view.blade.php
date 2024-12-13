@@ -188,7 +188,7 @@
                             <button class="nav-link" id="nav-client-tab" data-bs-toggle="tab" data-bs-target="#nav-client" type="button" role="tab" aria-controls="nav-client" aria-selected="false">Client Feedback <span class="text-sm btn-batch btn-batch-secondary ms-3"><i class='bx bx-comment-dots text-secondary'></i> {{ $task->comments->where('type','client')->count() }} Comments</span></button>
                         </div>
                     </div>
-                    <div class="tab-content" id="nav-tabContent" wire:ignore>
+                    <div class="tab-content" id="nav-tabContent" wire:ignore.self>
                         <div class="tab-pane fade show active" id="nav-internal" role="tabpanel" aria-labelledby="nav-internal-tab" tabindex="0">
                             @foreach($task->comments->where('type','internal') as $comment)
                                 <div class="cmnt_item_row">
@@ -201,10 +201,15 @@
                                             <div class="cmnt_item_date">{{ $comment->created_at->diffForHumans() }}</div>
                                             <div class="cmnt_item_user_text">{!! $comment->comment !!}</div>
                                         </div>
-                                        {{-- <div class="cmnt_item_user-edit btn-list">
+                                        <div class="cmnt_item_user-edit btn-list">
                                             <a href="#" class="btn_link"><i class='bx bx-pencil' ></i></a>
-                                            <a href="#" class="btn_link"><i class='bx bx-trash' ></i></a>
-                                        </div> --}}
+                                            <a class="btn_link" wire:click="deleteComment({{$comment->id}})">
+                                                <i class='bx bx-trash' wire:loading.remove wire:target="deleteComment({{$comment->id}})"></i>
+                                                <span wire:loading wire:target="deleteComment({{$comment->id}})">
+                                                    ...
+                                                </span>
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                             @endforeach
@@ -215,7 +220,7 @@
                                     </div>
                                     <div class="cmnt_item_user_name-wrap">
                                         <div class="custComment">
-                                            <div class="custComment-editor" >
+                                            <div class="custComment-editor" wire:ignore>
                                                 <textarea name="" id="comment_box" cols="30" rows="5"></textarea>
                                                 <div class="custComment-attachments"><i class="bx bx-paperclip" style="transform: rotate(90deg);"></i></div>
                                             </div>
@@ -237,10 +242,10 @@
                                             <div class="cmnt_item_date">{{ $comment->created_at->diffForHumans() }}</div>
                                             <div class="cmnt_item_user_text">{!! $comment->comment !!}</div>
                                         </div>
-                                        {{-- <div class="cmnt_item_user-edit btn-list">
+                                        <div class="cmnt_item_user-edit btn-list">
                                             <a href="#" class="btn_link"><i class='bx bx-pencil' ></i></a>
                                             <a href="#" class="btn_link"><i class='bx bx-trash' ></i></a>
-                                        </div> --}}
+                                        </div>
                                     </div>
                                 </div>
                             @endforeach
@@ -251,7 +256,7 @@
                                     </div>
                                     <div class="cmnt_item_user_name-wrap">
                                         <div class="custComment">
-                                            <div class="custComment-editor" >
+                                            <div class="custComment-editor" wire:ignore>
                                                 <textarea name="" id="client_comment_box" cols="30" rows="5"></textarea>
                                                 <div class="custComment-attachments"><i class="bx bx-paperclip" style="transform: rotate(90deg);"></i></div>
                                             </div>
