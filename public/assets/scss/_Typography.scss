@@ -1072,6 +1072,13 @@ hr.space-sm {
         }
         &-right {
             flex: 1;
+            .task-project-w {
+                margin-top: 5px;
+            }
+
+            .select2-container--default .select2-selection--single .select2-selection__clear {
+                margin-right: 10px;
+            }
         }
 
         select, textarea {

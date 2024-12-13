@@ -1,7 +1,6 @@
 <div>
     <div wire:ignore class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
         <div class="offcanvas-header taskPane-dashbaord-head py-3 px-4">
-            <span class="text-xs">Created By <span class="select2-selection__choice__display assigner-name" id="">Chetan</span></span>
             <div class="btn-list">
                 <select class="form-select" name="" id="" wire:model="status">
                     <option value="" disabled selected>Select Status</option>
@@ -12,7 +11,7 @@
                 </select> 
             </div> 
             <div class="taskPane-dashbaord-head-right">
-                <span class="btn-batch btn-batch-danger read-only-btn">Read Only</span>
+                <span class="btn-batch btn-batch-danger d-none read-only-btn">Read Only</span>
                 <button type="button" class="btn-icon add-attachments" data-bs-toggle="modal" data-bs-target="#attached-file-modal"><i class='bx bx-paperclip' style="transform: rotate(60deg);"></i></button>
                 {{-- <button type="button" class="btn-icon task-sharable-link d-none"><i class='bx bx-share-alt ' ></i></button> --}}
                 <button type="button" class="btn-icon view-task-btn d-none" wire:click="viewFullscree"><i class='bx bx-fullscreen'></i></button>
@@ -32,6 +31,12 @@
                     @error('name') <span class="text-danger">{{ $message }}</span> @enderror
                 </div>
                 <div class="taskPane-body">
+                    <div class="taskPane-item d-flex flex-wrap mb-3 d-none assigner-tab">
+                        <div class="taskPane-item-left"><div class="taskPane-item-label">Assigner </div></div>
+                        <div class="taskPane-item-right">
+                            <span class="select2-selection__choice__display assigner-name" id="">Chetan</span>
+                        </div>
+                    </div>
                     <div class="taskPane-item d-flex flex-wrap mb-3" >
                         <div class="taskPane-item-left"><div class="taskPane-item-label">Assigned to</div></div>
                         <div class="taskPane-item-right" wire:ignore>
@@ -52,13 +57,6 @@
                             </select>
                         </div>
                     </div> 
-
-                    <div class="taskPane-item d-flex flex-wrap mb-3 d-none assigner-tab">
-                        <div class="taskPane-item-left"><div class="taskPane-item-label">Assigner </div></div>
-                        <div class="taskPane-item-right">
-                            <span class="select2-selection__choice__display assigner-name" id="">Chetan</span>
-                        </div>
-                    </div> 
                     @if(!request()->routeIs('project.tasks'))
                     <div class="taskPane-item d-flex flex-wrap mb-3">
                         <div class="taskPane-item-left"><div class="taskPane-item-label">Project</div></div>
@@ -67,16 +65,12 @@
                                 <option value="" selected disabled>Select Project</option>
                                 @foreach ($projects as $p)
                                     @if($project_id && $project && $project->id == $p->id)
-                                        <option value="{{ $p->id }}" selected>{{ $p->name }} [{{$p->client->initials }}]</option>
+                                        <option value="{{ $p->id }}" data-client="{{$p->client->name}}" selected>{{ $p->name }}</option>
                                     @else
                                         @if($loop->first)
-                                            <optgroup label="{{$p->client->name }}">
-                                                <option value="{{ $p->id }}">{{ $p->name }}</option>
-                                            </optgroup>
+                                            <option value="{{ $p->id }}" data-client="{{$p->client->name}}">{{ $p->name }}</option>
                                         @else
-                                            <optgroup label="{{$p->client->name }}">
-                                                <option value="{{ $p->id }}">{{ $p->name }}</option>
-                                            </optgroup>
+                                            <option value="{{ $p->id }}" data-client="{{$p->client->name}}">{{ $p->name }}</option>
                                         @endif
                                     @endif
                                 @endforeach
@@ -151,7 +145,7 @@
                                     <div class="custComment-editor p-0" wire:ignore>
                                         <textarea wire:model="comment" name="" id="comment_box" class="form-control mb-3" cols="30" rows="5"></textarea>
                                     </div>
-                                    <button wire:click="saveComment('internal')" class="btn btn-sm btn-border-primary"><i class='bx bx-send'></i> Comment</button>
+                                    <button wire:click="saveComment('internal')" class="btn btn-sm btn-border-primary mt-3"><i class='bx bx-send'></i> Comment</button>
                                 </div>
                             </div>
                             <div class="comment-rows mt-4">
@@ -577,7 +571,22 @@
                 dropdownParent: $('#offcanvasRight'),
                 placeholder: "Select Project",
                 allowClear: true,
+                templateResult: taskProjectsFormatter,
+                templateSelection: taskProjectsFormatter
             });
+
+            function taskProjectsFormatter (project) {
+                if (!project.id) {
+                    return project.text;
+                }
+
+                let client = project.element.getAttribute('data-client');
+
+                var $project = $(
+                    '<div class="task-project-w_c"> <span>'+ project.text +'</span><span class="task-project-w"> ' + client + '</span></div>'
+                );
+                return $project;
+            };
 
             $(".task-projects").on('change', function (e) {
                 var data = $(".task-projects").val();

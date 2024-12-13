@@ -1066,6 +1066,12 @@ hr.space-sm {
 .taskPane-item-right {
   flex: 1;
 }
+.taskPane-item-right .task-project-w {
+  margin-top: 5px;
+}
+.taskPane-item-right .select2-container--default .select2-selection--single .select2-selection__clear {
+  margin-right: 10px;
+}
 .taskPane-item select, .taskPane-item textarea {
   min-height: inherit;
   border: none;
@@ -3786,11 +3792,26 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   z-index: 999999;
   width: 100% !important;
 }
+.select2-container .task-project-w {
+  background: #f83890;
+  color: #fff;
+  border-radius: 30px;
+  padding: 3px 6px;
+  font-size: 11px;
+  line-height: 100%;
+}
+.select2-container .task-project-w_c {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 15px;
+  align-items: flex-start;
+}
 .select2-container--default .select2-selection--multiple {
   padding-bottom: 0;
 }
 .select2-container--default .select2-selection--multiple, .select2-container--default .select2-selection--single {
   border: none;
+  height: inherit;
 }
 .select2-container--default .select2-selection--multiple .select2-selection__choice, .select2-container--default .select2-selection--single .select2-selection__choice {
   background: #f6f5f5;

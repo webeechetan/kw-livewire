@@ -762,6 +762,22 @@
         z-index: 999999;
         width: 100% !important;
 
+        .task-project-w {
+            background: $brand;
+            color: #fff;
+            border-radius: 30px;
+            padding: 3px 6px;
+            font-size: 11px;
+            line-height: 100%;
+            
+            &_c {
+                display: grid;
+                grid-template-columns: 1fr auto;
+                gap: 15px;
+                align-items: flex-start;
+            }
+        }
+
         &--default {
             .select2-selection {
                 &--multiple {
@@ -771,6 +787,7 @@
                 &--multiple,
                 &--single {
                     border: none;
+                    height: inherit;
 
                     .select2-selection__choice {
                         background: $light;
