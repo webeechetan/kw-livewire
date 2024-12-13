@@ -1,6 +1,7 @@
 <div>
     <div wire:ignore class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
         <div class="offcanvas-header taskPane-dashbaord-head py-3 px-4">
+            <span class="text-xs">Created By <span class="select2-selection__choice__display assigner-name" id="">Chetan</span></span>
             <div class="btn-list">
                 <select class="form-select" name="" id="" wire:model="status">
                     <option value="" disabled selected>Select Status</option>
@@ -11,7 +12,7 @@
                 </select> 
             </div> 
             <div class="taskPane-dashbaord-head-right">
-                <span class="btn-batch btn-batch-danger d-none read-only-btn">Read Only</span>
+                <span class="btn-batch btn-batch-danger read-only-btn">Read Only</span>
                 <button type="button" class="btn-icon add-attachments" data-bs-toggle="modal" data-bs-target="#attached-file-modal"><i class='bx bx-paperclip' style="transform: rotate(60deg);"></i></button>
                 {{-- <button type="button" class="btn-icon task-sharable-link d-none"><i class='bx bx-share-alt ' ></i></button> --}}
                 <button type="button" class="btn-icon view-task-btn d-none" wire:click="viewFullscree"><i class='bx bx-fullscreen'></i></button>
@@ -69,9 +70,13 @@
                                         <option value="{{ $p->id }}" selected>{{ $p->name }} [{{$p->client->initials }}]</option>
                                     @else
                                         @if($loop->first)
-                                            <option value="{{ $p->id }}" >{{ $p->name }} [{{$p->client->initials }}]</option>
+                                            <optgroup label="{{$p->client->name }}">
+                                                <option value="{{ $p->id }}">{{ $p->name }}</option>
+                                            </optgroup>
                                         @else
-                                            <option value="{{ $p->id }}">{{ $p->name }} [{{$p->client->initials }}]</option>
+                                            <optgroup label="{{$p->client->name }}">
+                                                <option value="{{ $p->id }}">{{ $p->name }}</option>
+                                            </optgroup>
                                         @endif
                                     @endif
                                 @endforeach

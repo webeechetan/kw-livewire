@@ -3798,7 +3798,7 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   margin: 0 5px 5px 0;
   border-color: #eee;
   border-radius: 30px;
-  font-size: 14px;
+  font-size: 13px;
   display: inline-flex;
   flex-direction: row-reverse;
 }
@@ -3832,8 +3832,22 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   color: #9c9c9c;
 }
 .select2-container--default .select2-results__option {
-  padding: 7px 15px;
   font-size: 13px;
+}
+.select2-container--default .select2-results__option:not(.select2-results__option--group) {
+  padding: 7px 15px;
+}
+.select2-container--default .select2-results__option.select2-results__option--group {
+  border-bottom: 1px solid #eee;
+}
+.select2-container--default .select2-results__option.select2-results__option--group .select2-results__group {
+  font-weight: 500;
+  font-size: 11px;
+  color: #f83890;
+  padding: 0 15px;
+}
+.select2-container--default .select2-results__option.select2-results__option--group:not(:last-child) {
+  margin-bottom: 15px;
 }
 .select2-container--default .select2-results__option--selected {
   display: none;

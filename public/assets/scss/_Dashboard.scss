@@ -778,7 +778,7 @@
                         margin: 0 5px 5px 0;
                         border-color: $grey;
                         border-radius: 30px;
-                        font-size: 14px;
+                        font-size: 13px;
                         display: inline-flex;
                         flex-direction: row-reverse;
 
@@ -828,8 +828,25 @@
             }
 
             .select2-results__option {
-                padding: 7px 15px;
+                &:not(.select2-results__option--group) {
+                    padding: 7px 15px;
+                }
                 font-size: 13px;
+
+                &.select2-results__option--group {
+                    border-bottom: 1px solid $grey;
+
+                    .select2-results__group {
+                        font-weight: 500;
+                        font-size: 11px;
+                        color: $brand;
+                        padding: 0 15px;
+                    }
+
+                    &:not(:last-child) {
+                        margin-bottom: 15px;
+                    }
+                }
 
                 &--selected {
                     display: none;

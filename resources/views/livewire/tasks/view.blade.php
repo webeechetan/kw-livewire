@@ -38,7 +38,7 @@
                         <div class="taskPane-dashbaord-head-right">
                             <button type="button" class="btn-icon" data-bs-toggle="modal" data-bs-target="#attached-file-modal"><i class='bx bx-paperclip' style="transform: rotate(90deg);"></i></button>
                             <button type="button" class="btn-icon task-sharable-link" data-id="{{ $task->id }}"><i class='bx bx-share-alt' ></i></button>
-                            <button wire:click="saveTask" type="button" class="btn-border btn-border-secondary"><i class='bx bx-check' ></i> Save Task</button>
+                            <button wire:click="saveTask" type="button" class="btn-border btn-border-secondary"><i class='bx bx-check' ></i> Update Task</button>
                         </div>
                     </div>
                 </div>
