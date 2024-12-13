@@ -35,6 +35,8 @@ class AddTask extends Component
     public $comment;
     public $comments = [];
 
+    public $comment_id = null;
+
 
 
     public function render()
@@ -152,6 +154,10 @@ class AddTask extends Component
     }
 
     public function saveComment($type = 'internal'){
+        if($this->comment_id){
+            $this->updateComment($this->comment_id);
+            return;
+        }
         // dd($this->comment);
         $this->validate([
             'comment' => 'required'
@@ -182,6 +188,16 @@ class AddTask extends Component
         $this->dispatch('comment-added',Comment::with('user')->find($comment->id));
         $this->comment = '';
         
+    }
+
+    public function updateComment($id){
+        $comment = Comment::find($id);
+        $comment->comment = $this->comment;
+        $comment->save();
+        $this->comments = $this->task->comments;
+        // $this->dispatch('comment-added',Comment::with('user')->find($comment->id));
+        $this->comment = '';
+        $this->comment_id = null;
     }
 
     public function editTask($id){

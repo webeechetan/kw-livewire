@@ -29,6 +29,8 @@ class View extends Component
     public $comment;
     public $voice_note;
 
+    protected $listeners = ['comment_deleted' => '$refresh'];
+
     public function render()
     {
         return view('livewire.tasks.view')->title($this->task->name);
@@ -141,5 +143,11 @@ class View extends Component
         $voiceNote->save();
         return $this->redirect(route('task.view', $this->task->id));
 
+    }
+
+    public function deleteComment($id){
+        $comment = Comment::find($id);
+        $comment->delete();
+        $this->dispatch('comment_deleted','Comment deleted successfully');
     }
 }  
