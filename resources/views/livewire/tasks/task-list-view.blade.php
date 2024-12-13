@@ -249,6 +249,9 @@
                 <div class="col text-center">
                     <div class="taskList-dashbaord_header_title taskList_col">Status</div>
                 </div>
+                <div class="col text-center">
+                    <div class="taskList-dashbaord_header_title taskList_col">Assigner</div>
+                </div>
             </div>
         </div>
 
@@ -315,6 +318,13 @@
                                                 <span class="avatar avatar-sm avatar-more">+{{$plus_more_users}}</span>
                                             </a>
                                         @endif       
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col text-center">
+                                    <div class="taskList_col">
+                                        <div class="avatarGroup avatarGroup-overlap">
+                                            {{  $task->assignedBy->name }}
                                         </div>
                                     </div>
                                 </div>

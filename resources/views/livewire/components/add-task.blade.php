@@ -51,6 +51,13 @@
                             </select>
                         </div>
                     </div> 
+
+                    <div class="taskPane-item d-flex flex-wrap mb-3 d-none assigner-tab">
+                        <div class="taskPane-item-left"><div class="taskPane-item-label">Assigner </div></div>
+                        <div class="taskPane-item-right">
+                            <span class="select2-selection__choice__display assigner-name" id="">Chetan</span>
+                        </div>
+                    </div> 
                     @if(!request()->routeIs('project.tasks'))
                     <div class="taskPane-item d-flex flex-wrap mb-3">
                         <div class="taskPane-item-left"><div class="taskPane-item-label">Project</div></div>
@@ -59,12 +66,12 @@
                                 <option value="" selected disabled>Select Project</option>
                                 @foreach ($projects as $p)
                                     @if($project_id && $project && $project->id == $p->id)
-                                        <option value="{{ $p->id }}" selected>{{ $p->name }}</option>
+                                        <option value="{{ $p->id }}" selected>{{ $p->name }} [{{$p->client->initials }}]</option>
                                     @else
                                         @if($loop->first)
-                                            <option value="{{ $p->id }}" selected>{{ $p->name }}</option>
+                                            <option value="{{ $p->id }}" >{{ $p->name }} [{{$p->client->initials }}]</option>
                                         @else
-                                            <option value="{{ $p->id }}">{{ $p->name }}</option>
+                                            <option value="{{ $p->id }}">{{ $p->name }} [{{$p->client->initials }}]</option>
                                         @endif
                                     @endif
                                 @endforeach
@@ -99,7 +106,7 @@
                     {{-- Add voice note --}}
                     <div class="my-4">
                         <div class="voice_note-wrap d-flex align-items-center justify-content-between gap-4">
-                            <div class="font-500 text-secondary">Add Voice Note <span class="text-xs">| 00:30</span></div>
+                            <div class="font-500 text-secondary">Add Voice Note <span class="text-xs">| <span class="voie-note-duration">30</span>s</span></div>
                             <div class="voice_note voice_note-icon">
                                 <span id="recordButton" class="text-secondary d-flex" title="Start"><i class='bx bxs-microphone' ></i></span>
                                 <span id="stopButton" class="d-none d-flex" title="Stop"><i class='bx bx-stop-circle bx-tada bx-flip-vertical' ></i></span>
@@ -113,6 +120,11 @@
                         <input class="d-none attachments" type="file" wire:model="attachments" multiple id="formFile" />
                         <div class="attached_files d-none">
                             <a href="javascript:;" class="btn btn-sm btn-border-secondary" data-bs-toggle="modal" data-bs-target="#attachmentModal">View Attachements</a>
+                        </div>
+                        <div class="newly-attached d-none">
+                            <ul class="newly-attached-list">
+
+                            </ul>
                         </div>
                     </div>
                 </div>
@@ -239,6 +251,11 @@
 
     function startRecording() {
         $("#stopButton").removeClass('d-none');
+        $("#recordButton").addClass('d-none');
+        // play start.mp3 sound
+        var audio = new Audio("{{ env('APP_URL') }}/audio/start.mp3");
+        audio.play();
+
         console.log("recordButton clicked");
         var constraints = { audio: true, video: false };
         recordButton.disabled = true;
@@ -253,6 +270,9 @@
                 input = audioContext.createMediaStreamSource(stream);
                 rec = new Recorder(input, { numChannels: 1 });
                 rec.record();
+
+                voiceNoteTimer()
+
                 console.log("Recording started");
             })
             .catch(function (err) {
@@ -265,10 +285,20 @@
     function stopRecording() {
         console.log("stopButton clicked");
         $("#stopButton").addClass('d-none');
+        $("#recordButton").removeClass('d-none');
         recordButton.disabled = false;
         rec.stop();
         gumStream.getAudioTracks()[0].stop();
         rec.exportWAV(createDownloadLink);
+
+        // reset timer
+        $(".voie-note-duration").html(30);
+        // stop timer
+        clearInterval(intrvalId);
+
+        // play stop.mp3 sound
+        var audio = new Audio("{{ env('APP_URL') }}/audio/start.mp3");
+        audio.play();
 
     }
 
@@ -279,6 +309,7 @@
         reader.onloadend = function () {
             var base64data = reader.result;
             @this.set('voice_note', base64data);
+            dispatchEvent(new CustomEvent('voice-note-added', { detail: base64data }));
         };
         $(".voice_note-preview").html('');
         var url = URL.createObjectURL(blob);
@@ -287,11 +318,31 @@
         au.src = url;
         $(".voice_note-preview").append(au);
         console.log("Recording stopped");
-
-
         rec.clear();
-
         
+    }
+
+    
+    // let intrvalId = null;
+
+    if(typeof intrvalId === 'undefined'){
+        var intrvalId = null;
+    }
+
+    function voiceNoteTimer(){
+        let time = 30;
+        let timer = setInterval(() => {
+            time--;
+            $(".voie-note-duration").html(time);
+            if(time == 0){
+                clearInterval(timer);
+                stopButton.click();
+                $(".voie-note-duration").html(30);
+            }
+        }, 1000);
+
+        intrvalId = timer;
+
     }
 
         // clear all fields when offcanvas is closed or dismissed 
@@ -308,6 +359,7 @@
             $(".task-due-date").text('No Due Date');
             $('#editor').summernote('code', '');
             $(".attachments").val(null);
+            @this.set('attachments', []);
             $(".task-attachment-count").html(0);
             $(".comment-rows").html('');
             $(".client-comment-rows").html('');
@@ -321,7 +373,11 @@
             $('.taskPane-heading-label').html('Add Task');
             $('.save-task-button').html('Save Task');
             $(".email_notification").prop('checked', false);
-
+            $(".voice_note-preview").html('');
+            $(".voice-notes-list").addClass('d-none');
+            $(".task-attachment-count").html(0);
+            $(".assigner-tab").addClass('d-none');
+            $(".newly-attached").addClass('d-none');
             @this.set('task', null);
         }
 
@@ -455,6 +511,49 @@
 
             $(".attachments").change(function(){
                 $(".task-attachment-count").html(this.files.length);
+                $(".newly-attached").removeClass('d-none');
+                $(".newly-attached-list").html('');
+                for (let i = 0; i < this.files.length; i++) {
+                    const file = this.files[i];
+                    let file_name = file.name;
+                    let file_size = file.size;
+                    let file_size_in_kb = file_size / 1024;
+                    let file_size_in_mb = file_size_in_kb / 1024;
+                    let size = '';
+                    if(file_size_in_mb > 1){
+                        size = file_size_in_mb.toFixed(2) + ' MB';
+                    }else if(file_size_in_kb > 1){
+                        size = file_size_in_kb.toFixed(2) + ' KB';
+                    }else{
+                        size = file_size + ' Bytes';
+                    }
+                    let file_html = `<li class="newly-attached-item">
+                        <span class="newly-attached-item-name">${file_name}</span>
+                        <span class="newly-attached-item-size">${size}</span>
+                        <span class="newly-attached-item-remove" data-id="${i}"><i class='bx bx-x'></i></span>
+
+                    </li>`;
+                    $(".newly-attached-list").append(file_html);
+                }
+
+            });
+
+            $(document).on('click', '.newly-attached-item-remove', function(){
+                let id = $(this).data('id');
+                let files = $(".attachments")[0].files;
+                let dt = new DataTransfer();
+                for (let i = 0; i < files.length; i++) {
+                    if (i != id) {
+                        dt.items.add(files[i]);
+                    }
+                }
+                $(".attachments")[0].files = dt.files;
+                $(".task-attachment-count").html(dt.files.length);
+                $(this).parent().remove();
+                let attachments = [];
+                for (let i = 0; i < dt.files.length; i++) {
+                    attachments.push(files[i]);
+                }
             });
 
             
@@ -546,11 +645,14 @@
                 $(".client-comment-rows").html('');
 
                 let task = event.detail[0];
+                console.log(task)
                 $(".cmnt_sec").removeClass('d-none');
                 $(".delete-task-btn").removeClass('d-none');
                 $(".view-task-btn").removeClass('d-none');
                 $(".task-sharable-link").removeClass('d-none');
                 $(".attached_files").removeClass('d-none');
+                $(".assigner-tab").removeClass('d-none');
+                $(".assigner-name").html(task.assigned_by.name);
                 $('.taskPane-heading-label').html('Edit Task');
                 $('.save-task-button').html('Update Task');
                 let task_users = event.detail[0].users;
@@ -652,11 +754,18 @@
                                 ${
                                     comment.user.image ? `<img class="rounded-circle" src="{{ env('APP_URL') }}/storage/${comment.user.image}">` 
                                     : 
-                                    `<span class="avatar avatar-sm avatar-yellow" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="${comment.user.name}">${createInitials(comment.user.name)}</span>`
+                                    `<span class="avatar avatar-sm avatar-yellow" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="${comment.user.name}">
+                                        ${createInitials(comment.user.name)}
+                                    </span>`
                                 }
                             </div>
                             <div class="cmnt_item_user_name-wrap">
-                                <div class="cmnt_item_user_name">${comment.user.name}</div>
+                                <div class="cmnt_item_user_name">
+                                    ${comment.user.name} 
+                                    ${
+                                        comment.user.id == {{ auth()->user()->id }} ? `<span wire:click="deleteComment(${comment.id})"  class="delete-comment" data-id="${comment.id}"><i class='bx bx-trash'></i></span>` : ''
+                                    }
+                                </div>
                                 <div class="cmnt_item_date">${formattedDate}</div>
                                 <div class="cmnt_item_user_text">${comment.comment}</div>
                             </div>
@@ -699,7 +808,12 @@
                                 }
                             </div>
                             <div class="cmnt_item_user_name-wrap">
-                                <div class="cmnt_item_user_name">${event.detail[0].user.name}</div>
+                                <div class="cmnt_item_user_name">
+                                    ${event.detail[0].user.name}
+                                    ${
+                                        event.detail[0].user.id == {{ auth()->user()->id }} ? `<span wire:click="deleteComment(${event.detail[0].id})"  class="delete-comment" data-id="${event.detail[0].id}"><i class='bx bx-trash'></i></span>` : ''
+                                    }
+                                </div>
                                 <div class="cmnt_item_date">${formattedDate}</div>
                                 <div class="cmnt_item_user_text">${event.detail[0].comment}</div>
                             </div>

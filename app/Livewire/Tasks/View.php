@@ -6,6 +6,9 @@ use Livewire\Component;
 use App\Models\{Task, User , Project , Client, Team, Attachment, Comment};
 use Livewire\WithFileUploads;
 use App\Notifications\UserMentionNotification;
+use Illuminate\Support\Facades\Auth;
+use App\Models\VoiceNote;
+
 
 
 class View extends Component
@@ -24,6 +27,7 @@ class View extends Component
     public $status;
     public $attachments = [];
     public $comment;
+    public $voice_note;
 
     public function render()
     {
@@ -60,16 +64,6 @@ class View extends Component
         $this->task->users()->sync($this->selectedUsers);
         $this->task->notifiers()->sync($this->selectedNotifiers);
 
-        // if(!empty($this->attachments)){
-        //     foreach($this->attachments as $attachment){
-        //         $attachment->storeAs('attachments', $attachment->getClientOriginalName());
-        //         Attachment::create([
-        //             'task_id' => $this->task->id,
-        //             'file' => $attachment->getClientOriginalName(),
-        //         ]);
-        //     }
-        // }
-
         if($this->attachments){ 
             foreach($this->attachments as $attachment){
                 $p = Project::find($this->task->project_id);
@@ -85,6 +79,8 @@ class View extends Component
                 $at->save();
             }
         } 
+
+        $this->saveVoiceNoteToTask($this->task->id);
 
         $this->dispatch('success','Task updated successfully');
     }
@@ -118,6 +114,31 @@ class View extends Component
             }
         }
         
+        return $this->redirect(route('task.view', $this->task->id));
+
+    }
+
+    public function saveVoiceNoteToTask($task_id){
+        $this->validate([
+            'voice_note' => 'required'
+        ]);
+        $audio_data = $this->voice_note;
+        $base64Audio = str_replace('data:audio/wav;base64,', '', $audio_data);
+        $audio_binary = base64_decode($base64Audio);
+        $audio_name = 'audio_'.time().'.wav';
+        $path = 'storage/voice_notes/'.$audio_name;
+        if (!file_exists(dirname($path))) {
+            mkdir(dirname($path), 0755, true);
+        }
+        file_put_contents($path, $audio_binary); 
+        
+        $voiceNote = new VoiceNote();
+        $voiceNote->org_id = session('org_id');
+        $voiceNote->user_id = Auth::user()->id;
+        $voiceNote->voice_noteable_id = $task_id;
+        $voiceNote->voice_noteable_type = 'App\Models\Task';
+        $voiceNote->path = $path;
+        $voiceNote->save();
         return $this->redirect(route('task.view', $this->task->id));
 
     }

@@ -9,6 +9,7 @@ use App\Notifications\NewTaskAssignNotification;
 use App\Notifications\UserMentionNotification;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Js;
+use App\Models\Scopes\MainClientScope;
 
 class AddTask extends Component
 {
@@ -109,7 +110,7 @@ class AddTask extends Component
         if($this->attachments){
             foreach($this->attachments as $attachment){
                 $p = Project::find($this->project_id);
-                $c = Client::find($p->client_id);
+                $c = Client::withoutGlobalScope(MainClientScope::class)->find($p->client_id);
                 $path = session('org_name').'/'.$c->name.'/'.$p->name;
                 $path = $attachment->store($path);
                 $at = new Attachment();
@@ -184,7 +185,7 @@ class AddTask extends Component
     }
 
     public function editTask($id){
-        $this->task = Task::with('users','notifiers','attachments','comments.user','voiceNotes.user')->find($id);
+        $this->task = Task::with('users','notifiers','attachments','comments.user','voiceNotes.user','assignedBy')->find($id);
         $this->name = $this->task->name;
         $this->description = $this->task->description;
         $this->due_date = $this->task->due_date;
@@ -237,7 +238,7 @@ class AddTask extends Component
         if($this->attachments){ 
             foreach($this->attachments as $attachment){
                 $p = Project::find($this->task->project_id);
-                $c = Client::find($p->client_id);
+                $c = Client::withoutGlobalScope(MainClientScope::class)->find($p->client_id);
                 $path = session('org_name').'/'.$c->name.'/'.$p->name;
                 $path = $attachment->store($path);
                 $at = new Attachment();
@@ -298,6 +299,13 @@ class AddTask extends Component
         $voiceNote->voice_noteable_type = 'App\Models\Task';
         $voiceNote->path = $path;
         $voiceNote->save();
+    }
+
+    public function deleteComment($id){
+        $comment = Comment::find($id);
+        $comment->delete();
+        $this->comments = $this->task->comments;
+        $this->editTask($this->task->id);
     }
     
 }

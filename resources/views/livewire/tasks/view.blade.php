@@ -99,7 +99,7 @@
                                 <div class="d-none">
                                     <input type="file" id="file" wire:model="attachments" multiple class="form-control">
                                 </div>
-                                <div class="taskPane-item-label mb-3 add-attachments"><a ><i class="bx bx-paperclip text-secondary" style="transform: rotate(60deg);"></i></a> {{$task->attachments->count()}} Attachements</div>
+                                <div class="taskPane-item-label mb-3 add-new-attachments"><a ><i class="bx bx-paperclip text-secondary" style="transform: rotate(60deg);"></i></a> {{$task->attachments->count()}} Attachements</div>
                                 @if($task->attachments->count() > 0)
                                     <div class="attached_files ">
                                         <a data-bs-toggle="modal" data-bs-target="#attachmentModal">View Attachements</a>
@@ -137,6 +137,47 @@
                     </div>
                 </div>
             </form>
+            <div class="voice_note-preview">
+                <div class="cmnt_sec pt-4">
+                    
+                    <!-- Activity -->
+                    <div class="cmnt_item">
+                        <h5 class="cmnt_item_title"><span><i class='bx bxs-microphone text-primary'></i> Voice Notes</span><span class="text-sm"><i class='bx bxs-microphone text-secondary'></i> {{ $task->voiceNotes->count() }} Voice Notes</span></h5>
+                        <div class="my-4">
+                            <div class="voice_note-wrap d-flex align-items-center justify-content-between gap-4">
+                                <div class="font-500 text-secondary">Add Voice Note <span class="text-xs">| <span class="voie-note-duration">30</span>s</span></div>
+                                <div class="voice_note voice_note-icon">
+                                    <span id="recordButton" class="text-secondary d-flex" title="Start"><i class='bx bxs-microphone' ></i></span>
+                                    <span id="stopButton" class="d-none d-flex" title="Stop"><i class='bx bx-stop-circle bx-tada bx-flip-vertical' ></i></span>
+                                </div>
+                            </div>
+                            <div class="voice_note-preview"></div>
+                        </div>
+                        <div class="cmnt_item-tabs">
+                            <div class="taskPane-item d-flex flex-wrap mb-3 voice-notes-list">
+                                @foreach($task->voiceNotes as $note)
+                                    <div class="voice-notes-item">
+                                        <div class="voice-notes-item-user d-flex gap-2 mb-2">
+                                            <div class="voice-notes-item-user-img">
+                                                <x-avatar :user="$note->user" />
+                                            </div>
+                                            <div class="voice-notes-item-user-name-wrap">
+                                                <div class="voice-notes-item-user-name text-sm">{{ $note->user->name }}</div>
+                                                <div class="voice-notes-item-date text-xs">{{ $note->created_at->diffForHumans() }}</div>
+                                            </div>  
+                                        </div>
+                                        <div class="voice-notes-item-audio">
+                                            <audio controls="">
+                                                <source src="{{ env('APP_URL') }}/{{$note->path}}" type="audio/wav">
+                                            </audio>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="cmnt_sec pt-4">
                 <!-- Activity -->
                 <div class="cmnt_item">
@@ -225,7 +266,7 @@
                 </div>
             </div>
             <div class="taskPane-footer-wrap pt-3 mt-4">
-                <button type="button" wire:click="saveTask" class="btn-border btn-border-secondary ms-auto"><i class='bx bx-check' ></i> Save Task</button>
+                <button type="button" wire:click="saveTask" class="btn-border btn-border-secondary ms-auto"><i class='bx bx-check' ></i> Update Task</button>
             </div>
         </div>   
     </div>
@@ -265,6 +306,13 @@
 
 @script
     <script>
+
+        window.addEventListener('voice-note-added', function(event) {
+            @this.set('voice_note', event.detail);
+            @this.saveVoiceNoteToTask({{ $task->id }});
+        });
+
+
 
         // detect if user came on this page from a browser back button
         window.addEventListener('popstate', function(event) {
@@ -438,7 +486,7 @@
                 defaultDate: "{{ $due_date }}"
             });
 
-            $(".add-attachments").on('click', function(){
+            $(".add-new-attachments").on('click', function(){
                 $("#file").click();
             });
 
