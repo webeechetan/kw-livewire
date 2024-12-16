@@ -28,7 +28,7 @@ class AddTask extends Component
     public $task_notifiers = [];
     public $project_id;
     public $status = 'pending'; 
-    public $email_notification;
+    public $email_notification = true;
     public $voice_note;
 
     public $attachments = [];

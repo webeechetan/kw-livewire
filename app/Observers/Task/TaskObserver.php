@@ -88,7 +88,7 @@ class TaskObserver
         }
 
         $changedValues = $task->getDirty();
-        $fields_to_ignore = ['updated_at','created_at','id','org_id','assigned_by','project_id','status','email_notification','task_order','description'];
+        $fields_to_ignore = ['updated_at','created_at','id','org_id','assigned_by','project_id','status','email_notification','task_order','description','client_id'];
         $fields_to_translate = ['name' => 'Name', 'due_date' => 'Due Date', 'email_notification' => 'Email Notification'];
         if(count($changedValues) > 0){
             foreach($changedValues as $key => $value){

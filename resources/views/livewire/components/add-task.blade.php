@@ -255,7 +255,6 @@
         var audio = new Audio("{{ env('APP_URL') }}/audio/start.mp3");
         audio.play();
 
-        console.log("recordButton clicked");
         var constraints = { audio: true, video: false };
         recordButton.disabled = true;
         navigator.mediaDevices
@@ -272,7 +271,6 @@
 
                 voiceNoteTimer()
 
-                console.log("Recording started");
             })
             .catch(function (err) {
                 recordButton.disabled = false;
@@ -282,7 +280,6 @@
 
 
     function stopRecording() {
-        console.log("stopButton clicked");
         $("#stopButton").addClass('d-none');
         $("#recordButton").removeClass('d-none');
         recordButton.disabled = false;
@@ -316,7 +313,6 @@
         au.controls = true;
         au.src = url;
         $(".voice_note-preview").append(au);
-        console.log("Recording stopped");
         rec.clear();
         
     }
@@ -627,8 +623,7 @@
             }
 
             document.addEventListener('read-only', event => {
-                let form_items = 
-                console.log(event.detail);
+                let form_items = $(".taskPane").find('input, select, textarea');
                 if(event.detail[0] == true){
                     toggleFormItems(true);
                 }else{
@@ -659,7 +654,6 @@
                 $(".client-comment-rows").html('');
 
                 let task = event.detail[0];
-                console.log(task)
                 $(".cmnt_sec").removeClass('d-none');
                 $(".delete-task-btn").removeClass('d-none');
                 $(".view-task-btn").removeClass('d-none');
@@ -687,6 +681,8 @@
                 $('.task-users').val(task_users_ids).trigger('change');
 
                 $('.task-notify-users').val(task_notifiers_ids).trigger('change');
+
+                console.log(event.detail[0].project_id)
 
                 $('.task-projects').val(event.detail[0].project_id).trigger('change');
 
@@ -806,14 +802,12 @@
             // edit-comment
 
             $(document).on('click', '.edit-comment', function(){
-                console.log('edit comment');
                 let id = $(this).data('id');
-                let comment = $(this).closest('.cmnt_item_user_name-wrap').find('.cmnt_item_user_text').html();
+                let comment = $(".comment-"+id).html();
                 let edit_comment_html = `<div class="edit-comment-section-${id}">
                     <textarea class="form-control" id="edit_comment_box_${id}" cols="30" rows="5">${comment}</textarea>
                     <button class="btn btn-sm btn-border-primary update-comment-btn" data-id="${id}" wire:click="updateComment(${id})">Update</button>
                 </div>`;
-                console.log(edit_comment_html);
                 $(".edit-comment-section-"+id).html(edit_comment_html);
                 $(".edit-comment-section-"+id).removeClass('d-none');
                 $(".edit-comment-section-"+id).find('textarea').summernote({
@@ -858,6 +852,7 @@
                 $(".edit-comment-section-"+id).addClass('d-none');
                 $(".edit-comment-section-"+id).html('');
                 $(".comment-"+id).html(comment);
+                dispatchEvent(new CustomEvent('comment-updated', { detail: comment }));
 
             });
 

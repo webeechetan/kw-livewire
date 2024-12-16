@@ -188,21 +188,22 @@
                             <button class="nav-link" id="nav-client-tab" data-bs-toggle="tab" data-bs-target="#nav-client" type="button" role="tab" aria-controls="nav-client" aria-selected="false">Client Feedback <span class="text-sm btn-batch btn-batch-secondary ms-3"><i class='bx bx-comment-dots text-secondary'></i> {{ $task->comments->where('type','client')->count() }} Comments</span></button>
                         </div>
                     </div>
-                    <div class="tab-content" id="nav-tabContent" wire:ignore.self>
+                    <div class="tab-content" id="nav-tabContent" wire:ignore>
                         <div class="tab-pane fade show active" id="nav-internal" role="tabpanel" aria-labelledby="nav-internal-tab" tabindex="0">
                             @foreach($task->comments->where('type','internal') as $comment)
-                                <div class="cmnt_item_row">
+                                <div class="cmnt_item_row comment-box-{{$comment->id}}">
                                     <div class="cmnt_item_user">
                                         <div class="cmnt_item_user_img">
                                             <x-avatar :user="$comment->user" />
                                         </div>
                                         <div class="cmnt_item_user_name-wrap">
                                             <div class="cmnt_item_user_name">{{ $comment->user->name }}</div>
+                                            <div class="edit-comment-section-{{ $comment->id }} d-none"></div>
                                             <div class="cmnt_item_date">{{ $comment->created_at->diffForHumans() }}</div>
-                                            <div class="cmnt_item_user_text">{!! $comment->comment !!}</div>
+                                            <div class="cmnt_item_user_text comment-{{ $comment->id }}">{!! $comment->comment !!}</div>
                                         </div>
                                         <div class="cmnt_item_user-edit btn-list">
-                                            <a href="#" class="btn_link"><i class='bx bx-pencil' ></i></a>
+                                            <a data-id="{{ $comment->id }}" class="btn_link edit-comment"><i class='bx bx-pencil' ></i></a>
                                             <a class="btn_link" wire:click="deleteComment({{$comment->id}})">
                                                 <i class='bx bx-trash' wire:loading.remove wire:target="deleteComment({{$comment->id}})"></i>
                                                 <span wire:loading wire:target="deleteComment({{$comment->id}})">
@@ -232,19 +233,25 @@
                         </div>
                         <div class="tab-pane fade" id="nav-client" role="tabpanel" aria-labelledby="nav-client-tab" tabindex="0">
                             @foreach($task->comments->where('type','client') as $comment)
-                                <div class="cmnt_item_row">
+                                <div class="cmnt_item_row comment-box-{{$comment->id}}">
                                     <div class="cmnt_item_user">
                                         <div class="cmnt_item_user_img">
                                             <x-avatar :user="$comment->user" />
                                         </div>
                                         <div class="cmnt_item_user_name-wrap">
                                             <div class="cmnt_item_user_name">{{ $comment->user->name }}</div>
+                                            <div class="edit-comment-section-{{ $comment->id }} d-none"></div>
                                             <div class="cmnt_item_date">{{ $comment->created_at->diffForHumans() }}</div>
-                                            <div class="cmnt_item_user_text">{!! $comment->comment !!}</div>
+                                            <div class="cmnt_item_user_text comment-{{ $comment->id }}">{!! $comment->comment !!}</div>
                                         </div>
                                         <div class="cmnt_item_user-edit btn-list">
-                                            <a href="#" class="btn_link"><i class='bx bx-pencil' ></i></a>
-                                            <a href="#" class="btn_link"><i class='bx bx-trash' ></i></a>
+                                            <a data-id="{{ $comment->id }}" class="btn_link edit-comment"><i class='bx bx-pencil' ></i></a>
+                                            <a class="btn_link" wire:click="deleteComment({{$comment->id}})">
+                                                <i class='bx bx-trash' wire:loading.remove wire:target="deleteComment({{$comment->id}})"></i>
+                                                <span wire:loading wire:target="deleteComment({{$comment->id}})">
+                                                    ...
+                                                </span>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
@@ -316,8 +323,14 @@
             @this.set('voice_note', event.detail);
             @this.saveVoiceNoteToTask({{ $task->id }});
         });
+        window.addEventListener('comment_deleted', function(event) {
+            let deleted_comment_id = event.detail;
+            $(".comment-box-"+deleted_comment_id).hide();
+        });
 
-
+        document.addEventListener('comment-added', event => {
+            $('#comment_box').summernote('code', '');
+        });
 
         // detect if user came on this page from a browser back button
         window.addEventListener('popstate', function(event) {
@@ -348,7 +361,7 @@
                 }, function(err) {
                     console.error('Async: Could not copy text: ', err);
                 });
-            });
+            }); 
 
             $('#comment_box').summernote(
                 {

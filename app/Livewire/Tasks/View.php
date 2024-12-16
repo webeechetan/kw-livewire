@@ -86,7 +86,7 @@ class View extends Component
 
         $this->dispatch('success','Task updated successfully');
     }
-
+ 
     public function saveComment($type = 'internal'){
         // dd($this->comment);
         $this->validate([
@@ -148,6 +148,13 @@ class View extends Component
     public function deleteComment($id){
         $comment = Comment::find($id);
         $comment->delete();
-        $this->dispatch('comment_deleted','Comment deleted successfully');
+        $this->dispatch('comment_deleted',$id);
+    }
+
+    public function updateComment($id){
+        $comment = Comment::find($id);
+        $comment->comment = $this->comment;
+        $comment->save();
+
     }
 }  
