@@ -178,6 +178,7 @@ class Teams extends Component
 
     public function updatedByTeam($value)
     {
+        $this->mount();
         $this->projects = Team::find($this->byTeam)->projects;
     }
 
@@ -212,7 +213,8 @@ class Teams extends Component
             $this->sort, 
             $this->startDate, 
             $this->dueDate, 
-            $this->status
+            $this->status,
+            $this->byTeam
         );
     }
 

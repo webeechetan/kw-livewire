@@ -65,11 +65,17 @@
                             <label for="" class="mb-2">Select Date</label>
                             <div class="row align-items-center">
                                 <div class="col mb-4 mb-md-0">
-                                    <a href="javascript:;" class="btn w-100 btn-sm btn-border-secondary project_start_date"><i class='bx bx-calendar-alt' ></i> Start Date</a>
+                                    <a href="javascript:;" class="btn w-100 btn-sm btn-border-secondary project_start_date">
+                                        <i class='bx bx-calendar-alt' ></i> 
+                                        Start Date
+                                    </a>
                                 </div>
                                 <div class="col-auto text-center font-500 mb-4 mb-md-0">To</div>
                                 <div class="col">
-                                    <a href="javascript:;" class="btn w-100 btn-sm btn-border-danger project_due_date"><i class='bx bx-calendar-alt' ></i> Due Date</a>
+                                    <a href="javascript:;" class="btn w-100 btn-sm btn-border-danger project_due_date">
+                                        <i class='bx bx-calendar-alt' ></i> Due Date
+                                    </a>
+                                    <span class="clear_due_date"><i class='bx bx-x'></i></span>
                                 </div>
                             </div>
                             <hr>
@@ -84,7 +90,6 @@
                         <div class="modal-form-btm">
                             <div class="row">
                                 <div class="col-md-6 ms-auto text-end">
-                                    
                                     <button wire:loading.attr="disabled" wire:target="image" type="submit" class="btn btn-primary project-form-btn">
                                         <span wire:loading wire:target="image"> 
                                             <i class='bx bx-loader-alt bx-spin'></i>
@@ -170,6 +175,13 @@
                     @this.set('project_due_date', dateStr);
                 },
             });
+
+            $('.clear_due_date').on('click', function(){
+                $(".project_due_date").html('Due Date');
+                @this.set('project_due_date', null);
+            });
+
+            
         });
     </script>
 

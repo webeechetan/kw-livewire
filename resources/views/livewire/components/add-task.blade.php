@@ -653,9 +653,23 @@
                 $(".comment-rows").html('');
                 $(".client-comment-rows").html('');
 
+                
                 let task = event.detail[0];
+                let role = "{{ auth()->user()->hasRole('Admin') }}";
+                let user_id = {{ auth()->user()->id }}
+                console.log(user_id)
+
+                // task creator and admin can only delete the task
+
+                if(role || task.assigned_by.id == user_id){
+                    console.log('delete')
+                    $(".delete-task-btn").removeClass('d-none');
+                }else{
+                    console.log('not delete')
+                    $(".delete-task-btn").addClass('d-none');
+                }
+
                 $(".cmnt_sec").removeClass('d-none');
-                $(".delete-task-btn").removeClass('d-none');
                 $(".view-task-btn").removeClass('d-none');
                 $(".task-sharable-link").removeClass('d-none');
                 $(".attached_files").removeClass('d-none');
@@ -681,8 +695,6 @@
                 $('.task-users').val(task_users_ids).trigger('change');
 
                 $('.task-notify-users').val(task_notifiers_ids).trigger('change');
-
-                console.log(event.detail[0].project_id)
 
                 $('.task-projects').val(event.detail[0].project_id).trigger('change');
 
