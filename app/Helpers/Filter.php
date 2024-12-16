@@ -35,7 +35,7 @@ class Filter
     //     return $query;
     // }
 
-    public static function filterTasks($query, $byProject, $byClient, $byUser, $sort, $startDate, $dueDate, $status,$byTeam){
+    public static function filterTasks($query, $byProject, $byClient, $byUser, $sort, $startDate, $dueDate, $status,$byTeam = null){
         $query = self::byProject($query, $byProject);
         $query = self::byClient($query, $byClient);
         $query = self::byUser($query, $byUser);
