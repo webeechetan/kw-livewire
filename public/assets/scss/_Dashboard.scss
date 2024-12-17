@@ -1296,10 +1296,10 @@
 .custComment {
 
     &-editor {
-        background-color: #fff;
-        border-radius: 4px;
-        padding: 10px;
-        position: relative;
+        // background-color: #fff;
+        // border-radius: 4px;
+        // padding: 10px;
+        // position: relative;
     }
 
     &-attachments {
@@ -1310,7 +1310,7 @@
 
     .panel-heading.note-toolbar {
         padding: 10px;
-        border-radius: 4px;
+        border-radius: 10px;
     }
 
     .note {

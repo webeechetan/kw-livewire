@@ -1142,11 +1142,6 @@ hr.space-sm {
   font-size: 12px;
   color: #9c9c9c;
 }
-.cmnt_item_row {
-  background-color: #f6f5f5;
-  padding: 20px;
-  border-radius: 7px;
-}
 .cmnt_item_row:not(:last-child) {
   margin-bottom: 10px;
 }
@@ -4239,12 +4234,6 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
 }
 
 /* ----- Comment Area ----- */
-.custComment-editor {
-  background-color: #fff;
-  border-radius: 4px;
-  padding: 10px;
-  position: relative;
-}
 .custComment-attachments {
   position: absolute;
   top: 23px;
@@ -4252,7 +4241,7 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
 }
 .custComment .panel-heading.note-toolbar {
   padding: 10px;
-  border-radius: 4px;
+  border-radius: 10px;
 }
 .custComment .note-statusbar {
   display: none;
