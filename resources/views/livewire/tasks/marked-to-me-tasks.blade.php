@@ -218,7 +218,7 @@
                     <div class="taskList-dashbaord_header_title taskList_col">Notifiers</div>
                 </div>
                 <div class="col text-center">
-                    <div class="taskList-dashbaord_header_title taskList_col">Assigner</div>
+                    <div class="taskList-dashbaord_header_title taskList_col">Assignor</div>
                 </div>
                 <div class="col text-center">
                     <div class="taskList-dashbaord_header_title taskList_col">Status</div>
