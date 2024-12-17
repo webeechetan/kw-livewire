@@ -31,11 +31,14 @@
                     @error('name') <span class="text-danger">{{ $message }}</span> @enderror
                 </div>
                 <div class="taskPane-body">
-                    <div class="taskPane-item d-flex flex-wrap mb-3 d-none assigner-tab">
-                        <div class="taskPane-item-left"><div class="taskPane-item-label">Assigner </div></div>
-                        <div class="taskPane-item-right">
-                            <span class="select2-selection__choice__display assigner-name" id="">Chetan</span>
+                    <div class="d-none assigner-tab">
+                        <div class="taskPane-item d-flex flex-wrap mb-3">
+                            <div class="taskPane-item-left"><div class="taskPane-item-label">Assigner </div></div>
+                            <div class="taskPane-item-right">
+                                <span class="select2-selection__choice__display assigner-name" id=""></span>
+                            </div>
                         </div>
+                        <hr>
                     </div>
                     <div class="taskPane-item d-flex flex-wrap mb-3" >
                         <div class="taskPane-item-left"><div class="taskPane-item-label">Assigned to</div></div>
@@ -47,6 +50,7 @@
                             </select>
                         </div>
                     </div>
+                    <hr>
                     <div class="taskPane-item d-flex flex-wrap mb-3">
                         <div class="taskPane-item-left"><div class="taskPane-item-label">Notify to</div></div>
                         <div class="taskPane-item-right">
@@ -57,6 +61,7 @@
                             </select>
                         </div>
                     </div> 
+                    <hr>
                     @if(!request()->routeIs('project.tasks'))
                     <div class="taskPane-item d-flex flex-wrap mb-3">
                         <div class="taskPane-item-left"><div class="taskPane-item-label">Project</div></div>
@@ -78,6 +83,7 @@
                         </div>
                     </div>
                     @endif
+                    <hr>
                     <div class="taskPane-item d-flex flex-wrap mb-3">
                         <div class="taskPane-item-left"><div class="taskPane-item-label">Due Date</div></div>
                         <div class="taskPane-item-right">
@@ -87,25 +93,26 @@
                             </a>
                         </div>
                     </div>
+                    <hr>
                     <div class="taskPane-item mb-3">
                         <div class="taskPane-item-label mb-2">Description</div>
                         <div>
                             <textarea wire:model="description" id="editor" cols="30" rows="4" placeholder="Type Description"></textarea>
                         </div>
                     </div>
-                    <div class="taskPane-item d-flex flex-wrap">
+                    <div class="taskPane-item d-flex flex-wrap mb-3">
                         <div class="taskPane-item-left"><div class="taskPane-item-label">Email Notification</div></div>
                         <div class="taskPane-item-right">
                            <input class="email_notification" type="checkbox" wire:model="email_notification">
                         </div>
-                    </div>
-                    <div class="taskPane-item d-flex flex-wrap mb-3 voice-notes-list d-none">
                     </div> 
                     <hr>
                     {{-- Add voice note --}}
+                    <h5 class="cmnt_item_title mb-4"><span><i class='bx bxs-microphone text-primary'></i> Voice Notes</span><span class="text-sm"><i class='bx bxs-microphone text-secondary'></i> 2 Voice Notes</span></h5>
+                    <div class="taskPane-item d-flex flex-wrap mb-3 voice-notes-list d-none"></div>
                     <div class="my-4">
                         <div class="voice_note-wrap d-flex align-items-center justify-content-between gap-4">
-                            <div class="font-500 text-secondary">Add Voice Note <span class="text-xs">| <span class="voie-note-duration">30</span>s</span></div>
+                            <div class="font-500 text-secondary">Add Voice Note <span class="text-sm">| <span class="voie-note-duration">30</span>s</span></div>
                             <div class="voice_note voice_note-icon">
                                 <span id="recordButton" class="text-secondary d-flex" title="Start"><i class='bx bxs-microphone' ></i></span>
                                 <span id="stopButton" class="d-none d-flex" title="Stop"><i class='bx bx-stop-circle bx-tada bx-flip-vertical' ></i></span>
@@ -140,6 +147,7 @@
                     </div>
                     <div class="tab-content" id="nav-tabContent">
                         <div class="tab-pane fade show active" id="nav-internal" role="tabpanel" aria-labelledby="nav-internal-tab" tabindex="0">
+                            <div class="comment-rows mt-4"></div>
                             <div class="custComment">
                                 <div class="custComment-wrap">
                                     <div class="custComment-editor p-0" wire:ignore>
@@ -148,20 +156,17 @@
                                     <button wire:click="saveComment('internal')" class="btn btn-sm btn-border-primary mt-3"><i class='bx bx-send'></i> Comment</button>
                                 </div>
                             </div>
-                            <div class="comment-rows mt-4">
-                            </div>
                             
                         </div>
                         <div class="tab-pane fade" id="nav-client" role="tabpanel" aria-labelledby="nav-client-tab" tabindex="0">
+                            <div class="client-comment-rows mt-4"></div>
                             <div class="custComment">
                                 <div class="custComment-wrap">
                                     <div class="custComment-editor p-0" wire:ignore>
                                         <textarea name="" id="internal_comment_box" class="form-control mb-3" cols="30" rows="5"></textarea>
                                     </div>
-                                    <button wire:click="saveComment('client')" class="btn btn-sm btn-border-primary"><i class='bx bx-send'></i> Comment</button>
+                                    <button wire:click="saveComment('client')" class="btn btn-sm btn-border-primary w-100"><i class='bx bx-send'></i> Comment</button>
                                 </div>
-                            </div>
-                            <div class="client-comment-rows mt-4">
                             </div>
                         </div>
                     </div>
@@ -170,7 +175,7 @@
         </div>
         <div class="offcanvas-footer">
             <div class="taskPane-footer-wrap py-3 px-4">
-                <button type="button" wire:loading.attr="disabled" wire:click="saveTask" class="btn-border btn-sm btn-border-primary save-task-button ms-auto"><i class='bx bx-check'></i> 
+                <button type="button" wire:loading.attr="disabled" wire:click="saveTask" class="btn-lg btn-border btn-border-primary save-task-button w-100"><i class='bx bx-check'></i> 
                     <span wire:loading wire:target="attachments"> 
                         <i class='bx bx-loader-alt bx-spin'></i>
                     </span>
@@ -400,7 +405,7 @@
 
             function initPlugins(){
                 $("#editor").summernote({
-                    height: 200,
+                    height: 150,
                     hint: {
                         mentions: users_for_mention,
                         match: /\B@(\w*)$/,
@@ -434,7 +439,7 @@
                 });
 
                 $("#comment_box").summernote({
-                    height: 200,
+                    height: 150,
                     hint: {
                         mentions: users_for_mention,
                         match: /\B@(\w*)$/,
@@ -467,7 +472,7 @@
                 });
 
                 $("#internal_comment_box").summernote({
-                    height: 200,
+                    height: 150,
                     hint: {
                         mentions: users_for_mention,
                         match: /\B@(\w*)$/,
@@ -784,16 +789,18 @@
                             <div class="cmnt_item_user_name-wrap">
                                 <div class="cmnt_item_user_name">
                                     ${comment.user.name} 
-                                    ${
-                                        comment.user.id == {{ auth()->user()->id }} ? `<span wire:click="deleteComment(${comment.id})"  class="delete-comment" data-id="${comment.id}"><i class='bx bx-trash'></i></span>` : ''
-                                    }
-                                    
-                                    ${
-                                        comment.user.id == {{ auth()->user()->id }} ? `<span class="edit-comment" data-id="${comment.id}"><i class='bx bx-pencil'></i></span>` : ''
-                                    }
+                                    <div class="cmnt_item_actions">
+                                        ${
+                                            comment.user.id == {{ auth()->user()->id }} ? `<span wire:click="deleteComment(${comment.id})"  class="delete-comment text-link text-link-danger text-cursor" data-id="${comment.id}"><i class='bx bx-trash'></i></span>` : ''
+                                        }
+                                        
+                                        ${
+                                            comment.user.id == {{ auth()->user()->id }} ? `<span class="edit-comment text-link text-link-success text-cursor" data-id="${comment.id}"><i class='bx bx-pencil'></i></span>` : ''
+                                        }
+                                    </div>
                                 </div>
-                                <div class="edit-comment-section-${comment.id} d-none"></div>
                                 <div class="cmnt_item_date">${formattedDate}</div>
+                                <div class="edit-comment-section-${comment.id} d-none mt-3"></div>
                                 <div class="cmnt_item_user_text comment-${comment.id}">${comment.comment}</div>
                             </div>
                         </div>
@@ -894,12 +901,14 @@
                             <div class="cmnt_item_user_name-wrap">
                                 <div class="cmnt_item_user_name">
                                     ${event.detail[0].user.name}
-                                    ${
-                                        event.detail[0].user.id == {{ auth()->user()->id }} ? `<span wire:click="deleteComment(${event.detail[0].id})"  class="delete-comment" data-id="${event.detail[0].id}"><i class='bx bx-trash'></i></span>` : ''
-                                    }
-                                    ${
-                                        event.detail[0].user.id == {{ auth()->user()->id }} ? `<span class="edit-comment" data-id="${event.detail[0].id}"><i class='bx bx-pencil'></i></span>` : ''
-                                    }
+                                    <div class="cmnt_item_actions">
+                                        ${
+                                            event.detail[0].user.id == {{ auth()->user()->id }} ? `<span wire:click="deleteComment(${event.detail[0].id})"  class="delete-comment text-link text-link-danger text-cursor" data-id="${event.detail[0].id}"><i class='bx bx-trash'></i></span>` : ''
+                                        }
+                                        ${
+                                            event.detail[0].user.id == {{ auth()->user()->id }} ? `<span class="edit-comment text-link text-link-success text-cursor" data-id="${event.detail[0].id}"><i class='bx bx-pencil'></i></span>` : ''
+                                        }
+                                    </div>
                                 </div>
                                  <div class="edit-comment-section-${event.detail[0].id} d-none"></div>
                                 <div class="cmnt_item_date">${formattedDate}</div>

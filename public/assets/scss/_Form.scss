@@ -43,9 +43,6 @@
         text-align: left;
         &-input {
             border: 1px solid $brand;
-            &[type=checkbox]:not(.task-switch) {
-                border-radius: $border_radius_checkbox;
-            }
             &:checked {
                 background-color: $brand;
                 border-color: $brand;

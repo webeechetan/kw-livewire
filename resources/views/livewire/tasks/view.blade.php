@@ -52,7 +52,14 @@
                                 <div class="taskPane-heading-label"><i class='bx bx-notepad text-primary'></i> Task Heading</div>
                                 <input class="form-control form-control-typeStyle AddTask_title" wire:model="name" type="text" placeholder="Write a task name">
                             </div>
-                            <div class="taskPane-item d-flex flex-wrap mb-4">
+                            <div class="taskPane-item assigner-tab d-flex flex-wrap mb-3">
+                                <div class="taskPane-item-left"><div class="taskPane-item-label">Assigner </div></div>
+                                <div class="taskPane-item-right">
+                                    <span class="select2-selection__choice__display" id="">{{ $task->assignedBy->name }}</span>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="taskPane-item d-flex flex-wrap mb-3">
                                 <div class="taskPane-item-left"><div class="taskPane-item-label">Assigned to</div></div>
                                 <div class="taskPane-item-right" wire:ignore>
                                     <select name="" id="" class="task-users" multiple>
@@ -65,7 +72,8 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="taskPane-item d-flex flex-wrap mb-4">
+                            <hr>
+                            <div class="taskPane-item d-flex flex-wrap mb-3">
                                 <div class="taskPane-item-left"><div class="taskPane-item-label">Notify to</div></div>
                                 <div class="taskPane-item-right"  wire:ignore>
                                     <select name="" id="" class="task-notify-users" multiple>
@@ -78,7 +86,8 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="taskPane-item d-flex flex-wrap mb-4">
+                            <hr>
+                            <div class="taskPane-item d-flex flex-wrap mb-3">
                                 <div class="taskPane-item-left"><div class="taskPane-item-label">Project</div></div>
                                 <div class="taskPane-item-right">
                                     <select wire:model="project_id" id="" class="task-projects">
@@ -89,13 +98,14 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="taskPane-item mb-4">
+                            <hr>
+                            <div class="taskPane-item mb-3">
                                 <div class="taskPane-item-label mb-3">Description</div>
                                 <div wire:ignore>
                                     <textarea wire:model="description" id="editor" cols="30" rows="4" placeholder="Add Notes">{{ $description }}</textarea>
                                 </div>
                             </div>
-                            <div class="taskPane-item mb-4">
+                            <div class="taskPane-item mb-3">
                                 <div class="d-none">
                                     <input type="file" id="file" wire:model="attachments" multiple class="form-control">
                                 </div>
@@ -144,17 +154,17 @@
                     <div class="cmnt_item">
                         <h5 class="cmnt_item_title"><span><i class='bx bxs-microphone text-primary'></i> Voice Notes</span><span class="text-sm"><i class='bx bxs-microphone text-secondary'></i> {{ $task->voiceNotes->count() }} Voice Notes</span></h5>
                         <div class="my-4">
+                            <div class="voice_note-preview"></div>
                             <div class="voice_note-wrap d-flex align-items-center justify-content-between gap-4">
-                                <div class="font-500 text-secondary">Add Voice Note <span class="text-xs">| <span class="voie-note-duration">30</span>s</span></div>
+                                <div class="font-500 text-secondary">Add Voice Note <span class="text-sm">| <span class="voie-note-duration">30</span>s</span></div>
                                 <div class="voice_note voice_note-icon">
                                     <span id="recordButton" class="text-secondary d-flex" title="Start"><i class='bx bxs-microphone' ></i></span>
                                     <span id="stopButton" class="d-none d-flex" title="Stop"><i class='bx bx-stop-circle bx-tada bx-flip-vertical' ></i></span>
                                 </div>
                             </div>
-                            <div class="voice_note-preview"></div>
                         </div>
                         <div class="cmnt_item-tabs">
-                            <div class="taskPane-item d-flex flex-wrap mb-3 voice-notes-list">
+                            <div class="taskPane-item d-flex flex-wrap mb-3 voice-notes-list gap-3">
                                 @foreach($task->voiceNotes as $note)
                                     <div class="voice-notes-item">
                                         <div class="voice-notes-item-user d-flex gap-2 mb-2">
@@ -365,6 +375,7 @@
 
             $('#comment_box').summernote(
                 {
+                    height: 170,
                     hint: {
                         mentions: users_for_mention,
                         match: /\B@(\w*)$/,
@@ -432,7 +443,7 @@
             );
 
             $("#editor").summernote({
-                height: 200,
+                height: 120,
                 hint: {
                         mentions: users_for_mention,
                         match: /\B@(\w*)$/,

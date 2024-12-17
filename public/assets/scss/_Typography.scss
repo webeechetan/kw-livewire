@@ -28,6 +28,10 @@ a {
     }
 }
 
+.text-cursor {
+    cursor: pointer;
+}
+
 /*---- Font Weight ----*/
 b, strong {
     font-weight: bold;
@@ -68,6 +72,14 @@ b, strong {
 .text {
     &-link {
         transition: $ease_03;
+
+        &-danger {
+            color: $danger;
+        }
+
+        &-success {
+            color: $success;
+        }
     }
     &-light {
         color: $text_light !important;
@@ -1139,6 +1151,9 @@ hr.space-sm {
     
             &_name {
                 font-weight: 500;
+                display: grid;
+                grid-template-columns: 1fr auto;
+                gap: 15px;
             }
             
             &_img {
@@ -1170,7 +1185,8 @@ hr.space-sm {
             // padding: 20px;
             // border-radius: 7px;
             &:not(:last-child) {
-                margin-bottom: 10px;
+                margin-bottom: 20px;
+                border-bottom: 1px solid $grey;
             }
         }
 
@@ -1410,6 +1426,7 @@ hr.space-sm {
     background-color: #fff;
     transition: all 0.3s ease;
     padding: 5px 10px;
+    border-radius: 7px;
     .mention_user {
         color: $dark;
     }

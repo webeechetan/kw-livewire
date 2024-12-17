@@ -72,10 +72,12 @@
                                 </div>
                                 <div class="col-auto text-center font-500 mb-4 mb-md-0">To</div>
                                 <div class="col">
-                                    <a href="javascript:;" class="btn w-100 btn-sm btn-border-danger project_due_date">
-                                        <i class='bx bx-calendar-alt' ></i> Due Date
-                                    </a>
-                                    <span class="clear_due_date"><i class='bx bx-x'></i></span>
+                                    <div class="d-flex gap-2">
+                                        <a href="javascript:;" class="btn w-100 btn-sm btn-border-danger project_due_date">
+                                            <i class='bx bx-calendar-alt' ></i> Due Date
+                                        </a>
+                                        <span class="clear_due_date btn btn-batch-danger btn-sm d-flex align-items-center justify-content-center"><i class='bx bx-x'></i></span>
+                                    </div>
                                 </div>
                             </div>
                             <hr>

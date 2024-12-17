@@ -337,12 +337,23 @@
         &-danger {
             color: $danger;
             border-color: $danger;
+
+            &.btn:hover {
+                background-color: $danger;
+                color: #fff;
+            }
         }
         &-avatar {
             padding: 3px 10px 3px 3px;
         }
     }
 
+    &-lg {
+        padding: 10px 20px;
+        font-size: 16px;
+        transition: $ease_03;
+    }
+    
     &-sm {
         padding: $spacing_btn_xs;
         font-size: 14px;
