@@ -168,9 +168,11 @@
         </aside>
       <div class="main-body-content scrollbar scrollbar-primary">
         <div class="text-center">
-            <h5>
-                403 | Unauthorized
-            </h5>
+          <dotlottie-player src="https://lottie.host/644d7824-72cd-4a03-8cfb-e64e010591f8/2SN3cXzzHl.lottie" background="transparent" speed="1" style="width: 300px; margin: auto;" loop autoplay></dotlottie-player>
+            <h1>Error 4O3 | Forbidden</h1>
+            <h2>The page you were looking for could not be found</h2>
+            <p>Please login to access the page you are looking for.</p>
+            <a class="error-btn" href="{{ route('login') }}">Login</a>
         </div>
         <p class="alert alert-warning" wire:offline> Whoops, your device has lost connection. The web page you are viewing is offline. </p>
       </div>
@@ -182,6 +184,7 @@
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/annyang/2.6.0/annyang.min.js"></script>
+    <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
 
     @livewireScripts 
     <script src="https://unpkg.com/@nextapps-be/livewire-sortablejs@0.4.0/dist/livewire-sortable.js"></script>

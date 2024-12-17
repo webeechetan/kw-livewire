@@ -131,6 +131,10 @@ a:hover {
   color: #4c1c90;
 }
 
+.text-cursor {
+  cursor: pointer;
+}
+
 /*---- Font Weight ----*/
 b, strong {
   font-weight: bold;
@@ -170,6 +174,12 @@ b, strong {
 /*---- Text Style ----*/
 .text-link {
   transition: all 0.3s ease;
+}
+.text-link-danger {
+  color: #ff0000;
+}
+.text-link-success {
+  color: #48914d;
 }
 .text-light {
   color: #9c9c9c !important;
@@ -1123,6 +1133,9 @@ hr.space-sm {
 }
 .cmnt_item_user_name {
   font-weight: 500;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 15px;
 }
 .cmnt_item_user_img img {
   width: 100%;
@@ -1142,13 +1155,9 @@ hr.space-sm {
   font-size: 12px;
   color: #9c9c9c;
 }
-.cmnt_item_row {
-  background-color: #f6f5f5;
-  padding: 20px;
-  border-radius: 7px;
-}
 .cmnt_item_row:not(:last-child) {
-  margin-bottom: 10px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #eee;
 }
 .cmnt_item-tabs {
   margin-bottom: 20px;
@@ -1358,6 +1367,7 @@ hr.space-sm {
   background-color: #fff;
   transition: all 0.3s ease;
   padding: 5px 10px;
+  border-radius: 7px;
 }
 .note-hint-popover .popover-content .note-hint-group .note-hint-item .mention_user {
   color: #191919;
@@ -1690,8 +1700,17 @@ hr.space-sm {
   color: #ff0000;
   border-color: #ff0000;
 }
+.btn-batch-danger.btn:hover {
+  background-color: #ff0000;
+  color: #fff;
+}
 .btn-batch-avatar {
   padding: 3px 10px 3px 3px;
+}
+.btn-lg {
+  padding: 10px 20px;
+  font-size: 16px;
+  transition: all 0.3s ease;
 }
 .btn-sm {
   padding: 7px 10px;
@@ -2195,9 +2214,6 @@ hr.space-sm {
 }
 .form-check-input {
   border: 1px solid #f83890;
-}
-.form-check-input[type=checkbox]:not(.task-switch) {
-  border-radius: 3px;
 }
 .form-check-input:checked {
   background-color: #f83890;
@@ -4159,7 +4175,6 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
 
 /* ----- Summer Note Editor ----- */
 .note-editable {
-  min-height: 200px;
   background-color: #f6f5f5;
   margin-top: 5px;
   border-radius: 20px;
@@ -4168,10 +4183,11 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
 .note-editor.note-airframe .note-editing-area .note-editable,
 .note-editor.note-frame .note-editing-area .note-editable {
   font-size: 14px;
+  padding: 20px;
 }
 
 .note-editor .note-editing-area .note-editable a {
-  color: #f83890;
+  color: #7407ff;
 }
 
 .note-editor .note-toolbar > .note-btn-group,
@@ -4207,8 +4223,29 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
 
 .note-editor.note-airframe .note-statusbar,
 .note-editor.note-frame .note-statusbar {
-  border-color: #eee;
+  border: none;
   background: #fff;
+}
+
+.note-popover.note-hint-popover {
+  border: none;
+  box-shadow: 0 3px 30px rgba(0, 0, 0, 0.07);
+}
+.note-popover.note-hint-popover .popover-content {
+  padding: 0;
+  border-radius: 0;
+}
+.note-popover.note-hint-popover .popover-content::-webkit-scrollbar-track, .note-popover.note-hint-popover .popover-content::-webkit-scrollbar-thumb {
+  -webkit-box-shadow: none;
+  border-radius: 7px;
+  background-color: #f6f5f5;
+}
+.note-popover.note-hint-popover .popover-content::-webkit-scrollbar-thumb {
+  background-color: #ddd;
+}
+.note-popover.note-hint-popover .popover-content::-webkit-scrollbar {
+  width: 6px;
+  background-color: transparent;
 }
 
 .note-modal {
@@ -4239,12 +4276,6 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
 }
 
 /* ----- Comment Area ----- */
-.custComment-editor {
-  background-color: #fff;
-  border-radius: 4px;
-  padding: 10px;
-  position: relative;
-}
 .custComment-attachments {
   position: absolute;
   top: 23px;
@@ -4252,7 +4283,7 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
 }
 .custComment .panel-heading.note-toolbar {
   padding: 10px;
-  border-radius: 4px;
+  border-radius: 10px;
 }
 .custComment .note-statusbar {
   display: none;
@@ -4812,7 +4843,6 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   background-color: #e8ddf7;
   max-width: 275px;
   padding: 5px 10px 5px 15px;
-  margin: 15px 0;
   border-radius: 10px;
 }
 .voice_note-icon {

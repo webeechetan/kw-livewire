@@ -49,7 +49,7 @@
                                 </div>
                             </div>
                             @if(session()->has('error'))
-                                <div class="col mb-4 text-center">
+                                <div class="col mb-4">
                                     <div class="text-danger">
                                         {{ session('error') }}
                                     </div>
@@ -57,16 +57,16 @@
                             @endif
                             
                             @if(session()->has('success'))
-                                <div class="col mb-4 text-center">
+                                <div class="col mb-4">
                                     <div class="text-success"> 
                                         {{ session('success') }}
                                     </div>
                                 </div>
                             @endif
                             <div class="row">
-                                <div class="col-md-6">
+                                <!-- <div class="col-md-6">
                                     <a class="w-100 btn btn-primary-border btn-smt wire:navigate" href="/register">Sign Up</a>
-                                </div>
+                                </div> -->
                                 <div class="col-md-6">
                                     <button class="w-100 btn btn-primary btn-smt" type="submit">Sign In</button>
                                 </div>
