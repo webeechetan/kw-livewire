@@ -179,7 +179,10 @@ class Teams extends Component
     public function updatedByTeam($value)
     {
         $this->mount();
-        $this->projects = Team::find($this->byTeam)->projects;
+        if($this->byTeam != 'all'){
+            $this->projects = Team::find($this->byTeam)->projects;
+        }
+        $this->byProject = 'all';
     }
 
     public function updatedStartDate($value)

@@ -1,5 +1,7 @@
 <?php
 namespace App\Helpers;
+use App\Models\Team;
+use App\Models\Task;
 
 class Filter
 {
@@ -26,19 +28,22 @@ class Filter
         return $query;
     }
 
-    // public static function byTeam($query, $team_id){
-    //     if($team_id != 'all'){
-    //         return $query->whereHas('teams', function($q) use ($team_id){
-    //             $q->where('team_id', $team_id);
-    //         });
-    //     }
-    //     return $query;
-    // }
+    public static function byTeam($query, $team_id){
+        if($team_id == 'all'){
+            return $query;
+        }
+        $team = Team::find($team_id);
+        $teamTasks = $team->tasks->pluck('id')->toArray();
+        return $query->whereIn('id', $teamTasks);
+    }
 
     public static function filterTasks($query, $byProject, $byClient, $byUser, $sort, $startDate, $dueDate, $status,$byTeam = null){
         $query = self::byProject($query, $byProject);
         $query = self::byClient($query, $byClient);
         $query = self::byUser($query, $byUser);
+        if($byTeam){
+            $query = self::byTeam($query, $byTeam);
+        }
 
         if($startDate){
             $query->whereDate('due_date', '>=', $startDate);

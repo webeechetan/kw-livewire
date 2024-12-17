@@ -284,7 +284,7 @@
                                             <a href="#" class="avatarGroup-avatar">
                                                 <span class="avatar avatar-sm avatar-more">+{{$plus_more_users}}</span>
                                             </a>
-                                        @endif       
+                                        @endif        
                                         </div>
                                     </div>
                                 </div>
