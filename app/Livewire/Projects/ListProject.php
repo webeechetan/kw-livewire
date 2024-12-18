@@ -46,8 +46,9 @@ class ListProject extends Component
     public function render()
     {   
         $this->pinnedProjects = Pin::where('user_id', Auth::user()->id)->where('pinnable_type', 'App\Models\Project')->pluck('pinnable_id')->toArray();
-
-        $projects = Project::where(function ($query) {
+        $role = Auth::user()->roles->first()->name;
+        $projects = Project::userProjects($role)->
+        where(function ($query) {
             $query->where('name', 'like', '%'.$this->query.'%')
                   ->orWhereHas('client', function ($query) {
                       $query->where('name', 'like', '%'.$this->query.'%')

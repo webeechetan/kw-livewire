@@ -44,7 +44,7 @@
                                 <div>Total {{ pluralOrSingular($users_tasks->count(),'Task') }}</div>
                             </div>
                         </div>
-                    </div>
+                    </div> 
                     <div class="col-md-6">
                         <div class="text-center">
                             <div id="progress-chart-gauge" style="width: 100%;height: 250px; margin-top: -15px;">
@@ -215,7 +215,17 @@
                         <hr>
                         <ul class="nav nav-pills nav-pills-sm mb-3" id="pills-tab" role="tablist">
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link active" id="pills-upcoming-tab" data-bs-toggle="pill"
+                                <button class="nav-link active" id="pills-today-tab" data-bs-toggle="pill"
+                                    data-bs-target="#pills-today" type="button" role="tab"
+                                    aria-controls="pills-today" aria-selected="false">
+                                    Today 
+                                    <span class="btn-batch">
+                                        {{ $users_tasks->where('due_date', now()->format('Y-m-d'))->where('status','!=','completed')->count();}}
+                                    </span>
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link " id="pills-upcoming-tab" data-bs-toggle="pill"
                                     data-bs-target="#pills-upcoming" type="button" role="tab"
                                     aria-controls="pills-upcoming" aria-selected="true">Upcoming <span
                                         class="btn-batch">{{ $users_tasks->where('due_date', '>',
@@ -230,7 +240,36 @@
                             </li>
                         </ul>
                         <div class="tab-content" id="pills-tabContent">
-                            <div class="tab-pane fade show active overflow-y scrollbar scrollbar-primary" id="pills-upcoming" role="tabpanel"
+                            <div class="tab-pane fade show active overflow-y scrollbar scrollbar-primary" id="pills-today" role="tabpanel"
+                                aria-labelledby="pills-upcoming-tab" tabindex="0">
+                                <div class="taskList scrollbar">
+                                    <div style="height: 307px;">
+                                        @foreach($users_tasks->where('due_date', now()->format('Y-m-d'))->take(10) as $task)
+                                        <div class="taskList_row">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <div class="taskList_col taskList_col_title">
+                                                        <div class="taskList_col_title_open" ><i
+                                                                class="bx bx-chevron-right"></i>
+                                                        </div>
+                                                        <a href="{{ route('task.view', $task->id) }}">
+                                                            <div>{{Str::limit($task->name, 25, '...')}}</div>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <div class="taskList_col"><span class="btn-batch ">{{ Carbon\Carbon::parse($task->due_date)->format('d M') }}</span></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+                                @if($users_tasks->where('due_date', '>', now())->count() > 10)
+                                <div class="text-center mt-2"><a href="{{ route('task.index') }}" wire:navigate class="btn-link">See More</a></div>
+                                @endif
+                            </div>
+                            <div class="tab-pane fade  active overflow-y scrollbar scrollbar-primary" id="pills-upcoming" role="tabpanel"
                                 aria-labelledby="pills-upcoming-tab" tabindex="0">
                                 <div class="taskList scrollbar">
                                     <div style="height: 307px;">

@@ -214,7 +214,7 @@
                     <div class="taskList-dashbaord_header_title taskList_col">Assignee</div>
                 </div>
                 <div class="col text-center">
-                    <div class="taskList-dashbaord_header_title taskList_col">Assigner</div>
+                    <div class="taskList-dashbaord_header_title taskList_col">Assignor</div>
                 </div>
                 <div class="col text-center">
                     <div class="taskList-dashbaord_header_title taskList_col">Status</div>
@@ -284,7 +284,7 @@
                                             <a href="#" class="avatarGroup-avatar">
                                                 <span class="avatar avatar-sm avatar-more">+{{$plus_more_users}}</span>
                                             </a>
-                                        @endif       
+                                        @endif        
                                         </div>
                                     </div>
                                 </div>

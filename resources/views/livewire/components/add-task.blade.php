@@ -33,7 +33,7 @@
                 <div class="taskPane-body">
                     <div class="d-none assigner-tab">
                         <div class="taskPane-item d-flex flex-wrap mb-3">
-                            <div class="taskPane-item-left"><div class="taskPane-item-label">Assigner </div></div>
+                            <div class="taskPane-item-left"><div class="taskPane-item-label">Assignor </div></div>
                             <div class="taskPane-item-right">
                                 <span class="select2-selection__choice__display assigner-name" id=""></span>
                             </div>
@@ -108,7 +108,7 @@
                     </div> 
                     <hr>
                     {{-- Add voice note --}}
-                    <h5 class="cmnt_item_title mb-4"><span><i class='bx bxs-microphone text-primary'></i> Voice Notes</span><span class="text-sm"><i class='bx bxs-microphone text-secondary'></i> 2 Voice Notes</span></h5>
+                    <h5 class="cmnt_item_title mb-4"><span><i class='bx bxs-microphone text-primary'></i> Voice Notes</span><span class="text-sm"><i class='bx bxs-microphone text-secondary'></i> <span class="voice-notes-count">0</span> Voice Notes</span></h5>
                     <div class="taskPane-item d-flex flex-wrap mb-3 voice-notes-list d-none"></div>
                     <div class="my-4">
                         <div class="voice_note-wrap d-flex align-items-center justify-content-between gap-4">
@@ -365,6 +365,7 @@
             $(".client-comment-rows").html('');
             $(".task-comments-count").html(0);
             $(".client-comment-count").html(0);
+            $(".voice-notes-count").html(0);
             $(".cmnt_sec").addClass('d-none');
             $(".delete-task-btn").addClass('d-none');
             $(".view-task-btn").addClass('d-none');
@@ -729,7 +730,7 @@
                 let voice_notes = event.detail[0].voice_notes
 
                 $(".voice-notes-list").html('');
-
+                $(".voice-notes-count").html(voice_notes.length);
                 voice_notes.forEach(voice_note => {
                     let date = new Date(voice_note.created_at);
                     let options = { day: 'numeric', month: 'long', year: 'numeric' };
@@ -823,6 +824,7 @@
             $(document).on('click', '.edit-comment', function(){
                 let id = $(this).data('id');
                 let comment = $(".comment-"+id).html();
+                $('.comment-'+id).html('');
                 let edit_comment_html = `<div class="edit-comment-section-${id}">
                     <textarea class="form-control" id="edit_comment_box_${id}" cols="30" rows="5">${comment}</textarea>
                     <button class="btn btn-sm btn-border-primary update-comment-btn" data-id="${id}" wire:click="updateComment(${id})">Update</button>

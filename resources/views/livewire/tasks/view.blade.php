@@ -53,7 +53,7 @@
                                 <input class="form-control form-control-typeStyle AddTask_title" wire:model="name" type="text" placeholder="Write a task name">
                             </div>
                             <div class="taskPane-item assigner-tab d-flex flex-wrap mb-3">
-                                <div class="taskPane-item-left"><div class="taskPane-item-label">Assigner </div></div>
+                                <div class="taskPane-item-left"><div class="taskPane-item-label">Assignor </div></div>
                                 <div class="taskPane-item-right">
                                     <span class="select2-selection__choice__display" id="">{{ $task->assignedBy->name }}</span>
                                 </div>

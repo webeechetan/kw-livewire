@@ -215,7 +215,11 @@ class AddTask extends Component
         // user ids of who created a task and who are assigned to a task and who are notifiers of a task
         $user_ids_who_can_edit_task = array_merge([$this->task->assigned_by],$this->task->users->pluck('id')->toArray(),$this->task->notifiers->pluck('id')->toArray());
         $user_ids_who_can_edit_task = array_unique($user_ids_who_can_edit_task);
-        if(!in_array(Auth::user()->id,$user_ids_who_can_edit_task)){
+        $admins = User::role('Admin')->pluck('id')->toArray();
+        $user_ids_who_can_edit_task = array_merge($user_ids_who_can_edit_task,$admins);
+        $user_ids_who_can_edit_task = array_unique($user_ids_who_can_edit_task);
+
+        if(!in_array(Auth::user()->id,$user_ids_who_can_edit_task) ){
             $this->dispatch('read-only',true);
         }else{
             $this->dispatch('read-only',false);
