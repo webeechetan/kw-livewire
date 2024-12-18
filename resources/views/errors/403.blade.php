@@ -169,10 +169,8 @@
       <div class="main-body-content scrollbar scrollbar-primary">
         <div class="text-center">
           <dotlottie-player src="https://lottie.host/644d7824-72cd-4a03-8cfb-e64e010591f8/2SN3cXzzHl.lottie" background="transparent" speed="1" style="width: 300px; margin: auto;" loop autoplay></dotlottie-player>
-            <h1>Error 4O3 | Forbidden</h1>
-            <h2>The page you were looking for could not be found</h2>
-            <p>Please login to access the page you are looking for.</p>
-            <a class="error-btn" href="{{ route('login') }}">Login</a>
+            <h2>Error 4O3 | Forbidden</h2>
+            <p>You Don't have permission to access this</p>
         </div>
         <p class="alert alert-warning" wire:offline> Whoops, your device has lost connection. The web page you are viewing is offline. </p>
       </div>
