@@ -8,6 +8,7 @@ use App\Models\Task;
 use App\Models\Comment;
 use App\Models\Pin;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class Dashboard extends Component
 {
@@ -21,11 +22,15 @@ class Dashboard extends Component
     public function render()
     {
         return view('livewire.dashboard');
-    }
+    } 
 
     public function mount(){
+
+        $assignedByMe = Task::assignedByMe()->get();
+        $markedToMe = Task::markedToMe()->get();
+        $myTasks = Task::tasksByUserType()->get();
+        $this->users_tasks = $assignedByMe->merge($markedToMe)->merge($myTasks);
         $this->mostImportantProjects = $this->getMostImportantProjects();
-        $this->users_tasks = Task::tasksByUserType()->get();
         $this->active_projects = Auth::user()->projects->where('status','!=','completed')->count();
         $tour = session()->get('tour');
         if(request()->tour == 'close-main-tour'){
@@ -41,9 +46,14 @@ class Dashboard extends Component
 
     public function getMostImportantProjects(){
         if(Auth::user()->hasRole('Admin')){
-            $projects = Project::where('status','!=','completed')->orderBy('due_date','asc')->limit(10)->get();
+            $projects = Project::where('status','!=','completed')
+            ->where('due_date','!=',null)
+            ->orderBy('due_date',"DESC")->limit(10)->get();
         }else{
-            $projects = Auth::user()->projects->where('status','!=','completed')->sortBy('due_date')->take(10);
+            $projects = Auth::user()->projects->where('status','!=','completed')
+            ->where('due_date','!=',null)
+            ->toArray();
+            $projects = Project::whereIn('id',array_column($projects,'id'))->orderBy('due_date','DESC')->limit(10)->get();
         }
         
         $mostImportantProjects = [];

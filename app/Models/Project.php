@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use App\Observers\Project\ProjectObserver;
 use App\Models\Scopes\MainClientScope;
+use Illuminate\Support\Facades\Auth;
 
 #[ObservedBy(ProjectObserver::class)]
 class Project extends Model
@@ -24,15 +25,6 @@ class Project extends Model
     public function setNameAttribute($value){
         $this->attributes['name'] = ucwords($value);
     }
-
-    // public function getInitialsAttribute(){
-    //     $words = explode(' ', $this->name);
-    //     if(count($words) == 1){
-    //         return substr($this->name, 0, 2);
-    //     }
-    //     return $words[0][0].$words[1][0];
-        
-    // }
 
     public function getInitialsAttribute(){
         $words = explode(' ', $this->name);
@@ -97,5 +89,22 @@ class Project extends Model
     protected static function booted()
     {
         static::addGlobalScope(new OrganizationScope);
+    }
+
+    public function scopeUserProjects($query,$role){
+        return $query;
+        // admin can see all projects manager can see all projects of there team members and user can see only assigned projects
+        if($role == 'Admin'){
+            return $query;
+        }elseif($role == 'Manager'){
+           if(Auth::user()->myTeam){
+                $team = Auth::user()->myTeam;
+                $projects = $team->projects;
+                return $query->whereIn('id',$projects->pluck('id'));
+           }
+        }else{
+            $users_projects_ids = User::find(Auth::id())->projects->pluck('id')->toArray();
+            dd($users_projects_ids);
+        }
     }
 }

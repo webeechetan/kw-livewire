@@ -129,5 +129,15 @@ class Task extends Model
     //     });
     // }
 
+    public function scopeAssignedByMe($query){
+        return $query->where('assigned_by', auth()->user()->id);
+    }
+
+    public function scopeMarkedToMe($query){
+        return $query->whereHas('notifiers', function($q){
+            $q->where('user_id', auth()->user()->id);
+        });
+    }
+
 
 }
