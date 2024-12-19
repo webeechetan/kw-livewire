@@ -187,6 +187,9 @@ b, strong {
 .text-primary {
   color: #f83890 !important;
 }
+.text-xl {
+  font-size: 24px;
+}
 .text-lg {
   font-size: 20px;
 }

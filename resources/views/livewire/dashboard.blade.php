@@ -138,7 +138,7 @@
             <div class="row">
                 <div class="col-md-6 mt-4">
                     <div class="box-item h-100">
-                        <h4>Your Progress</h4>
+                        <h4 class="text-xl">Your Progress</h4>
                         <hr>
                         <div class="text-center" id="user-progress-pie-chart" style="width: 100%;height: 250px;"></div>
                         <div class="row">

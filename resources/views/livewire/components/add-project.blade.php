@@ -179,7 +179,7 @@
             });
 
             $('.clear_due_date').on('click', function(){
-                $(".project_due_date").html('Due Date');
+                $(".project_due_date").html('<i class="bx bx-calendar-alt"></i> No Due Date');
                 @this.set('project_due_date', null);
             });
 

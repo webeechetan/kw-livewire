@@ -109,10 +109,10 @@
                                 <div class="d-none">
                                     <input type="file" id="file" wire:model="attachments" multiple class="form-control">
                                 </div>
-                                <div class="taskPane-item-label mb-3 add-new-attachments"><a ><i class="bx bx-paperclip text-secondary" style="transform: rotate(60deg);"></i></a> {{$task->attachments->count()}} Attachements</div>
+                                <div class="taskPane-item-label mb-3 add-new-attachments"><a ><i class="bx bx-paperclip text-secondary" style="transform: rotate(60deg);"></i></a> {{$task->attachments->count()}} Attachments</div>
                                 @if($task->attachments->count() > 0)
                                     <div class="attached_files ">
-                                        <a data-bs-toggle="modal" data-bs-target="#attachmentModal">View Attachements</a>
+                                        <a data-bs-toggle="modal" data-bs-target="#attachmentModal">View Attachments</a>
                                     </div>
                                 @endif
                             </div>
@@ -297,7 +297,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <div>
-                    <h5 class="modal-title" id="attachmentModalLabel">Attachements</h5>
+                    <h5 class="modal-title" id="attachmentModalLabel">Attachments</h5>
                     <div><i class="bx bx-data text-primary"></i> <span class="task-attachment-count">1</span> Attachments</div>
                 </div>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
