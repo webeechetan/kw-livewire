@@ -9,6 +9,13 @@
                     <option value="in_review">In-Review</option>
                     <option value="completed">Completed</option>
                 </select> 
+            </div>
+            <div class="btn-list">
+                <select class="form-select" wire:model="visibility">
+                    <option selected disabled>Visibility</option>
+                    <option value="public">Public</option>
+                    <option value="private">Private</option>
+                </select> 
             </div> 
             <div class="taskPane-dashbaord-head-right">
                 <span class="btn-batch btn-batch-danger d-none read-only-btn">Read Only</span>
@@ -391,17 +398,19 @@
             resetTaskCanvas();
         });
 
+    
 
-            if(typeof users_for_mention === 'undefined'){
-                var users_for_mention = [];
-                var users = @json($users);
-                users.forEach(user => {
-                    users_for_mention.push(user.name);
-                });
-            }else{
-                var users_for_mention = users_for_mention;
-                var users = @json($users);
-            }
+
+        if(typeof users_for_mention === 'undefined'){
+            var users_for_mention = [];
+            var users = @json($users);
+            users.forEach(user => {
+                users_for_mention.push(user.name);
+            });
+        }else{
+            var users_for_mention = users_for_mention;
+            var users = @json($users);
+        }
 
 
             function initPlugins(){
@@ -416,7 +425,7 @@
                             }));
                         },
                         template : function (item) {
-                            return '<span class="mention_users_list" data-id=" ' + users[users_for_mention.indexOf(item)].id + ' ">' + item + '</span>';
+                            return '<span class="mention_users_list" data-id=" ' + users[users_for_mention.indexOf(item)].id + ' ">' + item + '</span> ';
                         },
                         content: function (item) {
                             let a = document.createElement('a');
@@ -435,7 +444,8 @@
                     callbacks: {
                         onChange: function(contents, $editable) {
                             @this.set('description', contents);
-                        }
+                        },
+                        
                     }
                 });
 
@@ -528,11 +538,24 @@
                     }else{
                         size = file_size + ' Bytes';
                     }
+                    let preview_url = URL.createObjectURL(file);
+                    let preview_thumb = '';
+
+                    if(file.type.includes('image')){
+                        preview_thumb = `<img src="${preview_url}" class="" alt="" height="100" width="100px">`;
+                    }else if(file.type.includes('video')){
+                        preview_thumb = `<video src="${preview_url}" class="" alt=""></video>`;
+                    }else{
+                        preview_thumb = `<img height="100" width="100px" src="{{ env('APP_URL') }}/assets/images/icons/file-icon.png" class="" alt="">`;
+                    }
+
                     let file_html = `<li class="newly-attached-item">
                         <span class="newly-attached-item-name">${file_name}</span>
                         <span class="newly-attached-item-size">${size}</span>
                         <span class="newly-attached-item-remove" data-id="${i}"><i class='bx bx-x'></i></span>
-
+                        <div class="newly-attached-item-preview">
+                            ${preview_thumb}
+                        </div>
                     </li>`;
                     $(".newly-attached-list").append(file_html);
                 }

@@ -30,6 +30,7 @@ class AddTask extends Component
     public $status = 'pending'; 
     public $email_notification = true;
     public $voice_note;
+    public $visibility = 'public';
 
     public $attachments = [];
     public $comment;
@@ -97,13 +98,14 @@ class AddTask extends Component
         $task->due_date = $this->due_date;
         $task->project_id = $this->project_id;
         $task->status = $this->status;
+        $task->visibility = $this->visibility;
         if($this->email_notification == true){
             $task->email_notification = $this->email_notification;
         }
         if($this->email_notification == false || $this->email_notification == 'on'){
             $task->email_notification = 0;
         }
-
+ 
         $task->save();
         $task->users()->sync($this->task_users);
         $task->notifiers()->sync($this->task_notifiers);
@@ -148,9 +150,14 @@ class AddTask extends Component
         }
 
         $this->attachments = [];
+        if($this->voice_note){
+            $this->saveVoiceNoteToTask($task->id);
+        }
+        $this->task = null;
         $this->dispatch('task-added',$task);
         $this->dispatch('saved','Task saved successfully');
-        $this->saveVoiceNoteToTask($task->id);
+        $this->dispatch('success', 'Task Added successfully');
+
     }
 
     public function saveComment($type = 'internal'){
@@ -210,6 +217,7 @@ class AddTask extends Component
         $this->comments = $this->task->comments;
         $this->email_notification = $this->task->email_notification;
         $this->status = $this->task->status;
+        $this->visibility = $this->task->visibility;
         $this->project_id = $this->task->project_id;
         $this->dispatch('edit-task',$this->task);
         // user ids of who created a task and who are assigned to a task and who are notifiers of a task
@@ -251,6 +259,7 @@ class AddTask extends Component
         $this->task->status = $this->status;
         $this->task->project_id = $this->project_id;
         $this->task->email_notification = $this->email_notification;
+        $this->task->visibility = $this->visibility;
         $this->task->save();
         $this->task->users()->sync($this->task_users);
         $this->task->notifiers()->sync($this->task_notifiers);
@@ -272,7 +281,9 @@ class AddTask extends Component
         }
 
         $this->dispatch('task-added',$this->task);
-        $this->saveVoiceNoteToTask($this->task->id);
+        if($this->voice_note){
+            $this->saveVoiceNoteToTask($this->task->id);
+        }
 
         $this->attachments = [];
         $this->task = null; 
@@ -318,7 +329,12 @@ class AddTask extends Component
         $voiceNote->voice_noteable_id = $task_id;
         $voiceNote->voice_noteable_type = 'App\Models\Task';
         $voiceNote->path = $path;
-        $voiceNote->save();
+        if($voiceNote->save()){
+            return $voiceNote;
+        }
+        return false;
+        
+       
     }
 
     public function deleteComment($id){
