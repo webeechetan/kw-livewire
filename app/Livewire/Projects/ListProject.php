@@ -47,14 +47,14 @@ class ListProject extends Component
     {   
         $this->pinnedProjects = Pin::where('user_id', Auth::user()->id)->where('pinnable_type', 'App\Models\Project')->pluck('pinnable_id')->toArray();
         $role = Auth::user()->roles->first()->name;
-        $projects = Project::userProjects($role)->
-        where(function ($query) {
-            $query->where('name', 'like', '%'.$this->query.'%')
-                  ->orWhereHas('client', function ($query) {
-                      $query->where('name', 'like', '%'.$this->query.'%')
-                            ->orWhere('brand_name', 'like', '%'.$this->query.'%');
-                  });
-        });
+        $projects = Project::userProjects($role)
+            ->where(function ($query) {
+                $query->where('name', 'like', '%'.$this->query.'%')
+                    ->orWhereHas('client', function ($query) {
+                        $query->where('name', 'like', '%'.$this->query.'%')
+                                ->orWhere('brand_name', 'like', '%'.$this->query.'%');
+                    });
+            });
 
         $projects = $projects->whereNotIn('client_id', [Auth::user()->organization->mainClient->id]);
         $projects = $projects->whereHas('client', function ($query) {

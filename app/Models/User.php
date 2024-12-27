@@ -76,6 +76,12 @@ class User extends Authenticatable
         return $this->belongsToMany(Task::class);
     }
 
+    public function notifiedTasks(){
+        // task_user_notify is the pivot table
+        return $this->belongsToMany(Task::class, 'task_user_notify');
+    }
+    
+
     public function clients(){
         return $this->belongsToMany(Client::class);
     }
@@ -90,6 +96,8 @@ class User extends Authenticatable
 
     public function getProjectsAttribute(){
         $users_projects_ids = $this->tasks->pluck('project_id')->toArray();
+        $notified_tasks_projects_ids = $this->notifiedTasks->pluck('project_id')->toArray();
+        $users_projects_ids = array_merge($users_projects_ids, $notified_tasks_projects_ids);
         $users_projects_ids = array_unique($users_projects_ids);
         $projects = Project::whereIn('id', $users_projects_ids)->get();
         return $projects;

@@ -59,7 +59,10 @@ class Project extends Model
         foreach($project_tasks_ids as $task_id){
             $task = Task::find($task_id);
             $user_ids = array_merge($user_ids,$task->users->pluck('id')->toArray());
+            $user_ids = array_merge($user_ids,[$task->assigned_by]);
+            $user_ids = array_merge($user_ids,$task->notifiers->pluck('id')->toArray());
         }
+        // dd($user_ids);
         $user_ids = array_unique($user_ids);
         return User::whereIn('id',$user_ids)->get();
     }
@@ -92,7 +95,6 @@ class Project extends Model
     }
 
     public function scopeUserProjects($query,$role){
-        return $query;
         // admin can see all projects manager can see all projects of there team members and user can see only assigned projects
         if($role == 'Admin'){
             return $query;
@@ -101,10 +103,13 @@ class Project extends Model
                 $team = Auth::user()->myTeam;
                 $projects = $team->projects;
                 return $query->whereIn('id',$projects->pluck('id'));
+           }else{
+                $users_projects_ids = User::find(Auth::id())->projects->pluck('id')->toArray();
+                return $query->whereIn('id',$users_projects_ids);
            }
         }else{
             $users_projects_ids = User::find(Auth::id())->projects->pluck('id')->toArray();
-            dd($users_projects_ids);
+            return $query->whereIn('id',$users_projects_ids);
         }
     }
 }
