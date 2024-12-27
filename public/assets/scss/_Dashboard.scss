@@ -417,6 +417,8 @@
 
             &_bot {
                 display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
                 justify-content: space-between;
                 align-items: center;
                 margin-top: 5px;
@@ -1071,6 +1073,23 @@
             }
         }
     }
+
+    &-xs {
+        gap: $spacing_xs;
+        .nav-link {
+            padding: 3px 10px;
+            font-size: 11px;
+            letter-spacing: 0.5px;
+            font-weight: 500;
+            text-transform: uppercase;
+
+            .btn-batch {
+                font-size: 10px;
+                font-weight: 600;
+                padding: 1px 7px;
+            }
+        }
+    }
 }
 
 /* ----- Task List View ----- */
@@ -1079,7 +1098,7 @@
 
     &_col {
         padding: 8px $spacing_s;
-        font-size: 14px;
+        font-size: 12px;
 
         &_title {
             cursor: pointer;
@@ -1113,6 +1132,10 @@
         border-bottom: 1px solid $grey;
         border-radius: $border_radius_xs;
         transition: $ease_03;
+
+        display: grid;
+        grid-template-columns: 300px 1fr;
+        gap: 30px;
 
         &:hover,
         &.active {
@@ -1178,11 +1201,15 @@
             background-color: $brand;
             margin-top: $spacing_s;
             border-radius: $border_radius_xs;
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 30px;
+            align-items: center;
 
             &_title {
                 letter-spacing: 1px;
                 color: $dark;
-                font-size: 13px;
+                font-size: 12px;
                 font-weight: 500;
                 text-transform: uppercase;
                 color: #fff;
@@ -2083,7 +2110,7 @@
 /* ----- Calender ---- */
 .fc-theme-standard td,
 .fc-theme-standard th {
-    border: none;
+    border-color: $grey;
 }
 
 .fc .fc-daygrid-day-top {

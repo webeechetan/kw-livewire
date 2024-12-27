@@ -210,28 +210,14 @@
 
     <div class="column-box mt-3">
         <div class="taskList-dashbaord_header">
-            <div class="row">
-                <div class="col-lg-4">
-                    <div class="taskList-dashbaord_header_title taskList_col ms-2">Task Name</div>
-                </div>
-                <div class="col text-center">
-                    <div class="taskList-dashbaord_header_title taskList_col">Created Date</div>
-                </div>
-                <div class="col text-center">
-                    <div class="taskList-dashbaord_header_title taskList_col">Due Date</div>
-                </div>
-                <div class="col text-center">
-                    <div class="taskList-dashbaord_header_title taskList_col">Projects</div>
-                </div>
-                <div class="col text-center">
-                    <div class="taskList-dashbaord_header_title taskList_col">Assignee</div>
-                </div>
-                <div class="col text-center">
-                    <div class="taskList-dashbaord_header_title taskList_col">Assignor</div>
-                </div>
-                <div class="col text-center">
-                    <div class="taskList-dashbaord_header_title taskList_col">Status</div>
-                </div>
+            <div class="taskList-dashbaord_header_title ms-2">Task Name</div>
+            <div class="taskList-dashbaord_header_wrap text-center d-grid grid_col-repeat-6">
+                <div class="taskList-dashbaord_header_title taskList_col">Due Date</div>
+                <div class="taskList-dashbaord_header_title taskList_col">Client</div>
+                <div class="taskList-dashbaord_header_title taskList_col">Project</div>
+                <div class="taskList-dashbaord_header_title taskList_col">Assignee</div>
+                <div class="taskList-dashbaord_header_title taskList_col">Assignor</div>
+                <div class="taskList-dashbaord_header_title taskList_col">Status</div>
             </div>
         </div>
 
@@ -255,77 +241,97 @@
                   
 
                         <div class="taskList_row edit-task" data-id="{{ $task->id }}"  wire:key="task-row-{{ $task->id }}">
-                            <div class="row">
-                                <div class="col-lg-4">
-                                    <div class="taskList_col taskList_col_title">
-                                        <div class="taskList_col_title_open edit-task" data-id="{{ $task->id }}"><i class="bx bx-chevron-right"></i></div>
-                                        <div class="edit-task" data-id="{{ $task->id }}">
-                                            <div>{{ $task->name }}</div>
-                                        </div>
-                                    </div>
+                            <div class="taskList_col taskList_col_title">
+                                <div class="taskList_col_title_open edit-task" data-id="{{ $task->id }}"><i class="bx bx-chevron-right"></i></div>
+                                <div class="edit-task" data-id="{{ $task->id }}">
+                                    <div class="mb-1">{{ $task->name }}</div>
+                                    <span class="text-xs text-light">Created date: {{  Carbon\Carbon::parse($task->created_at)->format('d M Y') }}</span>
                                 </div>
-                                <div class="col text-center">
-                                    <div class="taskList_col"><span>{{  Carbon\Carbon::parse($task->created_at)->format('d M Y') }}</span></div>
-                                </div>
-                                <div class="col text-center">
-                                    <div class="taskList_col"><span class="btn-batch 
-                                        @if ($task->due_date < \Carbon\Carbon::now())  btn-batch btn-batch-danger @endif"> @if($task->due_date)
-                                        {{ Carbon\Carbon::parse($task->due_date)->format('d M Y') }}
+                            </div>
+
+                            <div class="taskList_row_wrap text-center d-grid grid_col-repeat-6">
+                                <div class="taskList_col"><span class=" 
+                                    @if ($task->due_date < \Carbon\Carbon::now())  text-danger @endif"> @if($task->due_date)
+                                    {{ Carbon\Carbon::parse($task->due_date)->format('d M Y') }}
                                     @else
                                         No Due Date
-                                    @endif</span></div>
+                                    @endif</span>
                                 </div>
-                                <div class="col text-center">
-                                    <div class="taskList_col"><span>{{ $task->project->name }}</span></div>
-                                </div>
-                                <div class="col text-center">
-                                    <div class="taskList_col">
-                                        <div class="avatarGroup avatarGroup-overlap">
+                                
+                                <div class="taskList_col"><span>{{ $task->project->name }}</span></div>
+                                
+                                <div class="taskList_col"><span>{{  Carbon\Carbon::parse($task->created_at)->format('d M Y') }}</span></div>
+                                
+                                <div class="taskList_col">
+                                    <div class="avatarGroup avatarGroup-overlap">
 
-                                            @php
-                                            $plus_more_users = 0;
-                                                if(count($task['users']) > 3){
-                                                    $plus_more_users = count($task['users']) - 3;
-                                                }
-                                            @endphp
+                                        @php
+                                        $plus_more_users = 0;
+                                            if(count($task['users']) > 3){
+                                                $plus_more_users = count($task['users']) - 3;
+                                            }
+                                        @endphp
 
-                                            @foreach($task['users']->take(3) as $user)
-                                                <x-avatar :user="$user" class="avatar-sm" />
-                                            @endforeach
+                                        @foreach($task['users']->take(3) as $user)
+                                            <x-avatar :user="$user" class="avatar-sm" />
+                                        @endforeach
 
-                                            @if($plus_more_users)
-                                            <a href="#" class="avatarGroup-avatar">
-                                                <span class="avatar avatar-sm avatar-more">+{{$plus_more_users}}</span>
-                                            </a>
-                                        @endif       
-                                        </div>
+                                        @if($plus_more_users)
+                                        <a href="#" class="avatarGroup-avatar">
+                                            <span class="avatar avatar-sm avatar-more">+{{$plus_more_users}}</span>
+                                        </a>
+                                    @endif       
                                     </div>
                                 </div>
-                                <div class="col text-center">
-                                    <div class="taskList_col">
-                                        <div class="avatarGroup avatarGroup-overlap">
-                                            {{  $task->assignedBy->name }}
-                                        </div>
+
+                                <div class="taskList_col">
+                                    <div class="avatarGroup avatarGroup-overlap">
+                                        {{  $task->assignedBy->name }}
                                     </div>
                                 </div>
+                                
+                                <div class="taskList_col">
+                                    {{-- <span class="btn-batch btn-batch-primary"> --}}
+
+                                        <span class="btn-batch 
+                                        @if($task->status == 'pending') btn-batch-primary 
+                                        @elseif ($task->status == 'in_progress') btn-batch-secondary
+                                        @elseif( $task->status == 'in_review') btn-batch-warning
+                                        @elseif( $task->status == 'completed') btn-batch-success
+                                        @endif" 
+                                        >
+
+                                        @if($task->status == 'pending') Assigned @endif
+                                        @if($task->status == 'in_progress') Accepted @endif
+                                        @if($task->status == 'in_review') In Review @endif
+                                        @if($task->status == 'completed') Completed @endif
+                                    </span>
+                                </div>
+                            </div>
+                    
+                    
+                    
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    
+                                </div>
                                 <div class="col text-center">
-                                    <div class="taskList_col">
-                                        {{-- <span class="btn-batch btn-batch-primary"> --}}
-
-                                            <span class="btn-batch 
-                                            @if($task->status == 'pending') btn-batch-primary 
-                                            @elseif ($task->status == 'in_progress') btn-batch-secondary
-                                            @elseif( $task->status == 'in_review') btn-batch-warning
-                                            @elseif( $task->status == 'completed') btn-batch-success
-                                            @endif" 
-                                            >
-
-                                            @if($task->status == 'pending') Assigned @endif
-                                            @if($task->status == 'in_progress') Accepted @endif
-                                            @if($task->status == 'in_review') In Review @endif
-                                            @if($task->status == 'completed') Completed @endif
-                                        </span>
-                                    </div>
+                                    
+                                </div>
+                                <div class="col text-center">
+                                    
+                                </div>
+                                <div class="col text-center">
+                                    
+                                </div>
+                                <div class="col text-center">
+                                    
+                                </div>
+                                <div class="col text-center">
+                                    
+                                </div>
+                                <div class="col text-center">
+                                    
                                 </div>
                             </div>
                         </div>

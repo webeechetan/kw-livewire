@@ -1146,18 +1146,14 @@ hr.space-sm {
                 font-weight: 400;
             }
         }
+        &_task {
+            font-size: 12px;
+        }
         &_user {
             display: grid;
-            grid-template-columns: 40px 1fr;
+            grid-template-columns: 30px 1fr;
             grid-gap: $spacing_xs;
             position: relative;
-    
-            &_name {
-                font-weight: 500;
-                display: grid;
-                grid-template-columns: 1fr auto;
-                gap: 15px;
-            }
             
             &_img {
                 img {
@@ -1166,10 +1162,23 @@ hr.space-sm {
             }
     
             &_text {
-                margin-top: $spacing_s;
+                margin-top: 10px;
+                display: grid;
+                grid-template-columns: 25px 1fr;
 
                 img {
                     max-width: 100%;
+                }
+
+                a {
+                    background-color: #fff;
+                    padding: 5px 10px;
+                    border-radius: 10px;
+                    font-size: 14px;
+
+                    p:last-child {
+                        margin-bottom: 0;
+                    }
                 }
             }
 
@@ -1184,11 +1193,12 @@ hr.space-sm {
             color: $text_light;
         }
         &_row {
-            // background-color: $light;
-            // padding: 20px;
-            // border-radius: 7px;
+            background-color: $light;
+            padding: 20px;
+            border-radius: 7px;
             &:not(:last-child) {
-                margin-bottom: 20px;
+                margin-bottom: 10px;
+                padding-bottom: 10px;
                 border-bottom: 1px solid $grey;
             }
         }
