@@ -31,10 +31,7 @@
             <div class="team-text col">
               <div class="mb-1 text-sm">
                 <a href="{{ $notification->url }}">
-                  {{
-                    Str::limit($notification->title, 50, '...')
-                    
-                  }}
+                  {{ Str::limit($notification->title, 50, '...') }}
                 </a>
               </div>
               <span class="text-sm text-muted">{{ \Carbon\Carbon::parse($notification->created_at)->diffForHumans() }}</span>

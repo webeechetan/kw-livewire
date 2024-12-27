@@ -14,6 +14,7 @@ class CommentObserver
     public function created(Comment $comment){
         $task = Task::find($comment->task_id);
         $users = $task->users;
+        $users = $users->merge($task->notifiers);
         $taskUrl = env('APP_URL').'/'.session('org_name').'/task/view/'.$task->id;
         $users->each(function($user) use ($comment, $task, $taskUrl){
             if($user->id == auth()->guard(session('guard'))->user()->id){

@@ -119,7 +119,7 @@ class Register extends Component
                     'Delete Task',
                     'View Task',
                 ],
-                'Employee' => [
+                'Team Member' => [
                     'View Project',
                     'View Team',
                     'View Task',

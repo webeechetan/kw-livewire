@@ -230,6 +230,11 @@
         }, 1000);
       });
 
+      document.addEventListener('livewire:navigated', () => {
+            console.log('navigated');
+            $('[data-toggle="tooltip"]').tooltip();
+      },{ once: true });
+
       $(".image_upload_input").change(function() {
           if (this.files && this.files[0]) {
               var reader = new FileReader();

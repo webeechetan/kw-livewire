@@ -113,13 +113,7 @@
                                             }
                                         @endphp
                                         @foreach($team->users->take(7) as $user)
-                                            @if($user->image)
-                                                <a href="javascript:;" class="avatar avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{$user->name}}">
-                                                    <img alt="avatar" src="{{ asset('storage/'.$user->image) }}" class="rounded-circle">
-                                                </a>
-                                            @else
-                                                <a href="javascript:;" class="avatar avatar-{{ $user->color }} avatar-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="{{$user->name}}">{{ $user->initials }}</a>
-                                            @endif
+                                            <x-avatar :user="$user"  />
                                         @endforeach
 
                                         @if($plus_more_users)

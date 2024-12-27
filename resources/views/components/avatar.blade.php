@@ -1,7 +1,7 @@
 @if($user->image && $user->image != 'default.png')
-    <span title="{{$user->name}}" class="avatar {{$class}}" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{ $user->name }}">
+    <span title="{{$user->name}}" class="avatar {{$class}}" data-toggle="tooltip" data-placement="top" >
         <img alt="{{ $user->name }}" src="{{ asset('storage/'.$user->image) }}" class="rounded-circle">
     </span>
 @else
-    <span title="{{$user->name}}" class="avatar {{$class}} avatar-{{$user->color}}" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{ $user->name }}">{{ $user->initials }}</span>
+    <span title="{{$user->name}}" class="avatar {{$class}} avatar-{{$user->color}}" data-toggle="tooltip" data-placement="top" >{{ $user->initials }}</span>
 @endif
