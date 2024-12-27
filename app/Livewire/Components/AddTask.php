@@ -92,7 +92,7 @@ class AddTask extends Component
 
         $task = new Task();
         $task->org_id = session('org_id');
-        $task->assigned_by = auth()->guard(session('guard'))->user()->id;
+        $task->assigned_by = Auth::user()->id;
         $task->name = $this->name;
         $task->description = $this->description;
         $task->due_date = $this->due_date;
@@ -127,8 +127,11 @@ class AddTask extends Component
             }
         }
         $taskUrl = env('APP_URL').'/'.session('org_name').'/task/view/'.$task->id;
-        $users = array_merge([$task->assigned_by],$this->task_users,$this->task_notifiers);
+        $taskUsers = $this->task_users;
+        $taskNotifiers = $this->task_notifiers;
+        $users = array_merge($this->task_users,$this->task_notifiers);
         $users = array_unique($users);
+        
         if($this->task_users){
             foreach($users as $user_id){
                 if($user_id == Auth::user()->id){
@@ -136,14 +139,29 @@ class AddTask extends Component
                 }
                 $user = User::find($user_id);
                 if($this->email_notification){
-                    $user->notify(new NewTaskAssignNotification($task,$taskUrl));
+                    $sendAs = '';
+
+                    if(in_array($user_id,$taskUsers)){
+                        $sendAs = 'assigned';
+                    }
+
+                    if(in_array($user_id,$taskNotifiers)){
+                        $sendAs = 'notifier';
+                    }
+                    $user->notify(new NewTaskAssignNotification($task,$taskUrl,$sendAs));
                 }
                 $notification = new Notification();
                 $notification->user_id = $user->id;
                 $notification->org_id = $task->org_id;
                 $notification->action_by = Auth::user()->id;
-                $notification->title = Auth::user()->name.' assigned you a new task '.$task->name;
-                $notification->message = Auth::user()->name.' assigned you a new task '.$task->name;
+                if(in_array($user_id,$taskUsers)){
+                    $text = Auth::user()->name.' assigned you a new task in '. $task->project->name;
+                }else{
+                    $text = Auth::user()->name.' invoked you in a new task in '. $task->project->name;
+                }
+
+                $notification->title = $text;
+                $notification->message = $text;
                 $notification->url = route('task.view', ['task' => $task->id]);
                 $notification->save();
             }

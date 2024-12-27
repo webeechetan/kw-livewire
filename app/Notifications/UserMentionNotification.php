@@ -43,7 +43,7 @@ class UserMentionNotification extends Notification implements ShouldQueue
     public function toMail(object $notifiable): MailMessage
     {
         $mentioner = User::withoutGlobalScope(OrganizationScope::class)->find($this->comment->user_id);
-        Log::info($mentioner);
+        Log::info($mentioner); 
         // dd($mentioner);
         return (new MailMessage)->view(
             'mails.mention-user-mail',

@@ -13,6 +13,7 @@ use App\Models\Scopes\OrganizationScope;
 use App\Models\User;
 use Illuminate\Support\Facades\Log;
 use App\Models\Notification as NotificationModel;
+use Illuminate\Support\Str;
 
 class NewTaskAssignNotification extends Notification implements ShouldQueue
 {
@@ -20,15 +21,17 @@ class NewTaskAssignNotification extends Notification implements ShouldQueue
 
     public $task;
     public $taskUrl;
+    public $sendAs;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct($task, $taskUrl)
+    public function __construct($task, $taskUrl, $sendAs = 'assigned')
     {
         $this->task = $task;
         $this->taskUrl = $taskUrl;
         $this->task->load('assignedBy');
+        $this->sendAs = $sendAs;
     }
 
     /**
@@ -50,6 +53,14 @@ class NewTaskAssignNotification extends Notification implements ShouldQueue
         $assignedBy = User::withoutGlobalScope(OrganizationScope::class)->where('id',$this->task->assigned_by)->first();
         $project = Project::withoutGlobalScope(OrganizationScope::class)->where('id',$this->task->project_id)->first();
 
+        $subject = '';
+
+        if($this->sendAs == 'assigned'){
+            $subject = $assignedBy->name.' assigned you a new task in '.$project->name. ' ⬇️';
+        }else{
+            $subject = $assignedBy->name.'  invoked you in a new task in '.$project->name. ' ⬇️';
+        }
+
         return (new MailMessage)
             ->view('mails.task-assigned-notification-mail', 
             [
@@ -59,7 +70,7 @@ class NewTaskAssignNotification extends Notification implements ShouldQueue
                 'project' => $project,
                 'taskUrl' => $this->taskUrl
             ]
-        );
+        )->subject($subject);
 
         
     }

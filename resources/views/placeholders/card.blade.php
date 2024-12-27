@@ -1,5 +1,10 @@
 <div class="container">
-    
+    <Assignor> included you in a task in <project_name>
+        .... for app notification use the above :middle_finger::skin-tone-4:
+        ........ for email subject :arrow_down:
+        <Assignor> included you in a task in <project_name>
+         Text -
+        <Assignore> included you in a task <Task name> in <project name> .. aisa kuch
     <div class="row">
         <div class="col-md-6 placeholder-glow">
             <div class="box-item h-100 ">
