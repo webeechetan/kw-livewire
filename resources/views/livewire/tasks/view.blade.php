@@ -20,9 +20,9 @@
             <div class="taskPane-dashbaord-head">
                 <div class="row">
                     <div class="col-md-6">
-                        <div>
-                            {{-- <div class="cus_dropdown">
-                                <div class="cus_dropdown-icon btn-batch btn-batch-success"><i class='bx bx-globe' ></i> Public <span><i class='bx bx-chevron-down' ></i></span></div>
+                        <div class="d-flex gap-3">
+                            <div class="cus_dropdown">
+                                <div class="cus_dropdown-icon btn-batch"><i class='bx bx-globe'></i> Public <span><i class='bx bx-chevron-down' ></i></span></div>
                                 <div class="cus_dropdown-body cus_dropdown-body_left cus_dropdown-body-widh_s">
                                     <div class="cus_dropdown-body-wrap">
                                         <ul class="cus_dropdown-list">
@@ -31,7 +31,8 @@
                                         </ul>
                                     </div>
                                 </div>
-                            </div> --}}
+                            </div>
+                            <div class="cus_dropdown-icon btn-batch"><i class='bx bx-check'></i> Mark Completed</div>
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -99,23 +100,6 @@
                                 </div>
                             </div>
                             <hr>
-                            <div class="taskPane-item mb-3">
-                                <div class="taskPane-item-label mb-3">Description</div>
-                                <div wire:ignore>
-                                    <textarea wire:model="description" id="editor" cols="30" rows="4" placeholder="Add Notes">{{ $description }}</textarea>
-                                </div>
-                            </div>
-                            <div class="taskPane-item mb-3">
-                                <div class="d-none">
-                                    <input type="file" id="file" wire:model="attachments" multiple class="form-control">
-                                </div>
-                                <div class="taskPane-item-label mb-3 add-new-attachments"><a ><i class="bx bx-paperclip text-secondary" style="transform: rotate(60deg);"></i></a> {{$task->attachments->count()}} Attachments</div>
-                                @if($task->attachments->count() > 0)
-                                    <div class="attached_files ">
-                                        <a data-bs-toggle="modal" data-bs-target="#attachmentModal">View Attachments</a>
-                                    </div>
-                                @endif
-                            </div>
                         </div>
                         <div class="col-md-4">
                             <div class="taskPane-item d-flex flex-wrap align-items-center">
@@ -147,6 +131,23 @@
                     </div>
                 </div>
             </form>
+            <div class="taskPane-item mb-3">
+                <div class="taskPane-item-label mb-3">Description</div>
+                <div wire:ignore>
+                    <textarea wire:model="description" id="editor" cols="30" rows="4" placeholder="Add Notes">{{ $description }}</textarea>
+                </div>
+            </div>
+            <div class="taskPane-item mb-3">
+                <div class="d-none">
+                    <input type="file" id="file" wire:model="attachments" multiple class="form-control">
+                </div>
+                <div class="taskPane-item-label mb-3 add-new-attachments"><a ><i class="bx bx-paperclip text-secondary" style="transform: rotate(60deg);"></i></a> {{$task->attachments->count()}} Attachments</div>
+                @if($task->attachments->count() > 0)
+                    <div class="attached_files ">
+                        <a data-bs-toggle="modal" data-bs-target="#attachmentModal">View Attachments</a>
+                    </div>
+                @endif
+            </div>
             <div class="voice_note-preview">
                 <div class="cmnt_sec pt-4">
                     
@@ -233,7 +234,6 @@
                                         <div class="custComment">
                                             <div class="custComment-editor" wire:ignore>
                                                 <textarea name="" id="comment_box" cols="30" rows="5"></textarea>
-                                                <div class="custComment-attachments"><i class="bx bx-paperclip" style="transform: rotate(90deg);"></i></div>
                                             </div>
                                             <button wire:click="saveComment" class="btn btn-sm btn-secondary mt-3"><i class='bx bx-send'></i> Comment</button>
                                         </div>
@@ -375,7 +375,7 @@
 
             $('#comment_box').summernote(
                 {
-                    height: 170,
+                    height: 200,
                     hint: {
                         mentions: users_for_mention,
                         match: /\B@(\w*)$/,
@@ -443,7 +443,7 @@
             );
 
             $("#editor").summernote({
-                height: 120,
+                height: 200,
                 hint: {
                         mentions: users_for_mention,
                         match: /\B@(\w*)$/,
@@ -521,6 +521,16 @@
 
             document.addEventListener('comment-added', event => {
                 $('#comment_box').summernote('code', '');
+            });
+
+            $(".cus_dropdown-icon").click(function(){
+                $(this).parent().toggleClass("active");
+            });
+
+            $(".select_ul li").click(function(){
+                var currentele = $(this).html();
+                $(".default_option li").html(currentele);
+                $(this).parents(".select_wrap").removeClass("active");
             });
         });
     </script>
