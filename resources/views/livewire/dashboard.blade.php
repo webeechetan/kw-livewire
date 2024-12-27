@@ -84,53 +84,123 @@
     <div class="row">
         <div class="col-md-4 mt-4">
             <div class="box-item h-100">
-                <h4>Important Projects</h4>
+                <h4 class="text-xl">Your Tasks</h4>
                 <hr>
-                <div class="overflow-y scrollbar scrollbar-primary">
-                    @foreach($mostImportantProjects as $project)
-                    <div class="border-bottom-list spacing-between-20">
-                        <div class="row mb-3">
-                            <div class="col-auto pe-md-1">
-                                <x-avatar class="avatar-sm" :user="$project" />
-                            </div>
-                            <div class="col">
-                                <div class="mb-1 text-lg">
-                                    <a href="{{ route('project.profile', $project->id) }}" wire:navigate>
-                                    {{ $project->name }}
-                                    </a>
+                <ul class="nav nav-pills nav-pills-xs mb-3" id="pills-tab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="pills-today-tab" data-bs-toggle="pill"
+                            data-bs-target="#pills-today" type="button" role="tab"
+                            aria-controls="pills-today" aria-selected="false">
+                            Today 
+                            <span class="btn-batch">
+                                {{ $users_tasks->where('due_date', now()->format('Y-m-d'))->where('status','!=','completed')->count();}}
+                            </span>
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link " id="pills-upcoming-tab" data-bs-toggle="pill"
+                            data-bs-target="#pills-upcoming" type="button" role="tab"
+                            aria-controls="pills-upcoming" aria-selected="true">Upcoming <span
+                                class="btn-batch">{{ $users_tasks->where('due_date', '>',
+                                now())->where('status','!=','completed')->count();}}</span></button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="pills-overdue-tab" data-bs-toggle="pill"
+                            data-bs-target="#pills-overdue" type="button" role="tab"
+                            aria-controls="pills-overdue" aria-selected="false">Overdue <span
+                                class="btn-batch">{{ $users_tasks->where('due_date', '<', now())->where('status','!=','completed')->
+                                    count();}}</span></button>
+                    </li>
+                </ul>
+                <div class="tab-content" id="pills-tabContent">
+                    <div class="tab-pane fade show active overflow-y scrollbar scrollbar-primary" id="pills-today" role="tabpanel"
+                        aria-labelledby="pills-upcoming-tab" tabindex="0">
+                        <div class="taskList scrollbar">
+                            <div style="height: 307px;">
+                                @foreach($users_tasks->where('due_date', now()->format('Y-m-d'))->take(10) as $task)
+                                <div class="taskList_row">
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="taskList_col taskList_col_title">
+                                                <div class="taskList_col_title_open" ><i
+                                                        class="bx bx-chevron-right"></i>
+                                                </div>
+                                                <a href="{{ route('task.view', $task->id) }}">
+                                                    <div>{{Str::limit($task->name, 25, '...')}}</div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <div class="taskList_col"><span class="btn-batch ">{{ Carbon\Carbon::parse($task->due_date)->format('d M') }}</span></div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="text-sm text-light">{{ $project->client->name}}</div>
+                                @endforeach
                             </div>
                         </div>
-                        <div class="d-flex flex-wrap gap-2 mt-4">
-                            @if($project->teams)
-                            @foreach($project->teams as $team)
-                            <a href="{{ route('team.profile', $team->id) }}" wire:navigate class="btn btn-success rounded-pill btn-xs text-uppercase">{{$team->name}}</a>
-                            @endforeach
-                            @endif
-                        </div>
-                        @php
-                        $taskDone = $project->tasks->where('status', 'completed')->count();
-                        $totalTask = $project->tasks->count();
-
-                        if ($totalTask > 0) {
-                        $percentage = ($taskDone / $totalTask) * 100;
-                        } else {
-                        $percentage = 0;
-                        }
-                        @endphp
-                        <div class="progress mt-4">
-                            <div class="progress-bar progress-secondary" role="progressbar" aria-label="Task Done"
-                                style="width: {{$percentage}}%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                            </div>
-                        </div>
-                        <div class="row mt-2">
-                            <div class="col"><b>{{ $taskDone }}</b> <span>{{ pluralOrSingular($taskDone,'Task') }} Done</span></div>
-                            <div class="col-auto text-end text-danger px-4"><i class="bx bx-calendar"></i> <span>{{ $project->due_date
-                                ?? 'No Due Date' }}</span></div>
-                        </div>
+                        @if($users_tasks->where('due_date', '>', now())->count() > 10)
+                        <div class="text-center mt-2"><a href="{{ route('task.index') }}" wire:navigate class="btn-link">See More</a></div>
+                        @endif
                     </div>
-                    @endforeach
+                    <div class="tab-pane fade overflow-y scrollbar scrollbar-primary" id="pills-upcoming" role="tabpanel"
+                        aria-labelledby="pills-upcoming-tab" tabindex="0">
+                        <div class="taskList scrollbar">
+                            <div style="height: 307px;">
+                                @foreach($users_tasks->where('due_date', '>', now())->take(10) as $task)
+                                <div class="taskList_row">
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="taskList_col taskList_col_title">
+                                                <div class="taskList_col_title_open" ><i
+                                                        class="bx bx-chevron-right"></i>
+                                                </div>
+                                                <a href="{{ route('task.view', $task->id) }}">
+                                                    <div>{{Str::limit($task->name, 25, '...')}}</div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <div class="taskList_col"><span class="btn-batch ">{{ Carbon\Carbon::parse($task->due_date)->format('d M') }}</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                @endforeach
+                            </div>
+                        </div>
+                        @if($users_tasks->where('due_date', '>', now())->count() > 10)
+                        <div class="text-center mt-2"><a href="{{ route('task.index') }}" wire:navigate class="btn-link">See More</a></div>
+                        @endif
+                    </div>
+                    <div class="tab-pane fade overflow-y scrollbar scrollbar-primary" id="pills-overdue" role="tabpanel"
+                        aria-labelledby="pills-overdue-tab" tabindex="0">
+
+                        <div class="taskList scrollbar">
+                            <div style="height: 307px;">
+                                @foreach($users_tasks->where('due_date', '<', now())->where('status','!=','completed')->take(10) as $task)
+                                <div class="taskList_row">
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="taskList_col taskList_col_title">
+                                                <div class="taskList_col_title_open" ><i
+                                                        class="bx bx-chevron-right"></i>
+                                                </div>
+                                                <a href="{{ route('task.view', $task->id) }}">
+                                                    <div>{{Str::limit($task->name, 25, '...')}}</div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <div class="taskList_col"><span class="btn-batch ">{{ Carbon\Carbon::parse($task->due_date)->format('d M') }}</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                @endforeach
+                            </div>
+                        </div>
+                        @if($users_tasks->where('due_date', '>', now())->count() > 10)
+                        <div class="text-center mt-2"><a href="{{ route('task.index') }}" wire:navigate class="btn-link">See More</a></div>
+                        @endif
+                    </div>
                 </div>
             </div>
         </div>
@@ -138,7 +208,7 @@
             <div class="row">
                 <div class="col-md-6 mt-4">
                     <div class="box-item h-100">
-                        <h4>Your Progress</h4>
+                        <h4 class="text-xl">Your Progress</h4>
                         <hr>
                         <div class="text-center" id="user-progress-pie-chart" style="width: 100%;height: 250px;"></div>
                         <div class="row">
@@ -211,123 +281,52 @@
                 </div>
                 <div class="col-md-6 mt-4">
                     <div class="box-item h-100">
-                        <h4>Your Tasks</h4>
+                        <h4 class="text-xl">Important Projects</h4>
                         <hr>
-                        <ul class="nav nav-pills nav-pills-sm mb-3" id="pills-tab" role="tablist">
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link active" id="pills-today-tab" data-bs-toggle="pill"
-                                    data-bs-target="#pills-today" type="button" role="tab"
-                                    aria-controls="pills-today" aria-selected="false">
-                                    Today 
-                                    <span class="btn-batch">
-                                        {{ $users_tasks->where('due_date', now()->format('Y-m-d'))->where('status','!=','completed')->count();}}
-                                    </span>
-                                </button>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link " id="pills-upcoming-tab" data-bs-toggle="pill"
-                                    data-bs-target="#pills-upcoming" type="button" role="tab"
-                                    aria-controls="pills-upcoming" aria-selected="true">Upcoming <span
-                                        class="btn-batch">{{ $users_tasks->where('due_date', '>',
-                                        now())->where('status','!=','completed')->count();}}</span></button>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="pills-overdue-tab" data-bs-toggle="pill"
-                                    data-bs-target="#pills-overdue" type="button" role="tab"
-                                    aria-controls="pills-overdue" aria-selected="false">Overdue <span
-                                        class="btn-batch">{{ $users_tasks->where('due_date', '<', now())->where('status','!=','completed')->
-                                            count();}}</span></button>
-                            </li>
-                        </ul>
-                        <div class="tab-content" id="pills-tabContent">
-                            <div class="tab-pane fade show active overflow-y scrollbar scrollbar-primary" id="pills-today" role="tabpanel"
-                                aria-labelledby="pills-upcoming-tab" tabindex="0">
-                                <div class="taskList scrollbar">
-                                    <div style="height: 307px;">
-                                        @foreach($users_tasks->where('due_date', now()->format('Y-m-d'))->take(10) as $task)
-                                        <div class="taskList_row">
-                                            <div class="row">
-                                                <div class="col">
-                                                    <div class="taskList_col taskList_col_title">
-                                                        <div class="taskList_col_title_open" ><i
-                                                                class="bx bx-chevron-right"></i>
-                                                        </div>
-                                                        <a href="{{ route('task.view', $task->id) }}">
-                                                            <div>{{Str::limit($task->name, 25, '...')}}</div>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <div class="col-auto">
-                                                    <div class="taskList_col"><span class="btn-batch ">{{ Carbon\Carbon::parse($task->due_date)->format('d M') }}</span></div>
-                                                </div>
-                                            </div>
+                        <div class="overflow-y scrollbar scrollbar-primary">
+                            @foreach($mostImportantProjects as $project)
+                            <div class="card_style bg-light spacing-between-20">
+                                <a href="{{ route('project.profile', $project->id) }}" class="card_style-open"><i class='bx bx-chevron-right'></i></a>
+                                <div class="row mb-2">
+                                    <div class="col-auto pe-md-1">
+                                        <x-avatar class="avatar-sm" :user="$project" />
+                                    </div>
+                                    <div class="col">
+                                        <div class="text-sm text-light"><i class="bx bx-briefcase-alt-2"></i> {{ $project->client->name}}</div>
+                                        <div class="mb-1 text-lg">
+                                            <a href="{{ route('project.profile', $project->id) }}" wire:navigate>{{ $project->name }}</a>
                                         </div>
-                                        @endforeach
                                     </div>
                                 </div>
-                                @if($users_tasks->where('due_date', '>', now())->count() > 10)
-                                <div class="text-center mt-2"><a href="{{ route('task.index') }}" wire:navigate class="btn-link">See More</a></div>
-                                @endif
-                            </div>
-                            <div class="tab-pane fade  active overflow-y scrollbar scrollbar-primary" id="pills-upcoming" role="tabpanel"
-                                aria-labelledby="pills-upcoming-tab" tabindex="0">
-                                <div class="taskList scrollbar">
-                                    <div style="height: 307px;">
-                                        @foreach($users_tasks->where('due_date', '>', now())->take(10) as $task)
-                                        <div class="taskList_row">
-                                            <div class="row">
-                                                <div class="col">
-                                                    <div class="taskList_col taskList_col_title">
-                                                        <div class="taskList_col_title_open" ><i
-                                                                class="bx bx-chevron-right"></i>
-                                                        </div>
-                                                        <a href="{{ route('task.view', $task->id) }}">
-                                                            <div>{{Str::limit($task->name, 25, '...')}}</div>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <div class="col-auto">
-                                                    <div class="taskList_col"><span class="btn-batch ">{{ Carbon\Carbon::parse($task->due_date)->format('d M') }}</span></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        @endforeach
-                                    </div>
+                                <div class="d-flex flex-wrap gap-2 mt-2">
+                                    @if($project->teams)
+                                    @foreach($project->teams as $team)
+                                    <a href="{{ route('team.profile', $team->id) }}" wire:navigate class="btn btn-success rounded-pill btn-xs text-uppercase">{{$team->name}}</a>
+                                    @endforeach
+                                    @endif
                                 </div>
-                                @if($users_tasks->where('due_date', '>', now())->count() > 10)
-                                <div class="text-center mt-2"><a href="{{ route('task.index') }}" wire:navigate class="btn-link">See More</a></div>
-                                @endif
-                            </div>
-                            <div class="tab-pane fade overflow-y scrollbar scrollbar-primary" id="pills-overdue" role="tabpanel"
-                                aria-labelledby="pills-overdue-tab" tabindex="0">
+                                @php
+                                $taskDone = $project->tasks->where('status', 'completed')->count();
+                                $totalTask = $project->tasks->count();
 
-                                <div class="taskList scrollbar">
-                                    <div style="height: 307px;">
-                                        @foreach($users_tasks->where('due_date', '<', now())->where('status','!=','completed')->take(10) as $task)
-                                        <div class="taskList_row">
-                                            <div class="row">
-                                                <div class="col">
-                                                    <div class="taskList_col taskList_col_title">
-                                                        <div class="taskList_col_title_open" ><i
-                                                                class="bx bx-chevron-right"></i>
-                                                        </div>
-                                                        <a href="{{ route('task.view', $task->id) }}">
-                                                            <div>{{Str::limit($task->name, 25, '...')}}</div>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <div class="col-auto">
-                                                    <div class="taskList_col"><span class="btn-batch ">{{ Carbon\Carbon::parse($task->due_date)->format('d M') }}</span></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        @endforeach
+                                if ($totalTask > 0) {
+                                $percentage = ($taskDone / $totalTask) * 100;
+                                } else {
+                                $percentage = 0;
+                                }
+                                @endphp
+                                <div class="progress mt-3">
+                                    <div class="progress-bar progress-secondary" role="progressbar" aria-label="Task Done"
+                                        style="width: {{$percentage}}%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
                                     </div>
                                 </div>
-                                @if($users_tasks->where('due_date', '>', now())->count() > 10)
-                                <div class="text-center mt-2"><a href="{{ route('task.index') }}" wire:navigate class="btn-link">See More</a></div>
-                                @endif
+                                <div class="row mt-2">
+                                    <div class="col"><b>{{ $taskDone }}</b> <span>{{ pluralOrSingular($taskDone,'Task') }} Done</span></div>
+                                    <div class="col-auto text-end text-danger px-4 text-sm"><i class="bx bx-calendar"></i> <span>{{ $project->due_date
+                                        ?? 'No Due Date' }}</span></div>
+                                </div>
                             </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>
@@ -341,29 +340,30 @@
         </div>
         <div class="col-md-4 mt-3">
             <div class="box-item h-100">
-                <h4>Recent Comments</h4>
+                <h4 class="text-xl">Recent Comments</h4>
                 <hr>
-                @foreach($recent_comments as $comment)
-                <div class="cmnt_item_row">
-                    <div class="cmnt_item_user">
-                        <div class="cmnt_item_user_img">
-                            <x-avatar :user="$comment->user" />
-                        </div>
-                        <div class="cmnt_item_user_name-wrap">
-                            <div class="cmnt_item_user_name">
-                                <a href="{{ route('user.profile', $comment->user->id) }}">{{ $comment->user->name }}</a>
+                <div class="scrollbar">
+                    <div style="height: 570px;">
+                        @foreach($recent_comments as $comment)
+                        <div class="cmnt_item_row">
+                            <a href="{{ route('task.view', $comment->task_id) }}" class="card_style-open"><i class='bx bx-chevron-right'></i></a>
+                            <div class="cmnt_item_user">
+                                <div class="cmnt_item_user_img">
+                                    <x-avatar :user="$comment->user" class="avatar-sm" />
+                                </div>
+                                <div class="cmnt_item_user_name-wrap">
+                                    <div class="cmnt_item_user_name">
+                                        <a href="{{ route('user.profile', $comment->user->id) }}">{{ $comment->user->name }}</a>
+                                        <div class="cmnt_item_date">{{ \Carbon\Carbon::parse($comment->created_at)->diffForHumans() }}</div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="cmnt_item_date">{{ \Carbon\Carbon::parse($comment->created_at)->diffForHumans() }}</div>
-                            <div>
-                                <a href="{{ route('task.view', $comment->task_id) }}" class="cmnt_item_task"> <b>On:</b>
-                                    {{ $comment->task->name }}
-                                </a>
-                            </div>
-                            <div class="cmnt_item_user_text">{!! $comment->comment !!}</div>
+                            <div class="mt-2 cmnt_item_task"><i class="bx bx-task"></i> <a href="{{ route('task.view', $comment->task_id) }}">{{ $comment->task->name }}</a></div>
+                            <div class="cmnt_item_user_text"><i class="bx bx-chat"></i> <a href="{{ route('task.view', $comment->task_id) }}">{!! $comment->comment !!}</a></div>
                         </div>
+                        @endforeach
                     </div>
                 </div>
-                @endforeach
             </div>
         </div>
     </div>
@@ -372,7 +372,7 @@
     @if($myPins->count() > 0)
         <div class="row mt-4">
             <div class="col">
-                <h4>Pinned Projects</h4>
+                <h4 class="text-xl">Pinned Projects</h4>
             </div>
         </div>
         <div class="row">
@@ -380,7 +380,7 @@
                 @php
                     $project = $pin->pinnable;
                 @endphp
-                <div class="col-md-4 mt-4">
+                <div class="col-md-4 mt-3">
                     <div class="card_style h-100">
                         <a href="{{ route('project.profile', $pin->pinnable_id) }}" class="card_style-open">
                             <i class="bx bx-chevron-right"></i>

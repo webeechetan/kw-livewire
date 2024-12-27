@@ -130,7 +130,7 @@
                 </div>
                 <div class="column-box font-500 bg-light">
                     <div class="row">
-                        <div class="col"><span><i class='bx bx-layer text-primary'></i></span> Attachements</div>
+                        <div class="col"><span><i class='bx bx-layer text-primary'></i></span> Attachments</div>
                         <div class="col">
                             <div class="d-flex align-items-center flex-wrap"><a wire:navigate href="{{ route('project.file-manager',$project->id) }}" class="ms-3 btn_link btn_link-border btn_link-sm">Add</a></div>
                         </div>

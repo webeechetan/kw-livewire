@@ -99,6 +99,21 @@
 .grid_col-repeat-3 {
   grid-template-columns: repeat(3, 1fr);
 }
+.grid_col-repeat-4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+.grid_col-repeat-5 {
+  grid-template-columns: repeat(5, 1fr);
+}
+.grid_col-repeat-6 {
+  grid-template-columns: repeat(6, 1fr);
+}
+.grid_col-repeat-7 {
+  grid-template-columns: repeat(7, 1fr);
+}
+.grid_col-repeat-8 {
+  grid-template-columns: repeat(8, 1fr);
+}
 
 /*---- Body Style ----*/
 body {
@@ -186,6 +201,9 @@ b, strong {
 }
 .text-primary {
   color: #f83890 !important;
+}
+.text-xl {
+  font-size: 24px;
 }
 .text-lg {
   font-size: 20px;
@@ -1125,26 +1143,34 @@ hr.space-sm {
 .cmnt_item_title span:nth-child(2) {
   font-weight: 400;
 }
+.cmnt_item_task {
+  font-size: 12px;
+}
 .cmnt_item_user {
   display: grid;
-  grid-template-columns: 40px 1fr;
+  grid-template-columns: 30px 1fr;
   grid-gap: 10px;
   position: relative;
-}
-.cmnt_item_user_name {
-  font-weight: 500;
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 15px;
 }
 .cmnt_item_user_img img {
   width: 100%;
 }
 .cmnt_item_user_text {
-  margin-top: 15px;
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: 25px 1fr;
 }
 .cmnt_item_user_text img {
   max-width: 100%;
+}
+.cmnt_item_user_text a {
+  background-color: #fff;
+  padding: 5px 10px;
+  border-radius: 10px;
+  font-size: 14px;
+}
+.cmnt_item_user_text a p:last-child {
+  margin-bottom: 0;
 }
 .cmnt_item_user-edit {
   position: absolute;
@@ -1155,8 +1181,14 @@ hr.space-sm {
   font-size: 12px;
   color: #9c9c9c;
 }
+.cmnt_item_row {
+  background-color: #f6f5f5;
+  padding: 20px;
+  border-radius: 7px;
+}
 .cmnt_item_row:not(:last-child) {
-  margin-bottom: 20px;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
   border-bottom: 1px solid #eee;
 }
 .cmnt_item-tabs {
@@ -1719,7 +1751,7 @@ hr.space-sm {
 }
 .btn-xs {
   padding: 2px 12px;
-  font-size: 13px;
+  font-size: 11px;
   transition: all 0.3s ease;
 }
 .btn-list {
@@ -1886,7 +1918,7 @@ hr.space-sm {
 }
 @media (max-width: 1440px) {
   .sidebar-l {
-    width: 230px;
+    width: 200px;
   }
 }
 .sidebar-l-btm {
@@ -3554,6 +3586,8 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
 }
 .kanban_column_task_bot {
   display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
   justify-content: space-between;
   align-items: center;
   margin-top: 5px;
@@ -4061,6 +4095,21 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   font-size: 10px;
   font-weight: 600;
 }
+.nav-pills-xs {
+  gap: 10px;
+}
+.nav-pills-xs .nav-link {
+  padding: 3px 10px;
+  font-size: 11px;
+  letter-spacing: 0.5px;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+.nav-pills-xs .nav-link .btn-batch {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 1px 7px;
+}
 
 /* ----- Task List View ----- */
 .taskList {
@@ -4069,7 +4118,7 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
 }
 .taskList_col {
   padding: 8px 15px;
-  font-size: 14px;
+  font-size: 12px;
 }
 .taskList_col_title {
   cursor: pointer;
@@ -4102,6 +4151,9 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   border-bottom: 1px solid #eee;
   border-radius: 4px;
   transition: all 0.3s ease;
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 30px;
 }
 .taskList_row:hover, .taskList_row.active {
   background-color: #e8ddf7;
@@ -4151,11 +4203,15 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   background-color: #f83890;
   margin-top: 15px;
   border-radius: 4px;
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 30px;
+  align-items: center;
 }
 .taskList-dashbaord_header_title {
   letter-spacing: 1px;
   color: #191919;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 500;
   text-transform: uppercase;
   color: #fff;
@@ -4276,11 +4332,6 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
 }
 
 /* ----- Comment Area ----- */
-.custComment-attachments {
-  position: absolute;
-  top: 23px;
-  left: 25px;
-}
 .custComment .panel-heading.note-toolbar {
   padding: 10px;
   border-radius: 10px;
@@ -4883,7 +4934,7 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
 /* ----- Calender ---- */
 .fc-theme-standard td,
 .fc-theme-standard th {
-  border: none;
+  border-color: #eee;
 }
 
 .fc .fc-daygrid-day-top {
@@ -4998,6 +5049,68 @@ button.fc-today-button.fc-button.fc-button-primary {
 .fc-day-mon .fc-col-header-cell-cushion,
 .fc-day-tue .fc-col-header-cell-cushion {
   color: #f83890;
+}
+
+/* ----- Flatpicker ------*/
+.flatpickr-calendar.inline {
+  padding: 7px;
+  border-right: 10px;
+  box-shadow: none;
+  border: 1px solid #eee;
+}
+
+.flatpickr-day.inRange, .flatpickr-day.prevMonthDay.inRange, .flatpickr-day.nextMonthDay.inRange, .flatpickr-day.today.inRange, .flatpickr-day.prevMonthDay.today.inRange, .flatpickr-day.nextMonthDay.today.inRange, .flatpickr-day:hover, .flatpickr-day.prevMonthDay:hover, .flatpickr-day.nextMonthDay:hover, .flatpickr-day:focus, .flatpickr-day.prevMonthDay:focus, .flatpickr-day.nextMonthDay:focus {
+  background-color: #f6f5f5;
+}
+
+.flatpickr-day.selected, .flatpickr-day.startRange, .flatpickr-day.endRange, .flatpickr-day.selected.inRange, .flatpickr-day.startRange.inRange, .flatpickr-day.endRange.inRange, .flatpickr-day.selected:focus, .flatpickr-day.startRange:focus, .flatpickr-day.endRange:focus, .flatpickr-day.selected:hover, .flatpickr-day.startRange:hover, .flatpickr-day.endRange:hover, .flatpickr-day.selected.prevMonthDay, .flatpickr-day.startRange.prevMonthDay, .flatpickr-day.endRange.prevMonthDay, .flatpickr-day.selected.nextMonthDay, .flatpickr-day.startRange.nextMonthDay, .flatpickr-day.endRange.nextMonthDay {
+  background-color: #f83890;
+  border-color: #f83890;
+}
+
+.flatpickr-current-month, .flatpickr-current-month .flatpickr-monthDropdown-months {
+  font-size: 14px;
+}
+
+.flatpickr-months .flatpickr-prev-month, .flatpickr-months .flatpickr-next-month {
+  background: #fff;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  padding: 0;
+  top: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.flatpickr-months {
+  background-color: #f6f5f5;
+  border-radius: 30px;
+  margin-bottom: 10px;
+}
+
+.flatpickr-months .flatpickr-prev-month {
+  left: 12px !important;
+}
+
+.flatpickr-months .flatpickr-next-month {
+  right: 12px !important;
+}
+
+.flatpickr-months .flatpickr-prev-month svg, .flatpickr-months .flatpickr-next-month svg {
+  width: 10px;
+  height: 10px;
+}
+
+.flatpickr-current-month .flatpickr-monthDropdown-months:hover {
+  background: transparent;
+}
+
+span.flatpickr-weekday {
+  font-size: 12px;
+  font-weight: 500;
 }
 
 /*# sourceMappingURL=app.css.map */

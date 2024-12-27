@@ -129,10 +129,10 @@
                     </div>
                     <hr>
                     <div class="taskPane-item mb-2">
-                        <div class="taskPane-item-label mb-2"><a href="#"><i class="bx bx-paperclip text-secondary add-attachments" style="transform: rotate(60deg);"></i></a> <span class="task-attachment-count"> {{ count($attachments) }}</span> Attachements</div>
+                        <div class="taskPane-item-label mb-2"><a href="#"><i class="bx bx-paperclip text-secondary add-attachments" style="transform: rotate(60deg);"></i></a> <span class="task-attachment-count"> {{ count($attachments) }}</span> Attachments</div>
                         <input class="d-none attachments" type="file" wire:model="attachments" multiple id="formFile" />
                         <div class="attached_files d-none">
-                            <a href="javascript:;" class="btn btn-sm btn-border-secondary" data-bs-toggle="modal" data-bs-target="#attachmentModal">View Attachements</a>
+                            <a href="javascript:;" class="btn btn-sm btn-border-secondary" data-bs-toggle="modal" data-bs-target="#attachmentModal">View Attachments</a>
                         </div>
                         <div class="newly-attached d-none">
                             <ul class="newly-attached-list">
@@ -172,7 +172,7 @@
                                     <div class="custComment-editor p-0" wire:ignore>
                                         <textarea name="" id="internal_comment_box" class="form-control mb-3" cols="30" rows="5"></textarea>
                                     </div>
-                                    <button wire:click="saveComment('client')" class="btn btn-sm btn-border-primary w-100"><i class='bx bx-send'></i> Comment</button>
+                                    <button wire:click="saveComment('client')" class="btn btn-sm btn-border-primary mt-3"><i class='bx bx-send'></i> Comment</button>
                                 </div>
                             </div>
                         </div>
@@ -197,7 +197,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <div>
-                    <h5 class="modal-title" id="attachmentModalLabel">Attachements</h5>
+                    <h5 class="modal-title" id="attachmentModalLabel">Attachments</h5>
                     <div>
                         <i class="bx bx-data text-primary"></i> 
                         <span class="task-attachment-count">
