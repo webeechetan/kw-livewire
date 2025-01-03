@@ -58,7 +58,7 @@ class NewTaskAssignNotification extends Notification implements ShouldQueue
         if($this->sendAs == 'assigned'){
             $subject = $assignedBy->name.' assigned you a new task in '.$project->name. ' ⬇️';
         }else{
-            $subject = $assignedBy->name.'  invoked you in a new task in '.$project->name. ' ⬇️';
+            $subject = $assignedBy->name.' involved you in a new task in '.$project->name. ' ⬇️';
         }
 
         return (new MailMessage)

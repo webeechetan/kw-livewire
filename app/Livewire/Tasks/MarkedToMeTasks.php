@@ -114,38 +114,13 @@ class MarkedToMeTasks extends Component
 
             $this->teams = Team::all();
             $this->clients = Client::all();
-            $this->tasks = [
-                'pending' => $this->applySort(
+            $this->tasks = $this->applySort(
                                     Task::whereHas('notifiers', function($q){
                                         $q->where('user_id', $this->auth_user_id);
                                     })
-                                    ->where('status', 'pending')
                                     ->where('name', 'like', '%' . $this->query . '%')
-                                    )->get(),
+                                    )->get();
     
-                'in_progress' => $this->applySort(
-                                    Task::whereHas('notifiers', function($q){
-                                            $q->where('user_id', $this->auth_user_id);
-                                        })->where('status', 'in_progress')
-                                        ->where('name', 'like', '%' . $this->query . '%')
-                                )->get(),
-                
-                'in_review' => $this->applySort(
-                                Task::whereHas('notifiers', function($q){
-                                        $q->where('user_id', $this->auth_user_id);
-                                    })->where('status', 'in_review')
-                                    ->where('name', 'like', '%' . $this->query . '%')
-                            )->get(),
-
-                'completed' => $this->applySort(
-                                Task::whereHas('notifiers', function($q){
-                                        $q->where('user_id', $this->auth_user_id);
-                                    })
-                                    ->where('status', 'completed')
-                                    ->where('name', 'like', '%' . $this->query . '%')
-                            )->get(),
-                
-            ];
 
 
     }

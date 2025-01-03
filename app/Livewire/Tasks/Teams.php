@@ -115,28 +115,10 @@ class Teams extends Component
             $this->teams = Team::all();
             $this->clients = Client::all();
            
-            $this->tasks = [
-                'pending' => $this->applySort(
-                    Task::where('status', 'pending')
-                        ->where('name', 'like', '%' . $this->query . '%')
-                )->get(),
-    
-                'in_progress' => $this->applySort(
-                                    Task::where('status', 'in_progress')
-                                        ->where('name', 'like', '%' . $this->query . '%')
-                                )->get(),
-                
-                'in_review' => $this->applySort(
-                                Task::where('status', 'in_review')
-                                    ->where('name', 'like', '%' . $this->query . '%')
-                            )->get(),
-
-                'completed' => $this->applySort(
-                                Task::where('status', 'completed')
-                                ->where('name', 'like', '%' . $this->query . '%')
-                            )->get(),
-                
-            ];
+            $this->tasks =  $this->applySort(
+                Task::where('name', 'like', '%' . $this->query . '%')
+                    ->orderBy('created_at', 'desc')
+            )->get();
 
 
     }

@@ -163,8 +163,7 @@
 
     <div class="btn-list">
         <a wire:click="$set('status', 'all')" class="btn-border btn-border-primary @if($status == 'all') active @endif">
-            {{-- {{ $tasks['pending']->count() + $tasks['in_progress']->count() + $tasks['in_review']->count() + $tasks['completed']->count() }}  --}}
-            {{ $allTasks}}
+            {{ $tasks->count() }}
             <span>|</span> 
              All 
         </a>
@@ -172,21 +171,30 @@
 
         {{-- <a href="javascript:" wire:click="$set('status', 'pending')" class="btn-border btn-border-sm btn-border-primary "><span><i class='bx bx-objects-horizontal-center' ></i></span> {{ $project->tasks->where('status', 'pending')->count() }} Assigned</a> --}}
 
-        <a  wire:click="$set('status', 'completed')" class="btn-border btn-border-warning @if($status == 'completed') active @endif">{{ $completedTasks }} <span>|</span> Today</a>
-        <a  wire:click="$set('status', 'completed')" class="btn-border btn-border-success @if($status == 'completed') active @endif">{{ $completedTasks }} <span>|</span> Upcoming</a>
-        <a  wire:click="$set('status', 'pending')" class="btn-border btn-border-primary @if($status == 'pending') active @endif">{{ $pendingTasks}} <span>|</span> Assigned</a>
-        <a  wire:click="$set('status', 'in_progress')" class="btn-border btn-border-secondary @if($status == 'in_progress') active @endif">{{ $inProgressTasks}} <span>|</span> Accepted</a>
-        <a  wire:click="$set('status', 'in_review')" class="btn-border btn-border-warning @if($status == 'in_review') active @endif">{{  $inReviewTasks }} <span>|</span> In Review</a>
-        <a  wire:click="$set('status', 'completed')" class="btn-border btn-border-success @if($status == 'completed') active @endif">{{ $completedTasks }} <span>|</span> Completed</a>
+        {{-- <a  wire:click="$set('status', 'completed')" class="btn-border btn-border-warning @if($status == 'completed') active @endif">{{ $tasks->where('due_date',
+        '=', now())->count() }} <span>|</span> Today</a> --}}
+        {{-- <a  wire:click="$set('status', 'completed')" class="btn-border btn-border-success @if($status == 'completed') active @endif">{{ $completedTasks }} <span>|</span> Upcoming</a> --}}
+        <a  wire:click="$set('status', 'pending')" class="btn-border btn-border-primary @if($status == 'pending') active @endif">
+            {{ $tasks->where('status', 'pending')->count() }} 
+            <span>|</span> Assigned
+        </a>
+        <a  wire:click="$set('status', 'in_progress')" class="btn-border btn-border-secondary @if($status == 'in_progress') active @endif">
+            {{ $tasks->where('status', 'in_progress')->count() }} 
+            <span>|</span> Accepted
+        </a>
+        <a  wire:click="$set('status', 'in_review')" class="btn-border btn-border-warning @if($status == 'in_review') active @endif">
+            {{ $tasks->where('status', 'in_review')->count() }} 
+            <span>|</span> In Review
+        </a>
+        <a  wire:click="$set('status', 'completed')" class="btn-border btn-border-success @if($status == 'completed') active @endif">
+            {{ $tasks->where('status', 'completed')->count() }} 
+            <span>|</span> Completed
+        </a>
        
-
-        {{-- <a wire:click="$set('status', 'pending')" class="btn-border btn-border-primary @if($status == 'pending') active @endif">{{ $tasks_count->where('status','pending')->count() }} <span>|</span> Assigned</a>
-        <a wire:click="$set('status', 'in_progress')" class="btn-border btn-border-secondary @if($status == 'in_progress') active @endif">{{ $tasks_count->where('status','in_progress')->count() }} <span>|</span> Accepted</a>
-        <a wire:click="$set('status', 'in_review')" class="btn-border btn-border-warning @if($status == 'in_review') active @endif">{{ $tasks_count->where('status','in_review')->count() }} <span>|</span> In Review</a>
-        <a wire:click="$set('status', 'completed')" class="btn-border btn-border-success @if($status == 'completed') active @endif">{{ $tasks_count->where('status','completed')->count() }} <span>|</span> Completed</a> --}}
         <a wire:click="$set('status', 'overdue')" class="btn-border btn-border-danger @if($status == 'overdue') active @endif">
-           {{ $overdueTasks }}
-            <span>|</span> Overdue</a>
+            {{ $tasks->where('due_date', '<', now())->where('status','!=','completed')->count() }}
+            <span>|</span> Overdue
+        </a>
     </div>
 
     <!-- Filters Query Params -->
@@ -224,128 +232,19 @@
        
         <div class="taskList scrollbar">
             <div>
-                @php
-                    $groups = ['pending','in_progress','in_review','completed'];
-                    $hasTasks = false;
-                @endphp
-                
-                @foreach($groups as $group)
-                @if(!empty($tasks[$group]) && count($tasks[$group]) > 0)
-                @php
-                    $hasTasks = true;
-                @endphp
-                    @foreach($tasks[$group] as $task)
+                @foreach($tasks as $task)
                     @if(!$task->project)
                         @continue
                     @endif
-                  
-
-                        <div class="taskList_row edit-task" data-id="{{ $task->id }}"  wire:key="task-row-{{ $task->id }}">
-                            <div class="taskList_col taskList_col_title">
-                                <div class="taskList_col_title_open edit-task" data-id="{{ $task->id }}"><i class="bx bx-chevron-right"></i></div>
-                                <div class="edit-task" data-id="{{ $task->id }}">
-                                    <div class="mb-1">{{ $task->name }}</div>
-                                    <span class="text-xs text-light">Created date: {{  Carbon\Carbon::parse($task->created_at)->format('d M Y') }}</span>
-                                </div>
-                            </div>
-
-                            <div class="taskList_row_wrap text-center d-grid grid_col-repeat-6">
-                                <div class="taskList_col"><span class=" 
-                                    @if ($task->due_date < \Carbon\Carbon::now())  text-danger @endif"> @if($task->due_date)
-                                    {{ Carbon\Carbon::parse($task->due_date)->format('d M Y') }}
-                                    @else
-                                        No Due Date
-                                    @endif</span>
-                                </div>
-                                
-                                <div class="taskList_col"><span>{{ $task->project->name }}</span></div>
-                                
-                                <div class="taskList_col"><span>{{  Carbon\Carbon::parse($task->created_at)->format('d M Y') }}</span></div>
-                                
-                                <div class="taskList_col">
-                                    <div class="avatarGroup avatarGroup-overlap">
-
-                                        @php
-                                        $plus_more_users = 0;
-                                            if(count($task['users']) > 3){
-                                                $plus_more_users = count($task['users']) - 3;
-                                            }
-                                        @endphp
-
-                                        @foreach($task['users']->take(3) as $user)
-                                            <x-avatar :user="$user" class="avatar-sm" />
-                                        @endforeach
-
-                                        @if($plus_more_users)
-                                        <a href="#" class="avatarGroup-avatar">
-                                            <span class="avatar avatar-sm avatar-more">+{{$plus_more_users}}</span>
-                                        </a>
-                                    @endif       
-                                    </div>
-                                </div>
-
-                                <div class="taskList_col">
-                                    <div class="avatarGroup avatarGroup-overlap">
-                                        {{  $task->assignedBy->name }}
-                                    </div>
-                                </div>
-                                
-                                <div class="taskList_col">
-                                    {{-- <span class="btn-batch btn-batch-primary"> --}}
-
-                                        <span class="btn-batch 
-                                        @if($task->status == 'pending') btn-batch-primary 
-                                        @elseif ($task->status == 'in_progress') btn-batch-secondary
-                                        @elseif( $task->status == 'in_review') btn-batch-warning
-                                        @elseif( $task->status == 'completed') btn-batch-success
-                                        @endif" 
-                                        >
-
-                                        @if($task->status == 'pending') Assigned @endif
-                                        @if($task->status == 'in_progress') Accepted @endif
-                                        @if($task->status == 'in_review') In Review @endif
-                                        @if($task->status == 'completed') Completed @endif
-                                    </span>
-                                </div>
-                            </div>
-                    
-                    
-                    
-                            <div class="row">
-                                <div class="col-lg-4">
-                                    
-                                </div>
-                                <div class="col text-center">
-                                    
-                                </div>
-                                <div class="col text-center">
-                                    
-                                </div>
-                                <div class="col text-center">
-                                    
-                                </div>
-                                <div class="col text-center">
-                                    
-                                </div>
-                                <div class="col text-center">
-                                    
-                                </div>
-                                <div class="col text-center">
-                                    
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-                    @endif
+                    <x-table-row :task="$task"/>
                 @endforeach
 
-                @if(!$hasTasks)
-                <div class="col-md-12 text-center">
-                    <img src="{{ asset('assets/images/'.'invite_signup_img.png') }}" width="150" alt="">
-                    <h5 class="text text-light mt-3">No Tasks found</h5>
-                </div>
+                @if(!$tasks)
+                    <div class="col-md-12 text-center">
+                        <img src="{{ asset('assets/images/'.'invite_signup_img.png') }}" width="150" alt="">
+                        <h5 class="text text-light mt-3">No Tasks found</h5>
+                    </div>
                 @endif
-               
             </div>
         </div>
     </div>

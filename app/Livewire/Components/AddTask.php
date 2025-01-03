@@ -157,7 +157,7 @@ class AddTask extends Component
                 if(in_array($user_id,$taskUsers)){
                     $text = Auth::user()->name.' assigned you a new task in '. $task->project->name;
                 }else{
-                    $text = Auth::user()->name.' invoked you in a new task in '. $task->project->name;
+                    $text = Auth::user()->name.' involved you in a new task in '. $task->project->name;
                 }
 
                 $notification->title = $text;
