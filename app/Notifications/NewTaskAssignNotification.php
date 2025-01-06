@@ -68,7 +68,8 @@ class NewTaskAssignNotification extends Notification implements ShouldQueue
                 'user' => $notifiable,
                 'assignedBy' => $assignedBy,
                 'project' => $project,
-                'taskUrl' => $this->taskUrl
+                'taskUrl' => $this->taskUrl,
+                'sendAs' => $this->sendAs
             ]
         )->subject($subject);
 

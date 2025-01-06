@@ -199,7 +199,6 @@
 
     <!-- Filters Query Params -->
      @if($this->doesAnyFilterApplied())
-
         <x-filters-query-params 
             :sort="$sort" 
             :status="$status" 
@@ -212,7 +211,7 @@
             :teams="$teams"
             :clients="$clients"
             :projects="$projects"
-            :clearFilters="route('task.list-view')"
+            :clearFilters="route('task.projects')"
         />
      @endif
 
@@ -228,7 +227,6 @@
                 <div class="taskList-dashbaord_header_title taskList_col">Status</div>
             </div>
         </div>
-
        
         <div class="taskList scrollbar">
             <div>
@@ -239,6 +237,16 @@
                     <x-table-row :task="$task"/>
                 @endforeach
 
+                
+                @if($tasks->count() < $totalTasks)
+                    <div class="text-center mt-3">
+                        <button wire:click="loadMore" class="btn-border btn-border-primary">
+                            <span wire:loading wire:target="loadMore" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            <span wire:loading.remove wire:target="loadMore">Load More</span>
+                        </button>
+                    </div>
+                @endif
+                
                 @if(!$tasks)
                     <div class="col-md-12 text-center">
                         <img src="{{ asset('assets/images/'.'invite_signup_img.png') }}" width="150" alt="">
@@ -248,8 +256,6 @@
             </div>
         </div>
     </div>
-
-    {{-- <livewire:components.add-task @saved="$refresh"  /> --}}
 </div>
 
 @script
@@ -258,7 +264,7 @@
             $('#offcanvasRight').offcanvas('hide');
         });
 
-        $(".edit-task").click(function(){
+        $(document).on('click', '.edit-task', function(){
             let taskId = $(this).data('id');
             @this.emitEditTaskEvent(taskId);
         });

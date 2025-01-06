@@ -109,11 +109,11 @@ class Teams extends Component
             if($this->byProject != 'all'){
                 $this->users = Project::find($this->byProject)->members;
             }else{
-                $this->users = User::all();
+                $this->users = User::orderBy('name', 'asc')->get();
             }
 
-            $this->teams = Team::all();
-            $this->clients = Client::all();
+            $this->teams = Team::orderBy('name', 'asc')->get();
+            $this->clients = Client::orderBy('name', 'asc')->get();
            
             $this->tasks =  $this->applySort(
                 Task::where('name', 'like', '%' . $this->query . '%')
