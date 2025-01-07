@@ -240,8 +240,7 @@
                 <div class="taskList-dashbaord_header_title taskList_col">Status</div>
             </div>
         </div>
-
-       
+        
         <div class="taskList scrollbar">
             <div>
                 @php

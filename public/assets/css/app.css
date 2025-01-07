@@ -135,6 +135,10 @@ hr {
   border-color: #eee;
 }
 
+.opaicty-05 {
+  opacity: 0.5;
+}
+
 /*---- Anchor Style ----*/
 a {
   color: #191919;

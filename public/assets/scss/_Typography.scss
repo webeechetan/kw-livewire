@@ -17,6 +17,12 @@ hr {
     border-color: $grey;
 }
 
+.opaicty {
+    &-05 {
+        opacity: 0.5;
+    }
+}
+
 /*---- Anchor Style ----*/
 a {
     color: $text_color;
