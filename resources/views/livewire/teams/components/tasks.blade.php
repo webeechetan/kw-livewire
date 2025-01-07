@@ -157,84 +157,34 @@
             />
         @endif
         <div class="taskList-dashbaord_header">
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="taskList-dashbaord_header_title taskList_col ms-2">Task Name</div>
-                </div>
-                <div class="col text-center">
-                    <div class="taskList-dashbaord_header_title taskList_col">Created Date</div>
-                </div>
-                <div class="col text-center">
-                    <div class="taskList-dashbaord_header_title taskList_col">Due Date</div>
-                </div>
-                <div class="col text-center">
-                    <div class="taskList-dashbaord_header_title taskList_col">Project</div>
-                </div>
-                <div class="col text-center">
-                    <div class="taskList-dashbaord_header_title taskList_col">Assignee</div>
-                </div>
+            <div class="taskList-dashbaord_header_title taskList_col ms-2">Task Name</div>
+            <div class="taskList-dashbaord_header_wrap text-center d-grid grid_col-repeat-6">
+                <div class="taskList-dashbaord_header_title taskList_col">Due Date</div>
+                <div class="taskList-dashbaord_header_title taskList_col">Client</div>
+                <div class="taskList-dashbaord_header_title taskList_col">Projects</div>
+                <div class="taskList-dashbaord_header_title taskList_col">Assignee</div>
+                <div class="taskList-dashbaord_header_title taskList_col">Assignor</div>
+                <div class="taskList-dashbaord_header_title taskList_col">Status</div>
             </div>
         </div>
        
-        @if($tasks->isNotEmpty())
-        @foreach ($tasks as $task)
-            <div class="taskList scrollbar">
-                <div class="taskList_row">
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <div class="taskList_col taskList_col_title">
-                                <div class="edit-task" data-id="100">
-                                    <div>{{$task->name}} </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col text-center">
-                            <div class="taskList_col"><span>{{  Carbon\Carbon::parse($task->created_at)->format('d M Y') }}</span></div>
-                        </div>
-                        <div class="col text-center">
-                            <div class="taskList_col"><span> @if($task->due_date)
-                                {{ Carbon\Carbon::parse($task->due_date)->format('d M Y') }}
-                            @else
-                                No Due Date
-                            @endif</span></div>
-                        </div>
-                        <div class="col text-center">
-                            <div class="taskList_col"><span>{{$task->project->name}}</span></div>
-                        </div>
-                        <div class="col text-center">
-                            <div class="taskList_col">
-                                <div class="avatarGroup avatarGroup-overlap">
+        <div class="taskList scrollbar">
+            <div>
+                @foreach($tasks as $task)
+                    @if(!$task->project)
+                        @continue
+                    @endif
+                    <x-table-row :task="$task"/>
+                @endforeach
 
-                                    @php
-                                    $plus_more_users = 0;
-                                        if(count($task->users) > 3){
-                                            $plus_more_users = count($task->users) - 3;
-                                        }
-                                    @endphp
-
-                                    @foreach($task->users->take(3) as $user)
-                                    <x-avatar :user="$user" class="avatar-sm" />
-                                    @endforeach   
-                                    @if($plus_more_users)
-                                        <a href="#" class="avatarGroup-avatar">
-                                            <span class="avatar avatar-sm avatar-more">+{{$plus_more_users}}</span>
-                                        </a>
-                                    @endif                      
-                                </div>
-                                
-                            </div>
-                        </div>
+                @if(!$tasks)
+                    <div class="col-md-12 text-center">
+                        <img src="{{ asset('assets/images/'.'invite_signup_img.png') }}" width="150" alt="">
+                        <h5 class="text text-light mt-3">No Tasks found</h5>
                     </div>
-                </div>
+                @endif
             </div>
-        @endforeach
-         
-        @else
-            <div class="col-md-12 text-center py-4">               
-                <img src="{{ asset('assets/images/'.'invite_signup_img.png') }}" width="150" alt="">
-                <h5 class="text text-light mt-3">No Task found</h5>
-            </div>
-        @endif
+        </div>
         {{-- load more tasks --}}
         @if($tasks->count() < $totalTasks)
         <div class="col-md-12 text-center mt-3 ">

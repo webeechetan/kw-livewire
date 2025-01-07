@@ -117,7 +117,7 @@
                         aria-labelledby="pills-upcoming-tab" tabindex="0">
                         <div class="taskList scrollbar">
                             <div style="height: 307px;">
-                                @foreach($users_tasks->where('due_date', now()->format('Y-m-d'))->take(10) as $task)
+                                @foreach($users_tasks->where('due_date', now()->format('Y-m-d'))->where('status','!=','completed')->take(10) as $task)
                                 <div class="taskList_row">
                                     <div class="row">
                                         <div class="col">
@@ -146,7 +146,7 @@
                         aria-labelledby="pills-upcoming-tab" tabindex="0">
                         <div class="taskList scrollbar">
                             <div style="height: 307px;">
-                                @foreach($users_tasks->where('due_date', '>', now())->take(10) as $task)
+                                @foreach($users_tasks->where('due_date', '>', now())->where('status','!=','completed')->take(10) as $task)
                                 <div class="taskList_row">
                                     <div class="row">
                                         <div class="col">

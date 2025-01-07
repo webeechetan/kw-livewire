@@ -86,7 +86,11 @@
                                             <table class="emailer-text-wrap mxauto" width="100%" cellcellspacing="0" cellpadding="">
                                                 <tr>
                                                     <td>
+                                                        @if($sendAs == 'assigned')
                                                         <p> <b>{{ $assignedBy->name }}</b> assigned you a task {{ Str::limit($task->name, 50, '...') }} in <b>{{ $project->name }}</b> </p>
+                                                        @else
+                                                        <p> <b>{{ $assignedBy->name }}</b> involved you in a task {{ Str::limit($task->name, 50, '...') }} in <b>{{ $project->name }}</b> </p>
+                                                        @endif
                                                         {{-- <p>  assigned you a task {{ Str::limit($task->name, 15, '...') }} in </p> --}}
                                                         <a href="{{ $taskUrl }}"  class="btn-primary" style="margin-top: 30px;">View Task</a>
                                                     </td>

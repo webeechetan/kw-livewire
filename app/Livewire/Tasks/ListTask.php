@@ -111,20 +111,20 @@ class ListTask extends Component
             }
             $this->auth_user_id = auth()->guard(session('guard'))->user()->id;
             if($this->byClient != 'all'){
-                $this->projects = Project::where('client_id', $this->byClient)->get();
+                $this->projects = Project::where('client_id', $this->byClient)->orderBy('name', 'asc')->get();
             }else{
-                $this->projects = Project::all();
+                $this->projects = Project::orderBy('name', 'asc')->get();
             }
                     
             if($this->byProject != 'all'){
                 $this->users = Project::find($this->byProject)->members;
             }else{
-                $this->users = User::all();
+                $this->users = User::orderBy('name', 'asc')->get();
             } 
 
             // dd($this->projects);
-            $this->teams = Team::all();
-            $this->clients = Client::all();
+            $this->teams = Team::orderBy('name', 'asc')->get();
+            $this->clients = Client::orderBy('name', 'asc')->get();
             // Fetch all tasks from the database
             if($this->ViewTasksAs == 'manager'){
                 $manager_team = auth()->user()->myTeam;

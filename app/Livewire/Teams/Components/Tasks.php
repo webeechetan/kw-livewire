@@ -48,7 +48,7 @@ class Tasks extends Component
     public function render()
     {
         return view('livewire.teams.components.tasks');
-    }
+    } 
 
   
     public function mount(Team $team) {

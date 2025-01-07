@@ -18,20 +18,11 @@ use App\Helpers\Filter;
 class Projects extends Component
 {
     use WithPagination;
-
-    public $allTasks;
-    public $pendingTasks;
-    public $inProgressTasks;
-    public $inReviewTasks;
-    public $completedTasks;
-    public $overdueTasks;
-
     // auth 
 
     public $auth_user_id;
 
     public $tasks;
-    public $tasks_count = [];
 
     // Add task Form
     public $name;
@@ -75,6 +66,9 @@ class Projects extends Component
     public $ViewTasksAs = 'user';
     public $assignedByMe = false;
 
+    public $totalTasks = 0;
+    public $rows = 25;
+
 
     public function render()
     {
@@ -84,60 +78,47 @@ class Projects extends Component
       
     public function mount()
     {
-
-            $this->allTasks = Task::tasksByUserType($this->assignedByMe)->count();
-            $this->pendingTasks = Task::tasksByUserType($this->assignedByMe)->where('status', 'pending')->count();
-            $this->inProgressTasks = Task::tasksByUserType($this->assignedByMe)->where('status', 'in_progress')->count();
-            $this->inReviewTasks = Task::tasksByUserType($this->assignedByMe)->where('status', 'in_review')->count();
-            $this->completedTasks = Task::tasksByUserType($this->assignedByMe)->where('status', 'completed')->count();
-            $this->overdueTasks = Task::tasksByUserType($this->assignedByMe)->where('due_date', '<', now())->where('status', '!=', 'completed')->count();
-            // dd($this->overdueTasks); 
+ 
             $this->doesAnyFilterApplied();
             $this->authorize('View Task');
-            $this->tasks_count = Task::all();
             if(!($this->currentRoute)){
                 $this->currentRoute = request()->route()->getName();
             }
            
             $this->auth_user_id = auth()->guard(session('guard'))->user()->id;
             if($this->byClient != 'all'){
-                $this->projects = Project::where('client_id', $this->byClient)->get();
+                $this->projects = Project::where('client_id', $this->byClient)->orderBy('name', 'asc')->get();
             }else{
-                $this->projects = Project::all();
+                $this->projects = Project::orderBy('name', 'asc')->get();
             }
 
             if($this->byProject != 'all'){
                 $this->users = Project::find($this->byProject)->members;
             }else{
-                $this->users = User::all();
+                $this->users = User::orderBy('name', 'asc')->get();
             }
 
-            $this->teams = Team::all();
-            $this->clients = Client::all(); 
-            $this->tasks = [
-                'pending' => $this->applySort(
-                    Task::where('status', 'pending')
-                        ->where('name', 'like', '%' . $this->query . '%')
-                )->get(),
-    
-                'in_progress' => $this->applySort(
-                                    Task::where('status', 'in_progress')
-                                        ->where('name', 'like', '%' . $this->query . '%')
-                                )->get(),
-                
-                'in_review' => $this->applySort(
-                                Task::where('status', 'in_review')
-                                    ->where('name', 'like', '%' . $this->query . '%')
-                            )->get(),
+            $this->teams = Team::orderBy('name', 'asc')->get();
+            $this->clients = Client::orderBy('name', 'asc')->get();
+            $this->tasks =  $this->applySort(
+                    Task::where('name', 'like', '%' . $this->query . '%')
+                        ->orderBy('created_at', 'desc')
+                )->limit($this->rows)->get();
 
-                'completed' => $this->applySort(
-                                Task::where('status', 'completed')
-                                ->where('name', 'like', '%' . $this->query . '%')
-                            )->get(),
-                
-            ];
+            $this->totalTasks =  $this->applySort(
+                Task::where('name', 'like', '%' . $this->query . '%')
+                    ->orderBy('created_at', 'desc')
+            )->count();
 
+    }
 
+    public function loadMore()
+    {
+        $this->rows += 25;
+        $this->tasks =  $this->applySort(
+            Task::where('name', 'like', '%' . $this->query . '%')
+                ->orderBy('created_at', 'desc')
+        )->limit($this->rows)->get();
     }
 
     public function updatedAssignedByMe($value)
@@ -211,8 +192,6 @@ class Projects extends Component
     }
 
     public function doesAnyFilterApplied(){
-
-        // dd($this->sort);
 
         if($this->sort != 'all' || $this->byProject != 'all' || $this->byClient != 'all' || $this->byUser != 'all' || $this->startDate || $this->dueDate || $this->status != 'all'){
             return true;

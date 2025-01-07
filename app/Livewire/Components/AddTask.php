@@ -100,11 +100,12 @@ class AddTask extends Component
         $task->status = $this->status;
         $task->visibility = $this->visibility;
         if($this->email_notification == true){
-            $task->email_notification = $this->email_notification;
+            $task->email_notification = 1;
         }
-        if($this->email_notification == false || $this->email_notification == 'on'){
+        if($this->email_notification == false){
             $task->email_notification = 0;
         }
+
  
         $task->save();
         $task->users()->sync($this->task_users);
@@ -157,7 +158,7 @@ class AddTask extends Component
                 if(in_array($user_id,$taskUsers)){
                     $text = Auth::user()->name.' assigned you a new task in '. $task->project->name;
                 }else{
-                    $text = Auth::user()->name.' invoked you in a new task in '. $task->project->name;
+                    $text = Auth::user()->name.' involved you in a new task in '. $task->project->name;
                 }
 
                 $notification->title = $text;
