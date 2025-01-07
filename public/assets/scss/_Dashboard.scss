@@ -1088,6 +1088,15 @@
                 font-weight: 600;
                 padding: 1px 7px;
             }
+
+            @media (max-width: 1399px) {
+                font-size: 9px;
+                padding: 2px 5px;
+
+                .btn-batch {
+                    font-size: 10px;
+                }
+            }
         }
     }
 }
@@ -1189,6 +1198,10 @@
                 border-color: $secondary;
             }
         }
+    }
+
+    &_todos {
+        display: block;
     }
 
     /* ----- Task List Header ----- */
@@ -1344,6 +1357,7 @@
 
 /* ----- Comment Area ----- */
 .custComment {
+    margin-top: 40px;
 
     &-editor {
         // background-color: #fff;

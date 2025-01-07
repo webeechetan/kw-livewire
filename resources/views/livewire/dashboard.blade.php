@@ -118,7 +118,7 @@
                         <div class="taskList scrollbar">
                             <div style="height: 307px;">
                                 @foreach($users_tasks->where('due_date', now()->format('Y-m-d'))->where('status','!=','completed')->take(10) as $task)
-                                <div class="taskList_row">
+                                <div class="taskList_row taskList_todos">
                                     <div class="row">
                                         <div class="col">
                                             <div class="taskList_col taskList_col_title">
@@ -147,7 +147,7 @@
                         <div class="taskList scrollbar">
                             <div style="height: 307px;">
                                 @foreach($users_tasks->where('due_date', '>', now())->where('status','!=','completed')->take(10) as $task)
-                                <div class="taskList_row">
+                                <div class="taskList_row taskList_todos">
                                     <div class="row">
                                         <div class="col">
                                             <div class="taskList_col taskList_col_title">
@@ -177,7 +177,7 @@
                         <div class="taskList scrollbar">
                             <div style="height: 307px;">
                                 @foreach($users_tasks->where('due_date', '<', now())->where('status','!=','completed')->take(10) as $task)
-                                <div class="taskList_row">
+                                <div class="taskList_row taskList_todos">
                                     <div class="row">
                                         <div class="col">
                                             <div class="taskList_col taskList_col_title">
@@ -345,7 +345,7 @@
                 <div class="scrollbar">
                     <div style="height: 570px;">
                         @foreach($recent_comments as $comment)
-                        <div class="cmnt_item_row">
+                        <div class="cmnt_item_row card_style bg-light">
                             <a href="{{ route('task.view', $comment->task_id) }}" class="card_style-open"><i class='bx bx-chevron-right'></i></a>
                             <div class="cmnt_item_user">
                                 <div class="cmnt_item_user_img">
@@ -354,12 +354,12 @@
                                 <div class="cmnt_item_user_name-wrap">
                                     <div class="cmnt_item_user_name">
                                         <a href="{{ route('user.profile', $comment->user->id) }}">{{ $comment->user->name }}</a>
-                                        <div class="cmnt_item_date">{{ \Carbon\Carbon::parse($comment->created_at)->diffForHumans() }}</div>
                                     </div>
+                                    <div class="cmnt_item_date">{{ \Carbon\Carbon::parse($comment->created_at)->diffForHumans() }}</div>
                                 </div>
                             </div>
-                            <div class="mt-2 cmnt_item_task"><i class="bx bx-task"></i> <a href="{{ route('task.view', $comment->task_id) }}">{{ $comment->task->name }}</a></div>
-                            <div class="cmnt_item_user_text"><i class="bx bx-chat"></i> <a href="{{ route('task.view', $comment->task_id) }}">{!! $comment->comment !!}</a></div>
+                            <div class="mt-2 cmnt_item_task border-bottom pb-2"><i class="bx bx-task"></i> <a href="{{ route('task.view', $comment->task_id) }}">{{ $comment->task->name }}</a></div>
+                            <div class="cmnt_item_user_text"><a href="{{ route('task.view', $comment->task_id) }}">{!! $comment->comment !!}</a></div>
                         </div>
                         @endforeach
                     </div>

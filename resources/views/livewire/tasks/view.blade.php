@@ -225,20 +225,11 @@
                                     </div>
                                 </div>
                             @endforeach
-                            <div class="cmnt_item_row">
-                                <div class="cmnt_item_user">
-                                    <div class="cmnt_item_user_img">
-                                        <x-avatar :user="auth()->user()" />
-                                    </div>
-                                    <div class="cmnt_item_user_name-wrap">
-                                        <div class="custComment">
-                                            <div class="custComment-editor" wire:ignore>
-                                                <textarea name="" id="comment_box" cols="30" rows="5"></textarea>
-                                            </div>
-                                            <button wire:click="saveComment" class="btn btn-sm btn-secondary mt-3"><i class='bx bx-send'></i> Comment</button>
-                                        </div>
-                                    </div>
+                            <div class="custComment">
+                                <div class="custComment-editor" wire:ignore>
+                                    <textarea name="" id="comment_box" cols="30" rows="5"></textarea>
                                 </div>
+                                <button wire:click="saveComment" class="btn btn-sm btn-secondary mt-3"><i class='bx bx-send'></i> Comment</button>
                             </div>
                         </div>
                         <div class="tab-pane fade" id="nav-client" role="tabpanel" aria-labelledby="nav-client-tab" tabindex="0">
@@ -266,21 +257,12 @@
                                     </div>
                                 </div>
                             @endforeach
-                            <div class="cmnt_item_row">
-                                <div class="cmnt_item_user">
-                                    <div class="cmnt_item_user_img">
-                                        <x-avatar :user="auth()->user()" />
-                                    </div>
-                                    <div class="cmnt_item_user_name-wrap">
-                                        <div class="custComment">
-                                            <div class="custComment-editor" wire:ignore>
-                                                <textarea name="" id="client_comment_box" cols="30" rows="5"></textarea>
-                                                <div class="custComment-attachments"><i class="bx bx-paperclip" style="transform: rotate(90deg);"></i></div>
-                                            </div>
-                                            <button wire:click="saveComment('client')" class="btn btn-sm btn-secondary mt-3"><i class='bx bx-send'></i> Comment</button>
-                                        </div>
-                                    </div>
+                            <div class="custComment">
+                                <div class="custComment-editor" wire:ignore>
+                                    <textarea name="" id="client_comment_box" cols="30" rows="5"></textarea>
+                                    <div class="custComment-attachments"><i class="bx bx-paperclip" style="transform: rotate(90deg);"></i></div>
                                 </div>
+                                <button wire:click="saveComment('client')" class="btn btn-sm btn-secondary mt-3"><i class='bx bx-send'></i> Comment</button>
                             </div>
                         </div>
                         
