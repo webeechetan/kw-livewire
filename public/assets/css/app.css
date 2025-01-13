@@ -135,6 +135,10 @@ hr {
   border-color: #eee;
 }
 
+.opaicty-05 {
+  opacity: 0.5;
+}
+
 /*---- Anchor Style ----*/
 a {
   color: #191919;
@@ -588,6 +592,7 @@ hr.space-sm {
   visibility: hidden;
   transform: translateX(5px);
   transition: all 0.3s ease;
+  z-index: 99;
 }
 .card_style-open:hover {
   background-color: #f83890;
@@ -1152,22 +1157,24 @@ hr.space-sm {
   grid-gap: 10px;
   position: relative;
 }
+.cmnt_item_user_name {
+  display: flex;
+}
 .cmnt_item_user_img img {
   width: 100%;
 }
 .cmnt_item_user_text {
   margin-top: 10px;
-  display: grid;
-  grid-template-columns: 25px 1fr;
+  font-size: 14px;
+}
+.cmnt_item_user_text p, .cmnt_item_user_text span, .cmnt_item_user_text a {
+  font-size: 14px !important;
+}
+.cmnt_item_user_text p:last-child, .cmnt_item_user_text span:last-child, .cmnt_item_user_text a:last-child {
+  margin-bottom: 0 !important;
 }
 .cmnt_item_user_text img {
   max-width: 100%;
-}
-.cmnt_item_user_text a {
-  background-color: #fff;
-  padding: 5px 10px;
-  border-radius: 10px;
-  font-size: 14px;
 }
 .cmnt_item_user_text a p:last-child {
   margin-bottom: 0;
@@ -1177,18 +1184,16 @@ hr.space-sm {
   top: 0;
   right: 0;
 }
+.cmnt_item_actions {
+  margin-left: auto;
+}
 .cmnt_item_date {
   font-size: 12px;
   color: #9c9c9c;
 }
-.cmnt_item_row {
-  background-color: #f6f5f5;
-  padding: 20px;
-  border-radius: 7px;
-}
 .cmnt_item_row:not(:last-child) {
-  margin-bottom: 10px;
-  padding-bottom: 10px;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
   border-bottom: 1px solid #eee;
 }
 .cmnt_item-tabs {
@@ -4110,6 +4115,15 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   font-weight: 600;
   padding: 1px 7px;
 }
+@media (max-width: 1399px) {
+  .nav-pills-xs .nav-link {
+    font-size: 9px;
+    padding: 2px 5px;
+  }
+  .nav-pills-xs .nav-link .btn-batch {
+    font-size: 10px;
+  }
+}
 
 /* ----- Task List View ----- */
 .taskList {
@@ -4195,6 +4209,9 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
 .taskList_row.in_review .taskList_col_title_complete_icon:hover,
 .taskList_row.in_review .taskList_col_title_complete_icon:focus {
   border-color: #7407ff;
+}
+.taskList_todos {
+  display: block;
 }
 .taskList-dashbaord_tabs {
   margin-top: 20px;
@@ -4332,6 +4349,9 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
 }
 
 /* ----- Comment Area ----- */
+.custComment {
+  margin-top: 40px;
+}
 .custComment .panel-heading.note-toolbar {
   padding: 10px;
   border-radius: 10px;
