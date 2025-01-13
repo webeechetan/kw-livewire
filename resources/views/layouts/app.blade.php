@@ -177,17 +177,17 @@
         {{ $slot }}
         <p class="alert alert-warning" wire:offline> Whoops, your device has lost connection. The web page you are viewing is offline. </p>
       </div>
+      @if(!request()->routeIs('project.tasks'))
+        <livewire:components.add-task @saved="$refresh"  />
+      @endif
     </div>
-    @if(!request()->routeIs('project.tasks'))
-      <livewire:components.add-task @saved="$refresh"  />
-    @endif
     {{-- <livewire:components.voice-control /> --}}
     
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/annyang/2.6.0/annyang.min.js"></script>
+    {{-- <script src="//cdnjs.cloudflare.com/ajax/libs/annyang/2.6.0/annyang.min.js"></script> --}}
 
     @livewireScripts 
     <script src="https://unpkg.com/@nextapps-be/livewire-sortablejs@0.4.0/dist/livewire-sortable.js"></script>

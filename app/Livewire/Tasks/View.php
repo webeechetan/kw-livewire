@@ -82,9 +82,9 @@ class View extends Component
             }
         } 
 
+        $this->dispatch('success','Task updated successfully');
         $this->saveVoiceNoteToTask($this->task->id);
 
-        $this->dispatch('success','Task updated successfully');
     }
  
     public function saveComment($type = 'internal'){

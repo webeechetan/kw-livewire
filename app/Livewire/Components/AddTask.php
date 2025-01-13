@@ -15,7 +15,7 @@ class AddTask extends Component
 {
     use WithFileUploads;
 
-    protected $listeners = ['editTask','deleteTask','copy-link'=>'copyLink'];
+    protected $listeners = ['editTask','deleteTask','copy-link'=>'copyLink','resetForm'];
 
     public $project;
     public $task;
@@ -132,6 +132,10 @@ class AddTask extends Component
         $taskNotifiers = $this->task_notifiers;
         $users = array_merge($this->task_users,$this->task_notifiers);
         $users = array_unique($users);
+
+        $project = Project::find($this->project_id);
+        $project->users()->syncWithoutDetaching($users);
+
         
         if($this->task_users){
             foreach($users as $user_id){
@@ -181,7 +185,7 @@ class AddTask extends Component
 
     public function saveComment($type = 'internal'){
         if($this->comment_id){
-            $this->updateComment($this->comment_id);
+            $this->updateComment($this->comment_id,$this->comment);
             return;
         }
         // dd($this->comment);
@@ -216,11 +220,10 @@ class AddTask extends Component
         
     }
 
-    public function updateComment($id){
+    public function updateComment($id,$newComment){
         $comment = Comment::find($id);
-        $comment->comment = $this->comment;
+        $comment->comment = $newComment;
         $comment->save();
-        $this->comments = $this->task->comments;
         // $this->dispatch('comment-added',Comment::with('user')->find($comment->id));
         $this->comment = '';
         $this->comment_id = null;
@@ -282,6 +285,16 @@ class AddTask extends Component
         $this->task->save();
         $this->task->users()->sync($this->task_users);
         $this->task->notifiers()->sync($this->task_notifiers);
+
+        $taskUsers = $this->task_users;
+        $taskNotifiers = $this->task_notifiers;
+        $users = array_merge($this->task_users,$this->task_notifiers);
+        $users = array_unique($users);
+
+        $project = Project::find($this->task->project_id);
+        $project->users()->syncWithoutDetaching($users);
+
+
         // attach files to task from $this->attachments
         if($this->attachments){ 
             foreach($this->attachments as $attachment){
@@ -361,6 +374,10 @@ class AddTask extends Component
         $comment->delete();
         $this->comments = $this->task->comments;
         $this->editTask($this->task->id);
+    }
+
+    public function resetForm(){
+       $this->task = null;
     }
     
 }

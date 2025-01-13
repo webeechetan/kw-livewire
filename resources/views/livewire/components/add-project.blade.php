@@ -38,6 +38,22 @@
                                     <input wire:model="project_name" type="text" class="form-style" placeholder="Project Name" required>
                                 </div>
                             </div>
+                            {{-- project users --}}
+                            <div class="row">
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Add Users<sup class="text-primary">*</sup></label>
+                                </div>
+                                <div class="col-md-8 mb-4">
+                                    <div class="custom-select">
+                                        <select class="form-style project-users" multiple required>
+                                            @foreach ($users as $user)
+                                                <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="row">
                                 <div class="col-md-4 mb-4">
                                     <label for="">Upload Logo</label>
@@ -120,8 +136,19 @@
 
             });
 
+            $('.project-users').select2({
+                placeholder: "Add Users",
+                allowClear: true,
+                dropdownParent: $('#add-project-modal'),
+            });
+
             $('.clients').on('change', function (e) {
                 @this.set('client_id', e.target.value);
+            });
+
+            $('.project-users').on('change', function (e) {
+                var data = $(this).select2("val");
+                @this.set('project_users', data);
             });
 
             document.addEventListener('project-added', event => {
@@ -150,6 +177,12 @@
                 }else{
                     $('.project_due_date').html('Due Date');
                 }
+
+                let project_users = event.detail[0].users.map(function (user) {
+                    return user.id;
+                });
+
+                $('.project-users').val(project_users).trigger('change');
 
                 $('.clients').val(event.detail[0].client_id).trigger('change');
 

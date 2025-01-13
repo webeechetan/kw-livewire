@@ -168,7 +168,25 @@
                 </div>
                 <div class="col-lg-6">
                     <div class="column-box mb-3">
-                        <div class="column-head"><div class="column-title">Assignees</div></div>
+                        <div class="column-head">
+                            <div class="column-title">Assignees 
+                                <a href="javascript:" class="ms-3 btn_link btn_link-border btn_link-sm assign-new-user">
+                                    Add
+                                </a>
+                            </div>
+                        </div>
+                        <div class="assign-new-user-col d-none">
+                            <select class="users" name="" id="" multiple>
+                                <option value="">Select User</option>
+                                @foreach($users as $user)
+                                    <option 
+                                        @if($project->users->contains($user->id))
+                                            @selected(true)
+                                        @endif
+                                    value="{{ $user->id }}">{{ $user->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                         <!-- Avatar Group -->
                         <div class="avatarGroup mt-3">
                             @php
@@ -294,7 +312,7 @@
         var users = $(this).val();
         console.log(users);
         @this.syncUsers(users);
-    });
+    });  
 
     // user-synced
     document.addEventListener('user-synced', event => {

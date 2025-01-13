@@ -8,6 +8,7 @@ use App\Models\Notification;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Events\NotificationEvent;
+use Illuminate\Support\Facades\Log;
 
 class TaskObserver
 {
@@ -142,7 +143,50 @@ class TaskObserver
         $activity->activityable_type = 'App\Models\Project';
         $activity->created_by = auth()->guard(session('guard'))->user()->id;
         $activity->save();
-        
+
     }
+
+    public function updated(Task $task)
+    {
+        // create activity
+        if($task->project_id == null){
+            return;
+        }
+        
+
+        // $task->load('project');
+        // $task->load('users');
+        // $task->load('notifiers');
+
+        // Log::info('Task: '.json_encode($task));
+        // Log::info('Task Project: '.json_encode($task->project));
+        // Log::info('Task Users: '.json_encode($task->users));
+        // Log::info('Task Notifiers: '.json_encode($task->notifiers));
+
+
+        // $taskUsers = $task->users->pluck('id')->toArray();
+
+        // Log::info('Task Users: '.json_encode($taskUsers));
+
+        // $taskNotifiers = $task->notifiers->pluck('id')->toArray();
+
+        // Log::info('Task Notifiers: '.json_encode($taskNotifiers));
+
+        // $taskCreator = $task->assigned_by;
+
+        // Log::info('Task Creator: '.json_encode($taskCreator));
+
+        // $users = array_merge($taskUsers, $taskNotifiers, [$taskCreator]);
+
+        // $users = array_unique($users);
+
+        // $project = $task->project;
+
+        // $project->users()->syncWithoutDetaching($users);
+
+        // Log::info('Task Users: '.json_encode($taskUsers));
+    }
+
+
 
 }

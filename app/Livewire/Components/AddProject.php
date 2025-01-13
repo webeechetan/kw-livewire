@@ -93,7 +93,11 @@ class AddProject extends Component
                 if(count($this->project_users) > 0){
                     $project->users()->sync($this->project_users);
                 }
-                $project->users()->attach(session('user')->id);
+
+                if(!in_array(auth()->user()->id, $this->project_users)){
+                    $project->users()->attach(session('user')->id);
+                }
+
                 $this->dispatch('success', 'Project added successfully');
                 $this->dispatch('project-added', $project);
                 $this->dispatch('saved');
@@ -142,6 +146,10 @@ class AddProject extends Component
             'image' => $image,
             'client_id' => $this->client_id,
         ]);
+
+        if(count($this->project_users) > 0){
+            $this->project->users()->sync($this->project_users);
+        }
 
         $this->dispatch('project-added', $this->project);
         $this->resetForm();

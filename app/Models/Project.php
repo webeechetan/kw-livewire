@@ -54,17 +54,18 @@ class Project extends Model
 
 
     public function getMembersAttribute(){
-        $project_tasks_ids = Task::where('project_id',$this->id)->pluck('id');
-        $user_ids = [];
-        foreach($project_tasks_ids as $task_id){
-            $task = Task::find($task_id);
-            $user_ids = array_merge($user_ids,$task->users->pluck('id')->toArray());
-            $user_ids = array_merge($user_ids,[$task->assigned_by]);
-            $user_ids = array_merge($user_ids,$task->notifiers->pluck('id')->toArray());
-        }
-        // dd($user_ids);
-        $user_ids = array_unique($user_ids);
-        return User::whereIn('id',$user_ids)->get();
+        // $project_tasks_ids = Task::where('project_id',$this->id)->pluck('id');
+        // $user_ids = [];
+        // foreach($project_tasks_ids as $task_id){
+        //     $task = Task::find($task_id);
+        //     $user_ids = array_merge($user_ids,$task->users->pluck('id')->toArray());
+        //     $user_ids = array_merge($user_ids,[$task->assigned_by]);
+        //     $user_ids = array_merge($user_ids,$task->notifiers->pluck('id')->toArray());
+        // }
+        // // dd($user_ids);
+        // $user_ids = array_unique($user_ids);
+        // return User::whereIn('id',$user_ids)->get();
+        return $this->users;
     }
 
     public function getTeamsAttribute(){

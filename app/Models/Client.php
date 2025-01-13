@@ -72,12 +72,19 @@ class Client extends Model
 
     public function getUsersAttribute(){
         $projects = $this->projects->pluck('id')->toArray();
-        $tasks = Task::whereIn('project_id', $projects)->get();
-        $task_users = [];
-        foreach ($tasks as $task) {
-            $task_users = array_merge($task_users, $task->users->pluck('id')->toArray());
+        // $tasks = Task::whereIn('project_id', $projects)->get();
+        // $task_users = [];
+        // foreach ($tasks as $task) {
+        //     $task_users = array_merge($task_users, $task->users->pluck('id')->toArray());
+        // }
+        // return User::whereIn('id', $task_users)->get();
+
+        $users = [];
+        foreach ($projects as $project) {
+            $users = array_merge($users, Project::find($project)->members->pluck('id')->toArray());
         }
-        return User::whereIn('id', $task_users)->get();
+
+        return User::whereIn('id', $users)->get();
         
     }
 
