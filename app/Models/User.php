@@ -86,21 +86,27 @@ class User extends Authenticatable
         return $this->belongsToMany(Client::class);
     }
 
-    // public function projects(){
-    //     return $this->belongsToMany(Project::class);
-    // }
+    public function projects(){
+        // SQLSTATE[23000]: Integrity constraint violation: 1052 Column 'id' in field list is ambiguous
+        return $this->belongsToMany(Project::class);
+        
+    }
 
     public function organization(){
         return $this->belongsTo(Organization::class, 'org_id');
     }
 
     public function getProjectsAttribute(){
-        $users_projects_ids = $this->tasks->pluck('project_id')->toArray();
-        $notified_tasks_projects_ids = $this->notifiedTasks->pluck('project_id')->toArray();
-        $users_projects_ids = array_merge($users_projects_ids, $notified_tasks_projects_ids);
-        $users_projects_ids = array_unique($users_projects_ids);
-        $projects = Project::whereIn('id', $users_projects_ids)->get();
-        return $projects;
+
+        return $this->projects();
+
+        // $users_projects_ids = $this->tasks->pluck('project_id')->toArray();
+        // $notified_tasks_projects_ids = $this->notifiedTasks->pluck('project_id')->toArray();
+        // $users_projects_ids = array_merge($users_projects_ids, $notified_tasks_projects_ids);
+        // $users_projects_ids = array_unique($users_projects_ids);
+        // $projects = Project::whereIn('id', $users_projects_ids)->get();
+        // return $projects;
+
     }
 
     public function details(){

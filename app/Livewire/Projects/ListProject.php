@@ -117,11 +117,9 @@ class ListProject extends Component
         }
 
         if($this->byUser != 'all'){
-            $user = User::find($this->byUser);
-            if($user){
-                $projectsIds = $user->projects->pluck('id')->toArray();
-                $projects->whereIn('id',$projectsIds);
-            }
+            $user = User::with('projects')->find($this->byUser);
+            $projectIds = $user->projects->pluck('project_id')->toArray();
+            $projects->whereIn('id', $projectIds);
         }
        
 

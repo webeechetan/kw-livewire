@@ -359,7 +359,11 @@
                                 </div>
                             </div>
                             <div class="mt-2 cmnt_item_task border-bottom pb-2"><i class="bx bx-task"></i> <a href="{{ route('task.view', $comment->task_id) }}">{{ $comment->task->name }}</a></div>
-                            <div class="cmnt_item_user_text"><a href="{{ route('task.view', $comment->task_id) }}">{!! $comment->comment !!}</a></div>
+                            <div class="cmnt_item_user_text">
+                                <a href="{{ route('task.view', $comment->task_id) }}">
+                                    {!! Str::limit($comment->comment, 25, '...') !!}
+                                </a>
+                            </div>
                         </div>
                         @endforeach
                     </div>
