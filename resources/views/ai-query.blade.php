@@ -170,6 +170,9 @@
             annyang.addCommands(commands);
             SpeechKITT.annyang();
             SpeechKITT.setStylesheet('//cdnjs.cloudflare.com/ajax/libs/SpeechKITT/0.3.0/themes/flat.css');
+             // Add instructional texts
+            SpeechKITT.setInstructionsText('Trigger me by saying "KK" followed by your query');
+            SpeechKITT.setSampleCommands(['KK Give projects insights', 'KK Which projects are out of due date']);
             SpeechKITT.vroom();
         }
 
