@@ -5,14 +5,57 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>KW AI Agent</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        input[type="text"] {
+            width: 80%;
+            padding: 10px;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            border: none;
+            background-color: #007bff;
+            color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        pre {
+            background-color: #f4f4f4;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Kaykewalk AI Agent</h1>
-    <form id="aiQueryForm" method="POST" action="/ai/query">
-        @csrf
-        <input type="text" name="query" placeholder="Enter your query" required>
-        <button type="submit" id="submit-btn">Submit</button>
-    </form>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Ask me anything</h2>
+                <form id="aiQueryForm" method="POST" action="/ai/query">
+                    @csrf
+                    <input type="text" name="query" placeholder="Enter your query" required>
+                    <button type="submit" id="submit-btn">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
     <pre id="response"></pre>
 
     @if(isset($response))
@@ -27,6 +70,8 @@
 
     <script>
 
+    var submitBtn = document.getElementById('submit-btn');
+    
     let voices = [];
 
     function preloadVoices() {
@@ -45,6 +90,7 @@
         document.getElementById('aiQueryForm').addEventListener('submit', async function (event) {
             event.preventDefault();
             speakRes('Please wait while I process your query...');
+            submitBtn.innerText = 'Processing...';
             // stop annyang
 
             annyang.abort();
@@ -69,9 +115,12 @@
                 const data = await response.json();
                 document.getElementById('response').textContent = data.text;
                 speakRes(data.text);
+                submitBtn.innerText = 'Submit';
                 document.getElementById('aiQueryForm').reset();
             } catch (error) {
                 console.error('Error:', error);
+                submitBtn.innerText = 'Submit';
+
                 document.getElementById('response').textContent = 'An error occurred. Check the console for details.';
             }
         });
@@ -113,7 +162,6 @@
             var commands = {
                 'kk *query': function(query) {
                     document.getElementById('aiQueryForm').query.value = query;
-                    let submitBtn = document.getElementById('submit-btn');
                     submitBtn.click();
                 }
             };
