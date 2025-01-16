@@ -38,9 +38,7 @@ class Project extends Component
             $task_users = array_merge($task_users, $task->users->pluck('id')->toArray());
         }
 
-        $this->projectTeams = Team::whereHas('users', function ($query) use ($task_users) {
-            $query->whereIn('user_id', $task_users);
-        })->get();
+        $this->projectTeams = $this->project->teams;
  
     }
 

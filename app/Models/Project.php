@@ -69,11 +69,14 @@ class Project extends Model
     }
 
     public function getTeamsAttribute(){
-        $users = $this->members->pluck('id');
-        $users = array_unique($users->toArray());
-        return Team::whereHas('users',function($query) use($users){
-            $query->whereIn('user_id',$users);
-        })->get();
+        // $users = $this->members->pluck('id');
+        // $users = array_unique($users->toArray());
+        // return Team::whereHas('users',function($query) use($users){
+        //     $query->whereIn('users.main_team_id',$users);
+        // })->get();
+
+        $teams = $this->users->pluck('main_team_id')->toArray();
+        return Team::whereIn('id',$teams)->get();
         
        
     }

@@ -23,7 +23,7 @@ class Team extends Model
     }
 
     public function users(){
-        return $this->belongsToMany(User::class);
+        return $this->hasMany(User::class,'main_team_id');
     }
 
     public function manager(){
@@ -42,8 +42,9 @@ class Team extends Model
         // })->pluck('project_id')->toArray();
         $projects = Project::whereHas('users', function ($query) use ($users) {
             $query->whereIn('user_id', $users);
-        })->pluck('id')->toArray();
-        return Project::whereIn('id', $projects)->get();
+        })->get();
+
+        return $projects;
     }
 
     public function getClientsAttribute(){
@@ -55,8 +56,12 @@ class Team extends Model
     }
 
     public function getTasksAttribute(){
-        $projects = $this->projects->pluck('id')->toArray();
-        return Task::whereIn('project_id', $projects)->get();
+        // $projects = $this->projects->pluck('id')->toArray();
+        // return Task::whereIn('project_id', $projects)->get();
+        $users = $this->users->pluck('id')->toArray();
+        return Task::whereHas('users', function ($query) use ($users) {
+            $query->whereIn('user_id', $users);
+        })->get();
     }
 
     public function getInitialsAttribute(){

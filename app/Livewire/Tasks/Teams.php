@@ -112,12 +112,18 @@ class Teams extends Component
                 $this->users = User::orderBy('name', 'asc')->get();
             }
 
+            if($this->byTeam != 'all'){
+                $this->projects = Team::find($this->byTeam)->projects;
+            }else{
+                $this->projects = Project::all();
+            }
+
             $this->teams = Team::orderBy('name', 'asc')->get();
             $this->clients = Client::orderBy('name', 'asc')->get();
            
             $this->tasks =  $this->applySort(
                 Task::where('name', 'like', '%' . $this->query . '%')
-                    ->orderBy('created_at', 'desc')
+                    ->orderBy('created_at', 'desc'),
             )->get();
 
 
@@ -162,7 +168,9 @@ class Teams extends Component
     {
         $this->mount();
         if($this->byTeam != 'all'){
-            $this->projects = Team::find($this->byTeam)->projects;
+            $this->tasks = Team::find($this->byTeam)->tasks;
+            // $this->tasks = Task::whereIn('project_id', $this->projects->pluck('id'))->get();
+            // dd($this->projects);
         }
         $this->byProject = 'all';
     }
