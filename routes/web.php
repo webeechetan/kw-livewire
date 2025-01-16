@@ -79,6 +79,17 @@ use App\Livewire\Tasks\MarkedToMeTasks;
 |
 */
 
+use App\Http\Controllers\AIController;
+
+
+Route::get('/kk', function () {
+    return view('ai-query');
+});
+
+Route::post('/ai/query', [AIController::class, 'query'])->name('ai.query');
+Route::get('/ai/schema', [AIController::class, 'getSchema']);
+
+
 
 Route::get('/',Login::class);
 Route::get('/login',Login::class)->name('login');
