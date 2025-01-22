@@ -87,7 +87,6 @@ class User extends Authenticatable
     }
 
     public function projects(){
-        // SQLSTATE[23000]: Integrity constraint violation: 1052 Column 'id' in field list is ambiguous
         return $this->belongsToMany(Project::class);
         
     }

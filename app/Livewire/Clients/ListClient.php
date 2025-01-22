@@ -77,7 +77,7 @@ class ListClient extends Component
             $clients->onlyTrashed();
         }
 
-        $clients->orderBy('created_at','desc');
+        $clients->orderBy('name','asc');
 
         $clients = $clients->paginate(12);
 

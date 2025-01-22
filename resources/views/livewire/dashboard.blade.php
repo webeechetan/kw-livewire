@@ -31,18 +31,35 @@
                 <div class="row">
                     <div class="col-md-6">
                         <h4>Tasks Overview</h4>
-                        <h6>Completed  <b><span class="text-success">
+                        <h6>
+                            Completed  
+                            <b>
+                                <span class="text-success">
                                     {{ round($users_tasks->where('status','completed')->count() > 0 ?
                                     ($users_tasks->where('status','completed')->count() / $users_tasks->count()) * 100 :
                                     0)}}%
-                                </span></b></h6>
+                                </span>
+                            </b>
+                        </h6>
                         <div class="row mt-5">
-                            <div class="col-auto"><img src="{{ asset('') }}assets/images/dashboard_chart_small.png"
-                                    alt=""></div>
                             <div class="col">
-                                <h5 class="mb-0"><b>{{ $users_tasks->count()}}</b></h5>
-                                <div>Total {{ pluralOrSingular($users_tasks->count(),'Task') }}</div>
+                                <div class="row">
+                                    <div class="col-auto">
+                                        <img src="{{ asset('') }}assets/images/dashboard_chart_small.png" alt="">
+                                    </div>
+                                    <div class="col">
+                                        <h5 class="mb-0"><b>{{ $users_tasks->count()}}</b></h5>
+                                        <div>Total {{ pluralOrSingular($users_tasks->count(),'Task') }}</div> 
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <div id="my-task-chart" style="width: 100%;height: 100px;"></div>
+                                    </div>
+                                </div>
                             </div>
+
+                            
                         </div>
                     </div> 
                     <div class="col-md-6">
@@ -204,8 +221,8 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-8">
-            <div class="row">
+        <div class="col-md-8 ">
+            <div class="row d-none">
                 <div class="col-md-6 mt-4">
                     <div class="box-item h-100">
                         <h4 class="text-xl">Your Progress</h4>
@@ -456,6 +473,62 @@
     <script>
         $(document).ready(function () {
 
+            // my-task-chart
+
+            var dom = document.getElementById('my-task-chart');
+            var myChart = echarts.init(dom, null, {
+                renderer: 'canvas',
+                useDirtyRect: false
+            });
+
+            var app = {};
+
+            var option;
+
+            option = {
+                tooltip: {
+                    trigger: 'item'
+                },
+                legend: {
+                    top: '5%',
+                    left: 'center'
+                },
+                series: [
+                    {
+                    name: 'Access From',
+                    type: 'pie',
+                    radius: ['40%', '70%'],
+                    avoidLabelOverlap: false,
+                    label: {
+                        show: false,
+                        position: 'center'
+                    },
+                    emphasis: {
+                        label: {
+                        show: true,
+                        fontSize: 40,
+                        fontWeight: 'bold'
+                        }
+                    },
+                    labelLine: {
+                        show: false
+                    },
+                    data: [
+                        {value: {{ $myTasks->where('status','completed')->count() }}, name: 'Completed'},
+                        {value: {{ $myTasks->where('status','!=','completed')->count() }}, name: 'Pending'}
+                    ]
+                    }
+                ]
+            };
+
+            if (option && typeof option === 'object') {
+                myChart.setOption(option);
+            }
+
+            window.addEventListener('resize', myChart.resize);
+
+            // calendar
+
             var events = @json($events);
             var calendarEl = document.getElementById('calendar');
             var calendar = new FullCalendar.Calendar(calendarEl, {
@@ -522,29 +595,6 @@
                             show: false
                         },
                         detail: {
-                            // backgroundColor: '#fff',
-                            // borderColor: '#999',
-                            // borderWidth: 2,
-                            // width: '60%',
-                            // lineHeight: 15,
-                            // height: 15,
-                            // borderRadius: 8,
-                            // offsetCenter: [0, '45%'],
-                            // valueAnimation: true,
-                            // formatter: function (value) {
-                            //     return '{value|' + value.toFixed(0) + '}{unit|%}';
-                            // },
-                            // rich: {
-                            //     value: {
-                            //         fontSize: 15,
-                            //         fontWeight: 'bolder',
-                            //         color: '#777'
-                            //     },
-                            //     unit: {
-                            //         fontSize: 15,
-                            //         color: '#999',
-                            //     }
-                            // }
                             show:false
                         },
                         data: [

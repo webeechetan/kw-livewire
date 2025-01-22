@@ -88,6 +88,15 @@ class Client extends Model
         
     }
 
+    public function getTeamsAttribute(){
+        $projects = $this->projects->pluck('id')->toArray();
+        $teams = [];
+        foreach ($projects as $project) {
+            $teams = array_merge($teams, Project::find($project)->teams->pluck('id')->toArray());
+        }
+        return Team::whereIn('id', $teams)->get();
+    }
+
     // scopes
 
     public function scopeMain($query){

@@ -18,6 +18,8 @@ class Dashboard extends Component
     public $active_projects = [];
     public $recent_comments = [];
     public $myPins = [];
+    public $myTasks = [];
+    public $otherTasks = [];
 
     public function render()
     {
@@ -29,6 +31,8 @@ class Dashboard extends Component
         $assignedByMe = Task::assignedByMe()->get();
         $markedToMe = Task::markedToMe()->get();
         $myTasks = Task::tasksByUserType()->get();
+        $this->myTasks = $myTasks;
+        $this->otherTasks = $assignedByMe->merge($markedToMe);
         $this->users_tasks = $assignedByMe->merge($markedToMe)->merge($myTasks);
         $this->mostImportantProjects = $this->getMostImportantProjects();
         $this->active_projects = Auth::user()->projects->where('status','!=','completed')->count();
@@ -51,9 +55,7 @@ class Dashboard extends Component
             ->orderBy('due_date',"DESC")->limit(10)->get();
         }else{
             $projects = Auth::user()->projects->where('status','!=','completed')
-            ->where('due_date','!=',null)
-            ->toArray();
-            $projects = Project::whereIn('id',array_column($projects,'id'))->orderBy('due_date','DESC')->limit(10)->get();
+            ->where('due_date','!=',null)->limit(10)->get();
         }
         
         $mostImportantProjects = [];

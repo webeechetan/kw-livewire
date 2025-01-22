@@ -57,17 +57,10 @@ class Client extends Component
         $this->completed_projects = $this->client->projects()->where('status', 'completed')->get();
         $this->overdue_projects = $this->client->projects()->where('status', 'overdue')->get();
         $this->archived_projects = $this->client->projects()->where('status', 'archived')->get();
-        $projects = $this->client->projects->pluck('id')->toArray();
-        $tasks = Task::whereIn('project_id', $projects)->get();
-        $task_users = [];
-        foreach ($tasks as $task) {
-            $task_users = array_merge($task_users, $task->users->pluck('id')->toArray());
-        }
-        $this->client_users = User::whereIn('id', $task_users)->get();
+        
+        $this->client_users = $this->client->users;
 
-        $this->client_teams = Team::whereHas('users', function ($query) use ($task_users) {
-            $query->whereIn('user_id', $task_users);
-        })->get();
+        $this->client_teams = $this->client->teams;
 
         
     }
