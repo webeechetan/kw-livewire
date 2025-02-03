@@ -132,7 +132,7 @@ class ListProject extends Component
         }
 
 
-        $projects->orderBy('id','desc');
+        $projects->orderBy('name','asc');
 
         $projects = $projects->paginate(12);
 
@@ -148,8 +148,8 @@ class ListProject extends Component
         $this->authorize('View Project');
 
         $this->project_all_count =  Project::all();
-        $this->users = User::all();
-        $this->clients = Client::all();
+        $this->users = User::orderBy('name')->get();
+        $this->clients = Client::orderBy('name')->get();
         $this->teams = Team::orderBy('name')->get();
 
         $tour = session()->get('tour');

@@ -86,7 +86,7 @@ class ListUser extends Component
             $users->whereIn('id', $project_users);
         }
 
-        $users->orderBy('created_at', 'desc');
+        $users->orderBy('name', 'asc');
         $users = $users->paginate(9);
 
         return view('livewire.users.list-user',[

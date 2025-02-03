@@ -23,7 +23,7 @@ class Team extends Model
     }
 
     public function users(){
-        return $this->hasMany(User::class,'main_team_id');
+        return $this->hasMany(User::class,'main_team_id'); 
     }
 
     public function manager(){

@@ -45,15 +45,17 @@
                             <div class="col">
                                 <div class="row">
                                     <div class="col-auto">
-                                        <img src="{{ asset('') }}assets/images/dashboard_chart_small.png" alt="">
+                                        <h5>Other Tasks </h5>
+                                        <div id="others-tasks-chart" style="width: 100%;height: 100px;"></div>
                                     </div>
-                                    <div class="col">
+                                    {{-- <div class="col">
                                         <h5 class="mb-0"><b>{{ $users_tasks->count()}}</b></h5>
                                         <div>Total {{ pluralOrSingular($users_tasks->count(),'Task') }}</div> 
-                                    </div>
+                                    </div> --}}
                                 </div>
                                 <div class="row">
                                     <div class="col">
+                                        <h5 class="mb-0">My Tasks</h5>
                                         <div id="my-task-chart" style="width: 100%;height: 100px;"></div>
                                     </div>
                                 </div>
@@ -64,7 +66,7 @@
                     </div> 
                     <div class="col-md-6">
                         <div class="text-center">
-                            <div id="progress-chart-gauge" style="width: 100%;height: 250px; margin-top: -15px;">
+                            <div id="progress-chart-gauge" style="width: 100%;height: 200px; margin-top: -15px;">
 
                             </div>
                         </div>
@@ -491,7 +493,8 @@
                 },
                 legend: {
                     top: '5%',
-                    left: 'center'
+                    left: 'center',
+                    show:false
                 },
                 series: [
                     {
@@ -505,7 +508,7 @@
                     },
                     emphasis: {
                         label: {
-                        show: true,
+                        show: false,
                         fontSize: 40,
                         fontWeight: 'bold'
                         }
@@ -526,6 +529,63 @@
             }
 
             window.addEventListener('resize', myChart.resize);
+
+            // others-tasks-chart
+
+            var dom = document.getElementById('others-tasks-chart');
+            var myChart = echarts.init(dom, null, {
+                renderer: 'canvas',
+                useDirtyRect: false
+            });
+
+            var app = {};
+
+            var option;
+
+            option = {
+                tooltip: {
+                    trigger: 'item'
+                },
+                legend: {
+                    top: '5%',
+                    left: 'center',
+                    show:false
+                },
+                series: [
+                    {
+                    name: 'Access From',
+                    type: 'pie',
+                    radius: ['40%', '70%'],
+                    avoidLabelOverlap: false,
+                    label: {
+                        show: false,
+                        position: 'center'
+                    },
+                    emphasis: {
+                        label: {
+                        show: false,
+                        fontSize: 40,
+                        fontWeight: 'bold'
+                        }
+                    },
+                    labelLine: {
+                        show: false
+                    },
+                    data: [
+                        {value: {{ $otherTasks->where('status','completed')->count() }}, name: 'Completed'},
+                        {value: {{ $otherTasks->where('status','!=','completed')->count() }}, name: 'Pending'}
+                    ]
+                    }
+                ]
+            };
+
+            if (option && typeof option === 'object') {
+                myChart.setOption(option);
+            }
+
+            window.addEventListener('resize', myChart.resize);
+
+
 
             // calendar
 

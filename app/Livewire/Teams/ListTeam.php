@@ -52,11 +52,11 @@ class ListTeam extends Component
         if($this->byUser != 'all'){
 
             $teams->whereHas('users',function($query){
-                $query->where('user_id',$this->byUser);
+                $query->where('users.id',$this->byUser);
             });
         }
 
-        $teams->orderBy('created_at', 'desc');
+        $teams->orderBy('name', 'asc');
         $teams = $teams->paginate(12);
 
         return view('livewire.teams.list-team',[
@@ -67,7 +67,7 @@ class ListTeam extends Component
 
     public function mount(){
         $this->authorize('View Team');
-        $this->users = User::all();
+        $this->users = User::orderBy('name')->get();
 
         $tour = session()->get('tour');
         if(request()->tour == 'close-team-tour'){

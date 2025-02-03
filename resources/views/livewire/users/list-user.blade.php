@@ -19,8 +19,12 @@
             <div class="text-end col">
                 <div class="main-body-header-right">
                     <form class="search-box" wire:submit="search" action="" data-step="2" data-intro='Search User' data-position='bottom'>
-                        <input wire:model="query" type="text" class="form-control" placeholder="Search Users...">
-                        <button type="submit" class="search-box-icon"><i class='bx bx-search me-1'></i> Search</button>
+                        <input wire:model.live.debounce.250ms="query"  type="text" class="form-control" placeholder="Search Userscts...">
+                        <button type="submit" class="search-box-icon" wire:loading.class="opacity-50">
+                            <i class='bx bx-search me-1' wire:loading.class="bx-tada"></i> 
+                            <span wire:loading.remove>Search</span>
+                            <span wire:loading>Searcing...</span>
+                        </button>
                     </form>
                     <div class="main-body-header-filters" data-step="3" data-intro='Filter User' data-position='bottom'>
                         <div class="cus_dropdown" wire:ignore.self>
