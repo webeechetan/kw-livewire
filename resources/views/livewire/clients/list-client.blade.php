@@ -117,15 +117,25 @@
                             <h4 class="text-md mb-0"><i class="bx bx-user text-primary"></i> {{ pluralOrSingular(count($client->users),'User') }}</h4> 
                         </div>
                         <div class="col">
-                            <div class="avatarGroup avatarGroup-overlap">
-                                @if(count($client->users) > 0)
+                            <div class="avatarGroup avatarGroup-overlap"> 
+                                @php
+                                    $allUsers = [];
+                                    foreach($client->projects as $project){
+                                        foreach($project->users as $user){
+                                            $allUsers[] = $user;
+                                        }
+                                    }
+                                    $allUsers = collect($allUsers)->unique('id');
+                                @endphp
+
+                                @if(count($allUsers) > 0)
                                     @php
                                         $plus_more_users = 0;
-                                        if(count($client->users) > 7){
-                                            $plus_more_users = count($client->users) - 7;
+                                        if(count($allUsers) > 7){
+                                            $plus_more_users = count($allUsers) - 7;
                                         }
                                     @endphp
-                                    @foreach($client->users->take(7) as $user)
+                                    @foreach(collect($allUsers)->take(7) as $user)
                                         <x-avatar :user="$user" class="avatar-sm" />
                                     @endforeach
                                     @if($plus_more_users)

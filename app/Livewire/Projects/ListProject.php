@@ -52,6 +52,8 @@ class ListProject extends Component
             $query->where('clients.deleted_at','=', null);
         });
 
+        $projects = $projects->with('client','users','tasks');
+
         $filters = [
             new SearchFilter($this->query,'PROJECT'),
             new StatusFilter($this->filter,'PROJECT'),

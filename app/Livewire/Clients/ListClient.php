@@ -66,11 +66,13 @@ class ListClient extends Component
         $this->activeClients = (clone $clients)->where('status','active')->count();
         $this->completedClients = (clone $clients)->where('status','completed')->count();
         $this->archivedClients = (clone $clients)->onlyTrashed()->count();
-
+        
+        $clients = $clients->with('projects','projects.users');
+        
         $clients->orderBy('name','asc');
-
+        
         $clients = $clients->paginate(12);
-
+        
         return view('livewire.clients.list-client',[
             'clients' => $clients,
         ]);

@@ -57,6 +57,7 @@ class AddTask extends Component
             $query->whereNull('clients.deleted_at');
         })
         ->orderBy('projects.name', 'asc')
+        ->with('client')
         ->get();
 
         if($project){
