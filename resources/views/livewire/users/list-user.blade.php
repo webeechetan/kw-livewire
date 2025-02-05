@@ -19,7 +19,7 @@
             <div class="text-end col">
                 <div class="main-body-header-right">
                     <form class="search-box" wire:submit="search" action="" data-step="2" data-intro='Search User' data-position='bottom'>
-                        <input wire:model.live.debounce.250ms="query"  type="text" class="form-control" placeholder="Search Userscts...">
+                        <input wire:model.live.debounce.250ms="query"  type="text" class="form-control" placeholder="Search Users...">
                         <button type="submit" class="search-box-icon" wire:loading.class="opacity-50">
                             <i class='bx bx-search me-1' wire:loading.class="bx-tada"></i> 
                             <span wire:loading.remove>Search</span>
@@ -46,7 +46,7 @@
                                             <li class="filterSort_item"><a wire:click="$set('filter','active')" class="btn-batch @if($filter == 'active') active @endif">Active</a></li>
                                             <li class="filterSort_item"><a wire:click="$set('filter','archived')" class="btn-batch @if($filter == 'archived') active @endif">Archived</a></li>
                                         </ul>
-                                        <hr>
+                                        {{-- <hr>
                                         <h5 class="filterSort-header"><i class='bx bx-briefcase text-primary' ></i> Filter By Teams</h5>
                                         <select class="dashboard_filters-select w-100" wire:model.live="byTeam" name="" id="">
                                             <option value="all">All</option>
@@ -62,7 +62,7 @@
                                                 <option value="{{ $project->id}}">{{ $project->name }}</option>
                                                 
                                             @endforeach
-                                        </select>
+                                        </select> --}}
                                     </div>
                                 </div>
                             </div>
@@ -137,10 +137,6 @@
                                    {{ $user->mainTeam->name }}
                                 @endif
                             </div>
-
-                            @if($user->teams->count() > 0)
-                                <div class="card_style-user-head-team"><span class="btn-batch btn-batch-warning"> {{ $user->teams->count() }}  {{ $user->teams->count() >1 ? 'Teams' : 'Team'}}</span></div>
-                            @endif
                         </div>
                     </div>
                     <div class="card_style-user-body mt-3">

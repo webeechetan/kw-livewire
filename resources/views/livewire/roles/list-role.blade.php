@@ -19,7 +19,7 @@
             <div class="col">
                 <div class="main-body-header-right">
                     <form class="search-box" wire:submit="search" action="" data-step="2" data-intro='Search Role' data-position='bottom'>
-                        <input wire:model="query" type="text" class="form-control" placeholder="Search Company">
+                        <input wire:model="query" type="text" class="form-control" placeholder="Search Role">
                         <button type="submit" class="search-box-icon"><i class='bx bx-search me-1'></i> Search</button>
                     </form>
                 </div>

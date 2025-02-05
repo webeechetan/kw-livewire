@@ -15,67 +15,21 @@
     <livewire:teams.components.teams-tab :team="$team" @saved="$refresh"/> 
     <!--- Dashboard Body --->
 
-    @php
-        
-        $tasks = $team->tasks->take($perPage);
-        $tasks_for_count = $team->tasks;
-
-        if($byClient != 'all'){
-            $tasks = $tasks->where('client_id', $byClient);
-        }
-
-        if($status != 'all'){
-            if($status == 'overdue'){
-                $tasks = $tasks->where('due_date', '<', Carbon\Carbon::now())->where('status', '!=', 'completed');
-            }else{
-                $tasks = $tasks->where('status', $status);
-            }
-        }
-
-        if($byProject != 'all'){
-            $tasks = $tasks->where('project_id', $byProject);
-        }
-
-        if($byUser != 'all'){
-            $tasks = \App\Models\Task::whereHas('users', function($query) use($byUser){
-                $query->where('user_id', $byUser);
-            }); 
-            
-            if($byProject != 'all'){
-                $tasks = $tasks->where('project_id', $byProject);
-            }
-            $tasks = $tasks->get();
-        }
-
-        if($startDate != null && $dueDate != null){
-            $tasks = $tasks->where('due_date', '>=', $startDate)->where('due_date', '<=', $dueDate);
-        }
-
-        if($this->query){
-            $tasks = $tasks->filter(function($task){
-                return str_contains(strtolower($task->name), strtolower($this->query));
-            });
-        }
-
-    @endphp
 
     <div class="row">
         <div class="col-md-8">
             <div class="btn-list">
                 <a wire:click="$set('status', 'all')" class="btn-border btn-border-primary @if($status == 'all') active @endif">
-                    {{ $tasks_for_count->count() }} 
+                    {{ $allTasks }} 
                     <span>|</span> 
                      All
                 </a>
-                <a wire:click="$set('status', 'pending')" class="btn-border btn-border-primary @if($status == 'pending') active @endif">{{ $tasks_for_count->where('status','pending')->count() }} <span>|</span> Assigned</a>
-                <a wire:click="$set('status', 'in_progress')" class="btn-border btn-border-secondary @if($status == 'in_progress') active @endif">{{ $tasks_for_count->where('status','in_progress')->count() }} <span>|</span> Accepted</a>
-                <a wire:click="$set('status', 'in_review')" class="btn-border btn-border-warning @if($status == 'in_review') active @endif">{{ $tasks_for_count->where('status','in_review')->count() }} <span>|</span> In Review</a>
-                <a wire:click="$set('status', 'completed')" class="btn-border btn-border-success @if($status == 'completed') active @endif">{{ $tasks_for_count->where('status','completed')->count() }} <span>|</span> Completed</a>
+                <a wire:click="$set('status', 'pending')" class="btn-border btn-border-primary @if($status == 'pending') active @endif">{{ $assignedTasks }} <span>|</span> Assigned</a>
+                <a wire:click="$set('status', 'in_progress')" class="btn-border btn-border-secondary @if($status == 'in_progress') active @endif">{{ $acceptedTasks }} <span>|</span> Accepted</a>
+                <a wire:click="$set('status', 'in_review')" class="btn-border btn-border-warning @if($status == 'in_review') active @endif">{{ $inReviewTasks }} <span>|</span> In Review</a>
+                <a wire:click="$set('status', 'completed')" class="btn-border btn-border-success @if($status == 'completed') active @endif">{{ $completedTasks }} <span>|</span> Completed</a>
                 <a wire:click="$set('status', 'overdue')" class="btn-border btn-border-danger @if($status == 'overdue') active @endif">
-                    @php
-                        $overdue = $tasks_for_count->where('due_date', '<', now())->where('status', '!=', 'completed')->count();
-                    @endphp
-                    {{ $overdue }}
+                    {{ $overdueTasks }}
                     <span>|</span> Overdue</a>
             </div>
         
@@ -185,19 +139,12 @@
                 @endif
             </div>
         </div>
-        {{-- load more tasks --}}
-        @if($tasks->count() < $totalTasks)
-        <div class="col-md-12 text-center mt-3 ">
-            <a href="javascript:" wire:click="loadMore" class="btn btn-sm btn-border btn-border-primary">
-                Load More
-                <div wire:loading wire:target="loadMore">  
-                    <div class="spinner-border spinner-border-sm text-primary" role="status">
-                        <span class="visually-hidden">Loading...</span>
-                    </div>
-                </div>
-            </a>
+        <!-- Pagination -->
+        <div class="pagination-wrap">
+            <div class="col-md-12 d-flex justify-content-end">
+                {{ $tasks->links() }}
+            </div>
         </div>
-        @endif
     </div>
     <livewire:components.add-team @saved="$refresh" />
 </div>

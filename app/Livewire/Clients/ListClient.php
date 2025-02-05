@@ -5,9 +5,8 @@ namespace App\Livewire\Clients;
 use Livewire\Component;
 use App\Models\Client;
 use Livewire\WithPagination;
-use App\Helpers\Helper;
-use ProtoneMedia\LaravelCrossEloquentSearch\Search;
-use Livewire\Attributes\On;
+use Illuminate\Support\Facades\Pipeline;
+use App\Filters\{SearchFilter, StatusFilter, SortFilter};
 
 
 class ListClient extends Component
@@ -51,31 +50,22 @@ class ListClient extends Component
 
     public function render()
     {
-        $this->allClients = Client::count();
-        $this->activeClients = Client::where('status','active')->count();
-        $this->completedClients = Client::where('status','completed')->count();
-        $this->archivedClients = Client::onlyTrashed()->count();
+        $clients = Client::query();
 
+        $filters = [
+            new SearchFilter($this->query),
+            new StatusFilter($this->status, 'CLIENT'),
+            new SortFilter($this->sort),
+        ];
 
-        $clients = Client::where('name','like','%'.$this->query.'%');
+        $clients = Pipeline::send($clients)
+        ->through($filters)
+        ->thenReturn();
 
-        if($this->sort == 'newest'){
-            $clients->orderBy('created_at','desc');
-        }elseif($this->sort == 'oldest'){
-            $clients->orderBy('created_at','asc');
-        }elseif($this->sort == 'a_z'){
-            $clients->orderBy('name','asc');
-        }elseif($this->sort == 'z_a'){
-            $clients->orderBy('name','desc');
-        }
-
-        if($this->status == 'active'){
-            $clients->where('status','active');
-        }elseif($this->status == 'completed'){
-            $clients->where('status','completed');
-        }elseif($this->status == 'archived'){
-            $clients->onlyTrashed();
-        }
+        $this->allClients = (clone $clients)->count();
+        $this->activeClients = (clone $clients)->where('status','active')->count();
+        $this->completedClients = (clone $clients)->where('status','completed')->count();
+        $this->archivedClients = (clone $clients)->onlyTrashed()->count();
 
         $clients->orderBy('name','asc');
 

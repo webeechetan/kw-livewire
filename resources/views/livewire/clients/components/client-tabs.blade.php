@@ -25,6 +25,7 @@
                     <div class="main-body-header-right">
                         <!-- Edit -->
                         @can('Edit Client')
+                            @if(!$client->is_main)
                             <div class="cus_dropdown">
                                 <!-- For Active Class = btn-border-success | For Archived Class = btn-border-archived -->
                                 @if(!$client->trashed())
@@ -42,6 +43,7 @@
                                     </div>
                                 </div>
                             </div>
+                            @endif
                             
                             @if(!$client->trashed())
                                 <button wire:click="emitEditClient({{$client->id}})" class="btn-sm btn-border btn-border-secondary ">
@@ -55,8 +57,10 @@
                         @endcan
                         <!-- Delete -->
                         @can('Delete Client')
+                        @if(!$client->is_main)
                             {{-- <a href="#" class="btn-sm btn-border btn-border-danger" wire:click="forceDeleteClient({{$client->id}})"><i class='bx bx-trash'></i> Delete</a>--}}
                              <a href="#" class="btn-sm btn-border btn-border-danger" wire:click="forceDeleteClient({{$client->id}})" wire:confirm="Are you sure you want to delete?"><i class='bx bx-trash'></i> Delete</a> 
+                        @endif
                         @endcan
                     </div>
                 </div>

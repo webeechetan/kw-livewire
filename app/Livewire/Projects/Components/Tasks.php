@@ -7,11 +7,14 @@ use App\Models\Task;
 use App\Models\Project;
 use App\Models\User;
 use App\Models\Team;
-use Livewire\Attributes\On;
 use App\Helpers\ProjectTaskFilter;
+use Illuminate\Support\Facades\Pipeline;
+use App\Filters\{UserFilter, SearchFilter, StatusFilter, SortFilter, DateFilter};
+use Livewire\WithPagination;
 
 class Tasks extends Component
 { 
+    use WithPagination;
 
     protected $listeners = ['saved' => 'refresh'];
 
@@ -19,7 +22,6 @@ class Tasks extends Component
 
     public $users = [];
     public $teams = [];
-    public $tasks = [];
     public $totalTasks = 0;
 
     public $sort = 'all';
@@ -33,11 +35,28 @@ class Tasks extends Component
 
     public $query = '';
 
-    public $perPage = 10;
-
     public function render() 
     {
-        return view('livewire.projects.components.tasks');
+        $filters = [
+            new SearchFilter($this->query, 'PROJECT-TASKS'),
+            new StatusFilter($this->status, 'PROJECT-TASKS'),
+            new SortFilter($this->sort, 'PROJECT-TASKS'),
+            new UserFilter($this->byUser, 'PROJECT-TASKS'),
+            new DateFilter($this->startDate, $this->dueDate, 'PROJECT-TASKS')
+        ];
+
+        $query = $this->project->tasks();
+
+        $tasks = Pipeline::send($query)
+            ->through($filters)
+            ->thenReturn()
+            ->paginate(25);
+
+        $this->totalTasks = $tasks->count();
+
+        return view('livewire.projects.components.tasks',[
+            'tasks' => $tasks
+        ]);
     }
 
     public function mount(Project $project)
@@ -45,51 +64,9 @@ class Tasks extends Component
         $this->project = $project;
         $this->users = User::all();
         $this->teams = Team::all();
-        $this->tasks = $this->applySort($project->tasks());
-        $this->tasks = $this->tasks->where('name', 'like', '%' . $this->query . '%');
-        $this->totalTasks = $this->tasks->count();
-        $this->tasks = $this->tasks->take($this->perPage)->get();
-    }
-
-    public function loadMore(){
-        $this->perPage += 10;
-        $tasks = $this->applySort($this->project->tasks());
-        $tasks = $tasks->where('name', 'like', '%' . $this->query . '%');
-        // new 10 tasks
-        $tasks = $tasks->skip($this->perPage - 10)->limit(10)->get();
-        $this->tasks = $this->tasks->merge($tasks);
-
     }
 
     public function refresh()
-    {
-        $this->mount($this->project);
-    }
-
-    public function search(){
-        $this->mount($this->project);
-    }
-
-    public function updatedSort($value)
-    {
-        $this->mount($this->project);
-    }
-    public function updatedStartDate($value)
-    {
-        $this->mount($this->project);
-    }
-
-    public function updatedDueDate($value)
-    {
-        $this->mount($this->project);
-    }
-
-    public function updatedByUser($value)
-    {
-        $this->mount($this->project);
-    }
-
-    public function updatedStatus($value)
     {
         $this->mount($this->project);
     }
@@ -102,18 +79,6 @@ class Tasks extends Component
     public function emitDeleteTaskEvent($id)
     {
         $this->dispatch('deleteTask', $id);
-    }
-
-    public function applySort($query)
-    {
-        return ProjectTaskFilter::filterTasks(
-            $query, 
-            $this->byUser, 
-            $this->sort, 
-            $this->startDate, 
-            $this->dueDate, 
-            $this->status
-        );
     }
 
     public function doesAnyFilterApplied(){

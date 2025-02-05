@@ -56,12 +56,18 @@ class Team extends Model
     }
 
     public function getTasksAttribute(){
-        // $projects = $this->projects->pluck('id')->toArray();
-        // return Task::whereIn('project_id', $projects)->get();
         $users = $this->users->pluck('id')->toArray();
         return Task::whereHas('users', function ($query) use ($users) {
             $query->whereIn('user_id', $users);
         })->get();
+
+    }
+
+    public function getTasksQueryAttribute(){
+        $users = $this->users->pluck('id')->toArray();
+        return Task::whereHas('users', function ($query) use ($users) {
+            $query->whereIn('user_id', $users);
+        });
     }
 
     public function getInitialsAttribute(){

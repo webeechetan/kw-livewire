@@ -5,7 +5,7 @@
             <li class="breadcrumb-item"><a wire:navigate href="{{ route('project.index') }}"><i class='bx bx-line-chart'></i>{{ucfirst(Auth::user()->organization->name)}}</a></li>
             <li class="breadcrumb-item active" aria-current="page">All Projects</li>
         </ol>
-    </nav>
+    </nav> 
 
     <div class="dashboard-head mb-3">
         <div class="row align-items-center">
@@ -126,7 +126,7 @@
                                     @endphp
 
                                     @foreach($project->members->take(7) as $user)
-                                    <x-avatar :user="$user" class="avatar-sm" />
+                                        <x-avatar :user="$user" class="avatar-sm" />
                                     @endforeach
                                     @if($plus_more_users)
                                         <a href="#" class="avatarGroup-avatar">
