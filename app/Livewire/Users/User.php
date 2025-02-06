@@ -84,10 +84,10 @@ class User extends Component
 
     public function forceDeleteUser($userId)
     {
-        $user = UserModel::withTrashed()->find($userId);
-        $user->forceDelete();
-        $this->dispatch('success', 'User deleted successfully.');
-        $this->redirect(route('user.index'),navigate:true);
+        // $user = UserModel::withTrashed()->find($userId);
+        // $user->forceDelete();
+        // $this->dispatch('success', 'User deleted successfully.');
+        // $this->redirect(route('user.index'),navigate:true);
 
     }
 

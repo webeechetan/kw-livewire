@@ -16,6 +16,14 @@ class SearchFilter
             return $next($query);
         }
 
+        // this is for seraching in clients
+        if($this->for === 'CLIENT'){
+            $query->where('name', 'like', '%'.$this->value.'%')
+            ->orWhere('brand_name', 'like', '%'.$this->value.'%');
+            return $next($query);
+        }
+
+
         if($this->for === 'PROJECT'){
             $query->where('name', 'like', '%'.$this->value.'%')
             ->orWhereHas('client', function ($query) {
@@ -26,7 +34,7 @@ class SearchFilter
             $query->where('name', 'like', '%'.$this->value.'%');
         }
 
-        return $next($query);
+        return $next($query); 
 
    }
 }

@@ -60,6 +60,21 @@ class AddProject extends Component
             return;
         }
 
+        $validation_error_message = '';
+
+        if(!$this->project_name){
+            $validation_error_message .= 'Name is required. ';
+        }
+
+        if(!$this->client_id){
+            $validation_error_message .= 'Client is required. ';
+        }
+
+        if(!$this->project_name || !$this->client_id){
+            $this->dispatch('error',$validation_error_message);
+            return;
+        }
+
         $this->validate([
             'project_name' => 'required',
         ]);
@@ -124,6 +139,22 @@ class AddProject extends Component
     }
 
     public function updateProject(){
+
+        $validation_error_message = '';
+
+        if(!$this->project_name){
+            $validation_error_message .= 'Name is required. ';
+        }
+
+        if(!$this->client_id){
+            $validation_error_message .= 'Client is required. ';
+        }
+
+        if(!$this->project_name || !$this->client_id){
+            $this->dispatch('error',$validation_error_message);
+            return;
+        }
+
         $this->validate([
             'project_name' => 'required',
         ]);

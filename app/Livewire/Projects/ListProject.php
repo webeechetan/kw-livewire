@@ -54,6 +54,12 @@ class ListProject extends Component
 
         $projects = $projects->with('client','users','tasks');
 
+        $this->allProjects = (clone $projects)->count();
+        $this->activeProjects = (clone $projects)->where('status','active')->count();
+        $this->completedProjects = (clone $projects)->where('status','completed')->count();
+        $this->archivedProjects = (clone $projects)->onlyTrashed()->count();
+        $this->overdueProjects = (clone $projects)->where('due_date','<', Carbon::today())->count();
+
         $filters = [
             new SearchFilter($this->query,'PROJECT'),
             new StatusFilter($this->filter,'PROJECT'),
@@ -62,16 +68,11 @@ class ListProject extends Component
             new UserFilter($this->byUser,'PROJECT'),
             new TeamFilter($this->byTeam,'PROJECT')
         ];
-        
+
         $projects = Pipeline::send($projects)
         ->through($filters)
         ->thenReturn();
         
-        $this->allProjects = (clone $projects)->count();
-        $this->activeProjects = (clone $projects)->where('status','active')->count();
-        $this->completedProjects = (clone $projects)->where('status','completed')->count();
-        $this->archivedProjects = (clone $projects)->onlyTrashed()->count();
-        $this->overdueProjects = (clone $projects)->where('due_date','<', Carbon::today())->count();
 
         $projects->orderBy('name','asc');
         $projects = $projects->paginate(12);

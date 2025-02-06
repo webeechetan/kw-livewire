@@ -53,19 +53,20 @@ class ListClient extends Component
         $clients = Client::query();
 
         $filters = [
-            new SearchFilter($this->query),
+            new SearchFilter($this->query,'CLIENT'),
             new StatusFilter($this->status, 'CLIENT'),
             new SortFilter($this->sort),
         ];
 
-        $clients = Pipeline::send($clients)
-        ->through($filters)
-        ->thenReturn();
-
+        
         $this->allClients = (clone $clients)->count();
         $this->activeClients = (clone $clients)->where('status','active')->count();
         $this->completedClients = (clone $clients)->where('status','completed')->count();
         $this->archivedClients = (clone $clients)->onlyTrashed()->count();
+
+        $clients = Pipeline::send($clients)
+        ->through($filters)
+        ->thenReturn();
         
         $clients = $clients->with('projects','projects.users');
         
