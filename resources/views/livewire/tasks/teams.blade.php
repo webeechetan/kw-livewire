@@ -158,7 +158,7 @@
                     @endforeach
                 </select>
                 <select class="dashboard_filters-select" wire:model.live="byProject" id="">
-                    <option value="all">All Clients</option>
+                    <option value="all">All Projects</option>
                     @foreach($projects as $project)
                         <option value="{{ $project->id }}">{{ $project->name }}</option>
                     @endforeach

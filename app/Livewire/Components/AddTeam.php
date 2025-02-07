@@ -15,7 +15,6 @@ class AddTeam extends Component
 
     public $name;
     public $image;
-    public $team_users = [];
     public $team_manager;
 
     public $users = [];
@@ -58,14 +57,13 @@ class AddTeam extends Component
         }
 
         if($team->save()){
-            $team->users()->attach($this->team_users);
+            $this->dispatch('success', 'Team added successfully');
+            $this->dispatch('team-added');
+            $this->dispatch('saved');
+            $this->resetForm();
+            $team = null;
         }
 
-        $this->dispatch('success', 'Team added successfully');
-        $this->dispatch('team-added');
-        $this->dispatch('saved');
-        $this->resetForm();
-        $team = null;
         
     }
 
@@ -74,7 +72,6 @@ class AddTeam extends Component
         $this->team = Team::find($id);
         $this->name = $this->team->name;
         $this->team_manager = $this->team->manager_id;
-        $this->team_users = $this->team->users->pluck('id')->toArray();
         $this->dispatch('editTeamEvent',$this->team);
     }
 
@@ -95,21 +92,29 @@ class AddTeam extends Component
         }
 
         if($team->save()){
-            $team->users()->sync($this->team_users);
+            $this->dispatch('success', 'Team updated successfully');
+            $this->dispatch('team-updated');
+            $this->dispatch('saved');
         }
 
-        $this->dispatch('success', 'Team updated successfully');
-        $this->dispatch('team-updated');
-        $this->dispatch('saved');
     }
 
     public function resetForm(){
         $this->team = null;
         $this->name = '';
-        $this->team_users = [];
         $this->team_manager = '';
         $this->image = null;
         
+    }
+
+    public function removeImage(){
+        if($this->team){
+            $this->team->image = null;
+            $this->team->save();
+            $this->image = null;
+        }else{
+            $this->image = null;
+        }
     }
 
 }

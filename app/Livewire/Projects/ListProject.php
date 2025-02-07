@@ -12,6 +12,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Pipeline;
 use App\Filters\{ClientFilter, UserFilter, TeamFilter, SearchFilter, StatusFilter, SortFilter};
+use App\Models\Pin;
 use Illuminate\Support\Facades\Cache;
 
 class ListProject extends Component
@@ -62,18 +63,17 @@ class ListProject extends Component
 
         $filters = [
             new SearchFilter($this->query,'PROJECT'),
-            new StatusFilter($this->filter,'PROJECT'),
             new SortFilter($this->sort,'PROJECT'),
             new ClientFilter($this->byClient,'PROJECT'),
             new UserFilter($this->byUser,'PROJECT'),
-            new TeamFilter($this->byTeam,'PROJECT')
+            new TeamFilter($this->byTeam,'PROJECT'),
+            new StatusFilter($this->filter,'PROJECT'),
         ];
 
         $projects = Pipeline::send($projects)
         ->through($filters)
         ->thenReturn();
         
-
         $projects->orderBy('name','asc');
         $projects = $projects->paginate(12);
 

@@ -19,10 +19,10 @@ class SortFilter
 
         switch ($this->value) {
             case 'a_z':
-                $query->orderBy('name');
+                $query->orderBy('name','asc');
                 break;
             case 'z_a':
-                $query->orderByDesc('name');
+                $query->orderBy('name','desc');
                 break;
             case 'newest':
                 $query->latest();

@@ -54,8 +54,8 @@ class ListClient extends Component
 
         $filters = [
             new SearchFilter($this->query,'CLIENT'),
-            new StatusFilter($this->status, 'CLIENT'),
             new SortFilter($this->sort),
+            new StatusFilter($this->status, 'CLIENT'),
         ];
 
         

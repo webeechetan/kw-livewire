@@ -34,7 +34,7 @@ class ListTeam extends Component
     public function render()
     {
         $this->allTeams = Team::count();
-        $teams = Team::query();
+        $teams = Team::with('users');
 
         $filters = [
             new SearchFilter($this->query),

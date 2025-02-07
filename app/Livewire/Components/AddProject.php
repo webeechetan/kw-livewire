@@ -205,9 +205,6 @@ class AddProject extends Component
         $this->dispatch('saved');
     }
 
-
-
-
     public function resetForm(){
         $this->client_id = null;
         $this->project_name = '';
@@ -216,5 +213,14 @@ class AddProject extends Component
         $this->project_start_date = null;
         $this->project = null;
         $this->image = null;
+    }
+
+    public function removeImage(){
+        if($this->project){
+            $this->project->image = null;
+            $this->project->save();
+        }else{
+            $this->project = null;
+        }
     }
 }

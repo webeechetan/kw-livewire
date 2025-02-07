@@ -240,11 +240,19 @@
               var reader = new FileReader();
               reader.onload = function(e) {
                   $('.image-preview-section').removeClass('d-none');
+                  $('.remove-image-sesction').removeClass('d-none');
                   $('.image-preview-section').html('<img src="'+e.target.result+'" alt="Image Preview" class="img-fluid" style="max-width: 200px;">');
               }
               reader.readAsDataURL(this.files[0]);
           }
+      }); 
+
+      $(".remove-image-button").click(function() {
+          $('.image-preview-section').addClass('d-none');
+          $('.remove-image-sesction').addClass('d-none');
+          $(".image_upload_input").val('');
       });
+      
 
       document.addEventListener('livewire-upload-progress', event => {
           $(".upload-progress").removeClass("d-none");

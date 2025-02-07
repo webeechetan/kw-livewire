@@ -41,7 +41,7 @@ class Dashboard extends Component
             // $tour['main_tour'] = false;
             unset($tour['main_tour']);
             session()->put('tour',$tour);
-        }
+        } 
         $this->getRecentComments();
         $this->myPins = Pin::where('user_id',Auth::id())->get(); 
     }

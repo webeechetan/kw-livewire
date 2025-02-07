@@ -37,9 +37,6 @@ class Team extends Model
 
     public function getProjectsAttribute(){
         $users = $this->users->pluck('id')->toArray();
-        // $projects = Task::whereHas('users', function ($query) use ($users) {
-        //     $query->whereIn('user_id', $users);
-        // })->pluck('project_id')->toArray();
         $projects = Project::whereHas('users', function ($query) use ($users) {
             $query->whereIn('user_id', $users);
         })->get();

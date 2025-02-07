@@ -24,7 +24,7 @@ class AddTask extends Component
     public $due_date;
     public $projects = []; 
     public $users = [];
-    public $task_users;
+    public $task_users = []; 
     public $task_notifiers = [];
     public $project_id;
     public $status = 'pending'; 
@@ -131,7 +131,18 @@ class AddTask extends Component
         $taskUrl = env('APP_URL').'/'.session('org_name').'/task/view/'.$task->id;
         $taskUsers = $this->task_users;
         $taskNotifiers = $this->task_notifiers;
-        $users = array_merge($this->task_users,$this->task_notifiers);
+        if(is_array($this->task_users)){
+            $taskUsers = $this->task_users;
+        }else{
+            $taskUsers = [];
+        }
+        if(is_array($this->task_notifiers)){
+            $taskNotifiers = $this->task_notifiers;
+        }else{
+            $taskNotifiers = [];
+        }
+
+        $users = array_merge($taskUsers,$taskNotifiers);
         $users = array_unique($users);
 
         $project = Project::find($this->project_id);
@@ -289,7 +300,18 @@ class AddTask extends Component
 
         $taskUsers = $this->task_users;
         $taskNotifiers = $this->task_notifiers;
-        $users = array_merge($this->task_users,$this->task_notifiers);
+        if(is_array($this->task_users)){
+            $taskUsers = $this->task_users;
+        }else{
+            $taskUsers = [];
+        }
+        if(is_array($this->task_notifiers)){
+            $taskNotifiers = $this->task_notifiers;
+        }else{
+            $taskNotifiers = [];
+        }
+
+        $users = array_merge($taskUsers,$taskNotifiers);
         $users = array_unique($users);
 
         $project = Project::find($this->task->project_id);

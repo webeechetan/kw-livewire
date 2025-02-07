@@ -48,51 +48,16 @@
                                     </div>
                                 </div>
                             </div>
-                            {{-- <div class="row">
-                                <div class="col-md-4 mb-4">
-                                    <label for="">Upload Logo</label>
-                                </div>
-                                <div class="col-md-8 mb-4">
-                                    <div class="form-file_upload form-file_upload-logo">
-                                        <input type="file" id="formFile" wire:model="client_image">
-                                        <div class="form-file_upload-box">
-                                            <div class="form-file_upload-box-icon"><i class='bx bx-image'></i></div>
-                                            <div class="form-file_upload-box-text">Upload Image</div>
-                                        </div>
-                                        <div class="form-file_upload-valText">Allowed *.jpeg, *.jpg, *.png, *.gif max size of 3 Mb</div>
-                                    </div>
-                                    <div class="old-image d-none mt-3">
-                                        <img src="" alt="" class="img-fluid old-image-src">
-                                    </div>
-                                </div>
-                            </div> --}}
 
                             <div class="row">
                                 <div class="col-md-4">
                                     <label for="">Upload Logo</label>
                                 </div>
                                 <div class="col-md-8">
-                                    <div class="form-file_upload form-file_upload-logo">
-                                        <input class="image_upload_input" type="file" id="formFile" wire:model="client_image" accept="image/jpeg, image/jpg, image/png, image/gif">
-                                        <div class="form-file_upload-box">
-                                            <div class="form-file_upload-box-icon"><i class='bx bx-image'></i></div>
-                                            <div class="form-file_upload-box-text">Upload Image</div>
-                                        </div>
-                                        <div class="form-file_upload-valText">Allowed *.jpeg, *.jpg, *.png, *.gif max size of 3 Mb</div>
-                                    </div>
-                                    <div class="mt-4 d-none upload-progress">
-                                        <div class="progress w-100" role="progressbar" aria-label="Project Progress" aria-valuemin="0" aria-valuemax="100">
-                                            <div class="progress-bar progress-success" ><span class="progress-bar-text">0%</span></div>
-                                        </div>
-                                    </div>
-
-                                    <div class="image-preview-section mt-3 d-none">
-
-                                    </div>
+                                    <x-image-input model="client_image" />
                                 </div>
                             </div>
                             <hr>
-
 
                             <div class="row">
                                 <div class="col-12">
@@ -147,6 +112,7 @@
                 $('.client-form-btn').html('Add Client');
                 // $('.old-image').addClass('d-none');
                 $('.image-preview-section').addClass('d-none');
+                $('.remove-image-sesction').addClass('d-none');
                 $('.old-image-src').attr('src', '');
                 $('.client-onboard-date').html('Select Date'); 
             })
@@ -176,6 +142,7 @@
                 if (event.detail[0].image) {
                     $(".image-preview-section").removeClass('d-none');
                     $('.image-preview-section').html('<img src="{{ asset('storage') }}/'+event.detail[0].image+'" alt="project image" class="img-fluid">');
+                    $('.remove-image-sesction').removeClass('d-none');
                 }
 
                 $('.client-form-text').html('Edit Client');
