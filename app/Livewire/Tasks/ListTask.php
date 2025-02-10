@@ -8,12 +8,7 @@ use App\Models\User;
 use App\Models\Client;
 use App\Models\Project;
 use App\Models\Team;
-use App\Models\Comment;
-use App\Notifications\NewTaskAssignNotification;
-use App\Notifications\UserMentionNotification;
 use Livewire\WithPagination;
-use App\Helpers\Helper;
-use ProtoneMedia\LaravelCrossEloquentSearch\Search;
 use App\Helpers\Filter;
 use Livewire\Attributes\Session;
 
@@ -107,7 +102,7 @@ class ListTask extends Component
             $this->authorize('View Task');
 
             if(!($this->currentRoute)){
-            $this->currentRoute = request()->route()->getName();
+                $this->currentRoute = request()->route()->getName();
             }
             $this->auth_user_id = auth()->guard(session('guard'))->user()->id;
             if($this->byClient != 'all'){
@@ -126,82 +121,44 @@ class ListTask extends Component
             $this->teams = Team::orderBy('name', 'asc')->get();
             $this->clients = Client::orderBy('name', 'asc')->get();
             // Fetch all tasks from the database
-            if($this->ViewTasksAs == 'manager'){
+            $statuses = ['pending', 'in_progress', 'in_review', 'completed'];
+            $baseQuery = null;
+
+            if ($this->ViewTasksAs == 'manager') {
                 $manager_team = auth()->user()->myTeam;
                 $team_users = $manager_team->users()->pluck('users.id')->toArray();
-                
-                $this->tasks = [
-                    'pending' => $this->applySort(
-                        Task::where('status', 'pending')
-                            ->whereHas('users', function($q) use($team_users){
-                                $q->whereIn('user_id', $team_users);
-                            })
-                            ->where('name', 'like', '%' . $this->query . '%')
-                    )->take($this->perPage)->get(),
-                    'in_progress' => $this->applySort(
-                        Task::where('status', 'in_progress')
-                            ->whereHas('users', function($q) use($team_users){
-                                $q->whereIn('user_id', $team_users);
-                            }) 
-                            ->where('name', 'like', '%' . $this->query . '%')
-                    )->take($this->perPage)->get(),
-                    'in_review' => $this->applySort(
-                        Task::where('status', 'in_review')
-                            ->whereHas('users', function($q) use($team_users){
-                                $q->whereIn('user_id', $team_users);
-                            })
-                            ->where('name', 'like', '%' . $this->query . '%')
-                    )->take($this->perPage)->get(),
-                    'completed' => $this->applySort(
-                        Task::where('status', 'completed')
-                            ->whereHas('users', function($q) use($team_users){
-                                $q->whereIn('user_id', $team_users);
-                            })
-                            ->where('name', 'like', '%' . $this->query . '%')
-                    )->take($this->perPage)->get(),
-                ];
-                // dd($this->tasks);
-                $this->totalTasks = Task::whereHas('users', function($q) use($team_users){
-                    $q->whereIn('user_id', $team_users);
-                })->count();
-            }else{
-                $this->tasks = [
-                    'pending' => $this->applySort(
-                        Task::tasksByUserType($this->assignedByMe,true)
-                            ->where('status', 'pending') 
-                            ->where('name', 'like', '%' . $this->query . '%')
-                        )->take($this->perPage)->get(),
-        
-                    'in_progress' => $this->applySort(
-                        Task::tasksByUserType($this->assignedByMe,true)
-                            ->where('status', 'in_progress')
-                            ->where('name', 'like', '%' . $this->query . '%')
-                        )->take($this->perPage)->get(),
 
-                    
-                    'in_review' => $this->applySort(
-                        Task::tasksByUserType($this->assignedByMe,true)
-                            ->where('status', 'in_review')
-                            ->where('name', 'like', '%' . $this->query . '%')
-                        )->take($this->perPage)->get(),
-
-    
-                    'completed' => $this->applySort(
-                        Task::tasksByUserType($this->assignedByMe,true)
-                            ->where('status', 'completed')
-                            ->where('name', 'like', '%' . $this->query . '%')
-                        )->take($this->perPage)->get(),
-
-                ];
-                if($this->doesAnyFilterApplied()){
-                    $this->totalTasks = $this->applySort(
-                        Task::tasksByUserType($this->assignedByMe,true)
-                            ->where('name', 'like', '%' . $this->query . '%')
-                    )->count();
-                }else{
-                    $this->totalTasks = Task::tasksByUserType($this->assignedByMe,true)->count();
-                }
+                $baseQuery = function ($status) use ($team_users) {
+                    return Task::where('status', $status)
+                        ->whereHas('users', function($q) use ($team_users) {
+                            $q->whereIn('user_id', $team_users);
+                        })
+                        ->where('name', 'like', '%' . $this->query . '%');
+                };
+            } else {
+                $baseQuery = function ($status) {
+                    return Task::tasksByUserType($this->assignedByMe, true)
+                        ->where('status', $status)
+                        ->where('name', 'like', '%' . $this->query . '%');
+                };
             }
+
+            $this->tasks = [];
+            foreach ($statuses as $status) {
+                $this->tasks[$status] = $this->applySort($baseQuery($status))
+                    ->take($this->perPage)
+                    ->get();
+            }
+
+            if ($this->doesAnyFilterApplied()) {
+                $this->totalTasks = $this->applySort(
+                    Task::tasksByUserType($this->assignedByMe, true)
+                        ->where('name', 'like', '%' . $this->query . '%')
+                )->count();
+            } else {
+                $this->totalTasks = Task::tasksByUserType($this->assignedByMe, true)->count();
+            }
+
 
             $tour = session()->get('tour');
             if(request()->tour == 'close-task-tour'){

@@ -214,19 +214,11 @@
                         <h5 class="text text-light mt-3">No Tasks found</h5>
                     </div>
                     @endif
-                    {{-- load more tasks --}}
-                    @if($tasks->count() < $totalTasks)
-                    <div class="col-md-12 text-center mt-3 ">
-                        <a href="javascript:" wire:click="loadMore" class="btn btn-sm btn-border btn-border-primary">
-                            Load More
-                            <div wire:loading wire:target="loadMore">  
-                                <div class="spinner-border spinner-border-sm text-primary" role="status">
-                                    <span class="visually-hidden">Loading...</span>
-                                </div>
-                            </div>
-                        </a>
+                    <!-- Pagination -->
+                    <div class="mt-4">
+                        {{  $tasks->links(data: ['scrollTo' => false])  }}
                     </div>
-                    @endif
+                    
                 </div>
             </div>
         </div>

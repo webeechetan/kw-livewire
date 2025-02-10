@@ -15,7 +15,7 @@ class AddTask extends Component
 {
     use WithFileUploads;
 
-    protected $listeners = ['editTask','deleteTask','copy-link'=>'copyLink'];
+    protected $listeners = ['editTask','deleteTask','copy-link'=>'copyLink','resetForm'];
 
     public $project;
     public $task;
@@ -24,7 +24,7 @@ class AddTask extends Component
     public $due_date;
     public $projects = []; 
     public $users = [];
-    public $task_users;
+    public $task_users = []; 
     public $task_notifiers = [];
     public $project_id;
     public $status = 'pending'; 
@@ -57,6 +57,7 @@ class AddTask extends Component
             $query->whereNull('clients.deleted_at');
         })
         ->orderBy('projects.name', 'asc')
+        ->with('client')
         ->get();
 
         if($project){
@@ -130,8 +131,23 @@ class AddTask extends Component
         $taskUrl = env('APP_URL').'/'.session('org_name').'/task/view/'.$task->id;
         $taskUsers = $this->task_users;
         $taskNotifiers = $this->task_notifiers;
-        $users = array_merge($this->task_users,$this->task_notifiers);
+        if(is_array($this->task_users)){
+            $taskUsers = $this->task_users;
+        }else{
+            $taskUsers = [];
+        }
+        if(is_array($this->task_notifiers)){
+            $taskNotifiers = $this->task_notifiers;
+        }else{
+            $taskNotifiers = [];
+        }
+
+        $users = array_merge($taskUsers,$taskNotifiers);
         $users = array_unique($users);
+
+        $project = Project::find($this->project_id);
+        $project->users()->syncWithoutDetaching($users);
+
         
         if($this->task_users){
             foreach($users as $user_id){
@@ -181,7 +197,7 @@ class AddTask extends Component
 
     public function saveComment($type = 'internal'){
         if($this->comment_id){
-            $this->updateComment($this->comment_id);
+            $this->updateComment($this->comment_id,$this->comment);
             return;
         }
         // dd($this->comment);
@@ -216,11 +232,10 @@ class AddTask extends Component
         
     }
 
-    public function updateComment($id){
+    public function updateComment($id,$newComment){
         $comment = Comment::find($id);
-        $comment->comment = $this->comment;
+        $comment->comment = $newComment;
         $comment->save();
-        $this->comments = $this->task->comments;
         // $this->dispatch('comment-added',Comment::with('user')->find($comment->id));
         $this->comment = '';
         $this->comment_id = null;
@@ -282,6 +297,27 @@ class AddTask extends Component
         $this->task->save();
         $this->task->users()->sync($this->task_users);
         $this->task->notifiers()->sync($this->task_notifiers);
+
+        $taskUsers = $this->task_users;
+        $taskNotifiers = $this->task_notifiers;
+        if(is_array($this->task_users)){
+            $taskUsers = $this->task_users;
+        }else{
+            $taskUsers = [];
+        }
+        if(is_array($this->task_notifiers)){
+            $taskNotifiers = $this->task_notifiers;
+        }else{
+            $taskNotifiers = [];
+        }
+
+        $users = array_merge($taskUsers,$taskNotifiers);
+        $users = array_unique($users);
+
+        $project = Project::find($this->task->project_id);
+        $project->users()->syncWithoutDetaching($users);
+
+
         // attach files to task from $this->attachments
         if($this->attachments){ 
             foreach($this->attachments as $attachment){
@@ -361,6 +397,10 @@ class AddTask extends Component
         $comment->delete();
         $this->comments = $this->task->comments;
         $this->editTask($this->task->id);
+    }
+
+    public function resetForm(){
+       $this->task = null;
     }
     
 }

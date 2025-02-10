@@ -60,6 +60,21 @@ class AddProject extends Component
             return;
         }
 
+        $validation_error_message = '';
+
+        if(!$this->project_name){
+            $validation_error_message .= 'Name is required. ';
+        }
+
+        if(!$this->client_id){
+            $validation_error_message .= 'Client is required. ';
+        }
+
+        if(!$this->project_name || !$this->client_id){
+            $this->dispatch('error',$validation_error_message);
+            return;
+        }
+
         $this->validate([
             'project_name' => 'required',
         ]);
@@ -93,7 +108,11 @@ class AddProject extends Component
                 if(count($this->project_users) > 0){
                     $project->users()->sync($this->project_users);
                 }
-                $project->users()->attach(session('user')->id);
+
+                if(!in_array(auth()->user()->id, $this->project_users)){
+                    $project->users()->attach(session('user')->id);
+                }
+
                 $this->dispatch('success', 'Project added successfully');
                 $this->dispatch('project-added', $project);
                 $this->dispatch('saved');
@@ -120,6 +139,22 @@ class AddProject extends Component
     }
 
     public function updateProject(){
+
+        $validation_error_message = '';
+
+        if(!$this->project_name){
+            $validation_error_message .= 'Name is required. ';
+        }
+
+        if(!$this->client_id){
+            $validation_error_message .= 'Client is required. ';
+        }
+
+        if(!$this->project_name || !$this->client_id){
+            $this->dispatch('error',$validation_error_message);
+            return;
+        }
+
         $this->validate([
             'project_name' => 'required',
         ]);
@@ -142,6 +177,10 @@ class AddProject extends Component
             'image' => $image,
             'client_id' => $this->client_id,
         ]);
+
+        if(count($this->project_users) > 0){
+            $this->project->users()->sync($this->project_users);
+        }
 
         $this->dispatch('project-added', $this->project);
         $this->resetForm();
@@ -166,9 +205,6 @@ class AddProject extends Component
         $this->dispatch('saved');
     }
 
-
-
-
     public function resetForm(){
         $this->client_id = null;
         $this->project_name = '';
@@ -177,5 +213,14 @@ class AddProject extends Component
         $this->project_start_date = null;
         $this->project = null;
         $this->image = null;
+    }
+
+    public function removeImage(){
+        if($this->project){
+            $this->project->image = null;
+            $this->project->save();
+        }else{
+            $this->project = null;
+        }
     }
 }

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('mentioned_users')->nullable();
             $table->string('created_by')->default('web')->comment('web','orginizations');
             $table->string('type')->default('internal')->comment('internal','client');
-            $table->text('comment');
+            $table->longText('comment')->nullable();
             $table->timestamps();
         });
     }

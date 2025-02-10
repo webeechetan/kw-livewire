@@ -54,27 +54,12 @@ class Project extends Model
 
 
     public function getMembersAttribute(){
-        $project_tasks_ids = Task::where('project_id',$this->id)->pluck('id');
-        $user_ids = [];
-        foreach($project_tasks_ids as $task_id){
-            $task = Task::find($task_id);
-            $user_ids = array_merge($user_ids,$task->users->pluck('id')->toArray());
-            $user_ids = array_merge($user_ids,[$task->assigned_by]);
-            $user_ids = array_merge($user_ids,$task->notifiers->pluck('id')->toArray());
-        }
-        // dd($user_ids);
-        $user_ids = array_unique($user_ids);
-        return User::whereIn('id',$user_ids)->get();
+        return $this->users;
     }
 
     public function getTeamsAttribute(){
-        $users = $this->members->pluck('id');
-        $users = array_unique($users->toArray());
-        return Team::whereHas('users',function($query) use($users){
-            $query->whereIn('user_id',$users);
-        })->get();
-        
-       
+        $teams = $this->users->pluck('main_team_id')->toArray();
+        return Team::whereIn('id',$teams)->get();
     }
 
     public function tasks(){
@@ -104,7 +89,7 @@ class Project extends Model
                 $projects = $team->projects;
                 return $query->whereIn('id',$projects->pluck('id'));
            }else{
-                $users_projects_ids = User::find(Auth::id())->projects->pluck('id')->toArray();
+                $users_projects_ids = User::find(Auth::id())->projects->pluck('projects.id')->toArray();
                 return $query->whereIn('id',$users_projects_ids);
            }
         }else{

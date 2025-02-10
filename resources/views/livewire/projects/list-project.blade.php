@@ -5,7 +5,7 @@
             <li class="breadcrumb-item"><a wire:navigate href="{{ route('project.index') }}"><i class='bx bx-line-chart'></i>{{ucfirst(Auth::user()->organization->name)}}</a></li>
             <li class="breadcrumb-item active" aria-current="page">All Projects</li>
         </ol>
-    </nav>
+    </nav> 
 
     <div class="dashboard-head mb-3">
         <div class="row align-items-center">
@@ -19,8 +19,12 @@
             <div class="col">
                 <div class="main-body-header-right">
                     <form class="search-box" wire:submit="search" action="" data-step="2" data-intro='Search Project' data-position='bottom'>
-                        <input wire:model="query" type="text" class="form-control" placeholder="Search Projects...">
-                        <button type="submit" class="search-box-icon"><i class='bx bx-search me-1'></i> Search</button>
+                        <input wire:model.live.debounce.250ms="query"  type="text" class="form-control" placeholder="Search Projects...">
+                        <button type="submit" class="search-box-icon" wire:loading.class="opacity-50">
+                            <i class='bx bx-search me-1' wire:loading.class="bx-tada"></i> 
+                            <span wire:loading.remove>Search</span>
+                            <span wire:loading>Searcing...</span>
+                        </button>
                     </form>
                     <div class="main-body-header-filters" data-step="3" data-intro='Filter Project' data-position='bottom'>
                         <div class="cus_dropdown" wire:ignore.self>
@@ -109,8 +113,8 @@
                     <div class="card_style h-100">
                         <a href="{{ route('project.profile', $project->id ) }}" class="card_style-open"><i class='bx bx-chevron-right'></i></a>
                         <div class="card_style-project-head">
-                            <div class="card_style-project-head-client"><span><i class='bx bx-briefcase-alt-2'></i></span> {{ $project->client?->name }}</div>
-                            <h4><a href="{{ route('project.profile',$project->id) }}" wire:navigate>{{ $project->name }}</a></h4>
+                            <div class="card_style-project-head-client"><span><i class='bx bx-briefcase-alt-2'></i></span> {{ $project->client?->name }} </div>
+                            <h4><a href="{{ route('project.profile',$project->id) }}" wire:navigate>{{ $project->name }}</a> </h4>
                             <!-- Avatar Group -->
                             <div class="avatarGroup avatarGroup-lg avatarGroup-overlap mt-2">
                                 @if(count($project->members) > 0)
@@ -122,7 +126,7 @@
                                     @endphp
 
                                     @foreach($project->members->take(7) as $user)
-                                    <x-avatar :user="$user" class="avatar-sm" />
+                                        <x-avatar :user="$user" class="avatar-sm" />
                                     @endforeach
                                     @if($plus_more_users)
                                         <a href="#" class="avatarGroup-avatar">

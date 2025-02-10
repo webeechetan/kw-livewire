@@ -38,27 +38,28 @@
                                     <input wire:model="project_name" type="text" class="form-style" placeholder="Project Name" required>
                                 </div>
                             </div>
+                            {{-- project users --}}
+                            <div class="row">
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Add Users<sup class="text-primary">*</sup></label>
+                                </div>
+                                <div class="col-md-8 mb-4">
+                                    <div class="custom-select">
+                                        <select class="form-style project-users" multiple required>
+                                            @foreach ($users as $user)
+                                                <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="row">
                                 <div class="col-md-4 mb-4">
                                     <label for="">Upload Logo</label>
                                 </div>
                                 <div class="col-md-8 mb-4">
-                                    <div class="form-file_upload form-file_upload-logo">
-                                        <input class="image_upload_input" type="file" id="formFile" wire:model="image" accept="image/jpeg, image/jpg, image/png, image/gif">
-                                        <div class="form-file_upload-box">
-                                            <div class="form-file_upload-box-icon"><i class='bx bx-image'></i></div>
-                                            <div class="form-file_upload-box-text">Upload Image</div>
-                                        </div>
-                                        <div class="form-file_upload-valText">Allowed *.jpeg, *.jpg, *.png, *.gif max size of 3 Mb</div>
-                                    </div>
-                                    <div class="mt-4 d-none upload-progress">
-                                        <div class="progress w-100" role="progressbar" aria-label="Project Progress" aria-valuemin="0" aria-valuemax="100">
-                                            <div class="progress-bar progress-success" ><span class="progress-bar-text">0%</span></div>
-                                        </div>
-                                    </div>
-                                    <div class="image-preview-section d-none">
-
-                                    </div>
+                                    <x-image-input model="image" />
                                 </div>
                             </div>
                             <hr>
@@ -120,8 +121,19 @@
 
             });
 
+            $('.project-users').select2({
+                placeholder: "Add Users",
+                allowClear: true,
+                dropdownParent: $('#add-project-modal'),
+            });
+
             $('.clients').on('change', function (e) {
                 @this.set('client_id', e.target.value);
+            });
+
+            $('.project-users').on('change', function (e) {
+                var data = $(this).select2("val");
+                @this.set('project_users', data);
             });
 
             document.addEventListener('project-added', event => {
@@ -133,7 +145,8 @@
                 $('.project_start_date').html('Start Date');
                 $('.project_due_date').html('Due Date');
                 $(".clients").val('').trigger('change');
-
+                $('.image-preview-section').addClass('d-none');
+                $('.remove-image-sesction').addClass('d-none');
             });
 
             document.addEventListener('edit-project', event => {
@@ -151,13 +164,18 @@
                     $('.project_due_date').html('Due Date');
                 }
 
+                let project_users = event.detail[0].users.map(function (user) {
+                    return user.id;
+                });
+
+                $('.project-users').val(project_users).trigger('change');
+
                 $('.clients').val(event.detail[0].client_id).trigger('change');
 
-                $(".image-preview-section").removeClass('d-none');
-
-
-                if (event.detail[0].image) {
-                  $('.image-preview-section').html('<img src="{{ asset('storage') }}/'+event.detail[0].image+'" alt="project image" class="img-fluid">');
+                if (event.detail[0].image && event.detail[0].image != null) {
+                    $(".image-preview-section").removeClass('d-none');
+                    $('.image-preview-section').html('<img src="{{ asset('storage') }}/'+event.detail[0].image+'" alt="project image" class="img-fluid">');
+                    $('.remove-image-sesction').removeClass('d-none');
                 }
 
             });

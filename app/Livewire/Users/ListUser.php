@@ -6,9 +6,9 @@ use Livewire\Component;
 use App\Models\User;
 use App\Models\Team;
 use App\Models\Project;
+use Illuminate\Support\Facades\Pipeline;
+use App\Filters\{ClientFilter, ProjectFilter, UserFilter, SearchFilter, StatusFilter, SortFilter, DateFilter, TeamFilter};
 use Livewire\WithPagination;
-use App\Helpers\Helper;
-use ProtoneMedia\LaravelCrossEloquentSearch\Search;
 
 
 
@@ -19,7 +19,6 @@ class ListUser extends Component
 
      public $allUsers;
      public $activeUsers;
-     public $completedUsers;
      public $archivedUsers;
 
      public $query = '';
@@ -46,48 +45,24 @@ class ListUser extends Component
     public function render()
     {
 
-        $this->allUsers = User::count();
-        $this->activeUsers = User::where('status', 'active')->count();
-        $this->completedUsers = User::where('status', 'completed')->count();
-        $this->archivedUsers = User::onlyTrashed()->count();
+        $users = User::query();
+        $users->orderBy('name');
 
+        $this->allUsers = (clone $users)->count();
+        $this->activeUsers = (clone $users)->where('status', 'active')->count();
+        $this->archivedUsers = (clone $users)->where('status', 'archived')->count();
 
-        $users = User::where('name', 'like', '%'.$this->query.'%');
+        $users = Pipeline::send($users)
+            ->through([
+                new SearchFilter($this->query),
+                new SortFilter($this->sort),
+                new StatusFilter($this->filter),
+                new TeamFilter($this->byTeam, 'USER'),
+                new ProjectFilter($this->byProject),
+            ])
+            ->thenReturn()
+            ->paginate(9);
 
-        if($this->sort == 'newest'){
-            $users->orderBy('created_at','desc');
-        }elseif($this->sort == 'oldest'){
-            $users->orderBy('created_at','asc');
-        }elseif($this->sort == 'a_z'){
-            $users->orderBy('name','asc');
-        }elseif($this->sort == 'z_a'){
-            $users->orderBy('name','desc');
-        }
-
-        
-        if($this->filter == 'active'){
-            $users->where('status','active');
-        }elseif($this->filter == 'completed'){
-            $users->where('status','completed');
-        }elseif($this->filter == 'archived'){
-            $users->onlyTrashed();
-        }
-
-
-        if($this->byTeam != 'all'){
-            $users->whereHas('teams', function($query){
-                $query->where('team_id', $this->byTeam);
-            });
-        }
-       
-
-        if($this->byProject != 'all'){
-            $project_users = Project::find($this->byProject)->members->pluck('id');
-            $users->whereIn('id', $project_users);
-        }
-
-        $users->orderBy('created_at', 'desc');
-        $users = $users->paginate(9);
 
         return view('livewire.users.list-user',[
             'users' => $users,

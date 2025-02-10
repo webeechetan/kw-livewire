@@ -21,31 +21,10 @@
                                 <label for="">Upload Logo</label>
                             </div>
                             <div class="col-md-8 mb-4">
-                                <div class="form-file_upload form-file_upload-logo">
-                                    <input class="image_upload_input" type="file" id="formFile" wire:model="image" accept="image/jpeg, image/jpg, image/png, image/gif">
-                                    <div class="form-file_upload-box">
-                                        <div class="form-file_upload-box-icon"><i class='bx bx-image'></i></div>
-                                        <div class="form-file_upload-box-text">Upload Image</div>
-                                    </div>
-                                    <div class="form-file_upload-valText">Allowed *.jpeg, *.jpg, *.png, *.gif max size of 3 Mb</div>
-                                </div>
-                                <div class="image-preview-section d-none">
-
-                                </div>
+                                <x-image-input model="image" />
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-4 mb-4">
-                                <label for="">Add Users</label>
-                            </div>
-                            <div class="col-md-8 mb-4">
-                                <select class="form-style team_users" multiple>
-                                    @foreach($users as $user)
-                                        <option value="{{ $user->id }}">{{$user->name}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>   
+                        
                         <div class="row">
                             <div class="col-md-4 mb-4 mb-lg-0">
                                 <label for="">Assign Manager</label>
@@ -78,47 +57,29 @@
         document.addEventListener('team-added', event => {
             $("#add-team-modal").modal('hide');
             $('.image_upload_input').val('');
-            $('.team_users').val('').trigger('change');
             $('.image-preview-section').addClass('d-none');
+            $('.remove-image-sesction').addClass('d-none');
         });
 
         document.addEventListener('team-updated', event => {
             $("#add-team-modal").modal('hide');
+            $('.image_upload_input').val('');
+            $('.image-preview-section').addClass('d-none');
+            $('.remove-image-sesction').addClass('d-none');
         });
 
        
 
-        $(".team_users").select2({
-            placeholder:'Select Users'
-        });
-
-        $('.team_users').on('change', function (e) {
-            var data = $(this).select2("val");
-            @this.set('team_users', data);
-            console.log(data);
-        });
-
         document.addEventListener('editTeamEvent', event => {
             $("#add-team-modal").modal('show');
-            let team_users = event.detail[0].users;
-            let team_users_array = [];
-            team_users.forEach(function (user) {
-                team_users_array.push(user.id);
-            });
-
-            $('.team_users').val(team_users_array).trigger('change');
-
             $(".modal-btn").html('Update Team');
             $(".modal-text").html('Edit Team');
-
-
             if (event.detail[0].image) {
                 $(".image-preview-section").removeClass('d-none');
+                $(".remove-image-sesction").removeClass('d-none');
                 $('.image-preview-section').html('<img src="{{ asset('storage') }}/'+event.detail[0].image+'" alt="project image" class="img-fluid">');
-                }
-
+            }
         });
 
-        
     </script>
 @endscript

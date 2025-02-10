@@ -149,75 +149,58 @@
                     </a>
                 
                 </div>
-            </div>
+            </div> 
             <div class="col-md-6 text-end">
                 <select class="dashboard_filters-select" wire:model.live="byProject" id="">
-                    <option value="all">All</option>
+                    <option value="all">All Projects</option>
                     @foreach($projects as $project)
                         <option value="{{ $project->id }}">{{ $project->name }}</option>
                     @endforeach
-                </select>   
+                </select>
+                
             </div>
         </div>
     </div>
 
     <div class="btn-list">
         <a wire:click="$set('status', 'all')" class="btn-border btn-border-primary @if($status == 'all') active @endif">
-            {{ $tasks->count() }}
+            {{-- {{ $tasks['pending']->count() + $tasks['in_progress']->count() + $tasks['in_review']->count() + $tasks['completed']->count() }}  --}}
+            {{ $allTasks}}
             <span>|</span> 
              All 
         </a>
-
-
-        {{-- <a href="javascript:" wire:click="$set('status', 'pending')" class="btn-border btn-border-sm btn-border-primary "><span><i class='bx bx-objects-horizontal-center' ></i></span> {{ $project->tasks->where('status', 'pending')->count() }} Assigned</a> --}}
-
-        {{-- <a  wire:click="$set('status', 'completed')" class="btn-border btn-border-warning @if($status == 'completed') active @endif">{{ $tasks->where('due_date',
-        '=', now())->count() }} <span>|</span> Today</a> --}}
-        {{-- <a  wire:click="$set('status', 'completed')" class="btn-border btn-border-success @if($status == 'completed') active @endif">{{ $completedTasks }} <span>|</span> Upcoming</a> --}}
-        <a  wire:click="$set('status', 'pending')" class="btn-border btn-border-primary @if($status == 'pending') active @endif">
-            {{ $tasks->where('status', 'pending')->count() }} 
-            <span>|</span> Assigned
-        </a>
-        <a  wire:click="$set('status', 'in_progress')" class="btn-border btn-border-secondary @if($status == 'in_progress') active @endif">
-            {{ $tasks->where('status', 'in_progress')->count() }} 
-            <span>|</span> Accepted
-        </a>
-        <a  wire:click="$set('status', 'in_review')" class="btn-border btn-border-warning @if($status == 'in_review') active @endif">
-            {{ $tasks->where('status', 'in_review')->count() }} 
-            <span>|</span> In Review
-        </a>
-        <a  wire:click="$set('status', 'completed')" class="btn-border btn-border-success @if($status == 'completed') active @endif">
-            {{ $tasks->where('status', 'completed')->count() }} 
-            <span>|</span> Completed
-        </a>
-       
+        <a  wire:click="$set('status', 'pending')" class="btn-border btn-border-primary @if($status == 'pending') active @endif">{{ $pendingTasks}} <span>|</span> Assigned</a>
+        <a  wire:click="$set('status', 'in_progress')" class="btn-border btn-border-secondary @if($status == 'in_progress') active @endif">{{ $inProgressTasks}} <span>|</span> Accepted</a>
+        <a  wire:click="$set('status', 'in_review')" class="btn-border btn-border-warning @if($status == 'in_review') active @endif">{{  $inReviewTasks }} <span>|</span> In Review</a>
+        <a  wire:click="$set('status', 'completed')" class="btn-border btn-border-success @if($status == 'completed') active @endif">{{ $completedTasks }} <span>|</span> Completed</a>
         <a wire:click="$set('status', 'overdue')" class="btn-border btn-border-danger @if($status == 'overdue') active @endif">
-            {{ $tasks->where('due_date', '<', now())->where('status','!=','completed')->count() }}
+           {{ $overdueTasks }}
             <span>|</span> Overdue
         </a>
+        <div class="col-md-6">
+            @if($this->doesAnyFilterApplied())
+                <x-filters-query-params 
+                    :sort="$sort" 
+                    :status="$filter" 
+                    :byUser="$byUser" 
+                    :byProject="$byProject"
+                    :byClient="$byClient"
+                    :byTeam="$byTeam"
+                    :startDate="$startDate"
+                    :dueDate="$dueDate"
+                    :users="$users" 
+                    :projects="$projects"
+                    :teams="$teams"
+                    :clients="$clients"
+                    :clearFilters="route('task.projects')"
+                />
+            @endif
+        </div>
     </div>
-
-    <!-- Filters Query Params -->
-     @if($this->doesAnyFilterApplied())
-        <x-filters-query-params 
-            :sort="$sort" 
-            :status="$status" 
-            :byUser="$byUser" 
-            :byClient="$byClient"
-            :byProject="$byProject"
-            :startDate="$startDate" 
-            :dueDate="$dueDate" 
-            :users="$users" 
-            :teams="$teams"
-            :clients="$clients"
-            :projects="$projects"
-            :clearFilters="route('task.projects')"
-        />
-     @endif
 
     <div class="column-box mt-3">
         <div class="taskList-dashbaord_header">
-            <div class="taskList-dashbaord_header_title ms-2">Task Name</div>
+            <div class="taskList-dashbaord_header_title taskList_col ms-2">Task Name</div>
             <div class="taskList-dashbaord_header_wrap text-center d-grid grid_col-repeat-6">
                 <div class="taskList-dashbaord_header_title taskList_col">Due Date</div>
                 <div class="taskList-dashbaord_header_title taskList_col">Client</div>
@@ -227,6 +210,7 @@
                 <div class="taskList-dashbaord_header_title taskList_col">Status</div>
             </div>
         </div>
+
        
         <div class="taskList scrollbar">
             <div>
@@ -237,16 +221,7 @@
                     <x-table-row :task="$task"/>
                 @endforeach
 
-                
-                @if($tasks->count() < $totalTasks)
-                    <div class="text-center mt-3">
-                        <button wire:click="loadMore" class="btn-border btn-border-primary">
-                            <span wire:loading wire:target="loadMore" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                            <span wire:loading.remove wire:target="loadMore">Load More</span>
-                        </button>
-                    </div>
-                @endif
-                
+                <!--- Pagination -->
                 @if(!$tasks)
                     <div class="col-md-12 text-center">
                         <img src="{{ asset('assets/images/'.'invite_signup_img.png') }}" width="150" alt="">
@@ -255,7 +230,11 @@
                 @endif
             </div>
         </div>
+        <div class="pagination-wrap">
+            {{ $tasks->links() }}
+        </div>
     </div>
+
 </div>
 
 @script
@@ -287,7 +266,7 @@
             }
         });
 
-        $(".task-switch").change(function(){
+        $(".task-switch").change(function(){ 
             if($(this).is(':checked')){
                 @this.set('ViewTasksAs', 'manager');
             }else{

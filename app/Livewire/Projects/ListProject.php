@@ -4,27 +4,27 @@ namespace App\Livewire\Projects;
 
 use Livewire\Component;
 use Livewire\WithPagination;
-use App\Helpers\Helper;
 use App\Models\Project;
 use App\Models\Team;
 use App\Models\User;
 use App\Models\Client;
-use App\Models\Pin;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
-use Livewire\Attributes\Lazy;
-use ProtoneMedia\LaravelCrossEloquentSearch\Search;
+use Illuminate\Support\Facades\Pipeline;
+use App\Filters\{ClientFilter, UserFilter, TeamFilter, SearchFilter, StatusFilter, SortFilter};
+use App\Models\Pin;
+use Illuminate\Support\Facades\Cache;
 
 class ListProject extends Component
 {
     use WithPagination;
 
 
-    public $allProjects;
-    public $activeProjects;
-    public $completedProjects;
-    public $archivedProjects;
-    public $overdueProjects;
+    public $allProjects = 0;
+    public $activeProjects = 0;
+    public $completedProjects = 0;
+    public $archivedProjects = 0;
+    public $overdueProjects = 0;
     public $pinnedProjects = [];
 
     // public $projects= [];
@@ -45,99 +45,37 @@ class ListProject extends Component
 
     public function render()
     {   
-        $this->pinnedProjects = Pin::where('user_id', Auth::user()->id)->where('pinnable_type', 'App\Models\Project')->pluck('pinnable_id')->toArray();
         $role = Auth::user()->roles->first()->name;
-        $projects = Project::userProjects($role)
-            ->where(function ($query) {
-                $query->where('name', 'like', '%'.$this->query.'%')
-                    ->orWhereHas('client', function ($query) {
-                        $query->where('name', 'like', '%'.$this->query.'%')
-                                ->orWhere('brand_name', 'like', '%'.$this->query.'%');
-                    });
-            });
+        $projects = Project::userProjects($role);
 
         $projects = $projects->whereNotIn('client_id', [Auth::user()->organization->mainClient->id]);
         $projects = $projects->whereHas('client', function ($query) {
             $query->where('clients.deleted_at','=', null);
         });
 
+        $projects = $projects->with('client','users','tasks');
 
-        $this->allProjects =  Project::whereNotIn('client_id', [Auth::user()->organization->mainClient->id])
-        ->whereHas('client', function ($query) {
-            $query->where('clients.deleted_at','=', null);
-        })->count();
+        $this->allProjects = (clone $projects)->count();
+        $this->activeProjects = (clone $projects)->where('status','active')->count();
+        $this->completedProjects = (clone $projects)->where('status','completed')->count();
+        $this->archivedProjects = (clone $projects)->onlyTrashed()->count();
+        $this->overdueProjects = (clone $projects)->where('due_date','<', Carbon::today())->count();
+
+        $filters = [
+            new SearchFilter($this->query,'PROJECT'),
+            new SortFilter($this->sort,'PROJECT'),
+            new ClientFilter($this->byClient,'PROJECT'),
+            new UserFilter($this->byUser,'PROJECT'),
+            new TeamFilter($this->byTeam,'PROJECT'),
+            new StatusFilter($this->filter,'PROJECT'),
+        ];
+
+        $projects = Pipeline::send($projects)
+        ->through($filters)
+        ->thenReturn();
         
-        $this->activeProjects = Project::whereNotIn('client_id', [Auth::user()->organization->mainClient->id])
-        ->whereHas('client', function ($query) {
-            $query->where('clients.deleted_at','=', null);
-        })->where('status','active')->count();
-
-        $this->completedProjects = Project::whereNotIn('client_id', [Auth::user()->organization->mainClient->id])
-        ->whereHas('client', function ($query) {
-            $query->where('clients.deleted_at','=', null);
-        })->where('status','completed')->count();
-        
-        $this->archivedProjects = Project::whereNotIn('client_id', [Auth::user()->organization->mainClient->id])
-        ->whereHas('client', function ($query) {
-            $query->where('clients.deleted_at','=', null);
-        })->onlyTrashed()->count();
-
-
-        $this->overdueProjects = Project::whereNotIn('client_id', [Auth::user()->organization->mainClient->id])
-        ->whereHas('client', function ($query) {
-            $query->where('clients.deleted_at','=', null);
-        })->where('due_date','<', Carbon::today())->count();
-
-
-
-        if($this->filter == 'active'){
-            $projects->where('status','active');
-        }elseif($this->filter == 'archived'){
-            $projects->onlyTrashed();
-        }elseif($this->filter == 'completed'){
-            $projects->where('status','completed');
-        }elseif($this->filter == 'overdue'){ 
-            $projects->where('due_date','<', Carbon::today());
-        }
-
-        if($this->sort == 'a_z'){
-            $projects->orderBy('name');
-        }elseif($this->sort == 'z_a'){
-            $projects->orderByDesc('name');
-        }elseif($this->sort == 'newest'){
-            $projects->latest();
-        }elseif($this->sort == 'oldest'){
-            $projects->oldest();
-        }
-
-        if($this->byClient != 'all'){
-            $projects->whereHas('client',function($query){
-                $query->where('client_id',$this->byClient);
-            });
-        }
-
-        if($this->byUser != 'all'){
-            $user = User::find($this->byUser);
-            if($user){
-                $projectsIds = $user->projects->pluck('id')->toArray();
-                $projects->whereIn('id',$projectsIds);
-            }
-        }
-       
-
-        if ($this->byTeam != 'all') {
-            $team = Team::find($this->byTeam);
-            if ($team) {
-                $projectIds = $team->projects->pluck('id')->toArray();
-                $projects->whereIn('id', $projectIds);
-            }
-        }
-
-
-        $projects->orderBy('id','desc');
-
+        $projects->orderBy('name','asc');
         $projects = $projects->paginate(12);
-
 
         return view('livewire.projects.list-project',[
             'projects' => $projects
@@ -150,8 +88,8 @@ class ListProject extends Component
         $this->authorize('View Project');
 
         $this->project_all_count =  Project::all();
-        $this->users = User::all();
-        $this->clients = Client::all();
+        $this->users = User::orderBy('name')->get();
+        $this->clients = Client::orderBy('name')->get();
         $this->teams = Team::orderBy('name')->get();
 
         $tour = session()->get('tour');
@@ -200,8 +138,4 @@ class ListProject extends Component
         return false;
     }
 
-
-    // public function placeholder(){
-    //     return view('placeholders.card');
-    // }
 }

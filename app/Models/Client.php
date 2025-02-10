@@ -70,15 +70,27 @@ class Client extends Model
         return $this->belongsTo(User::class,'created_by');
     }
 
-    public function getUsersAttribute(){
+    public function getUsersAttribute()
+    {
+        $userIds = $this->projects()
+            ->with('users:id')
+            ->get()
+            ->pluck('users.*.id')
+            ->flatten()
+            ->unique()
+            ->toArray();
+
+        return User::whereIn('id', $userIds)->get();
+    }
+
+
+    public function getTeamsAttribute(){
         $projects = $this->projects->pluck('id')->toArray();
-        $tasks = Task::whereIn('project_id', $projects)->get();
-        $task_users = [];
-        foreach ($tasks as $task) {
-            $task_users = array_merge($task_users, $task->users->pluck('id')->toArray());
+        $teams = [];
+        foreach ($projects as $project) {
+            $teams = array_merge($teams, Project::find($project)->teams->pluck('id')->toArray());
         }
-        return User::whereIn('id', $task_users)->get();
-        
+        return Team::whereIn('id', $teams)->get();
     }
 
     // scopes

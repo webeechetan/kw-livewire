@@ -6,11 +6,8 @@ use Livewire\Component;
 use App\Models\Team;
 use App\Models\User;
 use Livewire\WithPagination;
-use App\Models\Project;
-use App\Models\Client;
-use App\Models\Task;
-use Livewire\Attributes\Lazy;
-use ProtoneMedia\LaravelCrossEloquentSearch\Search;
+use Illuminate\Support\Facades\Pipeline;
+use App\Filters\{SearchFilter, UserFilter, SortFilter};
 
 class ListTeam extends Component
 {
@@ -37,26 +34,19 @@ class ListTeam extends Component
     public function render()
     {
         $this->allTeams = Team::count();
-        $teams = Team::where('name', 'like', '%'.$this->query.'%');
+        $teams = Team::with('users');
 
-        if($this->sort == 'newest'){
-            $teams->orderBy('created_at','desc');
-        }elseif($this->sort == 'oldest'){
-            $teams->orderBy('created_at','asc');
-        }elseif($this->sort == 'a_z'){
-            $teams->orderBy('name','asc');
-        }elseif($this->sort == 'z_a'){
-            $teams->orderBy('name','desc');
-        }
+        $filters = [
+            new SearchFilter($this->query),
+            new SortFilter($this->sort),
+            new UserFilter($this->byUser, 'TEAM'),
+        ];
 
-        if($this->byUser != 'all'){
+        Pipeline::send($teams)
+            ->through($filters)
+            ->thenReturn();
 
-            $teams->whereHas('users',function($query){
-                $query->where('user_id',$this->byUser);
-            });
-        }
-
-        $teams->orderBy('created_at', 'desc');
+        $teams->orderBy('name', 'asc');
         $teams = $teams->paginate(12);
 
         return view('livewire.teams.list-team',[
@@ -67,7 +57,7 @@ class ListTeam extends Component
 
     public function mount(){
         $this->authorize('View Team');
-        $this->users = User::all();
+        $this->users = User::orderBy('name')->get();
 
         $tour = session()->get('tour');
         if(request()->tour == 'close-team-tour'){

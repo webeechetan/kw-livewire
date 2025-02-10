@@ -19,8 +19,12 @@
             <div class="col">
                 <div class="main-body-header-right">
                     <form class="search-box" wire:submit="search" action="" data-step="2" data-intro='Search Client' data-position='bottom'>
-                        <input wire:model="query" type="text" class="form-control" placeholder="Search Client">
-                        <button type="submit" class="search-box-icon"><i class='bx bx-search me-1'></i> Search</button>
+                        <input wire:model.live.debounce.250ms="query" type="text" class="form-control" placeholder="Search Client">
+                        <button type="submit" class="search-box-icon" wire:loading.class="opacity-50">
+                            <i class='bx bx-search me-1' wire:loading.class="bx-tada"></i> 
+                            <span wire:loading.remove>Search</span>
+                            <span wire:loading>Searcing...</span>
+                        </button>
                     </form>
                     <div class="main-body-header-filters" data-step="3" data-intro='Filter Client' data-position='bottom'>
                         <div class="cus_dropdown" wire:ignore.self>
@@ -113,15 +117,25 @@
                             <h4 class="text-md mb-0"><i class="bx bx-user text-primary"></i> {{ pluralOrSingular(count($client->users),'User') }}</h4> 
                         </div>
                         <div class="col">
-                            <div class="avatarGroup avatarGroup-overlap">
-                                @if(count($client->users) > 0)
+                            <div class="avatarGroup avatarGroup-overlap"> 
+                                @php
+                                    $allUsers = [];
+                                    foreach($client->projects as $project){
+                                        foreach($project->users as $user){
+                                            $allUsers[] = $user;
+                                        }
+                                    }
+                                    $allUsers = collect($allUsers)->unique('id');
+                                @endphp
+
+                                @if(count($allUsers) > 0)
                                     @php
                                         $plus_more_users = 0;
-                                        if(count($client->users) > 7){
-                                            $plus_more_users = count($client->users) - 7;
+                                        if(count($allUsers) > 7){
+                                            $plus_more_users = count($allUsers) - 7;
                                         }
                                     @endphp
-                                    @foreach($client->users->take(7) as $user)
+                                    @foreach(collect($allUsers)->take(7) as $user)
                                         <x-avatar :user="$user" class="avatar-sm" />
                                     @endforeach
                                     @if($plus_more_users)

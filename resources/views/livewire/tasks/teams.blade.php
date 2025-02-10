@@ -152,13 +152,13 @@
             </div> 
             <div class="col-md-6 text-end">
                 <select class="dashboard_filters-select" wire:model.live="byTeam" id="">
-                    <option value="all">All</option>
+                    <option value="all">All Teams</option>
                     @foreach($teams as $team)
                         <option value="{{ $team->id }}">{{ $team->name }}</option>
                     @endforeach
                 </select>
                 <select class="dashboard_filters-select" wire:model.live="byProject" id="">
-                    <option value="all">All</option>
+                    <option value="all">All Projects</option>
                     @foreach($projects as $project)
                         <option value="{{ $project->id }}">{{ $project->name }}</option>
                     @endforeach
@@ -175,24 +175,33 @@
             <span>|</span> 
              All 
         </a>
-
-
-        {{-- <a href="javascript:" wire:click="$set('status', 'pending')" class="btn-border btn-border-sm btn-border-primary "><span><i class='bx bx-objects-horizontal-center' ></i></span> {{ $project->tasks->where('status', 'pending')->count() }} Assigned</a> --}}
-
         <a  wire:click="$set('status', 'pending')" class="btn-border btn-border-primary @if($status == 'pending') active @endif">{{ $pendingTasks}} <span>|</span> Assigned</a>
         <a  wire:click="$set('status', 'in_progress')" class="btn-border btn-border-secondary @if($status == 'in_progress') active @endif">{{ $inProgressTasks}} <span>|</span> Accepted</a>
         <a  wire:click="$set('status', 'in_review')" class="btn-border btn-border-warning @if($status == 'in_review') active @endif">{{  $inReviewTasks }} <span>|</span> In Review</a>
         <a  wire:click="$set('status', 'completed')" class="btn-border btn-border-success @if($status == 'completed') active @endif">{{ $completedTasks }} <span>|</span> Completed</a>
-       
-
-        {{-- <a wire:click="$set('status', 'pending')" class="btn-border btn-border-primary @if($status == 'pending') active @endif">{{ $tasks_count->where('status','pending')->count() }} <span>|</span> Assigned</a>
-        <a wire:click="$set('status', 'in_progress')" class="btn-border btn-border-secondary @if($status == 'in_progress') active @endif">{{ $tasks_count->where('status','in_progress')->count() }} <span>|</span> Accepted</a>
-        <a wire:click="$set('status', 'in_review')" class="btn-border btn-border-warning @if($status == 'in_review') active @endif">{{ $tasks_count->where('status','in_review')->count() }} <span>|</span> In Review</a>
-        <a wire:click="$set('status', 'completed')" class="btn-border btn-border-success @if($status == 'completed') active @endif">{{ $tasks_count->where('status','completed')->count() }} <span>|</span> Completed</a> --}}
         <a wire:click="$set('status', 'overdue')" class="btn-border btn-border-danger @if($status == 'overdue') active @endif">
            {{ $overdueTasks }}
             <span>|</span> Overdue
         </a>
+        <div class="col-md-6">
+            @if($this->doesAnyFilterApplied())
+                <x-filters-query-params 
+                    :sort="$sort" 
+                    :status="$filter" 
+                    :byUser="$byUser" 
+                    :byProject="$byProject"
+                    :byClient="$byClient"
+                    :byTeam="$byTeam"
+                    :startDate="$startDate"
+                    :dueDate="$dueDate"
+                    :users="$users" 
+                    :projects="$projects"
+                    :teams="$teams"
+                    :clients="$clients"
+                    :clearFilters="route('task.teams')"
+                />
+            @endif
+        </div>
     </div>
 
     <div class="column-box mt-3">
@@ -218,6 +227,7 @@
                     <x-table-row :task="$task"/>
                 @endforeach
 
+                <!--- Pagination -->
                 @if(!$tasks)
                     <div class="col-md-12 text-center">
                         <img src="{{ asset('assets/images/'.'invite_signup_img.png') }}" width="150" alt="">
@@ -225,6 +235,9 @@
                     </div>
                 @endif
             </div>
+        </div>
+        <div class="pagination-wrap">
+            {{ $tasks->links() }}
         </div>
     </div>
 
@@ -236,7 +249,7 @@
             $('#offcanvasRight').offcanvas('hide');
         });
 
-        $(".edit-task").click(function(){
+        $(document).on('click', '.edit-task', function(){
             let taskId = $(this).data('id');
             @this.emitEditTaskEvent(taskId);
         });

@@ -86,7 +86,7 @@
                                         @endif
                                     @endif
                                 @endforeach
-                            </select>
+                            </select> 
                         </div>
                     </div>
                     @endif
@@ -359,6 +359,9 @@
         });
 
         function resetTaskCanvas(){
+
+            @this.set('task',null);
+            @this.resetForm();
             $(".taskPane").trigger('reset');
             $(".task-users").val(null).trigger('change');
             $(".task-notify-users").val(null).trigger('change');
@@ -386,15 +389,17 @@
             $(".task-attachment-count").html(0);
             $(".assigner-tab").addClass('d-none');
             $(".newly-attached").addClass('d-none');
-            @this.set('task', null);
+
         }
 
         $('#offcanvasRight').on('hidden.bs.offcanvas', function () {
+            @this.set('task',null);
             resetTaskCanvas();
         });
 
         document.addEventListener('task-added', event => {
             $('#offcanvasRight').offcanvas('hide');
+            @this.set('task',null);
             resetTaskCanvas();
         });
 
@@ -686,15 +691,12 @@
                 let task = event.detail[0];
                 let role = "{{ auth()->user()->hasRole('Admin') }}";
                 let user_id = {{ auth()->user()->id }}
-                console.log(user_id)
 
                 // task creator and admin can only delete the task
 
                 if(role || task.assigned_by.id == user_id){
-                    console.log('delete')
                     $(".delete-task-btn").removeClass('d-none');
                 }else{
-                    console.log('not delete')
                     $(".delete-task-btn").addClass('d-none');
                 }
 
@@ -850,7 +852,7 @@
                 $('.comment-'+id).html('');
                 let edit_comment_html = `<div class="edit-comment-section-${id}">
                     <textarea class="form-control" id="edit_comment_box_${id}" cols="30" rows="5">${comment}</textarea>
-                    <button class="btn btn-sm btn-border-primary update-comment-btn" data-id="${id}" wire:click="updateComment(${id})">Update</button>
+                    <button class="btn btn-sm btn-border-primary update-comment-btn" data-id="${id}">Update</button>
                 </div>`;
                 $(".edit-comment-section-"+id).html(edit_comment_html);
                 $(".edit-comment-section-"+id).removeClass('d-none');
@@ -896,6 +898,7 @@
                 $(".edit-comment-section-"+id).addClass('d-none');
                 $(".edit-comment-section-"+id).html('');
                 $(".comment-"+id).html(comment);
+                @this.updateComment(id, comment);
                 dispatchEvent(new CustomEvent('comment-updated', { detail: comment }));
 
             });

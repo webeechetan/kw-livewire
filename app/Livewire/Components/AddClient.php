@@ -166,4 +166,14 @@ class AddClient extends Component
         $this->dispatch('success', 'Client deleted successfully');
         $this->dispatch('saved');
     }
+
+    public function removeImage(){
+        if($this->client){
+            $this->client->image = null;
+            $this->client->save();
+        }else{
+            $this->client_image = null;
+        }
+
+    }
 }

@@ -3,26 +3,33 @@
 namespace App\Livewire\Tasks;
 
 use Livewire\Component;
+use App\Models\Team;
 use App\Models\Task;
 use App\Models\User;
 use App\Models\Project;
-use App\Models\Team;
-use App\Models\Comment;
 use App\Models\Client;
-use App\Notifications\NewTaskAssignNotification;
-use App\Notifications\UserMentionNotification;
 use Livewire\WithPagination;
 use App\Helpers\Filter;
+use Illuminate\Support\Facades\Pipeline;
+use App\Filters\{ProjectFilter, ClientFilter, UserFilter, TeamFilter, SearchFilter, StatusFilter, SortFilter, DateFilter};
 
 
 class Projects extends Component
 {
     use WithPagination;
+
+    public $allTasks;
+    public $pendingTasks;
+    public $inProgressTasks;
+    public $inReviewTasks;
+    public $completedTasks;
+    public $overdueTasks;
+
     // auth 
 
     public $auth_user_id;
 
-    public $tasks;
+    public $tasks_count = [];
 
     // Add task Form
     public $name;
@@ -36,7 +43,7 @@ class Projects extends Component
     public $byProject = 'all';
     public $byClient = 'all';
     public $byUser = 'all';
-    // public $byTeam = 'all';
+    public $byTeam = 'all';
     public $startDate;
     public $dueDate; 
     public $status = 'all';
@@ -66,67 +73,55 @@ class Projects extends Component
     public $ViewTasksAs = 'user';
     public $assignedByMe = false;
 
-    public $totalTasks = 0;
-    public $rows = 25;
-
 
     public function render()
     {
-        return view('livewire.tasks.projects');
+        $this->doesAnyFilterApplied();
+        $this->authorize('View Task');
+        $this->auth_user_id = auth()->guard(session('guard'))->user()->id;
+            
+        $tasks = Task::query();
+
+        
+        $tasks = Pipeline::send($tasks)
+            ->through([
+                new SearchFilter($this->query),
+                new StatusFilter($this->status, 'TASK-TEAMS'),
+                new SortFilter($this->sort),
+                new ClientFilter($this->byClient),
+                new ProjectFilter($this->byProject),
+                new UserFilter($this->byUser, 'TASK-TEAMS'),
+                new DateFilter($this->startDate, $this->dueDate,'TASK-TEAMS'),
+            ])
+            ->thenReturn();
+            
+        $this->allTasks = (clone $tasks)->count();
+        $this->pendingTasks = (clone $tasks)->where('status', 'pending')->count();
+        $this->inProgressTasks = (clone $tasks)->where('status', 'in_progress')->count();
+        $this->inReviewTasks = (clone $tasks)->where('status', 'in_review')->count();
+        $this->completedTasks = (clone $tasks)->where('status', 'completed')->count();
+        $this->overdueTasks = (clone $tasks)->where('due_date', '<', now())->where('status', '!=', 'completed')->count();
+
+        $tasks = $tasks->paginate(10);
+
+        return view('livewire.tasks.projects',[
+            'tasks' => $tasks,
+        ]);
     }
 
       
     public function mount()
     {
- 
-            $this->doesAnyFilterApplied();
-            $this->authorize('View Task');
-            if(!($this->currentRoute)){
-                $this->currentRoute = request()->route()->getName();
-            }
-           
-            $this->auth_user_id = auth()->guard(session('guard'))->user()->id;
-            if($this->byClient != 'all'){
-                $this->projects = Project::where('client_id', $this->byClient)->orderBy('name', 'asc')->get();
-            }else{
-                $this->projects = Project::orderBy('name', 'asc')->get();
-            }
-
-            if($this->byProject != 'all'){
-                $this->users = Project::find($this->byProject)->members;
-            }else{
-                $this->users = User::orderBy('name', 'asc')->get();
-            }
-
-            $this->teams = Team::orderBy('name', 'asc')->get();
-            $this->clients = Client::orderBy('name', 'asc')->get();
-            $this->tasks =  $this->applySort(
-                    Task::where('name', 'like', '%' . $this->query . '%')
-                        ->orderBy('created_at', 'desc')
-                )->limit($this->rows)->get();
-
-            $this->totalTasks =  $this->applySort(
-                Task::where('name', 'like', '%' . $this->query . '%')
-                    ->orderBy('created_at', 'desc')
-            )->count();
-
-    }
-
-    public function loadMore()
-    {
-        $this->rows += 25;
-        $this->tasks =  $this->applySort(
-            Task::where('name', 'like', '%' . $this->query . '%')
-                ->orderBy('created_at', 'desc')
-        )->limit($this->rows)->get();
+        if(!($this->currentRoute)){
+            $this->currentRoute = request()->route()->getName();
+        }
+        $this->clients = Client::orderBy('name')->get();
+        $this->projects = Project::orderBy('name')->get();
+        $this->teams = Team::orderBy('name')->get();
+        $this->users = User::orderBy('name')->get();
     }
 
     public function updatedAssignedByMe($value)
-    {
-        $this->mount();
-    }
-
-    public function updatedSort($value)
     {
         $this->mount();
     }
@@ -146,49 +141,12 @@ class Projects extends Component
     }
 
 
-    public function updatedByClient($value)
+    public function updatedByTeam($value)
     {
         $this->mount();
-    }
-
-    public function updatedByProject($value)
-    {
-        $this->mount();
-    }
-
-    public function updatedStartDate($value)
-    {
-        $this->mount();
-    }
-
-    public function updatedDueDate($value)
-    {
-        $this->mount();
-    }
-
-    public function updatedByUser($value)
-    {
-        $this->mount();
-    }
-
-    public function updatedStatus($value)
-    {
-        $this->mount();
-    }
-
-    public function applySort($query)
-    {
-    
-        return Filter::filterTasks(
-            $query, 
-            $this->byProject, 
-            $this->byClient, 
-            $this->byUser, 
-            $this->sort, 
-            $this->startDate, 
-            $this->dueDate, 
-            $this->status
-        );
+        if($this->byTeam != 'all'){
+            $this->projects = Team::find($this->byTeam)->projects;
+        }
     }
 
     public function doesAnyFilterApplied(){
