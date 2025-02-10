@@ -27,23 +27,42 @@
             </div>
         </div>
         <div class="col-md-6">
-            <div class="box-item" style="height: 225px;">
+            <div class="box-item">
                 <div class="row">
                     <div class="col-md-6">
                         <h4>Tasks Overview</h4>
-                        <h6>
-                            Completed  
-                            <b>
-                                <span class="text-success">
-                                    {{ round($users_tasks->where('status','completed')->count() > 0 ?
-                                    ($users_tasks->where('status','completed')->count() / $users_tasks->count()) * 100 :
-                                    0)}}%
-                                </span>
-                            </b>
-                        </h6>
-                        <div class="row mt-5">
+                        <h6>Total Active Tasks: <span class="text-secondary font-500">150</span></h6>
+                        <div class="row text-center mt-3">
                             <div class="col">
-                                <div class="row">
+                                <div id="others-tasks-chart" style="width: 70px; height: 70px; margin: auto;"></div>
+                                <span>20 My Tasks</span>
+                            </div>
+                            <div class="col">
+                                <div id="my-task-chart" style="width: 70px; height: 70px; margin: auto;"></div>
+                                <span>20 Other Tasks</span>
+                            </div>
+                        </div>
+                        <div class="row mt-2 d-none">
+
+                            <div class="col">
+                                <div class="row text-center">
+                                    <div class="col">
+                                        <div id="others-tasks-chart" style="width: 70px; height: 70px; margin: auto;"></div>
+                                        <h6>20</h6>
+                                        <span class="font-500">My Tasks</span>
+                                    </div>
+                                    <div class="col">
+                                        <div id="others-tasks-chart" style="width: 70px; height: 70px; margin: auto;"></div>
+                                        <h6>20</h6>
+                                        <span class="font-500">My Tasks</span>
+                                    </div>
+                                    <div class="col">
+                                        <div id="my-task-chart" style="width: 70px; height: 70px; margin: auto;"></div>
+                                        <h6>20</h6>
+                                        <span class="font-500">Other Tasks</span>
+                                    </div>
+                                </div>
+                                <div class="row d-none">
                                     <div class="col-auto">
                                         <h5>Other Tasks </h5>
                                         <div id="others-tasks-chart" style="width: 100%;height: 100px;"></div>
@@ -53,7 +72,7 @@
                                         <div>Total {{ pluralOrSingular($users_tasks->count(),'Task') }}</div> 
                                     </div> --}}
                                 </div>
-                                <div class="row">
+                                <div class="row d-none">
                                     <div class="col">
                                         <h5 class="mb-0">My Tasks</h5>
                                         <div id="my-task-chart" style="width: 100%;height: 100px;"></div>
@@ -64,10 +83,18 @@
                             
                         </div>
                     </div> 
-                    <div class="col-md-6">
+                    <div class="col-md-6 border-start">
                         <div class="text-center">
-                            <div id="progress-chart-gauge" style="width: 100%;height: 200px; margin-top: -15px;">
-
+                            <div id="progress-chart-gauge" style="width: 100%;height: 200px; margin-top: -15px; margin-bottom: -80px;"></div>
+                            <div>
+                                Progress
+                                <b>
+                                    <span class="text-success">
+                                        {{ round($users_tasks->where('status','completed')->count() > 0 ?
+                                        ($users_tasks->where('status','completed')->count() / $users_tasks->count()) * 100 :
+                                        0)}}%
+                                    </span>
+                                </b>
                             </div>
                         </div>
                         <div class="row mt-4 task-details">
