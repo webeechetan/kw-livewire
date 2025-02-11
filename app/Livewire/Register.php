@@ -61,6 +61,7 @@ class Register extends Component
             $user->email = $this->email;
             $user->password = Hash::make($this->password);
             $user->org_id = $organization->id;
+            $user->is_owner = true;
             $user->save();
 
             $client = new Client();

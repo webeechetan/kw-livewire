@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('org_id');
             $table->unsignedBigInteger('main_team_id')->nullable();
+            $table->boolean('is_owner')->default(false);
             $table->string('name');
             $table->string('email')->unique();
             $table->string('image')->nullable();

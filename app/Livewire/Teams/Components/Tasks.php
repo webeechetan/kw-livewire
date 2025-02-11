@@ -70,7 +70,7 @@ class Tasks extends Component
         $this->completedTasks = (clone $tasks)->where('status', 'completed')->count();
         $this->overdueTasks = (clone $tasks)->where('due_date', '<', Carbon::now())->where('status','!=','completed')->count();
 
-        $tasks = $tasks->paginate(5);
+        $tasks = $tasks->paginate(25);
 
         return view('livewire.teams.components.tasks',[
             'tasks' => $tasks
