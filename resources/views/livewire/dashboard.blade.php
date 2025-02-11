@@ -35,11 +35,11 @@
                         <div class="row text-center mt-3">
                             <div class="col">
                                 <div id="others-tasks-chart" style="width: 70px; height: 70px; margin: auto;"></div>
-                                <span>20 My Tasks</span>
+                                <span>My Tasks</span>
                             </div>
                             <div class="col">
                                 <div id="my-task-chart" style="width: 70px; height: 70px; margin: auto;"></div>
-                                <span>20 Other Tasks</span>
+                                <span>Other Tasks</span>
                             </div>
                         </div>
                         <div class="row mt-2 d-none">
@@ -97,28 +97,14 @@
                                 </b>
                             </div>
                         </div>
-                        <div class="row mt-4 task-details">
+                        <div class="row mt-2 task-details text-center">
                             <div class="col-md-6">
-                                <div class="row">
-                                    <div class="col-md-auto pe-md-0">
-                                        <div class="text-success"><i class='bx bxs-circle'></i></div>
-                                    </div>
-                                    <div class="col ps-md-2">
-                                        <h6><b>{{ $users_tasks->where('status','in_progress')->count()}}</b></h6>
-                                        <div>On Going</div>
-                                    </div>
-                                </div>
+                                <h6><b>{{ $users_tasks->where('status','in_progress')->count()}}</b></h6>
+                                <div>On Going</div>
                             </div>
                             <div class="col-md-6">
-                                <div class="row">
-                                    <div class="col-md-auto pe-md-0">
-                                        <div class="text-warning"><i class='bx bxs-circle'></i></div>
-                                    </div>
-                                    <div class="col ps-md-2">
-                                        <h6><b>{{ $users_tasks->where('status','pending')->count()}}</b></h6>
-                                        <div>Unfinished</div>
-                                    </div>
-                                </div>
+                                <h6><b>{{ $users_tasks->where('status','pending')->count()}}</b></h6>
+                                <div>Unfinished</div>
                             </div>
                         </div>
                     </div>
@@ -128,9 +114,9 @@
     </div>
 
     <div class="row">
-        <div class="col-md-4 mt-4">
+        <div class="col-md-5 mt-4">
             <div class="box-item h-100">
-                <h4 class="text-xl">Your Tasks</h4>
+                <h4 class="text-xl">My Tasks</h4>
                 <hr>
                 <ul class="nav nav-pills nav-pills-xs mb-3" id="pills-tab" role="tablist">
                     <li class="nav-item" role="presentation">
@@ -250,138 +236,136 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-8 ">
-            <div class="row d-none">
-                <div class="col-md-6 mt-4">
-                    <div class="box-item h-100">
-                        <h4 class="text-xl">Your Progress</h4>
-                        <hr>
-                        <div class="text-center" id="user-progress-pie-chart" style="width: 100%;height: 250px;"></div>
-                        <div class="row">
-                            <div class="col">
-                                <div class="row align-items-center">
-                                    <div class="col-md-auto pe-md-0">
-                                        <div class="text-secondary"><i class="bx bxs-circle"></i></div>
-                                    </div>
-                                    <div class="col ps-md-2">
-                                        <h6 class="mb-0">Active Projects</h6>
-                                    </div>
-                                </div>
+        <div class="col-md-7 mt-4">
+            <div class="box-item calendar-title">
+                <!-- <h4>Calendar</h4> -->
+                <div id="calendar"></div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 mt-4">
+            <div class="box-item h-100">
+                <h4 class="text-xl">My Progress</h4>
+                <hr>
+                <div class="text-center" id="user-progress-pie-chart" style="width: 100%;height: 250px;"></div>
+                <div class="row">
+                    <div class="col">
+                        <div class="row align-items-center">
+                            <div class="col-md-auto pe-md-0">
+                                <div class="text-secondary"><i class="bx bxs-circle"></i></div>
                             </div>
-                            <div class="col-md-auto">
-                                <h6 class="mb-0 text-secondary"><b>{{$active_projects}}</b></h6>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col">
-                                <div class="row align-items-center">
-                                    <div class="col-md-auto pe-md-0">
-                                        <div class="text-danger"><i class="bx bxs-circle"></i></div>
-                                    </div>
-                                    <div class="col ps-md-2">
-                                        <h6 class="mb-0 text-danger">Overdue Tasks</h6>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-auto">
-                                <h6 class="mb-0 text-danger"><b>{{ $users_tasks->where('due_date', '<', now())->where('status','!=','completed')->
-                                            count();}}</b></h6>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col">
-                                <div class="row align-items-center">
-                                    <div class="col-md-auto pe-md-0">
-                                        <div class="text-warning"><i class="bx bxs-circle"></i></div>
-                                    </div>
-                                    <div class="col ps-md-2">
-                                        <h6 class="mb-0">Active Tasks</h6>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-auto">
-                                <h6 class="mb-0 text-warning"><b>{{ $users_tasks->where('status',
-                                        'in_progress')->count();}}</b></h6>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col">
-                                <div class="row align-items-center">
-                                    <div class="col-md-auto pe-md-0">
-                                        <div class="text-success"><i class="bx bxs-circle"></i></div>
-                                    </div>
-                                    <div class="col ps-md-2">
-                                        <h6 class="mb-0">Completed Tasks</h6>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-auto">
-                                <h6 class="mb-0 text-success"><b>{{
-                                        $users_tasks->where('status','completed')->count();}}</b></h6>
+                            <div class="col ps-md-2">
+                                <h6 class="mb-0">Active Projects</h6>
                             </div>
                         </div>
                     </div>
+                    <div class="col-md-auto">
+                        <h6 class="mb-0 text-secondary"><b>{{$active_projects}}</b></h6>
+                    </div>
                 </div>
-                <div class="col-md-6 mt-4">
-                    <div class="box-item h-100">
-                        <h4 class="text-xl">Important Projects</h4>
-                        <hr>
-                        <div class="overflow-y scrollbar scrollbar-primary">
-                            @foreach($mostImportantProjects as $project)
-                            <div class="card_style bg-light spacing-between-20">
-                                <a href="{{ route('project.profile', $project->id) }}" class="card_style-open"><i class='bx bx-chevron-right'></i></a>
-                                <div class="row mb-2">
-                                    <div class="col-auto pe-md-1">
-                                        <x-avatar class="avatar-sm" :user="$project" />
-                                    </div>
-                                    <div class="col">
-                                        <div class="text-sm text-light"><i class="bx bx-briefcase-alt-2"></i> {{ $project->client->name}}</div>
-                                        <div class="mb-1 text-lg">
-                                            <a href="{{ route('project.profile', $project->id) }}" wire:navigate>{{ $project->name }}</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="d-flex flex-wrap gap-2 mt-2">
-                                    @if($project->teams)
-                                    @foreach($project->teams as $team)
-                                    <a href="{{ route('team.profile', $team->id) }}" wire:navigate class="btn btn-success rounded-pill btn-xs text-uppercase">{{$team->name}}</a>
-                                    @endforeach
-                                    @endif
-                                </div>
-                                @php
-                                $taskDone = $project->tasks->where('status', 'completed')->count();
-                                $totalTask = $project->tasks->count();
-
-                                if ($totalTask > 0) {
-                                $percentage = ($taskDone / $totalTask) * 100;
-                                } else {
-                                $percentage = 0;
-                                }
-                                @endphp
-                                <div class="progress mt-3">
-                                    <div class="progress-bar progress-secondary" role="progressbar" aria-label="Task Done"
-                                        style="width: {{$percentage}}%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                                    </div>
-                                </div>
-                                <div class="row mt-2">
-                                    <div class="col"><b>{{ $taskDone }}</b> <span>{{ pluralOrSingular($taskDone,'Task') }} Done</span></div>
-                                    <div class="col-auto text-end text-danger px-4 text-sm"><i class="bx bx-calendar"></i> <span>{{ $project->due_date
-                                        ?? 'No Due Date' }}</span></div>
-                                </div>
+                <hr>
+                <div class="row">
+                    <div class="col">
+                        <div class="row align-items-center">
+                            <div class="col-md-auto pe-md-0">
+                                <div class="text-danger"><i class="bx bxs-circle"></i></div>
                             </div>
-                            @endforeach
+                            <div class="col ps-md-2">
+                                <h6 class="mb-0 text-danger">Overdue Tasks</h6>
+                            </div>
                         </div>
+                    </div>
+                    <div class="col-md-auto">
+                        <h6 class="mb-0 text-danger"><b>{{ $users_tasks->where('due_date', '<', now())->where('status','!=','completed')->
+                                    count();}}</b></h6>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col">
+                        <div class="row align-items-center">
+                            <div class="col-md-auto pe-md-0">
+                                <div class="text-warning"><i class="bx bxs-circle"></i></div>
+                            </div>
+                            <div class="col ps-md-2">
+                                <h6 class="mb-0">Active Tasks</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-auto">
+                        <h6 class="mb-0 text-warning"><b>{{ $users_tasks->where('status',
+                                'in_progress')->count();}}</b></h6>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col">
+                        <div class="row align-items-center">
+                            <div class="col-md-auto pe-md-0">
+                                <div class="text-success"><i class="bx bxs-circle"></i></div>
+                            </div>
+                            <div class="col ps-md-2">
+                                <h6 class="mb-0">Completed Tasks</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-auto">
+                        <h6 class="mb-0 text-success"><b>{{
+                                $users_tasks->where('status','completed')->count();}}</b></h6>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-8 mt-3">
-            <div class="box-item h-100 calendar-title">
-                <!-- <h4>Calendar</h4> -->
-                <div id="calendar"></div>
+        <div class="col-md-4 mt-4">
+            <div class="box-item h-100">
+                <h4 class="text-xl">Important Projects</h4>
+                <hr>
+                <div class="overflow-y scrollbar scrollbar-primary">
+                    @foreach($mostImportantProjects as $project)
+                    <div class="card_style bg-light spacing-between-20">
+                        <a href="{{ route('project.profile', $project->id) }}" class="card_style-open"><i class='bx bx-chevron-right'></i></a>
+                        <div class="row mb-2">
+                            <div class="col-auto pe-md-1">
+                                <x-avatar class="avatar-sm" :user="$project" />
+                            </div>
+                            <div class="col">
+                                <div class="text-sm text-light"><i class="bx bx-briefcase-alt-2"></i> {{ $project->client->name}}</div>
+                                <div class="mb-1 text-lg">
+                                    <a href="{{ route('project.profile', $project->id) }}" wire:navigate>{{ $project->name }}</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex flex-wrap gap-2 mt-2">
+                            @if($project->teams)
+                            @foreach($project->teams as $team)
+                            <a href="{{ route('team.profile', $team->id) }}" wire:navigate class="btn btn-success rounded-pill btn-xs text-uppercase">{{$team->name}}</a>
+                            @endforeach
+                            @endif
+                        </div>
+                        @php
+                        $taskDone = $project->tasks->where('status', 'completed')->count();
+                        $totalTask = $project->tasks->count();
+
+                        if ($totalTask > 0) {
+                        $percentage = ($taskDone / $totalTask) * 100;
+                        } else {
+                        $percentage = 0;
+                        }
+                        @endphp
+                        <div class="progress mt-3">
+                            <div class="progress-bar progress-secondary" role="progressbar" aria-label="Task Done"
+                                style="width: {{$percentage}}%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col"><b>{{ $taskDone }}</b> <span>{{ pluralOrSingular($taskDone,'Task') }} Done</span></div>
+                            <div class="col-auto text-end text-danger px-4 text-sm"><i class="bx bx-calendar"></i> <span>{{ $project->due_date
+                                ?? 'No Due Date' }}</span></div>
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
             </div>
         </div>
         <div class="col-md-4 mt-3">
@@ -389,7 +373,7 @@
                 <h4 class="text-xl">Recent Comments</h4>
                 <hr>
                 <div class="scrollbar">
-                    <div style="height: 570px;">
+                    <div style="height: 460px;">
                         @foreach($recent_comments as $comment)
                         <div class="cmnt_item_row card_style bg-light">
                             <a href="{{ route('task.view', $comment->task_id) }}" class="card_style-open"><i class='bx bx-chevron-right'></i></a>
