@@ -1176,6 +1176,9 @@ hr.space-sm {
 .cmnt_item_user_text img {
   max-width: 100%;
 }
+.cmnt_item_user_text a {
+  color: #7407ff;
+}
 .cmnt_item_user_text a p:last-child {
   margin-bottom: 0;
 }
