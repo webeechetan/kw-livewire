@@ -187,7 +187,7 @@
             @if($this->doesAnyFilterApplied())
                 <x-filters-query-params 
                     :sort="$sort" 
-                    :status="$filter" 
+                    :status="$status" 
                     :byUser="$byUser" 
                     :byProject="$byProject"
                     :byClient="$byClient"

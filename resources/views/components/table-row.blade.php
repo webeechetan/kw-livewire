@@ -37,7 +37,7 @@
             </span>
         </div>
         
-        <div class="taskList_col"><span>{{ $task->client?->name }}</span></div>
+        <div class="taskList_col"><span>{{ $task->project?->client?->name }}</span></div>
         
         <div class="taskList_col"><span>{{ $task->project?->name }}</span></div>
         
@@ -65,7 +65,7 @@
 
         <div class="taskList_col">
             <div class="avatarGroup avatarGroup-overlap">
-                {{  $task->assignedBy->name }}
+                {{  $task->assignedBy?->name }}
             </div>
         </div>
         

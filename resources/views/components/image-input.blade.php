@@ -21,7 +21,7 @@
     </div>
 
     <div class="remove-image-sesction d-none">
-        <button type="button" class="remove-image-button btn btn-danger btn-sm" wire:click="removeImage">Remove Image</button>
+        <button type="button" class="remove-image-button btn btn-danger btn-sm" wire:click="removeImage"><i class="bx bx-trash"></i></button>
     </div>
 
 </div>

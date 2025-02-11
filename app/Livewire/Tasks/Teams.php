@@ -80,8 +80,16 @@ class Teams extends Component
         $this->authorize('View Task');
         $this->auth_user_id = auth()->guard(session('guard'))->user()->id;
             
-        $tasks = Task::query();
+        $tasks = Task::with('assignedBy','project','users','project.client');
 
+        
+        
+        $this->allTasks = (clone $tasks)->count();
+        $this->pendingTasks = (clone $tasks)->where('status', 'pending')->count();
+        $this->inProgressTasks = (clone $tasks)->where('status', 'in_progress')->count();
+        $this->inReviewTasks = (clone $tasks)->where('status', 'in_review')->count();
+        $this->completedTasks = (clone $tasks)->where('status', 'completed')->count();
+        $this->overdueTasks = (clone $tasks)->where('due_date', '<', now())->where('status', '!=', 'completed')->count();
         
         $tasks = Pipeline::send($tasks)
             ->through([
@@ -95,13 +103,6 @@ class Teams extends Component
                 new DateFilter($this->startDate, $this->dueDate,'TASK-TEAMS'),
             ])
             ->thenReturn();
-            
-        $this->allTasks = (clone $tasks)->count();
-        $this->pendingTasks = (clone $tasks)->where('status', 'pending')->count();
-        $this->inProgressTasks = (clone $tasks)->where('status', 'in_progress')->count();
-        $this->inReviewTasks = (clone $tasks)->where('status', 'in_review')->count();
-        $this->completedTasks = (clone $tasks)->where('status', 'completed')->count();
-        $this->overdueTasks = (clone $tasks)->where('due_date', '<', now())->where('status', '!=', 'completed')->count();
 
         $tasks = $tasks->paginate(25);
 

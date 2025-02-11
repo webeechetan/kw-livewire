@@ -69,7 +69,7 @@
                                                 </a>
                                             </div>
                                         </div> 
-                                        <h5 class="filterSort-header mt-4"><i class='bx bx-calendar-alt text-primary' ></i> Filter By Statuss</h5>
+                                        <h5 class="filterSort-header mt-4"><i class='bx bx-calendar-alt text-primary' ></i> Filter By Status</h5>
                                         <ul class="filterSort_btn_group list-none">
                                             <li class="filterSort_item"><a wire:click="$set('status', 'all')" class="btn-batch @if($status == 'all') active @endif">All</a></li>
                                             <li class="filterSort_item"><a wire:click="$set('status', 'pending')" class="btn-batch @if($status == 'pending') active @endif">Assigned</a></li>
@@ -181,14 +181,14 @@
             @if($this->doesAnyFilterApplied())
                 <x-filters-query-params 
                     :sort="$sort" 
-                    :status="$filter" 
+                    :status="$status" 
                     :byUser="$byUser" 
                     :byProject="$byProject"
                     :byClient="$byClient"
                     :byTeam="$byTeam"
                     :startDate="$startDate"
                     :dueDate="$dueDate"
-                    :users="$users" 
+                    :users="$users"  
                     :projects="$projects"
                     :teams="$teams"
                     :clients="$clients"
@@ -215,9 +215,6 @@
         <div class="taskList scrollbar">
             <div>
                 @foreach($tasks as $task)
-                    @if(!$task->project)
-                        @continue
-                    @endif
                     <x-table-row :task="$task"/>
                 @endforeach
 

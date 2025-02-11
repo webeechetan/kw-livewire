@@ -32,7 +32,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="cus_dropdown-icon btn-batch"><i class='bx bx-check'></i> Mark Completed</div>
+                            {{-- <div class="cus_dropdown-icon btn-batch"><i class='bx bx-check'></i> Mark Completed</div> --}}
                         </div>
                     </div>
                     <div class="col-md-6">

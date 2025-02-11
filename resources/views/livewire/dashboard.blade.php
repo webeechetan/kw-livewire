@@ -31,7 +31,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <h4>Tasks Overview</h4>
-                        <h6>Total Active Tasks: <span class="text-secondary font-500">150</span></h6>
+                        <h6>Total Active Tasks: <span class="text-secondary font-500"> {{ $users_tasks->count()  }} </span></h6>
                         <div class="row text-center mt-3">
                             <div class="col">
                                 <div id="others-tasks-chart" style="width: 70px; height: 70px; margin: auto;"></div>
@@ -403,7 +403,7 @@
     </div>
 
     {{-- pins --}}
-    @if($myPins->count() > 0)
+    {{-- @if($myPins->count() > 0)
         <div class="row mt-4">
             <div class="col">
                 <h4 class="text-xl">Pinned Projects</h4>
@@ -420,9 +420,9 @@
                             <i class="bx bx-chevron-right"></i>
                         </a>
                         <div class="card_style-project-head">
-                            <div class="card_style-project-head-client"><span><i class="bx bx-briefcase-alt-2"></i></span> {{ $pin->pinnable->client?->name }}</div>
+                            <div class="card_style-project-head-client"><span><i class="bx bx-briefcase-alt-2"></i></span> {{ $project->client?->name }}</div>
                             <h4>
-                                <a href="{{ route('project.profile', $pin->pinnable_id) }}" wire:navigate>{{ $pin->pinnable->name }}</a>
+                                <a href="{{ route('project.profile', $pin->pinnable_id) }}" wire:navigate>{{ $pin->project->name }}</a>
                             </h4>
                             <livewire:components.pin-button pinnable_type="App\Models\Project"  :pinnable_id="$project->id" />
                         </div>
@@ -452,7 +452,7 @@
                 </div>
             @endforeach
         </div>
-    @endif
+    @endif --}}
 </div>
 @php
     $tour = session()->get('tour');
@@ -468,7 +468,7 @@
             'start' => $task->due_date,
             'url' => route('task.view', $task->id),
             'backgroundColor' => $color,
-            ];
+        ];
     }
 
     @endphp
@@ -509,10 +509,16 @@
                 },
                 series: [
                     {
-                    name: 'Access From',
+                    name: 'My Tasks',
                     type: 'pie',
                     radius: ['40%', '70%'],
                     avoidLabelOverlap: false,
+                    itemStyle: {
+                        color : function(params) {
+                            var colorList = ['#32CD32','#FF6347'];
+                            return colorList[params.dataIndex]
+                        }
+                    },
                     label: {
                         show: false,
                         position: 'center'
@@ -564,13 +570,19 @@
                 },
                 series: [
                     {
-                    name: 'Access From',
+                    name: 'Others Tasks',
                     type: 'pie',
                     radius: ['40%', '70%'],
                     avoidLabelOverlap: false,
                     label: {
                         show: false,
                         position: 'center'
+                    },
+                    itemStyle: {
+                        color : function(params) {
+                            var colorList = ['#32CD32','#FF6347'];
+                            return colorList[params.dataIndex]
+                        }
                     },
                     emphasis: {
                         label: {
@@ -605,6 +617,10 @@
             var calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: 'dayGridMonth',
                 events: events,
+                dayMaxEventRows: true,
+                moreLinkClick: 'popover',
+                moreLinkClassNames: 'calendar-more-link-btn',
+
             });
             calendar.render();
 

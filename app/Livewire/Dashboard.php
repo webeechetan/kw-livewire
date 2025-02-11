@@ -43,7 +43,7 @@ class Dashboard extends Component
             session()->put('tour',$tour);
         } 
         $this->getRecentComments();
-        $this->myPins = Pin::where('user_id',Auth::id())->get(); 
+        $this->myPins = Pin::where('user_id',Auth::id())->where('pinnable_type','App\Models\Project')->get();
     }
 
     // nearest due date and more pending tasks are most important projects
