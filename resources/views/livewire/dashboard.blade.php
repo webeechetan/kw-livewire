@@ -54,12 +54,12 @@
                                     <div class="col">
                                         <div id="others-tasks-chart" style="width: 70px; height: 70px; margin: auto;"></div>
                                         <h6>20</h6>
-                                        <span class="font-500">My Tasks</span>
+                                        <span class="font-500">Other Tasks</span>
                                     </div>
                                     <div class="col">
                                         <div id="my-task-chart" style="width: 70px; height: 70px; margin: auto;"></div>
                                         <h6>20</h6>
-                                        <span class="font-500">Other Tasks</span>
+                                        <span class="font-500">My Tasks</span>
                                     </div>
                                 </div>
                                 <div class="row d-none">
@@ -114,7 +114,7 @@
     </div>
 
     <div class="row">
-        <div class="col-md-5 mt-4">
+        <div class="col-md-4 mt-4">
             <div class="box-item h-100">
                 <h4 class="text-xl">My Tasks</h4>
                 <hr>
@@ -236,7 +236,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-7 mt-4">
+        <div class="col-md-8 mt-4">
             <div class="box-item calendar-title">
                 <!-- <h4>Calendar</h4> -->
                 <div id="calendar"></div>
