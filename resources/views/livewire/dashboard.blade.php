@@ -375,26 +375,26 @@
                 <div class="scrollbar">
                     <div style="height: 460px;">
                         @foreach($recent_comments as $comment)
-                        <div class="cmnt_item_row card_style bg-light">
-                            <a href="{{ route('task.view', $comment->task_id) }}" class="card_style-open"><i class='bx bx-chevron-right'></i></a>
-                            <div class="cmnt_item_user">
-                                <div class="cmnt_item_user_img">
-                                    <x-avatar :user="$comment->user" class="avatar-sm" />
-                                </div>
-                                <div class="cmnt_item_user_name-wrap">
-                                    <div class="cmnt_item_user_name">
-                                        <a href="{{ route('user.profile', $comment->user->id) }}">{{ $comment->user->name }}</a>
+                            <div class="cmnt_item_row card_style bg-light">
+                                <a href="{{ route('task.view', $comment->task_id) }}" class="card_style-open"><i class='bx bx-chevron-right'></i></a>
+                                <div class="cmnt_item_user">
+                                    <div class="cmnt_item_user_img">
+                                        <x-avatar :user="$comment->user" class="avatar-sm" />
                                     </div>
-                                    <div class="cmnt_item_date">{{ \Carbon\Carbon::parse($comment->created_at)->diffForHumans() }}</div>
+                                    <div class="cmnt_item_user_name-wrap">
+                                        <div class="cmnt_item_user_name">
+                                            <a href="{{ route('user.profile', $comment->user->id) }}">{{ $comment->user->name }}</a>
+                                        </div>
+                                        <div class="cmnt_item_date">{{ \Carbon\Carbon::parse($comment->created_at)->diffForHumans() }}</div>
+                                    </div>
+                                </div>
+                                <div class="mt-2 cmnt_item_task border-bottom pb-2"><i class="bx bx-task"></i> <a href="{{ route('task.view', $comment->task_id) }}">{{ $comment->task->name }}</a></div>
+                                <div class="cmnt_item_user_text">
+                                    <a href="{{ route('task.view', $comment->task_id) }}">
+                                        {!! Str::limit($comment->comment, 25, '...') !!}
+                                    </a>
                                 </div>
                             </div>
-                            <div class="mt-2 cmnt_item_task border-bottom pb-2"><i class="bx bx-task"></i> <a href="{{ route('task.view', $comment->task_id) }}">{{ $comment->task->name }}</a></div>
-                            <div class="cmnt_item_user_text">
-                                <a href="{{ route('task.view', $comment->task_id) }}">
-                                    {!! Str::limit($comment->comment, 25, '...') !!}
-                                </a>
-                            </div>
-                        </div>
                         @endforeach
                     </div>
                 </div>
