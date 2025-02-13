@@ -80,7 +80,7 @@ use App\Livewire\Tasks\MarkedToMeTasks;
 */
 
 use App\Http\Controllers\AIController;
-
+use App\Livewire\Projects\Components\CalendarView;
 
 Route::get('/kk', function () {
     return view('ai-query');
@@ -164,7 +164,9 @@ Route::group(
     Route::get('/project/view/{id}',Project::class)->name('project.profile');
     Route::get('/project/view/{project}/tasks',ProjectTasks::class)->name('project.tasks')->withTrashed();
     Route::get('/project/view/{project}/file-manager',ProjectFileManager::class)->name('project.file-manager')->withTrashed();
+    Route::get('/project/view/{project}/calendar-view',CalendarView::class)->name('project.calendar')->withTrashed();
     
+
     /*
     |--------------------------------------------------------------------------
     | Teams Routes
