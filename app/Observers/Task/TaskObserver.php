@@ -4,6 +4,8 @@ namespace App\Observers\Task;
 use App\Models\Task;
 use App\Notifications\TaskStatusChangeNotification;
 use App\Models\Activity;
+use App\Models\Organization;
+use App\Models\Webhook;
 use App\Models\Notification;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
@@ -143,6 +145,19 @@ class TaskObserver
         $activity->activityable_type = 'App\Models\Project';
         $activity->created_by = auth()->guard(session('guard'))->user()->id;
         $activity->save();
+
+        $org_id = $task->org_id;
+
+        $org = Organization::find($org_id);
+
+        $webhooks = $org->webhooks;
+
+        $webhooks = $webhooks->where('for','task')->where('type','outgoing')->where('event','created')->where('status','active');
+
+        foreach($webhooks as $webhook){
+            $webhook->send($task);
+        }
+
 
     }
 
