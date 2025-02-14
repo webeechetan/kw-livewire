@@ -68,6 +68,10 @@ use Livewire\Livewire;
 use App\Livewire\Organizations\Profile as OrganizationProfile;
 use App\Livewire\Tasks\MarkedToMeTasks;
 
+// developer routes
+
+use App\Livewire\Developers\Dashbaord as DeveloperDashboard;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -80,7 +84,8 @@ use App\Livewire\Tasks\MarkedToMeTasks;
 */
 
 use App\Http\Controllers\AIController;
-
+use App\Livewire\Developers\ApiTokens;
+use App\Livewire\Developers\Webhooks;
 
 Route::get('/kk', function () {
     return view('ai-query');
@@ -216,6 +221,16 @@ Route::group(
     */
 
     Route::get('/organization/profile',OrganizationProfile::class)->name('organization.profile');
+
+    /*
+    |--------------------------------------------------------------------------
+    | Developers Routes
+    |--------------------------------------------------------------------------
+    */
+
+    Route::get('/developers/dashboard',DeveloperDashboard::class)->name('developers.dashboard');
+    Route::get('/developers/webhooks',Webhooks::class)->name('developers.webhooks');
+    Route::get('/developers/api-tokens',ApiTokens::class)->name('developers.api-tokens');
 
 
     /*

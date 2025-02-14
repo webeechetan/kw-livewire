@@ -112,6 +112,13 @@
                     </li> 
                     @endrole
                     <li>
+                      <a class="dropdown-item align-items-center" wire:navigate href="{{ route('developers.dashboard') }}">
+                        <i class="bx bx-code me-2"></i>
+                        <span class="align-middle">Developers</span>
+                      </a>
+                    </li> 
+
+                    <li>
                       <a class="dropdown-item align-items-center text-danger" href="{{route('logout')}}" >
                         <i class="bx bx-power-off me-2"></i>
                         <span class="align-middle">Log Out</span>
