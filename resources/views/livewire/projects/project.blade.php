@@ -172,7 +172,7 @@
                             <div class="column-title">Assignees 
                                 <a href="javascript:" class="ms-3 btn_link btn_link-border btn_link-sm assign-new-user">
                                     Add
-                                </a>
+                                </a> 
                             </div>
                         </div>
                         <div class="assign-new-user-col d-none">
