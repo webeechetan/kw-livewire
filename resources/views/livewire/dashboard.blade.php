@@ -382,15 +382,13 @@
                                         <x-avatar :user="$comment->user" class="avatar-sm" />
                                     </div>
                                     <div class="cmnt_item_user_name-wrap">
-                                        <div class="cmnt_item_user_name">
-                                            <a href="{{ route('user.profile', $comment->user->id) }}">{{ $comment->user->name }}</a>
-                                        </div>
+                                        <div class="cmnt_item_user_name">{{ $comment->user->name }}</div>
                                         <div class="cmnt_item_date">{{ \Carbon\Carbon::parse($comment->created_at)->diffForHumans() }}</div>
                                     </div>
                                 </div>
                                 <div class="mt-2 cmnt_item_task border-bottom pb-2"><i class="bx bx-task"></i> <a href="{{ route('task.view', $comment->task_id) }}">{{ $comment->task->name }}</a></div>
                                 <div class="cmnt_item_user_text">
-                                    <a href="{{ route('task.view', $comment->task_id) }}">
+                                    <a class="text-light" href="{{ route('task.view', $comment->task_id) }}">
                                         {!! Str::limit(strip_tags($comment->comment), 25, '...') !!}
                                     </a>
                                 </div>
@@ -460,9 +458,9 @@
     foreach($users_tasks as $task){
         $color = '';
         if($task->status == 'completed'){
-            $color = 'green';
+            $color = '#4F9F54';
         }else{
-            if($task->due_date < now()){ $color='red' ; }else{ $color='green' ; } 
+            if($task->due_date < now()){ $color='#FF0000' ; }else{ $color='#4F9F54' ; } 
         } 
         $events[]=[ 'title'=> $task->name,
             'start' => $task->due_date,
@@ -515,7 +513,7 @@
                     avoidLabelOverlap: false,
                     itemStyle: {
                         color : function(params) {
-                            var colorList = ['#32CD32','#FF6347'];
+                            var colorList = ['#48914D','#ddd'];
                             return colorList[params.dataIndex]
                         }
                     },
@@ -580,7 +578,7 @@
                     },
                     itemStyle: {
                         color : function(params) {
-                            var colorList = ['#32CD32','#FF6347'];
+                            var colorList = ['#48914D','#ddd'];
                             return colorList[params.dataIndex]
                         }
                     },
@@ -645,7 +643,7 @@
                         max: 100,
                         splitNumber: 10,
                         itemStyle: {
-                            color: '#7407ff',
+                            color: '#4F9F54',
                             shadowColor: 'rgba(0,138,255,0.45)',
                         },
                         progress: {
@@ -653,7 +651,7 @@
                             roundCap: false,
                             width: 18,
                             itemStyle: {
-                                color: 'rgb(220 53 69)',
+                                color: '#4F9F54',
                             },
                         },
                         pointer: {
@@ -715,7 +713,7 @@
             var option;
 
             option = {
-                color: ['#8B00FF', '#FF6347', '#FFD700', '#32CD32'],
+                color: ['#8B00FF', '#ff0000', '#FFD700', '#48914D'],
                 tooltip: {
                     trigger: 'item',
                     formatter: '{b}: {c} ({d}%)',

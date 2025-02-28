@@ -4955,123 +4955,47 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
 }
 
 /* ----- Calender ---- */
-.fc-theme-standard td,
-.fc-theme-standard th {
-  border-color: #eee;
-}
-
-.fc .fc-daygrid-day-top {
-  display: flex;
-  flex-direction: row-reverse;
-  justify-content: center;
-}
-
-.fc .fc-daygrid-day.fc-day-today {
-  background-color: unset;
-}
-
-.fc .fc-day-today .fc-daygrid-day-number {
-  background: #7407ff;
-  width: 33px;
-  border-radius: 50%;
-  text-align: center;
-  color: #fff;
-}
-
-.fc-theme-standard .fc-scrollgrid {
-  border: unset;
-}
-
-a.fc-event.fc-event-start.fc-event-end.fc-event-today.fc-daygrid-event.fc-daygrid-block-event.fc-h-event {
-  background: transparent !important;
-  border: none;
-}
-
-.fc-event-title.fc-sticky {
-  color: #7407ff;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  text-align: center;
-  font-weight: 500;
-}
-
-a.fc-event.fc-event-start.fc-event-end.fc-event-future.fc-daygrid-event.fc-daygrid-block-event.fc-h-event {
-  background: unset !important;
-  border: none;
-}
-
-a.fc-col-header-cell-cushion {
-  color: #7407ff;
-}
-
-.fc-daygrid-day-frame {
-  background: #fff;
-}
-
-.fc-col-header-cell {
-  background: #fff;
-}
-
-.fc .fc-scrollgrid-section,
-.fc .fc-scrollgrid-section table,
-.fc .fc-scrollgrid-section > td {
-  height: 40px;
-}
-
-button.fc-today-button.fc-button.fc-button-primary {
-  text-transform: capitalize;
-}
-
-button.fc-today-button.fc-button.fc-button-primary {
-  background: #e7bf1d;
-  border: none;
-  opacity: 1;
-}
-
 .fc .fc-button-primary {
-  background-color: #f83890;
+  background-color: #7407ff;
   border-color: unset;
   color: var(--fc-button-text-color);
 }
-
-.fc-toolbar-title {
+.fc .fc-toolbar-title {
+  font-size: 24px;
+  color: #191919;
+}
+.fc .fc-col-header-cell-cushion {
+  font-weight: 500;
+}
+.fc .fc-day-mon a, .fc .fc-day-tue a, .fc .fc-day-wed a, .fc .fc-day-thu a, .fc .fc-day-fri a {
   color: #7407ff;
 }
-
-.fc-header-toolbar.fc-toolbar {
-  position: relative;
+.fc .fc-daygrid-day-top {
+  justify-content: center;
 }
 
-.fc-header-toolbar.fc-toolbar:after {
-  content: "";
-  display: block;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  top: 48px;
-  width: 100%;
-  height: 1px;
+.fc-theme-standard td, .fc-theme-standard th, .fc-theme-standard .fc-scrollgrid {
+  background-color: #fff;
+  border-color: #eee;
+}
+
+.fc .fc-daygrid-day.fc-day-today {
   background-color: #f6f5f5;
 }
-
-.fc-event-past {
-  background: transparent !important;
+.fc .fc-daygrid-more-link {
+  width: 100%;
+  text-align: center;
+}
+.fc .fc-daygrid-event {
   border: none;
+  padding: 0 5px;
 }
 
-.fc-event-future .fc-event-title.fc-sticky {
-  color: #f83890;
-}
-
-.fc .fc-button-primary:focus {
-  box-shadow: unset;
-}
-
-.fc-day-sun .fc-col-header-cell-cushion,
-.fc-day-mon .fc-col-header-cell-cushion,
-.fc-day-tue .fc-col-header-cell-cushion {
-  color: #f83890;
+button.fc-today-button.fc-button.fc-button-primary {
+  background: #f83890;
+  border: none;
+  opacity: 1;
+  text-transform: capitalize;
 }
 
 /* ----- Flatpicker ------*/
