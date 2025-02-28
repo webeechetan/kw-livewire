@@ -59,7 +59,7 @@
                                     <tr>
                                         <th>Token Name</th>
                                         <th>Token Ability</th>
-                                        <th>Creted Date</th>
+                                        <th>Created Date</th>
                                         <th>Last Used At</th>
                                         <th>Actions</th>
                                     </tr>
@@ -76,7 +76,7 @@
                                             <td>{{ $token->created_at->diffForHumans() }}</td>
                                             <td>{{ $token->last_used_at ? $token->last_used_at->diffForHumans() : 'Never Used' }}</td>
                                             <td>
-                                                <button class="btn btn-danger btn-sm" wire:click="deleteToken('{{ $token->id }}')">Delete</button>
+                                                <button wire:click="deleteToken({{ $token->id }})"  class="btn-icon" ><i class="bx bx-trash"></i></button>
                                             </td>
                                         </tr>
                                     @endforeach

@@ -23,6 +23,8 @@ class Register extends Component
     public $name;
     public $email;
     public $password;
+    public $user_name;
+    public $industry_type;
 
     // registration journey properties
     public $companysize;
@@ -41,7 +43,8 @@ class Register extends Component
         $this->validate([
             'name' => 'required|min:3',
             'email' => 'required|email|unique:organizations',
-            'password' => 'required|min:6'
+            'password' => 'required|min:6',
+            'user_name' => 'required',
         ]);
 
         $organization = new Organization();
@@ -57,7 +60,7 @@ class Register extends Component
                 mkdir($path, 0777, true);
             }
             $user = new User();
-            $user->name = $this->name;
+            $user->name = $this->user_name;
             $user->email = $this->email;
             $user->password = Hash::make($this->password);
             $user->org_id = $organization->id;

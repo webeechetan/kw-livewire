@@ -65,6 +65,20 @@ class StatusFilter
             }
         }
 
+        // this if for fitering teams task
+
+        if($this->for == 'TEAM-TASKS'){
+            if($this->value != 'all'){
+                if($this->value == 'overdue'){
+                    $query->whereDate('due_date', '<', now())
+                    ->where('status', '!=', 'completed');;
+                }else{
+                    $query->where('status', $this->value);
+                }
+                return $next($query);
+            }
+        }
+
         return $next($query);
 
 

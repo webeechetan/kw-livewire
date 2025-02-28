@@ -58,4 +58,11 @@ class Webhooks extends Component
         $this->webhookEvent = 'created';
         $this->webhookUrl = '';
     }
+
+    public function deleteWebhook($id){
+        $webhook = Webhook::find($id);
+        $webhook->delete();
+        $this->dispatch('success', 'Webhook deleted successfully');
+        $this->webhooks = Webhook::where('created_by', auth()->id())->get();
+    }
 }

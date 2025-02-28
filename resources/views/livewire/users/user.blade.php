@@ -106,10 +106,12 @@
 
                                 <div class="cus_dropdown-body cus_dropdown-body-widh_s">
                                     <div class="cus_dropdown-body-wrap">
+                                        @can('Delete User')
                                         <ul class="cus_dropdown-list">
                                             <li><a href="javascript:;" wire:click="changeUserStatus('active')" @if(!$user->trashed()) class="active" @endif> Active</a></li>
                                             <li><a href="javascript:;" wire:click="changeUserStatus('archived')" @if($user->trashed()) class="active" @endif> Archived</a></li>
                                         </ul>
+                                        @endcan
                                     </div>
                                 </div>
                             </div>
@@ -120,10 +122,6 @@
                                 <i class='bx bx-pencil'></i> 
                                 Edit
                             </a>
-                            @endcan
-                            @can('Delete User')
-                            <a href="#" class="btn-sm btn-border btn-border-danger" wire:click="forceDeleteUser({{$user->id}})" wire:confirm="Are you sure you want to delete?"><i class='bx bx-trash'></i> Delete</a>
-                            {{-- <a href="javascript:" class="btn-sm btn-border btn-border-danger"><i class='bx bx-trash'></i> Delete</a> --}}
                             @endcan
                         </div>
                     </div>

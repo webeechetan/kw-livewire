@@ -85,6 +85,7 @@
                                         <th>Webhook For</th>
                                         <th>Webhook Event</th>
                                         <th>Webhook URL</th>
+                                        <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -95,6 +96,9 @@
                                             <td>{{ $webhook->for }}</td>
                                             <td>{{ $webhook->event }}</td>
                                             <td>{{ $webhook->url }}</td>
+                                            <td>
+                                                <button wire:click="deleteWebhook({{$webhook->id}})" type="button" class="btn-icon" ><i class="bx bx-trash"></i></button>
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>

@@ -149,7 +149,7 @@
                         aria-labelledby="pills-upcoming-tab" tabindex="0">
                         <div class="taskList scrollbar">
                             <div style="height: 307px;">
-                                @foreach($users_tasks->where('due_date', now()->format('Y-m-d'))->where('status','!=','completed')->take(10) as $task)
+                                @foreach($users_tasks->where('due_date', now()->format('Y-m-d'))->where('status','!=','completed')->take(15) as $task)
                                 <div class="taskList_row taskList_todos">
                                     <div class="row">
                                         <div class="col">
@@ -178,7 +178,7 @@
                         aria-labelledby="pills-upcoming-tab" tabindex="0">
                         <div class="taskList scrollbar">
                             <div style="height: 307px;">
-                                @foreach($users_tasks->where('due_date', '>', now())->where('status','!=','completed')->take(10) as $task)
+                                @foreach($users_tasks->where('due_date', '>', now())->where('status','!=','completed')->take(15) as $task)
                                 <div class="taskList_row taskList_todos">
                                     <div class="row">
                                         <div class="col">
@@ -208,7 +208,7 @@
 
                         <div class="taskList scrollbar">
                             <div style="height: 307px;">
-                                @foreach($users_tasks->where('due_date', '<', now())->where('status','!=','completed')->take(10) as $task)
+                                @foreach($users_tasks->where('due_date', '<', now())->where('status','!=','completed')->take(15) as $task)
                                 <div class="taskList_row taskList_todos">
                                     <div class="row">
                                         <div class="col">
@@ -391,7 +391,7 @@
                                 <div class="mt-2 cmnt_item_task border-bottom pb-2"><i class="bx bx-task"></i> <a href="{{ route('task.view', $comment->task_id) }}">{{ $comment->task->name }}</a></div>
                                 <div class="cmnt_item_user_text">
                                     <a href="{{ route('task.view', $comment->task_id) }}">
-                                        {!! Str::limit($comment->comment, 25, '...') !!}
+                                        {!! Str::limit(strip_tags($comment->comment), 25, '...') !!}
                                     </a>
                                 </div>
                             </div>

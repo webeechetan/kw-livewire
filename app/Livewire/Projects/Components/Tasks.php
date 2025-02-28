@@ -66,6 +66,10 @@ class Tasks extends Component
         $this->teams = Team::all();
     }
 
+    public function search(){
+        $this->resetPage();
+    }
+
     public function refresh()
     {
         $this->mount($this->project);
