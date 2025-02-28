@@ -57,7 +57,11 @@ class User extends Authenticatable
 
     protected static function booted()
     {
-        static::addGlobalScope(new OrganizationScope);
+        if (request()->is('api/*')) {
+            static::withoutGlobalScopes();
+        }else{
+            static::addGlobalScope(new OrganizationScope);
+        }
     }
 
     public function setNameAttribute($value){

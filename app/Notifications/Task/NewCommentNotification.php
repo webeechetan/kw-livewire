@@ -6,6 +6,8 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use App\Models\Scopes\OrganizationScope;
+use App\Models\User;   
 
 class NewCommentNotification extends Notification implements ShouldQueue
 {
@@ -40,13 +42,16 @@ class NewCommentNotification extends Notification implements ShouldQueue
      */
     public function toMail(object $notifiable): MailMessage
     {
+        $mentioner = User::withoutGlobalScope(OrganizationScope::class)->find($this->comment->user_id);
+
         return (new MailMessage)
             ->view('mails.comment-notification-mail', 
             [
                 'task' => $this->task, 
                 'user' => $notifiable, 
                 'comment' => $this->comment,
-                'taskUrl' => $this->taskUrl
+                'taskUrl' => $this->taskUrl,
+                'mentioner' => $mentioner
                 ]
         );
     }

@@ -102,7 +102,7 @@
                         
                         <a href="javascript:" wire:click="$set('status', 'completed')" class="btn-border btn-border-sm btn-border-success"><span><i class='bx bx-objects-horizontal-center' ></i></span> {{ $project->tasks->where('status', 'completed')->count() }} Completed</a>
                     </div>
-                </div>
+                </div> 
                 <div class="col-lg-4 ms-auto text-end">
                     <form class="search-box search-box-float-style" wire:submit="search">
                         <span class="search-box-float-icon"><i class='bx bx-search'></i></span>
@@ -153,7 +153,7 @@
                         <div class="taskList_row_wrap text-center d-grid grid_col-repeat-4">
                             <div class="taskList_col">
                                 <span class=" 
-                                    @if ($task->due_date < \Carbon\Carbon::now())  text-danger @endif"> @if($task->due_date)
+                                    @if ($task->due_date < \Carbon\Carbon::now() && $task->status != 'completed')  text-danger @endif"> @if($task->due_date)
                                         {{ Carbon\Carbon::parse($task->due_date)->format('d M Y') }}
                                     @else
                                         No Due Date

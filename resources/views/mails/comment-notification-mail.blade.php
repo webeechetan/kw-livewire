@@ -88,9 +88,22 @@
                                             <table class="emailer-text-wrap mxauto" width="100%" cellcellspacing="0" cellpadding="">
                                                 <tr>
                                                     <td>
-                                                         <p>A new internal comment has been added to <b>{{ Str::limit($task->name, 15, '...') }}</b></p>
+                                                        <h2 style="margin-top: 0; margin-bottom: 30px;">Hi there {{ $user->name }}!</h2>
+                                                        @if($comment)
+                                                            <p>{{ $mentioner->name }} has added a new comment in the task.</p>
+                                                            <p>Task: {{ $task->name }}</p>
+                                                            <p>Comment: {!! $comment->comment !!}</p>
+                                                        @else
+                                                            <p>{{ $task->assignedBy->name }} has mentioned you in a task.</p>
+                                                            <p>Task: {{ $task->name }}</p>
+                                                        @endif
+                                                        <p>
+                                                            Thanks,<br>
+                                                            Kaykewalk Team
+                                                        </p>
+                                                         {{-- <p>A new internal comment has been added to <b>{{ $task->name }}</b></p>
                                                          
-                                                        <a href="{{ $taskUrl }}"  class="btn-primary" style="margin-top: 30px;">View Task</a>
+                                                        <a href="{{ $taskUrl }}"  class="btn-primary" style="margin-top: 30px;">View Task</a> --}}
                                                     </td>
                                                 </tr>
                                             </table>

@@ -17,6 +17,7 @@ use App\Models\User;
 use Spatie\Permission\Traits\HasRoles;
 use App\Models\Scopes\OrganizationScope;
 use App\Models\Scopes\MainClientScope;
+use App\Models\Webhook;
 
 class Organization extends Authenticatable
 {
@@ -56,5 +57,9 @@ class Organization extends Authenticatable
         return $this->hasOne(Client::class, 'org_id')
         ->withoutGlobalScope(MainClientScope::class)
         ->where('is_main', 1);
+    }
+
+    public function webhooks(){
+        return $this->hasMany(Webhook::class, 'org_id');
     }
 }

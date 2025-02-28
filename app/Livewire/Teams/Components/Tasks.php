@@ -50,6 +50,7 @@ class Tasks extends Component
     public function render()
     {
         $filters = [
+            new StatusFilter($this->status,'TEAM-TASKS'),
             new SearchFilter($this->query, 'TEAM-TASKS'),
             new ClientFilter($this->byClient, 'TEAM-TASKS'),
             new ProjectFilter($this->byProject, 'TEAM-TASKS'),
@@ -59,16 +60,17 @@ class Tasks extends Component
 
         $query = $this->team->tasksQuery;
 
+        $this->allTasks = (clone $query)->count();
+        $this->assignedTasks = (clone $query)->where('status', 'pending')->count();        
+        $this->acceptedTasks = (clone $query)->where('status', 'accepted')->count();
+        $this->inReviewTasks = (clone $query)->where('status', 'in_review')->count();
+        $this->completedTasks = (clone $query)->where('status', 'completed')->count();
+        $this->overdueTasks = (clone $query)->where('due_date', '<', Carbon::now())->where('status','!=','completed')->count();
+
         $tasks = Pipeline::send($query)
             ->through($filters)
             ->thenReturn();
 
-        $this->allTasks = (clone $tasks)->count();
-        $this->assignedTasks = (clone $tasks)->where('status', 'pending')->count();        
-        $this->acceptedTasks = (clone $tasks)->where('status', 'accepted')->count();
-        $this->inReviewTasks = (clone $tasks)->where('status', 'in_review')->count();
-        $this->completedTasks = (clone $tasks)->where('status', 'completed')->count();
-        $this->overdueTasks = (clone $tasks)->where('due_date', '<', Carbon::now())->where('status','!=','completed')->count();
 
         $tasks = $tasks->paginate(25);
 

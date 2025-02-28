@@ -48,7 +48,7 @@ class Dashboard extends Component
 
     // nearest due date and more pending tasks are most important projects
 
-    public function getMostImportantProjects(){
+    public function getMostImportantProjects(){ 
         if(Auth::user()->hasRole('Admin')){
             $projects = Project::where('status','!=','completed')
             ->where('due_date','!=',null)

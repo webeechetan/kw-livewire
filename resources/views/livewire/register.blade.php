@@ -27,6 +27,22 @@
                         <form method="POST" wire:submit="register">
                             <div class="row">
                                 <div class="col-md-6">
+                                    <div class="mb-3 form-field" controlId="signupEmail">
+                                        <div class="form-field-icon"><i class='bx bx-user'></i></div>
+                                        <input type="text" wire:model="user_name" class="form-control" placeholder="e.g., John Doe"   />
+                                        @error('user_name') <span class="text-danger">{{ $message }}</span>@enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3 form-field" controlId="signupEmail">
+                                        <div class="form-field-icon"><i class='bx bx-envelope'></i></div>
+                                        <input type="email" wire:model="email" class="form-control" placeholder="e.g., john.doe@yourcompany.com"   />
+                                        @error('email') <span class="text-danger">{{ $message }}</span>@enderror
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
                                     <div class="form-field mb-3" controlId="signupName">
                                         <div class="form-field-icon"><i class='bx bx-user'></i></div>
                                         <input type="text" wire:model="name" class="form-control" placeholder="Organization Name"   />
@@ -35,20 +51,18 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-field mb-3" controlId="signupName">
-                                        <div class="form-field-icon"><i class='bx bx-briefcase'></i></div>
-                                        <input type="text" class="form-control" placeholder="Enter Your Role"   />
-                                        @error('name') <span class="text-danger">{{ $message }}</span>@enderror
+                                        <div class="form-field-icon"><i class='bx bx-home'></i></div>
+                                        {{-- industry type --}}
+                                        <select class="form-control" wire:model="industry_type">
+                                            <option value="" disabled selected>Industry Type</option>
+                                            <option value="inforamtion-technology">Information Technology</option>
+                                            <option value="agency">Digital Media Agency</option>
+                                        </select>
                                     </div>
                                 </div>
+                                
                             </div>
                             <div class="row">
-                                <div class="col-md-6">
-                                    <div class="mb-3 form-field" controlId="signupEmail">
-                                        <div class="form-field-icon"><i class='bx bx-envelope'></i></div>
-                                        <input type="email" wire:model="email" class="form-control" placeholder="Work Email"   />
-                                        @error('email') <span class="text-danger">{{ $message }}</span>@enderror
-                                    </div>
-                                </div>
                                 <div class="col-md-6">
                                     <div class="mb-3 form-field" controlId="signupPassword">
                                         <div class="form-field-icon"><i class='bx bx-lock-open'></i></div>
@@ -56,6 +70,14 @@
                                         @error('password') <span class="text-danger">{{ $message }}</span>@enderror
                                     </div>
                                 </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3 form-field" controlId="signupEmail">
+                                        <div class="form-field-icon"><i class='bx bx-lock-open'></i></div>
+                                        <input type="password" wire:model="confirm_password" class="form-control" placeholder="Confirm Password"   />
+                                        @error('confirm_password') <span class="text-danger">{{ $message }}</span>@enderror
+                                    </div>
+                                </div>
+                                
                             </div>
                             <div class="my-3">
                                 <button class="w-100 btn btn-primary btn-smt" type="submit">Sign Up</button>

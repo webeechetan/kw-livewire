@@ -54,12 +54,12 @@
                                     <div class="col">
                                         <div id="others-tasks-chart" style="width: 70px; height: 70px; margin: auto;"></div>
                                         <h6>20</h6>
-                                        <span class="font-500">My Tasks</span>
+                                        <span class="font-500">Other Tasks</span>
                                     </div>
                                     <div class="col">
                                         <div id="my-task-chart" style="width: 70px; height: 70px; margin: auto;"></div>
                                         <h6>20</h6>
-                                        <span class="font-500">Other Tasks</span>
+                                        <span class="font-500">My Tasks</span>
                                     </div>
                                 </div>
                                 <div class="row d-none">
@@ -114,7 +114,7 @@
     </div>
 
     <div class="row">
-        <div class="col-md-5 mt-4">
+        <div class="col-md-4 mt-4">
             <div class="box-item h-100">
                 <h4 class="text-xl">My Tasks</h4>
                 <hr>
@@ -149,7 +149,7 @@
                         aria-labelledby="pills-upcoming-tab" tabindex="0">
                         <div class="taskList scrollbar">
                             <div style="height: 307px;">
-                                @foreach($users_tasks->where('due_date', now()->format('Y-m-d'))->where('status','!=','completed')->take(10) as $task)
+                                @foreach($users_tasks->where('due_date', now()->format('Y-m-d'))->where('status','!=','completed')->take(15) as $task)
                                 <div class="taskList_row taskList_todos">
                                     <div class="row">
                                         <div class="col">
@@ -178,7 +178,7 @@
                         aria-labelledby="pills-upcoming-tab" tabindex="0">
                         <div class="taskList scrollbar">
                             <div style="height: 307px;">
-                                @foreach($users_tasks->where('due_date', '>', now())->where('status','!=','completed')->take(10) as $task)
+                                @foreach($users_tasks->where('due_date', '>', now())->where('status','!=','completed')->take(15) as $task)
                                 <div class="taskList_row taskList_todos">
                                     <div class="row">
                                         <div class="col">
@@ -208,7 +208,7 @@
 
                         <div class="taskList scrollbar">
                             <div style="height: 307px;">
-                                @foreach($users_tasks->where('due_date', '<', now())->where('status','!=','completed')->take(10) as $task)
+                                @foreach($users_tasks->where('due_date', '<', now())->where('status','!=','completed')->take(15) as $task)
                                 <div class="taskList_row taskList_todos">
                                     <div class="row">
                                         <div class="col">
@@ -236,7 +236,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-7 mt-4">
+        <div class="col-md-8 mt-4">
             <div class="box-item calendar-title">
                 <!-- <h4>Calendar</h4> -->
                 <div id="calendar"></div>
@@ -345,6 +345,8 @@
                         </div>
                         @php
                         $taskDone = $project->tasks->where('status', 'completed')->count();
+                        $taskPending = $project->tasks->where('status', '!=', 'completed')->count();
+                        $taskOverdue = $project->tasks->where('due_date', '<', now())->where('status', '!=', 'completed')->count();
                         $totalTask = $project->tasks->count();
 
                         if ($totalTask > 0) {
@@ -359,8 +361,8 @@
                             </div>
                         </div>
                         <div class="row mt-2">
-                            <div class="col"><b>{{ $taskDone }}</b> <span>{{ pluralOrSingular($taskDone,'Task') }} Done</span></div>
-                            <div class="col-auto text-end text-danger px-4 text-sm"><i class="bx bx-calendar"></i> <span>{{ $project->due_date
+                            <div class="col"><b>{{ $taskPending }}</b> <span>{{ pluralOrSingular($taskPending,'Task') }} Pending  </span> | <b>{{ $taskOverdue }}</b> <span>{{ pluralOrSingular($taskOverdue,'Task') }} Overdue  </span></div>
+                            <div class="col-auto text-end text-danger px-4 text-sm"><i class="bx bx-calendar"></i> <span>{{ \Carbon\Carbon::parse($project->due_date)->format('M d Y')
                                 ?? 'No Due Date' }}</span></div>
                         </div>
                     </div>
@@ -375,26 +377,26 @@
                 <div class="scrollbar">
                     <div style="height: 460px;">
                         @foreach($recent_comments as $comment)
-                        <div class="cmnt_item_row card_style bg-light">
-                            <a href="{{ route('task.view', $comment->task_id) }}" class="card_style-open"><i class='bx bx-chevron-right'></i></a>
-                            <div class="cmnt_item_user">
-                                <div class="cmnt_item_user_img">
-                                    <x-avatar :user="$comment->user" class="avatar-sm" />
-                                </div>
-                                <div class="cmnt_item_user_name-wrap">
-                                    <div class="cmnt_item_user_name">
-                                        <a href="{{ route('user.profile', $comment->user->id) }}">{{ $comment->user->name }}</a>
+                            <div class="cmnt_item_row card_style bg-light">
+                                <a href="{{ route('task.view', $comment->task_id) }}" class="card_style-open"><i class='bx bx-chevron-right'></i></a>
+                                <div class="cmnt_item_user">
+                                    <div class="cmnt_item_user_img">
+                                        <x-avatar :user="$comment->user" class="avatar-sm" />
                                     </div>
-                                    <div class="cmnt_item_date">{{ \Carbon\Carbon::parse($comment->created_at)->diffForHumans() }}</div>
+                                    <div class="cmnt_item_user_name-wrap">
+                                        <div class="cmnt_item_user_name">
+                                            <a href="{{ route('user.profile', $comment->user->id) }}">{{ $comment->user->name }}</a>
+                                        </div>
+                                        <div class="cmnt_item_date">{{ \Carbon\Carbon::parse($comment->created_at)->diffForHumans() }}</div>
+                                    </div>
+                                </div>
+                                <div class="mt-2 cmnt_item_task border-bottom pb-2"><i class="bx bx-task"></i> <a href="{{ route('task.view', $comment->task_id) }}">{{ $comment->task->name }}</a></div>
+                                <div class="cmnt_item_user_text">
+                                    <a href="{{ route('task.view', $comment->task_id) }}">
+                                        {!! Str::limit(strip_tags($comment->comment), 25, '...') !!}
+                                    </a>
                                 </div>
                             </div>
-                            <div class="mt-2 cmnt_item_task border-bottom pb-2"><i class="bx bx-task"></i> <a href="{{ route('task.view', $comment->task_id) }}">{{ $comment->task->name }}</a></div>
-                            <div class="cmnt_item_user_text">
-                                <a href="{{ route('task.view', $comment->task_id) }}">
-                                    {!! Str::limit($comment->comment, 25, '...') !!}
-                                </a>
-                            </div>
-                        </div>
                         @endforeach
                     </div>
                 </div>
