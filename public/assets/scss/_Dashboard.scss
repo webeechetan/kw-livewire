@@ -2152,6 +2152,13 @@
     background-color: #fff;
     border-color: #eee;
 }
+.fc-theme-standard .fc-popover-header {
+    background-color: $secondary;
+    color: #fff;
+}
+.fc-theme-standard .fc-popover {
+    border: none;
+}
 .fc .fc-daygrid {
     &-day.fc-day-today {
         background-color: $light;

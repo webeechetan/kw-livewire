@@ -4979,6 +4979,15 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   border-color: #eee;
 }
 
+.fc-theme-standard .fc-popover-header {
+  background-color: #7407ff;
+  color: #fff;
+}
+
+.fc-theme-standard .fc-popover {
+  border: none;
+}
+
 .fc .fc-daygrid-day.fc-day-today {
   background-color: #f6f5f5;
 }

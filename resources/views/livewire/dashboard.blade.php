@@ -148,7 +148,7 @@
                     <div class="tab-pane fade show active overflow-y scrollbar scrollbar-primary" id="pills-today" role="tabpanel"
                         aria-labelledby="pills-upcoming-tab" tabindex="0">
                         <div class="taskList scrollbar">
-                            <div style="height: 307px;">
+                            <div style="height: 538px;">
                                 @foreach($users_tasks->where('due_date', now()->format('Y-m-d'))->where('status','!=','completed')->take(15) as $task)
                                 <div class="taskList_row taskList_todos">
                                     <div class="row">
@@ -253,15 +253,50 @@
                     <div class="col">
                         <div class="row align-items-center">
                             <div class="col-md-auto pe-md-0">
-                                <div class="text-secondary"><i class="bx bxs-circle"></i></div>
+                                <div class="text-primary"><i class="bx bxs-circle"></i></div>
                             </div>
                             <div class="col ps-md-2">
-                                <h6 class="mb-0">Active Projects</h6>
+                                <h6 class="mb-0">Assigned Tasks</h6>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-auto">
-                        <h6 class="mb-0 text-secondary"><b>{{$active_projects}}</b></h6>
+                        <h6 class="mb-0 text-primary"><b>{{ $users_tasks->where('status',
+                                'in_progress')->count();}}</b></h6>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col">
+                        <div class="row align-items-center">
+                            <div class="col-md-auto pe-md-0">
+                                <div class="text-secondary"><i class="bx bxs-circle"></i></div>
+                            </div>
+                            <div class="col ps-md-2">
+                                <h6 class="mb-0">Accepted Tasks</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-auto">
+                        <h6 class="mb-0 text-secondary"><b>{{ $users_tasks->where('status',
+                                'in_progress')->count();}}</b></h6>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col">
+                        <div class="row align-items-center">
+                            <div class="col-md-auto pe-md-0">
+                                <div class="text-warning"><i class="bx bxs-circle"></i></div>
+                            </div>
+                            <div class="col ps-md-2">
+                                <h6 class="mb-0">In Review Tasks</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-auto">
+                        <h6 class="mb-0 text-warning"><b>{{ $users_tasks->where('status',
+                                'in_progress')->count();}}</b></h6>
                     </div>
                 </div>
                 <hr>
@@ -286,23 +321,6 @@
                     <div class="col">
                         <div class="row align-items-center">
                             <div class="col-md-auto pe-md-0">
-                                <div class="text-warning"><i class="bx bxs-circle"></i></div>
-                            </div>
-                            <div class="col ps-md-2">
-                                <h6 class="mb-0">Active Tasks</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-auto">
-                        <h6 class="mb-0 text-warning"><b>{{ $users_tasks->where('status',
-                                'in_progress')->count();}}</b></h6>
-                    </div>
-                </div>
-                <hr>
-                <div class="row">
-                    <div class="col">
-                        <div class="row align-items-center">
-                            <div class="col-md-auto pe-md-0">
                                 <div class="text-success"><i class="bx bxs-circle"></i></div>
                             </div>
                             <div class="col ps-md-2">
@@ -315,6 +333,22 @@
                                 $users_tasks->where('status','completed')->count();}}</b></h6>
                     </div>
                 </div>
+                <hr>
+                <!-- <div class="row">
+                    <div class="col">
+                        <div class="row align-items-center">
+                            <div class="col-md-auto pe-md-0">
+                                <div class="text-secondary"><i class="bx bxs-circle"></i></div>
+                            </div>
+                            <div class="col ps-md-2">
+                                <h6 class="mb-0">Active Projects</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-auto">
+                        <h6 class="mb-0 text-secondary"><b>{{$active_projects}}</b></h6>
+                    </div>
+                </div> -->
             </div>
         </div>
         <div class="col-md-4 mt-4">
@@ -334,9 +368,12 @@
                                 <div class="mb-1 text-lg">
                                     <a href="{{ route('project.profile', $project->id) }}" wire:navigate>{{ $project->name }}</a>
                                 </div>
+                                <div class="text-danger text-sm"><i class="bx bx-calendar"></i> <span>{{ \Carbon\Carbon::parse($project->due_date)->format('M d Y')
+                                    ?? 'No Due Date' }}</span></div>
                             </div>
                         </div>
-                        <div class="d-flex flex-wrap gap-2 mt-2">
+                        <!-- Need to remove team from here -->
+                        <div class="d-flex flex-wrap gap-2 mt-2 d-none">
                             @if($project->teams)
                             @foreach($project->teams as $team)
                             <a href="{{ route('team.profile', $team->id) }}" wire:navigate class="btn btn-success rounded-pill btn-xs text-uppercase">{{$team->name}}</a>
@@ -361,9 +398,9 @@
                             </div>
                         </div>
                         <div class="row mt-2">
-                            <div class="col"><b>{{ $taskPending }}</b> <span>{{ pluralOrSingular($taskPending,'Task') }} Pending  </span> | <b>{{ $taskOverdue }}</b> <span>{{ pluralOrSingular($taskOverdue,'Task') }} Overdue  </span></div>
-                            <div class="col-auto text-end text-danger px-4 text-sm"><i class="bx bx-calendar"></i> <span>{{ \Carbon\Carbon::parse($project->due_date)->format('M d Y')
-                                ?? 'No Due Date' }}</span></div>
+                            <div class="col"><span class="btn-batch btn-batch-secondary"><b>{{ $taskPending }}</b> <span>Pending {{ pluralOrSingular($taskPending,'Task') }} </span></span></div>
+                            <div class="col text-end"><span class="btn-batch btn-batch-danger"><b>{{ $taskOverdue }}</b> <span>Overdue {{ pluralOrSingular($taskOverdue,'Task') }} </span></span></div>
+                            
                         </div>
                     </div>
                     @endforeach
@@ -375,7 +412,7 @@
                 <h4 class="text-xl">Recent Comments</h4>
                 <hr>
                 <div class="scrollbar">
-                    <div style="height: 460px;">
+                    <div style="height: 540px;">
                         @foreach($recent_comments as $comment)
                             <div class="cmnt_item_row card_style bg-light">
                                 <a href="{{ route('task.view', $comment->task_id) }}" class="card_style-open"><i class='bx bx-chevron-right'></i></a>
@@ -462,7 +499,7 @@
         if($task->status == 'completed'){
             $color = '#4F9F54';
         }else{
-            if($task->due_date < now()){ $color='#FF0000' ; }else{ $color='#4F9F54' ; } 
+            if($task->due_date < now()){ $color='#999' ; }else{ $color='#4F9F54' ; } 
         } 
         $events[]=[ 'title'=> $task->name,
             'start' => $task->due_date,
