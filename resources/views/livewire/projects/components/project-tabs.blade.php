@@ -63,6 +63,7 @@
             @if(!$project->trashed()) 
             <a wire:navigate class="tabNavigationBar-item @if($currentRoute == 'project.tasks') active @endif" href="{{route ('project.tasks', $project->id) }}"><i class='bx bx-layer' ></i> Tasks</a>
             <a wire:navigate class="tabNavigationBar-item @if($currentRoute =='project.file-manager') active @endif" href="{{route('project.file-manager',$project->id)}}"><i class='bx bx-objects-horizontal-left' ></i> File Manager</a>
+            <a wire:navigate class="tabNavigationBar-item @if($currentRoute == 'project.calendar') active @endif" href="{{route('project.calendar',$project->id)}}"><i class='bx bx-calendar' ></i> Calendar</a>
             @endif
         </div>
     </div>

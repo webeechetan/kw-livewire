@@ -84,6 +84,7 @@ use App\Livewire\Developers\Dashbaord as DeveloperDashboard;
 */
 
 use App\Http\Controllers\AIController;
+use App\Livewire\Projects\Components\CalendarView;
 use App\Livewire\Developers\ApiTokens;
 use App\Livewire\Developers\Webhooks;
 
@@ -169,7 +170,9 @@ Route::group(
     Route::get('/project/view/{id}',Project::class)->name('project.profile');
     Route::get('/project/view/{project}/tasks',ProjectTasks::class)->name('project.tasks')->withTrashed();
     Route::get('/project/view/{project}/file-manager',ProjectFileManager::class)->name('project.file-manager')->withTrashed();
+    Route::get('/project/view/{project}/calendar-view',CalendarView::class)->name('project.calendar')->withTrashed();
     
+
     /*
     |--------------------------------------------------------------------------
     | Teams Routes

@@ -345,6 +345,8 @@
                         </div>
                         @php
                         $taskDone = $project->tasks->where('status', 'completed')->count();
+                        $taskPending = $project->tasks->where('status', '!=', 'completed')->count();
+                        $taskOverdue = $project->tasks->where('due_date', '<', now())->where('status', '!=', 'completed')->count();
                         $totalTask = $project->tasks->count();
 
                         if ($totalTask > 0) {
@@ -359,8 +361,8 @@
                             </div>
                         </div>
                         <div class="row mt-2">
-                            <div class="col"><b>{{ $taskDone }}</b> <span>{{ pluralOrSingular($taskDone,'Task') }} Done</span></div>
-                            <div class="col-auto text-end text-danger px-4 text-sm"><i class="bx bx-calendar"></i> <span>{{ $project->due_date
+                            <div class="col"><b>{{ $taskPending }}</b> <span>{{ pluralOrSingular($taskPending,'Task') }} Pending  </span> | <b>{{ $taskOverdue }}</b> <span>{{ pluralOrSingular($taskOverdue,'Task') }} Overdue  </span></div>
+                            <div class="col-auto text-end text-danger px-4 text-sm"><i class="bx bx-calendar"></i> <span>{{ \Carbon\Carbon::parse($project->due_date)->format('M d Y')
                                 ?? 'No Due Date' }}</span></div>
                         </div>
                     </div>
