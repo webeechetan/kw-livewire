@@ -34,53 +34,13 @@
                         <h6>Total Active Tasks: <span class="text-secondary font-500"> {{ $users_tasks->count()  }} </span></h6>
                         <div class="row text-center mt-3">
                             <div class="col">
-                                <div id="others-tasks-chart" style="width: 70px; height: 70px; margin: auto;"></div>
+                                <div id="my-task-chart" style="width: 70px; height: 70px; margin: auto;"></div>
                                 <span>My Tasks</span>
                             </div>
                             <div class="col">
-                                <div id="my-task-chart" style="width: 70px; height: 70px; margin: auto;"></div>
+                                <div id="others-tasks-chart" style="width: 70px; height: 70px; margin: auto;"></div>
                                 <span>Other Tasks</span>
                             </div>
-                        </div>
-                        <div class="row mt-2 d-none">
-
-                            <div class="col">
-                                <div class="row text-center">
-                                    <div class="col">
-                                        <div id="others-tasks-chart" style="width: 70px; height: 70px; margin: auto;"></div>
-                                        <h6>20</h6>
-                                        <span class="font-500">My Tasks</span>
-                                    </div>
-                                    <div class="col">
-                                        <div id="others-tasks-chart" style="width: 70px; height: 70px; margin: auto;"></div>
-                                        <h6>20</h6>
-                                        <span class="font-500">Other Tasks</span>
-                                    </div>
-                                    <div class="col">
-                                        <div id="my-task-chart" style="width: 70px; height: 70px; margin: auto;"></div>
-                                        <h6>20</h6>
-                                        <span class="font-500">My Tasks</span>
-                                    </div>
-                                </div>
-                                <div class="row d-none">
-                                    <div class="col-auto">
-                                        <h5>Other Tasks </h5>
-                                        <div id="others-tasks-chart" style="width: 100%;height: 100px;"></div>
-                                    </div>
-                                    {{-- <div class="col">
-                                        <h5 class="mb-0"><b>{{ $users_tasks->count()}}</b></h5>
-                                        <div>Total {{ pluralOrSingular($users_tasks->count(),'Task') }}</div> 
-                                    </div> --}}
-                                </div>
-                                <div class="row d-none">
-                                    <div class="col">
-                                        <h5 class="mb-0">My Tasks</h5>
-                                        <div id="my-task-chart" style="width: 100%;height: 100px;"></div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            
                         </div>
                     </div> 
                     <div class="col-md-6 border-start">
@@ -262,7 +222,7 @@
                     </div>
                     <div class="col-md-auto">
                         <h6 class="mb-0 text-primary"><b>{{ $users_tasks->where('status',
-                                'in_progress')->count();}}</b></h6>
+                                'pending')->count();}}</b></h6>
                     </div>
                 </div>
                 <hr>
@@ -296,7 +256,7 @@
                     </div>
                     <div class="col-md-auto">
                         <h6 class="mb-0 text-warning"><b>{{ $users_tasks->where('status',
-                                'in_progress')->count();}}</b></h6>
+                                'in_review')->count();}}</b></h6>
                     </div>
                 </div>
                 <hr>
@@ -499,7 +459,18 @@
         if($task->status == 'completed'){
             $color = '#4F9F54';
         }else{
-            if($task->due_date < now()){ $color='#999' ; }else{ $color='#4F9F54' ; } 
+            if($task->due_date < now()){ 
+                $color='red' ; 
+            }else{ 
+                if($task->status == 'in_progress'){ 
+                    $color='#e7bf1d';
+                }elseif ($task->status == 'in_review') {
+                    $color='#7407ff';
+                }else{
+                    $color='#48914d';
+                }
+
+            } 
         } 
         $events[]=[ 'title'=> $task->name,
             'start' => $task->due_date,
@@ -752,7 +723,13 @@
             var option;
 
             option = {
-                color: ['#8B00FF', '#ff0000', '#FFD700', '#48914D'],
+                color: [
+                    '#f83890', 
+                    '#7407ff', 
+                    '#e7bf1d', 
+                    '#dc3545',
+                    '#48914d'
+                ],
                 tooltip: {
                     trigger: 'item',
                     formatter: '{b}: {c} ({d}%)',
@@ -781,9 +758,10 @@
                         show: false
                     },
                     data: [
-                        {value: {{$active_projects}}, name: 'Active Projects'},
+                        {value: {{$users_tasks->where('status', 'pending')->where('status','!=','completed')->count()}}, name: 'Assigned Tasks'},
+                        {value: {{$users_tasks->where('status', 'in_progress')->where('status','!=','completed')->count()}}, name: 'Accepted Tasks'},
+                        {value: {{$users_tasks->where('status', 'in_review')->where('status','!=','completed')->count()}}, name: 'In Review Tasks'},
                         {value: {{$users_tasks->where('due_date', '<', now())->where('status','!=','completed')->count()}}, name: 'Overdue Tasks'},
-                        {value: {{$users_tasks->where('status','in_progress')->count()}}, name: 'Active Tasks'},
                         {value: {{$users_tasks->where('status','completed')->count()}}, name: 'Completed Tasks'}
 
                     ]

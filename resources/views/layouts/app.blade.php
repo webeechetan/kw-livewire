@@ -238,7 +238,6 @@
       });
 
       document.addEventListener('livewire:navigated', () => {
-            console.log('navigated');
             $('[data-toggle="tooltip"]').tooltip();
       },{ once: true });
 
