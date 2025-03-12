@@ -142,33 +142,29 @@
                     <li>
                       <a wire:navigate href="{{ route('dashboard') }}" class="@if (request()->routeIs('dashboard')) active @endif"><i class='bx bx-line-chart' ></i> Dashboard</a>
                     </li>
+                    <hr class="my-1">
                     <li>
                       <li>
-                        <a wire:navigate href="{{ route('client.profile',Auth::user()->organization->mainClient->id) }}"  class="@if ( request()->segment(4) == Auth::user()->organization->mainClient->id && (request()->segment(2) == 'clients' || request()->segment(2) == 'client' )) active @endif"><i class='bx bx-body' ></i> 
-                          {{ ucfirst(Auth::user()->organization->name) }}
+                        <a wire:navigate href="{{ route('client.profile',Auth::user()->organization->mainClient->id) }}"  class="@if ( request()->segment(4) == Auth::user()->organization->mainClient->id && (request()->segment(2) == 'clients' || request()->segment(2) == 'client' )) active @endif">
+                          <i class='bx bx-body' ></i> 
+                          Organization 
+                          {{-- <small>{{ ucfirst(Auth::user()->organization->name) }}</small> --}}
                         </a>
                       </li>
                     </li>
+                        
+                        @can('View Team')
+                          <li  @if(isset($tour['main_tour'])) data-step="1" data-position='right' data-intro='Create your first team' @endif><a wire:navigate href="{{ route('team.index') }}" class="@if (request()->segment(2) == 'teams' || request()->segment(2) == 'team' ) active @endif"><i class='bx bx-sitemap'></i> Teams</a></li>
+                        @endcan   
+                        @can('View User')
+                            <li @if(isset($tour['main_tour'])) data-step="2" data-position='right' data-intro='Create your first user' @endif><a wire:navigate href="{{ route('user.index') }}" class="@if (request()->segment(2) == 'users' || request()->segment(2) == 'user' ) active @endif"><i class='bx bx-user'></i> Users</a></li>
+                        @endcan
+                        <hr class="my-1">     
                         @can('View Client')
-                            <li 
-                            @if(isset($tour) && $tour != null)
-                              data-step="1" 
-                              data-intro='Create your first client' 
-                              data-position='right'
-                            @endif
-                            >
-                            <a wire:navigate href="{{ route('client.index') }}" 
-                            class="@if ( request()->segment(4) != Auth::user()->organization->mainClient->id && (request()->segment(2) == 'clients' || request()->segment(2) == 'client' )) active @endif"><i class='bx bx-briefcase-alt-2'></i> Clients</a></li>
+                            <li @if(isset($tour) && $tour != null) data-step="3" data-intro='Create your first client' data-position='right'@endif><a wire:navigate href="{{ route('client.index') }}" class="@if ( request()->segment(4) != Auth::user()->organization->mainClient->id && (request()->segment(2) == 'clients' || request()->segment(2) == 'client' )) active @endif"><i class='bx bx-briefcase-alt-2'></i> Clients</a></li>
                         @endcan
                         @can('View Project')
-                            <li @if(isset($tour['main_tour'])) data-step="2" data-position='right' data-intro='Create your first project' @endif><a wire:navigate href="{{ route('project.index') }}" class="@if (request()->segment(2) == 'projects' || request()->segment(2) == 'project' ) active @endif"><i class='bx bx-objects-horizontal-left'></i> Projects</a></li>
-                            
-                        @endcan
-                        @can('View Team')
-                            <li  @if(isset($tour['main_tour'])) data-step="4" data-position='right' data-intro='Create your first team' @endif><a wire:navigate href="{{ route('team.index') }}" class="@if (request()->segment(2) == 'teams' || request()->segment(2) == 'team' ) active @endif"><i class='bx bx-sitemap'></i> Teams</a></li>
-                        @endcan                      
-                        @can('View User')
-                            <li @if(isset($tour['main_tour'])) data-step="3" data-position='right' data-intro='Create your first user' @endif><a wire:navigate href="{{ route('user.index') }}" class="@if (request()->segment(2) == 'users' || request()->segment(2) == 'user' ) active @endif"><i class='bx bx-user'></i> Users</a></li>
+                            <li @if(isset($tour['main_tour'])) data-step="4" data-position='right' data-intro='Create your first project' @endif><a wire:navigate href="{{ route('project.index') }}" class="@if (request()->segment(2) == 'projects' || request()->segment(2) == 'project' ) active @endif"><i class='bx bx-objects-horizontal-left'></i> Projects</a></li>
                         @endcan
                         @can('View Task')
                           <li @if(isset($tour['main_tour'])) data-step="5" data-position='right' data-intro='Create your first task' @endif><a wire:navigate href="{{ route('task.index') }}" class="@if (request()->segment(2)== 'tasks' || request()->segment(2) == 'task') active @endif"><i class='bx bx-task' ></i>Tasks</a></li>

@@ -12,12 +12,12 @@
                 <h3 class="main-body-header-title mb-0">All Teams</h3>
                 <span class="text-light">|</span> 
                 @can('Create Team')
-                    <a data-step="1" data-intro='Create your first team' data-position='right' data-bs-toggle="modal" data-bs-target="#add-team-modal" href="javascript:void(0);" class="btn-border btn-border-sm btn-border-primary"><i class="bx bx-plus"></i> Add Team</a>
+                    <a data-step="6" data-intro='Create your first team' data-position='right' data-bs-toggle="modal" data-bs-target="#add-team-modal" href="javascript:void(0);" class="btn-border btn-border-sm btn-border-primary"><i class="bx bx-plus"></i> Add Team</a>
                 @endcan
             </div>
             <div class="text-end col">
                 <div class="main-body-header-right">
-                    <form class="search-box" wire:submit="search" action="" data-step="2" data-intro='Search team' data-position='right'>
+                    <form class="search-box" wire:submit="search" action="" data-step="7" data-intro='Search team' data-position='right'>
                         <input wire:model.live.debounce.250ms="query"  type="text" class="form-control" placeholder="Search Teams...">
                         <button type="submit" class="search-box-icon" wire:loading.class="opacity-50">
                             <i class='bx bx-search me-1' wire:loading.class="bx-tada"></i> 
@@ -25,7 +25,7 @@
                             <span wire:loading>Searcing...</span>
                         </button>
                     </form>
-                    <div class="main-body-header-filters" data-step="3" data-intro='Filter team' data-position='bottom'>
+                    <div class="main-body-header-filters" data-step="8" data-intro='Filter team' data-position='bottom'>
                         <div class="cus_dropdown" wire:ignore.self>
                             <div class="cus_dropdown-icon btn-border btn-border-secondary"><i class='bx bx-filter-alt' ></i> Filter</div>
                             <div class="cus_dropdown-body cus_dropdown-body-widh_l">

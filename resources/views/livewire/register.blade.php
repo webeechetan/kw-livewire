@@ -1,8 +1,11 @@
 <div>
+    @if($step == 1)
     <div class="header-signup d-flex align-items-center">
         <div class="container">
             <div class="row justify-content-md-center">
-                
+                <div class="col-sm-6">
+                    <img class="img-fluid" src="./assets/images/logo.png" alt="Kaykewalk Logo" />
+                </div>
                 <div class="col-sm-6 text-md-end">
                     @if(!in_array($step, [2, 3]))
                     <a wire:navigate href="/login">
@@ -13,7 +16,6 @@
             </div>
         </div>
     </div> 
-    @if($step == 1)
     <div class="signup-content">
         <div class="container">
             <div class="row">
@@ -29,14 +31,14 @@
                                 <div class="col-md-6">
                                     <div class="mb-3 form-field" controlId="signupEmail">
                                         <div class="form-field-icon"><i class='bx bx-user'></i></div>
-                                        <input type="text" wire:model="user_name" class="form-control" placeholder="e.g., John Doe"   />
+                                        <input type="text" wire:model="user_name" class="form-control" placeholder="Enter Full Name"   />
                                         @error('user_name') <span class="text-danger">{{ $message }}</span>@enderror
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3 form-field" controlId="signupEmail">
                                         <div class="form-field-icon"><i class='bx bx-envelope'></i></div>
-                                        <input type="email" wire:model="email" class="form-control" placeholder="e.g., john.doe@yourcompany.com"   />
+                                        <input type="email" wire:model="email" class="form-control" placeholder="Enter Email"   />
                                         @error('email') <span class="text-danger">{{ $message }}</span>@enderror
                                     </div>
                                 </div>
@@ -44,19 +46,146 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-field mb-3" controlId="signupName">
-                                        <div class="form-field-icon"><i class='bx bx-user'></i></div>
+                                        <div class="form-field-icon"><i class='bx bx-building'></i></div>
                                         <input type="text" wire:model="name" class="form-control" placeholder="Organization Name"   />
                                         @error('name') <span class="text-danger">{{ $message }}</span>@enderror
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-field mb-3" controlId="signupName">
-                                        <div class="form-field-icon"><i class='bx bx-home'></i></div>
+                                        <div class="form-field-icon"><i class='bx bx-buildings'></i></div>
                                         {{-- industry type --}}
                                         <select class="form-control" wire:model="industry_type">
-                                            <option value="" disabled selected>Industry Type</option>
-                                            <option value="inforamtion-technology">Information Technology</option>
-                                            <option value="agency">Digital Media Agency</option>
+                                            <option value="" selected >-- Select Industry --</option>
+                                            <option value="Accounting">Accounting</option>
+                                            <option value="Airlines/Aviation">Airlines/Aviation</option>
+                                            <option value="Alternative Dispute Resolution">Alternative Dispute Resolution</option>
+                                            <option value="Alternative Medicine">Alternative Medicine</option>
+                                            <option value="Animation">Animation</option>
+                                            <option value="Apparel & Fashion">Apparel & Fashion</option>
+                                            <option value="Architecture & Planning">Architecture & Planning</option>
+                                            <option value="Arts and Crafts">Arts and Crafts</option>
+                                            <option value="Automotive">Automotive</option>
+                                            <option value="Aviation & Aerospace">Aviation & Aerospace</option>
+                                            <option value="Banking">Banking</option>
+                                            <option value="Biotechnology">Biotechnology</option>
+                                            <option value="Broadcast Media">Broadcast Media</option>
+                                            <option value="Building Materials">Building Materials</option>
+                                            <option value="Business Supplies and Equipment">Business Supplies and Equipment</option>
+                                            <option value="Capital Markets">Capital Markets</option>
+                                            <option value="Chemicals">Chemicals</option>
+                                            <option value="Civic & Social Organization">Civic & Social Organization</option>
+                                            <option value="Civil Engineering">Civil Engineering</option>
+                                            <option value="Commercial Real Estate">Commercial Real Estate</option>
+                                            <option value="Computer & Network Security">Computer & Network Security</option>
+                                            <option value="Computer Games">Computer Games</option>
+                                            <option value="Computer Hardware">Computer Hardware</option>
+                                            <option value="Computer Networking">Computer Networking</option>
+                                            <option value="Computer Software">Computer Software</option>
+                                            <option value="Construction">Construction</option>
+                                            <option value="Consumer Electronics">Consumer Electronics</option>
+                                            <option value="Consumer Goods">Consumer Goods</option>
+                                            <option value="Consumer Services">Consumer Services</option>
+                                            <option value="Cosmetics">Cosmetics</option>
+                                            <option value="Dairy">Dairy</option>
+                                            <option value="Defense & Space">Defense & Space</option>
+                                            <option value="Design">Design</option>
+                                            <option value="Education Management">Education Management</option>
+                                            <option value="E-Learning">E-Learning</option>
+                                            <option value="Electrical/Electronic Manufacturing">Electrical/Electronic Manufacturing</option>
+                                            <option value="Entertainment">Entertainment</option>
+                                            <option value="Environmental Services">Environmental Services</option>
+                                            <option value="Events Services">Events Services</option>
+                                            <option value="Executive Office">Executive Office</option>
+                                            <option value="Facilities Services">Facilities Services</option>
+                                            <option value="Farming">Farming</option>
+                                            <option value="Financial Services">Financial Services</option>
+                                            <option value="Fine Art">Fine Art</option>
+                                            <option value="Fishery">Fishery</option>
+                                            <option value="Food & Beverages">Food & Beverages</option>
+                                            <option value="Food Production">Food Production</option>
+                                            <option value="Fund-Raising">Fund-Raising</option>
+                                            <option value="Furniture">Furniture</option>
+                                            <option value="Gambling & Casinos">Gambling & Casinos</option>
+                                            <option value="Glass, Ceramics & Concrete">Glass, Ceramics & Concrete</option>
+                                            <option value="Government Administration">Government Administration</option>
+                                            <option value="Government Relations">Government Relations</option>
+                                            <option value="Graphic Design">Graphic Design</option>
+                                            <option value="Health, Wellness and Fitness">Health, Wellness and Fitness</option>
+                                            <option value="Higher Education">Higher Education</option>
+                                            <option value="Hospital & Health Care">Hospital & Health Care</option>
+                                            <option value="Hospitality">Hospitality</option>
+                                            <option value="Human Resources">Human Resources</option>
+                                            <option value="Import and Export">Import and Export</option>
+                                            <option value="Individual & Family Services">Individual & Family Services</option>
+                                            <option value="Industrial Automation">Industrial Automation</option>
+                                            <option value="Information Services">Information Services</option>
+                                            <option value="Information Technology and Services">Information Technology and Services</option>
+                                            <option value="Insurance">Insurance</option>
+                                            <option value="International Affairs">International Affairs</option>
+                                            <option value="International Trade and Development">International Trade and Development</option>
+                                            <option value="Internet">Internet</option>
+                                            <option value="Investment Banking">Investment Banking</option>
+                                            <option value="Investment Management">Investment Management</option>
+                                            <option value="Judiciary">Judiciary</option>
+                                            <option value="Law Enforcement">Law Enforcement</option>
+                                            <option value="Law Practice">Law Practice</option>
+                                            <option value="Legal Services">Legal Services</option>
+                                            <option value="Legislative Office">Legislative Office</option>
+                                            <option value="Leisure, Travel & Tourism">Leisure, Travel & Tourism</option>
+                                            <option value="Libraries">Libraries</option>
+                                            <option value="Logistics and Supply Chain">Logistics and Supply Chain</option>
+                                            <option value="Luxury Goods & Jewelry">Luxury Goods & Jewelry</option>
+                                            <option value="Machinery">Machinery</option>
+                                            <option value="Management Consulting">Management Consulting</option>
+                                            <option value="Maritime">Maritime</option>
+                                            <option value="Market Research">Market Research</option>
+                                            <option value="Marketing and Advertising">Marketing and Advertising</option>
+                                            <option value="Mechanical or Industrial Engineering">Mechanical or Industrial Engineering</option>
+                                            <option value="Media Production">Media Production</option>
+                                            <option value="Medical Devices">Medical Devices</option>
+                                            <option value="Medical Practice">Medical Practice</option>
+                                            <option value="Mental Health Care">Mental Health Care</option>
+                                            <option value="Military">Military</option>
+                                            <option value="Mining & Metals">Mining & Metals</option>
+                                            <option value="Motion Pictures and Film">Motion Pictures and Film</option>
+                                            <option value="Museums and Institutions">Museums and Institutions</option>
+                                            <option value="Music">Music</option>
+                                            <option value="Nanotechnology">Nanotechnology</option>
+                                            <option value="Newspapers">Newspapers</option>
+                                            <option value="Non-Profit Organization Management">Non-Profit Organization Management</option>
+                                            <option value="Oil & Energy">Oil & Energy</option>
+                                            <option value="Online Media">Online Media</option>
+                                            <option value="Outsourcing/Offshoring">Outsourcing/Offshoring</option>
+                                            <option value="Package/Freight Delivery">Package/Freight Delivery</option>
+                                            <option value="Packaging and Containers">Packaging and Containers</option>
+                                            <option value="Paper & Forest Products">Paper & Forest Products</option>
+                                            <option value="Performing Arts">Performing Arts</option>
+                                            <option value="Pharmaceuticals">Pharmaceuticals</option>
+                                            <option value="Philanthropy">Philanthropy</option>
+                                            <option value="Photography">Photography</option>
+                                            <option value="Plastics">Plastics</option>
+                                            <option value="Political Organization">Political Organization</option>
+                                            <option value="Primary/Secondary Education">Primary/Secondary Education</option>
+                                            <option value="Printing">Printing</option>
+                                            <option value="Professional Training & Coaching">Professional Training & Coaching</option>
+                                            <option value="Program Development">Program Development</option>
+                                            <option value="Public Policy">Public Policy</option>
+                                            <option value="Public Relations and Communications">Public Relations and Communications</option>
+                                            <option value="Public Safety">Public Safety</option>
+                                            <option value="Publishing">Publishing</option>
+                                            <option value="Railroad Manufacture">Railroad Manufacture</option>
+                                            <option value="Ranching">Ranching</option>
+                                            <option value="Real Estate">Real Estate</option>
+                                            <option value="Recreational Facilities and Services">Recreational Facilities and Services</option>
+                                            <option value="Religious Institutions">Religious Institutions</option>
+                                            <option value="Renewables & Environment">Renewables & Environment</option>
+                                            <option value="Research">Research</option>
+                                            <option value="Restaurants">Restaurants</option>
+                                            <option value="Retail">Retail</option>
+                                            <option value="Security and Investigations">Security and Investigations</option>
+                                            <option value="Semiconductors">Semiconductors</option>
+                                              
                                         </select>
                                     </div>
                                 </div>
@@ -118,15 +247,13 @@
                 <div class="col-md-6">
                     <div class="signin-content-right text-center text-md-start space-sec">
                         <div class="signin-content-right-top">
-                            <h6 class="title">Upload Logo</h6>
+                            <h2 class="title">Upload Logo</h2>
                         </div>
                         <div class="signin-content-right-btm mt-4">
                             <form wire:submit="registerStepOne" method="POST" enctype="multipart/form-data">
                                 <div class="mb-3" >
-                                    <div class="form-field">
-                                        <input type="file" wire:model="image" class="form-control" />
-                                        @error('image') <span class="text-danger">{{ $message }}</span>@enderror
-                                    </div>
+                                    <input type="file" wire:model="image" class="form-control" />
+                                    @error('image') <span class="text-danger">{{ $message }}</span>@enderror
                                 </div>
                                 @if(session()->has('error'))
                                     <div class="col text-center">
@@ -138,8 +265,8 @@
                                 <div class="col-12 mb-4">
                                     <button class="w-100 btn btn-primary" type="submit">Done</button>
                                 </div>
-                                <div class="col-12 text-center">
-                                    <a wire:navigate href="{{ env('APP_URL') }}/{{session('org_name')}}/dashboard" class="text-link">Skip for now</a>
+                                <div class="col-12">
+                                    <a wire:navigate href="{{ env('APP_URL') }}/{{session('org_name')}}/teams" class="text-link text-dark">Skip for now</a>
                                 </div>
                             </form>
                             
