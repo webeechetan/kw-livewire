@@ -15,20 +15,24 @@
                             <h6 class="mb-1"><span class="fw-normal">Hi {{ Auth::guard(session('guard'))->user()->name
                                     }}</span>,</h6>
                             <h5><b>Welcome back!</b></h5>
+                            @if (Auth::user()->hasRole('Admin'))
                             <div class="row text-center mt-3">
                                 <div class="col">
                                     <div class="bg-primary py-3 rounded text-white">
-                                        <h6><b>50</b></h6>
+                                        <h6>
+                                            <b>{{$totalClients}}</b>
+                                        </h6>
                                         <span><i class="bx bx-briefcase-alt-2"></i> Clients</span>
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div class="bg-secondary py-3 rounded text-white">
-                                        <h6><b>40</b></h6>
+                                        <h6><b>{{ $totalProjects }}</b></h6>
                                         <span><i class="bx bx-objects-horizontal-left"></i> Projects</span>
                                     </div>
                                 </div>
                             </div>
+                            @endif
                         </div>
                     </div>
                     <div class="col-md-5 text-end">

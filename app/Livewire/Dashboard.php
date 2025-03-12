@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\Client;
 use Livewire\Component;
 use App\Models\Project;
 use App\Models\Task;
@@ -20,6 +21,8 @@ class Dashboard extends Component
     public $myPins = [];
     public $myTasks = [];
     public $otherTasks = [];
+    public $totalClients = 0;
+    public $totalProjects = 0;
 
     public function render()
     {
@@ -44,6 +47,8 @@ class Dashboard extends Component
         } 
         $this->getRecentComments();
         $this->myPins = Pin::where('user_id',Auth::id())->where('pinnable_type','App\Models\Project')->get();
+        $this->totalClients = Client::count();
+        $this->totalProjects = Project::count();
     }
 
     // nearest due date and more pending tasks are most important projects
