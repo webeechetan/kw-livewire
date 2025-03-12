@@ -2229,3 +2229,13 @@ span.flatpickr-weekday {
     font-size: 12px;
     font-weight: 500;
 }
+/* ----- Intro Js ----- */
+.introjs-tooltipReferenceLayer * {
+    font-family: $jost !important;
+}
+.introjs-button {
+    background-color: $brand !important;
+    color: #fff !important;
+    text-shadow: none !important;
+    border-radius: 4px !important;
+}

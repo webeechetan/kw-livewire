@@ -12,9 +12,13 @@
       <div class="dropdown-header">
         <h5 class="fs-5 mb-0 me-auto">Notification</h5>
         @if(count($notifications) > 0)
-          <a href="javascript:void(0);" wire:click="clearAll" class="text-decoration-underline text-danger">Clear All</a>        
+          <a href="javascript:void(0);" wire:click="clearAll" class="text-decoration-underline text-danger">Clear All</a>    
         @endif
       </div>
+      <div class="tabNavigationBar-tab border_style border-bottom-0">
+            <a class="tabNavigationBar-item active" href="#">All</a>
+            <a class="tabNavigationBar-item" href="#">@mentions</a>
+          </div>
     </li>
     <li class="activity-recent-scroll custom_scrollbar pe-0">
       <ul class="ps-0">
