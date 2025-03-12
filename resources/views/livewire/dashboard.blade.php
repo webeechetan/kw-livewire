@@ -12,9 +12,23 @@
                 <div class="row align-items-center">
                     <div class="col-md-7">
                         <div class="welcome-box">
-                            <h4 class="mb-1"><span class="fw-normal">Hi {{ Auth::guard(session('guard'))->user()->name
-                                    }}</span>,</h4>
-                            <h3><b>Welcome back!</b></h3>
+                            <h6 class="mb-1"><span class="fw-normal">Hi {{ Auth::guard(session('guard'))->user()->name
+                                    }}</span>,</h6>
+                            <h5><b>Welcome back!</b></h5>
+                            <div class="row text-center mt-3">
+                                <div class="col">
+                                    <div class="bg-primary py-3 rounded text-white">
+                                        <h6><b>50</b></h6>
+                                        <span><i class="bx bx-briefcase-alt-2"></i> Clients</span>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="bg-secondary py-3 rounded text-white">
+                                        <h6><b>40</b></h6>
+                                        <span><i class="bx bx-objects-horizontal-left"></i> Projects</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-5 text-end">
