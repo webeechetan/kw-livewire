@@ -5069,4 +5069,16 @@ span.flatpickr-weekday {
   font-weight: 500;
 }
 
+/* ----- Intro Js ----- */
+.introjs-tooltipReferenceLayer * {
+  font-family: "Jost", sans-serif !important;
+}
+
+.introjs-button {
+  background-color: #f83890 !important;
+  color: #fff !important;
+  text-shadow: none !important;
+  border-radius: 4px !important;
+}
+
 /*# sourceMappingURL=app.css.map */

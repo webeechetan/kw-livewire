@@ -49,7 +49,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <h4>Tasks Overview</h4>
-                        <h6>Total Active Tasks: <span class="text-secondary font-500"> {{ $users_tasks->count()  }} </span></h6>
+                        <h6>Total Tasks: <span class="text-secondary font-500"> {{ $users_tasks->count()  }} </span></h6>
                         <div class="row text-center mt-3">
                             <div class="col">
                                 <div id="my-task-chart" style="width: 70px; height: 70px; margin: auto;"></div>
@@ -126,7 +126,7 @@
                     <div class="tab-pane fade show active overflow-y scrollbar scrollbar-primary" id="pills-today" role="tabpanel"
                         aria-labelledby="pills-upcoming-tab" tabindex="0">
                         <div class="taskList scrollbar">
-                            <div style="height: 538px;">
+                            <div style="height: 300px;">
                                 @foreach($users_tasks->where('due_date', now()->format('Y-m-d'))->where('status','!=','completed')->take(15) as $task)
                                 <div class="taskList_row taskList_todos">
                                     <div class="row">
@@ -155,7 +155,7 @@
                     <div class="tab-pane fade overflow-y scrollbar scrollbar-primary" id="pills-upcoming" role="tabpanel"
                         aria-labelledby="pills-upcoming-tab" tabindex="0">
                         <div class="taskList scrollbar">
-                            <div style="height: 307px;">
+                            <div style="height: 300px;">
                                 @foreach($users_tasks->where('due_date', '>', now())->where('status','!=','completed')->take(15) as $task)
                                 <div class="taskList_row taskList_todos">
                                     <div class="row">
@@ -183,9 +183,8 @@
                     </div>
                     <div class="tab-pane fade overflow-y scrollbar scrollbar-primary" id="pills-overdue" role="tabpanel"
                         aria-labelledby="pills-overdue-tab" tabindex="0">
-
                         <div class="taskList scrollbar">
-                            <div style="height: 307px;">
+                            <div style="height: 300px;">
                                 @foreach($users_tasks->where('due_date', '<', now())->where('status','!=','completed')->take(15) as $task)
                                 <div class="taskList_row taskList_todos">
                                     <div class="row">
@@ -214,22 +213,14 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-8 mt-4">
-            <div class="box-item calendar-title">
-                <!-- <h4>Calendar</h4> -->
-                <div id="calendar"></div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
         <div class="col-md-4 mt-4">
             <div class="box-item h-100">
                 <h4 class="text-xl">My Progress</h4>
                 <hr>
-                <div class="text-center" id="user-progress-pie-chart" style="width: 100%;height: 250px;"></div>
-                <div class="row">
+                <!-- <div class="text-center" id="user-progress-pie-chart" style="width: 100%;height: 250px;"></div> -->
+                <div class="row align-items-center">
                     <div class="col">
-                        <div class="row align-items-center">
+                        <div class="row align-items-center py-2">
                             <div class="col-md-auto pe-md-0">
                                 <div class="text-primary"><i class="bx bxs-circle"></i></div>
                             </div>
@@ -244,9 +235,9 @@
                     </div>
                 </div>
                 <hr>
-                <div class="row">
+                <div class="row align-items-center">
                     <div class="col">
-                        <div class="row align-items-center">
+                        <div class="row align-items-center py-2">
                             <div class="col-md-auto pe-md-0">
                                 <div class="text-secondary"><i class="bx bxs-circle"></i></div>
                             </div>
@@ -261,9 +252,9 @@
                     </div>
                 </div>
                 <hr>
-                <div class="row">
+                <div class="row align-items-center">
                     <div class="col">
-                        <div class="row align-items-center">
+                        <div class="row align-items-center py-2">
                             <div class="col-md-auto pe-md-0">
                                 <div class="text-warning"><i class="bx bxs-circle"></i></div>
                             </div>
@@ -278,9 +269,9 @@
                     </div>
                 </div>
                 <hr>
-                <div class="row">
+                <div class="row align-items-center">
                     <div class="col">
-                        <div class="row align-items-center">
+                        <div class="row align-items-center py-2">
                             <div class="col-md-auto pe-md-0">
                                 <div class="text-danger"><i class="bx bxs-circle"></i></div>
                             </div>
@@ -295,9 +286,9 @@
                     </div>
                 </div>
                 <hr>
-                <div class="row">
+                <div class="row align-items-center">
                     <div class="col">
-                        <div class="row align-items-center">
+                        <div class="row align-items-center py-2">
                             <div class="col-md-auto pe-md-0">
                                 <div class="text-success"><i class="bx bxs-circle"></i></div>
                             </div>
@@ -311,7 +302,7 @@
                                 $users_tasks->where('status','completed')->count();}}</b></h6>
                     </div>
                 </div>
-                <hr>
+                <!-- <hr> -->
                 <!-- <div class="row">
                     <div class="col">
                         <div class="row align-items-center">
@@ -327,6 +318,44 @@
                         <h6 class="mb-0 text-secondary"><b>{{$active_projects}}</b></h6>
                     </div>
                 </div> -->
+            </div>
+        </div>
+        <div class="col-md-4 mt-3">
+            <div class="box-item h-100">
+                <h4 class="text-xl">Recent Comments</h4>
+                <hr>
+                <div class="scrollbar">
+                    <div style="height: 350px;">
+                        @foreach($recent_comments as $comment)
+                            <div class="cmnt_item_row card_style bg-light">
+                                <a href="{{ route('task.view', $comment->task_id) }}" class="card_style-open"><i class='bx bx-chevron-right'></i></a>
+                                <div class="cmnt_item_user">
+                                    <div class="cmnt_item_user_img">
+                                        <x-avatar :user="$comment->user" class="avatar-sm" />
+                                    </div>
+                                    <div class="cmnt_item_user_name-wrap">
+                                        <div class="cmnt_item_user_name">{{ $comment->user->name }}</div>
+                                        <div class="cmnt_item_date">{{ \Carbon\Carbon::parse($comment->created_at)->diffForHumans() }}</div>
+                                    </div>
+                                </div>
+                                <div class="mt-2 cmnt_item_task border-bottom pb-2"><i class="bx bx-task"></i> <a href="{{ route('task.view', $comment->task_id) }}">{{ $comment->task->name }}</a></div>
+                                <div class="cmnt_item_user_text">
+                                    <a class="text-light" href="{{ route('task.view', $comment->task_id) }}">
+                                        {!! Str::limit(strip_tags($comment->comment), 25, '...') !!}
+                                    </a>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8 mt-4">
+            <div class="box-item calendar-title">
+                <!-- <h4>Calendar</h4> -->
+                <div id="calendar"></div>
             </div>
         </div>
         <div class="col-md-4 mt-4">
@@ -382,36 +411,6 @@
                         </div>
                     </div>
                     @endforeach
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4 mt-3">
-            <div class="box-item h-100">
-                <h4 class="text-xl">Recent Comments</h4>
-                <hr>
-                <div class="scrollbar">
-                    <div style="height: 540px;">
-                        @foreach($recent_comments as $comment)
-                            <div class="cmnt_item_row card_style bg-light">
-                                <a href="{{ route('task.view', $comment->task_id) }}" class="card_style-open"><i class='bx bx-chevron-right'></i></a>
-                                <div class="cmnt_item_user">
-                                    <div class="cmnt_item_user_img">
-                                        <x-avatar :user="$comment->user" class="avatar-sm" />
-                                    </div>
-                                    <div class="cmnt_item_user_name-wrap">
-                                        <div class="cmnt_item_user_name">{{ $comment->user->name }}</div>
-                                        <div class="cmnt_item_date">{{ \Carbon\Carbon::parse($comment->created_at)->diffForHumans() }}</div>
-                                    </div>
-                                </div>
-                                <div class="mt-2 cmnt_item_task border-bottom pb-2"><i class="bx bx-task"></i> <a href="{{ route('task.view', $comment->task_id) }}">{{ $comment->task->name }}</a></div>
-                                <div class="cmnt_item_user_text">
-                                    <a class="text-light" href="{{ route('task.view', $comment->task_id) }}">
-                                        {!! Str::limit(strip_tags($comment->comment), 25, '...') !!}
-                                    </a>
-                                </div>
-                            </div>
-                        @endforeach
-                    </div>
                 </div>
             </div>
         </div>
@@ -476,19 +475,14 @@
         $color = '';
         if($task->status == 'completed'){
             $color = '#4F9F54';
-        }else{
-            if($task->due_date < now()){ 
-                $color='red' ; 
-            }else{ 
-                if($task->status == 'in_progress'){ 
-                    $color='#e7bf1d';
-                }elseif ($task->status == 'in_review') {
-                    $color='#7407ff';
-                }else{
-                    $color='#48914d';
-                }
-
-            } 
+        }else{ 
+            if($task->status == 'in_progress'){ 
+                $color='#e7bf1d';
+            }elseif ($task->status == 'in_review') {
+                $color='#7407ff';
+            }else{
+                $color='#48914d';
+            }        
         } 
         $events[]=[ 'title'=> $task->name,
             'start' => $task->due_date,
