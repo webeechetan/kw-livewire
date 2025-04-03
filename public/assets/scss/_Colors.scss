@@ -143,3 +143,12 @@ $table_header_color: $secondary;
         }
     }
 }
+
+/* ----- Border Colors ----- */
+.border {
+    &-hover, &-active {
+        &-primary:hover {
+            border-color: $brand !important;
+        }
+    }
+}

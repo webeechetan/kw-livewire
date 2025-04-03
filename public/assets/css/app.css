@@ -61,6 +61,11 @@
   }
 }
 
+/* ----- Border Colors ----- */
+.border-hover-primary:hover, .border-active-primary:hover {
+  border-color: #f83890 !important;
+}
+
 /*----   Family ----*/
 /*---- Transition Ease ----*/
 /*---- Border Radius ----*/
