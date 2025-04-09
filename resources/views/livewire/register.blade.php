@@ -1,3 +1,8 @@
+@assets
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.css" />
+<!-- Tagify CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css">
+@endassets
 <div>
     @if($step == 1)
     <div class="header-signup d-flex align-items-center">
@@ -18,11 +23,11 @@
     </div> 
     <div class="signup-content">
         <div class="container">
-            <div class="row">
-                <div class="col text-center mx-auto">
+            <div class="row d-none">
+                <div class="col-lg-6 mx-auto text-center mx-auto">
                     <img class="signup-welcome-img" src="{{ asset('') }}assets/images/signup_welcome.png" alt="Sign Up Welcome" />
                     <div class="title-wrap">
-                        <h2 class="title text-primary mt-3">Welcome to Kaykewalk</h2>
+                        <h2 class="title mt-3">Welcome to Kaykewalk</h2>
                         <p>Let’s get started with a few simple steps</p>
                     </div>
                     <div class="signup-form">
@@ -45,154 +50,6 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
-                                    <div class="form-field mb-3" controlId="signupName">
-                                        <div class="form-field-icon"><i class='bx bx-building'></i></div>
-                                        <input type="text" wire:model="name" class="form-control" placeholder="Organization Name"   />
-                                        @error('name') <span class="text-danger">{{ $message }}</span>@enderror
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-field mb-3" controlId="signupName">
-                                        <div class="form-field-icon"><i class='bx bx-buildings'></i></div>
-                                        {{-- industry type --}}
-                                        <select class="form-control" wire:model="industry_type">
-                                            <option value="" selected >-- Select Industry --</option>
-                                            <option value="Accounting">Accounting</option>
-                                            <option value="Airlines/Aviation">Airlines/Aviation</option>
-                                            <option value="Alternative Dispute Resolution">Alternative Dispute Resolution</option>
-                                            <option value="Alternative Medicine">Alternative Medicine</option>
-                                            <option value="Animation">Animation</option>
-                                            <option value="Apparel & Fashion">Apparel & Fashion</option>
-                                            <option value="Architecture & Planning">Architecture & Planning</option>
-                                            <option value="Arts and Crafts">Arts and Crafts</option>
-                                            <option value="Automotive">Automotive</option>
-                                            <option value="Aviation & Aerospace">Aviation & Aerospace</option>
-                                            <option value="Banking">Banking</option>
-                                            <option value="Biotechnology">Biotechnology</option>
-                                            <option value="Broadcast Media">Broadcast Media</option>
-                                            <option value="Building Materials">Building Materials</option>
-                                            <option value="Business Supplies and Equipment">Business Supplies and Equipment</option>
-                                            <option value="Capital Markets">Capital Markets</option>
-                                            <option value="Chemicals">Chemicals</option>
-                                            <option value="Civic & Social Organization">Civic & Social Organization</option>
-                                            <option value="Civil Engineering">Civil Engineering</option>
-                                            <option value="Commercial Real Estate">Commercial Real Estate</option>
-                                            <option value="Computer & Network Security">Computer & Network Security</option>
-                                            <option value="Computer Games">Computer Games</option>
-                                            <option value="Computer Hardware">Computer Hardware</option>
-                                            <option value="Computer Networking">Computer Networking</option>
-                                            <option value="Computer Software">Computer Software</option>
-                                            <option value="Construction">Construction</option>
-                                            <option value="Consumer Electronics">Consumer Electronics</option>
-                                            <option value="Consumer Goods">Consumer Goods</option>
-                                            <option value="Consumer Services">Consumer Services</option>
-                                            <option value="Cosmetics">Cosmetics</option>
-                                            <option value="Dairy">Dairy</option>
-                                            <option value="Defense & Space">Defense & Space</option>
-                                            <option value="Design">Design</option>
-                                            <option value="Education Management">Education Management</option>
-                                            <option value="E-Learning">E-Learning</option>
-                                            <option value="Electrical/Electronic Manufacturing">Electrical/Electronic Manufacturing</option>
-                                            <option value="Entertainment">Entertainment</option>
-                                            <option value="Environmental Services">Environmental Services</option>
-                                            <option value="Events Services">Events Services</option>
-                                            <option value="Executive Office">Executive Office</option>
-                                            <option value="Facilities Services">Facilities Services</option>
-                                            <option value="Farming">Farming</option>
-                                            <option value="Financial Services">Financial Services</option>
-                                            <option value="Fine Art">Fine Art</option>
-                                            <option value="Fishery">Fishery</option>
-                                            <option value="Food & Beverages">Food & Beverages</option>
-                                            <option value="Food Production">Food Production</option>
-                                            <option value="Fund-Raising">Fund-Raising</option>
-                                            <option value="Furniture">Furniture</option>
-                                            <option value="Gambling & Casinos">Gambling & Casinos</option>
-                                            <option value="Glass, Ceramics & Concrete">Glass, Ceramics & Concrete</option>
-                                            <option value="Government Administration">Government Administration</option>
-                                            <option value="Government Relations">Government Relations</option>
-                                            <option value="Graphic Design">Graphic Design</option>
-                                            <option value="Health, Wellness and Fitness">Health, Wellness and Fitness</option>
-                                            <option value="Higher Education">Higher Education</option>
-                                            <option value="Hospital & Health Care">Hospital & Health Care</option>
-                                            <option value="Hospitality">Hospitality</option>
-                                            <option value="Human Resources">Human Resources</option>
-                                            <option value="Import and Export">Import and Export</option>
-                                            <option value="Individual & Family Services">Individual & Family Services</option>
-                                            <option value="Industrial Automation">Industrial Automation</option>
-                                            <option value="Information Services">Information Services</option>
-                                            <option value="Information Technology and Services">Information Technology and Services</option>
-                                            <option value="Insurance">Insurance</option>
-                                            <option value="International Affairs">International Affairs</option>
-                                            <option value="International Trade and Development">International Trade and Development</option>
-                                            <option value="Internet">Internet</option>
-                                            <option value="Investment Banking">Investment Banking</option>
-                                            <option value="Investment Management">Investment Management</option>
-                                            <option value="Judiciary">Judiciary</option>
-                                            <option value="Law Enforcement">Law Enforcement</option>
-                                            <option value="Law Practice">Law Practice</option>
-                                            <option value="Legal Services">Legal Services</option>
-                                            <option value="Legislative Office">Legislative Office</option>
-                                            <option value="Leisure, Travel & Tourism">Leisure, Travel & Tourism</option>
-                                            <option value="Libraries">Libraries</option>
-                                            <option value="Logistics and Supply Chain">Logistics and Supply Chain</option>
-                                            <option value="Luxury Goods & Jewelry">Luxury Goods & Jewelry</option>
-                                            <option value="Machinery">Machinery</option>
-                                            <option value="Management Consulting">Management Consulting</option>
-                                            <option value="Maritime">Maritime</option>
-                                            <option value="Market Research">Market Research</option>
-                                            <option value="Marketing and Advertising">Marketing and Advertising</option>
-                                            <option value="Mechanical or Industrial Engineering">Mechanical or Industrial Engineering</option>
-                                            <option value="Media Production">Media Production</option>
-                                            <option value="Medical Devices">Medical Devices</option>
-                                            <option value="Medical Practice">Medical Practice</option>
-                                            <option value="Mental Health Care">Mental Health Care</option>
-                                            <option value="Military">Military</option>
-                                            <option value="Mining & Metals">Mining & Metals</option>
-                                            <option value="Motion Pictures and Film">Motion Pictures and Film</option>
-                                            <option value="Museums and Institutions">Museums and Institutions</option>
-                                            <option value="Music">Music</option>
-                                            <option value="Nanotechnology">Nanotechnology</option>
-                                            <option value="Newspapers">Newspapers</option>
-                                            <option value="Non-Profit Organization Management">Non-Profit Organization Management</option>
-                                            <option value="Oil & Energy">Oil & Energy</option>
-                                            <option value="Online Media">Online Media</option>
-                                            <option value="Outsourcing/Offshoring">Outsourcing/Offshoring</option>
-                                            <option value="Package/Freight Delivery">Package/Freight Delivery</option>
-                                            <option value="Packaging and Containers">Packaging and Containers</option>
-                                            <option value="Paper & Forest Products">Paper & Forest Products</option>
-                                            <option value="Performing Arts">Performing Arts</option>
-                                            <option value="Pharmaceuticals">Pharmaceuticals</option>
-                                            <option value="Philanthropy">Philanthropy</option>
-                                            <option value="Photography">Photography</option>
-                                            <option value="Plastics">Plastics</option>
-                                            <option value="Political Organization">Political Organization</option>
-                                            <option value="Primary/Secondary Education">Primary/Secondary Education</option>
-                                            <option value="Printing">Printing</option>
-                                            <option value="Professional Training & Coaching">Professional Training & Coaching</option>
-                                            <option value="Program Development">Program Development</option>
-                                            <option value="Public Policy">Public Policy</option>
-                                            <option value="Public Relations and Communications">Public Relations and Communications</option>
-                                            <option value="Public Safety">Public Safety</option>
-                                            <option value="Publishing">Publishing</option>
-                                            <option value="Railroad Manufacture">Railroad Manufacture</option>
-                                            <option value="Ranching">Ranching</option>
-                                            <option value="Real Estate">Real Estate</option>
-                                            <option value="Recreational Facilities and Services">Recreational Facilities and Services</option>
-                                            <option value="Religious Institutions">Religious Institutions</option>
-                                            <option value="Renewables & Environment">Renewables & Environment</option>
-                                            <option value="Research">Research</option>
-                                            <option value="Restaurants">Restaurants</option>
-                                            <option value="Retail">Retail</option>
-                                            <option value="Security and Investigations">Security and Investigations</option>
-                                            <option value="Semiconductors">Semiconductors</option>
-                                              
-                                        </select>
-                                    </div>
-                                </div>
-                                
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
                                     <div class="mb-3 form-field" controlId="signupPassword">
                                         <div class="form-field-icon"><i class='bx bx-lock-open'></i></div>
                                         <input type="password" wire:model="password" class="form-control" placeholder="Password 8+ Characters"    />
@@ -209,7 +66,7 @@
                                 
                             </div>
                             <div class="my-3">
-                                <button class="w-100 btn btn-primary btn-smt" type="submit">Sign Up</button>
+                                <button class="w-100 btn btn-primary btn-smt text-lg" type="submit">Sign Up</button>
                             </div>
                             {{-- <p>Or sign up with:</p>
                             <a href="#" class="signin-google-btn w-100">
@@ -227,6 +84,230 @@
                                 <span>google</span>
                             </a> --}}
                         </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xl-7 col-xxl-6 mx-auto text-center">
+                    <div id="onboarding">
+                        <span class="d-block text-light" id="step-counter">Step 4/1</span>
+                        <div class="row mt-2 mb-4">
+                            <div class="col-xxl-5 col-lg-6 mx-auto"><div id="progress-container"><div id="progress-bar"></div></div></div>
+                        </div>
+                        <!-- Step 1 -->
+                        <div class="row step" id="step-1">
+                            <div class="col-12 text-center">
+                                <h2 class="title mb-4">Who are you setting up Kaykewalk for?</h2>
+                                <div class="options">
+                                    <div class="option" onclick="toggleSelection(this)">
+                                        <span class="checkbox"><i class='bx bx-check text-white'></i></span>
+                                        <span class="d-block mb-2"><i class='bx bx-briefcase-alt-2 bx-md text-primary'></i></span>
+                                        <span>I run/manage a</span>
+                                        <p class="fw-bold">Creative Agency or Content Team</p>
+                                    </div>
+                                    
+                                    <div class="option" onclick="toggleSelection(this)">
+                                        <span class="checkbox"><i class='bx bx-check text-white'></i></span>
+                                        <span class="d-block mb-2"><i class='bx bx-edit bx-md text-primary'></i></span>
+                                        <span>I manage a</span>
+                                        <p class="fw-bold">Brand/In-House Marketing Team</p>
+                                    </div>
+                                </div>
+                                <button class="w-100 btn btn-primary btn-smt text-lg mt-4" onclick="nextStep()">Continue</button>
+                            </div>
+                        </div>
+
+                        <!-- Step 2 -->
+                        <div class="row step" id="step-2" style="display:none">
+                            <div class="col-12">
+                                <h2 class="title mb-4">Set Up Your Organization</h2>
+                            </div>
+                            <div class="col-12">
+                                <div class="upload-card mb-4">
+                                    <div class="upload-frame" id="uploadFrame">
+                                        <span class="placeholder-text">Click to <br/>upload logo</span>
+                                        <img id="logoPreview" alt="Logo Preview" />
+                                    </div>
+                                    <input type="file" id="logoInput" accept="image/*" hidden />
+
+                                    <!-- Modal -->
+                                    <div class="modal" id="cropModal">
+                                        <div class="modal-content">
+                                        <img id="cropImage" />
+                                        <button id="cropButton">Crop & Save</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-9 mx-auto">
+                                <div class="form-field mb-4" controlId="signupName">
+                                    <div class="form-field-icon"><i class='bx bx-building'></i></div>
+                                    <input type="text" wire:model="name" class="form-control" placeholder="Organization Name"   />
+                                    @error('name') <span class="text-danger">{{ $message }}</span>@enderror
+                                </div>
+                                <div class="form-field mb-4" controlId="signupName">
+                                    <div class="form-field-icon"><i class='bx bx-buildings'></i></div>
+                                    {{-- industry type --}}
+                                    <select class="form-control" wire:model="industry_type">
+                                        <option value="" selected readonly desable>-- Select Industry --</option>
+                                        <option value="marketing-agencies">Marketing Agencies</option>
+                                        <option value="advertising-agencies">Advertising Agencies</option>
+                                        <option value="pr-firms">PR Firms</option>
+                                        <option value="branding-agencies">Branding Agencies</option>
+                                        <option value="content-studios">Content Studios</option>
+                                        <option value="influencer-management-agencies">Influencer Management Agencies</option>
+                                        <option value="publishing-houses">Publishing Houses</option>
+                                        <option value="podcast-networks">Podcast Networks</option>
+                                        <option value="film-tv-studios">Film & TV Studios</option>
+                                        <option value="music-labels-artist-management">Music Labels & Artist Management</option>
+                                        <option value="fashion-apparel">Fashion & Apparel</option>
+                                        <option value="beauty-skincare">Beauty & Skincare</option>
+                                        <option value="home-decor-furniture">Home Decor & Furniture</option>
+                                        <option value="lifestyle-wellness-brands">Lifestyle & Wellness Brands</option>
+                                        <option value="food-beverage-brands">Food & Beverage Brands</option>
+                                        <option value="startups">Startups</option>
+                                        <option value="app-developers">App Developers</option>
+                                        <option value="gaming-companies">Gaming Companies</option>
+                                        <option value="software-companies">Software Companies</option>
+                                        <option value="online-learning-platforms">Online Learning Platforms</option>
+                                        <option value="universities-colleges">Universities & Colleges</option>
+                                        <option value="coaching-training-companies">Coaching & Training Companies</option>
+                                        <option value="health-fitness-brands">Health & Fitness Brands</option>
+                                        <option value="healthcare-providers">Healthcare Providers</option>
+                                        <option value="mental-health-platforms">Mental Health Platforms</option>
+                                        <option value="hotels-resorts">Hotels & Resorts</option>
+                                        <option value="travel-agencies">Travel Agencies</option>
+                                        <option value="tourism-boards">Tourism Boards</option>
+                                        <option value="airlines">Airlines</option>
+                                        <option value="charities">Charities</option>
+                                        <option value="advocacy-groups">Advocacy Groups</option>
+                                        <option value="educational-nonprofits">Educational Nonprofits</option>
+                                        <option value="brokerages">Brokerages</option>
+                                        <option value="real-estate-agents">Real Estate Agents</option>
+                                        <option value="property-management-companies">Property Management Companies</option>
+                                        <option value="fintech-startups">Fintech Startups</option>
+                                        <option value="insurance-companies">Insurance Companies</option>
+                                        <option value="banks-investment-firms">Banks & Investment Firms</option>
+                                        <option value="others">Others</option>                                
+                                    </select>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6"><button class="w-100 btn btn-outline-secondary btn-smt text-lg" onclick="prevStep()">Go Back</button></div>
+                                    <div class="col-md-6"><button class="w-100 btn btn-primary btn-smt text-lg" onclick="nextStep()">Continue</button></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 3 -->
+                        <div class="row step" id="step-3" style="display:none">
+                            <div class="col-md-12">
+                                <div class="mt-3 mb-3">
+                                    <div class="row">
+                                        <div class="col-lg-7 mx-auto">
+                                            <h2 class="title mb-4">Let's Add Your Brand Handle(s)</h2>
+                                        </div>
+                                    </div>
+                                    <div class="row justify-content-center social-input-list">
+                                        <div class="col-lg-6 mb-4">
+                                            <div class="social-input">
+                                                <span class="checkbox" id="handle_facebook"><i class='bx bx-check text-white'></i></span>
+                                                <label class="form-check-label d-flex align-items-center justify-content-center flex-column" for="handle_facebook">
+                                                <i class="bx bxl-facebook bx-sm me-2 text-secondary"></i> Facebook
+                                                </label>
+                                                <input type="text" class="mt-2 text-center w-100" placeholder="@username" />
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-6 mb-4">
+                                            <div class="social-input">
+                                                <span class="checkbox" id="handle_instagram"><i class='bx bx-check text-white'></i></span>
+                                                <label class="form-check-label d-flex align-items-center justify-content-center flex-column" for="handle_instagram">
+                                                <i class="bx bxl-instagram bx-sm me-2 text-secondary"></i> Instagram
+                                                </label>
+                                                <input type="text" class="mt-2 text-center w-100" placeholder="@username" />
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-6 mb-4">
+                                            <div class="social-input">
+                                                <span class="checkbox" id="handle_twitter"><i class='bx bx-check text-white'></i></span>
+                                                <label class="form-check-label d-flex align-items-center justify-content-center flex-column" for="handle_twitter">
+                                                <i class="bx bxl-twitter bx-sm me-2 text-secondary"></i> Twitter
+                                                </label>
+                                                <input type="text" class="mt-2 text-center w-100" placeholder="@username" />
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-6 mb-4">
+                                            <div class="social-input">
+                                                <span class="checkbox" id="handle_linkedin"><i class='bx bx-check text-white'></i></span>
+                                                <label class="form-check-label d-flex align-items-center justify-content-center flex-column" for="handle_linkedin">
+                                                <i class="bx bxl-linkedin bx-sm me-2 text-secondary"></i> LinkedIn
+                                                </label>
+                                                <input type="text" class="mt-2 text-center w-100" placeholder="@username" />
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-6">
+                                            <div class="social-input">
+                                                <span class="checkbox" id="handle_youtube"><i class='bx bx-check text-white'></i></span>
+                                                <label class="form-check-label d-flex align-items-center justify-content-center flex-column" for="handle_youtube">
+                                                <i class="bx bxl-youtube bx-sm me-2 text-secondary"></i> YouTube
+                                                </label>
+                                                <input type="text" class="mt-2 text-center w-100" placeholder="@username" />
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-6">
+                                            <div class="social-input">
+                                                <span class="checkbox" id="handle_tiktok"><i class='bx bx-check text-white'></i></span>
+                                                <label class="form-check-label d-flex align-items-center justify-content-center flex-column" for="handle_tiktok">
+                                                <i class="bx bxl-tiktok bx-sm me-2 text-secondary"></i> TikTok
+                                                </label>
+                                                <input type="text" class="mt-2 text-center w-100" placeholder="@username" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 mt-4">
+                                <div class="row">
+                                    <div class="col-md-6"><button class="w-100 btn btn-outline-secondary btn-smt text-lg" onclick="prevStep()">Go Back</button></div>
+                                    <div class="col-md-6"><button class="w-100 btn btn-primary btn-smt text-lg" onclick="nextStep()">Continue</button></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 4 -->
+                        <div class="step" id="step-4" style="display:none">
+                            <h2 class="mb-3 title">Invite teammates</h2>
+                            <p class="text-muted mb-4">Copy this link and share in your work messenger:</p>
+
+                            <!-- Copy Link Section -->
+                            <div class="input-group mb-4 position-relative">
+                                <input type="text" id="inviteLink" class="form-control bg-light text-muted" readonly value="https://yourapp.com/join/ABC123">
+                                <button id="copyBtn" class="btn btn-primary" onclick="copyLink()">COPY</button>
+                                <div id="copiedText" class="text-success small position-absolute" style="right: 10px; top: 100%; display: none;">Copied!</div>
+                            </div>
+
+                            <!-- Enter Emails -->
+                            <div class="mb-4">
+                                <input type="text" id="emailInput" class="form-control" placeholder="Enter emails here (comma separated)">
+                            </div>
+
+                            <div class="row justify-content-center">
+                                <div class="col-lg-6"><button class="w-100 btn btn-primary btn-smt text-lg" onclick="sendInvitations()">Send invitations</button></div>
+                                <div class="col-lg-6"><button class="w-100 btn btn-outline-secondary btn-smt text-lg" onclick="finishOnboarding()">Skip for now</button></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 🎉 Welcome Message -->
+                    <div id="welcome-message" class="text-center" style="display:none;">
+                        <h2 class="title-big"><span class="d-block">🎉</span> Welcome Aboard!</h2>
+                        <p>We're excited to have you with us.</p>
+                        <a href="#" class="btn btn-primary btn-smt text-lg">Let's start</a>
                     </div>
                 </div>
             </div>
@@ -278,3 +359,205 @@
      </div>
     @endif
 </div>
+
+@assets
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+<!-- Tagify JS -->
+<script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>
+<script>
+
+    // option Js
+    function toggleSelection(selectedOption) {
+    const options = document.querySelectorAll('.option');
+    
+    options.forEach(option => {
+        option.classList.remove('selected');
+    });
+
+        selectedOption.classList.add('selected');
+    }
+    // end option js
+
+
+    // Steps
+    let currentStep = 1;
+    const totalSteps = 4;
+    const startProgress = 20; // Starting at 20%
+
+    function nextStep() {
+        if (currentStep < totalSteps) {
+            document.getElementById(`step-${currentStep}`).style.display = "none";
+            currentStep++;
+            document.getElementById(`step-${currentStep}`).style.display = "block";
+            updateStepCounter();
+            updateProgressBar();
+        } else {
+            finishOnboarding();
+        }
+    }
+
+    function prevStep() {
+        if (currentStep > 1) {
+            document.getElementById(`step-${currentStep}`).style.display = "none";
+            currentStep--;
+            document.getElementById(`step-${currentStep}`).style.display = "block";
+            updateStepCounter();
+            updateProgressBar();
+        }
+    }
+
+    function updateStepCounter() {
+        const counter = document.getElementById('step-counter');
+        if (counter) {
+            counter.textContent = `Step ${totalSteps}/${currentStep}`;
+        }
+    }
+
+    function updateProgressBar() {
+        const progressBar = document.getElementById('progress-bar');
+
+        const progressPercent = startProgress + ((currentStep - 1) / (totalSteps - 1)) * (100 - startProgress);
+
+        progressBar.style.width = `${progressPercent}%`;
+    }
+
+    function finishOnboarding() {
+        document.getElementById('onboarding').style.display = 'none';
+        document.getElementById('welcome-message').style.display = 'block';
+
+        // Raining confetti
+        const duration = 2 * 1000; // 3 seconds
+        const end = Date.now() + duration;
+
+        (function frame() {
+            confetti({
+                particleCount: 5,
+                angle: 60,
+                spread: 55,
+                origin: { x: 0 }
+            });
+            confetti({
+                particleCount: 5,
+                angle: 120,
+                spread: 55,
+                origin: { x: 1 }
+            });
+
+            if (Date.now() < end) {
+                requestAnimationFrame(frame);
+            }
+        })();
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        updateStepCounter();
+        updateProgressBar();
+    });
+
+    // end steps
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const socialInputs = document.querySelectorAll('.social-input-list .social-input');
+
+        socialInputs.forEach(input => {
+            const textInput = input.querySelector('input[type="text"]');
+
+            // Handle input focus or typing
+            textInput.addEventListener('input', () => {
+            if (textInput.value.trim() !== "") {
+                input.classList.add('selected');
+            } else {
+                input.classList.remove('selected');
+            }
+            });
+
+            // Also optional: when clicking anywhere on box, focus the input
+            input.addEventListener('click', () => {
+            textInput.focus();
+            });
+        });
+
+        let cropper;
+        const logoInput = document.getElementById('logoInput');
+        const uploadFrame = document.getElementById('uploadFrame');
+        const logoPreview = document.getElementById('logoPreview');
+        const cropImage = document.getElementById('cropImage');
+        const cropModal = document.getElementById('cropModal');
+        const cropButton = document.getElementById('cropButton');
+
+        // Open file picker
+        uploadFrame.addEventListener('click', () => {
+        logoInput.click();
+        });
+
+        // When file selected
+        logoInput.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            cropImage.src = event.target.result;
+            cropModal.style.display = 'flex'; // Open modal
+            if (cropper) {
+            cropper.destroy();
+            }
+            cropper = new Cropper(cropImage, {
+            aspectRatio: 1, // square crop
+            viewMode: 1,
+            autoCropArea: 1,
+            responsive: true,
+            background: false,
+            movable: true,
+            zoomable: true,
+            });
+        };
+        reader.readAsDataURL(file);
+        });
+
+        // When user clicks "Crop & Save"
+        cropButton.addEventListener('click', () => {
+        if (cropper) {
+            const canvas = cropper.getCroppedCanvas({
+                width: 300,
+                height: 300,
+                imageSmoothingQuality: 'high',
+                });
+
+                // Set cropped image to preview
+                logoPreview.src = canvas.toDataURL('image/png');
+                logoPreview.style.display = 'block';
+                document.querySelector('.placeholder-text').style.display = 'none';
+
+                // Close modal and destroy cropper
+                cropModal.style.display = 'none';
+                cropper.destroy();
+                cropper = null;
+                logoInput.value = ''; // Reset input
+            }
+        });
+
+
+        // Tagify
+        const input = document.getElementById('emailInput');
+
+        // Initialize Tagify
+        const tagify = new Tagify(input, {
+            delimiters: ",", // allow comma separated values
+            pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, // email validation
+            keepInvalidTags: true, // show invalid emails as red
+            dropdown: {
+                enabled: 0 // no autocomplete dropdown
+            }
+        });
+
+        // Optional: Listen for invalid email tags
+        tagify.on('invalid', (e) => {
+            console.log('Invalid email:', e.detail.data.value);
+        });
+
+    });
+
+</script>
+@endassets

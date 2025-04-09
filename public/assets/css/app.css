@@ -173,6 +173,9 @@ b, strong {
 .w-150 {
   min-width: 150px;
 }
+.w-175 {
+  min-width: 175px;
+}
 .w-200 {
   min-width: 200px;
 }
@@ -2219,7 +2222,7 @@ hr.space-sm {
 }
 /*---- Form Style Start Here ----*/
 .form-control, .form-select {
-  border: 1px solid #ced4da;
+  border: 1px solid #d9d9d9;
   padding: 10px 20px;
   border-radius: 4px;
   font-size: 1rem;
@@ -2237,7 +2240,7 @@ hr.space-sm {
 }
 @media (min-width: 768px) {
   .form-control, .form-select {
-    min-height: 50px;
+    min-height: 55px;
   }
 }
 .form-select-sm {
@@ -2276,15 +2279,13 @@ hr.space-sm {
   position: relative;
 }
 .form-field .form-control, .form-field .form-select {
-  padding: 10px 20px 10px 65px;
+  padding: 10px 20px 10px 50px;
 }
 .form-field-icon {
   color: #f83890;
   position: absolute;
   top: 8px;
   left: 15px;
-  padding-right: 15px;
-  border-right: 1px solid #ced4da;
   display: flex;
   align-items: center;
 }
@@ -2294,7 +2295,7 @@ hr.space-sm {
 @media (min-width: 768px) {
   .form-field-icon {
     top: 10px;
-    min-height: 30px;
+    min-height: 35px;
   }
 }
 .form-file_upload {
@@ -2551,7 +2552,7 @@ input:-webkit-autofill, input:-webkit-autofill:focus {
   overflow: hidden;
 }
 .invite-copy-link-text {
-  border: 1px solid #ced4da;
+  border: 1px solid #d9d9d9;
   border-right: none;
   padding: 10px;
   border-radius: 4px 0 0 4px;
@@ -2637,6 +2638,7 @@ input:-webkit-autofill, input:-webkit-autofill:focus {
 }
 
 .signup-content {
+  padding: 100px 0;
   position: relative;
   min-height: 100vh;
   display: flex;
@@ -2661,11 +2663,6 @@ input:-webkit-autofill, input:-webkit-autofill:focus {
 .signup-content > .container {
   z-index: 9;
   position: relative;
-}
-.signup-form {
-  width: 600px;
-  max-width: 100%;
-  margin: 0 auto;
 }
 .signup-welcome-img {
   transform: translateX(16px);
@@ -3309,12 +3306,6 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
 }
 .dashboard-head .tabNavigationBar-tab {
   border-color: transparent;
-}
-
-/* ----- Auth Forms ----- */
-.signup-form button,
-.signup-form .signin-google-btn {
-  font-size: 22px;
 }
 
 /*---- Box Item Style ---*/
@@ -4438,7 +4429,7 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   font-size: 14px;
 }
 .req_calender-repeats select.planHoverStyle:hover, .req_calender-repeats select.planHoverStyle.active {
-  border-color: #ced4da;
+  border-color: #d9d9d9;
 }
 .req_calender-repeats-lable {
   font-size: 14px;
@@ -5084,6 +5075,190 @@ span.flatpickr-weekday {
   color: #fff !important;
   text-shadow: none !important;
   border-radius: 4px !important;
+}
+
+/* ----- Onboarding ----- */
+.options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.options .option {
+  border: 1px solid #ddd;
+  padding: 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+  position: relative;
+}
+.options .option label {
+  cursor: pointer;
+}
+.options .option .checkbox {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 20px;
+  height: 20px;
+  background-color: #f83890;
+  border-radius: 50%;
+  display: none;
+}
+.options .option:hover {
+  border-color: #f83890;
+}
+.options .option.selected {
+  border-color: #f83890;
+}
+.options .option.selected .checkbox {
+  display: flex;
+}
+
+/* ----- Social Inputs ----- */
+.social-input {
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 8px;
+  position: relative;
+}
+.social-input .checkbox {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 20px;
+  height: 20px;
+  background-color: #f83890;
+  border-radius: 50%;
+  display: none;
+}
+.social-input input {
+  border: none;
+  background-color: #eee;
+  border-radius: 4px;
+  min-height: 40px;
+}
+.social-input input::selection, .social-input input:focus {
+  outline: none;
+}
+.social-input:hover {
+  border-color: #f83890;
+}
+.social-input.selected {
+  border-color: #f83890;
+}
+.social-input.selected input {
+  background-color: #f83890;
+  color: #fff;
+}
+.social-input.selected input::selection, .social-input.selected input:focus {
+  outline: 1px solid #f83890;
+  background-color: #f83890;
+}
+.social-input.selected input::placeholder {
+  color: #fff;
+}
+.social-input.selected .checkbox {
+  display: flex;
+}
+
+.upload-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+.upload-card .upload-frame {
+  width: 150px;
+  height: 150px;
+  border: 2px dashed #ccc;
+  border-radius: 15px;
+  background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.upload-card .upload-frame img#logoPreview {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: none;
+}
+.upload-card .upload-frame .placeholder-text {
+  color: #999;
+  font-size: 14px;
+  text-align: center;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 9999;
+  align-items: center;
+  justify-content: center;
+}
+.modal .modal-content {
+  border-radius: 12px;
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+}
+.modal .modal-content #cropImage {
+  max-width: 100%;
+  border-radius: 10px;
+}
+.modal .modal-content #cropButton {
+  margin: 10px;
+  padding: 10px 20px;
+  background: #4caf50;
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+.modal .modal-content #cropButton:hover {
+  background: #45a049;
+}
+
+.step {
+  transition: all 0.5s ease;
+}
+
+#progress-container {
+  width: 100%;
+  background-color: #dae9db;
+  height: 5px;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+#progress-bar {
+  height: 100%;
+  width: 0%;
+  background-color: #48914d;
+  transition: width 0.4s ease;
+  border-radius: 5px;
+}
+
+.input-group #copyBtn {
+  border-radius: 0 5px 5px 0;
 }
 
 /*# sourceMappingURL=app.css.map */
