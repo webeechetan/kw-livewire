@@ -148,7 +148,7 @@
 
                 <div class="col-md-5">
                     <div class="row gap-3">
-                        <!-- Storage -->
+                        <!-- Total Teams -->
                         <div class="col-12">
                             <a href="#">
                                 <div class="card shadow-sm border-0">
@@ -242,6 +242,39 @@
             </div>
         </div>
     </div>
+
+    <!-- Pnboarding Popup -->
+    <div class="onboarding-popup" id="onboardingPopup">
+        <div class="onboarding-header">
+            <div>Getting Started</div>
+            <i class='bx bx-x' id="closePopup"></i>
+        </div>
+
+        <span class="text-sm" id="progressText">0% Complete</span>
+        <div class="progress">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+
+        <div class="onboarding-step" onclick="completeStep(this)">
+            <i class='bx bx-user-plus'></i> Onboard your first client
+        </div>
+        <div class="onboarding-step" onclick="completeStep(this)">
+            <i class='bx bx-folder-plus'></i> Add your first project
+        </div>
+        <div class="onboarding-step" onclick="completeStep(this)">
+            <i class='bx bx-group'></i> Create your teams
+        </div>
+        <div class="onboarding-step" onclick="completeStep(this)">
+            <i class='bx bx-calendar'></i> Create your first content calendar
+        </div>
+        <div class="onboarding-step" onclick="completeStep(this)">
+            <i class='bx bx-edit'></i> Create your first post
+        </div>
+
+        <div id="stepCounter">
+            <i class='bx bx-rocket'></i> <span id="completedCount">0/5</span>
+        </div>
+    </div>
 </div>
 
 @assets
@@ -251,6 +284,30 @@
 
 @script
 <script>
+    const steps = document.querySelectorAll('.onboarding-step');
+    const progressBar = document.getElementById('progressBar');
+    const progressText = document.getElementById('progressText');
+    const completedCount = document.getElementById('completedCount');
+
+    function completeStep(element) {
+        element.classList.toggle('completed');
+
+        const completedSteps = document.querySelectorAll('.onboarding-step.completed').length;
+        const totalSteps = steps.length;
+        const progressPercent = Math.round((completedSteps / totalSteps) * 100);
+
+        progressBar.style.width = progressPercent + '%';
+        progressText.innerText = progressPercent + '% Complete';
+        completedCount.innerText = completedSteps + '/' + totalSteps;
+    }
+
+    steps.forEach(step => {
+        step.addEventListener('click', function() {
+            completeStep(this);
+        });
+    });
+
+    // JQery
     $(document).ready(function() {
 
     // Post Stats Chart Data

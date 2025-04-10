@@ -2560,15 +2560,76 @@ span.flatpickr-weekday {
 }
 
 .activity-feed {
-    max-height: 400px;  /* Set height */
-    overflow-y: auto;   /* Enable vertical scroll */
+    max-height: 400px;
+    /* Set height */
+    overflow-y: auto;
+    /* Enable vertical scroll */
     padding-right: 10px;
 }
+
 .activity-item {
     padding: 10px;
     border-bottom: 1px solid #e9ecef;
 }
+
 .activity-time {
     font-size: 0.8rem;
     color: #6c757d;
 }
+
+
+.onboarding-popup {
+    position: fixed;
+    bottom: 40px;
+    right: 20px;
+    background: #fff;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    border-radius: 10px;
+    padding: 20px;
+    width: 300px;
+    z-index: 1000;
+  }
+  .onboarding-header {
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  .progress {
+    background: #eee;
+    height: 6px;
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 15px;
+  }
+  .progress-bar {
+    height: 100%;
+    width: 0%;
+    background: #6c5ce7;
+    transition: 0.3s;
+  }
+  .onboarding-step {
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .onboarding-step.completed {
+    text-decoration: line-through;
+    color: #888;
+  }
+  #stepCounter {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: #6c5ce7;
+    color: white;
+    border-radius: 20px;
+    padding: 4px 8px;
+    font-size: 14px;
+    position: absolute;
+    top: -15px;
+    left: 10px;
+  }
