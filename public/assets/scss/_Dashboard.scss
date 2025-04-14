@@ -25,7 +25,7 @@
         }
 
         @media (max-width: 1440px) {
-            width: calc(100% - 230px);
+            width: calc(100% - 200px);
         }
     }
 
@@ -69,21 +69,6 @@
 .box {
     &-item {
         @include box_item;
-    }
-}
-
-/*---- Welcome Box Style ----*/
-.welcome-box {
-    &-img {
-        margin-top: -40px;
-
-        img {
-            max-width: 185px;
-        }
-
-        @media (max-width: 1440px) {
-            margin-top: -35px;
-        }
     }
 }
 
@@ -165,12 +150,6 @@
         color: #fff;
     }
 
-    &-blue {
-        background-color: #0000F7;
-        border-color: #0000F7;
-        color: #fff;
-    }
-
     &-sm {
         width: 26px;
         height: 26px;
@@ -204,7 +183,9 @@
     }
 
     .avatar {
-        &:hover, &:focus {
+
+        &:hover,
+        &:focus {
             transform: translateY(-2px);
         }
     }
@@ -762,7 +743,7 @@
             padding: 3px 6px;
             font-size: 11px;
             line-height: 100%;
-            
+
             &_c {
                 display: grid;
                 grid-template-columns: 1fr auto;
@@ -841,6 +822,7 @@
                 &:not(.select2-results__option--group) {
                     padding: 7px 15px;
                 }
+
                 font-size: 13px;
 
                 &.select2-results__option--group {
@@ -1010,6 +992,16 @@
             color: $dark;
         }
     }
+
+    &-box {
+        width: 50px;
+        height: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 10px;
+        font-size: 24px;
+    }
 }
 
 /* ----- Task Status Tabs ----- */
@@ -1067,6 +1059,7 @@
 
     &-xs {
         gap: $spacing_xs;
+
         .nav-link {
             padding: 3px 10px;
             font-size: 11px;
@@ -1293,17 +1286,22 @@
     &.note-hint-popover {
         border: none;
         box-shadow: $box_shadow_light;
+
         .popover-content {
             padding: 0;
             border-radius: 0;
-            &::-webkit-scrollbar-track, &::-webkit-scrollbar-thumb {
+
+            &::-webkit-scrollbar-track,
+            &::-webkit-scrollbar-thumb {
                 -webkit-box-shadow: none;
                 border-radius: 7px;
                 background-color: $light;
             }
+
             &::-webkit-scrollbar-thumb {
                 background-color: $grey_xd;
             }
+
             &::-webkit-scrollbar {
                 width: 6px;
                 background-color: transparent;
@@ -2064,6 +2062,7 @@
         padding: 5px 10px 5px 15px;
         border-radius: $border_radius_sm;
     }
+
     &-icon {
         width: 30px;
         height: 30px;
@@ -2073,11 +2072,13 @@
         justify-content: center;
         border-radius: 7px;
     }
+
     &-preview {
         audio {
             height: 36px;
         }
     }
+
     i {
         font-size: 22px;
         cursor: pointer;
@@ -2121,48 +2122,66 @@
             color: var(--fc-button-text-color);
         }
     }
+
     &-toolbar-title {
         font-size: 24px;
         color: $dark;
     }
+
     &-col-header-cell-cushion {
         font-weight: 500;
     }
+
     &-day {
-        &-mon, &-tue, &-wed, &-thu, &-fri {
+
+        &-mon,
+        &-tue,
+        &-wed,
+        &-thu,
+        &-fri {
             a {
                 color: $secondary;
             }
         }
     }
+
     &-daygrid-day-top {
         justify-content: center;
     }
 }
-.fc-theme-standard td, .fc-theme-standard th, .fc-theme-standard .fc-scrollgrid {
+
+.fc-theme-standard td,
+.fc-theme-standard th,
+.fc-theme-standard .fc-scrollgrid {
     background-color: #fff;
     border-color: #eee;
 }
+
 .fc-theme-standard .fc-popover-header {
     background-color: $secondary;
     color: #fff;
 }
+
 .fc-theme-standard .fc-popover {
     border: none;
 }
+
 .fc .fc-daygrid {
     &-day.fc-day-today {
         background-color: $light;
     }
+
     &-more-link {
         width: 100%;
         text-align: center;
     }
+
     &-event {
         border: none;
         padding: 0 5px;
     }
 }
+
 button.fc-today-button.fc-button.fc-button-primary {
     background: $brand;
     border: none;
@@ -2175,21 +2194,53 @@ button.fc-today-button.fc-button.fc-button-primary {
     padding: 7px;
     border-right: 10px;
     box-shadow: none;
-    border: 1px solid #eee; 
+    border: 1px solid #eee;
 }
-.flatpickr-day.inRange, .flatpickr-day.prevMonthDay.inRange, .flatpickr-day.nextMonthDay.inRange, .flatpickr-day.today.inRange, .flatpickr-day.prevMonthDay.today.inRange, .flatpickr-day.nextMonthDay.today.inRange, .flatpickr-day:hover, .flatpickr-day.prevMonthDay:hover, .flatpickr-day.nextMonthDay:hover, .flatpickr-day:focus, .flatpickr-day.prevMonthDay:focus, .flatpickr-day.nextMonthDay:focus {
+
+.flatpickr-day.inRange,
+.flatpickr-day.prevMonthDay.inRange,
+.flatpickr-day.nextMonthDay.inRange,
+.flatpickr-day.today.inRange,
+.flatpickr-day.prevMonthDay.today.inRange,
+.flatpickr-day.nextMonthDay.today.inRange,
+.flatpickr-day:hover,
+.flatpickr-day.prevMonthDay:hover,
+.flatpickr-day.nextMonthDay:hover,
+.flatpickr-day:focus,
+.flatpickr-day.prevMonthDay:focus,
+.flatpickr-day.nextMonthDay:focus {
     background-color: $light;
 }
-.flatpickr-day.selected, .flatpickr-day.startRange, .flatpickr-day.endRange, .flatpickr-day.selected.inRange, .flatpickr-day.startRange.inRange, .flatpickr-day.endRange.inRange, .flatpickr-day.selected:focus, .flatpickr-day.startRange:focus, .flatpickr-day.endRange:focus, .flatpickr-day.selected:hover, .flatpickr-day.startRange:hover, .flatpickr-day.endRange:hover, .flatpickr-day.selected.prevMonthDay, .flatpickr-day.startRange.prevMonthDay, .flatpickr-day.endRange.prevMonthDay, .flatpickr-day.selected.nextMonthDay, .flatpickr-day.startRange.nextMonthDay, .flatpickr-day.endRange.nextMonthDay {
+
+.flatpickr-day.selected,
+.flatpickr-day.startRange,
+.flatpickr-day.endRange,
+.flatpickr-day.selected.inRange,
+.flatpickr-day.startRange.inRange,
+.flatpickr-day.endRange.inRange,
+.flatpickr-day.selected:focus,
+.flatpickr-day.startRange:focus,
+.flatpickr-day.endRange:focus,
+.flatpickr-day.selected:hover,
+.flatpickr-day.startRange:hover,
+.flatpickr-day.endRange:hover,
+.flatpickr-day.selected.prevMonthDay,
+.flatpickr-day.startRange.prevMonthDay,
+.flatpickr-day.endRange.prevMonthDay,
+.flatpickr-day.selected.nextMonthDay,
+.flatpickr-day.startRange.nextMonthDay,
+.flatpickr-day.endRange.nextMonthDay {
     background-color: $brand;
     border-color: $brand;
 }
 
-.flatpickr-current-month, .flatpickr-current-month .flatpickr-monthDropdown-months {
+.flatpickr-current-month,
+.flatpickr-current-month .flatpickr-monthDropdown-months {
     font-size: 14px;
 }
 
-.flatpickr-months .flatpickr-prev-month, .flatpickr-months .flatpickr-next-month {
+.flatpickr-months .flatpickr-prev-month,
+.flatpickr-months .flatpickr-next-month {
     background: #fff;
     width: 24px;
     height: 24px;
@@ -2198,32 +2249,41 @@ button.fc-today-button.fc-button.fc-button-primary {
     top: 12px;
     @include flex_center;
 }
+
 .flatpickr-months {
     background-color: $light;
     border-radius: 30px;
     margin-bottom: 10px;
 }
+
 .flatpickr-months .flatpickr-prev-month {
     left: 12px !important;
 }
+
 .flatpickr-months .flatpickr-next-month {
     right: 12px !important;
 }
-.flatpickr-months .flatpickr-prev-month svg, .flatpickr-months .flatpickr-next-month svg {
+
+.flatpickr-months .flatpickr-prev-month svg,
+.flatpickr-months .flatpickr-next-month svg {
     width: 10px;
     height: 10px;
 }
+
 .flatpickr-current-month .flatpickr-monthDropdown-months:hover {
     background: transparent;
 }
+
 span.flatpickr-weekday {
     font-size: 12px;
     font-weight: 500;
 }
+
 /* ----- Intro Js ----- */
 .introjs-tooltipReferenceLayer * {
     font-family: $jost !important;
 }
+
 .introjs-button {
     background-color: $brand !important;
     color: #fff !important;
@@ -2264,6 +2324,7 @@ span.flatpickr-weekday {
         &:hover {
             border-color: $brand;
         }
+
         &.selected {
             border-color: $brand;
 
@@ -2280,6 +2341,7 @@ span.flatpickr-weekday {
     padding: 10px;
     border-radius: 8px;
     position: relative;
+
     .checkbox {
         @include flex_center;
         position: absolute;
@@ -2298,7 +2360,8 @@ span.flatpickr-weekday {
         border-radius: 4px;
         min-height: 40px;
 
-        &::selection, &:focus {
+        &::selection,
+        &:focus {
             outline: none;
         }
 
@@ -2307,19 +2370,25 @@ span.flatpickr-weekday {
     &:hover {
         border-color: $brand;
     }
+
     &.selected {
         border-color: $brand;
+
         input {
             background-color: $brand;
             color: #fff;
-            &::selection, &:focus {
+
+            &::selection,
+            &:focus {
                 outline: 1px solid $brand;
                 background-color: $brand;
             }
+
             &::placeholder {
                 color: #fff;
             }
         }
+
         .checkbox {
             display: flex;
         }
@@ -2332,81 +2401,84 @@ span.flatpickr-weekday {
     flex-direction: column;
     align-items: center;
     gap: 1rem;
-    
+
     .upload-frame {
-      width: 150px;
-      height: 150px;
-      border: 2px dashed #ccc;
-      border-radius: 15px;
-      background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      position: relative;
-      overflow: hidden;
-  
-      img#logoPreview {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        display: none;
-      }
-  
-      .placeholder-text {
-        color: #999;
-        font-size: 14px;
-        text-align: center;
-      }
+        width: 150px;
+        height: 150px;
+        border: 2px dashed #ccc;
+        border-radius: 15px;
+        background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+
+        img#logoPreview {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: none;
+        }
+
+        .placeholder-text {
+            color: #999;
+            font-size: 14px;
+            text-align: center;
+        }
     }
-  }
-  
-  .modal {
-    display: none; 
+}
+
+.modal {
+    display: none;
     position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     background: rgba(0, 0, 0, 0.7);
     z-index: 9999;
     align-items: center;
     justify-content: center;
-  
+
     .modal-content {
-      border-radius: 12px;
-      max-width: 400px;
-      width: 100%;
-      text-align: center;
-  
-      #cropImage {
-        max-width: 100%;
-        border-radius: 10px;
-      }
-  
-      #cropButton {
-        margin: 10px;
-        padding: 10px 20px;
-        background: #4caf50;
-        border: none;
-        border-radius: 8px;
-        color: #fff;
-        font-weight: bold;
-        cursor: pointer;
-        transition: background 0.3s;
-  
-        &:hover {
-          background: #45a049;
+        border-radius: 12px;
+        max-width: 400px;
+        width: 100%;
+        text-align: center;
+
+        #cropImage {
+            max-width: 100%;
+            border-radius: 10px;
         }
-      }
+
+        #cropButton {
+            margin: 10px;
+            padding: 10px 20px;
+            background: #4caf50;
+            border: none;
+            border-radius: 8px;
+            color: #fff;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+
+            &:hover {
+                background: #45a049;
+            }
+        }
     }
-  }
-  
+}
 
-  .step {
+
+.step {
     transition: all 0.5s ease;
-  }
+}
 
-  #progress-container {
+#progress-container {
     width: 100%;
-    background-color: $success_light;
+    background-color: $brand_light;
     height: 5px;
     border-radius: 5px;
     overflow: hidden;
@@ -2415,13 +2487,273 @@ span.flatpickr-weekday {
 #progress-bar {
     height: 100%;
     width: 0%;
-    background-color: $success;
+    background-color: $brand;
     transition: width 0.4s ease;
     border-radius: 5px;
 }
+
 .input-group {
     #copyBtn {
         border-radius: 0 5px 5px 0;
     }
 }
+
+
+/* -----  ----- */
+.pricing-card {
+    background: linear-gradient(135deg, #a67eff, #c23aff);
+    color: white;
+    border-radius: 10px;
+    padding: 40px 20px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+
+    &::before,
+    &::after {
+        content: "";
+        position: absolute;
+        width: 150px;
+        height: 150px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+    }
+
+    &::before {
+        top: -50px;
+        left: -50px;
+    }
+
+    &::after {
+        bottom: -50px;
+        right: -50px;
+    }
+
+    .btn-upgrade {
+        background-color: white;
+        color: #6f42c1;
+        padding: 8px 25px;
+        border-radius: 50px;
+        font-weight: 500;
+        border: none;
+        transition: 0.3s ease;
+
+        &:hover {
+            background-color: #f1f1f1;
+        }
+    }
+}
+
+.activity-feed {
+    max-height: 400px;
+    /* Set height */
+    overflow-y: auto;
+    /* Enable vertical scroll */
+    padding-right: 10px;
+}
+
+.activity-item {
+    padding: 10px;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.activity-time {
+    font-size: 0.8rem;
+    color: #6c757d;
+}
+
+
+.onboarding-popup {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    padding: 20px;
+    width: 330px;
+    z-index: 1000;
+
+    .onboarding-header {
+        display: flex;
+        justify-content: space-between;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    .progress {
+        background: #eee;
+        height: 6px;
+        border-radius: 3px;
+        overflow: hidden;
+        margin-bottom: 15px;
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: $success;
+            transition: 0.3s;
+        }
+    }
+
+    .onboarding-step {
+        background-color: $light;
+        padding: 5px 10px;
+        border-radius: 30px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 5px;
+        transition: all 0.3s ease;
+
+        &:hover {
+            background-color: $success_light;
+        }
+
+        &.completed {
+            text-decoration: line-through;
+            background-color: $success;
+            color: #ddd;
+        }
+    }
+}
+
+#stepCounter {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: $secondary;
+    color: white;
+    border-radius: 20px;
+    padding: 4px 8px;
+    font-size: 14px;
+    position: absolute;
+    top: -15px;
+    left: 10px;
+}
+
+// Post Card
+.post-img {
+    height: 140px;
+    object-fit: cover;
+}
+
+// 
+.cursor {
+    display: inline-block;
+    animation: blink 1s infinite;
+}
   
+
+
+/* Blur Gradient Overlay */
+.popup-overlay {
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(85, 110, 230, 0.4), rgba(244, 106, 106, 0.4));
+    backdrop-filter: blur(12px);
+    z-index: 1050; /* Above everything */
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+
+// AI Chat
+.chat-container {
+    max-width: 100%;
+    margin: auto;
+    background-color: #1f1f1f;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.chat-header {
+    font-size: 18px;
+    font-weight: 500;
+    color: #fff;
+    border-bottom: 1px solid #333;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.chat-message {
+    background-color: #292929;
+    border-radius: 10px;
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    display: inline-block;
+    max-width: 80%;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.chat-message.ai {
+    background-color: #2a2f4a;
+    color: #fff;
+}
+
+.chat-input {
+    background-color: #2a2a2a;
+    border: none;
+    color: #fff;
+    padding-right: 50px;
+}
+
+.chat-input:focus {
+    background-color: #2a2a2a;
+    color: #fff;
+}
+
+.ai-icon {
+    width: 32px;
+    height: 32px;
+    background-color: #556ee6;
+    border-radius: 50%;
+    display: inline-block;
+    text-align: center;
+    line-height: 32px;
+    margin-right: 8px;
+    font-size: 16px;
+    color: #fff;
+}
+
+.input-group {
+    display: flex;
+    gap: 5px;
+}
+
+.btn-mic, .btn-send {
+    background-color: #556ee6;
+    color: #fff;
+    border: none;
+    padding: 8px 10px;
+    border-radius: 50%;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.btn-mic:hover, .btn-send:hover {
+    opacity: 0.8;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.w {
+    &-20 {
+        width: 20px !important;
+    }
+    &-50 {
+        width: 50px !important;
+    }
+}
+.h {
+    &-20 {
+        height: 20px !important;
+    }
+    &-50 {
+        height: 50px !important;
+    }
+}
