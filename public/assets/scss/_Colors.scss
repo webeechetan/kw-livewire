@@ -40,8 +40,8 @@ $border_dark_grey: #ddd;
 $border_form: #333;
 
 /*---- Actions ----*/
-$success: #48914d;
-$success_light: #dae9db;
+$success: #2ecc71;
+$success_light: #E6F9EE;
 $danger: #ff0000;
 $danger_light: #fedddc;
 $warning: #e7bf1d;
@@ -128,6 +128,27 @@ $table_header_color: $secondary;
 .bg {
     &-primary {
         background-color: $brand !important;
+        &-light {
+            background-color: $brand_light !important;
+        }
+    }
+    &-success {
+        background-color: $success !important;
+        &-light {
+            background-color: $success_light !important;
+        }
+    }
+    &-danger {
+        background-color: $danger !important;
+        &-light {
+            background-color: $danger_light !important;
+        }
+    }
+    &-warning {
+        background-color: $warning !important;
+        &-light {
+            background-color: $warning_light !important;
+        }
     }
     &-secondary {
         background-color: $secondary !important;

@@ -176,9 +176,16 @@ ul {
     }
 }
 
-.border-bottom-list {
-    &:not(:last-child) {
-        border-bottom: 1px solid $border_grey;
+.border {
+    &-bottom-list {
+        &:not(:last-child) {
+            border-bottom: 1px solid $border_grey;
+        }
+    }
+    &-radius {
+        &-10 {
+            border-radius: 10px;
+        }
     }
 }
 
