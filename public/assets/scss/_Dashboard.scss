@@ -65,6 +65,10 @@
     }
 }
 
+.welcome-box-img  img {
+    max-width: 150px;
+}
+
 /*---- Box Item Style ---*/
 .box {
     &-item {
@@ -2568,7 +2572,7 @@ span.flatpickr-weekday {
     bottom: 20px;
     right: 20px;
     background: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.2);
     border-radius: 10px;
     padding: 20px;
     width: 330px;
@@ -2600,6 +2604,7 @@ span.flatpickr-weekday {
         background-color: $light;
         padding: 5px 10px;
         border-radius: 30px;
+        border: 1px solid #ddd;
         cursor: pointer;
         display: flex;
         align-items: center;
@@ -2608,7 +2613,8 @@ span.flatpickr-weekday {
         transition: all 0.3s ease;
 
         &:hover {
-            background-color: $success_light;
+            background-color: $success;
+            color: #fff;
         }
 
         &.completed {

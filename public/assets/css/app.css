@@ -3355,6 +3355,10 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   border-color: transparent;
 }
 
+.welcome-box-img img {
+  max-width: 150px;
+}
+
 /*---- Box Item Style ---*/
 .box-item {
   background: #fff;
@@ -5394,7 +5398,7 @@ span.flatpickr-weekday {
   bottom: 20px;
   right: 20px;
   background: #fff;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
   padding: 20px;
   width: 330px;
@@ -5423,6 +5427,7 @@ span.flatpickr-weekday {
   background-color: #f6f5f5;
   padding: 5px 10px;
   border-radius: 30px;
+  border: 1px solid #ddd;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -5431,7 +5436,8 @@ span.flatpickr-weekday {
   transition: all 0.3s ease;
 }
 .onboarding-popup .onboarding-step:hover {
-  background-color: #E6F9EE;
+  background-color: #2ecc71;
+  color: #fff;
 }
 .onboarding-popup .onboarding-step.completed {
   text-decoration: line-through;

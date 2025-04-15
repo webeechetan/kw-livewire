@@ -72,6 +72,7 @@ use App\Livewire\Tasks\MarkedToMeTasks;
 
 use App\Livewire\Developers\Dashbaord as DeveloperDashboard;
 use App\Livewire\AdminDashboard;
+use App\Livewire\UserDashboard;
 
 /*
 |--------------------------------------------------------------------------
@@ -137,7 +138,8 @@ Route::group(
     |--------------------------------------------------------------------------
     */
     Route::get('/dashboard',Dashboard::class)->name('dashboard');
-    Route::get('/admin-dashboard',AdminDashboard::class)->name('dashboard');
+    Route::get('/admin-dashboard',AdminDashboard::class)->name('admin.dashboard');
+    Route::get('/user-dashboard',UserDashboard::class)->name('user.dashboard');
 
     /*
     |--------------------------------------------------------------------------

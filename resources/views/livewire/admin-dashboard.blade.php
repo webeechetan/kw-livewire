@@ -28,7 +28,7 @@
                 </div>
 
                 <!-- Total Clients -->
-                <div class="col-md-4">
+                <!-- <div class="col-md-4">
                     <a href="#">
                         <div class="card shadow-sm border-0">
                             <span class="card-open"><i class="bx bx-chevron-right"></i></span>
@@ -45,7 +45,7 @@
                             </div>
                         </div>
                     </a>
-                </div>
+                </div> -->
 
                 <!-- Total Projects -->
                 <div class="col-md-4">
@@ -83,18 +83,21 @@
                     </a>
                 </div>
 
-                <!-- Social Accounts -->
+                <!-- Total Tasks -->
                 <div class="col-md-4">
                     <a href="#">
                         <div class="card shadow-sm border-0">
                             <span class="card-open"><i class="bx bx-chevron-right"></i></span>
-                            <div class="card-body d-flex align-items-center gap-3">
-                                <div class="icon-box" style="background-color:#f4f0ff;">
-                                    <i class='bx bx-link text-primary'></i>
-                                </div>
-                                <div>
-                                    <span class="text-muted">Social Accounts</span>
-                                    <h5 class="mb-0">1</h5>
+                            <div class="card-body">
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="icon-box" style="background-color:#e8f7ff;">
+                                        <i class='bx bx-briefcase-alt-2 text-info'></i>
+                                    </div>
+                                    <div>
+                                        <span class="text-muted">Pending Tasks</span>
+                                        <small>Last 15 days</small>
+                                        <h5 class="mb-0">10</h5>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -131,6 +134,24 @@
                                 <div>
                                     <span class="text-muted">Content Calendar</span>
                                     <h5 class="mb-0">30</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Social Accounts -->
+                <div class="col-md-4">
+                    <a href="#">
+                        <div class="card shadow-sm border-0">
+                            <span class="card-open"><i class="bx bx-chevron-right"></i></span>
+                            <div class="card-body d-flex align-items-center gap-3">
+                                <div class="icon-box" style="background-color:#f4f0ff;">
+                                    <i class='bx bx-link text-primary'></i>
+                                </div>
+                                <div>
+                                    <span class="text-muted">Social Accounts</span>
+                                    <h5 class="mb-0">1</h5>
                                 </div>
                             </div>
                         </div>
@@ -348,7 +369,7 @@
     </div>
 
     <!-- Welcome Profile Complete Popup -->
-    <div id="popupOverlay" class="popup-overlay" style="display: flex;">
+    <div id="popupOverlay" class="popup-overlay" style="display: none;">
         <div class="rounded-4 position-relative shadow-lg" style="max-width: 750px; width: 90%;">
 
             <div id="popupOverlay" class="popup-overlay d-flex">
