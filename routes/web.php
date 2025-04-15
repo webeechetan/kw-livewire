@@ -4,6 +4,10 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Hash;
 use App\Livewire\Login;
 use App\Livewire\Register;
+use App\Livewire\Register\Step1;
+use App\Livewire\Register\Step2;
+use App\Livewire\Register\Step3;
+use App\Livewire\Register\Step4;
 use App\Livewire\ForgotPassword;
 use App\Livewire\RegistrationJourney;
 use App\Livewire\Dashboard;
@@ -101,7 +105,13 @@ Route::get('/ai/schema', [AIController::class, 'getSchema']);
 
 Route::get('/',Login::class);
 Route::get('/login',Login::class)->name('login');
-Route::get('/register/{org_id?}',Register::class)->name('register');
+Route::get('/register',Register::class)->name('register');
+Route::get('/register/step1',Step1::class)->name('register.step1');
+Route::get('/register/step2',Step2::class)->name('register.step2');
+Route::get('/register/step3',Step3::class)->name('register.step3');
+Route::get('/register/step4',Step4::class)->name('register.step4');
+
+
 Route::get('/logout',function(){
     Auth::logout();
     return redirect(route('login'));

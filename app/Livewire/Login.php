@@ -57,6 +57,8 @@ class Login extends Component
                 session()->put('org_id',User::withoutGlobalScope(OrganizationScope::class)->where('email',$this->email)->first()->org_id);
                 $org_name = Organization::find(session('org_id'))->name;
                 $org_name = str_replace(' ','-',$org_name);
+                $org_for = Organization::find(session('org_id'))->for;
+                session()->put('for',$org_for);
                 session()->put('org_name',$org_name);
                 session()->put('user',User::withoutGlobalScope(OrganizationScope::class)->where('email',$this->email)->first());
                 return $this->redirect(session('org_name') .'/dashboard');

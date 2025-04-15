@@ -396,7 +396,7 @@
                             </div>
 
                             <!-- Send Button -->
-                            <button onclick="sendMessage()" class="btn p-0 w-50 h-50 btn-primary rounded"><i class='bx bx-send' ></i></button>
+                            <button class="btn p-0 w-50 h-50 btn-primary rounded send-message"><i class='bx bx-send' ></i></button>
                         </div>
 
                         <!-- Word Count -->
@@ -471,8 +471,20 @@
     closePopup.addEventListener('click', function() {
         onboardingPopup.style.display = 'none';
     });
+
+    document.addEventListener('brandCreated', event => {
+        console.log('Brand created:', event.detail);
+        // hide popup
+        document.getElementById('popupOverlay').style.display = 'none';
+    });
+
+
     // JQery
     $(document).ready(function() {
+
+        $(".send-message").click(function(){
+            sendMessage()
+        });
 
         // ----- AI Profile Chat
 
@@ -483,6 +495,22 @@
         const popupContainer = document.querySelector('.chat-container');
 
         const steps = [
+            {
+                question: "What's the exact name of your brand?",
+                key: 'brandName'
+            },
+            {
+                question: "What type of content do you create?",
+                key: 'contentType'
+            },
+            {
+                question: "What are your brand colors?",
+                key: 'brandColors'
+            },
+            {
+                question: "What are your brand's main goals?",
+                key: 'brandGoals'
+            },
             {
                 question: "What's your monthly content goal?",
                 key: 'contentGoal'
@@ -523,6 +551,10 @@
             userInput.value = '';
             updateWordCount();
 
+            console.log(answers); // Log the answers object to see the collected data
+
+            // current question
+
             setTimeout(() => {
                 getBotResponse();
             }, 600);
@@ -545,8 +577,13 @@
             if (stepIndex < steps.length - 1) {
                 stepIndex++;
                 appendMessage(steps[stepIndex].question, 'ai');
-            } else {
+            } else { 
+                @this.createBrand(answers);
                 appendMessage("Thank you! Your brand setup is complete. 🎉", 'ai');
+                // close the popup
+                setTimeout(() => {
+                    popupOverlay.style.display = 'none';
+                }, 2000);
             }
         }
 

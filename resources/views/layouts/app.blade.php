@@ -159,10 +159,12 @@
                         @can('View User')
                             <li @if(isset($tour['main_tour'])) data-step="2" data-position='right' data-intro='Create your first user' @endif><a wire:navigate href="{{ route('user.index') }}" class="@if (request()->segment(2) == 'users' || request()->segment(2) == 'user' ) active @endif"><i class='bx bx-user'></i> Users</a></li>
                         @endcan
-                        <hr class="my-1">     
-                        @can('View Client')
-                            <li @if(isset($tour) && $tour != null) data-step="3" data-intro='Create your first client' data-position='right'@endif><a wire:navigate href="{{ route('client.index') }}" class="@if ( request()->segment(4) != Auth::user()->organization->mainClient->id && (request()->segment(2) == 'clients' || request()->segment(2) == 'client' )) active @endif"><i class='bx bx-briefcase-alt-2'></i> Clients</a></li>
-                        @endcan
+                        <hr class="my-1">
+                        @if(session('for') == 'agency')     
+                          @can('View Client')
+                              <li @if(isset($tour) && $tour != null) data-step="3" data-intro='Create your first client' data-position='right'@endif><a wire:navigate href="{{ route('client.index') }}" class="@if ( request()->segment(4) != Auth::user()->organization->mainClient->id && (request()->segment(2) == 'clients' || request()->segment(2) == 'client' )) active @endif"><i class='bx bx-briefcase-alt-2'></i> Clients</a></li>
+                          @endcan
+                        @endif
                         @can('View Project')
                             <li @if(isset($tour['main_tour'])) data-step="4" data-position='right' data-intro='Create your first project' @endif><a wire:navigate href="{{ route('project.index') }}" class="@if (request()->segment(2) == 'projects' || request()->segment(2) == 'project' ) active @endif"><i class='bx bx-objects-horizontal-left'></i> Projects</a></li>
                         @endcan

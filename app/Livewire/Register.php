@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use App\Models\Organization;
+use App\Models\OrganizationDetail;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\Client;
@@ -25,13 +26,20 @@ class Register extends Component
     public $password;
     public $user_name;
     public $industry_type;
+    public $facebook = '';
+    public $twitter = '';
+    public $linkedin = '';
+    public $instagram = '';
+    public $youtube = '';
+    public $tiktok = '';
+    public $inviteEmails = [];
 
     // registration journey properties
     public $companysize;
-    public $step = 1;
     public $image;
     public $memberemail;
     public $organization;
+    public $for = 'agency';
 
     public function render()
     {
@@ -45,7 +53,7 @@ class Register extends Component
             'email' => 'required|email|unique:organizations',
             'password' => 'required|min:6',
             'user_name' => 'required',
-        ]);
+        ]); 
 
         $organization = new Organization();
         $organization->name = $this->name;
@@ -160,17 +168,25 @@ class Register extends Component
             $org_name = str_replace(' ','-',$org_name);
             session()->put('org_name',$org_name);
             session()->put('user',User::withoutGlobalScope(OrganizationScope::class)->where('email',$this->email)->first());
-            session()->put('tour',$tour);            
+            session()->put('tour',$tour);       
+            
+            if($this->image){
+                $image = $organization->image = $this->image->store('images/organizations');
+                $image = str_replace('public/', '', $image);
+                $organization->image = $image;
+                $organization->save();
+            }
+
+            return $this->redirect(route('register.step1'));
+  
+
+            // return $this->redirect(session('org_name') .'/teams');
 
         } catch (\Throwable $th) {
             dd($th);
             return $this->alert('error', 'Something went wrong, please try again later');
         }
 
-
-        
-         $this->step = 2;
-        //  return $this->redirect(route('login'),navigate: true);
     }
 
 
@@ -188,19 +204,24 @@ class Register extends Component
         }
     }
 
-    // public function registerStepTwo()
-    // {
-    //     $this->validate([
-    //         'memberemail'=>'required|email',
-    //     ]);
+    
 
-    //     $user = Auth::user();
-    //     $organization = Organization::where('id', $user->org_id)->first();
-    //     $organization->memberemail = $this->memberemail;
-    //     $this->dispatch('success', 'Member email  added');
-
-    //     $this->step = 4;    
-    // }
+    public function completeOnbording(){
+        dd($this->inviteEmails);
+        // update or create organization details
+        $org = OrganizationDetail::updateOrCreate(
+            ['org_id' => Auth::user()->org_id],
+            [
+                'industry' => $this->industry_type,
+                'facebook' => $this->facebook,
+                'twitter' => $this->twitter,
+                'linkedin' => $this->linkedin,
+                'instagram' => $this->instagram,
+                'youtube' => $this->youtube,
+                'tiktok' => $this->tiktok
+            ]
+        );
+    }
 
 
 }

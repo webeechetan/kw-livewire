@@ -393,7 +393,7 @@
                 cropper.replace(e.target.result);
             }
             reader.readAsDataURL(file);
-        });
+        }); 
         
         // Upload cropped image to server 
 
@@ -485,7 +485,7 @@
             skillsArray = JSON.parse(skillsArray);
 
             skillsArray = skillsArray.map(function(item){
-                return item.value;
+                return item.value; 
             });
 
             skills = JSON.stringify(skillsArray);

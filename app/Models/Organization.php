@@ -18,12 +18,17 @@ use Spatie\Permission\Traits\HasRoles;
 use App\Models\Scopes\OrganizationScope;
 use App\Models\Scopes\MainClientScope;
 use App\Models\Webhook;
+use App\Models\OrganizationDetail;
 
 class Organization extends Authenticatable
 {
     use HasFactory, Notifiable, HasRoles;
 
     protected $hidden = ['password'];
+
+    public function details(){
+        return $this->hasOne(OrganizationDetail::class, 'org_id');
+    }
 
     public function clients(){
         return $this->hasMany(Client::class, 'org_id');
