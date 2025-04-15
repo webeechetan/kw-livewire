@@ -23,6 +23,7 @@ class Step1 extends Component
         $org = Organization::where('id', Auth::user()->org_id)->first();
         $org->for = $for;
         $this->for = $for;
+        session()->put('for',$this->for);
         $org->save();
     }
 
