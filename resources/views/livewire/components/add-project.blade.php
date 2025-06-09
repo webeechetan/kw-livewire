@@ -56,6 +56,24 @@
 
                             <div class="row">
                                 <div class="col-md-4 mb-4">
+                                    <label for="">Project Type<sup class="text-primary">*</sup></label>
+                                </div>
+                                <div class="col-md-8 mb-4">
+                                    <div class="custom-select">
+                                        <select wire:model="type" class="form-style project_type">
+                                            <option value="">Select Project Type</option>
+                                            <option value="Digital Strategy and Planning">Digital Strategy and Planning</option>
+                                            <option value="Content Creation and Management">Content Creation and Management</option>
+                                            <option value="Social Media Marketing">Social Media Marketing</option>
+                                            <option value="Website Design and Development">Website Design and Development</option>
+                                            <option value="Email Marketing">Email Marketing</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-4 mb-4">
                                     <label for="">Upload Logo</label>
                                 </div>
                                 <div class="col-md-8 mb-4">
@@ -144,6 +162,7 @@
                 $('.project-users').val(null).trigger('change');
                 $('.project_start_date').html('Start Date');
                 $('.project_due_date').html('Due Date');
+                $(".project_type").val('').trigger('change');
                 $(".clients").val('').trigger('change');
                 $('.image-preview-section').addClass('d-none');
                 $('.remove-image-sesction').addClass('d-none');
@@ -167,6 +186,8 @@
                 let project_users = event.detail[0].users.map(function (user) {
                     return user.id;
                 });
+
+                $('.project_type').val(event.detail[0].type).trigger('change');
 
                 $('.project-users').val(project_users).trigger('change');
 

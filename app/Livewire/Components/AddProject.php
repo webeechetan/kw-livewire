@@ -28,6 +28,7 @@ class AddProject extends Component
     public $project_start_date;
     public $image;
     public $project_users = [];
+    public $type = 'default';
     
     protected $listeners = ['editProject', 'deleteProject','restoreProject','forceDeleteProject'];
 
@@ -94,6 +95,7 @@ class AddProject extends Component
         $project->start_date = $this->project_start_date;
         $project->due_date = $this->project_due_date;
         $project->image = $image;
+        $project->type = $this->type;
         $project->created_by = session('user')->id;
         try {
             if($project->save()){
@@ -135,6 +137,7 @@ class AddProject extends Component
         $this->project_due_date = $this->project->due_date;
         $this->project_start_date = $this->project->start_date;
         $this->project_users = $this->project->users->pluck('id')->toArray();
+        $this->type = $this->project->type;
         $this->dispatch('edit-project', $this->project);
     }
 
@@ -176,6 +179,7 @@ class AddProject extends Component
             'due_date' => $this->project_due_date,
             'image' => $image,
             'client_id' => $this->client_id,
+            'type' => $this->type,
         ]);
 
         if(count($this->project_users) > 0){
@@ -213,6 +217,7 @@ class AddProject extends Component
         $this->project_start_date = null;
         $this->project = null;
         $this->image = null;
+        $this->type = 'default';
     }
 
     public function removeImage(){

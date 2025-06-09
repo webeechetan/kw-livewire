@@ -4,18 +4,18 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Project;
 
-class Brand extends Model
+class ProjectBrief extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'org_id',
-        'client_id',
         'project_id',
-        'created_by',
-        'name',
-        'settings',
-
+        'brief',
     ];
+
+    public function project(){
+        return $this->belongsTo(Project::class);
+    }
 }

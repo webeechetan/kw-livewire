@@ -8,6 +8,7 @@ use App\Models\Client;
 use App\Models\User;
 use App\Models\Scopes\OrganizationScope;
 use App\Models\Task;
+use App\Models\Brand;
 use App\Models\Activity;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
@@ -74,6 +75,10 @@ class Project extends Model
         return $this->morphMany(Activity::class, 'activityable');
     }
 
+    public function brief(){
+        return $this->hasOne(ProjectBrief::class);
+    }
+    
     protected static function booted()
     {
         static::addGlobalScope(new OrganizationScope);

@@ -64,6 +64,17 @@
             <a wire:navigate class="tabNavigationBar-item @if($currentRoute == 'project.tasks') active @endif" href="{{route ('project.tasks', $project->id) }}"><i class='bx bx-layer' ></i> Tasks</a>
             <a wire:navigate class="tabNavigationBar-item @if($currentRoute =='project.file-manager') active @endif" href="{{route('project.file-manager',$project->id)}}"><i class='bx bx-objects-horizontal-left' ></i> File Manager</a>
             <a wire:navigate class="tabNavigationBar-item @if($currentRoute == 'project.calendar') active @endif" href="{{route('project.calendar',$project->id)}}"><i class='bx bx-calendar' ></i> Calendar</a>
+            @php
+                $acceptedTypes = ['Digital Strategy and Planning','Content Creation and Management','Social Media Marketing'];
+            @endphp
+            @if($project->type && in_array($project->type, $acceptedTypes))
+                <a wire:navigate class="tabNavigationBar-item @if($currentRoute == 'project.project-breif') active @endif" href="{{route('project.project-breif',$project->id)}}"><i class='bx bx-cog' ></i> Brief</a>
+                @if($project->brief)
+                    <a wire:navigate class="tabNavigationBar-item @if($currentRoute == 'project.brand-setting' || $currentRoute == 'project.content-plan') active @endif" href="{{route('project.brand-setting',$project->id)}}"><i class='bx bx-cog' ></i> Content Plan</a>
+                @endif
+            {{-- <a wire:navigate class="tabNavigationBar-item @if($currentRoute == 'project.post-generator') active @endif" href="{{route('project.post-generator',$project->id)}}"><i class='bx bx-notepad' ></i> Post</a> --}}
+            
+            @endif
             @endif
         </div>
     </div>
