@@ -119,7 +119,7 @@
                     </a>
                 </div>
 
-                <!-- Content Calendar -->
+                <!-- Content Plan -->
                 <div class="col-md-4">
                     <a href="#">
                         <div class="card shadow-sm border-0">
@@ -129,7 +129,7 @@
                                     <i class='bx bxs-edit text-success'></i>
                                 </div>
                                 <div>
-                                    <span class="text-muted">Content Calendar</span>
+                                    <span class="text-muted">Content Plan</span>
                                     <h5 class="mb-0">30</h5>
                                 </div>
                             </div>

@@ -1,7 +1,8 @@
 <div class="container">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a wire:navigate href="{{ route('project.index') }}"><i class='bx bx-line-chart'></i>{{ ucfirst(Auth::user()->organization->name) }}</a></li>
+            <li class="breadcrumb-item"><a wire:navigate href="{{ route('project.index') }}"><i
+                        class='bx bx-line-chart'></i>{{ ucfirst(Auth::user()->organization->name) }}</a></li>
             <li class="breadcrumb-item"><a wire:navigate href="{{ route('project.index') }}">All Projects</a></li>
             <li class="breadcrumb-item active" aria-current="page">{{ $project->name }}</li>
         </ol>
@@ -12,75 +13,83 @@
     <div class="row mt-4">
         {{-- brand details --}}
         <div class="col-md-12 mb-4">
-            <div class="card_style card_style-user h-100">
-                <div class="card_style-user-head">
+            <div class="column-box">
+                <div class="d-flex flex-wrap align-items-center justify-content-between">
                     <div class="card_style-user-profile-content">
                         <h4>Add Project Brief</h4>
                     </div>
-                    {{-- create brand form --}}
-                    <div class="card_style-user-body">
-                        <div class="card_style-user-body-content">
-                            <form wire:submit.prevent="saveProjectBreif" class="row g-3">
-                                <div class="col-md-12 mt-4">
-                                    <label for="brandDescription" class="form-label">Brand Description</label>
-                                    <input type="text" wire:model="brandDescription" class="form-control" id="brandDescription" >
-                                    @error('brandDescription') <span class="text-danger">{{ $message }}</span> @enderror
-                                </div>
-
-
-                                <div class="col-md-12 mt-4">
-                                    <label for="brandGoals" class="form-label">Add Monthly / Quarterly Goals</label>
-                                    <input type="text" wire:model="brandGoals" class="form-control" id="brandGoals" value="">
-                                    @error('brandGoals') <span class="text-danger">{{ $message }}</span> @enderror
-                                </div>
-
-                                <div class="col-md-12 mt-4">
-                                    <label for="brnadObjective" class="form-label">Add Long-term Objectives</label>
-                                    <input type="text" wire:model="brandObjective" class="form-control" id="brnadObjective" value="">
-                                    @error('brandObjective') <span class="text-danger">{{ $message }}</span> @enderror
-                                </div>
-
-                                <div class="col-md-12 mt-4">
-                                    <label for="campaignTimelines" class="form-label">Key Campaign Timelines</label>
-                                    <input type="text" wire:model="campaignTimelines" class="form-control" id="campaignTimelines" value="">
-                                    @error('campaignTimelines') <span class="text-danger">{{ $message }}</span> @enderror
-                                </div>
-
-                                <div class="col-md-12 mt-4">
-                                    <label for="brandVoice" class="form-label">What is your brand voice?</label>
-                                    <input type="text" wire:model="brandVoice" class="form-control" id="brandVoice" value="">
-                                    @error('brandVoice') <span class="text-danger">{{ $message }}</span> @enderror
-                                </div>
-
-                                <div class="col-md-12 mt-4">
-                                    <label for="avoidWords" class="form-label">What topics should you never talk about?</label>
-                                    <input type="text" wire:model="avoidWords" class="form-control" id="avoidWords" value="">
-                                    @error('avoidWords') <span class="text-danger">{{ $message }}</span> @enderror
-                                </div>
-
-                                <div class="col-md-12 mt-4">
-                                    <label for="competitors" class="form-label">List 3 competitors and your differentiator (USP)</label>
-                                    <input type="text" wire:model="competitors" class="form-control" id="competitors" value="">
-                                    @error('competitors') <span class="text-danger">{{ $message }}</span> @enderror
-                                </div>
-
-                                <div class="col-md-12 mt-4">
-                                    <label for="platforms" class="form-label">What platforms are most important to your brand?</label>
-                                    <input type="text" wire:model="platforms" class="form-control" id="platforms" value="">
-                                    @error('platforms') <span class="text-danger">{{ $message }}</span> @enderror
-                                </div>
-
-                                <div class="col-12">
-                                    <button type="submit" class="btn btn-primary">Submit</button>
-                                </div>
-
-                            </form>
-                        </div>
-                    </div>
-
                 </div>
+                <hr class="space-sm">
+                {{-- create brand form --}}
+                <form wire:submit.prevent="saveProjectBreif" class="modal-body mt-4">
+                    <div class="mb-4">
+                        <label for="brandDescription">Briefly describe your brand and its core values</label>
+                        <textarea wire:model="brandDescription" class="form-style" id="brandDescription" rows="3"></textarea>
+                        @error('brandDescription')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div class="mb-4">
+                        <label for="brandGoals">What are the main goals for this social media project? (e.g.,
+                            increase followers, drive engagement, generate leads, boost sales)</label>
+                        <textarea wire:model="brandGoals" class="form-style" id="brandGoals" rows="3"></textarea>
+                        @error('brandGoals')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div class="mb-4">
+                        <label for="brandObjective">What does long-term success look like for this project on
+                            social media?</label>
+                        <textarea wire:model="brandObjective" class="form-style" id="brandObjective" rows="3"></textarea>
+                        @error('brandObjective')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div class="mb-4">
+                        <label for="campaignTimelines">Are there any important dates, events, or timelines for
+                            this project?</label>
+                        <textarea wire:model="campaignTimelines" class="form-style" id="campaignTimelines" rows="3"></textarea>
+                        @error('campaignTimelines')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div class="mb-4">
+                        <label for="brandVoice">What tone and voice should be used for this project's social
+                            media content?</label>
+                        <textarea wire:model="brandVoice" class="form-style" id="brandVoice" rows="3"></textarea>
+                        @error('brandVoice')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div class="mb-4">
+                        <label for="avoidWords">Are there any topics, themes, or messaging to avoid for this
+                            project?</label>
+                        <textarea wire:model="avoidWords" class="form-style" id="avoidWords" rows="3"></textarea>
+                        @error('avoidWords')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div class="mb-4">
+                        <label for="competitors">List 3 main competitors for this project and what makes your
+                            brand/project unique on social media</label>
+                        <textarea wire:model="competitors" class="form-style" id="competitors" rows="3"></textarea>
+                        @error('competitors')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div class="mb-4">
+                        <label for="platforms">Which social media platforms are most important for this project
+                            and why?</label>
+                        <textarea wire:model="platforms" class="form-style" id="platforms" rows="3"></textarea>
+                        @error('platforms')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div class="text-end">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 </div>
-
