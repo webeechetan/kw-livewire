@@ -39,4 +39,9 @@ class Step3 extends Component
         return $this->redirect(route('register.step4'));
 
     }
+
+    
+    public function movePrev(){
+        return $this->redirect(route('register.step2'));
+    }
 }
