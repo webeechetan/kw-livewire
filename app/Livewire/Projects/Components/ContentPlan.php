@@ -29,9 +29,9 @@ class ContentPlan extends Component
     public function regeneratePost($id)
     {
         $post = PostModel::find($id);    
-        // $openAIService = new OpenAIService();
-        // $newPost = $openAIService->regeneratePost($post);
-        $post->description = 'New Description '. rand(1, 1000);
+        $openAIService = new OpenAIService();
+        $newPost = $openAIService->regeneratePost($post);
+        $post->description = $newPost;
         $post->save();
         $this->dispatch('postRegenerated', $post->toArray());
     }

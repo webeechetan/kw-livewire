@@ -38,6 +38,14 @@
         rowData: calendarData,
         // Column Definitions: Defines the columns to be displayed.
         columnDefs: [
+                {
+                    field: "id",
+                    headerName: "ID",
+                    hide: true,
+                    width: 100, 
+                    editable: false,
+                },
+            
                 { field: "date",
                     headerName: "Date",
                  },
@@ -65,6 +73,8 @@
                     field: "description",
                     headerName: "Description",
                     editable: true,
+                    width: 600,
+                    height: 200,
                     // when edit show big text area
                     cellEditor: 'agTextCellEditor',
                     cellEditorParams: {
@@ -91,24 +101,20 @@
         };
 
         const myGridElement = document.querySelector('#calendarTable');
-        agGrid.createGrid(myGridElement, gridOptions);
+        var grid = agGrid.createGrid(myGridElement, gridOptions);
 
         function regeneratePost(id) {
             @this.regeneratePost(id);
         }
 
-        // document.addEventListener('postRegenerated', (event) => {
-        //     // show regenerated post
-        // });
-
-        document.addEventListener('livewire:load', () => {
-            Livewire.on('postRegenerated', (updatedPost) => {
-                const rowNode = gridOptions.api.getRowNode(updatedPost.id);
-                if (rowNode) {
-                    rowNode.setData(updatedPost);
-                    gridOptions.api.flashCells({ rowNodes: [rowNode] });
-                }
-            });
+        document.addEventListener('postRegenerated', (event) => {
+            var post = event.detail[0];
+            console.log(post);
+            const rowIndex = calendarData.findIndex(p => p.id === post.id);
+            const rowNode = grid.getRowNode(rowIndex);
+            rowNode.setDataValue('description', post.description);
+            
+            
         });
 
 </script>

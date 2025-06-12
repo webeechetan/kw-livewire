@@ -17,6 +17,7 @@ class OpenAIService
                 'Authorization' => 'Bearer ' . env('OPEN_AI_API_KEY'),
                 'Content-Type' => 'application/json',
             ],
+            'verify' => false // Disable SSL verification
         ]);
     }
 
