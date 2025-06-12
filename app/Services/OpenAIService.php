@@ -23,22 +23,22 @@ class OpenAIService
     public function query(string $prompt): string
     {
         $response = $this->client->post('chat/completions', [
-                    'json' => [
-                        'model' => 'gpt-3.5-turbo', // Use 'gpt-4' if needed
-                        'messages' => [
-                            [
-                                'role' => 'system',
-                                'content' => 'You are an SQL query generator.',
-                            ],
-                            [
-                                'role' => 'user',
-                                'content' => $prompt,
-                            ],
-                        ],
-                        'max_tokens' => 150,
+            'json' => [
+                'model' => 'gpt-3.5-turbo', // Use 'gpt-4' if needed
+                'messages' => [
+                    [
+                        'role' => 'system',
+                        'content' => 'You are an SQL query generator.',
                     ],
-                ]);
-        
+                    [
+                        'role' => 'user',
+                        'content' => $prompt,
+                    ],
+                ],
+                'max_tokens' => 150,
+            ],
+        ]);
+
         $response = json_decode($response->getBody(), true);
         return $response['choices'][0]['message']['content'];
     }
@@ -68,8 +68,6 @@ class OpenAIService
 
         $response = json_decode($response->getBody(), true);
         return $response['choices'][0]['message']['content'];
-
-
     }
 
     /**
@@ -107,7 +105,7 @@ class OpenAIService
      * @param int $frequencyInDays
      * @return array
      */
-    public  function generateContentCalendar($brandName, $brandSettings, $month,  $number_of_posts = 4, $platforms, $goals)
+    public function generateContentCalendar($brandName, $brandSettings, $month, $number_of_posts = 4, $platforms, $goals)
     {
         $prompt = "Create a content calendar for a {$brandName} brand for the month of {$month}. 
             The content should follow these settings:
@@ -161,6 +159,89 @@ class OpenAIService
         return json_decode($response['choices'][0]['message']['content'], true);
     }
 
+    /**
+     * Generate a detailed content plan for a brand within a date range.
+     * @param string $brandName
+     * @param string $startDate
+     * @param string $endDate
+     * @param array $brandSettings
+     * @param int $numberOfPosts
+     * @param array $platforms
+     * @param array $goals
+     * @return array
+     */
+    public function generateContentPlan(
+        string $brandName,
+        string $startDate,
+        string $endDate,
+        array $brandSettings,
+        int $numberOfPosts,
+        array $platforms,
+        array $goals
+    ) {
+        $platformsList = implode(', ', array: $platforms);
+        $goalsList = implode(', ', $goals);
+
+        $prompt = <<<EOT
+Generate a social media content plan for the brand "{$brandName}" from {$startDate} to {$endDate}.
+
+Brand Information:
+- Description: {$brandSettings['brandDescription']}
+- Goals: {$goalsList}
+- Objective: {$brandSettings['brandObjective']}
+- Timeline: {$brandSettings['campaignTimelines']}
+- Voice: {$brandSettings['brandVoice']}
+- Avoid: {$brandSettings['avoidWords']}
+- Competitors: {$brandSettings['competitors']}
+- Platforms: {$platformsList}
+
+Instructions:
+- Create exactly {$numberOfPosts} content items.
+- Spread them evenly across the date range.
+- Use varied formats: Text, Image, Video, Story, Live Stream, Poll & Quiz.
+- Align each post with brand voice and goals.
+- Tailor content based on platform.
+
+Each content item must include:
+- date (within the given range)
+- platform (from: {$platformsList})
+- format (e.g., Text, Image, Video, Story, Live Stream, Poll & Quiz)
+- bucket (e.g., Educational, Promotional, Behind-the-Scenes, Testimonial, User-Generated Content, Product Highlight, etc.)
+- idea (a short content idea in 1–2 sentences)
+
+Provide the output strictly in the following JSON array format:
+[
+  {
+    "date": "YYYY-MM-DD",
+    "platform": "Facebook | Instagram | X | YouTube | etc.",
+    "format": "Text | Image | Video | Story | Live Stream | Poll & Quiz",
+    "bucket": "Educational | Promotional | Behind-the-Scenes | Testimonial | User-Generated Content | Product Highlight | etc.",
+    "idea": "Concise 1-2 sentence description of the content idea"
+  }
+]
+EOT;
+
+        $response = $this->client->post('chat/completions', [
+            'json' => [
+                'model' => 'gpt-4',
+                'messages' => [
+                    [
+                        'role' => 'system',
+                        'content' => "You are an expert social media content plan generator. Your task is to create detailed, creative, and platform-specific content plans for the brand {$brandName} across the following platforms: {$brandSettings['platforms']}. Ensure each post aligns with the brand\'s voice, goals, and audience, and is tailored for maximum engagement on each platform.",
+                    ],
+                    [
+                        'role' => 'user',
+                        'content' => $prompt,
+                    ],
+                ],
+                'max_tokens' => 1200,
+            ],
+        ]);
+
+        $response = json_decode($response->getBody(), true);
+        return json_decode($response['choices'][0]['message']['content'], true);
+    }
+
     public function regeneratePost($post)
     {
         $prompt = "Regenerate the post for the following content: \n\n" . $post->description;
@@ -184,5 +265,4 @@ class OpenAIService
         Log::info($response);
         return $response['choices'][0]['message']['content'];
     }
-
 }
