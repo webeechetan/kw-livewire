@@ -68,9 +68,9 @@
                 $acceptedTypes = ['Digital Strategy and Planning','Content Creation and Management','Social Media Marketing'];
             @endphp
             @if($project->type && in_array($project->type, $acceptedTypes))
-                <a wire:navigate class="tabNavigationBar-item @if($currentRoute == 'project.project-breif') active @endif" href="{{route('project.project-breif',$project->id)}}"><i class='bx bx-cog' ></i> Brief</a>
+                <a wire:navigate class="tabNavigationBar-item @if($currentRoute == 'project.project-breif') active @endif" href="{{route('project.project-breif',$project->id)}}"><i class='bx bx-clipboard'></i> Brief</a>
                 @if($project->brief)
-                    <a wire:navigate class="tabNavigationBar-item @if($currentRoute == 'project.brand-setting' || $currentRoute == 'project.content-plan') active @endif" href="{{route('project.brand-setting',$project->id)}}"><i class='bx bx-cog' ></i> Content Plan</a>
+                    <a wire:navigate class="tabNavigationBar-item @if($currentRoute == 'project.brand-setting' || $currentRoute == 'project.content-plan') active @endif" href="{{route('project.brand-setting',$project->id)}}"><i class='bx bx-table' ></i> Content Plan</a>
                 @endif
             {{-- <a wire:navigate class="tabNavigationBar-item @if($currentRoute == 'project.post-generator') active @endif" href="{{route('project.post-generator',$project->id)}}"><i class='bx bx-notepad' ></i> Post</a> --}}
             
@@ -78,5 +78,5 @@
             @endif
         </div>
     </div>
-    <livewire:components.add-project @saved="$refresh" />
+    <livewire:components.add-project @saved="$refresh" />   
 </div>

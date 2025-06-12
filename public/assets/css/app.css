@@ -710,7 +710,7 @@ hr.space-sm {
   border-color: #2ecc71;
 }
 .card_style-user-head {
-  text-align: center;
+  /* text-align: center; */
 }
 .card_style-user-head-team {
   position: absolute;
@@ -5285,9 +5285,9 @@ span.flatpickr-weekday {
 }
 .modal .modal-content {
   border-radius: 12px;
-  max-width: 400px;
+  /* max-width: 400px; */
   width: 100%;
-  text-align: center;
+  /* text-align: center; */
 }
 .modal .modal-content #cropImage {
   max-width: 100%;

@@ -30,7 +30,7 @@ class BrandSetting extends Component
         $this->contentPlans = ContentPlan::where('project_id', $this->project->id)->get();
     }
 
-    public function generateContentCalendar()
+    public function generateContentPlan()
     {
         $brandName = $this->project->name;
         $month = date('F');
@@ -121,7 +121,7 @@ class BrandSetting extends Component
                 ],
             ];
 
-        if(is_array($contentCalendar)) {
+        if (is_array($contentCalendar)) {
             foreach ($contentCalendar as $postData) {
                 $post = new Post();
                 $post->project_id = $this->project->id;

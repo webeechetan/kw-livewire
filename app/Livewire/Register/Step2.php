@@ -50,6 +50,10 @@ class Step2 extends Component
         return $this->redirect(route('register.step3'));
 
     }
+    
+    public function movePrev(){
+        return $this->redirect(route('register.step1'));
+    }
 
 
 }
