@@ -13,10 +13,10 @@
     <div wire:ignore>
         <div class="row calendarTableRow ">
             <div class="col-md-12 mb-4">
-                            <h4>Content Plan Table</h4>
-                            <div>
-                                <div id="calendarTable" class="mt-4" style="height: 500px"></div>
-                            </div>
+                <h4>Content Plan Table</h4>
+                <div>
+                    <div id="calendarTable" class="mt-4" style="height: 500px"></div>
+                </div>
             </div>
         </div>
     </div>
@@ -113,7 +113,7 @@
             const rowIndex = calendarData.findIndex(p => p.id === post.id);
             const rowNode = grid.getRowNode(rowIndex);
             rowNode.setDataValue('description', post.description);
-            
+
             
         });
 

@@ -10,16 +10,18 @@ use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use App\Services\OpenAIService;
 use Illuminate\Support\Facades\Log;
+use Carbon\Carbon;
 
 class BrandSetting extends Component
 {
     public Project $project;
 
     public $title = '';
-    public $duration = '';
     public $number_of_posts = '';
     public $platforms = '';
     public $goals = '';
+    public $start_date = '';
+    public $end_date = '';
 
     public $contentPlans = [];
 
@@ -41,11 +43,11 @@ class BrandSetting extends Component
         $contentPlan = new ContentPlan();
         $contentPlan->project_id = $this->project->id;
         $contentPlan->title = $this->title ?: 'Content Plan for ' . $brandName . ' - ' . $month;
-        $contentPlan->duration = $this->duration;
+        $contentPlan->duration = Carbon::parse($this->start_date)->diffInDays(Carbon::parse($this->end_date));
         $contentPlan->number_of_posts = $this->number_of_posts;
         $contentPlan->platforms = $this->platforms;
-        $contentPlan->start_date = now()->startOfMonth();
-        $contentPlan->end_date = now()->endOfMonth();
+        $contentPlan->start_date = $this->start_date ?: now()->startOfMonth();
+        $contentPlan->end_date = $this->end_date ?: now()->endOfMonth();
         $contentPlan->status = 'draft';
 
         $contentPlan->save();

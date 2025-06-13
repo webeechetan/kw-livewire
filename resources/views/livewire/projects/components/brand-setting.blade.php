@@ -41,7 +41,7 @@
                 <hr class="space-sm">
 
                 <div class="row">
-                    @foreach ($contentPlans as $contentPlan)
+                    {{-- @foreach ($contentPlans as $contentPlan)
                         <div class="col-md-4 mb-4">
                             <div class="card_style card_style-user h-100">
                                 <div class="card_style-user-head">
@@ -64,13 +64,52 @@
                                 </div>
                             </div>
                         </div>
-                    @endforeach
+                    @endforeach --}}
                 </div>
             </div>
         </div>
     </div>
 
-
+    <div>
+        <div class="row mt-4">
+            @foreach (range(1, 12) as $month)
+                @php
+                    $monthName = \Carbon\Carbon::create()->month($month)->format('F');
+                    $plansInMonth = $contentPlans->filter(function($plan) use ($month) {
+                        return \Carbon\Carbon::parse($plan->start_date)->month == $month;
+                    });
+                @endphp
+                <div class="col-md-3 mb-4">
+                    <div class="card h-100 content-plan-card">
+                        <div class="card-body">
+                            <h5 class="card-title text-primary mb-3">{{ $monthName }}</h5>
+                            <div class="d-flex align-items-center mb-3">
+                                <span class="badge bg-light text-dark">{{ $plansInMonth->count() }} Content Plans</span>
+                            </div>
+                            @foreach ($plansInMonth as $plan)
+                                <div class="content-plan-item mb-3">
+                                    <a href="{{ route('project.content-plan', [$project->id, $plan->id]) }}" class="text-decoration-none">
+                                        <h6 class="mb-2 text-dark">{{ $plan->title }}</h6>
+                                    </a>
+                                    <div class="d-flex align-items-center text-muted small mb-1">
+                                        <i class='bx bx-calendar me-1'></i>
+                                        {{ \Carbon\Carbon::parse($plan->start_date)->format('d M') }} - {{ \Carbon\Carbon::parse($plan->end_date)->format('d M') }}
+                                    </div>
+                                    <div class="d-flex align-items-center text-muted small">
+                                        <i class='bx bx-layer me-1'></i>
+                                        {{ $plan->number_of_posts }} Posts
+                                        
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+        
+    </div>
+   
 
     {{-- content plan modal --}}
 
@@ -93,14 +132,14 @@
                                 placeholder="Enter title">
                         </div>
                         <div class="mb-4">
-                            <label for="duration" class="form-label">Duration</label>
-                            <input type="text" class="form-style" wire:model="duration" id="duration"
-                                placeholder="Enter duration">
+                            <label for="start_date" class="form-label">Start Date</label>
+                            <input type="date" class="form-style" wire:model="start_date" id="start_date"
+                                placeholder="Enter start date">
                         </div>
                         <div class="mb-4">
-                            <label for="goals" class="form-label">Goals</label>
-                            <input type="text" class="form-style" wire:model="goals" id="goals"
-                                placeholder="Enter goals">
+                            <label for="end_date" class="form-label">End Date</label>
+                            <input type="date" class="form-style" wire:model="end_date" id="end_date"
+                                placeholder="Enter end date">
                         </div>
                         <div class="mb-4">
                             <label for="number_of_posts" class="form-label">Number of posts</label>
@@ -130,85 +169,90 @@
             </div>
         </div>
     </div>
-
-
 </div>
 
 @assets
-    <script src="https://cdn.jsdelivr.net/npm/ag-grid-community/dist/ag-grid-community.min.js"></script>
+<style>
+    .content-plan-card {
+        transition: all 0.3s ease;
+        border: 1px solid rgba(0,0,0,0.1);
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+    
+    .content-plan-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    
+    .content-plan-item {
+        padding: 12px;
+        border-radius: 8px;
+        background-color: #f8f9fa;
+        transition: all 0.2s ease;
+    }
+    
+    .content-plan-item:hover {
+        background-color: #f0f2f5;
+    }
+    
+    .content-plan-item:not(:last-child) {
+        border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+    
+    .content-plan-item h6 {
+        font-weight: 600;
+        line-height: 1.4;
+    }
+    
+    .badge {
+        font-weight: 500;
+        padding: 6px 12px;
+        border-radius: 20px;
+    }
+    </style>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 @endassets
+
+@php
+    $events = [];
+    foreach ($contentPlans as $contentPlan) {
+        $events[] = [
+            'title' => $contentPlan->title,
+            'start' => $contentPlan->start_date,
+            'end' => $contentPlan->end_date,
+        ];
+    }
+@endphp
+
 
 @push('scripts')
     <script>
         $(".generateContentPlanBtn").click(function() {
             // show modal
             $('#contentPlanModal').modal('show');
+
+            // calendar
         });
-
-        document.addEventListener('showContentPlan', (event) => {
-
-            // document.querySelector('#calendarTable').classList.remove('d-none');
-
-
-            let calendarData = event.detail[0];
-            let calendarTable = document.getElementById('calendarTable');
-
-            const gridOptions = {
-                // Row Data: The data to be displayed.
-                rowData: calendarData,
-                // Column Definitions: Defines the columns to be displayed.
-                columnDefs: [{
-                        field: "week",
-                    },
-                    {
-                        field: "date"
-                    },
-                    {
-                        field: "platform"
-                    },
-                    {
-                        field: "format"
-                    },
-                    {
-                        field: "content_bucket",
-                        headerName: "Content Bucket",
-
-                    },
-                    {
-                        field: "content_idea",
-                        headerName: "Content Idea",
-
-                    },
-                    {
-                        field: "title",
-                        editable: true,
-                    },
-                    {
-                        field: "post",
-                        editable: true,
-                    },
-                    {
-                        field: "status",
-                        cellEditor: 'agSelectCellEditor',
-                        cellEditorParams: {
-                            values: ['Scheduled', 'Posted', 'Draft']
-                        },
-                        editable: true,
-                    },
-                ]
-            };
-
-            const myGridElement = document.querySelector('#calendarTable');
-            agGrid.createGrid(myGridElement, gridOptions);
-
-            $('#contentPlanModal').modal('hide');
-
-            $(".calendarTableRow").removeClass('d-none');
-            // $(".calendarTableRow").show();
-            // $(".calendarTableRow").addClass('abcbcbcbb');
-
-            // console.log($(".calendarTableRow"));
-
+        $(document).ready(function(){
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                events: @json($events),
+                dayMaxEventRows: true,
+                moreLinkClick: 'popover',
+                moreLinkClassNames: 'calendar-more-link-btn',
+                // initialView: 'dayGridMonth',
+                views: {
+                    dayGridMonth: {
+                        titleFormat: {
+                            month: 'long',
+                        }
+                    }
+                }
+        });
+        calendar.render();
         });
     </script>
 @endpush
+
+
