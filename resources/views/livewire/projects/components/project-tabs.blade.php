@@ -68,7 +68,7 @@
                 $acceptedTypes = ['Digital Strategy and Planning','Content Creation and Management','Social Media Marketing'];
             @endphp
             @if($project->type && in_array($project->type, $acceptedTypes))
-                <a wire:navigate class="tabNavigationBar-item @if($currentRoute == 'project.project-brief') active @endif" href="{{route('project.project-brief',$project->id)}}"><i class='bx bx-clipboard'></i> Brief</a>
+                <a wire:navigate class="tabNavigationBar-item @if($currentRoute == 'project.brief') active @endif" href="{{route('project.brief',$project->id)}}"><i class='bx bx-clipboard'></i> Brief</a>
                 @if($project->brief)
                     <a wire:navigate class="tabNavigationBar-item @if($currentRoute == 'project.content-plans' || $currentRoute == 'project.content-plan') active @endif" href="{{route('project.content-plans',$project->id)}}"><i class='bx bx-table' ></i> Content Plan</a>
                 @endif
