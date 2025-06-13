@@ -6,9 +6,9 @@ use Livewire\Component;
 use App\Models\Project;
 use App\Models\Brand;
 use Illuminate\Support\Facades\Auth;
-use App\Models\ProjectBrief as ProjectBreifModel;
+use App\Models\ProjectBrief as ProjectBriefModel;
 
-class ProjectBreif extends Component
+class ProjectBrief extends Component
 {
     public Project $project;
 
@@ -23,7 +23,7 @@ class ProjectBreif extends Component
 
     public function render()
     {
-        return view('livewire.projects.components.project-breif');
+        return view('livewire.projects.components.project-brief');
     }
 
     public function mount(Project $project)
@@ -44,7 +44,7 @@ class ProjectBreif extends Component
         }
     }
 
-    public function saveProjectBreif()
+    public function saveProjectBrief()
     {
         
         $this->validate([
@@ -64,7 +64,7 @@ class ProjectBreif extends Component
 
         $briefData = json_encode($briefData);
 
-        $brief = ProjectBreifModel::updateOrCreate(
+        $brief = ProjectBriefModel::updateOrCreate(
             ['project_id' => $this->project->id],
             [
                 'brief' => $briefData,

@@ -12,7 +12,7 @@ use App\Services\OpenAIService;
 use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
 
-class BrandSetting extends Component
+class ContentPlans extends Component
 {
     public Project $project;
 
@@ -90,6 +90,6 @@ class BrandSetting extends Component
 
     public function render()
     {
-        return view('livewire.projects.components.brand-setting');
+        return view('livewire.projects.components.content-plans');
     }
 }

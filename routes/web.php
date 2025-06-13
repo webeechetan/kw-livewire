@@ -25,7 +25,7 @@ use App\Livewire\Projects\Project;
 use App\Livewire\Projects\Components\Tasks as ProjectTasks;
 use App\Livewire\Projects\Components\FileManager as ProjectFileManager;
 use App\Livewire\Projects\Components\PostGenerator;
-use App\Livewire\Projects\Components\BrandSetting;
+use App\Livewire\Projects\Components\ContentPlans;
 
 use App\Livewire\Users\AddUser;
 use App\Livewire\Users\ListUser;
@@ -95,7 +95,7 @@ use App\Livewire\Projects\Components\CalendarView;
 use App\Livewire\Developers\ApiTokens;
 use App\Livewire\Developers\Webhooks;
 use App\Livewire\Projects\Components\ContentPlan;
-use App\Livewire\Projects\Components\ProjectBreif;
+use App\Livewire\Projects\Components\ProjectBrief;
 
 Route::get('/kk', function () {
     return view('ai-query');
@@ -188,8 +188,8 @@ Route::group(
     Route::get('/project/view/{project}/file-manager',ProjectFileManager::class)->name('project.file-manager')->withTrashed();
     Route::get('/project/view/{project}/calendar-view',CalendarView::class)->name('project.calendar')->withTrashed();
     Route::get('/project/view/{project}/post-generator',PostGenerator::class)->name('project.post-generator')->withTrashed();
-    Route::get('/project/view/{project}/brand-setting',BrandSetting::class)->name('project.brand-setting')->withTrashed();
-    Route::get('/project/view/{project}/project-breif',ProjectBreif::class)->name('project.project-breif')->withTrashed();
+    Route::get('/project/view/{project}/content-plans',ContentPlans::class)->name('project.content-plans')->withTrashed();
+    Route::get('/project/view/{project}/project-brief',ProjectBrief::class)->name('project.project-brief')->withTrashed();
     Route::get('/project/view/{project}/{contentPlan}/content-plan',ContentPlan::class)->name('project.content-plan')->withTrashed();
     
 

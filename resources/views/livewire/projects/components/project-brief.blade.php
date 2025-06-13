@@ -21,7 +21,7 @@
                 </div>
                 <hr class="space-sm">
                 {{-- create brand form --}}
-                <form wire:submit.prevent="saveProjectBreif" class="modal-body mt-4">
+                <form wire:submit.prevent="saveProjectBrief" class="modal-body mt-4">
                     <div class="mb-4">
                         <label for="brandDescription">Briefly describe your brand and its core values</label>
                         <textarea wire:model="brandDescription" class="form-style" id="brandDescription" rows="3"></textarea>
