@@ -35,107 +35,52 @@ class BrandSetting extends Component
     public function generateContentPlan()
     {
         $brandName = $this->project->name;
-        $month = date('F');
         $brandSettings = $this->project->brief->brief;
         $brandSettings = json_decode($brandSettings, true);
         $openAIService = new OpenAIService();
 
+        $startDate = $this->start_date ?? now()->startOfMonth()->toDateString();
+        $endDate = $this->end_date ?? now()->endOfMonth()->toDateString();
+        $numberOfPosts = $this->number_of_posts;
+        $platforms = is_array($this->platforms) ? $this->platforms : explode(',', $this->platforms);
+        $goals = is_array($this->goals) ? $this->goals : explode(',', $this->goals);
+
         $contentPlan = new ContentPlan();
         $contentPlan->project_id = $this->project->id;
-        $contentPlan->title = $this->title ?: 'Content Plan for ' . $brandName . ' - ' . $month;
+        $contentPlan->title = $this->title ?: 'Content Plan for ' . $brandName . ' - ' . now()->format('F');
         $contentPlan->duration = Carbon::parse($this->start_date)->diffInDays(Carbon::parse($this->end_date));
         $contentPlan->number_of_posts = $this->number_of_posts;
         $contentPlan->platforms = $this->platforms;
         $contentPlan->start_date = $this->start_date ?: now()->startOfMonth();
         $contentPlan->end_date = $this->end_date ?: now()->endOfMonth();
         $contentPlan->status = 'draft';
-
         $contentPlan->save();
 
+        // Call OpenAIService to generate the content plan
+        $contentCalendar = $openAIService->generateContentPlan(
+            $brandName,
+            $startDate,
+            $endDate,
+            $brandSettings,
+            $numberOfPosts,
+            $platforms,
+            $goals
+        );
 
-        // dd($this->duration, $this->number_of_posts, $this->platforms, $this->goals);
-
-        // $contentCalendar = $openAIService->generateContentCalendar($brandName, $brandSettings, $month,  $this->duration, $this->number_of_posts, $this->platforms, $this->goals);
-        $contentCalendar =
-            [
-                [
-                    'date' => '2025-05-01',
-                    'platform' => 'Twitter',
-                    'status' => 'draft',
-                    'post' => 'Acma is proud to be leading the automotive component industry and offering state-of-the-art technology solutions. #AutomotiveIndustry #ACMA',
-                    'format' => 'Story',
-                    'content_bucket' => 'educational',
-                    'content_idea' => 'industry insights',
-                ],
-                [
-                    'date' => '2025-05-06',
-                    'platform' => 'Twitter',
-                    'status' => 'draft',
-                    'post' => 'We\'re driving the future of the automotive industry in India, join us on this journey. #Innovation #ACMA',
-                    'format' => 'Text',
-                    'content_bucket' => 'inspirational',
-                    'content_idea' => 'brand mission',
-                ],
-                [
-                    'date' => '2025-05-11',
-                    'platform' => 'LinkedIn',
-                    'status' => 'draft',
-                    'post' => 'ACMA is excited to introduce our latest advancement in auto component technology. Stay tuned! #Technology #Innovation',
-                    'format' => 'Story',
-                    'content_bucket' => 'educational',
-                    'content_idea' => 'product announcement',
-                ],
-                [
-                    'date' => '2025-05-16',
-                    'platform' => 'Twitter',
-                    'status' => 'draft',
-                    'post' => 'We believe in quality. We wouldn\'t provide anything less to our partners in the automotive industry. #Quality #ACMA',
-                    'format' => 'Text',
-                    'content_bucket' => 'educational',
-                    'content_idea' => 'values',
-                ],
-                [
-                    'date' => '2025-05-21',
-                    'platform' => 'LinkedIn',
-                    'status' => 'draft',
-                    'post' => 'Our database of automotive companies continues to grow, so does our commitment to excellence and innovation. #Growth #ACMA',
-                    'format' => 'Text',
-                    'content_bucket' => 'inspirational',
-                    'content_idea' => 'company growth',
-                ],
-                [
-                    'date' => '2025-05-26',
-                    'platform' => 'Twitter',
-                    'status' => 'draft',
-                    'post' => 'ACMA has the expertise for all types of automotive component manufacturing. Trust in us! #Automotive #Expertise',
-                    'format' => 'Story',
-                    'content_bucket' => 'educational',
-                    'content_idea' => 'expertise',
-                ],
-                [
-                    'date' => '2025-05-31',
-                    'platform' => 'LinkedIn',
-                    'status' => 'draft',
-                    'post' => 'As we round off this month, we\'d like to thank all our partners and customers for their support. Together, we drive the future! #ThankYou #ACMA',
-                    'format' => 'Post',
-                    'content_bucket' => 'entertaining',
-                    'content_idea' => 'gratitude',
-                ],
-            ];
-
+        dd($contentCalendar);
         if (is_array($contentCalendar)) {
             foreach ($contentCalendar as $postData) {
                 $post = new Post();
                 $post->project_id = $this->project->id;
                 $post->content_plan_id = $contentPlan->id;
-                $post->date = $postData['date'];
-                $post->platform = $postData['platform'];
-                $post->status = $postData['status'];
-                $post->title = 'Post for ' . $postData['date'] . ' on ' . $postData['platform'];
-                $post->description = $postData['post'];
-                $post->format = $postData['format'];
-                $post->content_bucket = $postData['content_bucket'];
-                $post->content_idea = $postData['content_idea'];
+                $post->date = $postData['date'] ?? null;
+                $post->platform = $postData['platform'] ?? null;
+                $post->status = 'draft';
+                $post->title = 'Post for ' . ($postData['date'] ?? '') . ' on ' . ($postData['platform'] ?? '');
+                $post->description = $postData['post'] ?? ($postData['idea'] ?? '');
+                $post->format = $postData['format'] ?? null;
+                $post->content_bucket = $postData['content_bucket'] ?? ($postData['bucket'] ?? null);
+                $post->content_idea = $postData['content_idea'] ?? ($postData['idea'] ?? null);
                 $post->save();
             }
         }
