@@ -93,9 +93,14 @@
                                 placeholder="Enter title">
                         </div>
                         <div class="mb-4">
-                            <label for="duration" class="form-label">Duration</label>
-                            <input type="text" class="form-style" wire:model="duration" id="duration"
-                                placeholder="Enter duration">
+                            <label for="start_date" class="form-label">Start Date</label>
+                            <input type="date" class="form-style" wire:model="start_date" id="start_date"
+                                placeholder="Select start date">
+                        </div>
+                        <div class="mb-4">
+                            <label for="end_date" class="form-label">End Date</label>
+                            <input type="date" class="form-style" wire:model="end_date" id="end_date"
+                                placeholder="Select end date">
                         </div>
                         <div class="mb-4">
                             <label for="goals" class="form-label">Goals</label>
