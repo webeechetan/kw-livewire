@@ -6,24 +6,24 @@ use Livewire\Component;
 use App\Models\Project;
 use App\Models\Brand;
 use Illuminate\Support\Facades\Auth;
-use App\Models\ProjectBrief as ProjectBreifModel;
+use App\Models\ProjectBrief as ProjectBriefModel;
 
-class ProjectBreif extends Component
+class ProjectBrief extends Component
 {
     public Project $project;
 
-    public $brandDescription = '';
-    public $brandGoals = '';
-    public $brandObjective = '';
-    public $campaignTimelines = '';
-    public $brandVoice = '';
+    public $description = '';
+    public $goals = '';
+    public $objectives = '';
+    public $timelines = '';
+    public $toneOfVoice = '';
     public $avoidWords = '';
     public $competitors = '';
     public $platforms = '';
 
     public function render()
     {
-        return view('livewire.projects.components.project-breif');
+        return view('livewire.projects.components.project-brief');
     }
 
     public function mount(Project $project)
@@ -33,30 +33,30 @@ class ProjectBreif extends Component
         if($project->brief) {
             $brief = json_decode($project->brief->brief, true);
 
-            $this->brandDescription = $brief['brandDescription'] ?? '';
-            $this->brandGoals = $brief['brandGoals'] ?? '';
-            $this->brandObjective = $brief['brandObjective'] ?? '';
-            $this->campaignTimelines = $brief['campaignTimelines'] ?? '';
-            $this->brandVoice = $brief['brandVoice'] ?? '';
+            $this->description = $brief['description'] ?? '';
+            $this->goals = $brief['goals'] ?? '';
+            $this->objectives = $brief['objectives'] ?? '';
+            $this->timelines = $brief['timelines'] ?? '';
+            $this->toneOfVoice = $brief['toneOfVoice'] ?? '';
             $this->avoidWords = $brief['avoidWords'] ?? '';
             $this->competitors = $brief['competitors'] ?? '';
             $this->platforms = $brief['platforms'] ?? '';
         }
     }
 
-    public function saveProjectBreif()
+    public function saveProjectBrief()
     {
         
         $this->validate([
-            'brandDescription' => 'required',
+            'description' => 'required',
         ]);
 
         $briefData = [
-            'brandDescription' => $this->brandDescription,
-            'brandGoals' => $this->brandGoals,
-            'brandObjective' => $this->brandObjective,
-            'campaignTimelines' => $this->campaignTimelines,
-            'brandVoice' => $this->brandVoice,
+            'description' => $this->description,
+            'goals' => $this->goals,
+            'objectives' => $this->objectives,
+            'timelines' => $this->timelines,
+            'toneOfVoice' => $this->toneOfVoice,
             'avoidWords' => $this->avoidWords,
             'competitors' => $this->competitors,
             'platforms' => $this->platforms,
@@ -64,7 +64,7 @@ class ProjectBreif extends Component
 
         $briefData = json_encode($briefData);
 
-        $brief = ProjectBreifModel::updateOrCreate(
+        $brief = ProjectBriefModel::updateOrCreate(
             ['project_id' => $this->project->id],
             [
                 'brief' => $briefData,

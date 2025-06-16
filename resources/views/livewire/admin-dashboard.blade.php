@@ -488,7 +488,7 @@
             },
             {
                 question: "What are your brand's main goals?",
-                key: 'brandGoals'
+                key: 'goals'
             },
             {
                 question: "What's your monthly content goal?",
