@@ -67,7 +67,7 @@ class DatabaseSeeder extends Seeder
         //     ->count(9)
         //     ->create();
 
-        $this->call(PermissionSedder::class);
+        $this->call(PermissionSeeder::class);
 
         // assign admin role to the user
         // setPermissionsTeamId(1);
