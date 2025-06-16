@@ -112,7 +112,6 @@ class OpenAIService
         array $contentPlanBrief,
         array $projectBrief
     ) {
-        $platformsList = implode(', ', $contentPlanBrief['platforms']);
 
         $prompt = <<<EOT
 Generate a social media content plan for the brand "{$projectName}" from {$contentPlanBrief['start_date']} to {$contentPlanBrief['end_date']}.
@@ -124,7 +123,7 @@ Brand Information:
 - Voice: {$projectBrief['toneOfVoice']}
 - Avoid: {$projectBrief['avoidWords']}
 - Competitors: {$projectBrief['competitors']}
-- Platforms: {$platformsList}
+- Platforms: {$contentPlanBrief['platforms']}
 
 Content Plan Details:
 - Title: {$contentPlanBrief['title']}
@@ -140,7 +139,7 @@ Instructions:
 
 Each content item must include:
 - date (within the given range)
-- platform (from: {$platformsList})
+- platform (from: {$contentPlanBrief['platforms']})
 - format (e.g., Text, Image, Video, Story, Live Stream, Poll & Quiz)
 - bucket (e.g., Educational, Promotional, Behind-the-Scenes, Testimonial, User-Generated Content, Product Highlight, etc.)
 - idea (a short content idea in 1–2 sentences)
@@ -163,7 +162,7 @@ EOT;
                 'messages' => [
                     [
                         'role' => 'system',
-                        'content' => "You are an expert social media content plan generator. Your task is to create detailed, creative, and platform-specific content plans for the brand {$projectName} across the following platforms: {$platformsList}. Ensure each post aligns with the brand's voice, goals, and audience, and is tailored for maximum engagement on each platform.",
+                        'content' => "You are an expert social media content plan generator. Your task is to create detailed, creative, and platform-specific content plans for the brand {$projectName} across the following platforms: {$contentPlanBrief['platforms']}. Ensure each post aligns with the brand's voice, goals, and audience, and is tailored for maximum engagement on each platform.",
                     ],
                     [
                         'role' => 'user',

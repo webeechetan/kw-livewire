@@ -42,7 +42,7 @@ class ContentPlans extends Component
             'title' => $this->title,
             'description' => $this->description,
             'number_of_posts' => $this->number_of_posts,
-            'platforms' => is_array($this->platforms) ? $this->platforms : explode(',', $this->platforms),
+            'platforms' => $this->platforms,
             'start_date' => $this->start_date ?? now()->startOfMonth()->toDateString(),
             'end_date' => $this->end_date ?? now()->endOfMonth()->toDateString(),
         ];
@@ -50,7 +50,9 @@ class ContentPlans extends Component
         $contentPlan = new ContentPlan();
         $contentPlan->project_id = $this->project->id;
         $contentPlan->title = $this->title ?: 'Content Plan for ' . $projectName . ' - ' . now()->format('F');
-        $contentPlan->content_plan_brief = json_encode($contentPlanBrief);
+        $contentPlan->description = $this->description;
+        $contentPlan->number_of_posts = $this->number_of_posts;
+        $contentPlan->platforms = $this->platforms;
         $contentPlan->start_date = $contentPlanBrief['start_date'];
         $contentPlan->end_date = $contentPlanBrief['end_date'];
         $contentPlan->status = 'draft';
@@ -58,9 +60,9 @@ class ContentPlans extends Component
 
         // Call OpenAIService to generate the content plan
         $generatedPosts = $openAIService->generateContentPlan(
-            $projectName,
-            $projectBrief,
-            $contentPlanBrief
+            projectName: $projectName,
+            contentPlanBrief: $contentPlanBrief,
+            projectBrief: $projectBrief
         );
 
         if (is_array($generatedPosts)) {
