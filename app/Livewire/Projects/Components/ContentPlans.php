@@ -2,7 +2,6 @@
 
 namespace App\Livewire\Projects\Components;
 
-use App\Models\Brand;
 use App\Models\Project;
 use App\Models\ContentPlan;
 use App\Models\Post;
@@ -17,14 +16,13 @@ class ContentPlans extends Component
     public Project $project;
 
     public $title = '';
+    public $description = '';
     public $number_of_posts = '';
     public $platforms = '';
-    public $goals = '';
     public $start_date = '';
     public $end_date = '';
 
     public $contentPlans = [];
-
 
     public function mount(Project $project)
     {
@@ -34,42 +32,39 @@ class ContentPlans extends Component
 
     public function generateContentPlan()
     {
-        $brandName = $this->project->name;
-        $brandSettings = $this->project->brief->brief;
-        $brandSettings = json_decode($brandSettings, true);
+        $projectName = $this->project->name;
+        $projectBrief = $this->project->brief->brief;
+        $projectBrief = json_decode($projectBrief, true);
         $openAIService = new OpenAIService();
 
-        $startDate = $this->start_date ?? now()->startOfMonth()->toDateString();
-        $endDate = $this->end_date ?? now()->endOfMonth()->toDateString();
-        $numberOfPosts = $this->number_of_posts;
-        $platforms = is_array($this->platforms) ? $this->platforms : explode(',', $this->platforms);
-        $goals = is_array($this->goals) ? $this->goals : explode(',', $this->goals);
+        // Create content plan brief object
+        $contentPlanBrief = [
+            'title' => $this->title,
+            'description' => $this->description,
+            'number_of_posts' => $this->number_of_posts,
+            'platforms' => is_array($this->platforms) ? $this->platforms : explode(',', $this->platforms),
+            'start_date' => $this->start_date ?? now()->startOfMonth()->toDateString(),
+            'end_date' => $this->end_date ?? now()->endOfMonth()->toDateString(),
+        ];
 
         $contentPlan = new ContentPlan();
         $contentPlan->project_id = $this->project->id;
-        $contentPlan->title = $this->title ?: 'Content Plan for ' . $brandName . ' - ' . now()->format('F');
-        $contentPlan->duration = Carbon::parse($this->start_date)->diffInDays(Carbon::parse($this->end_date));
-        $contentPlan->number_of_posts = $this->number_of_posts;
-        $contentPlan->platforms = $this->platforms;
-        $contentPlan->start_date = $this->start_date ?: now()->startOfMonth();
-        $contentPlan->end_date = $this->end_date ?: now()->endOfMonth();
+        $contentPlan->title = $this->title ?: 'Content Plan for ' . $projectName . ' - ' . now()->format('F');
+        $contentPlan->content_plan_brief = json_encode($contentPlanBrief);
+        $contentPlan->start_date = $contentPlanBrief['start_date'];
+        $contentPlan->end_date = $contentPlanBrief['end_date'];
         $contentPlan->status = 'draft';
         $contentPlan->save();
 
         // Call OpenAIService to generate the content plan
-        $contentCalendar = $openAIService->generateContentPlan(
-            $brandName,
-            $startDate,
-            $endDate,
-            $brandSettings,
-            $numberOfPosts,
-            $platforms,
-            $goals
+        $generatedPosts = $openAIService->generateContentPlan(
+            $projectName,
+            $projectBrief,
+            $contentPlanBrief
         );
 
-        dd($contentCalendar);
-        if (is_array($contentCalendar)) {
-            foreach ($contentCalendar as $postData) {
+        if (is_array($generatedPosts)) {
+            foreach ($generatedPosts as $postData) {
                 $post = new Post();
                 $post->project_id = $this->project->id;
                 $post->content_plan_id = $contentPlan->id;

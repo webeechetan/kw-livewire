@@ -23,41 +23,41 @@
                 {{-- create brand form --}}
                 <form wire:submit.prevent="saveProjectBrief" class="modal-body mt-4">
                     <div class="mb-4">
-                        <label for="brandDescription">Briefly describe your brand and its core values</label>
-                        <textarea wire:model="brandDescription" class="form-style" id="brandDescription" rows="3"></textarea>
-                        @error('brandDescription')
+                        <label for="description">Briefly describe your brand and its core values</label>
+                        <textarea wire:model="description" class="form-style" id="description" rows="3"></textarea>
+                        @error('description')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
                     <div class="mb-4">
-                        <label for="brandGoals">What are the main goals for this social media project? (e.g.,
+                        <label for="goals">What are the main goals for this social media project? (e.g.,
                             increase followers, drive engagement, generate leads, boost sales)</label>
-                        <textarea wire:model="brandGoals" class="form-style" id="brandGoals" rows="3"></textarea>
-                        @error('brandGoals')
+                        <textarea wire:model="goals" class="form-style" id="goals" rows="3"></textarea>
+                        @error('goals')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
                     <div class="mb-4">
-                        <label for="brandObjective">What does long-term success look like for this project on
+                        <label for="objectives">What does long-term success look like for this project on
                             social media?</label>
-                        <textarea wire:model="brandObjective" class="form-style" id="brandObjective" rows="3"></textarea>
-                        @error('brandObjective')
+                        <textarea wire:model="objectives" class="form-style" id="objectives" rows="3"></textarea>
+                        @error('objectives')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
                     <div class="mb-4">
-                        <label for="campaignTimelines">Are there any important dates, events, or timelines for
+                        <label for="timelines">Are there any important dates, events, or timelines for
                             this project?</label>
-                        <textarea wire:model="campaignTimelines" class="form-style" id="campaignTimelines" rows="3"></textarea>
-                        @error('campaignTimelines')
+                        <textarea wire:model="timelines" class="form-style" id="timelines" rows="3"></textarea>
+                        @error('timelines')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
                     <div class="mb-4">
-                        <label for="brandVoice">What tone and voice should be used for this project's social
+                        <label for="toneOfVoice">What tone and voice should be used for this project's social
                             media content?</label>
-                        <textarea wire:model="brandVoice" class="form-style" id="brandVoice" rows="3"></textarea>
-                        @error('brandVoice')
+                        <textarea wire:model="toneOfVoice" class="form-style" id="toneOfVoice" rows="3"></textarea>
+                        @error('toneOfVoice')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>

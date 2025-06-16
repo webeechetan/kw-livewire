@@ -125,33 +125,36 @@
                     </button>
                 </div>
                 <div class="modal-body modal-form-body">
-                    <form>
-                        <div class="mb-4">
-                            <label for="title" class="form-label">Title</label>
-                            <input type="text" class="form-style" wire:model="title" id="title"
-                                placeholder="Enter title">
-                        </div>
-                        <div class="mb-4">
-                            <label for="start_date" class="form-label">Start Date</label>
-                            <input type="date" class="form-style" wire:model="start_date" id="start_date"
-                                placeholder="Enter start date">
-                        </div>
-                        <div class="mb-4">
-                            <label for="end_date" class="form-label">End Date</label>
-                            <input type="date" class="form-style" wire:model="end_date" id="end_date"
-                                placeholder="Enter end date">
-                        </div>
-                        <div class="mb-4">
-                            <label for="number_of_posts" class="form-label">Number of posts</label>
-                            <input type="text" class="form-style" wire:model="number_of_posts" id="number_of_posts"
-                                placeholder="Enter number of posts">
-                        </div>
-                        <div class="mb-4">
-                            <label for="platforms" class="form-label">Platforms</label>
-                            <input type="text" class="form-style" wire:model="platforms" id="platforms"
-                                placeholder="Enter platforms">
-                        </div>
-                    </form>
+                    <div class="mb-4">
+                        <label for="title" class="form-label">Title</label>
+                        <input type="text" class="form-style" wire:model="title" id="title"
+                            placeholder="Enter a descriptive title for your content plan">
+                    </div>
+                    <div class="mb-4">
+                        <label for="description" class="form-label">Description</label>
+                        <textarea class="form-style" wire:model="description" id="description" rows="3"
+                            placeholder="Describe the main focus, theme, or objective of this content plan"></textarea>
+                    </div>
+                    <div class="mb-4">
+                        <label for="start_date" class="form-label">Start Date</label>
+                        <input type="date" class="form-style" wire:model="start_date" id="start_date"
+                            placeholder="Select start date">
+                    </div>
+                    <div class="mb-4">
+                        <label for="end_date" class="form-label">End Date</label>
+                        <input type="date" class="form-style" wire:model="end_date" id="end_date"
+                            placeholder="Select end date">
+                    </div>
+                    <div class="mb-4">
+                        <label for="number_of_posts" class="form-label">Number of Posts</label>
+                        <input type="text" class="form-style" wire:model="number_of_posts" id="number_of_posts"
+                            placeholder="Enter number of posts">
+                    </div>
+                    <div class="mb-4">
+                        <label for="platforms" class="form-label">Platforms</label>
+                        <input type="text" class="form-style" wire:model="platforms" id="platforms"
+                            placeholder="Enter platforms (e.g., Instagram, Facebook, Twitter)">
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button wire:click="generateContentPlan" class="btn btn-primary generateContentPlanBtn">

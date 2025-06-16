@@ -172,10 +172,12 @@ Route::group(
         |--------------------------------------------------------------------------
         */
 
-        Route::get('/clients/{sort?}/{filter?}', ListClient::class)->name('client.index');
-        Route::get('/client/{id}', ClientProfile::class)->name('client.profile');
-        Route::get('/client/{id?}/projects', ClientProjects::class)->name('client.projects');
-        Route::get('/client/{id?}/file-manager', ClientFileManager::class)->name('client.file-manager');
+        Route::prefix('clients')->group(function () {
+            Route::get('/', ListClient::class)->name('client.index');
+            Route::get('/{id}', ClientProfile::class)->name('client.profile');
+            Route::get('/{id}/projects', ClientProjects::class)->name('client.projects');
+            Route::get('/{id}/file-manager', ClientFileManager::class)->name('client.file-manager');
+        });
 
         /*
         |--------------------------------------------------------------------------
@@ -183,16 +185,17 @@ Route::group(
         |--------------------------------------------------------------------------
         */
 
-        Route::get('/projects/{sort?}/{filter?}/{byUser?}/{byTeam?}', ListProject::class)->name('project.index');
-        Route::get('/project/{id}', Project::class)->name('project.profile');
-        Route::get('/project/{project}/tasks', ProjectTasks::class)->name('project.tasks')->withTrashed();
-        Route::get('/project/{project}/file-manager', ProjectFileManager::class)->name('project.file-manager')->withTrashed();
-        Route::get('/project/{project}/calendar', CalendarView::class)->name('project.calendar')->withTrashed();
-        Route::get('/project/{project}/post-generator', PostGenerator::class)->name('project.post-generator')->withTrashed();
-        Route::get('/project/{project}/content-plans', ContentPlans::class)->name('project.content-plans')->withTrashed();
-        Route::get('/project/{project}/brief', ProjectBrief::class)->name('project.brief')->withTrashed();
-        Route::get('/project/{project}/content-plan/{contentPlan}', ContentPlan::class)->name('project.content-plan')->withTrashed();
-
+        Route::prefix('projects')->group(function () {
+            Route::get('/', ListProject::class)->name('project.index');
+            Route::get('/{id}', Project::class)->name('project.profile');
+            Route::get('/{project}/tasks', ProjectTasks::class)->name('project.tasks')->withTrashed();
+            Route::get('/{project}/file-manager', ProjectFileManager::class)->name('project.file-manager')->withTrashed();
+            Route::get('/{project}/calendar', CalendarView::class)->name('project.calendar')->withTrashed();
+            Route::get('/{project}/post-generator', PostGenerator::class)->name('project.post-generator')->withTrashed();
+            Route::get('/{project}/brief', ProjectBrief::class)->name('project.brief')->withTrashed();
+            Route::get('/{project}/content-plans', ContentPlans::class)->name('project.content-plans')->withTrashed();
+            Route::get('/{project}/content-plans/{contentPlan}', ContentPlan::class)->name('project.content-plan')->withTrashed();
+        });
 
         /*
         |--------------------------------------------------------------------------
@@ -200,10 +203,12 @@ Route::group(
         |--------------------------------------------------------------------------
         */
 
-        Route::get('/teams/{sort?}/{filter?/{byUser?}', ListTeam::class)->name('team.index');
-        Route::get('/team/{team}', TeamProfile::class)->name('team.profile');
-        Route::get('/team/{team?}/projects', TeamProjects::class)->name('team.projects');
-        Route::get('/team/{team?}/tasks/{status?}', TeamTasks::class)->name('team.tasks');
+        Route::prefix('teams')->group(function () {
+            Route::get('/', ListTeam::class)->name('team.index');
+            Route::get('/{team}', TeamProfile::class)->name('team.profile');
+            Route::get('/{team}/projects', TeamProjects::class)->name('team.projects');
+            Route::get('/{team}/tasks/{status?}', TeamTasks::class)->name('team.tasks');
+        });
 
         /*
         |--------------------------------------------------------------------------
@@ -211,9 +216,11 @@ Route::group(
         |--------------------------------------------------------------------------
         */
 
-        Route::get('/users/{sort?}/{filter?}/{byProject?}', ListUser::class)->name('user.index');
-        Route::get('/users/add', AddUser::class)->name('user.add');
-        Route::get('/user/{user_id?}', UserProfile::class)->name('user.profile');
+        Route::prefix('users')->group(function () {
+            Route::get('/', ListUser::class)->name('user.index');
+            Route::get('/add', AddUser::class)->name('user.add');
+            Route::get('/{user_id}', UserProfile::class)->name('user.profile');
+        });
 
         /*
         |--------------------------------------------------------------------------
@@ -221,13 +228,14 @@ Route::group(
         |--------------------------------------------------------------------------
         */
 
-        Route::get('/tasks/projects', TaskProjects::class)->name('task.projects');
-        Route::get('/tasks/teams', TaskTeams::class)->name('task.teams');
-        Route::get('/tasks/list-view', TaskListView::class)->name('task.list-view');
-        Route::get('/tasks/marked-to-me', MarkedToMeTasks::class)->name('task.marked-to-me');
-        Route::get('/tasks/{sort?}/{filter?}/{byProject?}/{byClient?}', ListTask::class)->name('task.index');
-        Route::get('/tasks/add', AddTask::class)->name('task.add');
-
+        Route::prefix('tasks')->group(function () {
+            Route::get('/', ListTask::class)->name('task.index');
+            Route::get('/projects', TaskProjects::class)->name('task.projects');
+            Route::get('/teams', TaskTeams::class)->name('task.teams');
+            Route::get('/list-view', TaskListView::class)->name('task.list-view');
+            Route::get('/marked-to-me', MarkedToMeTasks::class)->name('task.marked-to-me');
+            Route::get('/add', AddTask::class)->name('task.add');
+        });
 
         /*
         |--------------------------------------------------------------------------
@@ -235,8 +243,10 @@ Route::group(
         |--------------------------------------------------------------------------
         */
 
-        Route::get('/roles', ListRole::class)->name('role.index');
-        Route::get('/role/{role}', RoleView::class)->name('role.profile');
+        Route::prefix('roles')->group(function () {
+            Route::get('/', ListRole::class)->name('role.index');
+            Route::get('/{role}', RoleView::class)->name('role.profile');
+        });
 
         /*
         |--------------------------------------------------------------------------
@@ -244,7 +254,9 @@ Route::group(
         |--------------------------------------------------------------------------
         */
 
-        Route::get('/organization/profile', OrganizationProfile::class)->name('organization.profile');
+        Route::prefix('organization')->group(function () {
+            Route::get('/profile', OrganizationProfile::class)->name('organization.profile');
+        });
 
         /*
         |--------------------------------------------------------------------------
@@ -252,10 +264,11 @@ Route::group(
         |--------------------------------------------------------------------------
         */
 
-        Route::get('/developers/dashboard', DeveloperDashboard::class)->name('developers.dashboard');
-        Route::get('/developers/webhooks', Webhooks::class)->name('developers.webhooks');
-        Route::get('/developers/api-tokens', ApiTokens::class)->name('developers.api-tokens');
-
+        Route::prefix('developers')->group(function () {
+            Route::get('/dashboard', DeveloperDashboard::class)->name('developers.dashboard');
+            Route::get('/webhooks', Webhooks::class)->name('developers.webhooks');
+            Route::get('/api-tokens', ApiTokens::class)->name('developers.api-tokens');
+        });
 
         /*
         |--------------------------------------------------------------------------

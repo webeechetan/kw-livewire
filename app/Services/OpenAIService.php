@@ -99,105 +99,40 @@ class OpenAIService
         $response = json_decode($response->getBody(), true);
         return $response['choices'][0]['message']['content'];
     }
-    /**
-     * Generate a content calendar for a  product brand.
-     * @param string $month
-     * @param array $brandSettings
-     * @param int $frequencyInDays
-     * @return array
-     */
-    public function generateContentCalendar($brandName, $brandSettings, $month, $number_of_posts = 4, $platforms, $goals)
-    {
-        $prompt = "Create a content calendar for a {$brandName} brand for the month of {$month}. 
-            The content should follow these settings:
-            - Brand Name: {$brandName}
-
-            - Brand Description: {$brandSettings['brandDescription']}
-            - Content Type: {$brandSettings['contentType']}
-            - Brand Colors: {$brandSettings['brandColors']}
-            - Tone of Voice: {$brandSettings['toneOfVoice']} 
-            - Avoid Words: {$brandSettings['avoidWords']}
-            - Unique Selling Point: {$brandSettings['uniqueSellingPoint']}
-            - Platforms: {$brandSettings['platforms']}
-            - Content Goal: {$brandSettings['contentGoal']}
-            - Number Of Posts: {$number_of_posts} 
-
-            Provide the output in a JSON format like:
-            [
-                {
-                    \"date\": \"2025-05-01\",
-                    \"platform\": \"Twitter\",
-                    \"post\": \"<post content>\",
-                    \"format\": \"Story\",
-                    \"content_bucket\": \"educational, entertaining, or inspirational\",
-                    \"content_idea\": \"marketing, blogging, or social media\",
-                    
-
-
-                },
-                ...
-            ]";
-
-        $response = $this->client->post('chat/completions', [
-            'json' => [
-                'model' => 'gpt-4',
-                'messages' => [
-                    [
-                        'role' => 'system',
-                        'content' => 'You are a content calendar generator.',
-                    ],
-                    [
-                        'role' => 'user',
-                        'content' => $prompt,
-                    ],
-                ],
-                'max_tokens' => 1000,
-            ],
-        ]);
-
-        $response = json_decode($response->getBody(), true);
-
-        return json_decode($response['choices'][0]['message']['content'], true);
-    }
 
     /**
      * Generate a detailed content plan for a brand within a date range.
-     * @param string $brandName
-     * @param string $startDate
-     * @param string $endDate
-     * @param array $brandSettings
-     * @param int $numberOfPosts
-     * @param array $platforms
-     * @param array $goals
+     * @param string $projectName
+     * @param array $contentPlanBrief
+     * @param array $projectBrief
      * @return array
      */
     public function generateContentPlan(
-        string $brandName,
-        string $startDate,
-        string $endDate,
-        array $brandSettings,
-        int $numberOfPosts,
-        array $platforms,
-        array $goals
+        string $projectName,
+        array $contentPlanBrief,
+        array $projectBrief
     ) {
-        $platformsList = implode(', ', array: $platforms);
-        $goalsList = implode(', ', $goals);
+        $platformsList = implode(', ', $contentPlanBrief['platforms']);
 
         $prompt = <<<EOT
-Generate a social media content plan for the brand "{$brandName}" from {$startDate} to {$endDate}.
+Generate a social media content plan for the brand "{$projectName}" from {$contentPlanBrief['start_date']} to {$contentPlanBrief['end_date']}.
 
 Brand Information:
-- Description: {$brandSettings['brandDescription']}
-- Goals: {$goalsList}
-- Objective: {$brandSettings['brandObjective']}
-- Timeline: {$brandSettings['campaignTimelines']}
-- Voice: {$brandSettings['brandVoice']}
-- Avoid: {$brandSettings['avoidWords']}
-- Competitors: {$brandSettings['competitors']}
+- Description: {$projectBrief['description']}
+- Objective: {$projectBrief['objectives']}
+- Timeline: {$projectBrief['timelines']}
+- Voice: {$projectBrief['toneOfVoice']}
+- Avoid: {$projectBrief['avoidWords']}
+- Competitors: {$projectBrief['competitors']}
 - Platforms: {$platformsList}
 
+Content Plan Details:
+- Title: {$contentPlanBrief['title']}
+- Description: {$contentPlanBrief['description']}
+- Number of Posts: {$contentPlanBrief['number_of_posts']}
+
 Instructions:
-- Create exactly {$numberOfPosts} content items.
+- Create exactly {$contentPlanBrief['number_of_posts']} content items.
 - Spread them evenly across the date range.
 - Use varied formats: Text, Image, Video, Story, Live Stream, Poll & Quiz.
 - Align each post with brand voice and goals.
@@ -228,7 +163,7 @@ EOT;
                 'messages' => [
                     [
                         'role' => 'system',
-                        'content' => "You are an expert social media content plan generator. Your task is to create detailed, creative, and platform-specific content plans for the brand {$brandName} across the following platforms: {$brandSettings['platforms']}. Ensure each post aligns with the brand\'s voice, goals, and audience, and is tailored for maximum engagement on each platform.",
+                        'content' => "You are an expert social media content plan generator. Your task is to create detailed, creative, and platform-specific content plans for the brand {$projectName} across the following platforms: {$platformsList}. Ensure each post aligns with the brand's voice, goals, and audience, and is tailored for maximum engagement on each platform.",
                     ],
                     [
                         'role' => 'user',
