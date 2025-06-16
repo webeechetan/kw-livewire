@@ -16,7 +16,7 @@
             <div class="column-box">
                 <div class="d-flex flex-wrap align-items-center justify-content-between">
                     <div class="card_style-user-profile-content">
-                        <h4>Add Project Brief</h4>
+                        <h4>Project Brief</h4>
                     </div>
                 </div>
                 <hr class="space-sm">
