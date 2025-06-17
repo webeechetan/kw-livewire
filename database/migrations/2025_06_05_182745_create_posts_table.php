@@ -15,14 +15,18 @@ return new class extends Migration
             $table->id();
             $table->foreignId('project_id')->constrained()->onDelete('cascade');
             $table->foreignId('content_plan_id')->constrained()->onDelete('cascade');
-            $table->string('title')->nullable();
-            $table->text('description')->nullable();
             $table->date('date')->nullable();
             $table->string('platform')->nullable();
             $table->string('format')->nullable()->comment('e.g., image, video, text');
             $table->string('content_bucket')->nullable()->comment('e.g., marketing, education, entertainment');
-            $table->string('content_idea')->nullable()->comment('Brief description of the content idea');
-            $table->string('status')->default('draft')->comment('draft, scheduled, published, archived');
+            $table->longText('content_idea')->nullable()->comment('Brief description of the content idea');
+            $table->string('idea_status')->default('pending')->comment('pending, approved, rejected');
+            $table->longText('creative_copy')->nullable();
+            $table->longText('visual_direction')->nullable();
+            $table->longText('caption')->nullable();
+            $table->string('copy_status')->default('pending')->comment('pending, approved, rejected');
+            $table->string('creative_status')->default('pending')->comment('pending, approved, rejected');
+            $table->string('final_status')->default('pending')->comment('pending, approved, rejected');
             $table->timestamps();
         });
     }

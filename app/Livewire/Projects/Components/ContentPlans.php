@@ -72,12 +72,16 @@ class ContentPlans extends Component
                 $post->content_plan_id = $contentPlan->id;
                 $post->date = $postData['date'] ?? null;
                 $post->platform = $postData['platform'] ?? null;
-                $post->status = 'draft';
-                $post->title = 'Post for ' . ($postData['date'] ?? '') . ' on ' . ($postData['platform'] ?? '');
-                $post->description = $postData['post'] ?? ($postData['idea'] ?? '');
+                $post->idea_status = 'pending';
+                $post->creative_status = 'pending';
+                $post->copy_status = 'pending';
+                $post->final_status = 'pending';
                 $post->format = $postData['format'] ?? null;
                 $post->content_bucket = $postData['content_bucket'] ?? ($postData['bucket'] ?? null);
-                $post->content_idea = $postData['content_idea'] ?? ($postData['idea'] ?? null);
+                $post->content_idea = $postData['idea'] ?? null;
+                $post->creative_copy = $postData['creative_copy'] ?? null;
+                $post->visual_direction = $postData['visual_direction'] ?? null;
+                $post->caption = $postData['caption'] ?? null;
                 $post->save();
             }
         }

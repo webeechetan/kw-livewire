@@ -52,7 +52,7 @@
                 { field: "platform",
                     headerName: "Platform",
                  },
-                { field: "format",
+                { field: "format", 
                     headerName: "Format",
                  },
                 { 
@@ -63,15 +63,6 @@
                  { 
                     field: "content_idea",
                     headerName: "Content Idea",
-                    
-                 },
-                { 
-                    field: "title",
-                    editable: true,
-                },
-                {
-                    field: "description",
-                    headerName: "Description",
                     editable: true,
                     width: 600,
                     height: 200,
@@ -80,14 +71,97 @@
                     cellEditorParams: {
                         maxLength: 1000,
                     },
-                },
+                 },
                 { 
-                    field: "status",
+                    field: "idea_status",
+                    headerName: "Idea Status",
+                    editable: true,
                     cellEditor: 'agSelectCellEditor',
                     cellEditorParams: {
-                        values: ['Scheduled', 'Posted', 'Draft']
+                        values: ['pending', 'approved', 'rejected']
                     },
+                },
+                {
+                    field: "creative_copy",
+                    headerName: "Creative Copy",
+                    editable: false, // turn off inline editing
+                    cellRenderer: function (params) {
+                        const copy = params.value;
+                        const postId = params.data.id;
+                        if (!copy || copy.trim() === "") {
+                            return `
+                                <div>
+                                    <button class="btn btn-sm btn-outline-primary generate-ai-btn" data-id="${postId}">
+                                        <i class="bx bx-bot"></i> Generate with AI
+                                    </button>
+                                </div>
+                            `;
+                        }
+                        return `<div>
+                                    <span>${copy}</span>
+                                    <button class="btn btn-sm btn-outline-primary generate-ai-btn" data-id="${postId}">
+                                        <i class="bx bx-bot"></i> Regenerate with AI
+                                    </button>
+                                </div>
+                            `;
+                    }
+                },
+
+
+                {
+                    field: "visual_direction",
+                    headerName: "Visual Direction",
                     editable: true,
+                    cellRenderer: function (params) {
+                        const visual = params.data.visual_direction || '';
+                        const buttonHTML = `<button class="btn btn-sm btn-primary generate-ai-btn" data-id="${params.data.id}">
+                                                <i class="bx bx-bot"></i> Generate with AI
+                                            </button>`;
+                        return visual
+                            ? `<span>${visual}</span>`
+                            : `<em style="color:#999;">Generate with AI</em><br>${buttonHTML}`;
+                    },
+                },
+                {
+                    field: "caption",
+                    headerName: "Caption",
+                    editable: true,
+                    cellRenderer: function (params) {
+                        const caption = params.data.caption || '';
+                        const buttonHTML = `<button class="btn btn-sm btn-primary generate-ai-btn" data-id="${params.data.id}">
+                                                <i class="bx bx-bot"></i> Generate with AI
+                                            </button>`;
+                        return caption
+                            ? `<span>${caption}</span>`
+                            : `<em style="color:#999;">Generate with AI</em><br>${buttonHTML}`;
+                    },
+                },
+                {
+                    field: "copy_status",
+                    headerName: "Copy Status",
+                    editable: true,
+                    cellEditor: 'agSelectCellEditor',
+                    cellEditorParams: {
+                        values: ['pending', 'approved', 'rejected']
+                    },
+                },
+                {
+                    field: "creative_status",
+                    headerName: "Creative Status",
+                    editable: true,
+                    cellEditor: 'agSelectCellEditor',
+                    cellEditorParams: {
+                        values: ['pending', 'approved', 'rejected']
+                    },
+                },
+                {
+                    field: "final_status",
+                    headerName: "Final Status",
+                    editable: true,
+                    cellEditor: 'agSelectCellEditor',
+                    cellEditorParams: {
+                        values: ['pending', 'approved', 'rejected']
+                    },
                 },
                 {
                     field: "actions",
