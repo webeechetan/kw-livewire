@@ -209,4 +209,411 @@ class OpenAIService
         Log::info($response);
         return $response['choices'][0]['message']['content'];
     }
+
+    /**
+     * Generate post copy for social media captions
+     * @param array $projectBrief
+     * @param array $contentPlanBrief
+     * @param array $postBrief
+     * @return string
+     */
+    public function generatePostCopy(array $projectBrief, array $contentPlanBrief, array $postBrief)
+    {
+        // Skip generation for story format
+        if (strtolower($postBrief['format']) === 'story') {
+            return 'Story format does not require post copy.';
+        }
+
+        $prompt = <<<EOT
+        Generate a compelling social media post caption for the following content:
+
+        BRAND INFORMATION:
+        - Description: {$projectBrief['description']}
+        - Tone of Voice: {$projectBrief['toneOfVoice']}
+        - Words to Avoid: {$projectBrief['avoidWords']}
+
+        CONTENT PLAN CONTEXT:
+        - Description: {$contentPlanBrief['description']}
+
+        POST DETAILS:
+        - Content Idea: {$postBrief['content_idea']}
+        - Content Bucket: {$postBrief['content_bucket']}
+        - Format: {$postBrief['format']}
+        - Platform: {$postBrief['platforms']}
+
+        REQUIREMENTS:
+        - Create an engaging caption that matches the brand's tone of voice
+        - Include relevant hashtags for the platform
+        - Keep it concise but impactful
+        - Avoid using the specified words to avoid
+        - Make it platform-appropriate for {$postBrief['platforms']}
+        - Ensure it complements the content idea and bucket
+
+        Generate only the caption text without any additional formatting or explanations.
+        EOT;
+
+        $response = $this->client->post('chat/completions', [
+            'json' => [
+                'model' => 'gpt-4',
+                'messages' => [
+                    [
+                        'role' => 'system',
+                        'content' => 'You are an expert social media copywriter specializing in creating engaging post captions that drive engagement and align with brand voice.',
+                    ],
+                    [
+                        'role' => 'user',
+                        'content' => $prompt,
+                    ],
+                ],
+                'max_tokens' => 300,
+            ],
+        ]);
+
+        $response = json_decode($response->getBody(), true);
+        return $response['choices'][0]['message']['content'];
+    }
+
+    /**
+     * Generate creative copy for visual elements
+     * @param array $projectBrief
+     * @param array $contentPlanBrief
+     * @param array $postBrief
+     * @return string
+     */
+    public function generateCreativeCopy(array $projectBrief, array $contentPlanBrief, array $postBrief)
+    {
+        // Skip generation for text and polls & quiz formats
+        $excludedFormats = ['text', 'poll & quiz'];
+        if (in_array(strtolower($postBrief['format']), $excludedFormats)) {
+            return 'Creative copy not applicable for ' . $postBrief['format'] . ' format.';
+        }
+
+        $prompt = <<<EOT
+        Generate creative copy to be placed on visual elements (images, video frames) for the following content:
+
+        BRAND INFORMATION:
+        - Description: {$projectBrief['description']}
+        - Tone of Voice: {$projectBrief['toneOfVoice']}
+        - Words to Avoid: {$projectBrief['avoidWords']}
+
+        CONTENT PLAN CONTEXT:
+        - Description: {$contentPlanBrief['description']}
+
+        POST DETAILS:
+        - Content Idea: {$postBrief['content_idea']}
+        - Content Bucket: {$postBrief['content_bucket']}
+        - Format: {$postBrief['format']}
+        - Platform: {$postBrief['platforms']}
+
+        REQUIREMENTS:
+        - Create short, impactful text that can be overlaid on visual content
+        - Keep it to 1-3 lines maximum
+        - Make it visually appealing and easy to read
+        - Match the brand's tone of voice
+        - Avoid using the specified words to avoid
+        - Ensure it works well with the content format: {$postBrief['format']}
+        - Make it platform-appropriate for {$postBrief['platforms']}
+
+        Generate only the creative copy text without any additional formatting or explanations.
+        EOT;
+
+        $response = $this->client->post('chat/completions', [
+            'json' => [
+                'model' => 'gpt-4',
+                'messages' => [
+                    [
+                        'role' => 'system',
+                        'content' => 'You are an expert creative copywriter specializing in creating impactful text for visual content that captures attention and communicates brand messages effectively.',
+                    ],
+                    [
+                        'role' => 'user',
+                        'content' => $prompt,
+                    ],
+                ],
+                'max_tokens' => 150,
+            ],
+        ]);
+
+        $response = json_decode($response->getBody(), true);
+        return $response['choices'][0]['message']['content'];
+    }
+
+    /**
+     * Generate visual direction for content creation
+     * @param array $projectBrief
+     * @param array $contentPlanBrief
+     * @param array $postBrief
+     * @return string
+     */
+    public function generateVisualDirection(array $projectBrief, array $contentPlanBrief, array $postBrief)
+    {
+        // Skip generation for text and polls & quiz formats
+        $excludedFormats = ['text', 'poll & quiz'];
+        if (in_array(strtolower($postBrief['format']), $excludedFormats)) {
+            return 'Visual direction not applicable for ' . $postBrief['format'] . ' format.';
+        }
+
+        $prompt = <<<EOT
+        Generate detailed visual direction for creating visual content based on the following:
+
+        BRAND INFORMATION:
+        - Description: {$projectBrief['description']}
+        - Tone of Voice: {$projectBrief['toneOfVoice']}
+        - Words to Avoid: {$projectBrief['avoidWords']}
+
+        CONTENT PLAN CONTEXT:
+        - Description: {$contentPlanBrief['description']}
+
+        POST DETAILS:
+        - Content Idea: {$postBrief['content_idea']}
+        - Content Bucket: {$postBrief['content_bucket']}
+        - Format: {$postBrief['format']}
+        - Platform: {$postBrief['platforms']}
+
+        REQUIREMENTS:
+        Provide detailed visual direction including:
+        - Color palette and mood
+        - Typography style and hierarchy
+        - Layout composition suggestions
+        - Visual elements and imagery recommendations
+        - Brand consistency guidelines
+        - Platform-specific considerations for {$postBrief['platforms']}
+        - Format-specific requirements for {$postBrief['format']}
+
+        Make the direction actionable and specific for content creators.
+        EOT;
+
+        $response = $this->client->post('chat/completions', [
+            'json' => [
+                'model' => 'gpt-4',
+                'messages' => [
+                    [
+                        'role' => 'system',
+                        'content' => 'You are an expert visual designer and art director specializing in creating detailed visual direction for social media content that aligns with brand identity and platform requirements.',
+                    ],
+                    [
+                        'role' => 'user',
+                        'content' => $prompt,
+                    ],
+                ],
+                'max_tokens' => 500,
+            ],
+        ]);
+
+        $response = json_decode($response->getBody(), true);
+        return $response['choices'][0]['message']['content'];
+    }
+
+    /**
+     * Regenerate creative copy for visual elements
+     * @param array $projectBrief
+     * @param array $contentPlanBrief
+     * @param array $postBrief
+     * @return string
+     */
+    public function regenerateCreativeCopy(array $projectBrief, array $contentPlanBrief, array $postBrief)
+    {
+        // Skip generation for text and polls & quiz formats
+        $excludedFormats = ['text', 'poll & quiz'];
+        if (in_array(strtolower($postBrief['format']), $excludedFormats)) {
+            return 'Creative copy not applicable for ' . $postBrief['format'] . ' format.';
+        }
+
+        $existingCreativeCopy = $postBrief['creative_copy'] ?? 'No existing creative copy available.';
+
+        $prompt = <<<EOT
+Regenerate the creative copy for visual elements. Here's the existing copy to improve upon:
+
+EXISTING CREATIVE COPY:
+{$existingCreativeCopy}
+
+BRAND INFORMATION:
+- Description: {$projectBrief['description']}
+- Tone of Voice: {$projectBrief['toneOfVoice']}
+- Words to Avoid: {$projectBrief['avoidWords']}
+
+CONTENT PLAN CONTEXT:
+- Description: {$contentPlanBrief['description']}
+
+POST DETAILS:
+- Content Idea: {$postBrief['content_idea']}
+- Content Bucket: {$postBrief['content_bucket']}
+- Format: {$postBrief['format']}
+- Platform: {$postBrief['platforms']}
+
+REQUIREMENTS:
+- Create a new version of the creative copy that can be overlaid on visual content
+- Keep it to 1-3 lines maximum
+- Make it visually appealing and easy to read
+- Match the brand's tone of voice
+- Avoid using the specified words to avoid
+- Ensure it works well with the content format: {$postBrief['format']}
+- Make it platform-appropriate for {$postBrief['platforms']}
+- Maintain the same core message but improve the execution
+
+Generate only the new creative copy text without any additional formatting or explanations.
+EOT;
+
+        $response = $this->client->post('chat/completions', [
+            'json' => [
+                'model' => 'gpt-4',
+                'messages' => [
+                    [
+                        'role' => 'system',
+                        'content' => 'You are an expert creative copywriter specializing in creating impactful text for visual content. You excel at improving and regenerating copy while maintaining brand consistency.',
+                    ],
+                    [
+                        'role' => 'user',
+                        'content' => $prompt,
+                    ],
+                ],
+                'max_tokens' => 150,
+            ],
+        ]);
+
+        $response = json_decode($response->getBody(), true);
+        return $response['choices'][0]['message']['content'];
+    }
+
+    /**
+     * Regenerate post copy for social media captions
+     * @param array $projectBrief
+     * @param array $contentPlanBrief
+     * @param array $postBrief
+     * @return string
+     */
+    public function regeneratePostCopy(array $projectBrief, array $contentPlanBrief, array $postBrief)
+    {
+        // Skip generation for story format
+        if (strtolower($postBrief['format']) === 'story') {
+            return 'Story format does not require post copy.';
+        }
+
+        $existingPostCopy = $postBrief['post_copy'] ?? 'No existing post copy available.';
+
+        $prompt = <<<EOT
+Regenerate the social media post caption. Here's the existing caption to improve upon:
+
+EXISTING POST COPY:
+{$existingPostCopy}
+
+BRAND INFORMATION:
+- Description: {$projectBrief['description']}
+- Tone of Voice: {$projectBrief['toneOfVoice']}
+- Words to Avoid: {$projectBrief['avoidWords']}
+
+CONTENT PLAN CONTEXT:
+- Description: {$contentPlanBrief['description']}
+
+POST DETAILS:
+- Content Idea: {$postBrief['content_idea']}
+- Content Bucket: {$postBrief['content_bucket']}
+- Format: {$postBrief['format']}
+- Platform: {$postBrief['platforms']}
+
+REQUIREMENTS:
+- Create a new engaging caption that matches the brand's tone of voice
+- Include relevant hashtags for the platform
+- Keep it concise but impactful
+- Avoid using the specified words to avoid
+- Make it platform-appropriate for {$postBrief['platforms']}
+- Ensure it complements the content idea and bucket
+- Maintain the same core message but improve the execution
+- Consider different angles or approaches while staying true to the content
+
+Generate only the new caption text without any additional formatting or explanations.
+EOT;
+
+        $response = $this->client->post('chat/completions', [
+            'json' => [
+                'model' => 'gpt-4',
+                'messages' => [
+                    [
+                        'role' => 'system',
+                        'content' => 'You are an expert social media copywriter specializing in creating engaging post captions that drive engagement and align with brand voice. You excel at improving and regenerating copy.',
+                    ],
+                    [
+                        'role' => 'user',
+                        'content' => $prompt,
+                    ],
+                ],
+                'max_tokens' => 300,
+            ],
+        ]);
+
+        $response = json_decode($response->getBody(), true);
+        return $response['choices'][0]['message']['content'];
+    }
+
+    /**
+     * Regenerate visual direction for content creation
+     * @param array $projectBrief
+     * @param array $contentPlanBrief
+     * @param array $postBrief
+     * @return string
+     */
+    public function regenerateVisualDirection(array $projectBrief, array $contentPlanBrief, array $postBrief)
+    {
+        // Skip generation for text and polls & quiz formats
+        $excludedFormats = ['text', 'poll & quiz'];
+        if (in_array(strtolower($postBrief['format']), $excludedFormats)) {
+            return 'Visual direction not applicable for ' . $postBrief['format'] . ' format.';
+        }
+
+        $existingVisualDirection = $postBrief['visual_direction'] ?? 'No existing visual direction available.';
+
+        $prompt = <<<EOT
+Regenerate the visual direction for creating visual content. Here's the existing direction to improve upon:
+
+EXISTING VISUAL DIRECTION:
+{$existingVisualDirection}
+
+BRAND INFORMATION:
+- Description: {$projectBrief['description']}
+- Tone of Voice: {$projectBrief['toneOfVoice']}
+- Words to Avoid: {$projectBrief['avoidWords']}
+
+CONTENT PLAN CONTEXT:
+- Description: {$contentPlanBrief['description']}
+
+POST DETAILS:
+- Content Idea: {$postBrief['content_idea']}
+- Content Bucket: {$postBrief['content_bucket']}
+- Format: {$postBrief['format']}
+- Platform: {$postBrief['platforms']}
+
+REQUIREMENTS:
+Provide new detailed visual direction including:
+- Color palette and mood (consider different color approaches)
+- Typography style and hierarchy
+- Layout composition suggestions
+- Visual elements and imagery recommendations
+- Brand consistency guidelines
+- Platform-specific considerations for {$postBrief['platforms']}
+- Format-specific requirements for {$postBrief['format']}
+- Alternative approaches or variations to consider
+
+Make the direction actionable and specific for content creators. Consider different creative approaches while maintaining brand alignment.
+EOT;
+
+        $response = $this->client->post('chat/completions', [
+            'json' => [
+                'model' => 'gpt-4',
+                'messages' => [
+                    [
+                        'role' => 'system',
+                        'content' => 'You are an expert visual designer and art director specializing in creating detailed visual direction for social media content. You excel at improving and regenerating visual guidance while maintaining brand identity.',
+                    ],
+                    [
+                        'role' => 'user',
+                        'content' => $prompt,
+                    ],
+                ],
+                'max_tokens' => 500,
+            ],
+        ]);
+
+        $response = json_decode($response->getBody(), true);
+        return $response['choices'][0]['message']['content'];
+    }
 }
