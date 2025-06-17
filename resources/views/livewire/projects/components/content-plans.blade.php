@@ -24,16 +24,14 @@
 
 
     <div class="row mt-4">
-        <div class="col-md-12 mb-4">
+        <div class="col">
             <div class="column-box">
                 <div class="d-flex flex-wrap justify-content-between align-items-center">
-                    <h4>Content Plan</h4>
-                    <div class="d-flex text-center">
-                        <button class="btn btn-primary generateContentPlanBtn" data-bs-toggle="modal"
+                    <h4 class="column-title mb-0">Content Plan</h4>
+                    <div class="d-flex text-center gap-2">
+                        <button class="btn-border btn-sm btn-border-primary" data-bs-toggle="modal"
                             data-bs-target="#contentPlanModal">
-                            <span>
-                                Generate Content Plan
-                            </span>
+                            <i class="bx bx-plus"></i> Generate Content Plan
                         </button>
                     </div>
                 </div>
@@ -72,44 +70,43 @@
 
     <div>
         <div class="row mt-4">
-            @foreach (range(1, 12) as $month)
-                @php
-                    $monthName = \Carbon\Carbon::create()->month($month)->format('F');
-                    $plansInMonth = $contentPlans->filter(function($plan) use ($month) {
-                        return \Carbon\Carbon::parse($plan->start_date)->month == $month;
-                    });
-                @endphp
-                <div class="col-md-3 mb-4">
-                    <div class="card h-100 content-plan-card">
+            @foreach ($contentPlans as $plan)
+                <div class="col-md-4 mb-4">
+                    <div class="card_style h-100">
+                        <a href="{{ route('project.content-plan', [$project->id, $plan->id]) }}"
+                            class="card_style-open"><i class='bx bx-chevron-right'></i></a>
                         <div class="card-body">
-                            <h5 class="card-title text-primary mb-3">{{ $monthName }}</h5>
-                            <div class="d-flex align-items-center mb-3">
-                                <span class="badge bg-light text-dark">{{ $plansInMonth->count() }} Content Plans</span>
+                            <div class="d-flex align-items-center">
+                                <span class="badge bg-light text-dark">{{ $plan->status }}</span>
                             </div>
-                            @foreach ($plansInMonth as $plan)
-                                <div class="content-plan-item mb-3">
-                                    <a href="{{ route('project.content-plan', [$project->id, $plan->id]) }}" class="text-decoration-none">
-                                        <h6 class="mb-2 text-dark">{{ $plan->title }}</h6>
+                            <div class="card_style-project-head">
+                                <h4>
+                                    <a href="{{ route('project.content-plan', [$project->id, $plan->id]) }}">
+                                        {{ $plan->title }}
                                     </a>
-                                    <div class="d-flex align-items-center text-muted small mb-1">
-                                        <i class='bx bx-calendar me-1'></i>
-                                        {{ \Carbon\Carbon::parse($plan->start_date)->format('d M') }} - {{ \Carbon\Carbon::parse($plan->end_date)->format('d M') }}
-                                    </div>
-                                    <div class="d-flex align-items-center text-muted small">
-                                        <i class='bx bx-layer me-1'></i>
-                                        {{ $plan->number_of_posts }} Posts
-                                        
-                                    </div>
-                                </div>
-                            @endforeach
+                                </h4>
+                            </div>
+                            <div class="d-flex align-items-center text-muted small mb-1">
+                                <i class='bx bx-calendar me-1'></i>
+                                {{ \Carbon\Carbon::parse($plan->start_date)->format('d M') }} -
+                                {{ \Carbon\Carbon::parse($plan->end_date)->format('d M') }}
+                            </div>
+                            <div class="d-flex align-items-center text-muted small">
+                                <i class='bx bx-layer me-1'></i>
+                                {{ $plan->number_of_posts }} Posts
+                            </div>
+                            <div class="d-flex align-items-center text-muted small">
+                                <i class='bx bx-layer me-1'></i>
+                                {{ $plan->platforms }}
+                            </div>
                         </div>
                     </div>
                 </div>
             @endforeach
         </div>
-        
+
     </div>
-   
+
 
     {{-- content plan modal --}}
 
@@ -175,46 +172,8 @@
 </div>
 
 @assets
-<style>
-    .content-plan-card {
-        transition: all 0.3s ease;
-        border: 1px solid rgba(0,0,0,0.1);
-        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-    }
-    
-    .content-plan-card:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    }
-    
-    .content-plan-item {
-        padding: 12px;
-        border-radius: 8px;
-        background-color: #f8f9fa;
-        transition: all 0.2s ease;
-    }
-    
-    .content-plan-item:hover {
-        background-color: #f0f2f5;
-    }
-    
-    .content-plan-item:not(:last-child) {
-        border-bottom: 1px solid rgba(0,0,0,0.05);
-    }
-    
-    .content-plan-item h6 {
-        font-weight: 600;
-        line-height: 1.4;
-    }
-    
-    .badge {
-        font-weight: 500;
-        padding: 6px 12px;
-        border-radius: 20px;
-    }
-    </style>
-<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 @endassets
 
 @php
@@ -237,7 +196,7 @@
 
             // calendar
         });
-        $(document).ready(function(){
+        $(document).ready(function() {
             var calendarEl = document.getElementById('calendar');
             var calendar = new FullCalendar.Calendar(calendarEl, {
                 events: @json($events),
@@ -252,10 +211,8 @@
                         }
                     }
                 }
-        });
-        calendar.render();
+            });
+            calendar.render();
         });
     </script>
 @endpush
-
-
