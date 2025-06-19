@@ -10,6 +10,18 @@
 
     <livewire:projects.components.project-tabs :project="$project" />
 
+    @if(!$project->brief)
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-warning">
+                    <h4>No brief found</h4>
+                    <p>Please create a brief for the project before generating a content plan.</p>
+                    <a href="{{ route('project.brief', $project->id) }}" class="btn btn-primary">Create Brief</a>
+                </div>
+            </div>
+        </div>
+    @endif
+
     {{-- content calander table --}}
     <div wire:ignore>
         <div class="row calendarTableRow d-none">
@@ -22,7 +34,7 @@
         </div>
     </div>
 
-
+    @if($project->brief)
     <div class="row mt-4">
         <div class="col">
             <div class="column-box">
@@ -67,6 +79,7 @@
             </div>
         </div>
     </div>
+    @endif
 
     <div>
         <div class="row mt-4">
@@ -106,10 +119,7 @@
         </div>
 
     </div>
-
-
     {{-- content plan modal --}}
-
     <div class="modal fade" id="contentPlanModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">

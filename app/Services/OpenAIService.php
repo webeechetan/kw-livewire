@@ -413,6 +413,7 @@ class OpenAIService
      */
     public function regenerateCreativeCopy(array $projectBrief, array $contentPlanBrief, array $postBrief)
     {
+        // dd($projectBrief, $contentPlanBrief, $postBrief);
         // Skip generation for text and polls & quiz formats
         $excludedFormats = ['text', 'poll & quiz'];
         if (in_array(strtolower($postBrief['format']), $excludedFormats)) {
@@ -422,37 +423,37 @@ class OpenAIService
         $existingCreativeCopy = $postBrief['creative_copy'] ?? 'No existing creative copy available.';
 
         $prompt = <<<EOT
-Regenerate the creative copy for visual elements. Here's the existing copy to improve upon:
+            Regenerate the creative copy for visual elements. Here's the existing copy to improve upon:
 
-EXISTING CREATIVE COPY:
-{$existingCreativeCopy}
+            EXISTING CREATIVE COPY:
+            {$existingCreativeCopy}
 
-BRAND INFORMATION:
-- Description: {$projectBrief['description']}
-- Tone of Voice: {$projectBrief['toneOfVoice']}
-- Words to Avoid: {$projectBrief['avoidWords']}
+            BRAND INFORMATION:
+            - Description: {$projectBrief['description']}
+            - Tone of Voice: {$projectBrief['toneOfVoice']}
+            - Words to Avoid: {$projectBrief['avoidWords']}
 
-CONTENT PLAN CONTEXT:
-- Description: {$contentPlanBrief['description']}
+            CONTENT PLAN CONTEXT:
+            - Description: {$contentPlanBrief['description']}
 
-POST DETAILS:
-- Content Idea: {$postBrief['content_idea']}
-- Content Bucket: {$postBrief['content_bucket']}
-- Format: {$postBrief['format']}
-- Platform: {$postBrief['platforms']}
+            POST DETAILS:
+            - Content Idea: {$postBrief['content_idea']}
+            - Content Bucket: {$postBrief['content_bucket']}
+            - Format: {$postBrief['format']}
+            - Platform: {$postBrief['platform']}
 
-REQUIREMENTS:
-- Create a new version of the creative copy that can be overlaid on visual content
-- Keep it to 1-3 lines maximum
-- Make it visually appealing and easy to read
-- Match the brand's tone of voice
-- Avoid using the specified words to avoid
-- Ensure it works well with the content format: {$postBrief['format']}
-- Make it platform-appropriate for {$postBrief['platforms']}
-- Maintain the same core message but improve the execution
+            REQUIREMENTS:
+            - Create a new version of the creative copy that can be overlaid on visual content
+            - Keep it to 1-3 lines maximum
+            - Make it visually appealing and easy to read
+            - Match the brand's tone of voice
+            - Avoid using the specified words to avoid
+            - Ensure it works well with the content format: {$postBrief['format']}
+            - Make it platform-appropriate for {$postBrief['platform']}
+            - Maintain the same core message but improve the execution
 
-Generate only the new creative copy text without any additional formatting or explanations.
-EOT;
+            Generate only the new creative copy text without any additional formatting or explanations.
+            EOT;
 
         $response = $this->client->post('chat/completions', [
             'json' => [
@@ -509,14 +510,14 @@ POST DETAILS:
 - Content Idea: {$postBrief['content_idea']}
 - Content Bucket: {$postBrief['content_bucket']}
 - Format: {$postBrief['format']}
-- Platform: {$postBrief['platforms']}
+- Platform: {$postBrief['platform']}
 
 REQUIREMENTS:
 - Create a new engaging caption that matches the brand's tone of voice
 - Include relevant hashtags for the platform
 - Keep it concise but impactful
 - Avoid using the specified words to avoid
-- Make it platform-appropriate for {$postBrief['platforms']}
+- Make it platform-appropriate for {$postBrief['platform']}
 - Ensure it complements the content idea and bucket
 - Maintain the same core message but improve the execution
 - Consider different angles or approaches while staying true to the content
@@ -580,7 +581,7 @@ POST DETAILS:
 - Content Idea: {$postBrief['content_idea']}
 - Content Bucket: {$postBrief['content_bucket']}
 - Format: {$postBrief['format']}
-- Platform: {$postBrief['platforms']}
+- Platform: {$postBrief['platform']}
 
 REQUIREMENTS:
 Provide new detailed visual direction including:
@@ -589,7 +590,7 @@ Provide new detailed visual direction including:
 - Layout composition suggestions
 - Visual elements and imagery recommendations
 - Brand consistency guidelines
-- Platform-specific considerations for {$postBrief['platforms']}
+- Platform-specific considerations for {$postBrief['platform']}
 - Format-specific requirements for {$postBrief['format']}
 - Alternative approaches or variations to consider
 

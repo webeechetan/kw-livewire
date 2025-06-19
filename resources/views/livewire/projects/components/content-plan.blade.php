@@ -72,27 +72,23 @@
                         maxLength: 1000,
                     },
                  },
-                { 
-                    field: "idea_status",
-                    headerName: "Idea Status",
-                    editable: true,
-                    cellEditor: 'agSelectCellEditor',
-                    cellEditorParams: {
-                        values: ['pending', 'approved', 'rejected']
-                    },
-                },
                 {
                     field: "creative_copy",
                     headerName: "Creative Copy",
-                    editable: false, // turn off inline editing
+                    editable: true, // turn off inline editing
                     cellRenderer: function (params) {
                         const copy = params.value;
                         const postId = params.data.id;
                         if (!copy || copy.trim() === "") {
                             return `
                                 <div>
-                                    <button class="btn btn-sm btn-outline-primary generate-ai-btn" data-id="${postId}">
-                                        <i class="bx bx-bot"></i> Generate with AI
+                                    <button class="btn btn-sm btn-outline-primary generate-ai-btn" data-id="${postId}" wire:click="regenerateCreativeCopy(${postId})">
+                                        <span wire:loading.remove wire:target="regenerateCreativeCopy(${postId})">
+                                            <i class="bx bx-bot"></i> Generate with AI
+                                        </span>
+                                        <span wire:loading wire:target="regenerateCreativeCopy(${postId})">
+                                            <i class="bx bx-loader-circle"></i>
+                                        </span>
                                     </button>
                                 </div>
                             `;
@@ -114,12 +110,31 @@
                     editable: true,
                     cellRenderer: function (params) {
                         const visual = params.data.visual_direction || '';
-                        const buttonHTML = `<button class="btn btn-sm btn-primary generate-ai-btn" data-id="${params.data.id}">
-                                                <i class="bx bx-bot"></i> Generate with AI
-                                            </button>`;
-                        return visual
-                            ? `<span>${visual}</span>`
-                            : `<em style="color:#999;">Generate with AI</em><br>${buttonHTML}`;
+                        const postId = params.data.id;
+                        if (!visual || visual.trim() === "") {
+                            return `
+                                <div>
+                                    <button class="btn btn-sm btn-outline-primary generate-ai-btn" data-id="${postId}" wire:click="regenerateVisualDirection(${postId})">
+                                        <span wire:loading.remove wire:target="regenerateVisualDirection(${postId})">
+                                            <i class="bx bx-bot"></i> Generate with AI
+                                        </span>
+                                        <span wire:loading wire:target="regenerateVisualDirection(${postId})">
+                                            <i class="bx bx-loader-circle"></i>
+                                        </span>
+                                    </button>
+                                </div>
+                            `;  
+                        }
+                        return `<div>
+                                    <span>${visual}</span>
+                                    <button class="btn btn-sm btn-outline-primary generate-ai-btn" data-id="${postId}">
+                                        <i class="bx bx-bot"></i> Regenerate with AI
+                                        <span wire:loading wire:target="regenerateVisualDirection(${postId})">
+                                            <i class="bx bx-loader-circle"></i>
+                                        </span>
+                                    </button>
+                                </div>
+                            `;
                     },
                 },
                 {
@@ -128,47 +143,58 @@
                     editable: true,
                     cellRenderer: function (params) {
                         const caption = params.data.caption || '';
-                        const buttonHTML = `<button class="btn btn-sm btn-primary generate-ai-btn" data-id="${params.data.id}">
-                                                <i class="bx bx-bot"></i> Generate with AI
-                                            </button>`;
-                        return caption
-                            ? `<span>${caption}</span>`
-                            : `<em style="color:#999;">Generate with AI</em><br>${buttonHTML}`;
+                        const postId = params.data.id;
+                        if (!caption || caption.trim() === "") {
+                            return `
+                                <div>
+                                    <button class="btn btn-sm btn-outline-primary generate-ai-btn" data-id="${postId}" wire:click="regenerateCaption(${postId})">
+                                        <span wire:loading.remove wire:target="regenerateCaption(${postId})">
+                                            <i class="bx bx-bot"></i> Generate with AI
+                                        </span>
+                                        <span wire:loading wire:target="regenerateCaption(${postId})">
+                                            <i class="bx bx-loader-circle"></i>
+                                        </span>
+                                    </button>
+                                </div>
+                            `;
+                        }
+                        return `<div>
+                                    <span>${caption}</span>
+                                    <button class="btn btn-sm btn-outline-primary generate-ai-btn" data-id="${postId}">
+                                        <i class="bx bx-bot"></i> Regenerate with AI
+                                        <span wire:loading wire:target="regenerateCaption(${postId})">
+                                            <i class="bx bx-loader-circle"></i>
+                                        </span>
+                                    </button>
+                                </div>
+                            `;
                     },
                 },
                 {
-                    field: "copy_status",
-                    headerName: "Copy Status",
+                    field: "status",
+                    headerName: "Status",
                     editable: true,
                     cellEditor: 'agSelectCellEditor',
                     cellEditorParams: {
-                        values: ['pending', 'approved', 'rejected']
-                    },
-                },
-                {
-                    field: "creative_status",
-                    headerName: "Creative Status",
-                    editable: true,
-                    cellEditor: 'agSelectCellEditor',
-                    cellEditorParams: {
-                        values: ['pending', 'approved', 'rejected']
-                    },
-                },
-                {
-                    field: "final_status",
-                    headerName: "Final Status",
-                    editable: true,
-                    cellEditor: 'agSelectCellEditor',
-                    cellEditorParams: {
-                        values: ['pending', 'approved', 'rejected']
+                        values: [
+                            'pending for approval',
+                            'pending from client',
+                            'approved',
+                            'rejected',
+                            'published',
+                            'scheduled',
+                            'archived',
+                            'cancelled',
+                        ]
                     },
                 },
                 {
                     field: "actions",
                     headerName: "Actions",
                     cellRenderer: function(params) {
-                        // regenerate post button
-                        return '<button class="btn btn-primary post-regenerate-btn post-regenerate-btn-' + params.data.id + '" wire:click="regeneratePost(' + params.data.id + ')"><i class="bx bx-refresh" wire:loading.remove wire:target="regeneratePost(' + params.data.id + ')"></i> <i class="bx bx-loader-circle" wire:loading wire:target="regeneratePost(' + params.data.id + ')"></i></button>';
+                        // delete post button
+                        return '<button class="btn btn-sm btn-outline-danger" wire:click="deletePost(' + params.data.id + ')"><i class="bx bx-trash"></i></button>';
+                        // return '<button class="btn btn-primary post-regenerate-btn post-regenerate-btn-' + params.data.id + '" wire:click="regeneratePost(' + params.data.id + ')"><i class="bx bx-refresh" wire:loading.remove wire:target="regeneratePost(' + params.data.id + ')"></i> <i class="bx bx-loader-circle" wire:loading wire:target="regeneratePost(' + params.data.id + ')"></i></button>';
                     },
                 }
             ]
@@ -181,14 +207,27 @@
             @this.regeneratePost(id);
         }
 
+        function regenerateCreativeCopy(id) {
+            @this.regenerateCreativeCopy(id);
+        }
+
         document.addEventListener('postRegenerated', (event) => {
             var post = event.detail[0];
             console.log(post);
             const rowIndex = calendarData.findIndex(p => p.id === post.id);
             const rowNode = grid.getRowNode(rowIndex);
-            rowNode.setDataValue('description', post.description);
-
+            rowNode.setDataValue('creative_copy', post.creative_copy);
+            rowNode.setDataValue('visual_direction', post.visual_direction);
+            rowNode.setDataValue('caption', post.caption);
             
+        });
+
+        document.addEventListener('postDeleted', (event) => {
+            var postId = event.detail[0];
+            const rowIndex = calendarData.findIndex(p => p.id === postId);
+            grid.getRowNode(rowIndex).setDataValue('status', 'deleted');
+            // remove the row from the grid
+            grid.removeRow(rowIndex);
         });
 
 </script>

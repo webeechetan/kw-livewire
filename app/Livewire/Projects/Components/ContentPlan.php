@@ -36,5 +36,51 @@ class ContentPlan extends Component
         $this->dispatch('postRegenerated', $post->toArray());
     }
 
+    public function regenerateCreativeCopy($id)
+    {
+        $post = PostModel::find($id);
+        $openAIService = new OpenAIService();
+        $newCreativeCopy = $openAIService->regenerateCreativeCopy(
+            json_decode($this->project->brief->brief, true),
+            $this->contentPlan->toArray(),
+            $post->toArray()
+        );
+        $post->creative_copy = $newCreativeCopy;
+        $post->save();
+        $this->dispatch('postRegenerated', $post->toArray());
+    }
+
+    public function regenerateVisualDirection($id){
+        $post = PostModel::find($id);
+        $openAIService = new OpenAIService();
+        $newVisualDirection = $openAIService->regenerateVisualDirection(
+            json_decode($this->project->brief->brief, true),
+            $this->contentPlan->toArray(),
+            $post->toArray()
+        );
+        $post->visual_direction = $newVisualDirection;
+        $post->save();
+        $this->dispatch('postRegenerated', $post->toArray());
+    }
+
+    public function regenerateCaption($id){
+        $post = PostModel::find($id);
+        $openAIService = new OpenAIService();
+        $newCaption = $openAIService->regeneratePostCopy(
+            json_decode($this->project->brief->brief, true),
+            $this->contentPlan->toArray(),
+            $post->toArray()
+        );
+        $post->caption = $newCaption;
+        $post->save();
+        $this->dispatch('postRegenerated', $post->toArray());
+    }
+
+    public function deletePost($id){
+        $post = PostModel::find($id);
+        $post->delete();
+        $this->dispatch('postDeleted', $post->id);
+    }
+
 
 }

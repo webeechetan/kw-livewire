@@ -72,10 +72,7 @@ class ContentPlans extends Component
                 $post->content_plan_id = $contentPlan->id;
                 $post->date = $postData['date'] ?? null;
                 $post->platform = $postData['platform'] ?? null;
-                $post->idea_status = 'pending';
-                $post->creative_status = 'pending';
-                $post->copy_status = 'pending';
-                $post->final_status = 'pending';
+                $post->status = 'pending';
                 $post->format = $postData['format'] ?? null;
                 $post->content_bucket = $postData['content_bucket'] ?? ($postData['bucket'] ?? null);
                 $post->content_idea = $postData['idea'] ?? null;
