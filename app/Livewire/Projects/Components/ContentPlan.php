@@ -82,5 +82,45 @@ class ContentPlan extends Component
         $this->dispatch('postDeleted', $post->id);
     }
 
+    public function generateColumnValue($columnName, $columnValue, $columnId){
+        $post = PostModel::find($columnId);
+        $openAIService = new OpenAIService();
+       
+
+        
+        if($columnName == 'creative_copy'){
+            $generatedValue = $openAIService->regenerateCreativeCopy(
+                json_decode($this->project->brief->brief, true),
+                $this->contentPlan->toArray(),
+                $post->toArray()
+            );
+        }
+
+        if($columnName == 'visual_direction'){
+            $generatedValue = $openAIService->regenerateVisualDirection(
+                json_decode($this->project->brief->brief, true),
+                $this->contentPlan->toArray(),
+                $post->toArray()
+            );
+        }
+
+        if($columnName == 'caption'){
+            $generatedValue = $openAIService->regeneratePostCopy(
+                json_decode($this->project->brief->brief, true),
+                $this->contentPlan->toArray(),
+                $post->toArray()
+            );
+        }
+
+        $this->dispatch('postRegenerated', $generatedValue);
+    }
+
+    public function applyColumnValue($columnName, $columnValue, $columnId){
+        
+        $post = PostModel::find($columnId);
+        $post->$columnName = $columnValue;
+        $post->save();
+        $this->dispatch('postApplied', $post->toArray());
+    }
 
 }

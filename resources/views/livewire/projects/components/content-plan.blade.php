@@ -15,7 +15,42 @@
             <div class="col-md-12 mb-4">
                 <h4>Content Plan Table</h4>
                 <div>
+                    <button class="btn btn-primary" id="exportToExcel">Export to Excel</button>
                     <div id="calendarTable" class="mt-4" style="height: 500px"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{-- generate content plan modal --}}
+    <div class="modal fade" id="generateWithAIModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true" wire:ignore.self>
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header d-flex align-items-center justify-content-between gap-20">
+                    <h5 class="modal-title" id="exampleModalLabel"><span class="btn-icon btn-icon-primary me-1"><i
+                                class='bx bx-layer'></i></span> Generate <span id="generateWithAIModalTitle"></span></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body modal-form-body">
+                    <div class="mb-4">
+                        <label for="title" class="form-label">Title</label>
+                        <textarea name="generateWithAIColumn" cols="30" rows="10" class="form-style generateWithAIColumn" 
+                            placeholder="Enter a descriptive title for your content plan"></textarea>
+                    </div>
+                    <span class="d-none">
+                        <input type="text" name="generateWithAIColumnName" class="generateWithAIColumnName">
+                        <input type="text" name="generateWithAIColumnId" class="generateWithAIColumnId">
+                    </span>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary generateContentPlanBtn">
+                        Generate With AI
+                    </button>
+                    <button class="btn btn-primary apply-post-btn" data-bs-dismiss="modal">
+                        Apply
+                    </button>
                 </div>
             </div>
         </div>
@@ -30,12 +65,17 @@
 @push('scripts')
 <script>
 
-        let calendarData = @json($contentPlan->posts);
+        let postData = @json($contentPlan->posts);
         let calendarTable = document.getElementById('calendarTable');
         
         const gridOptions = {
         // Row Data: The data to be displayed.
-        rowData: calendarData,
+        rowData: postData,
+        // export data to excel
+        // row height
+        rowHeight: 100,
+
+
         // Column Definitions: Defines the columns to be displayed.
         columnDefs: [
                 {
@@ -48,12 +88,18 @@
             
                 { field: "date",
                     headerName: "Date",
+                    filter: true,
+                    filterParams: {
+                        filterOptions: ['contains', 'equals', 'notEqual', 'lessThan', 'lessThanOrEqual', 'greaterThan', 'greaterThanOrEqual', 'inRange', 'notInRange', 'startsWith', 'endsWith', 'isEmpty', 'isNotEmpty'],
+                    },
                  },
                 { field: "platform",
                     headerName: "Platform",
+                    filter: true,
                  },
                 { field: "format", 
                     headerName: "Format",
+                    filter: true,
                  },
                 { 
                     field: "content_bucket",
@@ -65,42 +111,29 @@
                     headerName: "Content Idea",
                     editable: true,
                     width: 600,
-                    height: 200,
+                    height: 100,
                     // when edit show big text area
                     cellEditor: 'agTextCellEditor',
                     cellEditorParams: {
                         maxLength: 1000,
                     },
+                    // text wrap
+                    wrapText: true,
                  },
                 {
                     field: "creative_copy",
                     headerName: "Creative Copy",
-                    editable: true, // turn off inline editing
-                    cellRenderer: function (params) {
-                        const copy = params.value;
-                        const postId = params.data.id;
-                        if (!copy || copy.trim() === "") {
-                            return `
-                                <div>
-                                    <button class="btn btn-sm btn-outline-primary generate-ai-btn" data-id="${postId}" wire:click="regenerateCreativeCopy(${postId})">
-                                        <span wire:loading.remove wire:target="regenerateCreativeCopy(${postId})">
-                                            <i class="bx bx-bot"></i> Generate with AI
-                                        </span>
-                                        <span wire:loading wire:target="regenerateCreativeCopy(${postId})">
-                                            <i class="bx bx-loader-circle"></i>
-                                        </span>
-                                    </button>
-                                </div>
-                            `;
-                        }
-                        return `<div>
-                                    <span>${copy}</span>
-                                    <button class="btn btn-sm btn-outline-primary generate-ai-btn" data-id="${postId}">
-                                        <i class="bx bx-bot"></i> Regenerate with AI
-                                    </button>
-                                </div>
-                            `;
-                    }
+                    editable: true,
+                    onCellClicked: function(params) {
+                        // open generate with ai modal
+                        $('.generateWithAIColumnName').val('creative_copy');
+                        $('#generateWithAIModal').modal('show');
+                        $('#generateWithAIModalTitle').text('Creative Copy');
+                        $('.generateWithAIColumn').val(params.data.creative_copy);
+                        $('.generateWithAIColumnId').val(params.data.id);
+                        $('.generateWithAIColumn').focus();
+                    },
+                    wrapText: true,
                 },
 
 
@@ -108,67 +141,29 @@
                     field: "visual_direction",
                     headerName: "Visual Direction",
                     editable: true,
-                    cellRenderer: function (params) {
-                        const visual = params.data.visual_direction || '';
-                        const postId = params.data.id;
-                        if (!visual || visual.trim() === "") {
-                            return `
-                                <div>
-                                    <button class="btn btn-sm btn-outline-primary generate-ai-btn" data-id="${postId}" wire:click="regenerateVisualDirection(${postId})">
-                                        <span wire:loading.remove wire:target="regenerateVisualDirection(${postId})">
-                                            <i class="bx bx-bot"></i> Generate with AI
-                                        </span>
-                                        <span wire:loading wire:target="regenerateVisualDirection(${postId})">
-                                            <i class="bx bx-loader-circle"></i>
-                                        </span>
-                                    </button>
-                                </div>
-                            `;  
-                        }
-                        return `<div>
-                                    <span>${visual}</span>
-                                    <button class="btn btn-sm btn-outline-primary generate-ai-btn" data-id="${postId}">
-                                        <i class="bx bx-bot"></i> Regenerate with AI
-                                        <span wire:loading wire:target="regenerateVisualDirection(${postId})">
-                                            <i class="bx bx-loader-circle"></i>
-                                        </span>
-                                    </button>
-                                </div>
-                            `;
+                    onCellClicked: function(params) {
+                        $('.generateWithAIColumnName').val('visual_direction');
+                        $('#generateWithAIModal').modal('show');
+                        $('#generateWithAIModalTitle').text('Visual Direction');
+                        $('.generateWithAIColumn').val(params.data.visual_direction);
+                        $('.generateWithAIColumnId').val(params.data.id);
+                        $('.generateWithAIColumn').focus();
                     },
+                    wrapText: true,
                 },
                 {
                     field: "caption",
                     headerName: "Caption",
                     editable: true,
-                    cellRenderer: function (params) {
-                        const caption = params.data.caption || '';
-                        const postId = params.data.id;
-                        if (!caption || caption.trim() === "") {
-                            return `
-                                <div>
-                                    <button class="btn btn-sm btn-outline-primary generate-ai-btn" data-id="${postId}" wire:click="regenerateCaption(${postId})">
-                                        <span wire:loading.remove wire:target="regenerateCaption(${postId})">
-                                            <i class="bx bx-bot"></i> Generate with AI
-                                        </span>
-                                        <span wire:loading wire:target="regenerateCaption(${postId})">
-                                            <i class="bx bx-loader-circle"></i>
-                                        </span>
-                                    </button>
-                                </div>
-                            `;
-                        }
-                        return `<div>
-                                    <span>${caption}</span>
-                                    <button class="btn btn-sm btn-outline-primary generate-ai-btn" data-id="${postId}">
-                                        <i class="bx bx-bot"></i> Regenerate with AI
-                                        <span wire:loading wire:target="regenerateCaption(${postId})">
-                                            <i class="bx bx-loader-circle"></i>
-                                        </span>
-                                    </button>
-                                </div>
-                            `;
+                    onCellClicked: function(params) {
+                        $('.generateWithAIColumnName').val('caption');
+                        $('#generateWithAIModal').modal('show');
+                        $('#generateWithAIModalTitle').text('Caption');
+                        $('.generateWithAIColumn').val(params.data.caption);
+                        $('.generateWithAIColumnId').val(params.data.id);
+                        $('.generateWithAIColumn').focus();
                     },
+                    wrapText: true,
                 },
                 {
                     field: "status",
@@ -187,6 +182,10 @@
                             'cancelled',
                         ]
                     },
+                    filter: true,
+                    filterParams: {
+                        filterOptions: ['contains'],
+                    },
                 },
                 {
                     field: "actions",
@@ -200,8 +199,21 @@
             ]
         };
 
+
+
         const myGridElement = document.querySelector('#calendarTable');
         var grid = agGrid.createGrid(myGridElement, gridOptions);
+
+        // export to excel
+        $('#exportToExcel').click(function() {
+            var data = grid.getDataAsCsv();
+            var blob = new Blob([data], { type: 'text/csv' });
+            var url = URL.createObjectURL(blob);
+            var a = document.createElement('a');
+            a.href = url;
+            a.download = 'content-plan.csv';
+            a.click();
+        });
 
         function regeneratePost(id) {
             @this.regeneratePost(id);
@@ -212,23 +224,56 @@
         }
 
         document.addEventListener('postRegenerated', (event) => {
-            var post = event.detail[0];
-            console.log(post);
-            const rowIndex = calendarData.findIndex(p => p.id === post.id);
-            const rowNode = grid.getRowNode(rowIndex);
-            rowNode.setDataValue('creative_copy', post.creative_copy);
-            rowNode.setDataValue('visual_direction', post.visual_direction);
-            rowNode.setDataValue('caption', post.caption);
+            console.log(event.detail);
+            var columnValue = event.detail;
+            $(".generateWithAIColumn").val(columnValue);
             
         });
 
         document.addEventListener('postDeleted', (event) => {
             var postId = event.detail[0];
-            const rowIndex = calendarData.findIndex(p => p.id === postId);
+            const rowIndex = postData.findIndex(p => p.id === postId);
             grid.getRowNode(rowIndex).setDataValue('status', 'deleted');
-            // remove the row from the grid
-            grid.removeRow(rowIndex);
+            grid.getRowNode(rowIndex).setDataValue('content_idea', 'deleted');
+            grid.getRowNode(rowIndex).setDataValue('creative_copy', 'deleted');
+            grid.getRowNode(rowIndex).setDataValue('visual_direction', 'deleted');
+            grid.getRowNode(rowIndex).setDataValue('caption', 'deleted');
+            grid.getRowNode(rowIndex).setDataValue('date', 'deleted');
+            grid.getRowNode(rowIndex).setDataValue('platform', 'deleted');
+            grid.getRowNode(rowIndex).setDataValue('format', 'deleted');
+            grid.getRowNode(rowIndex).setDataValue('content_bucket', 'deleted');
+            grid.getRowNode(rowIndex).setDataValue('id', 'deleted');
+            // add d-none class to the row
+            // grid.getRowNode(rowIndex).rowClass = 'd-none';
+            grid.getRowNode(rowIndex).setRowClass('d-none');
+
         });
+
+
+        document.addEventListener('postApplied', (event) => {
+            var post = event.detail[0];
+            const rowIndex = postData.findIndex(p => p.id === post.id);
+            grid.getRowNode(rowIndex).setDataValue('creative_copy', post.creative_copy);
+            grid.getRowNode(rowIndex).setDataValue('visual_direction', post.visual_direction);
+            grid.getRowNode(rowIndex).setDataValue('caption', post.caption);
+        });
+
+        $('.generateContentPlanBtn').click(function() {
+            var columnName = $('.generateWithAIColumnName').val();
+            var columnValue = $('.generateWithAIColumn').val();
+            var columnId = $('.generateWithAIColumnId').val();
+            @this.generateColumnValue(columnName, columnValue, columnId);
+        });
+
+        $('.apply-post-btn').click(function() {
+            var columnName = $('.generateWithAIColumnName').val();
+            var columnValue = $('.generateWithAIColumn').val();
+            var columnId = $('.generateWithAIColumnId').val();
+            console.log(columnName, columnValue, columnId);
+            @this.applyColumnValue(columnName, columnValue, columnId);
+        });
+
+
 
 </script>
 @endpush
