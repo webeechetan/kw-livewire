@@ -1,7 +1,7 @@
 <div class="column-box p-3" style="margin-bottom:150px;">
     <div class="files-head column-head d-flex flex-wrap align-items-center">
         <div>
-            <h5 class="column-title mb-0">Files & Folders</h5>
+            <h4 class="column-title mb-0">Files & Folders</h4>
         </div>
         <div class="files-options ms-auto">
             <div class="text-light">
