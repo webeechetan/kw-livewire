@@ -426,7 +426,7 @@ class OpenAIService
             Regenerate the creative copy for visual elements. Here's the existing copy to improve upon:
 
             EXISTING CREATIVE COPY:
-            {$existingCreativeCopy}
+            {$existingCreativeCopy} if no existing creative copy, generate a new one.
 
             BRAND INFORMATION:
             - Description: {$projectBrief['description']}
@@ -493,37 +493,37 @@ class OpenAIService
         $existingPostCopy = $postBrief['post_copy'] ?? 'No existing post copy available.';
 
         $prompt = <<<EOT
-Regenerate the social media post caption. Here's the existing caption to improve upon:
+                    Regenerate the social media post caption. Here's the existing caption to improve upon:
 
-EXISTING POST COPY:
-{$existingPostCopy}
+                    EXISTING POST COPY:
+                    {$existingPostCopy} if no existing post copy, generate a new one.
 
-BRAND INFORMATION:
-- Description: {$projectBrief['description']}
-- Tone of Voice: {$projectBrief['toneOfVoice']}
-- Words to Avoid: {$projectBrief['avoidWords']}
+                    BRAND INFORMATION:
+                    - Description: {$projectBrief['description']}
+                    - Tone of Voice: {$projectBrief['toneOfVoice']}
+                    - Words to Avoid: {$projectBrief['avoidWords']}
 
-CONTENT PLAN CONTEXT:
-- Description: {$contentPlanBrief['description']}
+                    CONTENT PLAN CONTEXT:
+                    - Description: {$contentPlanBrief['description']}
 
-POST DETAILS:
-- Content Idea: {$postBrief['content_idea']}
-- Content Bucket: {$postBrief['content_bucket']}
-- Format: {$postBrief['format']}
-- Platform: {$postBrief['platform']}
+                    POST DETAILS:
+                    - Content Idea: {$postBrief['content_idea']}
+                    - Content Bucket: {$postBrief['content_bucket']}
+                    - Format: {$postBrief['format']}
+                    - Platform: {$postBrief['platform']}
 
-REQUIREMENTS:
-- Create a new engaging caption that matches the brand's tone of voice
-- Include relevant hashtags for the platform
-- Keep it concise but impactful
-- Avoid using the specified words to avoid
-- Make it platform-appropriate for {$postBrief['platform']}
-- Ensure it complements the content idea and bucket
-- Maintain the same core message but improve the execution
-- Consider different angles or approaches while staying true to the content
+                    REQUIREMENTS:
+                    - Create a new engaging caption that matches the brand's tone of voice
+                    - Include relevant hashtags for the platform
+                    - Keep it concise but impactful
+                    - Avoid using the specified words to avoid
+                    - Make it platform-appropriate for {$postBrief['platform']}
+                    - Ensure it complements the content idea and bucket
+                    - Maintain the same core message but improve the execution
+                    - Consider different angles or approaches while staying true to the content
 
-Generate only the new caption text without any additional formatting or explanations.
-EOT;
+                    Generate only the new caption text without any additional formatting or explanations.
+                    EOT;
 
         $response = $this->client->post('chat/completions', [
             'json' => [
@@ -564,38 +564,38 @@ EOT;
         $existingVisualDirection = $postBrief['visual_direction'] ?? 'No existing visual direction available.';
 
         $prompt = <<<EOT
-Regenerate the visual direction for creating visual content. Here's the existing direction to improve upon:
+                    Regenerate the visual direction for creating visual content. Here's the existing direction to improve upon:
 
-EXISTING VISUAL DIRECTION:
-{$existingVisualDirection}
+                    EXISTING VISUAL DIRECTION:
+                    {$existingVisualDirection} if no existing visual direction, generate a new one.
 
-BRAND INFORMATION:
-- Description: {$projectBrief['description']}
-- Tone of Voice: {$projectBrief['toneOfVoice']}
-- Words to Avoid: {$projectBrief['avoidWords']}
+                    BRAND INFORMATION:
+                    - Description: {$projectBrief['description']}
+                    - Tone of Voice: {$projectBrief['toneOfVoice']}
+                    - Words to Avoid: {$projectBrief['avoidWords']}
 
-CONTENT PLAN CONTEXT:
-- Description: {$contentPlanBrief['description']}
+                    CONTENT PLAN CONTEXT:
+                    - Description: {$contentPlanBrief['description']}
 
-POST DETAILS:
-- Content Idea: {$postBrief['content_idea']}
-- Content Bucket: {$postBrief['content_bucket']}
-- Format: {$postBrief['format']}
-- Platform: {$postBrief['platform']}
+                    POST DETAILS:
+                    - Content Idea: {$postBrief['content_idea']}
+                    - Content Bucket: {$postBrief['content_bucket']}
+                    - Format: {$postBrief['format']}
+                    - Platform: {$postBrief['platform']}
 
-REQUIREMENTS:
-Provide new detailed visual direction including:
-- Color palette and mood (consider different color approaches)
-- Typography style and hierarchy
-- Layout composition suggestions
-- Visual elements and imagery recommendations
-- Brand consistency guidelines
-- Platform-specific considerations for {$postBrief['platform']}
-- Format-specific requirements for {$postBrief['format']}
-- Alternative approaches or variations to consider
+                    REQUIREMENTS:
+                    Provide new detailed visual direction including:
+                    - Color palette and mood (consider different color approaches)
+                    - Typography style and hierarchy
+                    - Layout composition suggestions
+                    - Visual elements and imagery recommendations
+                    - Brand consistency guidelines
+                    - Platform-specific considerations for {$postBrief['platform']}
+                    - Format-specific requirements for {$postBrief['format']}
+                    - Alternative approaches or variations to consider
 
-Make the direction actionable and specific for content creators. Consider different creative approaches while maintaining brand alignment.
-EOT;
+                    Make the direction actionable and specific for content creators. Consider different creative approaches while maintaining brand alignment.
+                    EOT;
 
         $response = $this->client->post('chat/completions', [
             'json' => [
