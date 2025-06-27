@@ -27,10 +27,12 @@
                     <div class="signup-form">
                         <form method="POST" >
                             <div class="row">
-                                <div class="form-field mb-4" controlId="signupName">
-                                    <div class="form-field-icon"><i class='bx bx-building'></i></div>
-                                    <input type="text" wire:model="name" class="form-control" placeholder="Organization Name"   />
-                                    @error('name') <span class="text-danger">{{ $message }}</span>@enderror
+                                <div class="col-12">
+                                    <div class="form-field mb-4" controlId="signupName">
+                                        <div class="form-field-icon"><i class='bx bx-building'></i></div>
+                                        <input type="text" wire:model="name" class="form-control" placeholder="Organization Name"   />
+                                        @error('name') <span class="text-danger">{{ $message }}</span>@enderror
+                                    </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3 form-field" controlId="signupEmail">

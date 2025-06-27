@@ -348,19 +348,22 @@
         </div>
 
         <div class="onboarding-step" onclick="completeStep(this)">
-            <i class='bx bx-user-plus'></i> Onboard your first client
+            <i class='bx bx-user'></i> Complete your profile
         </div>
         <div class="onboarding-step" onclick="completeStep(this)">
-            <i class='bx bx-folder-plus'></i> Add your first project
+            <i class='bx bx-objects-horizontal-left'></i> Add your first project
         </div>
         <div class="onboarding-step" onclick="completeStep(this)">
-            <i class='bx bx-group'></i> Create your teams
+            <i class='bx bx-sitemap'></i> Create your teams
         </div>
         <div class="onboarding-step" onclick="completeStep(this)">
             <i class='bx bx-calendar'></i> Create your first content calendar
         </div>
         <div class="onboarding-step" onclick="completeStep(this)">
             <i class='bx bx-edit'></i> Create your first post
+        </div>
+        <div class="onboarding-step" onclick="completeStep(this)">
+            <i class='bx bx-task'></i> Add your first task
         </div>
 
         <div id="stepCounter">
