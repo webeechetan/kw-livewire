@@ -1,0 +1,57 @@
+networks:
+  kaykewalk:
+    driver: bridge
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: db
+    restart: always
+    ports:
+      - "${DB_PORT:-3306}:3306"
+    volumes:
+      - ./mysql-data:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+      - MYSQL_DATABASE=${DB_DATABASE}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
+    networks:
+      - kaykewalk
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    restart: always
+    ports:
+      - "8081:80"
+    environment:
+      - PMA_HOST=db
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+    networks:
+      - kaykewalk
+    depends_on:
+      - db
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: app
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    environment:
+      - DB_HOST=db
+    networks:
+      - kaykewalk
+    depends_on:
+      - db
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - |
+        composer install
+        php artisan key:generate
+        php artisan migrate
+        php artisan db:seed
+        php artisan serve --host=0.0.0.0 --port=8000
