@@ -18,7 +18,7 @@
                     <button class="btn btn-primary" id="exportToExcel">Export to Excel</button>
                     <div id="calendarTable" class="mt-4" style="height: 500px"></div>
                 </div>
-            </div>
+            </div> 
         </div>
     </div>
     {{-- generate content plan modal --}}
@@ -188,6 +188,32 @@
                     },
                 },
                 {
+                    field: "assigned_to",
+                    headerName: "Assigned To",
+                    editable: true,
+                    cellEditor: MultiSelectCellEditor,
+                    cellEditorParams: {
+                        values: Object.entries(@json($users)), // [[id, name], ...]
+                    },
+                    filter: true,
+                    filterParams: {
+                        filterOptions: ['contains'],
+                    },
+                    valueFormatter: function(params) {
+                        // params.value is expected to be an object: {user_id: user_name, ...}
+                        if (!params.value) return '';
+                        if (Array.isArray(params.value)) {
+                            // fallback: array of ids
+                            return params.value.map(id => (@json($users)[id] || id)).join(', ');
+                        }
+                        // object: user_id => user_name
+                        return Object.values(params.value).join(', ');
+                    },
+                    onCellValueChanged: function(params) {
+                        console.log(params);
+                    }
+                },
+                {
                     field: "actions",
                     headerName: "Actions",
                     cellRenderer: function(params) {
@@ -273,7 +299,57 @@
             @this.applyColumnValue(columnName, columnValue, columnId);
         });
 
+        // Custom MultiSelect Cell Editor for ag-Grid
+        function MultiSelectCellEditor() {}
 
+        MultiSelectCellEditor.prototype.init = function(params) {
+            this.container = document.createElement('div');
+            this.select = document.createElement('select');
+            this.select.multiple = true;
+            this.select.style.width = '100%';
+            this.select.style.height = '80px';
+
+            // params.values: [[id, name], ...]
+            let selectedIds = [];
+            if (params.value && typeof params.value === 'object' && !Array.isArray(params.value)) {
+                selectedIds = Object.keys(params.value);
+            } else if (Array.isArray(params.value)) {
+                selectedIds = params.value;
+            }
+
+            params.values.forEach(([id, name]) => {
+                const option = document.createElement('option');
+                option.value = id;
+                option.text = name;
+                if (selectedIds.includes(String(id))) {
+                    option.selected = true;
+                }
+                this.select.appendChild(option);
+            });
+
+            this.container.appendChild(this.select);
+        };
+
+        MultiSelectCellEditor.prototype.getGui = function() {
+            return this.container;
+        };
+
+        MultiSelectCellEditor.prototype.afterGuiAttached = function() {
+            this.select.focus();
+        };
+
+        MultiSelectCellEditor.prototype.getValue = function() {
+            // Return object: {user_id: user_name, ...}
+            const selected = Array.from(this.select.selectedOptions).map(opt => [opt.value, opt.text]);
+            const obj = {};
+            selected.forEach(([id, name]) => { obj[id] = name; });
+            return obj;
+        };
+
+        MultiSelectCellEditor.prototype.destroy = function() {};
+        MultiSelectCellEditor.prototype.isPopup = function() {
+            return false;
+        };
 
 </script>
 @endpush

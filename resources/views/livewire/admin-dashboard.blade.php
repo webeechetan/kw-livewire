@@ -315,7 +315,7 @@
     </div>
 
     <!-- Onboarding Popup -->
-    <div class="onboarding-popup" id="onboardingPopup">
+    {{-- <div class="onboarding-popup" id="onboardingPopup">
         <div class="onboarding-header">
             <div>Getting Started</div>
             <i class='bx bx-x' id="closePopup"></i>
@@ -345,10 +345,10 @@
         <div id="stepCounter">
             <i class='bx bx-rocket'></i> <span id="completedCount">0/5</span>
         </div>
-    </div>
+    </div> --}}
 
     <!-- Welcome Profile Complete Popup -->
-    <div id="popupOverlay" class="popup-overlay" style="display: flex;">
+    {{-- <div id="popupOverlay" class="popup-overlay" style="display: flex;">
         <div class="rounded-4 position-relative shadow-lg" style="max-width: 750px; width: 90%;">
 
             <div id="popupOverlay" class="popup-overlay d-flex">
@@ -384,7 +384,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
 </div>
 
@@ -418,197 +418,48 @@
 
     typeText();
     // Function to open chat
-    const steps = document.querySelectorAll('.onboarding-step');
-    const progressBar = document.getElementById('progressBar');
-    const progressText = document.getElementById('progressText');
-    const completedCount = document.getElementById('completedCount');
-    const onboardingPopup = document.getElementById('onboardingPopup');
-    const closePopup = document.getElementById('closePopup');
+    // const steps = document.querySelectorAll('.onboarding-step');
+    // const progressBar = document.getElementById('progressBar');
+    // const progressText = document.getElementById('progressText');
+    // const completedCount = document.getElementById('completedCount');
+    // const onboardingPopup = document.getElementById('onboardingPopup');
+    // const closePopup = document.getElementById('closePopup');
 
-    function completeStep(element) {
-        element.classList.toggle('completed');
+    // function completeStep(element) {
+    //     element.classList.toggle('completed');
 
-        const completedSteps = document.querySelectorAll('.onboarding-step.completed').length;
-        const totalSteps = steps.length;
-        const progressPercent = Math.round((completedSteps / totalSteps) * 100);
+    //     const completedSteps = document.querySelectorAll('.onboarding-step.completed').length;
+    //     const totalSteps = steps.length;
+    //     const progressPercent = Math.round((completedSteps / totalSteps) * 100);
 
-        progressBar.style.width = progressPercent + '%';
-        progressText.innerText = progressPercent + '% Complete';
-        completedCount.innerText = completedSteps + '/' + totalSteps;
+    //     progressBar.style.width = progressPercent + '%';
+    //     progressText.innerText = progressPercent + '% Complete';
+    //     completedCount.innerText = completedSteps + '/' + totalSteps;
 
-        if (completedSteps === totalSteps) {
-            onboardingPopup.style.display = 'none';
-        }
-    }
+    //     if (completedSteps === totalSteps) {
+    //         onboardingPopup.style.display = 'none';
+    //     }
+    // }
 
-    steps.forEach(step => {
-        step.addEventListener('click', function() {
-            completeStep(this);
-        });
-    });
+    // steps.forEach(step => {
+    //     step.addEventListener('click', function() {
+    //         completeStep(this);
+    //     });
+    // });
 
-    closePopup.addEventListener('click', function() {
-        onboardingPopup.style.display = 'none';
-    });
+    // closePopup.addEventListener('click', function() {
+    //     onboardingPopup.style.display = 'none';
+    // });
 
-    document.addEventListener('brandCreated', event => {
-        console.log('Brand created:', event.detail);
-        // hide popup
-        document.getElementById('popupOverlay').style.display = 'none';
-    });
+    // document.addEventListener('brandCreated', event => {
+    //     console.log('Brand created:', event.detail);
+    //     // hide popup
+    //     document.getElementById('popupOverlay').style.display = 'none';
+    // });
 
 
     // JQery
     $(document).ready(function() {
-
-        $(".send-message").click(function(){
-            sendMessage()
-        });
-
-        // ----- AI Profile Chat
-
-        const chatBox = document.getElementById('chat-box');
-        const userInput = document.getElementById('user-input');
-        const wordCount = document.getElementById('word-count');
-        const popupOverlay = document.getElementById('popupOverlay');
-        const popupContainer = document.querySelector('.chat-container');
-
-        const steps = [
-            {
-                question: "What's the exact name of your brand?",
-                key: 'brandName'
-            },
-            {
-                question: "What type of content do you create?",
-                key: 'contentType'
-            },
-            {
-                question: "What are your brand colors?",
-                key: 'brandColors'
-            },
-            {
-                question: "What are your brand's main goals?",
-                key: 'goals'
-            },
-            {
-                question: "What's your monthly content goal?",
-                key: 'contentGoal'
-            },
-            {
-                question: "Describe your brand's tone of voice?",
-                key: 'toneOfVoice'
-            },
-            {
-                question: "Are there any topics or words to avoid?",
-                key: 'avoidWords'
-            },
-            {
-                question: "Who are your main competitors?",
-                key: 'competitors'
-            },
-            {
-                question: "What's your brand's unique selling point?",
-                key: 'uniqueSellingPoint'
-            },
-            {
-                question: "Which platforms do you focus on most?",
-                key: 'platforms'
-            }
-        ];
-
-        let stepIndex = 0;
-        const answers = {};
-
-        // Send Message Function
-        function sendMessage() {
-            const userText = userInput.value.trim();
-            if (!userText) return;
-
-            appendMessage(userText, 'user');
-            answers[steps[stepIndex]?.key] = userText;
-
-            userInput.value = '';
-            updateWordCount();
-
-            console.log(answers); // Log the answers object to see the collected data
-
-            // current question
-
-            setTimeout(() => {
-                getBotResponse();
-            }, 600);
-        }
-
-        // Append Message
-        function appendMessage(text, sender) {
-            const messageDiv = document.createElement('div');
-            messageDiv.classList.add('chat-message');
-            if (sender === 'ai') {
-                messageDiv.classList.add('ai');
-            }
-            messageDiv.innerText = text;
-            chatBox.appendChild(messageDiv);
-            chatBox.scrollTop = chatBox.scrollHeight;
-        }
-
-        // Get Dynamic Bot Response
-        function getBotResponse() {
-            if (stepIndex < steps.length - 1) {
-                stepIndex++;
-                appendMessage(steps[stepIndex].question, 'ai');
-            } else { 
-                @this.createBrand(answers);
-                appendMessage("Thank you! Your brand setup is complete. 🎉", 'ai');
-                // close the popup
-                setTimeout(() => {
-                    popupOverlay.style.display = 'none';
-                }, 2000);
-            }
-        }
-
-        // Voice Recognition Function
-        function startListening() {
-            if (!('webkitSpeechRecognition' in window)) {
-                alert('Sorry, your browser does not support voice recognition.');
-                return;
-            }
-
-            const recognition = new webkitSpeechRecognition();
-            recognition.lang = 'en-US';
-            recognition.interimResults = false;
-            recognition.maxAlternatives = 1;
-
-            recognition.start();
-
-            recognition.onresult = (event) => {
-                const transcript = event.results[0][0].transcript;
-                userInput.value = transcript;
-                updateWordCount();
-            };
-
-            recognition.onerror = (event) => {
-                console.error('Speech recognition error:', event.error);
-            };
-        }
-
-        // Word Count Function
-        function updateWordCount() {
-            const text = userInput.value.trim();
-            const words = text === '' ? 0 : text.split(/\s+/).length;
-            wordCount.innerText = `Word Count: ${words}`;
-        }
-
-        // Update word count on typing
-        userInput.addEventListener('input', updateWordCount);
-
-        // Close popup when clicking outside
-        popupOverlay.addEventListener('click', (event) => {
-            if (!popupContainer.contains(event.target)) {
-                popupOverlay.style.display = 'none';
-            }
-        });
-
-        // ----- End AI Profile Chat
 
         // Avatar Images
         const users = [
