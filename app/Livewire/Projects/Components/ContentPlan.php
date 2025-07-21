@@ -6,6 +6,7 @@ use Livewire\Component;
 use App\Models\ContentPlan as ContentPlanModel;
 use App\Models\Project as ProjectModel;
 use App\Models\Post as PostModel;
+use App\Models\User;
 use App\Services\OpenAIService;
 use Illuminate\Process\FakeProcessDescription;
 use Illuminate\Support\Facades\Log;
@@ -14,11 +15,15 @@ class ContentPlan extends Component
 {
     public $project;
     public $contentPlan;
+    public $users = [];
 
     public function mount($project, $contentPlan = null )
     {
         $this->project = ProjectModel::find($project);
         $this->contentPlan = ContentPlanModel::find($contentPlan);
+        $this->users = User::pluck('name','id')->toArray();
+        // dd($this->users);
+       
     }
 
     public function render()

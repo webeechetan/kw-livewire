@@ -3,7 +3,7 @@
         <div class="container">
             <div class="row justify-content-md-center">
                 <div class="col-sm-6">
-                    <img class="img-fluid" src="./assets/images/logo.png" alt="Kaykewalk Logo" />
+                    <img class="img-fluid" src="{{ asset('') }}assets/images/logo.png" alt="Kaykewalk Logo" />
                 </div>
                 <div class="col-sm-6 text-md-end">
                     <a wire:navigate href="/login">
@@ -43,13 +43,24 @@
                                     <div class="mb-3 form-field" controlId="signupEmail">
                                         <div class="form-field-icon"><i class='bx bx-user'></i></div>
                                         <input type="text" wire:model="user_name" class="form-control"
-                                            placeholder="Enter Full Name" />
+                                            placeholder="Enter First Name" />
                                         @error('user_name')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
                                     </div>
                                 </div>
+                                <!-- Added Last Name -->
                                 <div class="col-md-6">
+                                    <div class="mb-3 form-field" controlId="signupEmail">
+                                        <div class="form-field-icon"><i class='bx bx-user'></i></div>
+                                        <input type="text" wire:model="last_name" class="form-control"
+                                            placeholder="Enter Last Name" />
+                                        @error('last_name')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-12">
                                     <div class="mb-3 form-field" controlId="signupEmail">
                                         <div class="form-field-icon"><i class='bx bx-envelope'></i></div>
                                         <input type="email" wire:model="email" class="form-control"

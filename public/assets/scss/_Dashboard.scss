@@ -299,6 +299,34 @@
             }
         }
     }
+
+    // New Code
+
+    &-input {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+
+        #todo-input {
+            min-height: inherit;
+        }
+    }
+
+    &-date {
+        position: relative;
+        width: 30px;
+
+        // .todo-date-icon {
+        //     font-size: 26px;
+        // }
+
+        input[type="date"] {
+            opacity: 0;
+            position: absolute;
+            right: 0;
+            top: 0;
+        }
+    }
 }
 
 /* ----- Tab Navigator Bar ----- */
@@ -2423,7 +2451,7 @@ span.flatpickr-weekday {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            display: none;
+            position: absolute;
         }
 
         .placeholder-text {
@@ -2448,9 +2476,10 @@ span.flatpickr-weekday {
 
     .modal-content {
         border-radius: 12px;
-        // max-width: 400px;
+        max-width: 600px;
         width: 100%;
         // text-align: center;
+        overflow: hidden;
 
         #cropImage {
             max-width: 100%;

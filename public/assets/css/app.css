@@ -710,7 +710,7 @@ hr.space-sm {
   border-color: #2ecc71;
 }
 .card_style-user-head {
-  /* text-align: center; */
+  text-align: center;
 }
 .card_style-user-head-team {
   position: absolute;
@@ -2234,7 +2234,7 @@ hr.space-sm {
 }
 /*---- Form Style Start Here ----*/
 .form-control, .form-select {
-  border: 1px solid #333;
+  border: 1px solid #ddd;
   padding: 10px 20px;
   border-radius: 4px;
   font-size: 1rem;
@@ -2564,7 +2564,7 @@ input:-webkit-autofill, input:-webkit-autofill:focus {
   overflow: hidden;
 }
 .invite-copy-link-text {
-  border: 1px solid #333;
+  border: 1px solid #ddd;
   border-right: none;
   padding: 10px;
   border-radius: 4px 0 0 4px;
@@ -3546,6 +3546,24 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
 .todo-item-btns button:not(:last-child) {
   margin-right: 10px;
 }
+.todo-input {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.todo-input #todo-input {
+  min-height: inherit;
+}
+.todo-date {
+  position: relative;
+  width: 30px;
+}
+.todo-date input[type=date] {
+  opacity: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
 
 /* ----- Tab Navigator Bar ----- */
 .tabNavigationBar-item {
@@ -4471,7 +4489,7 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   font-size: 14px;
 }
 .req_calender-repeats select.planHoverStyle:hover, .req_calender-repeats select.planHoverStyle.active {
-  border-color: #333;
+  border-color: #ddd;
 }
 .req_calender-repeats-lable {
   font-size: 14px;
@@ -5267,7 +5285,7 @@ span.flatpickr-weekday {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  display: none;
+  position: absolute;
 }
 .upload-card .upload-frame .placeholder-text {
   color: #999;
@@ -5289,9 +5307,9 @@ span.flatpickr-weekday {
 }
 .modal .modal-content {
   border-radius: 12px;
-  /* max-width: 400px; */
+  max-width: 600px;
   width: 100%;
-  /* text-align: center; */
+  overflow: hidden;
 }
 .modal .modal-content #cropImage {
   max-width: 100%;

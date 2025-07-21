@@ -28,7 +28,7 @@
                                                 <span class="checkbox" id="handle_facebook"><i
                                                         class='bx bx-check text-white'></i></span>
                                                 <label
-                                                    class="form-check-label d-flex align-items-center justify-content-center flex-column"
+                                                    class="form-check-label d-flex align-items-center justify-content-center"
                                                     for="handle_facebook">
                                                     <i class="bx bxl-facebook bx-sm me-2 text-secondary"></i> Facebook
                                                 </label>
@@ -42,7 +42,7 @@
                                                 <span class="checkbox" id="handle_instagram"><i
                                                         class='bx bx-check text-white'></i></span>
                                                 <label
-                                                    class="form-check-label d-flex align-items-center justify-content-center flex-column"
+                                                    class="form-check-label d-flex align-items-center justify-content-center"
                                                     for="handle_instagram">
                                                     <i class="bx bxl-instagram bx-sm me-2 text-secondary"></i> Instagram
                                                 </label>
@@ -56,7 +56,7 @@
                                                 <span class="checkbox" id="handle_twitter"><i
                                                         class='bx bx-check text-white'></i></span>
                                                 <label
-                                                    class="form-check-label d-flex align-items-center justify-content-center flex-column"
+                                                    class="form-check-label d-flex align-items-center justify-content-center"
                                                     for="handle_twitter">
                                                     <i class="bx bxl-twitter bx-sm me-2 text-secondary"></i> Twitter
                                                 </label>
@@ -70,7 +70,7 @@
                                                 <span class="checkbox" id="handle_linkedin"><i
                                                         class='bx bx-check text-white'></i></span>
                                                 <label
-                                                    class="form-check-label d-flex align-items-center justify-content-center flex-column"
+                                                    class="form-check-label d-flex align-items-center justify-content-center"
                                                     for="handle_linkedin">
                                                     <i class="bx bxl-linkedin bx-sm me-2 text-secondary"></i> LinkedIn
                                                 </label>
@@ -84,7 +84,7 @@
                                                 <span class="checkbox" id="handle_youtube"><i
                                                         class='bx bx-check text-white'></i></span>
                                                 <label
-                                                    class="form-check-label d-flex align-items-center justify-content-center flex-column"
+                                                    class="form-check-label d-flex align-items-center justify-content-center"
                                                     for="handle_youtube">
                                                     <i class="bx bxl-youtube bx-sm me-2 text-secondary"></i> YouTube
                                                 </label>
@@ -98,7 +98,7 @@
                                                 <span class="checkbox" id="handle_tiktok"><i
                                                         class='bx bx-check text-white'></i></span>
                                                 <label
-                                                    class="form-check-label d-flex align-items-center justify-content-center flex-column"
+                                                    class="form-check-label d-flex align-items-center justify-content-center"
                                                     for="handle_tiktok">
                                                     <i class="bx bxl-tiktok bx-sm me-2 text-secondary"></i> TikTok
                                                 </label>
