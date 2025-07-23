@@ -5,11 +5,11 @@
             <div class="row ">
                 <div class="col-xl-7 col-xxl-6 mx-auto text-center">
                     <div id="onboarding">
-                        <span class="d-block text-light" id="step-counter">Step 2 of 4</span>
+                        <span class="d-block text-light" id="step-counter">Step 2 of 3</span>
                         <div class="row mt-2 mb-4">
                             <div class="col-xxl-5 col-lg-6 mx-auto">
                                 <div id="progress-container">
-                                    <div id="progress-bar" style="width:50%"></div>
+                                    <div id="progress-bar" style="width:66%"></div>
                                 </div>
                             </div>
                         </div>

@@ -7,7 +7,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="" class="invite-user-form">
+                    {{-- <form action="" class="invite-user-form">
                         <div class="modal-form-body">
                             <div class="row">
                                 <div class="col-12">
@@ -23,8 +23,8 @@
                                 </div>
                             </div>
                         </div>
-                    </form>
-                    <div class="divider-or"><span></span> OR <span></span></div>
+                    </form> 
+                    <div class="divider-or"><span></span> OR <span></span></div> --}}
                     <form wire:submit="addUser" method="POST" enctype="multipart/form-data">
                         <div class="modal-form-body">
                             <div class="row">

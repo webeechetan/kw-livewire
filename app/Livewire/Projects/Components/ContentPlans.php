@@ -10,6 +10,7 @@ use Livewire\Component;
 use App\Services\OpenAIService;
 use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
+use Exception;
 
 class ContentPlans extends Component
 {
@@ -23,6 +24,7 @@ class ContentPlans extends Component
     public $end_date = '';
 
     public $contentPlans = [];
+    
 
     public function mount(Project $project)
     {
@@ -59,29 +61,41 @@ class ContentPlans extends Component
         $contentPlan->save();
 
         // Call OpenAIService to generate the content plan
-        $generatedPosts = $openAIService->generateContentPlan(
-            projectName: $projectName,
-            contentPlanBrief: $contentPlanBrief,
-            projectBrief: $projectBrief
-        );
+        try {
+            $generatedPosts = $openAIService->generateContentPlan(
+                projectName: $projectName,
+                contentPlanBrief: $contentPlanBrief,
+                projectBrief: $projectBrief
+            );
+    
+            if (is_array($generatedPosts)) {
 
-        if (is_array($generatedPosts)) {
-            foreach ($generatedPosts as $postData) {
-                $post = new Post();
-                $post->project_id = $this->project->id;
-                $post->content_plan_id = $contentPlan->id;
-                $post->date = $postData['date'] ?? null;
-                $post->platform = $postData['platform'] ?? null;
-                $post->status = 'pending';
-                $post->format = $postData['format'] ?? null;
-                $post->content_bucket = $postData['content_bucket'] ?? ($postData['bucket'] ?? null);
-                $post->content_idea = $postData['idea'] ?? null;
-                $post->creative_copy = $postData['creative_copy'] ?? null;
-                $post->visual_direction = $postData['visual_direction'] ?? null;
-                $post->caption = $postData['caption'] ?? null;
-                $post->save();
+                foreach ($generatedPosts as $postData) {
+                    $post = new Post();
+                    $post->project_id = $this->project->id;
+                    $post->content_plan_id = $contentPlan->id;
+                    $post->date = $postData['date'] ?? null;
+                    $post->platform = $postData['platform'] ?? null;
+                    $post->status = 'pending';
+                    $post->format = $postData['format'] ?? null;
+                    $post->content_bucket = $postData['content_bucket'] ?? ($postData['bucket'] ?? null);
+                    $post->content_idea = $postData['idea'] ?? null;
+                    $post->creative_copy = $postData['creative_copy'] ?? null;
+                    $post->visual_direction = $postData['visual_direction'] ?? null;
+                    $post->caption = $postData['caption'] ?? null;
+                    $post->save();
+                }
+
+               
             }
-        }
+            } catch (Exception $e){
+                Post::factory()->count($this->number_of_posts)->create([
+                    'project_id' => $this->project->id,
+                    'content_plan_id' => $contentPlan->id,
+                ]);
+
+                $this->redirect(route('project.content-plan', [$this->project->id, $contentPlan->id]));
+            }
 
         $this->redirect(route('project.content-plan', [$this->project->id, $contentPlan->id]));
     }

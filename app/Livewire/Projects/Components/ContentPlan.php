@@ -7,6 +7,7 @@ use App\Models\ContentPlan as ContentPlanModel;
 use App\Models\Project as ProjectModel;
 use App\Models\Post as PostModel;
 use App\Models\User;
+use App\Models\Post;
 use App\Services\OpenAIService;
 use Illuminate\Process\FakeProcessDescription;
 use Illuminate\Support\Facades\Log;
@@ -16,6 +17,13 @@ class ContentPlan extends Component
     public $project;
     public $contentPlan;
     public $users = [];
+
+    // post attributes
+    public $post_date;
+    public $platforms;
+    public $format;
+    public $content_bucket;
+    public $content_idea;
 
     public function mount($project, $contentPlan = null )
     {
@@ -126,6 +134,25 @@ class ContentPlan extends Component
         $post->$columnName = $columnValue;
         $post->save();
         $this->dispatch('postApplied', $post->toArray());
+    }
+
+    public function createPost(){
+        $post = new Post();
+        $post->project_id = $this->project->id;
+        $post->content_plan_id = $this->contentPlan->id;
+        $post->date = $this->post_date;
+        $post->platform = $this->platforms;
+        $post->status = 'pending';
+        $post->format = $this->format;
+        $post->content_bucket = $this->content_bucket;
+        $post->content_idea = $this->content_idea;
+        // $post->creative_copy = $postData['creative_copy'] ?? null;
+        // $post->visual_direction = $postData['visual_direction'] ?? null;
+        // $post->caption = $postData['caption'] ?? null;
+        $post->save();
+        $this->dispatch('post-created',$post);
+        $this->redirect(route('project.content-plan', [$this->project->id, $this->contentPlan->id]));
+
     }
 
 }

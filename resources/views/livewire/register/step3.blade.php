@@ -5,11 +5,11 @@
             <div class="row ">
                 <div class="col-xl-7 col-xxl-6 mx-auto text-center">
                     <div id="onboarding">
-                        <span class="d-block text-light" id="step-counter">Step 3 of 4</span>
+                        <span class="d-block text-light" id="step-counter">Step 3 of 3</span>
                         <div class="row mt-2 mb-4">
                             <div class="col-xxl-5 col-lg-6 mx-auto">
                                 <div id="progress-container">
-                                    <div id="progress-bar" style="width:75%"></div>
+                                    <div id="progress-bar" style="width:100%"></div>
                                 </div>
                             </div>
                         </div>
@@ -135,6 +135,12 @@
 
 </div>
 
+@assets
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>
+@endassets
+
 @script
     <script>
         const socialInputs = document.querySelectorAll('.social-input-list .social-input');
@@ -155,6 +161,42 @@
             input.addEventListener('click', () => {
                 textInput.focus();
             });
+        });
+
+        document.addEventListener('email-sended', event => {
+            document.getElementById('onboarding').style.display = 'none';
+            document.getElementById('welcome-message').style.display = 'block';
+            // Raining confetti
+            const duration = 2 * 1000; // 3 seconds
+            const end = Date.now() + duration;
+
+            (function frame() {
+                confetti({
+                    particleCount: 5,
+                    angle: 60,
+                    spread: 55,
+                    origin: {
+                        x: 0
+                    }
+                });
+                confetti({
+                    particleCount: 5,
+                    angle: 120,
+                    spread: 55,
+                    origin: {
+                        x: 1
+                    }
+                });
+
+                if (Date.now() < end) {
+                    requestAnimationFrame(frame);
+                }
+            })();
+
+
+            setTimeout(() => {
+                window.location.href = "{{ env('APP_URL') }}/{{ session('org_name') }}/dashboard";
+            }, 3000);
         });
     </script>
 @endscript
