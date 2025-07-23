@@ -22,14 +22,14 @@
                                 <div class="upload-card mb-4">
                                     <div class="upload-frame" id="uploadFrame">
                                         <span class="placeholder-text">Click to <br />upload logo</span>
-                                        <img id="logoPreview" alt="Logo Preview"
+                                        <img id="logoPreview" alt="Logo Preview" style="display:none;"
                                             @if ($org->image) src="{{ asset('storage/' . $org->image) }}" @endif />
                                     </div>
                                     <input type="file" id="logoInput" accept="image/*" hidden />
 
                                     <!-- Modal -->
                                     <div class="modal" id="cropModal">
-                                        <div class="modal-content">
+                                        <div class="modal-content" style="max-width: 600px; margin: auto;">
                                             <img id="cropImage" />
                                             <button id="cropButton">Crop & Save</button>
                                         </div>

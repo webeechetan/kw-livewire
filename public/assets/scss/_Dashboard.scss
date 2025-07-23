@@ -65,6 +65,10 @@
     }
 }
 
+.welcome-box-img  img {
+    max-width: 150px;
+}
+
 /*---- Box Item Style ---*/
 .box {
     &-item {
@@ -293,6 +297,34 @@
                     margin-right: $spacing_xs;
                 }
             }
+        }
+    }
+
+    // New Code
+
+    &-input {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+
+        #todo-input {
+            min-height: inherit;
+        }
+    }
+
+    &-date {
+        position: relative;
+        width: 30px;
+
+        // .todo-date-icon {
+        //     font-size: 26px;
+        // }
+
+        input[type="date"] {
+            opacity: 0;
+            position: absolute;
+            right: 0;
+            top: 0;
         }
     }
 }
@@ -2419,7 +2451,7 @@ span.flatpickr-weekday {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            display: none;
+            position: absolute;
         }
 
         .placeholder-text {
@@ -2444,9 +2476,10 @@ span.flatpickr-weekday {
 
     .modal-content {
         border-radius: 12px;
-        // max-width: 400px;
+        max-width: 600px;
         width: 100%;
         // text-align: center;
+        overflow: hidden;
 
         #cropImage {
             max-width: 100%;
@@ -2568,7 +2601,7 @@ span.flatpickr-weekday {
     bottom: 20px;
     right: 20px;
     background: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.2);
     border-radius: 10px;
     padding: 20px;
     width: 330px;
@@ -2600,6 +2633,7 @@ span.flatpickr-weekday {
         background-color: $light;
         padding: 5px 10px;
         border-radius: 30px;
+        border: 1px solid #ddd;
         cursor: pointer;
         display: flex;
         align-items: center;
@@ -2608,7 +2642,8 @@ span.flatpickr-weekday {
         transition: all 0.3s ease;
 
         &:hover {
-            background-color: $success_light;
+            background-color: $success;
+            color: #fff;
         }
 
         &.completed {

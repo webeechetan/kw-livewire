@@ -28,7 +28,7 @@
                 </div>
 
                 <!-- Total Clients -->
-                <div class="col-md-4">
+                <!-- <div class="col-md-4">
                     <a href="#">
                         <div class="card shadow-sm border-0">
                             <span class="card-open"><i class="bx bx-chevron-right"></i></span>
@@ -45,7 +45,7 @@
                             </div>
                         </div>
                     </a>
-                </div>
+                </div> -->
 
                 <!-- Total Projects -->
                 <div class="col-md-4">
@@ -83,18 +83,21 @@
                     </a>
                 </div>
 
-                <!-- Social Accounts -->
+                <!-- Total Tasks -->
                 <div class="col-md-4">
                     <a href="#">
                         <div class="card shadow-sm border-0">
                             <span class="card-open"><i class="bx bx-chevron-right"></i></span>
-                            <div class="card-body d-flex align-items-center gap-3">
-                                <div class="icon-box" style="background-color:#f4f0ff;">
-                                    <i class='bx bx-link text-primary'></i>
-                                </div>
-                                <div>
-                                    <span class="text-muted">Social Accounts</span>
-                                    <h5 class="mb-0">1</h5>
+                            <div class="card-body">
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="icon-box" style="background-color:#e8f7ff;">
+                                        <i class='bx bx-briefcase-alt-2 text-info'></i>
+                                    </div>
+                                    <div>
+                                        <span class="text-muted">Pending Tasks</span>
+                                        <small>Last 15 days</small>
+                                        <h5 class="mb-0">10</h5>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -131,6 +134,24 @@
                                 <div>
                                     <span class="text-muted">Content Plan</span>
                                     <h5 class="mb-0">30</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Social Accounts -->
+                <div class="col-md-4">
+                    <a href="#">
+                        <div class="card shadow-sm border-0">
+                            <span class="card-open"><i class="bx bx-chevron-right"></i></span>
+                            <div class="card-body d-flex align-items-center gap-3">
+                                <div class="icon-box" style="background-color:#f4f0ff;">
+                                    <i class='bx bx-link text-primary'></i>
+                                </div>
+                                <div>
+                                    <span class="text-muted">Social Accounts</span>
+                                    <h5 class="mb-0">1</h5>
                                 </div>
                             </div>
                         </div>
@@ -292,6 +313,30 @@
             <div class="h-100">
                 <div class="card shadow-sm border-0 mb-3">
                     <div class="card-body">
+                        <div class="todo-box">
+                            <h5 class="mb-0">Todo List</h5>
+
+                            <!-- Filter -->
+                            <div class="filter d-flex gap-2">
+                                <button onclick="filterTodos('all')" class="filter-btn active">All</button>
+                                <button onclick="filterTodos('pending')" class="filter-btn">Pending</button>
+                                <button onclick="filterTodos('completed')" class="filter-btn">Completed</button>
+                                <button onclick="filterTodos('requested')" class="filter-btn">Requested</button>
+                            </div>
+
+                            <div class="todo-input mt-2">
+                                <input type="text" class="form-control" id="todo-input" placeholder="Add new task..." />
+                                <div class="todo-date btn btn-secondary px-2 py-2"><span class="todo-date-icon"><i class='bx bx-calendar-alt' ></i></span><span><input type="date" id="todo-date" /></span></div>
+                                <button onclick="addTodo()" class="btn btn-primary px-2 py-2"><i class='bx  bx-plus'  ></i> </button>
+                            </div>
+
+                            <ul id="todo-list" class="p-0 m-0"></ul>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="card shadow-sm border-0 mb-3">
+                    <div class="card-body">
                         <h5 class="mb-0">AI Usage Stats</h5>
                     </div>
                     <div id="aiUsageChart" style="height: 550px; margin-top: -15px; margin-bottom: -170px;"></div>
@@ -327,19 +372,22 @@
         </div>
 
         <div class="onboarding-step" onclick="completeStep(this)">
-            <i class='bx bx-user-plus'></i> Onboard your first client
+            <i class='bx bx-user'></i> Complete your profile
         </div>
         <div class="onboarding-step" onclick="completeStep(this)">
-            <i class='bx bx-folder-plus'></i> Add your first project
+            <i class='bx bx-objects-horizontal-left'></i> Add your first project
         </div>
         <div class="onboarding-step" onclick="completeStep(this)">
-            <i class='bx bx-group'></i> Create your teams
+            <i class='bx bx-sitemap'></i> Create your teams
         </div>
         <div class="onboarding-step" onclick="completeStep(this)">
             <i class='bx bx-calendar'></i> Create your first content calendar
         </div>
         <div class="onboarding-step" onclick="completeStep(this)">
             <i class='bx bx-edit'></i> Create your first post
+        </div>
+        <div class="onboarding-step" onclick="completeStep(this)">
+            <i class='bx bx-task'></i> Add your first task
         </div>
 
         <div id="stepCounter">
@@ -394,6 +442,7 @@
 @endassets
 
 @script
+
 <script>
     
     const text = "Hey there! Glad to have you back. Let’s see what’s new and keep things running smoothly.";
@@ -648,3 +697,7 @@
 
 </script>
 @endscript
+
+@push('scripts')
+    <script src="{{ asset('assets/js/todo.js') }}"></script>
+@endpush

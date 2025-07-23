@@ -1,4 +1,13 @@
 <div>
+    <div class="header-signup d-flex align-items-center">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <img class="img-fluid" src="../assets/images/logo.png" alt="Kaykewalk Logo" />
+                </div>
+            </div>
+        </div>
+    </div> 
     <div class="signup-content">
         <div class="container">
 
