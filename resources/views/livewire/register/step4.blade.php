@@ -48,8 +48,7 @@
 
                     <!-- 🎉 Welcome Message -->
                     <div id="welcome-message" class="text-center"
-                        @if ($emailSended) style="display:block;"
-                    @else
+                        @if ($emailSended) style="display:block;"@else
                      style="display:none;" @endif>
                         <h2 class="title-big"><span class="d-block">🎉</span> Welcome Aboard!</h2>
                         <p>We're excited to have you with us.</p>

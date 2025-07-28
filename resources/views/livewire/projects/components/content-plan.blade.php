@@ -16,8 +16,10 @@
                 <h4>Content Plan Table</h4>
                 <div>
                     <button class="btn btn-primary" id="exportToExcel">Export to Excel</button>
+                    <button class="btn btn-primary" id="create-new-post" >Create Post</button>
                     <div id="calendarTable" class="mt-4" style="height: 500px"></div>
                 </div>
+                
             </div> 
         </div>
     </div>
@@ -55,6 +57,61 @@
             </div>
         </div>
     </div>
+    {{-- create post modal --}}
+    <div class="modal fade" id="createPostModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header d-flex align-items-center justify-content-between gap-20">
+                    <h5 class="modal-title" id="exampleModalLabel"><span class="btn-icon btn-icon-primary me-1"><i
+                                class='bx bx-layer'></i></span>Create Post</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body modal-form-body">
+                    <div class="mb-4">
+                        <label for="post-date" class="form-label">Post Date</label>
+                        <input type="date" class="form-style" wire:model="post_date" id="post_date" placeholder="Select start date">
+                    </div>
+                    <div class="mb-4">
+                        <label for="platforms" class="form-label">Platforms</label>
+                        <input type="text" class="form-style" wire:model="platforms" id="platforms"
+                            placeholder="Enter platforms (e.g., Instagram, Facebook, Twitter)">
+                    </div>
+                    <div class="mb-4">
+                        <label for="format" class="form-label">Format</label>
+                        <input type="text" class="form-style" wire:model="format" id="format" 
+                            placeholder="Reel,Post,Short Video">
+                    </div>
+                    <div class="mb-4">
+                        <label for="content_bucket" class="form-label">Content Bucket</label>
+                        <input type="text" class="form-style" wire:model="content_bucket" id="content_bucket"
+                            placeholder="Testimonial, Behind the scene">
+                    </div>
+                    <div class="mb-4">
+                        <label for="content_idea" class="form-label">Content Idea</label>
+                        <textarea type="text" class="form-style" wire:model="content_idea" id="content_idea"
+                            placeholder=""></textarea>
+                    </div>
+                    
+                </div>
+                <div class="modal-footer">
+                    <button wire:click="createPost" class="btn btn-primary createPostBtn">
+                        <span wire:loading.remove wire:target="createPost">
+                            Create Post
+                        </span>
+                        <span wire:loading wire:target="createPost">
+                            Creating...
+                            <div class="spinner-border spinner-border-sm" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 @assets
@@ -64,6 +121,12 @@
 
 @push('scripts')
 <script>
+
+    $(document).ready(function(){
+        $("#create-new-post").click(function(){
+            $("#createPostModal").modal('show')
+        });
+    });
 
         let postData = @json($contentPlan->posts);
         let calendarTable = document.getElementById('calendarTable');
@@ -282,6 +345,12 @@
             grid.getRowNode(rowIndex).setDataValue('creative_copy', post.creative_copy);
             grid.getRowNode(rowIndex).setDataValue('visual_direction', post.visual_direction);
             grid.getRowNode(rowIndex).setDataValue('caption', post.caption);
+        });
+
+        document.addEventListener('post-created',(event)=>{
+            var post = event.detail[0];
+            $("#createPostModal").modal('hide');
+
         });
 
         $('.generateContentPlanBtn').click(function() {

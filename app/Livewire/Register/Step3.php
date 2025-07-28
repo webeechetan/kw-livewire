@@ -17,6 +17,7 @@ class Step3 extends Component
     public $instagram = '';
     public $youtube = '';
     public $tiktok = '';
+    public $emailSended = false;
 
     public function render()
     {
@@ -36,8 +37,10 @@ class Step3 extends Component
             ]
         );
 
-        return $this->redirect(route('register.step4'));
+        $this->emailSended = true;
 
+        $this->dispatch('email-sended');
+ 
     }
 
     

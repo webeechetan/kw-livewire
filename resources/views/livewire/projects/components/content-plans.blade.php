@@ -164,6 +164,17 @@
                     </div>
                 </div>
                 <div class="modal-footer">
+                    {{-- <button wire:click="generateContentPlan" class="btn btn-primary generateContentPlanBtn">
+                        <span wire:loading.remove wire:target="generateContentPlan">
+                            Generate Content Plan
+                        </span>
+                        <span wire:loading wire:target="generateContentPlan">
+                            Generating...
+                            <div class="spinner-border spinner-border-sm" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </span>
+                    </button> --}}
                     <button wire:click="generateContentPlan" class="btn btn-primary generateContentPlanBtn">
                         <span wire:loading.remove wire:target="generateContentPlan">
                             Generate Content Plan
