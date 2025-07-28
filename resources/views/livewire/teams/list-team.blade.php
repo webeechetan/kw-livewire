@@ -74,7 +74,7 @@
                 :teams="$teams"
                 :clearFilters="route('team.index')"
             />
-        @endif
+            @endif
         </div>
         
         @if($teams->isNotEmpty())

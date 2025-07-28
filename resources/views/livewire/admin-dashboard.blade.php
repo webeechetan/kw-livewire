@@ -7,7 +7,7 @@
         </ol>
     </nav>
     <div class="row">
-        <div class="col-xl-9">
+        <div class="col-xl-8">
             <div class="row g-3">
                 <div class="col-12">
                     <div class="card shadow-sm border-0 py-2 px-3">
@@ -309,28 +309,35 @@
                 </div>
             </div>
         </div>
-        <div class="col-xl-3">
+        <div class="col-xl-4">
             <div class="h-100">
                 <div class="card shadow-sm border-0 mb-3">
                     <div class="card-body">
                         <div class="todo-box">
-                            <h5 class="mb-0">Todo List</h5>
+                            <h5>Todo List</h5>
 
                             <!-- Filter -->
                             <div class="filter d-flex gap-2">
-                                <button onclick="filterTodos('all')" class="filter-btn active">All</button>
-                                <button onclick="filterTodos('pending')" class="filter-btn">Pending</button>
-                                <button onclick="filterTodos('completed')" class="filter-btn">Completed</button>
-                                <button onclick="filterTodos('requested')" class="filter-btn">Requested</button>
+                                <button class="filter-btn" data-filter="all">All</button>
+                                <button class="filter-btn active" data-filter="pending">Pending</button>
+                                <button class="filter-btn" data-filter="completed">Completed</button>
                             </div>
 
                             <div class="todo-input mt-2">
-                                <input type="text" class="form-control" id="todo-input" placeholder="Add new task..." />
-                                <div class="todo-date btn btn-secondary px-2 py-2"><span class="todo-date-icon"><i class='bx bx-calendar-alt' ></i></span><span><input type="date" id="todo-date" /></span></div>
-                                <button onclick="addTodo()" class="btn btn-primary px-2 py-2"><i class='bx  bx-plus'  ></i> </button>
+                                <input type="text" id="todo-input" placeholder="Add new task..." />
+                                <button onclick="addTodo()"><i class='bx bx-plus'></i></button>
                             </div>
 
-                            <ul id="todo-list" class="p-0 m-0"></ul>
+                            <div class="position-relative">
+                                <ul id="todo-list" class="p-0 mt-2 mb-0 scrollbar"></ul>
+                                <div id="completed-image" class="todo-completed-image" style="display: none;">
+                                    <h3 class="font-400 text-light">Todo-free <br/> Stress-free</h3>
+                                    <picture>
+                                        <source srcset="https://fonts.gstatic.com/s/e/notoemoji/latest/1f60e/512.webp" type="image/webp">
+                                        <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f60e/512.gif" alt="😎" width="90" height="90">
+                                    </picture>
+                                </div>
+                            </div>
                         </div>
                         
                     </div>

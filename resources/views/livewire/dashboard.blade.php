@@ -6,83 +6,380 @@
             <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
         </ol>
     </nav>
-    <div class="row">
-        <div class="col-md-6">
-            <div class="box-item h-100">
-                <div class="row align-items-center">
-                    <div class="col-md-7">
-                        <div class="welcome-box">
-                            <h6 class="mb-1"><span class="fw-normal">Hi {{ Auth::guard(session('guard'))->user()->name
-                                    }}</span>,</h6>
-                            <h5><b>Welcome back!</b></h5>
-                            @if (Auth::user()->hasRole('Admin'))
-                            <div class="row text-center mt-3">
-                                <div class="col">
-                                    <div class="bg-primary py-3 rounded text-white">
-                                        <h6>
-                                            <b>{{$totalClients}}</b>
-                                        </h6>
-                                        <span><i class="bx bx-briefcase-alt-2"></i> Clients</span>
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="bg-secondary py-3 rounded text-white">
-                                        <h6><b>{{ $totalProjects }}</b></h6>
-                                        <span><i class="bx bx-objects-horizontal-left"></i> Projects</span>
-                                    </div>
-                                </div>
+
+    <div class="row g-3">
+        <div class="col-xl-9">
+            <div class="row g-3 mb-3">
+                <div class="col-12">
+                    <div class="card shadow-sm border-0 py-2 px-3">
+                        <div class="card-body d-flex justify-content-between">
+                            <div>
+                                <h4 class="mb-2">Hey Welcome, {{ Auth::guard(session('guard'))->user()->name }} 🤖</h4>
+                                <p class="text-muted mb-0">Glad to have you back. Let’s see what’s new and keep things running smoothly.</p>
                             </div>
-                            @endif
+                            <div class="welcome-box-img">
+                                <img src="{{ asset('assets/images/welcome-img.png') }}" width="115" style="margin-top: -65px;" alt="Kaykewalk Welcome" />                            
+                            </div>
                         </div>
                     </div>
-                    <div class="col-md-5 text-end">
-                        <div class="welcome-box-img">
-                            {{-- <img src="{{ asset('') }}assets/images/welcome-img.png" alt="Kaykewalk Welcome" /> --}}
-                            <img src="{{ asset('assets/images/welcome-img.png') }}" alt="Kaykewalk Welcome" />
+                </div>
+            </div>
+            <div class="row g-3">
+                <div class="col-md-8">
+                    <div class="row g-3">
+                        <!-- Active Projects -->
+                        <div class="col-md-6">
+                            <a href="#">
+                                <div class="card shadow-sm border-0">
+                                    <span class="card-open"><i class="bx bx-chevron-right"></i></span>
+                                    <div class="card-body d-flex align-items-center gap-3">
+                                        <div class="icon-box" style="background-color:#eafaf0;">
+                                            <i class='bx bx-objects-horizontal-left text-success'></i>
+                                        </div>
+                                        <div>
+                                            <span class="text-muted font-500">Active Projects</span>
+                                            <h5 class="mb-0">{{ $totalProjects }}</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <!-- Active Tasks -->
+                        <div class="col-md-6">
+                            <a href="#">
+                                <div class="card shadow-sm border-0">
+                                    <span class="card-open"><i class="bx bx-chevron-right"></i></span>
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-center gap-3">
+                                            <div class="icon-box" style="background-color:#e8f7ff;">
+                                                <i class='bx bx-task text-info'></i>
+                                            </div>
+                                            <div>
+                                                <span class="text-muted font-500">Active Tasks</span>
+                                                <h5 class="mb-0">
+                                                    {{ $users_tasks->where('status','!=','completed')->count() }}
+                                                </h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <!-- Priority Tasks -->
+                        <div class="col-sm-6">
+                            <a href="#">
+                                <div class="card shadow-sm border-0">
+                                    <span class="card-open"><i class="bx bx-chevron-right"></i></span>
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-center gap-3">
+                                            <div class="icon-box" style="background-color:#F4F0FF;">
+                                                <i class='bx bx-pin text-primary'></i>
+                                            </div>
+                                            <div>
+                                                <span class="text-muted font-500">Priority Tasks</span>
+                                                <h5 class="mb-0">
+                                                    {{ $users_tasks->where('priority', 'high')->where('status','!=','completed')->count() }}
+                                                </h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <!-- Today's Tasks -->
+                        <div class="col-sm-6">
+                            <a href="#">
+                                <div class="card shadow-sm border-0">
+                                    <span class="card-open"><i class="bx bx-chevron-right"></i></span>
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-center gap-3">
+                                            <div class="icon-box bg-secondary-light">
+                                                <i class='bx bx-task text-secondary'></i>
+                                            </div>
+                                            <div>
+                                                <span class="text-muted font-500">Today’s Tasks</span>
+                                                <h5 class="mb-0">
+                                                    {{ $users_tasks->where('due_date', today())->where('status','!=','completed')->count() }}
+                                                </h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <!-- Overdue Tasks -->
+                        <div class="col-sm-6">
+                            <a href="#">
+                                <div class="card shadow-sm border-0">
+                                    <span class="card-open"><i class="bx bx-chevron-right"></i></span>
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-center gap-3">
+                                            <div class="icon-box bg-danger-light">
+                                                <i class='bx bx-task text-danger'></i>
+                                            </div>
+                                            <div>
+                                                <span class="text-muted font-500">Overdue Tasks</span>
+                                                <h5 class="mb-0">
+                                                    {{ $users_tasks->where('due_date', '<', today())->where('status','!=','completed')->count() }}
+                                                </h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <!-- In Review Tasks -->
+                        <div class="col-sm-6">
+                            <a href="#">
+                                <div class="card shadow-sm border-0">
+                                    <span class="card-open"><i class="bx bx-chevron-right"></i></span>
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-center gap-3">
+                                            <div class="icon-box bg-warning-light">
+                                                <i class='bx bx-task text-warning'></i>
+                                            </div>
+                                            <div>
+                                                <span class="text-muted font-500">In Review Tasks</span>
+                                                <h5 class="mb-0">
+                                                    {{ $users_tasks->where('status', 'in_review')->count() }}
+                                                </h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tasks Overview -->
+                <div class="col-md-4">
+                    <div class="card shadow-sm border-0">
+                        <div class="card-body">
+                            <h4 class="card-title text-center">Tasks Overview</h4>
+                            <div class="text-center">
+                                <div id="progress-chart-gauge" style="width: 100%;height: 260px; margin-top: -15px; margin-bottom: -102px;"></div>
+                                <div>
+                                    Progress
+                                    <b>
+                                        <span class="text-success">
+                                            {{ round($users_tasks->where('status','completed')->count() > 0 ?
+                                            ($users_tasks->where('status','completed')->count() / $users_tasks->count()) * 100 :
+                                            0)}}%
+                                        </span>
+                                    </b>
+                                </div>
+                            </div>
+                            <div class="row mt-2 task-details text-center">
+                                <div class="col-md-6">
+                                    <h6><b>{{ $users_tasks->where('status','in_progress')->count()}}</b></h6>
+                                    <div>On Going</div>
+                                </div>
+                                <div class="col-md-6">
+                                    <h6><b>{{ $users_tasks->where('status','pending')->count()}}</b></h6>
+                                    <div>Unfinished</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Task Calendar -->
+                <div class="col-md-6">
+                    <div class="card shadow-sm border-0">
+                        <div class="card-body">
+                            <h4 class="card-title">Weekly Tasks Summery </h4>
+                            <div id="calendar"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Post & Projects Statistics -->
+                <div class="col-md-6">
+                    <div class="card shadow-sm border-0">
+                        <div class="card-body">
+                            <h5 class="mb-0">Post Tasks Overview</h5>
+                            <p class="text-muted">Overview of your monthly post tasks.</p>
+                        </div>
+                        <div id="projectChart" style="height: 480px; margin-top: -130px;"></div>
+                    </div>
+                </div>
+
+                <!-- Important Projects -->
+                <div class="col-sm-6">
+                    <div class="card shadow-sm border-0">
+                        <div class="card-body">
+                            <h4 class="card-title">Important Projects</h4>
+                                <div class="card_style bg-light spacing-between-20">
+                                    <a href="https://app.kaykewalk.com/webeesocial/project/view/24" class="card_style-open"><i class="bx bx-chevron-right"></i></a>
+                                    <div class="row mb-2">
+                                        <div class="col-auto pe-md-1">
+                                            <span class="avatar avatar-sm avatar-" data-toggle="tooltip" data-placement="top" data-bs-original-title="Oregon July">OJ</span></div>
+                                        <div class="col">
+                                            <div class="text-sm text-light"><i class="bx bx-briefcase-alt-2"></i> Oregon Hazelnuts</div>
+                                            <div class="mb-1 text-lg">
+                                                <a href="https://app.kaykewalk.com/webeesocial/project/view/24" wire:navigate="">Oregon July</a>
+                                            </div>
+                                            <div class="text-danger text-sm"><i class="bx bx-calendar"></i> <span>Jul 24 2025</span></div>
+                                        </div>
+                                    </div>
+                                    <!-- Need to remove team from here -->
+                                    <div class="d-flex flex-wrap gap-2 mt-2 d-none">
+                                        <!--[if BLOCK]><![endif]-->                            <!--[if BLOCK]><![endif]-->                            <a href="https://app.kaykewalk.com/webeesocial/team/view/3" wire:navigate="" class="btn btn-success rounded-pill btn-xs text-uppercase">Client Servicing</a>
+                                                                    <a href="https://app.kaykewalk.com/webeesocial/team/view/4" wire:navigate="" class="btn btn-success rounded-pill btn-xs text-uppercase">Copy</a>
+                                                                    <a href="https://app.kaykewalk.com/webeesocial/team/view/5" wire:navigate="" class="btn btn-success rounded-pill btn-xs text-uppercase">Design</a>
+                                        <!--[if ENDBLOCK]><![endif]-->
+                                        <!--[if ENDBLOCK]><![endif]-->
+                                    </div>
+                                                            <div class="progress mt-3">
+                                        <div class="progress-bar progress-secondary" role="progressbar" aria-label="Task Done" style="width: 0%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                                        </div>
+                                    </div>
+                                    <div class="row mt-2">
+                                        <div class="col"><span class="btn-batch btn-batch-secondary"><b>1</b> <span>Pending Task </span></span></div>
+                                        <div class="col text-end"><span class="btn-batch btn-batch-danger"><b>0</b> <span>Overdue Tasks </span></span></div>
+                                        
+                                    </div>
+                                </div>
+
+
+                            <div class="overflow-y scrollbar scrollbar-primary">
+                                @foreach($mostImportantProjects as $project)
+                                <div class="card_style bg-light spacing-between-20">
+                                    <a href="{{ route('project.profile', $project->id) }}" class="card_style-open"><i class='bx bx-chevron-right'></i></a>
+                                    <div class="row mb-2">
+                                        <div class="col-auto pe-md-1">
+                                            <x-avatar class="avatar-sm" :user="$project" />
+                                        </div>
+                                        <div class="col">
+                                            <div class="text-sm text-light"><i class="bx bx-briefcase-alt-2"></i> {{ $project->client->name}}</div>
+                                            <div class="mb-1 text-lg">
+                                                <a href="{{ route('project.profile', $project->id) }}" wire:navigate>{{ $project->name }}</a>
+                                            </div>
+                                            <div class="text-danger text-sm"><i class="bx bx-calendar"></i> <span>{{ \Carbon\Carbon::parse($project->due_date)->format('M d Y')
+                                                ?? 'No Due Date' }}</span></div>
+                                        </div>
+                                    </div>
+                                    <!-- Need to remove team from here -->
+                                    <div class="d-flex flex-wrap gap-2 mt-2 d-none">
+                                        @if($project->teams)
+                                        @foreach($project->teams as $team)
+                                        <a href="{{ route('team.profile', $team->id) }}" wire:navigate class="btn btn-success rounded-pill btn-xs text-uppercase">{{$team->name}}</a>
+                                        @endforeach
+                                        @endif
+                                    </div>
+                                    @php
+                                    $taskDone = $project->tasks->where('status', 'completed')->count();
+                                    $taskPending = $project->tasks->where('status', '!=', 'completed')->count();
+                                    $taskOverdue = $project->tasks->where('due_date', '<', now())->where('status', '!=', 'completed')->count();
+                                    $totalTask = $project->tasks->count();
+
+                                    if ($totalTask > 0) {
+                                    $percentage = ($taskDone / $totalTask) * 100;
+                                    } else {
+                                    $percentage = 0;
+                                    }
+                                    @endphp
+                                    <div class="progress mt-3">
+                                        <div class="progress-bar progress-secondary" role="progressbar" aria-label="Task Done"
+                                            style="width: {{$percentage}}%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                                        </div>
+                                    </div>
+                                    <div class="row mt-2">
+                                        <div class="col"><span class="btn-batch btn-batch-secondary"><b>{{ $taskPending }}</b> <span>Pending {{ pluralOrSingular($taskPending,'Task') }} </span></span></div>
+                                        <div class="col text-end"><span class="btn-batch btn-batch-danger"><b>{{ $taskOverdue }}</b> <span>Overdue {{ pluralOrSingular($taskOverdue,'Task') }} </span></span></div>
+                                        
+                                    </div>
+                                </div>
+                                @endforeach
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
-            <div class="box-item">
-                <div class="row">
-                    <div class="col-md-6">
-                        <h4>Tasks Overview</h4>
-                        <h6>Total Tasks: <span class="text-secondary font-500"> {{ $users_tasks->count()  }} </span></h6>
-                        <div class="row text-center mt-3">
-                            <div class="col">
-                                <div id="my-task-chart" style="width: 70px; height: 70px; margin: auto;"></div>
-                                <span>My Tasks</span>
+        <div class="col-xl-3">
+            <div class="row g-3">
+                <div class="col-12">
+                    <!-- Todo's List -->
+                    <div class="card shadow-sm border-0">
+                        <div class="card-body">
+                            <div class="todo-box">
+                                <h5 class="card-title">Todo List</h5>
+
+                                <!-- Filter -->
+                                <div class="filter d-flex gap-2">
+                                    <button class="filter-btn" data-filter="all">All</button>
+                                    <button class="filter-btn active" data-filter="pending">Pending</button>
+                                    <button class="filter-btn" data-filter="completed">Completed</button>
+                                </div>
+
+                                <div class="todo-input mt-2">
+                                    <input type="text" id="todo-input" placeholder="Add new task..." />
+                                    <button onclick="addTodo()"><i class='bx bx-plus'></i></button>
+                                </div>
+
+                                <div class="position-relative">
+                                    <ul id="todo-list" class="p-0 mt-2 mb-0 scrollbar"></ul>
+                                    <div id="completed-image" class="todo-completed-image" style="display: none;">
+                                        <h3 class="font-400 text-light">Todo-free <br/> Stress-free</h3>
+                                        <picture>
+                                            <source srcset="https://fonts.gstatic.com/s/e/notoemoji/latest/1f60e/512.webp" type="image/webp">
+                                            <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f60e/512.gif" alt="😎" width="90" height="90">
+                                        </picture>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col">
-                                <div id="others-tasks-chart" style="width: 70px; height: 70px; margin: auto;"></div>
-                                <span>Other Tasks</span>
-                            </div>
+                            
                         </div>
-                    </div> 
-                    <div class="col-md-6 border-start">
-                        <div class="text-center">
-                            <div id="progress-chart-gauge" style="width: 100%;height: 200px; margin-top: -15px; margin-bottom: -80px;"></div>
-                            <div>
-                                Progress
-                                <b>
-                                    <span class="text-success">
-                                        {{ round($users_tasks->where('status','completed')->count() > 0 ?
-                                        ($users_tasks->where('status','completed')->count() / $users_tasks->count()) * 100 :
-                                        0)}}%
-                                    </span>
-                                </b>
-                            </div>
-                        </div>
-                        <div class="row mt-2 task-details text-center">
-                            <div class="col-md-6">
-                                <h6><b>{{ $users_tasks->where('status','in_progress')->count()}}</b></h6>
-                                <div>On Going</div>
-                            </div>
-                            <div class="col-md-6">
-                                <h6><b>{{ $users_tasks->where('status','pending')->count()}}</b></h6>
-                                <div>Unfinished</div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <!-- Recent Comments -->
+                    <div class="card shadow-sm border-0">
+                        <div class="card-body">
+                            <h4 class="card-title">Recent Comments</h4>
+                            <div class="scrollbar">
+                                <div style="height: 383px;">
+                                    @foreach($recent_comments as $comment)
+                                        <div class="mb-4">
+                                            <a class="d-block" href="{{ route('task.view', $comment->task_id) }}">
+                                                <div class="d-flex gap-1 mb-3">
+                                                    <span><x-avatar :user="$comment->user" class="avatar-sm" /></span>
+                                                    <div class="comment-text">
+                                                        <span class="d-flex text-muted text-xs mb-1">{{ \Carbon\Carbon::parse($comment->created_at)->diffForHumans() }}</span>
+                                                        <span class="text-sm">{!! Str::limit(strip_tags($comment->comment), 70, '...') !!}</span>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+
+
+                                        <div class="cmnt_item_row card_style bg-light d-none">
+                                            <a href="{{ route('task.view', $comment->task_id) }}" class="card_style-open"><i class='bx bx-chevron-right'></i></a>
+                                            <div class="cmnt_item_user">
+                                                <div class="cmnt_item_user_img">
+                                                    <x-avatar :user="$comment->user" class="avatar-sm" />
+                                                </div>
+                                                <div class="cmnt_item_user_name-wrap">
+                                                    <div class="cmnt_item_user_name">{{ $comment->user->name }}</div>
+                                                    <div class="cmnt_item_date">{{ \Carbon\Carbon::parse($comment->created_at)->diffForHumans() }}</div>
+                                                </div>
+                                            </div>
+                                            <div class="mt-2 cmnt_item_task border-bottom pb-2"><i class="bx bx-task"></i> <a href="{{ route('task.view', $comment->task_id) }}">{{ $comment->task->name }}</a></div>
+                                            <div class="cmnt_item_user_text">
+                                                <a class="text-light" href="{{ route('task.view', $comment->task_id) }}">
+                                                    {!! Str::limit(strip_tags($comment->comment), 25, '...') !!}
+                                                </a>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -92,332 +389,17 @@
     </div>
 
     <div class="row">
-        <div class="col-md-4 mt-4">
-            <div class="box-item h-100">
-                <h4 class="text-xl">My Tasks</h4>
-                <hr>
-                <ul class="nav nav-pills nav-pills-xs mb-3" id="pills-tab" role="tablist">
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link active" id="pills-today-tab" data-bs-toggle="pill"
-                            data-bs-target="#pills-today" type="button" role="tab"
-                            aria-controls="pills-today" aria-selected="false">
-                            Today 
-                            <span class="btn-batch">
-                                {{ $users_tasks->where('due_date', now()->format('Y-m-d'))->where('status','!=','completed')->count();}}
-                            </span>
-                        </button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link " id="pills-upcoming-tab" data-bs-toggle="pill"
-                            data-bs-target="#pills-upcoming" type="button" role="tab"
-                            aria-controls="pills-upcoming" aria-selected="true">Upcoming <span
-                                class="btn-batch">{{ $users_tasks->where('due_date', '>',
-                                now())->where('status','!=','completed')->count();}}</span></button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="pills-overdue-tab" data-bs-toggle="pill"
-                            data-bs-target="#pills-overdue" type="button" role="tab"
-                            aria-controls="pills-overdue" aria-selected="false">Overdue <span
-                                class="btn-batch">{{ $users_tasks->where('due_date', '<', now())->where('status','!=','completed')->
-                                    count();}}</span></button>
-                    </li>
-                </ul>
-                <div class="tab-content" id="pills-tabContent">
-                    <div class="tab-pane fade show active overflow-y scrollbar scrollbar-primary" id="pills-today" role="tabpanel"
-                        aria-labelledby="pills-upcoming-tab" tabindex="0">
-                        <div class="taskList scrollbar">
-                            <div style="height: 300px;">
-                                @foreach($users_tasks->where('due_date', now()->format('Y-m-d'))->where('status','!=','completed')->take(15) as $task)
-                                <div class="taskList_row taskList_todos">
-                                    <div class="row">
-                                        <div class="col">
-                                            <div class="taskList_col taskList_col_title">
-                                                <div class="taskList_col_title_open" ><i
-                                                        class="bx bx-chevron-right"></i>
-                                                </div>
-                                                <a href="{{ route('task.view', $task->id) }}">
-                                                    <div>{{Str::limit($task->name, 25, '...')}}</div>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <div class="taskList_col"><span class="btn-batch ">{{ Carbon\Carbon::parse($task->due_date)->format('d M') }}</span></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                @endforeach
-                            </div>
-                        </div>
-                        @if($users_tasks->where('due_date', '>', now())->count() > 10)
-                        <div class="text-center mt-2"><a href="{{ route('task.index') }}" wire:navigate class="btn-link">See More</a></div>
-                        @endif
-                    </div>
-                    <div class="tab-pane fade overflow-y scrollbar scrollbar-primary" id="pills-upcoming" role="tabpanel"
-                        aria-labelledby="pills-upcoming-tab" tabindex="0">
-                        <div class="taskList scrollbar">
-                            <div style="height: 300px;">
-                                @foreach($users_tasks->where('due_date', '>', now())->where('status','!=','completed')->take(15) as $task)
-                                <div class="taskList_row taskList_todos">
-                                    <div class="row">
-                                        <div class="col">
-                                            <div class="taskList_col taskList_col_title">
-                                                <div class="taskList_col_title_open" ><i
-                                                        class="bx bx-chevron-right"></i>
-                                                </div>
-                                                <a href="{{ route('task.view', $task->id) }}">
-                                                    <div>{{Str::limit($task->name, 25, '...')}}</div>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <div class="taskList_col"><span class="btn-batch ">{{ Carbon\Carbon::parse($task->due_date)->format('d M') }}</span></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                @endforeach
-                            </div>
-                        </div>
-                        @if($users_tasks->where('due_date', '>', now())->count() > 10)
-                        <div class="text-center mt-2"><a href="{{ route('task.index') }}" wire:navigate class="btn-link">See More</a></div>
-                        @endif
-                    </div>
-                    <div class="tab-pane fade overflow-y scrollbar scrollbar-primary" id="pills-overdue" role="tabpanel"
-                        aria-labelledby="pills-overdue-tab" tabindex="0">
-                        <div class="taskList scrollbar">
-                            <div style="height: 300px;">
-                                @foreach($users_tasks->where('due_date', '<', now())->where('status','!=','completed')->take(15) as $task)
-                                <div class="taskList_row taskList_todos">
-                                    <div class="row">
-                                        <div class="col">
-                                            <div class="taskList_col taskList_col_title">
-                                                <div class="taskList_col_title_open" ><i
-                                                        class="bx bx-chevron-right"></i>
-                                                </div>
-                                                <a href="{{ route('task.view', $task->id) }}">
-                                                    <div>{{Str::limit($task->name, 25, '...')}}</div>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <div class="taskList_col"><span class="btn-batch ">{{ Carbon\Carbon::parse($task->due_date)->format('d M') }}</span></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                @endforeach
-                            </div>
-                        </div>
-                        @if($users_tasks->where('due_date', '>', now())->count() > 10)
-                        <div class="text-center mt-2"><a href="{{ route('task.index') }}" wire:navigate class="btn-link">See More</a></div>
-                        @endif
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4 mt-4">
-            <div class="box-item h-100">
-                <h4 class="text-xl">My Progress</h4>
-                <hr>
-                <!-- <div class="text-center" id="user-progress-pie-chart" style="width: 100%;height: 250px;"></div> -->
-                <div class="row align-items-center">
-                    <div class="col">
-                        <div class="row align-items-center py-2">
-                            <div class="col-md-auto pe-md-0">
-                                <div class="text-primary"><i class="bx bxs-circle"></i></div>
-                            </div>
-                            <div class="col ps-md-2">
-                                <h6 class="mb-0">Assigned Tasks</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-auto">
-                        <h6 class="mb-0 text-primary"><b>{{ $users_tasks->where('status',
-                                'pending')->count();}}</b></h6>
-                    </div>
-                </div>
-                <hr>
-                <div class="row align-items-center">
-                    <div class="col">
-                        <div class="row align-items-center py-2">
-                            <div class="col-md-auto pe-md-0">
-                                <div class="text-secondary"><i class="bx bxs-circle"></i></div>
-                            </div>
-                            <div class="col ps-md-2">
-                                <h6 class="mb-0">Accepted Tasks</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-auto">
-                        <h6 class="mb-0 text-secondary"><b>{{ $users_tasks->where('status',
-                                'in_progress')->count();}}</b></h6>
-                    </div>
-                </div>
-                <hr>
-                <div class="row align-items-center">
-                    <div class="col">
-                        <div class="row align-items-center py-2">
-                            <div class="col-md-auto pe-md-0">
-                                <div class="text-warning"><i class="bx bxs-circle"></i></div>
-                            </div>
-                            <div class="col ps-md-2">
-                                <h6 class="mb-0">In Review Tasks</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-auto">
-                        <h6 class="mb-0 text-warning"><b>{{ $users_tasks->where('status',
-                                'in_review')->count();}}</b></h6>
-                    </div>
-                </div>
-                <hr>
-                <div class="row align-items-center">
-                    <div class="col">
-                        <div class="row align-items-center py-2">
-                            <div class="col-md-auto pe-md-0">
-                                <div class="text-danger"><i class="bx bxs-circle"></i></div>
-                            </div>
-                            <div class="col ps-md-2">
-                                <h6 class="mb-0 text-danger">Overdue Tasks</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-auto">
-                        <h6 class="mb-0 text-danger"><b>{{ $users_tasks->where('due_date', '<', now())->where('status','!=','completed')->
-                                    count();}}</b></h6>
-                    </div>
-                </div>
-                <hr>
-                <div class="row align-items-center">
-                    <div class="col">
-                        <div class="row align-items-center py-2">
-                            <div class="col-md-auto pe-md-0">
-                                <div class="text-success"><i class="bx bxs-circle"></i></div>
-                            </div>
-                            <div class="col ps-md-2">
-                                <h6 class="mb-0">Completed Tasks</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-auto">
-                        <h6 class="mb-0 text-success"><b>{{
-                                $users_tasks->where('status','completed')->count();}}</b></h6>
-                    </div>
-                </div>
-                <!-- <hr> -->
-                <!-- <div class="row">
-                    <div class="col">
-                        <div class="row align-items-center">
-                            <div class="col-md-auto pe-md-0">
-                                <div class="text-secondary"><i class="bx bxs-circle"></i></div>
-                            </div>
-                            <div class="col ps-md-2">
-                                <h6 class="mb-0">Active Projects</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-auto">
-                        <h6 class="mb-0 text-secondary"><b>{{$active_projects}}</b></h6>
-                    </div>
-                </div> -->
-            </div>
-        </div>
-        <div class="col-md-4 mt-3">
-            <div class="box-item h-100">
-                <h4 class="text-xl">Recent Comments</h4>
-                <hr>
-                <div class="scrollbar">
-                    <div style="height: 350px;">
-                        @foreach($recent_comments as $comment)
-                            <div class="cmnt_item_row card_style bg-light">
-                                <a href="{{ route('task.view', $comment->task_id) }}" class="card_style-open"><i class='bx bx-chevron-right'></i></a>
-                                <div class="cmnt_item_user">
-                                    <div class="cmnt_item_user_img">
-                                        <x-avatar :user="$comment->user" class="avatar-sm" />
-                                    </div>
-                                    <div class="cmnt_item_user_name-wrap">
-                                        <div class="cmnt_item_user_name">{{ $comment->user->name }}</div>
-                                        <div class="cmnt_item_date">{{ \Carbon\Carbon::parse($comment->created_at)->diffForHumans() }}</div>
-                                    </div>
-                                </div>
-                                <div class="mt-2 cmnt_item_task border-bottom pb-2"><i class="bx bx-task"></i> <a href="{{ route('task.view', $comment->task_id) }}">{{ $comment->task->name }}</a></div>
-                                <div class="cmnt_item_user_text">
-                                    <a class="text-light" href="{{ route('task.view', $comment->task_id) }}">
-                                        {!! Str::limit(strip_tags($comment->comment), 25, '...') !!}
-                                    </a>
-                                </div>
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-8 mt-4">
-            <div class="box-item calendar-title">
-                <!-- <h4>Calendar</h4> -->
-                <div id="calendar"></div>
-            </div>
-        </div>
         <div class="col-md-4 mt-4">
             <div class="box-item h-100">
                 <h4 class="text-xl">Important Projects</h4>
                 <hr>
-                <div class="overflow-y scrollbar scrollbar-primary">
-                    @foreach($mostImportantProjects as $project)
-                    <div class="card_style bg-light spacing-between-20">
-                        <a href="{{ route('project.profile', $project->id) }}" class="card_style-open"><i class='bx bx-chevron-right'></i></a>
-                        <div class="row mb-2">
-                            <div class="col-auto pe-md-1">
-                                <x-avatar class="avatar-sm" :user="$project" />
-                            </div>
-                            <div class="col">
-                                <div class="text-sm text-light"><i class="bx bx-briefcase-alt-2"></i> {{ $project->client->name}}</div>
-                                <div class="mb-1 text-lg">
-                                    <a href="{{ route('project.profile', $project->id) }}" wire:navigate>{{ $project->name }}</a>
-                                </div>
-                                <div class="text-danger text-sm"><i class="bx bx-calendar"></i> <span>{{ \Carbon\Carbon::parse($project->due_date)->format('M d Y')
-                                    ?? 'No Due Date' }}</span></div>
-                            </div>
-                        </div>
-                        <!-- Need to remove team from here -->
-                        <div class="d-flex flex-wrap gap-2 mt-2 d-none">
-                            @if($project->teams)
-                            @foreach($project->teams as $team)
-                            <a href="{{ route('team.profile', $team->id) }}" wire:navigate class="btn btn-success rounded-pill btn-xs text-uppercase">{{$team->name}}</a>
-                            @endforeach
-                            @endif
-                        </div>
-                        @php
-                        $taskDone = $project->tasks->where('status', 'completed')->count();
-                        $taskPending = $project->tasks->where('status', '!=', 'completed')->count();
-                        $taskOverdue = $project->tasks->where('due_date', '<', now())->where('status', '!=', 'completed')->count();
-                        $totalTask = $project->tasks->count();
-
-                        if ($totalTask > 0) {
-                        $percentage = ($taskDone / $totalTask) * 100;
-                        } else {
-                        $percentage = 0;
-                        }
-                        @endphp
-                        <div class="progress mt-3">
-                            <div class="progress-bar progress-secondary" role="progressbar" aria-label="Task Done"
-                                style="width: {{$percentage}}%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                            </div>
-                        </div>
-                        <div class="row mt-2">
-                            <div class="col"><span class="btn-batch btn-batch-secondary"><b>{{ $taskPending }}</b> <span>Pending {{ pluralOrSingular($taskPending,'Task') }} </span></span></div>
-                            <div class="col text-end"><span class="btn-batch btn-batch-danger"><b>{{ $taskOverdue }}</b> <span>Overdue {{ pluralOrSingular($taskOverdue,'Task') }} </span></span></div>
-                            
-                        </div>
-                    </div>
-                    @endforeach
-                </div>
+                
             </div>
         </div>
     </div>
 
     {{-- pins --}}
-    {{-- @if($myPins->count() > 0)
+    @if($myPins->count() > 0)
         <div class="row mt-4">
             <div class="col">
                 <h4 class="text-xl">Pinned Projects</h4>
@@ -466,7 +448,7 @@
                 </div>
             @endforeach
         </div>
-    @endif --}}
+    @endif
 </div>
 @php
     $tour = session()->get('tour');
@@ -500,149 +482,135 @@
     <link href="https://cdn.jsdelivr.net/npm/intro.js@7.2.0/minified/introjs.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/intro.js@7.2.0/intro.min.js"></script>
     @endif
+    <script src="{{ asset('assets/js/todo.js') }}"></script>
     @endassets
 
     @script
     <script>
         $(document).ready(function () {
 
-            // my-task-chart
+            // Project Chart
+            const projectChartDom = document.getElementById('projectChart');
+            const projectChart = echarts.init(projectChartDom);
 
-            var dom = document.getElementById('my-task-chart');
-            var myChart = echarts.init(dom, null, {
-                renderer: 'canvas',
-                useDirtyRect: false
-            });
+            const projectData = [
+                { value: 12, name: 'In-review' },
+                { value: 20, name: 'Active' },
+                { value: 8, name: 'Completed' }
+            ];
 
-            var app = {};
-
-            var option;
-
-            option = {
+            const projectOption = {
+                color: ['#e7bf1d', '#e5d1ff', '#2ecc71'],
                 tooltip: {
-                    trigger: 'item'
+                    trigger: 'item',
+                    formatter: '{b} : {c} Post ({d}%)'
                 },
                 legend: {
-                    top: '5%',
-                    left: 'center',
-                    show:false
-                },
-                series: [
-                    {
-                    name: 'My Tasks',
-                    type: 'pie',
-                    radius: ['40%', '70%'],
-                    avoidLabelOverlap: false,
-                    itemStyle: {
-                        color : function(params) {
-                            var colorList = ['#48914D','#ddd'];
-                            return colorList[params.dataIndex]
-                        }
-                    },
-                    label: {
-                        show: false,
-                        position: 'center'
-                    },
-                    emphasis: {
-                        label: {
-                        show: false,
-                        fontSize: 40,
-                        fontWeight: 'bold'
-                        }
-                    },
-                    labelLine: {
-                        show: false
-                    },
-                    data: [
-                        {value: {{ $myTasks->where('status','completed')->count() }}, name: 'Completed'},
-                        {value: {{ $myTasks->where('status','!=','completed')->count() }}, name: 'Pending'}
-                    ]
+                    bottom: '15px',
+                    formatter: name => {
+                        const item = projectData.find(i => i.name === name);
+                        return `${name} (${item.value})`;
                     }
-                ]
+                },
+                series: [{
+                    name: 'Post',
+                    type: 'pie',
+                    radius: ['20%', '40%'],
+                    roseType: 'area',
+                    data: projectData,
+                    label: {
+                        show: true,
+                        formatter: '{b}\n{c} Post'
+                    }
+                }]
             };
 
-            if (option && typeof option === 'object') {
-                myChart.setOption(option);
-            }
+            projectChart.setOption(projectOption);
 
-            window.addEventListener('resize', myChart.resize);
-
-            // others-tasks-chart
-
-            var dom = document.getElementById('others-tasks-chart');
-            var myChart = echarts.init(dom, null, {
-                renderer: 'canvas',
-                useDirtyRect: false
+            window.addEventListener('resize', function() {
+                aiUsageChart.resize();
+                projectChart.resize();
             });
-
-            var app = {};
-
-            var option;
-
-            option = {
-                tooltip: {
-                    trigger: 'item'
-                },
-                legend: {
-                    top: '5%',
-                    left: 'center',
-                    show:false
-                },
-                series: [
-                    {
-                    name: 'Others Tasks',
-                    type: 'pie',
-                    radius: ['40%', '70%'],
-                    avoidLabelOverlap: false,
-                    label: {
-                        show: false,
-                        position: 'center'
-                    },
-                    itemStyle: {
-                        color : function(params) {
-                            var colorList = ['#48914D','#ddd'];
-                            return colorList[params.dataIndex]
-                        }
-                    },
-                    emphasis: {
-                        label: {
-                        show: false,
-                        fontSize: 40,
-                        fontWeight: 'bold'
-                        }
-                    },
-                    labelLine: {
-                        show: false
-                    },
-                    data: [
-                        {value: {{ $otherTasks->where('status','completed')->count() }}, name: 'Completed'},
-                        {value: {{ $otherTasks->where('status','!=','completed')->count() }}, name: 'Pending'}
-                    ]
-                    }
-                ]
-            };
-
-            if (option && typeof option === 'object') {
-                myChart.setOption(option);
-            }
-
-            window.addEventListener('resize', myChart.resize);
-
-
 
             // calendar
 
             var events = @json($events);
             var calendarEl = document.getElementById('calendar');
-            var calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: 'dayGridMonth',
-                events: events,
+
+            const originalEvents = [...events];
+
+            const calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'listWeek',
+                events: originalEvents,
                 dayMaxEventRows: true,
                 moreLinkClick: 'popover',
                 moreLinkClassNames: 'calendar-more-link-btn',
+                headerToolbar: {
+                    left: 'title',
+                    right: 'todayBtn,resetBtn prev,next'
+                },
+                customButtons: {
+                    todayBtn: {
+                        text: "Today's Tasks",
+                        click: function () {
+                            const todayBtnEl = document.querySelector('.fc-todayBtn-button');
+                            const isActive = todayBtnEl.classList.contains('active');
 
+                            if (!isActive) {
+                                todayBtnEl.classList.add('active');
+
+                                const today = new Date();
+                                const todayStr = today.toISOString().split('T')[0];
+
+                                const todayEvents = originalEvents.filter(event => {
+                                    const eventDate = new Date(event.start);
+                                    return eventDate.toISOString().split('T')[0] === todayStr;
+                                });
+
+                                calendar.removeAllEvents();
+                                calendar.addEventSource(todayEvents);
+                                calendar.changeView('listDay', today);
+                            } else {
+                                resetCalendar();
+                            }
+                        }
+                    },
+                    resetBtn: {
+                        text: '',
+                        click: function () {
+                            resetCalendar();
+                        }
+                    }
+                }
             });
+
             calendar.render();
+
+            // Inject icon after render
+            setTimeout(() => {
+                const resetBtnEl = document.querySelector('.fc-resetBtn-button');
+                if (resetBtnEl) {
+                    resetBtnEl.innerHTML = '<i class="bx bx-refresh"></i>';
+                    resetBtnEl.title = 'Reset Calendar';
+                }
+
+                document.querySelector('.fc-prev-button')?.addEventListener('click', resetCalendar);
+                document.querySelector('.fc-next-button')?.addEventListener('click', resetCalendar);
+                document.querySelector('.fc-listWeek-button')?.addEventListener('click', resetCalendar);
+            }, 100);
+
+            // Reset function
+            function resetCalendar() {
+                setTimeout(() => {
+                    const todayBtnEl = document.querySelector('.fc-todayBtn-button');
+                    if (todayBtnEl) todayBtnEl.classList.remove('active');
+
+                    calendar.removeAllEvents();
+                    calendar.addEventSource(originalEvents);
+                    calendar.changeView('listWeek');
+                }, 10);
+            }
+
 
             // progress pie chart
 
@@ -801,4 +769,4 @@
             .start();
     </script>
     @endif
-    @endscript
+@endscript

@@ -194,4 +194,10 @@
         margin-bottom: $spacing_xs;
         position: relative;
     }  
+
+    // Title
+    &-title {
+        font-size: 1.3rem;
+        margin-bottom: 10px;
+    }
 }

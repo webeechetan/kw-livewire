@@ -41,7 +41,7 @@ $border_form: #ddd;
 
 /*---- Actions ----*/
 $success: #2ecc71;
-$success_light: #E6F9EE;
+$success_light: #eafaf0;
 $danger: #ff0000;
 $danger_light: #fedddc;
 $warning: #e7bf1d;
@@ -99,6 +99,10 @@ $table_header_color: $secondary;
     }
     &-success {
         color: $success !important;
+
+        &-light {
+            color: $success_light !important;
+        }
     }
     &-warning {
         color: $warning !important;
@@ -152,6 +156,9 @@ $table_header_color: $secondary;
     }
     &-secondary {
         background-color: $secondary !important;
+        &-light {
+            background-color: $secondary_light !important;
+        }
     }
     &-light {
         background-color: $light !important;
