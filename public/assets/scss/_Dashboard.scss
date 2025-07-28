@@ -258,74 +258,144 @@
 
 /*---- TODO ----*/
 .todo {
-    &-add {
-        position: relative;
+    &-box {
+        .filter {
+            &-btn {
+                border: none;
+                font-size: 12px;
+                text-transform: uppercase;
+                padding: 3px 10px;
+                border-radius: 4px;
+                letter-spacing: 0.5px;
 
-        input {
-            border: 2px solid $secondary;
+                &.active {
+                    background-color: $brand;
+                    color: #fff;
+                }
+            }
+        }
+        ul#todo-list {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+            min-height: 283px;
+            max-height: 283px;
+            overflow-y: auto;
         }
 
-        &-btn {
-            position: absolute;
-            right: $spacing_sm;
-            top: 7px;
+        .loading-spinner {
+            text-align: center;
+            color: #888;
+            padding: 10px;
+            font-size: 14px;
         }
     }
+    &-input {
+        display: flex;
+        padding: 7px;
+        border: 1px solid $success;
+        font-size: 14px;
+        border-radius: 4px;
+        input {
+            border: none;
+            flex: 1;
+            &:focus {
+                box-shadow: none;
+                outline: none;
+            }
+        }
+        button {
+            border: none;
+            background-color: $success_light;
+            i {
+                color: $success;
+            }
+        }
 
+    }
     &-item {
-        @include flex_align_center;
-        border: 1px solid $grey;
-        padding: $spacing_xs $spacing_sm;
-        border-radius: $border_radius_xs;
+        display: flex;
+        align-items: flex-start;
+        padding: 7px 0;
+        gap: 7px;
 
         &:not(:last-child) {
-            margin-bottom: $spacing_xs;
+            border-bottom: 1px solid $border_grey;
         }
 
-        &-text {
-            flex: 1
+        button {
+            border: none;
+            padding: 0;
+            margin: 0;
+            background-color: transparent;
         }
 
-        &-btns {
-            @include flex_align_center;
-            width: 125px;
+        &.fade-in {
+            animation: fadeIn 0.4s ease-in;
+        }
 
-            button {
-                border: none;
+        &.completed {
+            text-decoration: line-through;
+            color: $text_light;
 
-                &:not(:last-child) {
-                    margin-right: $spacing_xs;
+            .todo-check {
+                button {
+                    background-color: $success;
+                    color: #fff;
                 }
             }
         }
     }
+    &-details {
+        flex: 1;
 
-    // New Code
+        span {
+            display: flex;
+            font-size: 14px;
 
-    &-input {
-        display: flex;
-        align-items: center;
-        gap: 5px;
+            &:focus-visible {
+                outline: none;
+                background-color: $light;
+            }
+        }
+    }
+    &-check {
+        button {
+            background-color: $light;
+            width: 16px;
+            height: 16px;
+            line-height: 100%;
+            border-radius: 4px;
+            margin-top: 3px;
 
-        #todo-input {
-            min-height: inherit;
+            &:hover, &:focus {
+                background-color: $success_light;
+                color: $success;
+            }
+        }
+    }
+    &-created-date {
+        font-size: 10px;
+        color: $text_light;
+    }
+    &-actions {
+        margin-right: 10px;
+        button {
+            color: $danger;
+            font-size: 12px;
         }
     }
 
-    &-date {
-        position: relative;
-        width: 30px;
-
-        // .todo-date-icon {
-        //     font-size: 26px;
-        // }
-
-        input[type="date"] {
-            opacity: 0;
-            position: absolute;
-            right: 0;
-            top: 0;
-        }
+    &-completed-image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
     }
 }
 
@@ -1377,6 +1447,33 @@
 }
 
 /* ----- Comment Area ----- */
+.comment {
+    &-text {
+        width: 100%;
+        background-color: $grey;
+        padding: 3px 7px;
+        border-radius: 6px;
+        position: relative;
+        transition: all 0.3s ease;
+
+        &:before {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 7px;
+            border: 10px solid transparent;
+            border-top: 14px solid $grey;
+            transition: all 0.3s ease;
+        }
+
+        &:hover {
+            background-color: $success_light;
+            &:before {
+                border-top: 14px solid $success_light;
+            }
+        }
+    }
+}
 .custComment {
     margin-top: 40px;
 
@@ -2147,39 +2244,116 @@
 
 /* ----- Calender ---- */
 .fc .fc {
+    &-header-toolbar {
+        button {
+            margin: 0 !important;
+        }
+    }
     &-button {
-        &-primary {
-            background-color: $secondary;
+        &-primary:not(.fc-resetBtn-button) {
+            background-color: $dark;
             border-color: unset;
             color: var(--fc-button-text-color);
+            font-size: 12px;
+            padding: 3px;
+            border-radius: 5px !important;
+            line-height: 100%;
+            transition: all 0.3s ease;
+            
+            &.fc-todayBtn-button {
+                background-color: $secondary_light;
+                border-color: $secondary;
+                color: $secondary;
+                padding: 6px 10px;
+
+                &:hover, &.active {
+                    background-color: $secondary;
+                    color: #fff;
+                }
+            }
+        }
+        &.fc-resetBtn-button {
+            padding: 0 0 0 5px;
+            font-size: 22px;
+            background: transparent;
+            color: $dark;
+            border: none;
+            line-height: 100%;
         }
     }
 
     &-toolbar-title {
-        font-size: 24px;
-        color: $dark;
+        font-size: 14px;
+        text-transform: uppercase;
+        color: $secondary;
     }
 
     &-col-header-cell-cushion {
         font-weight: 500;
     }
 
-    &-day {
+    &-daygrid-day-top {
+        justify-content: center;
+    }
 
-        &-mon,
-        &-tue,
-        &-wed,
-        &-thu,
-        &-fri {
-            a {
-                color: $secondary;
+    &-event {
+        .fc-list-event-time {
+            display: none;
+        }
+        &:hover td {
+            background: transparent;
+        }
+    }
+
+    &-list-table td {
+        font-size: 14px;
+    }
+
+    &-day {
+        a {
+            font-weight: 500;
+        }
+        .fc-cell-shaded {
+            background-color: $light;
+        }
+        &-past {
+            .fc-cell-shaded {
+                a   {
+                    color: $text_light;
+                }
+            }
+        }
+        &-today {
+ 
+            .fc-cell-shaded {
+                background-color: $secondary_light;
+
+                a {
+                    color: $secondary;
+                }
             }
         }
     }
 
-    &-daygrid-day-top {
-        justify-content: center;
+    &-scroller {
+        &::-webkit-scrollbar-track {
+            background-color: $light;
+        }
+
+        &::-webkit-scrollbar {
+            border-radius: $border_radius_xs;
+            width: 4px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            border-radius: $border_radius_xs;
+            background-color: $grey_xd;
+        }
     }
+}
+
+.fc-theme-standard .fc-list {
+    border: none ;
 }
 
 .fc-theme-standard td,
