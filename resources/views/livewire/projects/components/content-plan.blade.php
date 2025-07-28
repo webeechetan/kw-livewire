@@ -13,10 +13,32 @@
     <div wire:ignore>
         <div class="row calendarTableRow ">
             <div class="col-md-12 mb-4">
-                <h4>Content Plan Table</h4>
+                <h4>{{ $contentPlan->title }}</h4>
                 <div>
                     <button class="btn btn-primary" id="exportToExcel">Export to Excel</button>
                     <button class="btn btn-primary" id="create-new-post" >Create Post</button>
+                    <button class="btn btn-primary" id="import-post-btn" >Import Posts</button>
+                    <div class="import-report mt-3 mb-3 alert alert-info d-none">
+                        <div class="summary mb-2"></div>
+                        <div class="failures d-none">
+                            <button class="btn btn-sm btn-outline-danger mb-2" type="button" data-bs-toggle="collapse" data-bs-target="#importFailureTable">
+                                Show Errors
+                            </button>
+                            <div class="collapse" id="importFailureTable">
+                                <table class="table table-sm table-bordered">
+                                    <thead class="table-danger">
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Row</th>
+                                            <th>Error</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    
                     <div id="calendarTable" class="mt-4" style="height: 500px"></div>
                 </div>
                 
@@ -112,6 +134,80 @@
             </div>
         </div>
     </div>
+    {{-- Import Post Modal  --}}
+    <div class="modal fade" id="importPostModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true" wire:ignore>
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header d-flex align-items-center justify-content-between gap-20">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    <span class="btn-icon btn-icon-primary me-1">
+                        <i class='bx bx-layer'></i>
+                    </span>Import Post
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body modal-form-body">
+                <div class="mb-3 p-3 border rounded bg-light">
+                    <h6 class="mb-2">📝 Import Instructions</h6>
+                    <ul class="mb-2">
+                        <li>Upload a CSV or Excel file with the correct headers.</li>
+                        <li>Ensure dates are in <code>YYYY-MM-DD</code> format.</li>
+                        <li>Maximum 1000 rows per file.</li>
+                    </ul>
+                    <div class="mb-2">
+                        <strong>Required Headers:</strong>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-sm text-center">
+                                <thead class="table-secondary">
+                                    <tr>
+                                        <th>date</th>
+                                        <th>platform</th>
+                                        <th>format</th>
+                                        <th>content_bucket</th>
+                                        <th>content_idea</th>
+                                        <th>creative_copy</th>
+                                        <th>visual_direction</th>
+                                        <th>caption</th>
+                                        <th>status</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                    <div>
+                        <a href="/path-to-sample-template.xlsx" class="btn btn-link btn-sm" target="_blank">
+                            <i class="bx bx-download"></i> Download Sample Template
+                        </a>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label for="post-date" class="form-label">Select File</label>
+                    <input type="file" class="form-style" wire:model="postFile" id="postFile">
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button wire:click="importPost" class="btn btn-primary importPostBtn">
+                    <span wire:loading.remove wire:target="importPost, postFile">
+                        Import Posts
+                    </span>
+                    <span wire:loading wire:target="importPost, postFile">
+                        Loading...
+                        <div class="spinner-border spinner-border-sm" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
 </div>
 
 @assets
@@ -122,9 +218,62 @@
 @push('scripts')
 <script>
 
+    document.addEventListener('imported', (event) => {
+        $("#importPostModal").modal('hide');
+        console.log(event.detail)
+        const report = event.detail[0];
+        const container = document.querySelector('.import-report');
+        const summary = container.querySelector('.summary');
+        const failureSection = container.querySelector('.failures');
+        const failureBody = container.querySelector('tbody');
+
+        // Reset old content
+        summary.innerHTML = '';
+        failureBody.innerHTML = '';
+        failureSection.classList.add('d-none');
+
+        if(report.header_error == '' || report.header_error == null){
+            // Show summary
+            summary.innerHTML = `
+                <strong>Import Summary:</strong><br>
+                <strong>Success</strong> : ${report.success || 0} rows imported successfully<br>
+                <strong>Failed </strong>: ${report.failed || 0} failed
+            `;
+        } else{
+            summary.innerHTML = `
+                <strong>Import Summary:</strong><br>
+                <strong>Header Error</strong> : ${report.header_error || 0}
+                `;
+        }
+
+
+        // Show failures if any
+        if (report.failed && report.failures && report.failures.length > 0) {
+            failureSection.classList.remove('d-none');
+
+            report.failures.forEach((item, index) => {
+                failureBody.innerHTML += `
+                    <tr>
+                        <td>${index + 1}</td>
+                        <td><pre>${JSON.stringify(item.row, null, 2)}</pre></td>
+                        <td>${item.error}</td>
+                    </tr>
+                `;
+            });
+        }
+
+        // Show the report
+        container.classList.remove('d-none');
+    });
+
+
     $(document).ready(function(){
         $("#create-new-post").click(function(){
             $("#createPostModal").modal('show')
+        });
+        
+        $("#import-post-btn").click(function(){
+            $("#importPostModal").modal('show')
         });
     });
 
@@ -152,21 +301,45 @@
                 { field: "date",
                     headerName: "Date",
                     filter: true,
+                    editable: true,
                     filterParams: {
                         filterOptions: ['contains', 'equals', 'notEqual', 'lessThan', 'lessThanOrEqual', 'greaterThan', 'greaterThanOrEqual', 'inRange', 'notInRange', 'startsWith', 'endsWith', 'isEmpty', 'isNotEmpty'],
                     },
+                    onCellValueChanged : function(params){
+                        const updatedValue = params.newValue;
+                        const rowId = params.data.id;
+                        @this.saveColumnValue(rowId,'date',updatedValue)
+                    }
                  },
                 { field: "platform",
                     headerName: "Platform",
                     filter: true,
+                    editable: true,
+                    onCellValueChanged : function(params){
+                        const updatedValue = params.newValue;
+                        const rowId = params.data.id;
+                        @this.saveColumnValue(rowId,'platform',updatedValue)
+                    }
                  },
                 { field: "format", 
                     headerName: "Format",
                     filter: true,
+                    editable: true,
+                    onCellValueChanged : function(params){
+                        const updatedValue = params.newValue;
+                        const rowId = params.data.id;
+                        @this.saveColumnValue(rowId,'format',updatedValue)
+                    }
                  },
                 { 
                     field: "content_bucket",
                     headerName: "Content Bucket",
+                    editable: true,
+                    onCellValueChanged : function(params){
+                        const updatedValue = params.newValue;
+                        const rowId = params.data.id;
+                        @this.saveColumnValue(rowId,'content_bucket',updatedValue)
+                    }
                     
                  },
                  { 
@@ -182,6 +355,11 @@
                     },
                     // text wrap
                     wrapText: true,
+                    onCellValueChanged : function(params){
+                        const updatedValue = params.newValue;
+                        const rowId = params.data.id;
+                        @this.saveColumnValue(rowId,'content_idea',updatedValue)
+                    }
                  },
                 {
                     field: "creative_copy",
@@ -249,6 +427,11 @@
                     filterParams: {
                         filterOptions: ['contains'],
                     },
+                    onCellValueChanged : function(params){
+                        const updatedValue = params.newValue;
+                        const rowId = params.data.id;
+                        @this.saveColumnValue(rowId,'status',updatedValue)
+                    }
                 },
                 {
                     field: "assigned_to",

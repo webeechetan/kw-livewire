@@ -11,9 +11,15 @@ use App\Models\Post;
 use App\Services\OpenAIService;
 use Illuminate\Process\FakeProcessDescription;
 use Illuminate\Support\Facades\Log;
+use Livewire\WithFileUploads;
+use App\Imports\PostsImport;
+use Maatwebsite\Excel\Facades\Excel;
+
 
 class ContentPlan extends Component
 {
+    use WithFileUploads;
+
     public $project;
     public $contentPlan;
     public $users = [];
@@ -24,6 +30,9 @@ class ContentPlan extends Component
     public $format;
     public $content_bucket;
     public $content_idea;
+
+    // import post attribute
+    public $postFile;
 
     public function mount($project, $contentPlan = null )
     {
@@ -154,5 +163,38 @@ class ContentPlan extends Component
         $this->redirect(route('project.content-plan', [$this->project->id, $this->contentPlan->id]));
 
     }
+
+    public function saveColumnValue($postId,$columnName,$columnValue){
+        $post = Post::find($postId);
+        $post->$columnName = $columnValue;
+        $post->save();
+    }
+
+    public function importPost()
+{
+    $type = match ($this->postFile->getClientOriginalExtension()) {
+        'csv' => \Maatwebsite\Excel\Excel::CSV,
+        'xls' => \Maatwebsite\Excel\Excel::XLS,
+        'xlsx' => \Maatwebsite\Excel\Excel::XLSX,
+        default => throw new \Exception('Unsupported file type'),
+    };
+
+    $import = new PostsImport($this->contentPlan->id, $this->project->id);
+
+    try {
+        \Maatwebsite\Excel\Facades\Excel::import(
+            $import,
+            $this->postFile->getRealPath(),
+            null,
+            $type
+        );
+    } catch (\Exception $e) {
+        $import->report['header_error'] = $e->getMessage();
+    }
+    $report = $import->getReport();
+
+    $this->dispatch('imported',$report);
+}
+
 
 }

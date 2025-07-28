@@ -89,15 +89,41 @@ class ContentPlans extends Component
                
             }
             } catch (Exception $e){
-                Post::factory()->count($this->number_of_posts)->create([
-                    'project_id' => $this->project->id,
-                    'content_plan_id' => $contentPlan->id,
-                ]);
-
                 $this->redirect(route('project.content-plan', [$this->project->id, $contentPlan->id]));
             }
 
         $this->redirect(route('project.content-plan', [$this->project->id, $contentPlan->id]));
+    }
+
+    public function generateContentPlanManually(){
+        $projectName = $this->project->name;
+        $projectBrief = $this->project->brief->brief;
+        $projectBrief = json_decode($projectBrief, true);
+        $openAIService = new OpenAIService();
+
+        // Create content plan brief object
+        $contentPlanBrief = [
+            'title' => $this->title,
+            'description' => $this->description,
+            'number_of_posts' => $this->number_of_posts,
+            'platforms' => $this->platforms,
+            'start_date' => $this->start_date ?? now()->startOfMonth()->toDateString(),
+            'end_date' => $this->end_date ?? now()->endOfMonth()->toDateString(),
+        ];
+
+        $contentPlan = new ContentPlan();
+        $contentPlan->project_id = $this->project->id;
+        $contentPlan->title = $this->title ?: 'Content Plan for ' . $projectName . ' - ' . now()->format('F');
+        $contentPlan->description = $this->description;
+        $contentPlan->number_of_posts = $this->number_of_posts;
+        $contentPlan->platforms = $this->platforms;
+        $contentPlan->start_date = $contentPlanBrief['start_date'];
+        $contentPlan->end_date = $contentPlanBrief['end_date'];
+        $contentPlan->status = 'draft';
+        $contentPlan->save();
+
+        $this->redirect(route('project.content-plan', [$this->project->id, $contentPlan->id]));
+
     }
 
     public function render()
