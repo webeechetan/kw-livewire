@@ -3,7 +3,7 @@
 namespace App\Livewire\Components;
 
 use Livewire\Component;
-use App\Models\ { Project, Task, User, Attachment, Comment, Client, Notification, VoiceNote};
+use App\Models\ { Project, Task, User, Attachment, Comment, Client, Notification, VoiceNote, Tag};
 use Livewire\WithFileUploads;
 use App\Notifications\NewTaskAssignNotification;
 use App\Notifications\UserMentionNotification;
@@ -26,6 +26,8 @@ class AddTask extends Component
     public $users = [];
     public $task_users = []; 
     public $task_notifiers = [];
+    public $tags = [];
+    public $tag_id = '';
     public $project_id;
     public $status = 'pending'; 
     public $email_notification = true;
@@ -48,18 +50,14 @@ class AddTask extends Component
     public function mount($project = null){
         $this->project = $project;
         $this->users = User::orderBy('name','asc')->get();
-        // $this->projects = Project::all();
-        // $this->projects = Project::whereHas('client',function($query){
-        //     $query->whereNull('clients.deleted_at');
-        // })->get();
-
         $this->projects = Project::whereHas('client', function($query) {
             $query->whereNull('clients.deleted_at');
         })
         ->orderBy('projects.name', 'asc')
         ->with('client')
         ->get();
-
+        $this->tags = Tag::orderBy('name', 'asc')->get();
+        dd($this->tags);
         if($project){
             $this->project_id = $project->id;
         }

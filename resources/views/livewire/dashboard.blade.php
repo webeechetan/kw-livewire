@@ -418,7 +418,7 @@
                         <div class="card_style-project-head">
                             <div class="card_style-project-head-client"><span><i class="bx bx-briefcase-alt-2"></i></span> {{ $project->client?->name }}</div>
                             <h4>
-                                <a href="{{ route('project.profile', $pin->pinnable_id) }}" wire:navigate>{{ $pin->project->name }}</a>
+                                <a href="{{ route('project.profile', $pin->pinnable_id) }}" wire:navigate>{{ $pin->project?->name }}</a>
                             </h4>
                             <livewire:components.pin-button pinnable_type="App\Models\Project"  :pinnable_id="$project->id" />
                         </div>
