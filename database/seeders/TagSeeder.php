@@ -25,7 +25,7 @@ class TagSeeder extends Seeder
 
         foreach ($tags as $tag) {
             Tag::create([
-                'org_id' => 5,
+                'org_id' => 7,
                 'created_by' => 3, 
                 'name' => $tag['name'],
                 'color' => $tag['color'],
