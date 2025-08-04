@@ -33,6 +33,7 @@ class Task extends Model
         'description',
         'due_date',
         'project_id',
+        'visibility'
     ];
 
     protected static function booted()
