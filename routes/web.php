@@ -153,7 +153,7 @@ Route::group(
         |--------------------------------------------------------------------------
         */
         Route::get('/dashboard', Dashboard::class)->name('dashboard');
-        Route::get('/admin-dashboard', AdminDashboard::class)->name('dashboard');
+        // Route::get('/admin-dashboard', AdminDashboard::class)->name('dashboard');
 
         /*
         |--------------------------------------------------------------------------
