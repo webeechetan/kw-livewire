@@ -18,11 +18,11 @@
                 </select> 
             </div> --}}
              <div class="btn-list">
-                <select class="form-select task-tag-id" wire:model="tag_id">
-                    <option selected >Select Tag</option>
-                    @foreach($tags as $tag)
-                        <option value="{{ $tag->id }}" style="color: {{ $tag->color }}">{{ $tag->name }}</option>
-                    @endforeach
+                <select class="form-select priority" wire:model="priority">
+                    <option >Select Priority</option>
+                    <option value="low" selected>Low</option>
+                    <option value="medium">Medium</option>
+                    <option value="high">High</option>
                 </select> 
             </div>
 
@@ -107,6 +107,18 @@
                                 <div class="icon_rounded"><i class='bx bx-calendar' ></i></div>
                                 <span class="btn_link task-due-date">No Due Date</span>
                             </a>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="taskPane-item d-flex flex-wrap mb-3">
+                        <div class="taskPane-item-left"><div class="taskPane-item-label">Tag</div></div>
+                        <div class="taskPane-item-right">
+                            <select class="form-select task-tag-id" wire:model="tag_id">
+                                <option selected >Select Tag</option>
+                                @foreach($tags as $tag)
+                                    <option value="{{ $tag->id }}" style="color: {{ $tag->color }}">{{ $tag->name }}</option>
+                                @endforeach
+                            </select> 
                         </div>
                     </div>
                     <hr>
@@ -397,7 +409,7 @@
             $(".assigner-tab").addClass('d-none');
             $(".newly-attached").addClass('d-none');
             $('.task-tag-id').val('Select Tag').trigger('change');
-            
+            $('.priority').val('low').trigger('change');
 
         }
 
@@ -737,6 +749,8 @@
                 $('.task-notify-users').val(task_notifiers_ids).trigger('change');
 
                 $('.task-projects').val(event.detail[0].project_id).trigger('change');
+
+                $(".priority").val(event.detail[0].priority).trigger('change');
 
                 if(event.detail[0].email_notification){
                     $(".email_notification").prop('checked', true);

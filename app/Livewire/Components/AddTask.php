@@ -28,6 +28,7 @@ class AddTask extends Component
     public $task_notifiers = [];
     public $tags = [];
     public $tag_id = '';
+    public $priority = 'low';
     public $project_id;
     public $status = 'pending'; 
     public $email_notification = true;
@@ -96,6 +97,7 @@ class AddTask extends Component
         $task->due_date = $this->due_date;
         $task->project_id = $this->project_id;
         $task->status = $this->status;
+        $task->priority = $this->priority;
         $task->visibility = $this->visibility;
         if($this->tag_id){
             $task->tag_id = $this->tag_id;
@@ -295,9 +297,11 @@ class AddTask extends Component
         $this->task->project_id = $this->project_id;
         $this->task->email_notification = $this->email_notification;
         $this->task->visibility = $this->visibility;
+        $this->task->priority = $this->priority;
         if($this->tag_id){
             $this->task->tag_id = $this->tag_id;
         }
+        
         $this->task->save();
         $this->task->users()->sync($this->task_users);
         $this->task->notifiers()->sync($this->task_notifiers);
