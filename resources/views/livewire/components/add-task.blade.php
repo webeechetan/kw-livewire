@@ -1,14 +1,24 @@
 <div>
     <div wire:ignore class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
         <div class="offcanvas-header taskPane-dashbaord-head py-3 px-4">
-            <div class="btn-list">
-                <select class="form-select" name="" id="" wire:model="status">
-                    <option value="" disabled selected>Select Status</option>
-                    <option value="pending">Assigned</option>
-                    <option value="in_progress">Accepted</option>
-                    <option value="in_review">In-Review</option>
-                    <option value="completed">Completed</option>
-                </select> 
+            <div class="btn-list d-flex">
+                <div>
+                    <select class="form-select" name="" id="" wire:model="status">
+                        <option value="" disabled selected>Select Status</option>
+                        <option value="pending">Assigned</option>
+                        <option value="in_progress">Accepted</option>
+                        <option value="in_review">In-Review</option>
+                        <option value="completed">Completed</option>
+                    </select>
+                </div>
+                <div>
+                    <select class="form-select priority" wire:model="priority">
+                        <option >Select Priority</option>
+                        <option value="low" selected>Low</option>
+                        <option value="medium">Medium</option>
+                        <option value="high">High</option>
+                    </select>
+                </div>
             </div>
             {{-- <div class="btn-list">
                 <select class="form-select" wire:model="visibility">
@@ -17,14 +27,6 @@
                     <option value="private">Private</option>
                 </select> 
             </div> --}}
-             <div class="btn-list">
-                <select class="form-select priority" wire:model="priority">
-                    <option >Select Priority</option>
-                    <option value="low" selected>Low</option>
-                    <option value="medium">Medium</option>
-                    <option value="high">High</option>
-                </select> 
-            </div>
 
             <div class="taskPane-dashbaord-head-right">
                 <span class="btn-batch btn-batch-danger d-none read-only-btn">Read Only</span>

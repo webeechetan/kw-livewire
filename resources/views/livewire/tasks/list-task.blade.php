@@ -304,9 +304,6 @@
                                                     <span class="">{{  \Carbon\Carbon::parse($task['due_date'])->format('d M Y') }}</span>
                                                 </a>
                                             </div>
-                                            @if($task['tag'])
-                                                <x-tag-icon :tag="$task['tag']" />
-                                            @endif
                                             <div>
                                                 <div class="avatarGroup avatarGroup-overlap">
                                                     @php
@@ -328,6 +325,16 @@
                                                     @endif
                                                 </div>
                                             </div>
+                                        </div>
+                                        <div class="mt-1">
+                                            @if($task['priority'] != 'low')
+                                            <span class="@if($task['priority'] == 'medium') p_medium @endif @if($task['priority'] == 'high') high @endif">
+                                                {{ ucfirst($task['priority']) }}
+                                            </span>
+                                            @endif
+                                            @if($task['tag'])
+                                                <x-tag-icon :tag="$task['tag']" />
+                                            @endif
                                         </div>
                                     </div>
                                 </div>

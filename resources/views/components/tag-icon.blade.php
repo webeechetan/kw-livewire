@@ -1,5 +1,5 @@
-<div class="card_style-tasks-item tag-icon"  
-    style="background-color: {{ $tag['color'] }}; color: #fff;"
+<div class="btn-batch tag-icon"  
+    style="color: {{ $tag['color'] }};"
     data-bs-toggle="tooltip" 
     data-bs-placement="top" 
     data-bs-original-title="{{$tag['name'] }}"
@@ -7,20 +7,21 @@
 >
 @php
     $icon = 'bx bx-tag';
-    if($tag['name'] == 'Urgent'){
-        $icon = 'bx bx-bell';
+    if($tag['name'] == 'Client Event'){
+        $icon = 'bx bx-calendar-event';
     }elseif($tag['name'] == 'Waiting'){
         $icon = 'bx bx-time';
     }elseif($tag['name'] == 'Meeting'){
         $icon = 'bx bx-headphone';
-    }elseif($tag['name'] == 'Optional'){
-        $icon = 'bx bx-check-circle';
+    }elseif($tag['name'] == 'Office Event'){
+        $icon = 'bx bx-calendar-event';
     }elseif($tag['name'] == 'Post') {
         $icon = 'bx bx-paper-plane';
+    }elseif($tag['name'] == 'Stuck') {
+        $icon = 'bx bx-pause-circle';
     }
 @endphp
     <span class="btn-icon-task-action"><i class='bx {{ $icon }}' ></i></span>
-
     {{ $tag['name'] }}
 </div>
 

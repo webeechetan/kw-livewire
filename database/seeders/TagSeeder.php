@@ -16,11 +16,12 @@ class TagSeeder extends Seeder
     public function run(): void
     {
         $tags = [
-            ['name' => 'Urgent', 'color' => '#ff0000'],
             ['name' => 'Meeting', 'color' => '#ffa500'],
-            ['name' => 'Optional', 'color' => '#008000'],
             ['name' => 'Post', 'color' => '#0000ff'],
-            ['name' => 'Waiting', 'color' => '#808080'],
+            ['name' => 'Client Event', 'color' => '#A020F0'],
+            ['name' => 'Office Event', 'color' => '#008000'],
+            ['name' => 'Stuck', 'color' => '#ff0000'],
+            ['name' => 'Waiting', 'color' => '#333'],
         ];
 
         foreach ($tags as $tag) {
