@@ -57,7 +57,6 @@ class AddTask extends Component
         ->with('client')
         ->get();
         $this->tags = Tag::orderBy('name', 'asc')->get();
-        dd($this->tags);
         if($project){
             $this->project_id = $project->id;
         }
@@ -98,6 +97,9 @@ class AddTask extends Component
         $task->project_id = $this->project_id;
         $task->status = $this->status;
         $task->visibility = $this->visibility;
+        if($this->tag_id){
+            $task->tag_id = $this->tag_id;
+        }
         if($this->email_notification == true){
             $task->email_notification = 1;
         }
@@ -251,6 +253,7 @@ class AddTask extends Component
         $this->status = $this->task->status;
         $this->visibility = $this->task->visibility;
         $this->project_id = $this->task->project_id;
+        $this->tag_id = $this->task->tag_id;
         $this->dispatch('edit-task',$this->task);
         // user ids of who created a task and who are assigned to a task and who are notifiers of a task
         $user_ids_who_can_edit_task = array_merge([$this->task->assigned_by],$this->task->users->pluck('id')->toArray(),$this->task->notifiers->pluck('id')->toArray());
@@ -292,6 +295,9 @@ class AddTask extends Component
         $this->task->project_id = $this->project_id;
         $this->task->email_notification = $this->email_notification;
         $this->task->visibility = $this->visibility;
+        if($this->tag_id){
+            $this->task->tag_id = $this->tag_id;
+        }
         $this->task->save();
         $this->task->users()->sync($this->task_users);
         $this->task->notifiers()->sync($this->task_notifiers);

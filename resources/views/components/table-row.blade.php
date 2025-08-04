@@ -7,6 +7,9 @@
         <div class="edit-task" data-id="{{ $task->id }}">
             <div class="mb-1">
                 {{ Str::limit($task->name, 50) }}
+                {{-- @if($task->tag)
+                    <x-tag-icon :tag="$task->tag" />
+                @endif --}}
             </div>
             <span class="text-xs text-light">Created date: {{  Carbon\Carbon::parse($task->created_at)->format('d M Y') }}</span>
         </div>

@@ -304,6 +304,9 @@
                                                     <span class="">{{  \Carbon\Carbon::parse($task['due_date'])->format('d M Y') }}</span>
                                                 </a>
                                             </div>
+                                            @if($task['tag'])
+                                                <x-tag-icon :tag="$task['tag']" />
+                                            @endif
                                             <div>
                                                 <div class="avatarGroup avatarGroup-overlap">
                                                     @php

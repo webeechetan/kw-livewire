@@ -10,13 +10,22 @@
                     <option value="completed">Completed</option>
                 </select> 
             </div>
-            <div class="btn-list">
+            {{-- <div class="btn-list">
                 <select class="form-select" wire:model="visibility">
                     <option selected disabled>Visibility</option>
                     <option value="public">Public</option>
                     <option value="private">Private</option>
                 </select> 
-            </div> 
+            </div> --}}
+             <div class="btn-list">
+                <select class="form-select task-tag-id" wire:model="tag_id">
+                    <option selected >Select Tag</option>
+                    @foreach($tags as $tag)
+                        <option value="{{ $tag->id }}" style="color: {{ $tag->color }}">{{ $tag->name }}</option>
+                    @endforeach
+                </select> 
+            </div>
+
             <div class="taskPane-dashbaord-head-right">
                 <span class="btn-batch btn-batch-danger d-none read-only-btn">Read Only</span>
                 <button type="button" class="btn-icon add-attachments" data-bs-toggle="modal" data-bs-target="#attached-file-modal"><i class='bx bx-paperclip' style="transform: rotate(60deg);"></i></button>
@@ -89,7 +98,7 @@
                             </select> 
                         </div>
                     </div>
-                    @endif
+                    @endif 
                     <hr>
                     <div class="taskPane-item d-flex flex-wrap mb-3">
                         <div class="taskPane-item-left"><div class="taskPane-item-label">Due Date</div></div>
@@ -244,8 +253,6 @@
 @push('scripts')
     <script>
 
-
-        
     URL = window.URL || window.webkitURL;
 
     var gumStream; 
@@ -389,6 +396,8 @@
             $(".task-attachment-count").html(0);
             $(".assigner-tab").addClass('d-none');
             $(".newly-attached").addClass('d-none');
+            $('.task-tag-id').val('Select Tag').trigger('change');
+            
 
         }
 
