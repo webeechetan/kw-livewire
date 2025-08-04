@@ -3,7 +3,7 @@
 namespace App\Livewire\Components;
 
 use Livewire\Component;
-use App\Models\ { Project, Task, User, Attachment, Comment, Client, Notification, VoiceNote};
+use App\Models\ { Project, Task, User, Attachment, Comment, Client, Notification, VoiceNote, Tag};
 use Livewire\WithFileUploads;
 use App\Notifications\NewTaskAssignNotification;
 use App\Notifications\UserMentionNotification;
@@ -26,6 +26,8 @@ class AddTask extends Component
     public $users = [];
     public $task_users = []; 
     public $task_notifiers = [];
+    public $tags = [];
+    public $tag_id = '';
     public $project_id;
     public $status = 'pending'; 
     public $email_notification = true;
@@ -48,18 +50,13 @@ class AddTask extends Component
     public function mount($project = null){
         $this->project = $project;
         $this->users = User::orderBy('name','asc')->get();
-        // $this->projects = Project::all();
-        // $this->projects = Project::whereHas('client',function($query){
-        //     $query->whereNull('clients.deleted_at');
-        // })->get();
-
         $this->projects = Project::whereHas('client', function($query) {
             $query->whereNull('clients.deleted_at');
         })
         ->orderBy('projects.name', 'asc')
         ->with('client')
         ->get();
-
+        $this->tags = Tag::orderBy('name', 'asc')->get();
         if($project){
             $this->project_id = $project->id;
         }
@@ -100,6 +97,9 @@ class AddTask extends Component
         $task->project_id = $this->project_id;
         $task->status = $this->status;
         $task->visibility = $this->visibility;
+        if($this->tag_id){
+            $task->tag_id = $this->tag_id;
+        }
         if($this->email_notification == true){
             $task->email_notification = 1;
         }
@@ -253,6 +253,7 @@ class AddTask extends Component
         $this->status = $this->task->status;
         $this->visibility = $this->task->visibility;
         $this->project_id = $this->task->project_id;
+        $this->tag_id = $this->task->tag_id;
         $this->dispatch('edit-task',$this->task);
         // user ids of who created a task and who are assigned to a task and who are notifiers of a task
         $user_ids_who_can_edit_task = array_merge([$this->task->assigned_by],$this->task->users->pluck('id')->toArray(),$this->task->notifiers->pluck('id')->toArray());
@@ -294,6 +295,9 @@ class AddTask extends Component
         $this->task->project_id = $this->project_id;
         $this->task->email_notification = $this->email_notification;
         $this->task->visibility = $this->visibility;
+        if($this->tag_id){
+            $this->task->tag_id = $this->tag_id;
+        }
         $this->task->save();
         $this->task->users()->sync($this->task_users);
         $this->task->notifiers()->sync($this->task_notifiers);

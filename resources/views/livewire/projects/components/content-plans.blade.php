@@ -42,8 +42,12 @@
                     <h4 class="column-title mb-0">Content Plan</h4>
                     <div class="d-flex text-center gap-2">
                         <button class="btn-border btn-sm btn-border-primary" data-bs-toggle="modal"
+                            data-bs-target="#contentPlanManualModal">
+                            <i class="bx bx-plus"></i> Create Manually
+                        </button>
+                        <button class="btn-border btn-sm btn-border-primary" data-bs-toggle="modal"
                             data-bs-target="#contentPlanModal">
-                            <i class="bx bx-plus"></i> Generate Content Plan
+                            <i class="bx bx-bot"></i> Generate With AI
                         </button>
                     </div>
                 </div>
@@ -118,6 +122,62 @@
             @endforeach
         </div>
 
+    </div>
+    {{-- contentPlanManualModal --}}
+    <div class="modal fade" id="contentPlanManualModal" tabindex="-1" role="dialog" aria-labelledby="contentPlanManualModal"
+    aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header d-flex align-items-center justify-content-between gap-20">
+                    <h5 class="modal-title" id="contentPlanManualModal"><span class="btn-icon btn-icon-primary me-1"><i
+                                class='bx bx-layer'></i></span> Create Content Plan</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body modal-form-body">
+                    <div class="mb-4">
+                        <label for="title" class="form-label">Title</label>
+                        <input type="text" class="form-style" wire:model="title" id="title"
+                            placeholder="Enter a descriptive title for your content plan">
+                    </div>
+                    <div class="mb-4">
+                        <label for="start_date" class="form-label">Start Date</label>
+                        <input type="date" class="form-style" wire:model="start_date" id="start_date"
+                            placeholder="Select start date">
+                    </div>
+                    <div class="mb-4">
+                        <label for="end_date" class="form-label">End Date</label>
+                        <input type="date" class="form-style" wire:model="end_date" id="end_date"
+                            placeholder="Select end date">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    {{-- <button wire:click="generateContentPlan" class="btn btn-primary generateContentPlanBtn">
+                        <span wire:loading.remove wire:target="generateContentPlan">
+                            Generate Content Plan
+                        </span>
+                        <span wire:loading wire:target="generateContentPlan">
+                            Generating...
+                            <div class="spinner-border spinner-border-sm" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </span>
+                    </button> --}}
+                    <button wire:click="generateContentPlanManually" class="btn btn-primary generateContentPlanManually">
+                        <span wire:loading.remove wire:target="generateContentPlanManually">
+                            Generate Content Plan
+                        </span>
+                        <span wire:loading wire:target="generateContentPlanManually">
+                            Creating...
+                            <div class="spinner-border spinner-border-sm" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
     {{-- content plan modal --}}
     <div class="modal fade" id="contentPlanModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"

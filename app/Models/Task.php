@@ -14,6 +14,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Notifications\Notification;
 use App\Models\Attachment;
 use App\Models\VoiceNote;
+use App\Models\Tag;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use App\Observers\Task\TaskObserver;
@@ -93,6 +94,10 @@ class Task extends Model
 
     public function voiceNotes(){
         return $this->morphMany(VoiceNote::class, 'voice_noteable');
+    }
+
+    public function tag(){
+        return $this->belongsTo(Tag::class);
     }
 
     // scopes 
