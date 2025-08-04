@@ -11,7 +11,8 @@ class PinButton extends Component
     public $pinned;
     public $pinnable_type;
     public $pinnable_id;
-    public $user_id;
+    public $user_id;    
+    public $content;
 
 
     public function render()

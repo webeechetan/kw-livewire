@@ -177,14 +177,6 @@
         }
     }
 
-    &:hover {
-        .card-open {
-            opacity: 1;
-            visibility: visible;
-            transform: translateX(0);
-        }
-    }
-
     // Header
     &-header {
         padding: $spacing_xs $spacing_sm;
@@ -199,5 +191,14 @@
     &-title {
         font-size: 1.3rem;
         margin-bottom: 10px;
+    }
+}
+a > .card, .card.hover-arrow {
+    &:hover {
+        .card-open {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(0);
+        }
     }
 }

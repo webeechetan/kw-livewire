@@ -187,6 +187,12 @@ ul {
             border-radius: 10px;
         }
     }
+    &-bottom-list {
+        &:not(:last-child) {
+            padding-bottom: 5px;
+            border-bottom: 1px solid #eee;
+        }
+    }
 }
 
 .spacing-between-20 {

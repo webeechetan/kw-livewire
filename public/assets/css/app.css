@@ -308,6 +308,10 @@ ul.social-icons li a:hover, ul.social-icons li a:active {
 .border-radius-10 {
   border-radius: 10px;
 }
+.border-bottom-list:not(:last-child) {
+  padding-bottom: 5px;
+  border-bottom: 1px solid #eee;
+}
 
 .spacing-between-20:not(:last-child) {
   margin-bottom: 20px;
@@ -2933,11 +2937,6 @@ input:-webkit-autofill, input:-webkit-autofill:focus {
 .card-open i {
   color: #7407ff;
 }
-.card:hover .card-open {
-  opacity: 1;
-  visibility: visible;
-  transform: translateX(0);
-}
 .card-header {
   padding: 10px 20px;
   background-color: #fff;
@@ -2949,6 +2948,12 @@ input:-webkit-autofill, input:-webkit-autofill:focus {
 .card-title {
   font-size: 1.3rem;
   margin-bottom: 10px;
+}
+
+a > .card:hover .card-open, .card.hover-arrow:hover .card-open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(0);
 }
 
 /*---- Datatable Style Start Here ----*/
@@ -3632,6 +3637,7 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
 .todo-created-date {
   font-size: 10px;
   color: #9c9c9c;
+  cursor: grab;
 }
 .todo-actions {
   margin-right: 10px;
@@ -4502,21 +4508,22 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   border-radius: 6px;
   position: relative;
   transition: all 0.3s ease;
+  margin-left: 8px;
 }
 .comment-text:before {
   content: "";
   position: absolute;
-  top: 100%;
-  left: 7px;
-  border: 10px solid transparent;
-  border-top: 14px solid #eee;
+  top: 5px;
+  left: -18px;
+  border: 8px solid transparent;
+  border-right: 10px solid #eee;
   transition: all 0.3s ease;
 }
 .comment-text:hover {
-  background-color: #eafaf0;
+  background-color: #e8ddf7;
 }
 .comment-text:hover:before {
-  border-top: 14px solid #eafaf0;
+  border-right: 10px solid #e8ddf7;
 }
 
 .custComment {

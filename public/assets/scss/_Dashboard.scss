@@ -377,6 +377,7 @@
     &-created-date {
         font-size: 10px;
         color: $text_light;
+        cursor: grab;
     }
     &-actions {
         margin-right: 10px;
@@ -1455,21 +1456,22 @@
         border-radius: 6px;
         position: relative;
         transition: all 0.3s ease;
+        margin-left: 8px;
 
         &:before {
             content: '';
             position: absolute;
-            top: 100%;
-            left: 7px;
-            border: 10px solid transparent;
-            border-top: 14px solid $grey;
+            top: 5px;
+            left: -18px;
+            border: 8px solid transparent;
+            border-right: 10px solid $grey;
             transition: all 0.3s ease;
         }
 
         &:hover {
-            background-color: $success_light;
+            background-color: $secondary_light;
             &:before {
-                border-top: 14px solid $success_light;
+                border-right: 10px solid $secondary_light;
             }
         }
     }

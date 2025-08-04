@@ -211,92 +211,70 @@
                 </div>
 
                 <!-- Important Projects -->
-                <div class="col-sm-6">
+                <div class="col-md-6">
                     <div class="card shadow-sm border-0">
                         <div class="card-body">
                             <h4 class="card-title">Important Projects</h4>
-                                <div class="card_style bg-light spacing-between-20">
-                                    <a href="https://app.kaykewalk.com/webeesocial/project/view/24" class="card_style-open"><i class="bx bx-chevron-right"></i></a>
-                                    <div class="row mb-2">
-                                        <div class="col-auto pe-md-1">
-                                            <span class="avatar avatar-sm avatar-" data-toggle="tooltip" data-placement="top" data-bs-original-title="Oregon July">OJ</span></div>
-                                        <div class="col">
-                                            <div class="text-sm text-light"><i class="bx bx-briefcase-alt-2"></i> Oregon Hazelnuts</div>
-                                            <div class="mb-1 text-lg">
-                                                <a href="https://app.kaykewalk.com/webeesocial/project/view/24" wire:navigate="">Oregon July</a>
+                            <div class="row">
+                                <div class="scrollbar">
+                                    <div style="height: 350px;">
+                                        @forelse($mostImportantProjects as $project)
+                                            <a class="mb-2 d-block" href="{{ route('project.tasks', $project->id) }}">
+                                                <div class="card bg-light shadow-sm border-0">
+                                                    <span class="card-open"><i class="bx bx-chevron-right"></i></span>
+                                                    <div class="card-body">
+                                                        <span class="text-muted"><i class="bx bx-briefcase-alt-2 text-secondary"></i> {{ $project->client->name}}</span>
+                                                        <h6 class="mb-2 font-500">{{ $project->name }}</h6>
+                                                        <div class="text-danger text-sm"><i class="bx bx-calendar"></i> <span>{{ \Carbon\Carbon::parse($project->due_date)->format('M d Y')
+                                                        ?? 'No Due Date' }}</span></div>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                            @empty
+                                            <div class="d-flex justify-content-center align-items-center bg-grey h-100 border-radius-10">
+                                                <span class="text-light">No Data Found!</span>
                                             </div>
-                                            <div class="text-danger text-sm"><i class="bx bx-calendar"></i> <span>Jul 24 2025</span></div>
-                                        </div>
-                                    </div>
-                                    <!-- Need to remove team from here -->
-                                    <div class="d-flex flex-wrap gap-2 mt-2 d-none">
-                                        <!--[if BLOCK]><![endif]-->                            <!--[if BLOCK]><![endif]-->                            <a href="https://app.kaykewalk.com/webeesocial/team/view/3" wire:navigate="" class="btn btn-success rounded-pill btn-xs text-uppercase">Client Servicing</a>
-                                                                    <a href="https://app.kaykewalk.com/webeesocial/team/view/4" wire:navigate="" class="btn btn-success rounded-pill btn-xs text-uppercase">Copy</a>
-                                                                    <a href="https://app.kaykewalk.com/webeesocial/team/view/5" wire:navigate="" class="btn btn-success rounded-pill btn-xs text-uppercase">Design</a>
-                                        <!--[if ENDBLOCK]><![endif]-->
-                                        <!--[if ENDBLOCK]><![endif]-->
-                                    </div>
-                                                            <div class="progress mt-3">
-                                        <div class="progress-bar progress-secondary" role="progressbar" aria-label="Task Done" style="width: 0%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                                        </div>
-                                    </div>
-                                    <div class="row mt-2">
-                                        <div class="col"><span class="btn-batch btn-batch-secondary"><b>1</b> <span>Pending Task </span></span></div>
-                                        <div class="col text-end"><span class="btn-batch btn-batch-danger"><b>0</b> <span>Overdue Tasks </span></span></div>
-                                        
+                                        @endforelse
                                     </div>
                                 </div>
-
-
-                            <div class="overflow-y scrollbar scrollbar-primary">
-                                @foreach($mostImportantProjects as $project)
-                                <div class="card_style bg-light spacing-between-20">
-                                    <a href="{{ route('project.profile', $project->id) }}" class="card_style-open"><i class='bx bx-chevron-right'></i></a>
-                                    <div class="row mb-2">
-                                        <div class="col-auto pe-md-1">
-                                            <x-avatar class="avatar-sm" :user="$project" />
-                                        </div>
-                                        <div class="col">
-                                            <div class="text-sm text-light"><i class="bx bx-briefcase-alt-2"></i> {{ $project->client->name}}</div>
-                                            <div class="mb-1 text-lg">
-                                                <a href="{{ route('project.profile', $project->id) }}" wire:navigate>{{ $project->name }}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Pin Projects -->
+                <div class="col-md-6">
+                    <div class="card shadow-sm border-0">
+                        <div class="card-body">
+                            <h4 class="card-title">Pin Projects</h4>
+                            <div class="row">
+                                <div class="scrollbar">
+                                    <div style="height: 350px;">
+                                        @forelse($myPins as $pin)
+                                        @php
+                                            $project = $pin->pinnable;
+                                        @endphp
+                                            <div class="card hover-arrow bg-light shadow-sm border-0 mb-2">
+                                                <a class="card-open" href="{{ route('project.profile', $pin->pinnable_id) }}" :key="$pin->pinnable_id"><i class="bx bx-chevron-right"></i></a>
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-auto pe-0">
+                                                            <livewire:components.pin-button pinnable_type="App\Models\Project" :pinnable_id="$project->id" content='' />
+                                                        </div>
+                                                        <div class="col">
+                                                            <span class="text-muted"><i class="bx bx-briefcase-alt-2 text-secondary"></i> {{ $pin->project->client->name}}</span>
+                                                            <h6 class="font-500"><a href="{{ route('project.profile', $pin->pinnable_id) }}" :key="$pin->pinnable_id">{{ $pin->project->name }}</a></h6>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div class="text-danger text-sm"><i class="bx bx-calendar"></i> <span>{{ \Carbon\Carbon::parse($project->due_date)->format('M d Y')
-                                                ?? 'No Due Date' }}</span></div>
-                                        </div>
-                                    </div>
-                                    <!-- Need to remove team from here -->
-                                    <div class="d-flex flex-wrap gap-2 mt-2 d-none">
-                                        @if($project->teams)
-                                        @foreach($project->teams as $team)
-                                        <a href="{{ route('team.profile', $team->id) }}" wire:navigate class="btn btn-success rounded-pill btn-xs text-uppercase">{{$team->name}}</a>
-                                        @endforeach
-                                        @endif
-                                    </div>
-                                    @php
-                                    $taskDone = $project->tasks->where('status', 'completed')->count();
-                                    $taskPending = $project->tasks->where('status', '!=', 'completed')->count();
-                                    $taskOverdue = $project->tasks->where('due_date', '<', now())->where('status', '!=', 'completed')->count();
-                                    $totalTask = $project->tasks->count();
-
-                                    if ($totalTask > 0) {
-                                    $percentage = ($taskDone / $totalTask) * 100;
-                                    } else {
-                                    $percentage = 0;
-                                    }
-                                    @endphp
-                                    <div class="progress mt-3">
-                                        <div class="progress-bar progress-secondary" role="progressbar" aria-label="Task Done"
-                                            style="width: {{$percentage}}%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                                        </div>
-                                    </div>
-                                    <div class="row mt-2">
-                                        <div class="col"><span class="btn-batch btn-batch-secondary"><b>{{ $taskPending }}</b> <span>Pending {{ pluralOrSingular($taskPending,'Task') }} </span></span></div>
-                                        <div class="col text-end"><span class="btn-batch btn-batch-danger"><b>{{ $taskOverdue }}</b> <span>Overdue {{ pluralOrSingular($taskOverdue,'Task') }} </span></span></div>
-                                        
+                                            @empty
+                                            <div class="d-flex justify-content-center align-items-center bg-grey h-100 border-radius-10">
+                                                <span class="text-light">No Data Found!</span>
+                                            </div>
+                                        @endforelse
                                     </div>
                                 </div>
-                                @endforeach
                             </div>
                         </div>
                     </div>
@@ -345,38 +323,19 @@
                         <div class="card-body">
                             <h4 class="card-title">Recent Comments</h4>
                             <div class="scrollbar">
-                                <div style="height: 383px;">
+                                <div style="height: 820px;">
                                     @foreach($recent_comments as $comment)
-                                        <div class="mb-4">
+                                        <div class="mb-4 border-bottom-list">
                                             <a class="d-block" href="{{ route('task.view', $comment->task_id) }}">
+                                                <div class="text-sm mb-2"><i class="bx bx-task"></i> {!! Str::limit(strip_tags($comment->task->name), 85, '...') !!}</div>
                                                 <div class="d-flex gap-1 mb-3">
                                                     <span><x-avatar :user="$comment->user" class="avatar-sm" /></span>
                                                     <div class="comment-text">
                                                         <span class="d-flex text-muted text-xs mb-1">{{ \Carbon\Carbon::parse($comment->created_at)->diffForHumans() }}</span>
-                                                        <span class="text-sm">{!! Str::limit(strip_tags($comment->comment), 70, '...') !!}</span>
+                                                        <span class="text-md">{!! Str::limit(strip_tags($comment->comment), 70, '...') !!}</span>
                                                     </div>
                                                 </div>
                                             </a>
-                                        </div>
-
-
-                                        <div class="cmnt_item_row card_style bg-light d-none">
-                                            <a href="{{ route('task.view', $comment->task_id) }}" class="card_style-open"><i class='bx bx-chevron-right'></i></a>
-                                            <div class="cmnt_item_user">
-                                                <div class="cmnt_item_user_img">
-                                                    <x-avatar :user="$comment->user" class="avatar-sm" />
-                                                </div>
-                                                <div class="cmnt_item_user_name-wrap">
-                                                    <div class="cmnt_item_user_name">{{ $comment->user->name }}</div>
-                                                    <div class="cmnt_item_date">{{ \Carbon\Carbon::parse($comment->created_at)->diffForHumans() }}</div>
-                                                </div>
-                                            </div>
-                                            <div class="mt-2 cmnt_item_task border-bottom pb-2"><i class="bx bx-task"></i> <a href="{{ route('task.view', $comment->task_id) }}">{{ $comment->task->name }}</a></div>
-                                            <div class="cmnt_item_user_text">
-                                                <a class="text-light" href="{{ route('task.view', $comment->task_id) }}">
-                                                    {!! Str::limit(strip_tags($comment->comment), 25, '...') !!}
-                                                </a>
-                                            </div>
                                         </div>
                                     @endforeach
                                 </div>
@@ -387,68 +346,6 @@
             </div>
         </div>
     </div>
-
-    <div class="row">
-        <div class="col-md-4 mt-4">
-            <div class="box-item h-100">
-                <h4 class="text-xl">Important Projects</h4>
-                <hr>
-                
-            </div>
-        </div>
-    </div>
-
-    {{-- pins --}}
-    @if($myPins->count() > 0)
-        <div class="row mt-4">
-            <div class="col">
-                <h4 class="text-xl">Pinned Projects</h4>
-            </div>
-        </div>
-        <div class="row">
-            @foreach($myPins as $pin)
-                @php
-                    $project = $pin->pinnable;
-                @endphp
-                <div class="col-md-4 mt-3">
-                    <div class="card_style h-100">
-                        <a href="{{ route('project.profile', $pin->pinnable_id) }}" class="card_style-open">
-                            <i class="bx bx-chevron-right"></i>
-                        </a>
-                        <div class="card_style-project-head">
-                            <div class="card_style-project-head-client"><span><i class="bx bx-briefcase-alt-2"></i></span> {{ $project->client?->name }}</div>
-                            <h4>
-                                <a href="{{ route('project.profile', $pin->pinnable_id) }}" wire:navigate>{{ $pin->project?->name }}</a>
-                            </h4>
-                            <livewire:components.pin-button pinnable_type="App\Models\Project"  :pinnable_id="$project->id" />
-                        </div>
-                        <div class="card_style-project-body mt-3">
-                            <div class="task_progress mt-3">
-                                <div class="task_progress-btm">
-                                    <div class="task_progress-btm-date d-flex justify-content-between">
-                                        <div><i class='bx bx-calendar' ></i> 
-                                            @if($project->start_date)
-                                                {{ \Carbon\Carbon::parse($project->start_date)->format('d M') }}
-                                            @else
-                                                No Start Date
-                                            @endif
-                                        </div>
-                                        <div class="text-danger"><i class='bx bx-calendar' ></i> 
-                                            @if($project->due_date)
-                                                {{ \Carbon\Carbon::parse($project->due_date)->format('d M') }}
-                                            @else
-                                                No Due Date
-                                            @endif
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            @endforeach
-        </div>
-    @endif
 </div>
 @php
     $tour = session()->get('tour');
