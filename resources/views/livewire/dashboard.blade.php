@@ -45,72 +45,6 @@
                             </a>
                         </div>
 
-                        <!-- Active Tasks -->
-                        <div class="col-md-6">
-                            <a href="#">
-                                <div class="card shadow-sm border-0">
-                                    <span class="card-open"><i class="bx bx-chevron-right"></i></span>
-                                    <div class="card-body">
-                                        <div class="d-flex align-items-center gap-3">
-                                            <div class="icon-box" style="background-color:#e8f7ff;">
-                                                <i class='bx bx-task text-info'></i>
-                                            </div>
-                                            <div>
-                                                <span class="text-muted font-500">Active Tasks</span>
-                                                <h5 class="mb-0">
-                                                    {{ $users_tasks->where('status','!=','completed')->count() }}
-                                                </h5>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-
-                        <!-- Priority Tasks -->
-                        <div class="col-sm-6">
-                            <a href="#">
-                                <div class="card shadow-sm border-0">
-                                    <span class="card-open"><i class="bx bx-chevron-right"></i></span>
-                                    <div class="card-body">
-                                        <div class="d-flex align-items-center gap-3">
-                                            <div class="icon-box" style="background-color:#F4F0FF;">
-                                                <i class='bx bx-pin text-primary'></i>
-                                            </div>
-                                            <div>
-                                                <span class="text-muted font-500">Priority Tasks</span>
-                                                <h5 class="mb-0">
-                                                    {{ $users_tasks->where('priority', 'high')->where('status','!=','completed')->count() }}
-                                                </h5>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-
-                        <!-- Today's Tasks -->
-                        <div class="col-sm-6">
-                            <a href="#">
-                                <div class="card shadow-sm border-0">
-                                    <span class="card-open"><i class="bx bx-chevron-right"></i></span>
-                                    <div class="card-body">
-                                        <div class="d-flex align-items-center gap-3">
-                                            <div class="icon-box bg-secondary-light">
-                                                <i class='bx bx-task text-secondary'></i>
-                                            </div>
-                                            <div>
-                                                <span class="text-muted font-500">Today’s Tasks</span>
-                                                <h5 class="mb-0">
-                                                    {{ $users_tasks->where('due_date', today())->where('status','!=','completed')->count() }}
-                                                </h5>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-
                         <!-- Overdue Tasks -->
                         <div class="col-sm-6">
                             <a href="#">
@@ -154,6 +88,73 @@
                                 </div>
                             </a>
                         </div>
+
+                        <!-- Active Tasks -->
+                        <div class="col-md-6">
+                            <a href="#">
+                                <div class="card shadow-sm border-0">
+                                    <span class="card-open"><i class="bx bx-chevron-right"></i></span>
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-center gap-3">
+                                            <div class="icon-box" style="background-color:#e8f7ff;">
+                                                <i class='bx bx-task text-info'></i>
+                                            </div>
+                                            <div>
+                                                <span class="text-muted font-500">Accepted Tasks</span>
+                                                <h5 class="mb-0">
+                                                    {{ $users_tasks->where('status','!=','completed')->count() }}
+                                                </h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <!-- Priority Tasks -->
+                        <div class="col-sm-6">
+                            <a href="#">
+                                <div class="card shadow-sm border-0">
+                                    <span class="card-open"><i class="bx bx-chevron-right"></i></span>
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-center gap-3">
+                                            <div class="icon-box" style="background-color:#F4F0FF;">
+                                                <i class='bx bx-pin text-primary'></i>
+                                            </div>
+                                            <div>
+                                                <span class="text-muted font-500">Priority Tasks</span>
+                                                <h5 class="mb-0">
+                                                    {{ $users_tasks->where('priority', 'high')->where('status','!=','completed')->count() }}
+                                                </h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <!-- Today's Tasks -->
+                        <div class="col-sm-6">
+                            <a href="#" data-bs-toggle="offcanvas" data-bs-target="#offcanvasMeeting" aria-controls="offcanvasMeeting">
+                                <div class="card shadow-sm border-0">
+                                    <span class="card-open"><i class="bx bx-chevron-right"></i></span>
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-center gap-3">
+                                            <div class="icon-box bg-secondary-light">
+                                                <i class='bx bx-calendar-event text-secondary'></i>
+                                            </div>
+                                            <div>
+                                                <span class="text-muted font-500">Meetings/Events</span>
+                                                <h5 class="mb-0">
+                                                    {{ $users_tasks->where('due_date', today())->where('status','!=','completed')->count() }}
+                                                </h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
                     </div>
                 </div>
 
@@ -161,7 +162,7 @@
                 <div class="col-md-4">
                     <div class="card shadow-sm border-0">
                         <div class="card-body">
-                            <h4 class="card-title text-center">Tasks Overview</h4>
+                            <h4 class="card-title text-center">Performance Overview</h4>
                             <div class="text-center">
                                 <div id="progress-chart-gauge" style="width: 100%;height: 260px; margin-top: -15px; margin-bottom: -102px;"></div>
                                 <div>
@@ -199,11 +200,11 @@
                     </div>
                 </div>
 
-                <!-- Post & Projects Statistics -->
+                <!-- Tasks Statistics -->
                 <div class="col-md-6">
                     <div class="card shadow-sm border-0">
                         <div class="card-body">
-                            <h5 class="mb-0">Post Tasks Overview</h5>
+                            <h5 class="mb-0">Tasks Overview</h5>
                             <p class="text-muted">Overview of your monthly post tasks.</p>
                         </div>
                         <div id="projectChart" style="height: 480px; margin-top: -130px;"></div>
@@ -344,6 +345,24 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- Meeting & Events -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasMeeting" aria-labelledby="offcanvasMeetingLabel">
+        <div class="offcanvas-header taskPane-dashbaord-head py-3 px-4">
+            <div class="taskPane-dashbaord-head-right">
+                <span class="btn-batch btn-batch-danger d-none read-only-btn">Read Only</span>
+                <button type="button" class="btn-icon add-attachments" data-bs-toggle="modal" data-bs-target="#attached-file-modal"><i class="bx bx-paperclip" style="transform: rotate(60deg);"></i></button>
+                
+                <button type="button" class="btn-icon view-task-btn d-none" wire:click="viewFullscree"><i class="bx bx-fullscreen"></i></button>
+                
+                <a href="javascript:" wire:click="deleteTask" wire:confirm="Are you sure you want to delete?" class="btn-icon delete-task-btn d-none"><i class="bx bx-trash"></i></a>
+                <button type="button" class="btn-icon" data-bs-dismiss="offcanvas" aria-label="Close"><i class="bx bx-x"></i></button>
+            </div>
+        </div>
+        <div class="offcanvas-body scrollbar">
+            <div id="calendarMeetingEvent"></div>
         </div>
     </div>
 </div>
@@ -650,8 +669,37 @@
                 myChart.setOption(option);
             }
             window.addEventListener('resize', myChart.resize);
+        });
 
+        // 
+        document.addEventListener('DOMContentLoaded', function () {
+            var meetingCalendarEl = document.getElementById('calendarMeetingEvent');
 
+            // Filter only Meeting/Event tasks from existing events
+            const meetingEvents = events.filter(event => {
+                const title = event.title.toLowerCase();
+                return title.includes('meeting') || title.includes('event');
+            });
+
+            const meetingCalendar = new FullCalendar.Calendar(meetingCalendarEl, {
+                initialView: 'listWeek',
+                events: meetingEvents,
+                headerToolbar: {
+                    left: 'title',
+                    right: 'prev,next'
+                },
+                eventClick: function(info) {
+                    if (info.event.url) {
+                        window.open(info.event.url, '_blank');
+                        info.jsEvent.preventDefault(); // don't let the browser follow the link
+                    }
+                },
+                dayMaxEventRows: true,
+                moreLinkClick: 'popover',
+                height: 'auto',
+            });
+
+            meetingCalendar.render();
         });
     </script>
     @if(isset($tour) && $tour != null && isset($tour['main_tour']))
