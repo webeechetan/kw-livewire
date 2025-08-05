@@ -11,7 +11,7 @@
         <div class="col-xl-9">
             <div class="row g-3 mb-3">
                 <div class="col-12">
-                    <div class="card shadow-sm border-0 py-2 px-3">
+                    <div class="card shadow-sm border-0 h-100 py-2 px-3">
                         <div class="card-body d-flex justify-content-between">
                             <div>
                                 <h4 class="mb-2">Hey Welcome, {{ Auth::guard(session('guard'))->user()->name }} 🤖</h4>
@@ -30,7 +30,7 @@
                         <!-- Active Projects -->
                         <div class="col-md-6">
                             <a href="#">
-                                <div class="card shadow-sm border-0">
+                                <div class="card shadow-sm border-0 h-100">
                                     <span class="card-open"><i class="bx bx-chevron-right"></i></span>
                                     <div class="card-body d-flex align-items-center gap-3">
                                         <div class="icon-box" style="background-color:#eafaf0;">
@@ -48,7 +48,7 @@
                         <!-- Overdue Tasks -->
                         <div class="col-sm-6">
                             <a href="#">
-                                <div class="card shadow-sm border-0">
+                                <div class="card shadow-sm border-0 h-100">
                                     <span class="card-open"><i class="bx bx-chevron-right"></i></span>
                                     <div class="card-body">
                                         <div class="d-flex align-items-center gap-3">
@@ -70,7 +70,7 @@
                         <!-- In Review Tasks -->
                         <div class="col-sm-6">
                             <a href="#">
-                                <div class="card shadow-sm border-0">
+                                <div class="card shadow-sm border-0 h-100">
                                     <span class="card-open"><i class="bx bx-chevron-right"></i></span>
                                     <div class="card-body">
                                         <div class="d-flex align-items-center gap-3">
@@ -89,10 +89,10 @@
                             </a>
                         </div>
 
-                        <!-- Active Tasks -->
+                        <!-- Accepted Tasks -->
                         <div class="col-md-6">
                             <a href="#">
-                                <div class="card shadow-sm border-0">
+                                <div class="card shadow-sm border-0 h-100">
                                     <span class="card-open"><i class="bx bx-chevron-right"></i></span>
                                     <div class="card-body">
                                         <div class="d-flex align-items-center gap-3">
@@ -102,7 +102,7 @@
                                             <div>
                                                 <span class="text-muted font-500">Accepted Tasks</span>
                                                 <h5 class="mb-0">
-                                                    {{ $users_tasks->where('status','!=','completed')->count() }}
+                                                    {{ $users_tasks->where('status','in_progress')->count() }}
                                                 </h5>
                                             </div>
                                         </div>
@@ -114,7 +114,7 @@
                         <!-- Priority Tasks -->
                         <div class="col-sm-6">
                             <a href="#">
-                                <div class="card shadow-sm border-0">
+                                <div class="card shadow-sm border-0 h-100">
                                     <span class="card-open"><i class="bx bx-chevron-right"></i></span>
                                     <div class="card-body">
                                         <div class="d-flex align-items-center gap-3">
@@ -135,18 +135,33 @@
 
                         <!-- Today's Tasks -->
                         <div class="col-sm-6">
-                            <a href="#" data-bs-toggle="offcanvas" data-bs-target="#offcanvasMeeting" aria-controls="offcanvasMeeting">
-                                <div class="card shadow-sm border-0">
+                            <a href="#">
+                                <div class="card shadow-sm border-0 h-100">
                                     <span class="card-open"><i class="bx bx-chevron-right"></i></span>
                                     <div class="card-body">
                                         <div class="d-flex align-items-center gap-3">
                                             <div class="icon-box bg-secondary-light">
-                                                <i class='bx bx-calendar-event text-secondary'></i>
+                                                <i class='bx bx-calendar text-secondary'></i>
                                             </div>
                                             <div>
                                                 <span class="text-muted font-500">Meetings/Events</span>
                                                 <h5 class="mb-0">
-                                                    {{ $users_tasks->where('due_date', today())->where('status','!=','completed')->count() }}
+                                                    @php
+                                                        $meetingCount = $users_tasks->filter(function ($task) {
+                                                            return isset($task['tag']['name'], $task['status']) &&
+                                                                strtolower(trim($task['tag']['name'])) === 'meeting' &&
+                                                                strtolower($task['status']) !== 'completed';
+                                                        })->count();
+
+                                                        $eventTags = ['client event', 'office event'];
+                                                        $eventCount = $users_tasks->filter(function ($task) use ($eventTags) {
+                                                            return isset($task['tag']['name']) &&
+                                                                in_array(strtolower(trim($task['tag']['name'])), $eventTags);
+                                                        })->count();
+                                                    @endphp
+
+                                                    <span> <i class='bx bx-time text-secondary text-md' ></i>{{ $meetingCount }} / <i class='bx bx-calendar-event text-secondary text-md'></i>{{ $eventCount }}</span>
+
                                                 </h5>
                                             </div>
                                         </div>
@@ -160,7 +175,7 @@
 
                 <!-- Tasks Overview -->
                 <div class="col-md-4">
-                    <div class="card shadow-sm border-0">
+                    <div class="card shadow-sm border-0 h-100">
                         <div class="card-body">
                             <h4 class="card-title text-center">Performance Overview</h4>
                             <div class="text-center">
@@ -176,7 +191,7 @@
                                     </b>
                                 </div>
                             </div>
-                            <div class="row mt-2 task-details text-center">
+                            <div class="row mt-1 task-details text-center">
                                 <div class="col-md-6">
                                     <h6><b>{{ $users_tasks->where('status','in_progress')->count()}}</b></h6>
                                     <div>On Going</div>
@@ -189,10 +204,53 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+        <div class="col-xl-3">
+            <div class="row g-3">
+                <div class="col-12">
+                    <!-- Todo's List -->
+                    <div class="card shadow-sm border-0 h-100">
+                        <div class="card-body">
+                            <div class="todo-box">
+                                <h5 class="card-title">Todo List</h5>
 
+                                <!-- Filter -->
+                                <div class="filter d-flex gap-2">
+                                    <button class="filter-btn" data-filter="all">All</button>
+                                    <button class="filter-btn active" data-filter="pending">Pending</button>
+                                    <button class="filter-btn" data-filter="completed">Completed</button>
+                                </div>
+
+                                <div class="todo-input mt-2">
+                                    <input type="text" id="todo-input" placeholder="Add new task..." />
+                                    <button onclick="addTodo()"><i class='bx bx-plus'></i></button>
+                                </div>
+
+                                <div class="position-relative">
+                                    <ul id="todo-list" class="p-0 mt-2 mb-0 scrollbar"></ul>
+                                    <div id="completed-image" class="todo-completed-image" style="display: none;">
+                                        <h3 class="font-400 text-light">Todo-free <br/> Stress-free</h3>
+                                        <picture>
+                                            <source srcset="https://fonts.gstatic.com/s/e/notoemoji/latest/1f60e/512.webp" type="image/webp">
+                                            <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f60e/512.gif" alt="😎" width="90" height="90">
+                                        </picture>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col-xl-9">
+            <div class="row g-3">
                 <!-- Task Calendar -->
                 <div class="col-md-6">
-                    <div class="card shadow-sm border-0">
+                    <div class="card shadow-sm border-0 h-100">
                         <div class="card-body">
                             <h4 class="card-title">Weekly Tasks Summery </h4>
                             <div id="calendar"></div>
@@ -202,7 +260,7 @@
 
                 <!-- Tasks Statistics -->
                 <div class="col-md-6">
-                    <div class="card shadow-sm border-0">
+                    <div class="card shadow-sm border-0 h-100">
                         <div class="card-body">
                             <h5 class="mb-0">Tasks Overview</h5>
                             <p class="text-muted">Overview of your monthly post tasks.</p>
@@ -213,7 +271,7 @@
 
                 <!-- Important Projects -->
                 <div class="col-md-6">
-                    <div class="card shadow-sm border-0">
+                    <div class="card shadow-sm border-0 h-100">
                         <div class="card-body">
                             <h4 class="card-title">Important Projects</h4>
                             <div class="row">
@@ -245,7 +303,7 @@
                 
                 <!-- Pin Projects -->
                 <div class="col-md-6">
-                    <div class="card shadow-sm border-0">
+                    <div class="card shadow-sm border-0 h-100">
                         <div class="card-body">
                             <h4 class="card-title">Pin Projects</h4>
                             <div class="row">
@@ -283,86 +341,30 @@
             </div>
         </div>
         <div class="col-xl-3">
-            <div class="row g-3">
-                <div class="col-12">
-                    <!-- Todo's List -->
-                    <div class="card shadow-sm border-0">
-                        <div class="card-body">
-                            <div class="todo-box">
-                                <h5 class="card-title">Todo List</h5>
-
-                                <!-- Filter -->
-                                <div class="filter d-flex gap-2">
-                                    <button class="filter-btn" data-filter="all">All</button>
-                                    <button class="filter-btn active" data-filter="pending">Pending</button>
-                                    <button class="filter-btn" data-filter="completed">Completed</button>
-                                </div>
-
-                                <div class="todo-input mt-2">
-                                    <input type="text" id="todo-input" placeholder="Add new task..." />
-                                    <button onclick="addTodo()"><i class='bx bx-plus'></i></button>
-                                </div>
-
-                                <div class="position-relative">
-                                    <ul id="todo-list" class="p-0 mt-2 mb-0 scrollbar"></ul>
-                                    <div id="completed-image" class="todo-completed-image" style="display: none;">
-                                        <h3 class="font-400 text-light">Todo-free <br/> Stress-free</h3>
-                                        <picture>
-                                            <source srcset="https://fonts.gstatic.com/s/e/notoemoji/latest/1f60e/512.webp" type="image/webp">
-                                            <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f60e/512.gif" alt="😎" width="90" height="90">
-                                        </picture>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12">
-                    <!-- Recent Comments -->
-                    <div class="card shadow-sm border-0">
-                        <div class="card-body">
-                            <h4 class="card-title">Recent Comments</h4>
-                            <div class="scrollbar">
-                                <div style="height: 820px;">
-                                    @foreach($recent_comments as $comment)
-                                        <div class="mb-4 border-bottom-list">
-                                            <a class="d-block" href="{{ route('task.view', $comment->task_id) }}">
-                                                <div class="text-sm mb-2"><i class="bx bx-task"></i> {!! Str::limit(strip_tags($comment->task->name), 85, '...') !!}</div>
-                                                <div class="d-flex gap-1 mb-3">
-                                                    <span><x-avatar :user="$comment->user" class="avatar-sm" /></span>
-                                                    <div class="comment-text">
-                                                        <span class="d-flex text-muted text-xs mb-1">{{ \Carbon\Carbon::parse($comment->created_at)->diffForHumans() }}</span>
-                                                        <span class="text-md">{!! Str::limit(strip_tags($comment->comment), 70, '...') !!}</span>
-                                                    </div>
-                                                </div>
-                                            </a>
+            <!-- Recent Comments -->
+            <div class="card shadow-sm border-0 h-100 h-100">
+                <div class="card-body">
+                    <h4 class="card-title">Recent Comments</h4>
+                    <div class="scrollbar">
+                        <div style="height: 820px;">
+                            @foreach($recent_comments as $comment)
+                                <div class="mb-4 border-bottom-list">
+                                    <a class="d-block" href="{{ route('task.view', $comment->task_id) }}">
+                                        <div class="text-sm mb-2"><i class="bx bx-task"></i> {!! Str::limit(strip_tags($comment->task->name), 85, '...') !!}</div>
+                                        <div class="d-flex gap-1 mb-3">
+                                            <span><x-avatar :user="$comment->user" class="avatar-sm" /></span>
+                                            <div class="comment-text">
+                                                <span class="d-flex text-muted text-xs mb-1">{{ \Carbon\Carbon::parse($comment->created_at)->diffForHumans() }}</span>
+                                                <span class="text-md">{!! Str::limit(strip_tags($comment->comment), 70, '...') !!}</span>
+                                            </div>
                                         </div>
-                                    @endforeach
+                                    </a>
                                 </div>
-                            </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-
-    <!-- Meeting & Events -->
-    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasMeeting" aria-labelledby="offcanvasMeetingLabel">
-        <div class="offcanvas-header taskPane-dashbaord-head py-3 px-4">
-            <div class="taskPane-dashbaord-head-right">
-                <span class="btn-batch btn-batch-danger d-none read-only-btn">Read Only</span>
-                <button type="button" class="btn-icon add-attachments" data-bs-toggle="modal" data-bs-target="#attached-file-modal"><i class="bx bx-paperclip" style="transform: rotate(60deg);"></i></button>
-                
-                <button type="button" class="btn-icon view-task-btn d-none" wire:click="viewFullscree"><i class="bx bx-fullscreen"></i></button>
-                
-                <a href="javascript:" wire:click="deleteTask" wire:confirm="Are you sure you want to delete?" class="btn-icon delete-task-btn d-none"><i class="bx bx-trash"></i></a>
-                <button type="button" class="btn-icon" data-bs-dismiss="offcanvas" aria-label="Close"><i class="bx bx-x"></i></button>
-            </div>
-        </div>
-        <div class="offcanvas-body scrollbar">
-            <div id="calendarMeetingEvent"></div>
         </div>
     </div>
 </div>
@@ -419,7 +421,7 @@
                 color: ['#e7bf1d', '#e5d1ff', '#2ecc71'],
                 tooltip: {
                     trigger: 'item',
-                    formatter: '{b} : {c} Post ({d}%)'
+                    formatter: '{b} : {c} Task ({d}%)'
                 },
                 legend: {
                     bottom: '15px',
@@ -429,14 +431,14 @@
                     }
                 },
                 series: [{
-                    name: 'Post',
+                    name: 'Task',
                     type: 'pie',
                     radius: ['20%', '40%'],
                     roseType: 'area',
                     data: projectData,
                     label: {
                         show: true,
-                        formatter: '{b}\n{c} Post'
+                        formatter: '{b}\n{c} Tasks'
                     }
                 }]
             };
@@ -462,57 +464,120 @@
                 moreLinkClick: 'popover',
                 moreLinkClassNames: 'calendar-more-link-btn',
                 headerToolbar: {
-                    left: 'title',
-                    right: 'todayBtn,resetBtn prev,next'
+                    left: 'title,todayBtn,resetBtn prev,next',
+                    right: 'meetingBtn,clientEventBtn,officeEventBtn'
                 },
                 customButtons: {
                     todayBtn: {
                         text: "Today's Tasks",
                         click: function () {
-                            const todayBtnEl = document.querySelector('.fc-todayBtn-button');
-                            const isActive = todayBtnEl.classList.contains('active');
+                            setActiveButton('todayBtn');
+                            const today = new Date().toISOString().split('T')[0];
 
-                            if (!isActive) {
-                                todayBtnEl.classList.add('active');
+                            const todayEvents = originalEvents.filter(event =>
+                                new Date(event.start).toISOString().split('T')[0] === today
+                            );
 
-                                const today = new Date();
-                                const todayStr = today.toISOString().split('T')[0];
+                            calendar.removeAllEvents();
+                            calendar.addEventSource(todayEvents);
+                            calendar.changeView('listDay', today);
+                        }
+                    },
+                    meetingBtn: {
+                        text: "Meetings",
+                        click: function () {
+                            setActiveButton('meetingBtn');
+                            const filtered = originalEvents.filter(event =>
+                                event.tag?.name?.toLowerCase().trim() === 'meeting'
+                            );
 
-                                const todayEvents = originalEvents.filter(event => {
-                                    const eventDate = new Date(event.start);
-                                    return eventDate.toISOString().split('T')[0] === todayStr;
-                                });
+                            calendar.removeAllEvents();
+                            calendar.addEventSource(filtered);
+                            calendar.changeView('listWeek');
+                        }
+                    },
+                    clientEventBtn: {
+                        text: "Client Events",
+                        click: function () {
+                            setActiveButton('clientEventBtn');
+                            const filtered = originalEvents.filter(event =>
+                                event.tag?.name?.toLowerCase().trim() === 'client event'
+                            );
 
-                                calendar.removeAllEvents();
-                                calendar.addEventSource(todayEvents);
-                                calendar.changeView('listDay', today);
-                            } else {
-                                resetCalendar();
-                            }
+                            calendar.removeAllEvents();
+                            calendar.addEventSource(filtered);
+                            calendar.changeView('listWeek');
+                        }
+                    },
+                    officeEventBtn: {
+                        text: "Office Events",
+                        click: function () {
+                            setActiveButton('officeEventBtn');
+                            const filtered = originalEvents.filter(event =>
+                                event.tag?.name?.toLowerCase().trim() === 'office event'
+                            );
+
+                            calendar.removeAllEvents();
+                            calendar.addEventSource(filtered);
+                            calendar.changeView('listWeek');
                         }
                     },
                     resetBtn: {
                         text: '',
                         click: function () {
-                            resetCalendar();
+                            setActiveButton(null);
+                            calendar.removeAllEvents();
+                            calendar.addEventSource(originalEvents);
+                            calendar.changeView('listWeek');
                         }
                     }
                 }
+
             });
+
+            function setActiveButton(buttonKey) {
+                const buttons = ['meetingBtn', 'clientEventBtn', 'officeEventBtn', 'todayBtn'];
+
+                buttons.forEach(key => {
+                    const el = document.querySelector(`.fc-${key}-button`);
+                    if (el) {
+                        if (key === buttonKey) {
+                            el.classList.add('active');
+                        } else {
+                            el.classList.remove('active');
+                        }
+                    }
+                });
+            }
 
             calendar.render();
 
             // Inject icon after render
             setTimeout(() => {
-                const resetBtnEl = document.querySelector('.fc-resetBtn-button');
-                if (resetBtnEl) {
-                    resetBtnEl.innerHTML = '<i class="bx bx-refresh"></i>';
-                    resetBtnEl.title = 'Reset Calendar';
+                const meetingBtn = document.querySelector('.fc-meetingBtn-button');
+                if (meetingBtn && !meetingBtn.dataset.rendered) {
+                    meetingBtn.innerHTML = '<i class="bx bx-group"></i> Meetings';
+                    meetingBtn.dataset.rendered = 'true';
                 }
 
-                document.querySelector('.fc-prev-button')?.addEventListener('click', resetCalendar);
-                document.querySelector('.fc-next-button')?.addEventListener('click', resetCalendar);
-                document.querySelector('.fc-listWeek-button')?.addEventListener('click', resetCalendar);
+                const clientBtn = document.querySelector('.fc-clientEventBtn-button');
+                if (clientBtn && !clientBtn.dataset.rendered) {
+                    clientBtn.innerHTML = '<i class="bx bx-user-voice"></i> Client Events';
+                    clientBtn.dataset.rendered = 'true';
+                }
+
+                const officeBtn = document.querySelector('.fc-officeEventBtn-button');
+                if (officeBtn && !officeBtn.dataset.rendered) {
+                    officeBtn.innerHTML = '<i class="bx bx-building"></i> Office Events';
+                    officeBtn.dataset.rendered = 'true';
+                }
+
+                const resetBtnEl = document.querySelector('.fc-resetBtn-button');
+                if (resetBtnEl && !resetBtnEl.dataset.rendered) {
+                    resetBtnEl.innerHTML = '<i class="bx bx-refresh"></i>';
+                    resetBtnEl.title = 'Reset Calendar';
+                    resetBtnEl.dataset.rendered = 'true';
+                }
             }, 100);
 
             // Reset function

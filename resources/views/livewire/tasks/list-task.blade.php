@@ -328,7 +328,7 @@
                                         </div>
                                         <div class="mt-1">
                                             @if($task['priority'] != 'low')
-                                            <span class="@if($task['priority'] == 'medium') p_medium @endif @if($task['priority'] == 'high') high @endif">
+                                            <span class="@if($task['priority'] == 'medium') p_medium @endif @if($task['priority'] == 'high') p_high @endif">
                                                 {{ ucfirst($task['priority']) }}
                                             </span>
                                             @endif

@@ -739,15 +739,22 @@
 
 /* ----- Task Tags ----- */
 .p {
-    &_medium {
+    &_medium, &_high {
         display: inline-block;
         padding: 7px 10px;
         font-size: 0.7rem;
         line-height: 100%;
-        background-color: $secondary;
-        color: #fff;
         border-radius: 30px;
         transition: all 0.3s ease;
+        font-weight: 500;
+    }
+    &_medium {
+        background-color: $secondary;
+        color: #fff;
+    }
+    &_high {
+        background-color: $danger;
+        color: #fff;
     }
 }
 
@@ -2261,6 +2268,9 @@
 /* ----- Calender ---- */
 .fc .fc {
     &-header-toolbar {
+        flex-direction: column;
+        align-items: inherit;
+        margin-bottom: 0 !important;
         button {
             margin: 0 !important;
         }
@@ -2298,10 +2308,41 @@
         }
     }
 
-    &-toolbar-title {
-        font-size: 14px;
-        text-transform: uppercase;
-        color: $secondary;
+    &-toolbar {
+        &-title {
+            font-size: 14px;
+            text-transform: uppercase;
+            color: $secondary;
+            margin-right: 10px;
+        }
+        &-chunk {
+            display: flex;
+            gap: 20px;
+            justify-content: space-between;
+
+            > div {
+                display: flex;
+                gap: 5px;
+                align-items: center;
+
+                &:first-child {
+                    margin-bottom: 10px;
+                }
+                &:last-child {
+                    button {
+                        &.fc-meetingBtn-button, &.fc-clientEventBtn-button, &.fc-officeEventBtn-button {
+                            padding: 5px 10px;
+                            background-color: #888;
+                            transition: all 0.2s ease;
+
+                            &:hover, &.active {
+                                background-color: $secondary;
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
     &-col-header-cell-cushion {

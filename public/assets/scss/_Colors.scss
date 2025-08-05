@@ -87,6 +87,10 @@ $table_header_color: $secondary;
     }
     &-secondary {
         color: $secondary !important;
+        
+        &-light {
+            color: $secondary_light !important;
+        }
     }
     &-yellow {
         color: $yellow !important;

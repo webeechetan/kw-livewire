@@ -10,6 +10,9 @@
 .text-secondary {
   color: #7407ff !important;
 }
+.text-secondary-light {
+  color: #e8ddf7 !important;
+}
 .text-yellow {
   color: #f7d306 !important;
 }
@@ -3912,15 +3915,22 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
 }
 
 /* ----- Task Tags ----- */
-.p_medium {
+.p_medium, .p_high {
   display: inline-block;
   padding: 7px 10px;
   font-size: 0.7rem;
   line-height: 100%;
-  background-color: #7407ff;
-  color: #fff;
   border-radius: 30px;
   transition: all 0.3s ease;
+  font-weight: 500;
+}
+.p_medium {
+  background-color: #7407ff;
+  color: #fff;
+}
+.p_high {
+  background-color: #ff0000;
+  color: #fff;
 }
 
 /* ----- Add Canvas ----- */
@@ -5141,6 +5151,11 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
 }
 
 /* ----- Calender ---- */
+.fc .fc-header-toolbar {
+  flex-direction: column;
+  align-items: inherit;
+  margin-bottom: 0 !important;
+}
 .fc .fc-header-toolbar button {
   margin: 0 !important;
 }
@@ -5176,6 +5191,28 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   font-size: 14px;
   text-transform: uppercase;
   color: #7407ff;
+  margin-right: 10px;
+}
+.fc .fc-toolbar-chunk {
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+}
+.fc .fc-toolbar-chunk > div {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+.fc .fc-toolbar-chunk > div:first-child {
+  margin-bottom: 10px;
+}
+.fc .fc-toolbar-chunk > div:last-child button.fc-meetingBtn-button, .fc .fc-toolbar-chunk > div:last-child button.fc-clientEventBtn-button, .fc .fc-toolbar-chunk > div:last-child button.fc-officeEventBtn-button {
+  padding: 5px 10px;
+  background-color: #888;
+  transition: all 0.2s ease;
+}
+.fc .fc-toolbar-chunk > div:last-child button.fc-meetingBtn-button:hover, .fc .fc-toolbar-chunk > div:last-child button.fc-meetingBtn-button.active, .fc .fc-toolbar-chunk > div:last-child button.fc-clientEventBtn-button:hover, .fc .fc-toolbar-chunk > div:last-child button.fc-clientEventBtn-button.active, .fc .fc-toolbar-chunk > div:last-child button.fc-officeEventBtn-button:hover, .fc .fc-toolbar-chunk > div:last-child button.fc-officeEventBtn-button.active {
+  background-color: #7407ff;
 }
 .fc .fc-col-header-cell-cushion {
   font-weight: 500;
