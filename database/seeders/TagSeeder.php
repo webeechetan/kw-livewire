@@ -16,20 +16,17 @@ class TagSeeder extends Seeder
     public function run(): void
     {
         $tags = [
-            ['name' => 'Meeting', 'color' => '#ffa500'],
-            ['name' => 'Post', 'color' => '#0000ff'],
-            ['name' => 'Client Event', 'color' => '#A020F0'],
-            ['name' => 'Office Event', 'color' => '#008000'],
-            ['name' => 'Stuck', 'color' => '#ff0000'],
-            ['name' => 'Waiting', 'color' => '#333'],
+            ['name' => 'Meeting'],
+            ['name' => 'Post'],
+            ['name' => 'Client Event'],
+            ['name' => 'Office Event'],
+            ['name' => 'Stuck'],
+            ['name' => 'Waiting'],
         ];
 
         foreach ($tags as $tag) {
             Tag::create([
-                'org_id' => 5,
-                'created_by' => 3, 
                 'name' => $tag['name'],
-                'color' => $tag['color'],
             ]);
         }
     }

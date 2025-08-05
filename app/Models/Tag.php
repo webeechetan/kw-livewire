@@ -11,14 +11,6 @@ class Tag extends Model
     use HasFactory;
 
     protected $fillable = [
-        'org_id',
-        'created_by',
         'name',
-        'color',
     ];
-
-    protected static function booted()
-    {
-        static::addGlobalScope(new OrganizationScope);
-    }
 }

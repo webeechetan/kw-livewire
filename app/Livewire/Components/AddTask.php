@@ -15,7 +15,7 @@ class AddTask extends Component
 {
     use WithFileUploads;
 
-    protected $listeners = ['editTask','deleteTask','copy-link'=>'copyLink','resetForm'];
+    protected $listeners = ['editTask'=> 'editTask','deleteTask','copy-link'=>'copyLink','resetForm'];
 
     public $project;
     public $task;
@@ -243,7 +243,11 @@ class AddTask extends Component
         $this->comment_id = null;
     }
 
-    public function editTask($id){
+    public function editTask($id = null){
+        // dd($id);
+        if(!$id){
+            dd('No task id provided for edit');
+        }
         $this->task = Task::with('users','notifiers','attachments','comments.user','voiceNotes.user','assignedBy')->find($id);
         $this->name = $this->task->name;
         $this->description = $this->task->description;
