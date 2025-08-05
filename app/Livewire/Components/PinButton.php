@@ -52,8 +52,8 @@ class PinButton extends Component
         $this->pinned = !$this->pinned;
         $msg = $this->pinned ? 'Pinned' : 'Unpinned';
         $this->dispatch('success', $msg);
+        $this->dispatch('togglePin', $pin->id);
         // refresh parent component
 
-        // $this->
     }
 }

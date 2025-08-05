@@ -118,7 +118,7 @@
                             <select class="form-select task-tag-id" wire:model="tag_id">
                                 <option selected >Select Tag</option>
                                 @foreach($tags as $tag)
-                                    <option value="{{ $tag->id }}" style="color: {{ $tag->color }}">{{ $tag->name }}</option>
+                                    <option value="{{ $tag->id }}" >{{ $tag->name }}</option>
                                 @endforeach
                             </select> 
                         </div>
@@ -862,7 +862,7 @@
                     }else{
                         $('.client-comment-rows').append(comment_html);
                     }
-                });
+                }); 
 
 
                 $('#offcanvasRight').offcanvas('show');

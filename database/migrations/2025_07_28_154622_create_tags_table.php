@@ -13,11 +13,7 @@ return new class extends Migration
     {
         Schema::create('tags', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('org_id');
-            $table->foreign('org_id')->references('id')->on('organizations')->onDelete('cascade');
-            $table->unsignedBigInteger('created_by')->nullable();
             $table->string('name');
-            $table->string('color')->nullable();
             $table->timestamps();
         });
     }

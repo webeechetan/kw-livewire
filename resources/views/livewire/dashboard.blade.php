@@ -313,7 +313,7 @@
                                         @php
                                             $project = $pin->pinnable;
                                         @endphp
-                                            <div class="card hover-arrow bg-light shadow-sm border-0 mb-2">
+                                            <div class="card hover-arrow bg-light shadow-sm border-0 mb-2 pin-id-{{ $pin->id }}">
                                                 <a class="card-open" href="{{ route('project.profile', $pin->pinnable_id) }}" :key="$pin->pinnable_id"><i class="bx bx-chevron-right"></i></a>
                                                 <div class="card-body">
                                                     <div class="row">
@@ -349,7 +349,7 @@
                         <div style="height: 820px;">
                             @foreach($recent_comments as $comment)
                                 <div class="mb-4 border-bottom-list">
-                                    <a class="d-block" href="{{ route('task.view', $comment->task_id) }}">
+                                    <a class="d-block" href="javascript:void(0)" wire:click="$dispatch('editTask', [{{$comment->task_id}}] )">
                                         <div class="text-sm mb-2"><i class="bx bx-task"></i> {!! Str::limit(strip_tags($comment->task->name), 85, '...') !!}</div>
                                         <div class="d-flex gap-1 mb-3">
                                             <span><x-avatar :user="$comment->user" class="avatar-sm" /></span>
@@ -386,8 +386,12 @@
         } 
         $events[]=[ 'title'=> $task->name,
             'start' => $task->due_date,
-            'url' => route('task.view', $task->id),
+            // 'url' => route('task.view', $task->id),
             'backgroundColor' => $color,
+            'classNames' => 'edit-task',
+            'extendedProps' => [
+                'task_id' => $task->id,
+            ],
         ];
     }
 
@@ -405,6 +409,15 @@
 
     @script
     <script>
+        // hide pin-id if togglePin event is dispatched
+        window.addEventListener('togglePin', function (event) {
+            const pinId = event.detail;
+            const pinElement = document.querySelector('.pin-id-' + pinId);
+            if (pinElement) {
+                pinElement.style.display = 'none';
+            }
+        });
+
         $(document).ready(function () {
 
             // Project Chart
@@ -466,6 +479,11 @@
                 headerToolbar: {
                     left: 'title,todayBtn,resetBtn prev,next',
                     right: 'meetingBtn,clientEventBtn,officeEventBtn'
+                },
+                eventClick: function(info) {
+                    const taskId = info.event.extendedProps.task_id;
+                    // trigger the edit task event
+                    Livewire.dispatch('editTask',[taskId]);
                 },
                 customButtons: {
                     todayBtn: {

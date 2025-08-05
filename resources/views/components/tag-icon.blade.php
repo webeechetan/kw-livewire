@@ -29,9 +29,9 @@
 <script>
     $(document).ready(function() {
         $(".tag-icon").hover(function() {
-            $(this).find('.btn-icon-task-action').addClass("bx-tada");
+            $(this).find('.bx').addClass("bx-tada");
         }, function() {
-            $(this).find('.btn-icon-task-action').removeClass("bx-tada");
+            $(this).find('.bx').removeClass("bx-tada");
         });
     });
 </script>

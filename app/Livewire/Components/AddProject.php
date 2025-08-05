@@ -10,6 +10,7 @@ use App\Helpers\Helper;
 use Livewire\WithFileUploads;
 use App\Models\Client;
 use App\Models\Scopes\MainClientScope;
+use App\Models\Pin;
 
 class AddProject extends Component
 {
@@ -196,6 +197,13 @@ class AddProject extends Component
     public function deleteProject($id)
     {
         $project = Project::find($id);
+        // if changing status to archived then remove pins who have this project pinned
+        $pins = Pin::where('pinnable_type', 'App\Models\Project')
+            ->where('pinnable_id', $id)
+            ->get();
+        foreach ($pins as $pin) {
+            $pin->delete();
+        }
         $project->delete();
         $this->dispatch('success', 'Project deleted successfully.');
         $this->dispatch('saved');
