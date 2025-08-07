@@ -21,7 +21,8 @@ class FiltersQueryParams extends Component
         $projects, 
         $clients, 
         $teams, 
-        $clearFilters;
+        $clearFilters,
+        $priority;
 
     /**
      * Create a new component instance.
@@ -39,7 +40,8 @@ class FiltersQueryParams extends Component
         $projects = null, 
         $clients = null, 
         $teams = null,
-        $clearFilters = null
+        $clearFilters = null,
+        $priority = null
         ){
 
         $this->sort = $sort;
@@ -55,6 +57,7 @@ class FiltersQueryParams extends Component
         $this->clients = $clients;
         $this->teams = $teams;
         $this->clearFilters = $clearFilters;
+        $this->priority = $priority;
     }
 
     /**

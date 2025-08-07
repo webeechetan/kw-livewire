@@ -37,12 +37,16 @@ class Filter
         return $query->whereIn('id', $teamTasks);
     }
 
-    public static function filterTasks($query, $byProject, $byClient, $byUser, $sort, $startDate, $dueDate, $status,$byTeam = null){
+    public static function filterTasks($query, $byProject, $byClient, $byUser, $sort, $startDate, $dueDate, $status,$byTeam = null, $priority = 'all'){
         $query = self::byProject($query, $byProject);
         $query = self::byClient($query, $byClient);
         $query = self::byUser($query, $byUser);
         if($byTeam){
             $query = self::byTeam($query, $byTeam);
+        }
+
+        if($priority != 'all'){
+            $query->where('priority', $priority);
         }
 
         if($startDate){

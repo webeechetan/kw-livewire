@@ -51,6 +51,7 @@ class ListTask extends Component
     public $startDate;
     public $dueDate;
     public $status = 'all';
+    public $priority = 'all';
  
 
 
@@ -285,12 +286,13 @@ class ListTask extends Component
             $this->sort, 
             $this->startDate, 
             $this->dueDate, 
-            $this->status
+            $this->status,
+            $this->priority
         );
     }
 
     public function doesAnyFilterApplied(){
-        if($this->sort != 'all' || $this->byProject != 'all' || $this->byClient != 'all' || $this->byUser != 'all' || $this->startDate || $this->dueDate || $this->status != 'all'){
+        if($this->sort != 'all' || $this->byProject != 'all' || $this->byClient != 'all' || $this->byUser != 'all' || $this->startDate || $this->dueDate || $this->status != 'all' || $this->priority != 'all'){
             return true;
         }
         return false;
