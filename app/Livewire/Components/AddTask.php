@@ -260,6 +260,7 @@ class AddTask extends Component
         $this->visibility = $this->task->visibility;
         $this->project_id = $this->task->project_id;
         $this->tag_id = $this->task->tag_id;
+        $this->priority = $this->task->priority;
         $this->dispatch('edit-task',$this->task);
         // user ids of who created a task and who are assigned to a task and who are notifiers of a task
         $user_ids_who_can_edit_task = array_merge([$this->task->assigned_by],$this->task->users->pluck('id')->toArray(),$this->task->notifiers->pluck('id')->toArray());

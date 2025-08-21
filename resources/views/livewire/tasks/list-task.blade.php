@@ -14,7 +14,7 @@
                 <span class="text-light">|</span>
                 @can('Create Task')
                     <a data-step="1" data-intro='Create your first task' data-position='right' data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" href="javascript:void(0);" class="btn-border btn-sm btn-border-primary toggleForm"><i class="bx bx-plus"></i> Add Task</a>
-                @endcan
+                @endcan  
             </div>
             <div class="col-auto">
                 <div class="main-body-header-right">
@@ -74,10 +74,10 @@
                                         </ul>
                                         <h5 class="filterSort-header mt-4"><i class='bx bx-calendar-alt text-primary' ></i> Filter By Priority</h5>
                                         <ul class="filterSort_btn_group list-none">
-                                            <li class="filterSort_item"><a wire:click="$set('priority', 'all')" class="btn-batch @if($status == 'all') active @endif">All</a></li>
-                                            <li class="filterSort_item"><a wire:click="$set('priority', 'high')" class="btn-batch @if($status == 'high') active @endif">High</a></li>
-                                            <li class="filterSort_item"><a wire:click="$set('priority', 'medium')" class="btn-batch @if($status == 'medium') active @endif">Medium</a></li>
-                                            <li class="filterSort_item"><a wire:click="$set('priority', 'low')" class="btn-batch @if($status == 'low') active @endif">Low</a></li>
+                                            <li class="filterSort_item"><a wire:click="$set('priority', 'all')" class="btn-batch @if($priority == 'all') active @endif">All</a></li>
+                                            <li class="filterSort_item"><a wire:click="$set('priority', 'high')" class="btn-batch @if($priority == 'high') active @endif">High</a></li>
+                                            <li class="filterSort_item"><a wire:click="$set('priority', 'medium')" class="btn-batch @if($priority == 'medium') active @endif">Medium</a></li>
+                                            <li class="filterSort_item"><a wire:click="$set('priority', 'low')" class="btn-batch @if($priority == 'low') active @endif">Low</a></li>
                                         </ul>
                                         <h5 class="filterSort-header mt-4"><i class='bx bx-briefcase text-primary' ></i> Filter By Clients</h5>
                                         <select class="dashboard_filters-select w-100" wire:model.live="byClient" id="">

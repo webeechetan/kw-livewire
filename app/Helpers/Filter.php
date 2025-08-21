@@ -33,6 +33,9 @@ class Filter
             return $query;
         }
         $team = Team::find($team_id);
+        if(!$team){
+            return $query;
+        }
         $teamTasks = $team->tasks->pluck('id')->toArray();
         return $query->whereIn('id', $teamTasks);
     }

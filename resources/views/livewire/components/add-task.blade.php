@@ -729,7 +729,7 @@
                 $(".attached_files").removeClass('d-none');
                 $(".assigner-tab").removeClass('d-none');
                 $(".assigner-name").html(task.assigned_by.name);
-                $('.taskPane-heading-label').html('Edit Task');
+                $('.taskPane-heading-label').html('Edit Task'); 
                 $('.save-task-button').html('Update Task');
                 let task_users = event.detail[0].users;
                 let task_notifiers = event.detail[0].notifiers;

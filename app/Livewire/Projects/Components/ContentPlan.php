@@ -171,30 +171,45 @@ class ContentPlan extends Component
     }
 
     public function importPost()
-{
-    $type = match ($this->postFile->getClientOriginalExtension()) {
-        'csv' => \Maatwebsite\Excel\Excel::CSV,
-        'xls' => \Maatwebsite\Excel\Excel::XLS,
-        'xlsx' => \Maatwebsite\Excel\Excel::XLSX,
-        default => throw new \Exception('Unsupported file type'),
-    };
+    {
+        $type = match ($this->postFile->getClientOriginalExtension()) {
+            'csv' => \Maatwebsite\Excel\Excel::CSV,
+            'xls' => \Maatwebsite\Excel\Excel::XLS,
+            'xlsx' => \Maatwebsite\Excel\Excel::XLSX,
+            default => throw new \Exception('Unsupported file type'),
+        };
 
-    $import = new PostsImport($this->contentPlan->id, $this->project->id);
+        $import = new PostsImport($this->contentPlan->id, $this->project->id);
 
-    try {
-        \Maatwebsite\Excel\Facades\Excel::import(
-            $import,
-            $this->postFile->getRealPath(),
-            null,
-            $type
-        );
-    } catch (\Exception $e) {
-        $import->report['header_error'] = $e->getMessage();
+        try {
+            \Maatwebsite\Excel\Facades\Excel::import(
+                $import,
+                $this->postFile->getRealPath(),
+                null,
+                $type
+            );
+        } catch (\Exception $e) {
+            $import->report['header_error'] = $e->getMessage();
+        }
+        $report = $import->getReport();
+
+        $this->dispatch('imported',$report);
     }
-    $report = $import->getReport();
 
-    $this->dispatch('imported',$report);
-}
+    public function createBlankPost(){
+        $post = new Post();
+        $post->project_id = $this->project->id;
+        $post->content_plan_id = $this->contentPlan->id;
+        $post->date = now();
+        $post->platform = 'default';
+        $post->status = 'pending';
+        $post->format = 'default';
+        $post->content_bucket = 'default';
+        $post->content_idea = 'default';
+        // Initialize other fields as needed
+        $post->save();
+        $this->dispatch('blank-post-created',$post);
+    }
 
 
 }

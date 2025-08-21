@@ -18,6 +18,7 @@
                     <button class="btn btn-primary" id="exportToExcel">Export to Excel</button>
                     <button class="btn btn-primary" id="create-new-post" >Create Post</button>
                     <button class="btn btn-primary" id="import-post-btn" >Import Posts</button>
+                    <button class="btn btn-primary add-row-btn" id="add-new-row" >Add Row</button>
                     <div class="import-report mt-3 mb-3 alert alert-info d-none">
                         <div class="summary mb-2"></div>
                         <div class="failures d-none">
@@ -476,6 +477,18 @@
         const myGridElement = document.querySelector('#calendarTable');
         var grid = agGrid.createGrid(myGridElement, gridOptions);
 
+        // Set the row data
+        $("#add-new-row").click(function() {
+            // Add a new row to the grid
+            if (!grid) {
+                console.error("Grid is not initialized.");
+                return;
+            }
+            @this.createBlankPost();
+
+        });
+        
+
         // export to excel
         $('#exportToExcel').click(function() {
             var data = grid.getDataAsCsv();
@@ -534,6 +547,25 @@
             var post = event.detail[0];
             $("#createPostModal").modal('hide');
 
+        });
+
+        document.addEventListener('blank-post-created', (event)=>{
+           var post = event.detail[0];
+             const newRow = {
+                id: post.id, // Unique ID for the new row
+                date: '',
+                platform: '',
+                format: '',
+                content_bucket: '',
+                content_idea: '',
+                creative_copy: '',
+                visual_direction: '',
+                caption: '',
+                status: 'pending',
+                assigned_to: {}
+            };
+
+            grid.applyTransaction({ add: [newRow] });
         });
 
         $('.generateContentPlanBtn').click(function() {

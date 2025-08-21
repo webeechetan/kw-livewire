@@ -47,7 +47,7 @@ class ListTask extends Component
     public $byProject = 'all';
     public $byClient = 'all';
     public $byUser = 'all';
-    // public $byTeam = 'all';
+    public $byTeam = 'all';
     public $startDate;
     public $dueDate;
     public $status = 'all';
@@ -150,6 +150,7 @@ class ListTask extends Component
                     ->take($this->perPage)
                     ->get();
             }
+
 
             if ($this->doesAnyFilterApplied()) {
                 $this->totalTasks = $this->applySort(
@@ -276,6 +277,11 @@ class ListTask extends Component
         $this->mount();
     }
 
+    public function updatedPriority($value)
+    {
+        $this->mount();
+    }
+
     public function applySort($query)
     {
         return Filter::filterTasks(
@@ -287,8 +293,10 @@ class ListTask extends Component
             $this->startDate, 
             $this->dueDate, 
             $this->status,
+            $this->byTeam,
             $this->priority
-        );
+        ); 
+        
     }
 
     public function doesAnyFilterApplied(){

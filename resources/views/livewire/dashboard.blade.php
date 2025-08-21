@@ -391,6 +391,7 @@
             'classNames' => 'edit-task',
             'extendedProps' => [
                 'task_id' => $task->id,
+                'tag' => $task->tag->name ?? null,
             ],
         ];
     }
@@ -478,7 +479,7 @@
                 moreLinkClassNames: 'calendar-more-link-btn',
                 headerToolbar: {
                     left: 'title,todayBtn,resetBtn prev,next',
-                    right: 'meetingBtn,clientEventBtn,officeEventBtn'
+                    right: ''
                 },
                 eventClick: function(info) {
                     const taskId = info.event.extendedProps.task_id;
@@ -501,45 +502,6 @@
                             calendar.changeView('listDay', today);
                         }
                     },
-                    meetingBtn: {
-                        text: "Meetings",
-                        click: function () {
-                            setActiveButton('meetingBtn');
-                            const filtered = originalEvents.filter(event =>
-                                event.tag?.name?.toLowerCase().trim() === 'meeting'
-                            );
-
-                            calendar.removeAllEvents();
-                            calendar.addEventSource(filtered);
-                            calendar.changeView('listWeek');
-                        }
-                    },
-                    clientEventBtn: {
-                        text: "Client Events",
-                        click: function () {
-                            setActiveButton('clientEventBtn');
-                            const filtered = originalEvents.filter(event =>
-                                event.tag?.name?.toLowerCase().trim() === 'client event'
-                            );
-
-                            calendar.removeAllEvents();
-                            calendar.addEventSource(filtered);
-                            calendar.changeView('listWeek');
-                        }
-                    },
-                    officeEventBtn: {
-                        text: "Office Events",
-                        click: function () {
-                            setActiveButton('officeEventBtn');
-                            const filtered = originalEvents.filter(event =>
-                                event.tag?.name?.toLowerCase().trim() === 'office event'
-                            );
-
-                            calendar.removeAllEvents();
-                            calendar.addEventSource(filtered);
-                            calendar.changeView('listWeek');
-                        }
-                    },
                     resetBtn: {
                         text: '',
                         click: function () {
@@ -549,12 +511,28 @@
                             calendar.changeView('listWeek');
                         }
                     }
-                }
+                },
+                eventContent: function(arg) {
+                    const title = arg.event.title;
+                    const tag = arg.event.extendedProps.tag;
+
+                    const titleEl = document.createElement('div');
+                    titleEl.innerText = title;
+
+                    if (tag) {
+                        const tagEl = document.createElement('span');
+                        tagEl.innerText = tag;
+                        tagEl.className = 'btn-batch tag-icon'; // custom class for styling
+                        titleEl.appendChild(tagEl);
+                    }
+
+                    return { domNodes: [titleEl] };
+                },
 
             });
 
             function setActiveButton(buttonKey) {
-                const buttons = ['meetingBtn', 'clientEventBtn', 'officeEventBtn', 'todayBtn'];
+                const buttons = ['todayBtn'];
 
                 buttons.forEach(key => {
                     const el = document.querySelector(`.fc-${key}-button`);
@@ -572,24 +550,6 @@
 
             // Inject icon after render
             setTimeout(() => {
-                const meetingBtn = document.querySelector('.fc-meetingBtn-button');
-                if (meetingBtn && !meetingBtn.dataset.rendered) {
-                    meetingBtn.innerHTML = '<i class="bx bx-group"></i> Meetings';
-                    meetingBtn.dataset.rendered = 'true';
-                }
-
-                const clientBtn = document.querySelector('.fc-clientEventBtn-button');
-                if (clientBtn && !clientBtn.dataset.rendered) {
-                    clientBtn.innerHTML = '<i class="bx bx-user-voice"></i> Client Events';
-                    clientBtn.dataset.rendered = 'true';
-                }
-
-                const officeBtn = document.querySelector('.fc-officeEventBtn-button');
-                if (officeBtn && !officeBtn.dataset.rendered) {
-                    officeBtn.innerHTML = '<i class="bx bx-building"></i> Office Events';
-                    officeBtn.dataset.rendered = 'true';
-                }
-
                 const resetBtnEl = document.querySelector('.fc-resetBtn-button');
                 if (resetBtnEl && !resetBtnEl.dataset.rendered) {
                     resetBtnEl.innerHTML = '<i class="bx bx-refresh"></i>';
