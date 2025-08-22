@@ -98,8 +98,12 @@ class ContentPlan extends Component
         $this->dispatch('postRegenerated', $post->toArray());
     }
 
+    // Chetan Code 
     public function deletePost($id){
         $post = PostModel::find($id);
+        if (!$post) {
+            return;
+        }
         $post->delete();
         $this->dispatch('postDeleted', $post->id);
     }

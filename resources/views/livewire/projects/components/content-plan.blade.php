@@ -15,6 +15,11 @@
             <div class="col-md-12 mb-4">
                 <h4>{{ $contentPlan->title }}</h4>
                 <div>
+  <span>{{ $contentPlan->start_date ? \Carbon\Carbon::parse($contentPlan->start_date)->format('d M y') : '-' }}</span>
+  <span>{{ $contentPlan->end_date ? \Carbon\Carbon::parse($contentPlan->end_date)->format('d M y') : '-' }}</span>
+</div>
+
+                <div>
                     <button class="btn btn-primary" id="exportToExcel">Export to Excel</button>
                     <button class="btn btn-primary" id="create-new-post" >Create Post</button>
                     <button class="btn btn-primary" id="import-post-btn" >Import Posts</button>
@@ -282,23 +287,19 @@
         let calendarTable = document.getElementById('calendarTable');
         
         const gridOptions = {
-        // Row Data: The data to be displayed.
-        rowData: postData,
-        // export data to excel
-        // row height
-        rowHeight: 100,
+            rowData: postData,
+            getRowId: params => params.data.id,  // ensures correct ID is used
+            // export data to excel
 
-
-        // Column Definitions: Defines the columns to be displayed.
-        columnDefs: [
+            // Column Definitions: Defines the columns to be displayed.
+            columnDefs: [
                 {
                     field: "id",
                     headerName: "ID",
                     hide: true,
                     width: 100, 
                     editable: false,
-                },
-            
+                },        
                 { field: "date",
                     headerName: "Date",
                     filter: true,
@@ -311,7 +312,7 @@
                         const rowId = params.data.id;
                         @this.saveColumnValue(rowId,'date',updatedValue)
                     }
-                 },
+                },
                 { field: "platform",
                     headerName: "Platform",
                     filter: true,
@@ -321,7 +322,7 @@
                         const rowId = params.data.id;
                         @this.saveColumnValue(rowId,'platform',updatedValue)
                     }
-                 },
+                },
                 { field: "format", 
                     headerName: "Format",
                     filter: true,
@@ -331,7 +332,7 @@
                         const rowId = params.data.id;
                         @this.saveColumnValue(rowId,'format',updatedValue)
                     }
-                 },
+                },
                 { 
                     field: "content_bucket",
                     headerName: "Content Bucket",
@@ -342,8 +343,8 @@
                         @this.saveColumnValue(rowId,'content_bucket',updatedValue)
                     }
                     
-                 },
-                 { 
+                },
+                { 
                     field: "content_idea",
                     headerName: "Content Idea",
                     editable: true,
@@ -361,7 +362,7 @@
                         const rowId = params.data.id;
                         @this.saveColumnValue(rowId,'content_idea',updatedValue)
                     }
-                 },
+                    },
                 {
                     field: "creative_copy",
                     headerName: "Creative Copy",
@@ -377,8 +378,6 @@
                     },
                     wrapText: true,
                 },
-
-
                 {
                     field: "visual_direction",
                     headerName: "Visual Direction",
@@ -478,7 +477,7 @@
         var grid = agGrid.createGrid(myGridElement, gridOptions);
 
         // Set the row data
-        $("#add-new-row").click(function() {
+        $('#add-new-row').click(function() {
             // Add a new row to the grid
             if (!grid) {
                 console.error("Grid is not initialized.");
@@ -487,7 +486,6 @@
             @this.createBlankPost();
 
         });
-        
 
         // export to excel
         $('#exportToExcel').click(function() {
@@ -532,6 +530,9 @@
             // grid.getRowNode(rowIndex).rowClass = 'd-none';
             grid.getRowNode(rowIndex).setRowClass('d-none');
 
+            // remove the row from the grid
+            grid.applyTransaction({ remove: [{ id: postId }] });
+
         });
 
 
@@ -549,10 +550,10 @@
 
         });
 
-        document.addEventListener('blank-post-created', (event)=>{
-           var post = event.detail[0];
-             const newRow = {
-                id: post.id, // Unique ID for the new row
+        document.addEventListener('blank-post-created', (event)=> {
+            var post = event.detail[0];
+            const newRow = {
+                id: post.id,
                 date: '',
                 platform: '',
                 format: '',
@@ -565,8 +566,17 @@
                 assigned_to: {}
             };
 
-            grid.applyTransaction({ add: [newRow] });
+            // find index of selected row
+            const selectedNodes = grid.getSelectedNodes();
+            if (selectedNodes.length > 0) {
+                const rowIndex = selectedNodes[0].rowIndex + 1;
+                grid.applyTransaction({ add: [newRow], addIndex: rowIndex });
+            } else {
+                // fallback: add at end
+                grid.applyTransaction({ add: [newRow] });
+            }
         });
+
 
         $('.generateContentPlanBtn').click(function() {
             var columnName = $('.generateWithAIColumnName').val();
