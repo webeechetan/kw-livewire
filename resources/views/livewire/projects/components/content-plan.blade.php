@@ -13,12 +13,56 @@
     <div wire:ignore>
         <div class="row calendarTableRow ">
             <div class="col-md-12 mb-4">
-                <h4>{{ $contentPlan->title }}</h4>
+                <h4 class="content-plan-title">{{ $contentPlan->title }}</h4>
                 <div>
                     <button class="btn btn-primary" id="exportToExcel">Export to Excel</button>
                     <button class="btn btn-primary" id="create-new-post" >Create Post</button>
                     <button class="btn btn-primary" id="import-post-btn" >Import Posts</button>
-                    <button class="btn btn-primary add-row-btn" id="add-new-row" >Add Row</button>
+                    <button class="btn btn-primary add-row-btn" id="add-new-row" >
+                        <span wire:loading.remove wire:target="createBlankPost">
+                            Add Row
+                        </span>
+                        <span wire:loading wire:target="createBlankPost">
+                            Adding...
+                            <div class="spinner-border spinner-border-sm" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </span>
+                </button>
+                    <button class="btn btn-primary edit-plan-btn" >Edit Plan</button>
+                    <button class="btn btn-primary delete-plan-btn" wire:click="deleteContentPlan" wire:confirm="Are you sure you want to delete this plan?">Delete Plan</button>
+                    {{-- edit plan form --}}
+                    <form wire:submit.prevent="updateContentPlan" class="d-none edit-plan-form mt-3 mb-3">
+                        <div class="mb-3">
+                            <label for="title" class="form-label">Title</label>
+                            <input type="text" class="form-style" wire:model="title" id="title" placeholder="Enter title">
+                        </div>
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Description</label>
+                            <textarea class="form-style" wire:model="description" id="description" placeholder="Enter description"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="start_date" class="form-label">Start Date</label>
+                            <input type="date" class="form-style" wire:model="start_date" id="start_date" placeholder="Select start date">
+                        </div>
+                        <div class="mb-3">
+                            <label for="end_date" class="form-label">End Date</label>
+                            <input type="date" class="form-style" wire:model="end_date" id="end_date" placeholder="Select end date">
+                        </div>
+                        <div class="mb-3">
+                            <label for="status" class="form-label">Status</label>
+                            <select class="form-style" wire:model="status" id="status">
+                                <option value="active">Active</option>
+                                <option value="completed">Completed</option>
+                                <option value="on hold">On Hold</option>
+                                <option value="cancelled">Cancelled</option>
+                                <option value="draft">Draft</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button type="button" class="btn btn-secondary cancel-edit-btn">Cancel</button>
+                    </form>
+
                     <div class="import-report mt-3 mb-3 alert alert-info d-none">
                         <div class="summary mb-2"></div>
                         <div class="failures d-none">
@@ -218,6 +262,20 @@
 
 @push('scripts')
 <script>
+
+    // hide and show edit plan form
+    $(".edit-plan-btn").click(function() {
+        $(".edit-plan-form").toggleClass("d-none");
+    });
+    $(".cancel-edit-btn").click(function() {
+        $(".edit-plan-form").addClass("d-none");
+    });
+
+    document.addEventListener('contentPlanUpdated', (event) => {
+        var contentPlan = event.detail[0];
+        $(".edit-plan-form").addClass("d-none");
+        $(".content-plan-title").text(contentPlan.title);
+    });
 
     document.addEventListener('imported', (event) => {
         $("#importPostModal").modal('hide');
@@ -434,39 +492,43 @@
                         @this.saveColumnValue(rowId,'status',updatedValue)
                     }
                 },
-                {
-                    field: "assigned_to",
-                    headerName: "Assigned To",
-                    editable: true,
-                    cellEditor: MultiSelectCellEditor,
-                    cellEditorParams: {
-                        values: Object.entries(@json($users)), // [[id, name], ...]
-                    },
-                    filter: true,
-                    filterParams: {
-                        filterOptions: ['contains'],
-                    },
-                    valueFormatter: function(params) {
-                        // params.value is expected to be an object: {user_id: user_name, ...}
-                        if (!params.value) return '';
-                        if (Array.isArray(params.value)) {
-                            // fallback: array of ids
-                            return params.value.map(id => (@json($users)[id] || id)).join(', ');
-                        }
-                        // object: user_id => user_name
-                        return Object.values(params.value).join(', ');
-                    },
-                    onCellValueChanged: function(params) {
-                        console.log(params);
-                    }
-                },
+                // {
+                //     field: "assigned_to",
+                //     headerName: "Assigned To",
+                //     editable: true,
+                //     cellEditor: MultiSelectCellEditor,
+                //     cellEditorParams: {
+                //         values: Object.entries(@json($users)), // [[id, name], ...]
+                //     },
+                //     filter: true,
+                //     filterParams: {
+                //         filterOptions: ['contains'],
+                //     },
+                //     valueFormatter: function(params) {
+                //         // params.value is expected to be an object: {user_id: user_name, ...}
+                //         if (!params.value) return '';
+                //         if (Array.isArray(params.value)) {
+                //             // fallback: array of ids
+                //             return params.value.map(id => (@json($users)[id] || id)).join(', ');
+                //         }
+                //         // object: user_id => user_name
+                //         return Object.values(params.value).join(', ');
+                //     },
+                //     onCellValueChanged: function(params) {
+                //         console.log(params);
+                //     }
+                // },
                 {
                     field: "actions",
                     headerName: "Actions",
                     cellRenderer: function(params) {
                         // delete post button
-                        return '<button class="btn btn-sm btn-outline-danger" wire:click="deletePost(' + params.data.id + ')"><i class="bx bx-trash"></i></button>';
-                        // return '<button class="btn btn-primary post-regenerate-btn post-regenerate-btn-' + params.data.id + '" wire:click="regeneratePost(' + params.data.id + ')"><i class="bx bx-refresh" wire:loading.remove wire:target="regeneratePost(' + params.data.id + ')"></i> <i class="bx bx-loader-circle" wire:loading wire:target="regeneratePost(' + params.data.id + ')"></i></button>';
+                        var btns = '<button class="btn btn-sm btn-outline-danger" wire:click="deletePost(' + params.data.id + ')"><i class="bx bx-trash"></i></button>';
+
+                        //  convert post into task button
+                        btns += ' <button class="btn btn-sm btn-primary" wire:click="convertToTask(' + params.data.id + ')" title="convert into task"><i class="bx bx-task"></i></button>';
+
+                        return btns;
                     },
                 }
             ]
@@ -528,9 +590,8 @@
             grid.getRowNode(rowIndex).setDataValue('format', 'deleted');
             grid.getRowNode(rowIndex).setDataValue('content_bucket', 'deleted');
             grid.getRowNode(rowIndex).setDataValue('id', 'deleted');
-            // add d-none class to the row
-            // grid.getRowNode(rowIndex).rowClass = 'd-none';
-            grid.getRowNode(rowIndex).setRowClass('d-none');
+            // Optionally, you can remove the row entirely
+            grid.applyTransaction({ remove: [grid.getRowNode(rowIndex).data] });
 
         });
 
@@ -553,7 +614,7 @@
            var post = event.detail[0];
              const newRow = {
                 id: post.id, // Unique ID for the new row
-                date: '',
+                date: post.date,
                 platform: '',
                 format: '',
                 content_bucket: '',

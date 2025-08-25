@@ -30,6 +30,8 @@ class ContentPlans extends Component
     {
         $this->project = $project;
         $this->contentPlans = ContentPlan::where('project_id', $this->project->id)->get();
+        $this->start_date = Carbon::now()->startOfMonth()->format('Y-m-d');
+        $this->end_date = Carbon::now()->endOfMonth()->format('Y-m-d');
     }
 
     public function generateContentPlan()
@@ -45,8 +47,8 @@ class ContentPlans extends Component
             'description' => $this->description,
             'number_of_posts' => $this->number_of_posts,
             'platforms' => $this->platforms,
-            'start_date' => $this->start_date ?? now()->startOfMonth()->toDateString(),
-            'end_date' => $this->end_date ?? now()->endOfMonth()->toDateString(),
+            'start_date' => $this->start_date ?? Carbon::now()->startOfMonth()->format('Y-m-d'),
+            'end_date' => $this->end_date ?? Carbon::now()->endOfMonth()->format('Y-m-d'),
         ];
 
         $contentPlan = new ContentPlan();
@@ -101,15 +103,28 @@ class ContentPlans extends Component
         $projectBrief = json_decode($projectBrief, true);
         $openAIService = new OpenAIService();
 
+        $start_date = $this->start_date;
+
+        if(!$start_date){
+            $start_date = Carbon::now()->startOfMonth()->format('Y-m-d');
+        }
+
+        $end_date = $this->end_date;
+
+        if(!$end_date){
+            $end_date = Carbon::now()->endOfMonth()->format('Y-m-d');
+        }
+
         // Create content plan brief object
         $contentPlanBrief = [
             'title' => $this->title,
             'description' => $this->description,
             'number_of_posts' => $this->number_of_posts,
             'platforms' => $this->platforms,
-            'start_date' => $this->start_date ?? now()->startOfMonth()->toDateString(),
-            'end_date' => $this->end_date ?? now()->endOfMonth()->toDateString(),
+            'start_date' => $this->start_date ?? Carbon::now()->startOfMonth()->format('Y-m-d'),
+            'end_date' => $this->end_date ?? Carbon::now()->endOfMonth()->format('Y-m-d'),
         ];
+        // dd($contentPlanBrief);
 
         $contentPlan = new ContentPlan();
         $contentPlan->project_id = $this->project->id;
@@ -117,8 +132,8 @@ class ContentPlans extends Component
         $contentPlan->description = $this->description;
         $contentPlan->number_of_posts = $this->number_of_posts;
         $contentPlan->platforms = $this->platforms;
-        $contentPlan->start_date = $contentPlanBrief['start_date'];
-        $contentPlan->end_date = $contentPlanBrief['end_date'];
+        $contentPlan->start_date = $start_date;
+        $contentPlan->end_date = $end_date;
         $contentPlan->status = 'draft';
         $contentPlan->save();
 

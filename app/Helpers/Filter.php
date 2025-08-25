@@ -40,7 +40,7 @@ class Filter
         return $query->whereIn('id', $teamTasks);
     }
 
-    public static function filterTasks($query, $byProject, $byClient, $byUser, $sort, $startDate, $dueDate, $status,$byTeam = null, $priority = 'all'){
+    public static function filterTasks($query, $byProject, $byClient, $byUser, $sort, $startDate, $dueDate, $status,$byTeam = null, $priority = 'all', $tag = 'all'){
         $query = self::byProject($query, $byProject);
         $query = self::byClient($query, $byClient);
         $query = self::byUser($query, $byUser);
@@ -50,6 +50,12 @@ class Filter
 
         if($priority != 'all'){
             $query->where('priority', $priority);
+        }
+
+        if($tag != 'all'){
+            $query->whereHas('tag', function($q) use ($tag){
+                $q->where('id', $tag);
+            });
         }
 
         if($startDate){

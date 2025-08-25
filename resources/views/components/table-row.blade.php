@@ -6,12 +6,19 @@
         <div class="taskList_col_title_open edit-task" data-id="{{ $task->id }}"><i class="bx bx-chevron-right"></i></div>
         <div class="edit-task" data-id="{{ $task->id }}">
             <div class="mb-1">
-                {{ Str::limit($task->name, 50) }}
-                {{-- @if($task->tag)
-                    <x-tag-icon :tag="$task->tag" />
-                @endif --}}
+                {{ Str::limit($task->name, 50) }} 
             </div>
             <span class="text-xs text-light">Created date: {{  Carbon\Carbon::parse($task->created_at)->format('d M Y') }}</span>
+            @if($task->tag_id)
+                <div class="mt-1">
+                    <x-tag-icon :tag="$task->tag" />
+                </div>
+            @endif
+            @if($task['priority'] != 'low')
+                <span class="@if($task['priority'] == 'medium') p_medium @endif @if($task['priority'] == 'high') p_high @endif">
+                    {{ ucfirst($task['priority']) }}
+                </span>
+            @endif
         </div>
     </div>
 

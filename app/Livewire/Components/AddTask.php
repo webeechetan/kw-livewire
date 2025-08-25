@@ -15,7 +15,7 @@ class AddTask extends Component
 {
     use WithFileUploads;
 
-    protected $listeners = ['editTask'=> 'editTask','deleteTask','copy-link'=>'copyLink','resetForm'];
+    protected $listeners = ['editTask'=> 'editTask','deleteTask','copy-link'=>'copyLink','resetForm','openTaskCanvasForAdd'=>'openTaskCanvasForAdd'];
 
     public $project;
     public $task;
@@ -414,6 +414,23 @@ class AddTask extends Component
 
     public function resetForm(){
        $this->task = null;
+    }
+
+    public function openTaskCanvasForAdd($post = null){
+        if(!$post){
+            return;
+        }
+
+        $project_id = $post['project_id'];
+
+        $this->reset(['task','name','description','due_date','project_id','task_users','task_notifiers','priority','status','attachments','comment','comments','comment_id','tag_id','visibility']);
+        $this->project_id = $project_id;
+        $this->tag_id = Tag::where('name','Post')->first()->id ?? 2;
+        $this->name = 'Post: '.$post['caption'];
+        $this->description = $post['content_idea'];
+        $this->due_date = $post['date'] ?? null;
+
+        $this->dispatch('open-task-canvas-for-add', $post);
     }
     
 }

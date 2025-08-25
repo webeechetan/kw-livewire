@@ -78,6 +78,23 @@
                                             <li class="filterSort_item"><a wire:click="$set('status', 'overdue')" class="btn-batch @if($status == 'overdue') active @endif">Overdue</a></li>
                                             <li class="filterSort_item"><a wire:click="$set('status', 'completed')" class="btn-batch @if($status == 'completed') active @endif">Completed</a></li>
                                         </ul>
+                                        <h5 class="filterSort-header mt-4"><i class='bx bx-calendar-alt text-primary' ></i> Filter By Priority</h5>
+                                        <ul class="filterSort_btn_group list-none">
+                                            <li class="filterSort_item"><a wire:click="$set('priority', 'all')" class="btn-batch @if($priority == 'all') active @endif">All</a></li>
+                                            <li class="filterSort_item"><a wire:click="$set('priority', 'high')" class="btn-batch @if($priority == 'high') active @endif">High</a></li>
+                                            <li class="filterSort_item"><a wire:click="$set('priority', 'medium')" class="btn-batch @if($priority == 'medium') active @endif">Medium</a></li>
+                                            <li class="filterSort_item"><a wire:click="$set('priority', 'low')" class="btn-batch @if($priority == 'low') active @endif">Low</a></li>
+                                        </ul>
+                                        <h5 class="filterSort-header mt-4"><i class='bx bx-calendar-alt text-primary' ></i> Filter By Tag</h5>
+                                        <ul class="filterSort_btn_group list-none">
+                                            <li class="filterSort_item"><a wire:click="$set('tag', 'all')" class="btn-batch @if($tag == 'all') active @endif">All</a></li>
+                                            @foreach($tags as $tagItem)
+                                                <a wire:click="$set('tag', '{{ $tagItem->id }}')" class=" @if($tag == $tagItem->id) active @endif">
+                                                    <x-tag-icon :tag="$tagItem" />
+                                                </a>
+                                            @endforeach
+
+                                        </ul>
                                         <h5 class="filterSort-header mt-4"><i class='bx bx-briefcase text-primary' ></i> Filter By Clients</h5>
                                         <select class="dashboard_filters-select w-100" wire:model.live="byClient" id="">
                                             <option value="all">Select Client</option>
@@ -225,6 +242,9 @@
             :clients="$clients"
             :projects="$projects"
             :clearFilters="route('task.list-view')"
+            :priority="$priority"
+            :tag="$tag"
+            :tags="$tags"
         />
      @endif
 
@@ -241,7 +261,7 @@
             </div>
         </div>
         
-        <div class="taskList scrollbar">
+        <div class="taskList scrollbar"> 
             <div>
                 @foreach($tasks as $task)
                     @if(!$task->project)

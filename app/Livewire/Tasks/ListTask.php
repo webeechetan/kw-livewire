@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Client;
 use App\Models\Project;
 use App\Models\Team;
+use App\Models\Tag;
 use Livewire\WithPagination;
 use App\Helpers\Filter;
 use Livewire\Attributes\Session;
@@ -52,6 +53,7 @@ class ListTask extends Component
     public $dueDate;
     public $status = 'all';
     public $priority = 'all';
+    public $tag = 'all';
  
 
 
@@ -59,6 +61,7 @@ class ListTask extends Component
     public $users = [];
     public $clients = [];
     public $projects;
+    public $tags = [];
     // public $teams;
     public $project_id; 
     public $user_ids;
@@ -121,6 +124,7 @@ class ListTask extends Component
             // dd($this->projects);
             $this->teams = Team::orderBy('name', 'asc')->get();
             $this->clients = Client::orderBy('name', 'asc')->get();
+            $this->tags = Tag::orderBy('name', 'asc')->get();
             // Fetch all tasks from the database
             $statuses = ['pending', 'in_progress', 'in_review', 'completed'];
             $baseQuery = null;
@@ -282,6 +286,11 @@ class ListTask extends Component
         $this->mount();
     }
 
+    public function updatedTag($value)
+    {
+        $this->mount();
+    }
+
     public function applySort($query)
     {
         return Filter::filterTasks(
@@ -294,13 +303,14 @@ class ListTask extends Component
             $this->dueDate, 
             $this->status,
             $this->byTeam,
-            $this->priority
+            $this->priority,
+            $this->tag
         ); 
         
     }
 
     public function doesAnyFilterApplied(){
-        if($this->sort != 'all' || $this->byProject != 'all' || $this->byClient != 'all' || $this->byUser != 'all' || $this->startDate || $this->dueDate || $this->status != 'all' || $this->priority != 'all'){
+        if($this->sort != 'all' || $this->byProject != 'all' || $this->byClient != 'all' || $this->byUser != 'all' || $this->startDate || $this->dueDate || $this->status != 'all' || $this->priority != 'all' || $this->tag != 'all'){
             return true;
         }
         return false;

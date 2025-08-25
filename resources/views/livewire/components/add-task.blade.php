@@ -688,6 +688,22 @@
                 }
             });
 
+            document.addEventListener('open-task-canvas-for-add', event => {
+               var post = event.detail[0];
+               if(post){
+                    $(".task-projects").val(post.project_id).trigger('change');
+                    $(".task-due-date").text(post.date);
+
+
+                    // description
+                    $("#editor").summernote('code', post.caption);
+               }
+
+               
+
+                $('#offcanvasRight').offcanvas('show');
+            });
+
 
             function toggleFormItems(prop){
                 let form_items = $(".taskPane").find('input, select, textarea');

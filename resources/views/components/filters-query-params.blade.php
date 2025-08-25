@@ -49,6 +49,10 @@
         @if($priority != 'all')
             <span class="btn-batch">{{ ucfirst($priority) }} <a wire:click="$set('priority','all')" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
         @endif
+
+        @if($tag != 'all' && $tag != null)
+            <span class="btn-batch">{{ $tags->find($tag)?->name }} <a wire:click="$set('tag','all')" class="ms-1"><i class='bx bx-x'></i></a></span> <span class="text-grey">|</span>
+        @endif
         
     <a wire:navigate href="{{$clearFilters}}" class="text-danger d-flex align-items-center">Reset <span class="ms-1 d-inline-flex"><i class='bx bx-refresh'></i></span></a>
 </div>

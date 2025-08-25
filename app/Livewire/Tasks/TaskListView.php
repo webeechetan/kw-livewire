@@ -13,7 +13,7 @@ use App\Notifications\NewTaskAssignNotification;
 use App\Notifications\UserMentionNotification;
 use Livewire\WithPagination;
 use App\Helpers\Filter;
-
+use App\Models\Tag;
 
 class TaskListView extends Component
 {
@@ -45,6 +45,11 @@ class TaskListView extends Component
     public $byProject = 'all';
     public $byClient = 'all';
     public $byUser = 'all';
+    public $priority = 'all';
+    public $tag = 'all';
+    public $tags = [];
+    public $byTeam = null;
+
     // public $byTeam = 'all';
     public $startDate;
     public $dueDate; 
@@ -114,6 +119,7 @@ class TaskListView extends Component
 
             $this->teams = Team::all();
             $this->clients = Client::all();
+            $this->tags = Tag::all();
             // Fetch all tasks from the database
             if($this->ViewTasksAs == 'manager'){
                 $manager_team = auth()->user()->myTeam;
@@ -192,6 +198,16 @@ class TaskListView extends Component
         $this->mount();
     }
 
+    public function updatedPriority($value)
+    {
+        $this->mount();
+    }
+
+    public function updatedTag($value)
+    {
+        $this->mount();
+    }
+
     public function applySort($query)
     {
     
@@ -203,7 +219,10 @@ class TaskListView extends Component
             $this->sort, 
             $this->startDate, 
             $this->dueDate, 
-            $this->status
+            $this->status,
+            $this->byTeam,
+            $this->priority,
+            $this->tag
         );
     }
 
@@ -211,7 +230,7 @@ class TaskListView extends Component
 
         // dd($this->sort);
 
-        if($this->sort != 'all' || $this->byProject != 'all' || $this->byClient != 'all' || $this->byUser != 'all' || $this->startDate || $this->dueDate || $this->status != 'all'){
+        if($this->sort != 'all' || $this->byProject != 'all' || $this->byClient != 'all' || $this->byUser != 'all' || $this->startDate || $this->dueDate || $this->status != 'all' || $this->priority != 'all' || $this->tag != 'all'){
             return true;
         }
         return false;

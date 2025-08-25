@@ -34,11 +34,24 @@ class ContentPlan extends Component
     // import post attribute
     public $postFile;
 
+    // content plan attributes
+    public $title;
+    public $description;
+    public $start_date;
+    public $end_date;
+    public $status;
+
     public function mount($project, $contentPlan = null )
     {
         $this->project = ProjectModel::find($project);
         $this->contentPlan = ContentPlanModel::find($contentPlan);
         $this->users = User::pluck('name','id')->toArray();
+
+        $this->title = $this->contentPlan->title;
+        $this->description = $this->contentPlan->description;
+        $this->start_date = $this->contentPlan->start_date;
+        $this->end_date = $this->contentPlan->end_date;
+        $this->status = $this->contentPlan->status;
         // dd($this->users);
        
     }
@@ -46,6 +59,23 @@ class ContentPlan extends Component
     public function render()
     {
         return view('livewire.projects.components.content-plan');
+    }
+
+    public function deleteContentPlan(){
+        $this->contentPlan->delete();
+        return redirect(route('project.content-plans', $this->project->id));
+    }
+
+    public function updateContentPlan(){
+        $this->contentPlan->title = $this->title;
+        $this->contentPlan->description = $this->description;
+        $this->contentPlan->start_date = $this->start_date;
+        $this->contentPlan->end_date = $this->end_date;
+        $this->contentPlan->status = $this->status;
+        $this->contentPlan->save();
+        $this->dispatch('contentPlanUpdated', $this->contentPlan->toArray());
+        $this->dispatch('success', 'Content Plan updated successfully');
+
     }
 
     public function regeneratePost($id)
@@ -102,6 +132,7 @@ class ContentPlan extends Component
         $post = PostModel::find($id);
         $post->delete();
         $this->dispatch('postDeleted', $post->id);
+        $this->dispatch('success', 'Post deleted successfully');
     }
 
     public function generateColumnValue($columnName, $columnValue, $columnId){
@@ -166,6 +197,7 @@ class ContentPlan extends Component
 
     public function saveColumnValue($postId,$columnName,$columnValue){
         $post = Post::find($postId);
+        if(!$post) return;
         $post->$columnName = $columnValue;
         $post->save();
     }
@@ -188,8 +220,11 @@ class ContentPlan extends Component
                 null,
                 $type
             );
+            $this->dispatch('success', 'Imported successfully');
+
         } catch (\Exception $e) {
             $import->report['header_error'] = $e->getMessage();
+            $this->dispatch('error', 'There was a problem with the import: ' . $e->getMessage());
         }
         $report = $import->getReport();
 
@@ -201,14 +236,19 @@ class ContentPlan extends Component
         $post->project_id = $this->project->id;
         $post->content_plan_id = $this->contentPlan->id;
         $post->date = now();
-        $post->platform = 'default';
-        $post->status = 'pending';
-        $post->format = 'default';
-        $post->content_bucket = 'default';
-        $post->content_idea = 'default';
+        $post->platform = '';
+        $post->status = '';
+        $post->format = '';
+        $post->content_bucket = '';
+        $post->content_idea = '';
         // Initialize other fields as needed
         $post->save();
         $this->dispatch('blank-post-created',$post);
+    }
+
+    public function convertToTask($id){
+        $post = PostModel::find($id);
+        $this->dispatch('openTaskCanvasForAdd', $post->toArray());
     }
 
 
