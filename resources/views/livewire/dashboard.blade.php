@@ -392,6 +392,7 @@
             'extendedProps' => [
                 'task_id' => $task->id,
                 'tag' => $task->tag->name ?? null,
+                'priority' => $task->priority ?? null
             ],
         ];
     }
@@ -515,18 +516,43 @@
                 eventContent: function(arg) {
                     const title = arg.event.title;
                     const tag = arg.event.extendedProps.tag;
+                    const priority = arg.event.extendedProps.priority;
 
-                    const titleEl = document.createElement('div');
-                    titleEl.innerText = title;
+                    let html = `<div class="calendar-event-title"><div>${title}</div><div class="mt-1">`;
 
                     if (tag) {
-                        const tagEl = document.createElement('span');
-                        tagEl.innerText = tag;
-                        tagEl.className = 'btn-batch tag-icon'; // custom class for styling
-                        titleEl.appendChild(tagEl);
+                        let icon = 'bx bx-tag';
+                        if (tag === 'Client Event') {
+                            icon = 'bx bx-calendar-event';
+                        } else if (tag === 'Waiting') {
+                            icon = 'bx bx-time';
+                        } else if (tag === 'Meeting') {
+                            icon = 'bx bx-headphone';
+                        } else if (tag === 'Office Event') {
+                            icon = 'bx bx-calendar-event';
+                        } else if (tag === 'Post') {
+                            icon = 'bx bx-paper-plane';
+                        } else if (tag === 'Stuck') {
+                            icon = 'bx bx-pause-circle';
+                        }
+
+                        html += `<span class="btn-batch tag-icon me-1"><i class="${icon}"></i> ${tag}</span>`;
                     }
 
-                    return { domNodes: [titleEl] };
+                    if (priority) {
+                        let priorityClass = 'p_medium';
+                        if (priority === 'high') {
+                            priorityClass = 'p_high';
+                        } else if (priority === 'low') {
+                            priorityClass = 'p_low';
+                        }
+
+                        html += `<span class="btn-batch ${priorityClass}">${priority.charAt(0).toUpperCase() + priority.slice(1)}</span>`;
+                    }
+
+                    html += `</div>`;
+
+                    return { html: html };
                 },
 
             });

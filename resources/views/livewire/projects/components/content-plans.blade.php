@@ -35,94 +35,51 @@
     </div>
 
     @if($project->brief)
-    <div class="row mt-4">
-        <div class="col">
-            <div class="column-box">
-                <div class="d-flex flex-wrap justify-content-between align-items-center">
-                    <h4 class="column-title mb-0">Content Plan</h4>
-                    <div class="d-flex text-center gap-2">
-                        <button class="btn-border btn-sm btn-border-primary" data-bs-toggle="modal"
-                            data-bs-target="#contentPlanManualModal">
-                            <i class="bx bx-plus"></i> Create Manually
-                        </button>
-                        <button class="btn-border btn-sm btn-border-primary" data-bs-toggle="modal"
-                            data-bs-target="#contentPlanModal">
-                            <i class="bx bx-bot"></i> Generate With AI
-                        </button>
-                    </div>
-                </div>
-
-                <hr class="space-sm">
-
-                <div class="row">
-                    {{-- @foreach ($contentPlans as $contentPlan)
-                        <div class="col-md-4 mb-4">
-                            <div class="card_style card_style-user h-100">
-                                <div class="card_style-user-head">
-                                    <div class="card_style-user-profile-content">
-                                        <a href="{{ route('project.content-plan', [$project->id, $contentPlan->id]) }}">
-                                            <h4>{{ $contentPlan->title ?? 'Untitled' }}</h4>
-                                        </a>
-                                        <div class="d-flex ">
-                                            Status: <span class="badge bg-primary ms-1 me-2">
-                                                {{ $contentPlan->status }}
-                                            </span>
-                                            Duration: <span class="badge bg-primary ms-1 me-2">
-                                                {{ $contentPlan->duration }}
-                                            </span>
-                                            Number of Posts: <span class="badge bg-primary ms-1">
-                                                {{ $contentPlan->number_of_posts }}
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach --}}
-                </div>
-            </div>
-        </div>
+    <div class="d-flex justify-content-end gap-2" style="margin-top: -15px;">
+        <button class="btn btn-white w-100" data-bs-toggle="modal" data-bs-target="#contentPlanManualModal">
+            <i class="bx bx-plus"></i> Create Manually
+        </button>
+        <button class="btn btn-gredient w-100" data-bs-toggle="modal" data-bs-target="#contentPlanModal">
+            <i class="bx bx-bot"></i> Generate With AI
+        </button>
     </div>
     @endif
 
-    <div>
-        <div class="row mt-4">
-            @foreach ($contentPlans as $plan)
-                <div class="col-md-4 mb-4">
-                    <div class="card_style h-100">
-                        <a href="{{ route('project.content-plan', [$project->id, $plan->id]) }}"
-                            class="card_style-open"><i class='bx bx-chevron-right'></i></a>
-                        <div class="card-body">
-                            <div class="d-flex align-items-center">
-                                <span class="badge bg-light text-dark">{{ $plan->status }}</span>
-                            </div>
-                            <div class="card_style-project-head">
-                                <h4>
-                                    <a href="{{ route('project.content-plan', [$project->id, $plan->id]) }}">
-                                        {{ $plan->title }}
-                                    </a>
-                                </h4>
-                            </div>
-                            <div class="d-flex align-items-center text-muted small mb-1">
-                                <i class='bx bx-calendar me-1'></i>
-                                {{ \Carbon\Carbon::parse($plan->start_date)->format('d M') }} -
-                                {{ \Carbon\Carbon::parse($plan->end_date)->format('d M') }}
-                            </div>
-                            <div class="d-flex align-items-center text-muted small">
-                                <i class='bx bx-layer me-1'></i>
-                                {{ $plan->number_of_posts }} Posts
-                            </div>
-                            <div class="d-flex align-items-center text-muted small">
-                                <i class='bx bx-layer me-1'></i>
-                                {{ $plan->platforms }}
-                            </div>
-                        </div>
+    <div class="row mt-4">
+    @forelse ($contentPlans as $plan)
+        <div class="col-md-3 mb-4">
+            <div class="card_style h-100">
+                <a href="{{ route('project.content-plan', [$project->id, $plan->id]) }}" class="card_style-open"><i class='bx bx-chevron-right'></i></a>
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-2">
+                        <span class="badge">{{ $plan->status }}</span>
+                    </div>
+                    <div class="card_style-project-head">
+                        <h4>
+                            <a href="{{ route('project.content-plan', [$project->id, $plan->id]) }}">
+                                {{ $plan->title }}
+                            </a>
+                        </h4>
+                    </div>
+                    <div class="d-flex align-items-center mb-1">
+                        <i class='bx bx-calendar me-1 text-primary'></i>
+                        {{ \Carbon\Carbon::parse($plan->start_date)->format('d M') }} - {{ \Carbon\Carbon::parse($plan->end_date)->format('d M') }}
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <i class='bx bx-layer me-1 text-primary'></i>
+                        {{ $plan->posts->count() }} Posts
                     </div>
                 </div>
-            @endforeach
+            </div>
         </div>
-
-    </div>
+        @empty
+        <div class="col-12">
+            <div class="w-100 text-center text-muted bg-white d-flex align-items-center justify-content-center p-5" style="height: 300px; border-radius: 7px;">
+                <p>No content plans found.</p>
+            </div>
+        </div>
+    @endforelse
+</div>
     {{-- contentPlanManualModal --}}
     <div class="modal fade" id="contentPlanManualModal" tabindex="-1" role="dialog" aria-labelledby="contentPlanManualModal"
     aria-hidden="true">

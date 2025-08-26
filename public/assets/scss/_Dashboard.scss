@@ -739,23 +739,23 @@
 
 /* ----- Task Tags ----- */
 .p {
-    &_medium, &_high {
-        display: inline-block;
-        padding: 7px 10px;
-        font-size: 0.7rem;
-        line-height: 100%;
-        border-radius: 30px;
-        transition: all 0.3s ease;
-        font-weight: 500;
-    }
     &_medium {
-        background-color: $secondary;
+        background-color: $yellow_dark;
         color: #fff;
     }
     &_high {
         background-color: $danger;
         color: #fff;
     }
+}
+.p_medium, .p_high, .tag-icon {
+    display: inline-block;
+    padding: 3px 7px;
+    font-size: 0.7rem;
+    line-height: 100%;
+    border-radius: 30px;
+    transition: all 0.3s ease;
+    font-weight: 500;
 }
 
 /* ----- Add Canvas ----- */
@@ -1220,10 +1220,11 @@
         &_title {
             cursor: pointer;
             transition: $ease_03;
+            padding-left: 30px;
 
             &_open {
-                width: 20px;
-                height: 20px;
+                width: 15px;
+                height: 17px;
                 font-size: 16px;
                 background-color: $brand;
                 color: #fff;
@@ -1249,9 +1250,8 @@
         border-bottom: 1px solid $grey;
         border-radius: $border_radius_xs;
         transition: $ease_03;
-
         display: grid;
-        grid-template-columns: 300px 1fr;
+        grid-template-columns: 35% 1fr;
         gap: 30px;
 
         &:hover,
@@ -1259,7 +1259,6 @@
             background-color: $secondary_light;
 
             .taskList_col_title {
-                padding-left: 35px;
 
                 &_open {
                     transform: translateX(0);
@@ -1267,6 +1266,11 @@
                     visibility: visible;
                 }
             }
+        }
+
+        &_wrap {
+            display: grid;
+            grid-template-columns: 100px 1fr 1fr 145px 100px 130px;
         }
 
         >.row {
@@ -1323,17 +1327,23 @@
             margin-top: $spacing_s;
             border-radius: $border_radius_xs;
             display: grid;
-            grid-template-columns: 300px 1fr;
+            grid-template-columns: 35% 1fr;
             gap: 30px;
             align-items: center;
+
+            &_wrap {
+                display: grid;
+                grid-template-columns: 100px 1fr 1fr 145px 100px 130px;
+            }
 
             &_title {
                 letter-spacing: 1px;
                 color: $dark;
-                font-size: 12px;
+                font-size: 11px;
                 font-weight: 500;
                 text-transform: uppercase;
                 color: #fff;
+                padding-left: 20px;
             }
         }
     }

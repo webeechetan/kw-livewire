@@ -426,7 +426,7 @@ class AddTask extends Component
         $this->reset(['task','name','description','due_date','project_id','task_users','task_notifiers','priority','status','attachments','comment','comments','comment_id','tag_id','visibility']);
         $this->project_id = $project_id;
         $this->tag_id = Tag::where('name','Post')->first()->id ?? 2;
-        $this->name = 'Post: '.$post['caption'];
+        $this->name = $post['caption'];
         $this->description = $post['content_idea'];
         $this->due_date = $post['date'] ?? null;
 

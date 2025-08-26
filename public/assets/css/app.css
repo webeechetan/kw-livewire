@@ -214,10 +214,10 @@ small {
 
 /*---- Batch ----*/
 .badge {
-  line-height: inherit;
+  color: #000;
+  text-transform: capitalize;
   font-weight: 500;
-  letter-spacing: 1px;
-  text-transform: uppercase;
+  background: #eee;
 }
 .badge-notifications {
   position: absolute;
@@ -1465,6 +1465,23 @@ hr.space-sm {
   /* ----- Button Submit ----- */
   /* ----- Button Batch ----- */
   /* ----- Button Group ----- */
+}
+.btn-white {
+  background-color: #fff;
+  color: #000;
+}
+.btn-white:hover, .btn-white:focus, .btn-white:active, .btn-white:first-child:active {
+  background-color: #f83890;
+  color: #fff;
+}
+.btn-gredient {
+  background: #8F0707;
+  background: linear-gradient(135deg, #8f0707 10%, #ec008c 47%, #f7bf10 100%);
+  color: #fff;
+}
+.btn-gredient:hover, .btn-gredient:focus, .btn-gredient:active, .btn-gredient:first-child:active {
+  background: linear-gradient(135deg, #8f0707 5%, #ec008c 70%, #f7bf10 100%);
+  color: #fff;
 }
 .btn-primary {
   color: #fff;
@@ -3915,22 +3932,23 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
 }
 
 /* ----- Task Tags ----- */
-.p_medium, .p_high {
-  display: inline-block;
-  padding: 7px 10px;
-  font-size: 0.7rem;
-  line-height: 100%;
-  border-radius: 30px;
-  transition: all 0.3s ease;
-  font-weight: 500;
-}
 .p_medium {
-  background-color: #7407ff;
+  background-color: #cdb110;
   color: #fff;
 }
 .p_high {
   background-color: #ff0000;
   color: #fff;
+}
+
+.p_medium, .p_high, .tag-icon {
+  display: inline-block;
+  padding: 3px 7px;
+  font-size: 0.7rem;
+  line-height: 100%;
+  border-radius: 30px;
+  transition: all 0.3s ease;
+  font-weight: 500;
 }
 
 /* ----- Add Canvas ----- */
@@ -4311,10 +4329,11 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
 .taskList_col_title {
   cursor: pointer;
   transition: all 0.3s ease;
+  padding-left: 30px;
 }
 .taskList_col_title_open {
-  width: 20px;
-  height: 20px;
+  width: 15px;
+  height: 17px;
   font-size: 16px;
   background-color: #f83890;
   color: #fff;
@@ -4340,19 +4359,20 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   border-radius: 4px;
   transition: all 0.3s ease;
   display: grid;
-  grid-template-columns: 300px 1fr;
+  grid-template-columns: 35% 1fr;
   gap: 30px;
 }
 .taskList_row:hover, .taskList_row.active {
   background-color: #e8ddf7;
 }
-.taskList_row:hover .taskList_col_title, .taskList_row.active .taskList_col_title {
-  padding-left: 35px;
-}
 .taskList_row:hover .taskList_col_title_open, .taskList_row.active .taskList_col_title_open {
   transform: translateX(0);
   opacity: 1;
   visibility: visible;
+}
+.taskList_row_wrap {
+  display: grid;
+  grid-template-columns: 100px 1fr 1fr 145px 100px 130px;
 }
 .taskList_row > .row {
   align-items: center;
@@ -4395,17 +4415,22 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   margin-top: 15px;
   border-radius: 4px;
   display: grid;
-  grid-template-columns: 300px 1fr;
+  grid-template-columns: 35% 1fr;
   gap: 30px;
   align-items: center;
+}
+.taskList-dashbaord_header_wrap {
+  display: grid;
+  grid-template-columns: 100px 1fr 1fr 145px 100px 130px;
 }
 .taskList-dashbaord_header_title {
   letter-spacing: 1px;
   color: #191919;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 500;
   text-transform: uppercase;
   color: #fff;
+  padding-left: 20px;
 }
 
 /* ----- Item Submit ----- */

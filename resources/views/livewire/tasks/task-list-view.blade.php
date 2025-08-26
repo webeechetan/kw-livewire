@@ -251,7 +251,7 @@
     <div class="column-box mt-3">
         <div class="taskList-dashbaord_header">
             <div class="taskList-dashbaord_header_title ms-2">Task Name</div>
-            <div class="taskList-dashbaord_header_wrap text-center d-grid grid_col-repeat-6">
+            <div class="taskList-dashbaord_header_wrap text-center d-grid">
                 <div class="taskList-dashbaord_header_title taskList_col">Due Date</div>
                 <div class="taskList-dashbaord_header_title taskList_col">Client</div>
                 <div class="taskList-dashbaord_header_title taskList_col">Project</div>

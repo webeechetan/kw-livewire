@@ -5,6 +5,26 @@
     transition: $ease_05;
     border-radius: $border_radius_xs;
 
+    &-white {
+        background-color: #fff;
+        color: #000;
+        &:hover, &:focus, &:active, &:first-child:active {
+            background-color: $brand;
+            color: #fff;
+        }
+    }
+
+    &-gredient {
+        background: #8F0707;
+        background: linear-gradient(135deg, rgba(143, 7, 7, 1) 10%, rgba(236, 0, 140, 1) 47%, rgba(247, 191, 16, 1) 100%);
+        color: #fff;
+
+        &:hover, &:focus, &:active, &:first-child:active {
+            background: linear-gradient(135deg, rgba(143, 7, 7, 1) 5%, rgba(236, 0, 140, 1) 70%, rgba(247, 191, 16, 1) 100%);
+            color: #fff;
+        }
+    }
+
     &-primary {
         color: $white;
         background-color: $brand;

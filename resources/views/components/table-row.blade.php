@@ -8,21 +8,23 @@
             <div class="mb-1">
                 {{ Str::limit($task->name, 50) }} 
             </div>
-            <span class="text-xs text-light">Created date: {{  Carbon\Carbon::parse($task->created_at)->format('d M Y') }}</span>
-            @if($task->tag_id)
-                <div class="mt-1">
-                    <x-tag-icon :tag="$task->tag" />
-                </div>
-            @endif
-            @if($task['priority'] != 'low')
-                <span class="@if($task['priority'] == 'medium') p_medium @endif @if($task['priority'] == 'high') p_high @endif">
-                    {{ ucfirst($task['priority']) }}
-                </span>
-            @endif
+            <div>
+                <span class="text-xs text-light">Created at: {{  Carbon\Carbon::parse($task->created_at)->format('d M Y') }}</span>
+                @if($task['priority'] != 'low')
+                    <span class="@if($task['priority'] == 'medium') p_medium @endif @if($task['priority'] == 'high') p_high @endif">
+                        {{ ucfirst($task['priority']) }}
+                    </span> 
+                @endif
+                @if($task->tag_id)
+                    <span>
+                        <x-tag-icon :tag="$task->tag" />
+                    </span>
+                @endif
+            </div>
         </div>
     </div>
 
-    <div class="taskList_row_wrap text-center d-grid grid_col-repeat-6">
+    <div class="taskList_row_wrap text-center">
         <div class="taskList_col">
             @php
                 $date_color = '';
@@ -75,7 +77,7 @@
 
         <div class="taskList_col">
             <div class="avatarGroup avatarGroup-overlap">
-                {{  $task->assignedBy?->name }}
+                <x-avatar :user="$task->assignedBy" class="avatar-sm" />
             </div>
         </div>
         
