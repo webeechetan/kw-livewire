@@ -65,7 +65,7 @@
                                                         <i class='bx bx-calendar-alt' ></i> End Date
                                                     @endif
                                                 </a>
-                                            </div>
+                                            </div> 
                                         </div>
                                         <h5 class="filterSort-header mt-4"><i class='bx bx-calendar-alt text-primary' ></i> Filter By Status</h5>
                                         <ul class="filterSort_btn_group list-none">

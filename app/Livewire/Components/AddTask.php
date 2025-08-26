@@ -99,7 +99,7 @@ class AddTask extends Component
         $task->status = $this->status;
         $task->priority = $this->priority;
         $task->visibility = $this->visibility;
-        if($this->tag_id){
+        if($this->tag_id && is_numeric($this->tag_id)){
             $task->tag_id = $this->tag_id;
         }
         if($this->email_notification == true){
@@ -303,7 +303,7 @@ class AddTask extends Component
         $this->task->email_notification = $this->email_notification;
         $this->task->visibility = $this->visibility;
         $this->task->priority = $this->priority;
-        if($this->tag_id){
+        if($this->tag_id && is_numeric($this->tag_id)){
             $this->task->tag_id = $this->tag_id;
         }
         
